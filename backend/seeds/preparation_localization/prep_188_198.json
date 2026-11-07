@@ -176,60 +176,104 @@
   "PREP-194": {
     "assumptions": {
       "he": [
-        "שרשרת סופית ולא מחזורית; empty test ובניית יחיד הותרו כהשלמה; השיתוף בלתי משתנה."
+        "שרשרת סופית ולא מחזורית; empty test ובניית יחיד הותרו כהשלמה; השיתוף בלתי משתנה.",
+        "Head מחזירה מחרוזת תו, Empty זמין, Length קבוע, Tail ו־ Concat מעתיקות במודל שטוח."
       ],
       "en": [
-        "Finite acyclic list; empty testing and singleton construction explicitly added; suffix sharing is immutable."
+        "Finite acyclic list; empty testing and singleton construction explicitly added; suffix sharing is immutable.",
+        "Head returns a one-character string, empty exists, Length is constant, and flat Tail/Concat copy."
       ]
     },
     "optimality": {
-      "he": "Θ(n) עם העתקת צד שמאל בלבד; Θ(n²) אם השרשור מעתיק את שני הצדדים. פלט Θ(n) תאים.",
-      "en": "Θ(n) when concatenation copies only the left side; Θ(n²) if both sides are copied. Output uses Θ(n) cells."
+      "he": "Θ(n) עם העתקת צד שמאל בלבד; Θ(n²) אם השרשור מעתיק את שני הצדדים. פלט Θ(n) תאים.\n\nΘ(n²) זמן במודל השטוח, Θ(n) עומק וייתכנו Θ(n²) תווי סיומות פעילות.",
+      "en": "Θ(n) when concatenation copies only the left side; Θ(n²) if both sides are copied. Output uses Θ(n) cells.\n\nΘ(n²) flat-copy time, Θ(n) depth and potentially Θ(n²) live suffix characters."
     },
     "verification": {
-      "he": "כל 3,280 הרשימות באורכים 0–7; בדיקה עצמאית של הפלט ושל אי־שינוי הקלט.",
-      "en": "All 3,280 lists at lengths 0..7, independently checking output and unchanged input."
+      "he": "כל 3,280 הרשימות באורכים 0–7; בדיקה עצמאית של הפלט ושל אי־שינוי הקלט.\n\n1,093 מחרוזות מעל שלושה תווים עד אורך 6 מול אורקל slicing חיצוני; AST מאמת רקורסיה ושימוש רק בארבע הפעולות בגוף ההיפוך.",
+      "en": "All 3,280 lists at lengths 0..7, independently checking output and unchanged input.\n\n1,093 strings over three characters through length six against an external slicing oracle; AST checks recursion and the four-primitive-only function body."
     },
     "edge_cases": {
       "he": [
-        "ריקה; יחיד; ערכים חוזרים; רשימה ארוכה; מחזור אינו קלט חוקי."
+        "ריקה; יחיד; ערכים חוזרים; רשימה ארוכה; מחזור אינו קלט חוקי.",
+        "ריקה, תו יחיד, חזרות, נקודות קוד בעברית ומגבלת עומק הרקורסיה."
       ],
       "en": [
-        "Empty; singleton; duplicates; long lists; cycles are outside the contract."
+        "Empty; singleton; duplicates; long lists; cycles are outside the contract.",
+        "Empty, singleton, repeated characters, Hebrew code points and recursion-depth limits."
       ]
     },
     "common_mistakes": {
       "he": [
         "Head מחזירה ערך, לא שרשרת.",
-        "אין להתעלם מעלות @ או להניח ריקות שלא ניתנת לזיהוי."
+        "אין להתעלם מעלות @ או להניח ריקות שלא ניתנת לזיהוי.",
+        "לא לשרשר תו שאינו מחרוזת בלי חוזה; לא להניח שסיומת או שרשור זולים; לא להחליף ברקורסיה מדומה עם היפוך מובנה."
       ],
       "en": [
         "Head returns a value, not a list.",
-        "Do not ignore @ cost or assume an unavailable empty test."
+        "Do not ignore @ cost or assume an unavailable empty test.",
+        "Do not concatenate incompatible character types, assume free suffix/concat, or replace the task with built-in reversal."
       ]
     },
     "interview_answer": {
-      "he": "צריך להשלים את הממשק. אחר כך מקדימים כל ראש לשרשרת המצטברת; העלות ליניארית רק כששרשור עם צד שמאל יחיד קבוע בזמן.",
-      "en": "Complete the interface, then prepend each head to an accumulator; linear time requires constant-time concatenation with a singleton left operand."
+      "he": "צריך להשלים את הממשק. אחר כך מקדימים כל ראש לשרשרת המצטברת; העלות ליניארית רק כששרשור עם צד שמאל יחיד קבוע בזמן.\n\nהפכו את הסיומת והוסיפו את הראש לסופה; בסיס ריק וסוג Head מפורש הופכים את הנסיגה למוגדרת.",
+      "en": "Complete the interface, then prepend each head to an accumulator; linear time requires constant-time concatenation with a singleton left operand.\n\nReverse the suffix and append its head; an empty base and typed Head make the recurrence well-defined."
     },
     "source_ambiguities": {
       "he": [
-        "אם Head הוגדרה להחזיר שרשרת יחיד במקום ערך, חלק מההשלמה כבר כלול — חייבים לברר זאת."
+        "אם Head הוגדרה להחזיר שרשרת יחיד במקום ערך, חלק מההשלמה כבר כלול — חייבים לברר זאת.",
+        "זהו ממשק מחרוזת נוסף, עם Length ורקורסיה מחייבת. הוא אינו משנה את חוזה הרשימה הישן."
       ],
       "en": [
-        "If Head actually returns a singleton list rather than a value, part of the completion already exists; clarify it."
+        "If Head actually returns a singleton list rather than a value, part of the completion already exists; clarify it.",
+        "This additional string interface supplies Length and mandates recursion; it leaves the original list contract intact."
       ]
     },
     "solution_extensions": {
       "he": {
         "question": "מה העלות של reverse(Tail(L))@[Head(L)]?",
         "direction": "סכום אורכי הצד השמאלי ריבועי במודל העתקה, בעוד מצטבר מקדים מעתיק יחיד בכל צעד.",
-        "integration": "מוכן בתוכן; לא מחובר לתור."
+        "integration": "מוכן בתוכן; לא מחובר לתור.",
+        "וריאציה: מחרוזת ורקורסיה באמצעות ארבע פעולות": [
+          {
+            "question": "מה צריך לשנות כדי לחסוך העתקת סיומות?",
+            "answer_direction": "שקלו תצוגת טווח או אינדקס משותף; זו הרחבה של הממשק ויש לחשב גם את עלות השרשור.",
+            "principle": "הרחבת חוזה באופן מפורש"
+          }
+        ]
       },
       "en": {
         "question": "What does reverse(Tail(L))@[Head(L)] cost?",
         "direction": "Copied left lengths sum quadratically; a prepending accumulator copies one cell per step.",
-        "integration": "Prepared in content; not connected to the queue."
+        "integration": "Prepared in content; not connected to the queue.",
+        "Variant: recursive string reversal through four primitives": [
+          {
+            "question": "What would avoid copying every suffix?",
+            "answer_direction": "Consider a shared range view or index; this extends the interface, and concatenation costs still matter.",
+            "principle": "Make an extension explicit"
+          }
+        ]
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "וריאציה: מחרוזת ורקורסיה באמצעות ארבע פעולות": {
+          "prompt": "### וריאציה: מחרוזת ורקורסיה באמצעות ארבע פעולות\nהפכו מחרוזת באמצעות רקורסיה ורק הפעולות Head, Tail, Concat ו־ Length בגוף פונקציית ההיפוך.\n\nהשלמת חוזה: Head מחזירה מחרוזת באורך תו אחד, Tail את הסיומת ללא התו הראשון, Concat מאחדת שתי מחרוזות ו־ Length מחזירה אורך. המחרוזת הריקה זמינה כתוצאת בסיס; אין לקרוא Head או Tail עליה. תו הוא נקודת קוד, לא צבר גרפי. הפלט אינו משנה את הקלט; דוגמאות ההרצה מוגבלות לאורך 200 בגלל מחסנית Python. נתחו את האלגוריתם גם לאורך n פרמטרי תחת מודל מחרוזות שטוחות, שבו Tail ו־ Concat מעתיקות תווים. אין לייבא לכאן אוטומטית את עלויות ADT הרשימה מהשאלה הקודמת.",
+          "hints": [
+            "איזה תנאי מאפשר לעצור בלי להפעיל Head על מחרוזת ריקה?",
+            "התו הראשון צריך לעבור לסוף, אחרי שהפכתם רקורסיבית את כל מה שאחריו.",
+            "באורך אפס החזירו מחרוזת ריקה; אחרת Concat(reverse(Tail(s)), Head(s)). Head כבר מחזירה מחרוזת של תו אחד לפי החוזה."
+          ]
+        }
+      },
+      "en": {
+        "Variant: recursive string reversal through four primitives": {
+          "prompt": "### Variant: recursive string reversal through four primitives\nReverse a string recursively using only Head, Tail, Concat and Length inside the reversing function.\n\nChosen contract: Head returns a one-character string, Tail the suffix after the first character, Concat joins strings, and Length reports length. The empty string is available as the base result; never call Head/Tail on it. Characters mean code points, not grapheme clusters. Preserve input; executable examples have length at most 200 because of the Python stack. Also analyze parameterized n under a flat-copy string model where Tail/Concat copy characters. Do not silently inherit the earlier linked-list ADT operation costs.",
+          "hints": [
+            "Which condition stops before applying Head to an empty string?",
+            "The first character belongs at the end, after reversing the remaining suffix.",
+            "Return empty at length zero; otherwise Concat(reverse(Tail(s)), Head(s)). By contract Head already returns a one-character string."
+          ]
+        }
       }
     }
   },

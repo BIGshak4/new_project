@@ -7,7 +7,8 @@
         "אופטימליות פירושה מספר מינימלי של רכיבי Half/Full-Adder באילוצים האלה, תוך שימור כל שמונת ביטי הקלט.",
         "וריאנט חמישה ביטים: כל הכניסות מקבילות במשקל יחידה; FA בלבד, אפס וחיווט חופשיים, פלט ספירה מדויק בן שלושה ביטים, ללא זיכרון או שערים חיצוניים.",
         "שלושה ביטים במקביל, HA בלבד וחיווט.",
-        "פלט בינארי לא מסומן בן שתי סיביות."
+        "פלט בינארי לא מסומן בן שתי סיביות.",
+        "שמונה ביטים במקביל, FA בלבד עם קבוע אפס; פלט ארבע סיביות."
       ],
       "en": [
         "The allowed building blocks are ideal binary Half-Adders and Full-Adders; gates inside them are not counted.",
@@ -15,7 +16,8 @@
         "Optimality means the minimum number of Half/Full-Adder components under these constraints, while preserving all eight input bits.",
         "Five-input variant: parallel unit-weight bits, FAs only, free zero/wiring and exact three-bit count, without memory or external gates.",
         "Three parallel input bits, HAs and wiring only.",
-        "Two-bit unsigned output."
+        "Two-bit unsigned output.",
+        "Eight simultaneous bits; FAs plus zero; four-bit output."
       ]
     },
     "optimality": {
@@ -24,14 +26,16 @@
         "result": "4 מחברים מלאים (Full-Adders) ו־3 מחברים למחצה (Half-Adders)",
         "proof": "כל Full-Adder מקטין באחד את מספר חוטי האות הכולל, וכל Half-Adder משמר אותו. מעבר משמונה חוטי קלט לארבעה חוטי פלט מחייב לפחות ארבעה Full-Adders. משוואות העמודות מחייבות אחר כך לפחות שלושה Half-Adders: ‏2f0+h0=7 במשקל 1, ‏2f1+h1=3 במשקל 2 לאחר ארבעה נשאים, ו־2f2+h2=1 במשקל 4. הרשת המוצעת משיגה את החסמים התחתונים האלה.",
         "batch11_five_input_fa": "שלושה FA הם מינימום בספריית FA תלת־כניסתי, קלטים גולמיים ואפס בלבד, חיווט חסר מעגלים ופיצול חופשי. מנייה מלאה שוללת אפס/רכיב אחד/שניים: 1,56,6720 אפשרויות. אין טענת מינימום פיזי או השהיה.",
-        "batch1103_three_bit_ha_only": "שלושה HA במבנה הנתון; אין טענת מינימום."
+        "batch1103_three_bit_ha_only": "שלושה HA במבנה הנתון; אין טענת מינימום.",
+        "1107n30_eight_fa_only": "שבעה FA; מינימום מנומק רק במודל דחיסת עמודות ללא שכפול, לא ברשת בלתי מוגבלת."
       },
       "en": {
         "criterion": "minimum number of allowed adders",
         "result": "4 Full-Adders + 3 Half-Adders",
         "proof": "Each Full-Adder reduces the total number of signal wires by one and each Half-Adder preserves it. Eight input wires and four output wires require at least four Full-Adders. Column equations then force at least three Half-Adders: 2f0+h0=7 for weight 1, 2f1+h1=3 for weight 2 after four carries, and 2f2+h2=1 for weight 4. The proposed network meets these lower bounds.",
         "batch11_five_input_fa": "Three FAs are minimal with three-input FAs, only raw bits/zero, acyclic wiring and free fanout. Complete enumeration excludes 0/1/2 cells: 1,56,6720 possibilities. No physical size/delay optimum is claimed.",
-        "batch1103_three_bit_ha_only": "Three HAs in this construction; no minimum claim."
+        "batch1103_three_bit_ha_only": "Three HAs in this construction; no minimum claim.",
+        "1107n30_eight_fa_only": "Seven FAs; minimality is justified only for nonduplicating weighted-column compression, not unrestricted networks."
       }
     },
     "edge_cases": {
@@ -66,7 +70,10 @@
           "note": "כל מיקום קלט נספר כיחידה אחת; השלישי מחבר c1,c2 במשקל שתיים, לא יחד עם x במשקל יחידה."
         },
         "000,111 ושלוש אפשרויות one-hot.",
-        "נשאי HA במשקל2 והנשא הלא בשימוש במשקל4."
+        "נשאי HA במשקל2 והנשא הלא בשימוש במשקל4.",
+        "0→0000",
+        "255→1000",
+        "01001010→0011"
       ],
       "en": [
         {
@@ -99,7 +106,10 @@
           "note": "Every input position counts as one; the third FA adds c1,c2 at weight two, not mixed with a raw weight-one x."
         },
         "000,111 and the three one-hot inputs.",
-        "Weight-two intermediate carries and the unused weight-four carry."
+        "Weight-two intermediate carries and the unused weight-four carry.",
+        "0→0000",
+        "255→1000",
+        "01001010→0011"
       ]
     },
     "verification": {
@@ -108,19 +118,21 @@
         "method": "סימולציה ממצה של כל 256 הקלטים בני שמונת הביטים באמצעות רשימת החיבורים של שבעת המחברים; כל פלט התאים לספירת הביטים המתמטית.",
         "checked_on": "2026-09-24",
         "batch11_five_input_fa": "הווריאנט עבר 32 וקטורים, 96 משוואות עמודה, שמונה שורות FA וארבע דחיות קלט. מניית חסם תחתון מלאה בדקה 56 רשתות FA יחיד ו־6,720 רשתות שני FA, ללא פתרון. Python בלבד; לא HDL או חומרה.",
-        "batch1103_three_bit_ha_only": "שמונה קלטים נבדקו מול ספירה עצמאית, ונבדק שהנשא האחרון תמיד0. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית."
+        "batch1103_three_bit_ha_only": "שמונה קלטים נבדקו מול ספירה עצמאית, ונבדק שהנשא האחרון תמיד0. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+        "1107n30_eight_fa_only": "מודלים עצמאיים עברו: קובייה בחמישה ערכי התנגדות, 3,072 גשרי DC במתח שאינו אפס, דוגמת מתח אפס, 64 זוגות נגדי משוב ו־256 בדיקות הגבר סופי, עשר פאזות סינוס, 1,024 קלטי מכפיל, 256 קלטי ספירת אחדות, 256 זוגות חיבור וארבע שורות NAND. ראיה: checks/night1107n30-hardware-model-verification.json. בדיקות אלה הן Python וחישוב רציונלי; קומפילציית SystemVerilog מתועדת בנפרד בדוח native של האצווה. לא בוצעו SPICE, סינתזה, ניתוח תזמון או מדידת חומרה.\n\nבדיקת Icarus Verilog 12 בפועל עברה: 1,664 השוואות RTL באצוות החומרה, כולל כל קלטי המכפיל, ספירת אחדות וחיבור, כל שורות NAND ו־124 בדיקות לוח פאזה עם איפוס והשהיה. ראיה: checks/night1107n30-native-verification.json. ריצת הקוד הייתה בסביבה זמנית מבודדת ללא רשת; אין להסיק מכך SPICE או סינתזה."
       },
       "en": {
         "status": "passed",
         "method": "Exhaustive simulation of all 256 eight-bit inputs using the seven-adder netlist; every output matched the mathematical bit count.",
         "checked_on": "2026-09-24",
         "batch11_five_input_fa": "Variant passed 32 vectors, 96 column equations, eight FA rows and four rejected inputs. Complete lower-bound enumeration found no solution among 56 one-FA/6,720 two-FA networks. Python only, not HDL or hardware.",
-        "batch1103_three_bit_ha_only": "All eight inputs were compared with an independent count, including zero final carry. HDL/simulation evidence is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
+        "batch1103_three_bit_ha_only": "All eight inputs were compared with an independent count, including zero final carry. HDL/simulation evidence is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed.",
+        "1107n30_eight_fa_only": "Independent models passed: five cube resistance scales, 3,072 nonzero-source DC bridges plus a zero-source example, 64 feedback-resistor pairs and 256 finite-gain checks, ten sine phases, 1,024 multiplier inputs, 256 popcount inputs, 256 addition pairs and four NAND truth rows. Evidence: checks/night1107n30-hardware-model-verification.json. These are Python/exact-rational checks; SystemVerilog compilation is documented separately in the batch native report. No SPICE, synthesis, timing analysis or hardware measurement was performed.\n\nActual Icarus Verilog12 execution passed 1,664 hardware RTL comparisons, including all multiplier, popcount and adder inputs, all NAND rows and 124 phase-schedule checks with reset and hold. Evidence: checks/night1107n30-native-verification.json. Execution used a temporary isolated environment with networking denied; this is not SPICE or synthesis."
       }
     },
     "interview_answer": {
-      "he": "אבנה מונה אחדות בשיטת Carry-Save. תחילה אצמצם את שמונת קלטי משקל 1 באמצעות שלושה Full-Adders ו־Half-Adder אחד; אחר כך אצמצם את ארבעת הנשאים בעמודת משקל 2 באמצעות Full-Adder ו־Half-Adder; ולבסוף אשתמש ב־Half-Adder בעמודת משקל 4. התוצאה היא ארבעה ביטי פלט, באמצעות 4 FAs ו־3 HAs. זהו מינימום: ארבעה FAs נדרשים לצמצום שמונה חוטים לארבעה, ומשוואות העמודות מחייבות שלושה HAs.\n\nלחמישה ביטים: FA(x0,x1,x2) נותן s1,c1; FA(s1,x3,x4) נותן y0,c2; FA(c1,c2,0) נותן y1,y2. c1,c2 במשקל שתיים ולכן Sum האחרון הוא ביט השתיים ו־Carry ביט הארבע. שלושה FA; הפלט בטווח 0..5.\n\nשני HA מטפלים בשלוש היחידות. שני הנשאים שלהם זרים ולכן HA שלישי מחבר אותם בלי נשא נוסף.",
-      "en": "I would build a carry-save population counter. First reduce the eight weight-1 inputs with three Full-Adders and one Half-Adder; then reduce the four carries in the weight-2 column with one Full-Adder and one Half-Adder; finally use one Half-Adder in the weight-4 column. The result is four output bits and uses 4 FAs plus 3 HAs, which is minimal because four FAs are needed to reduce eight wires to four and the column equations force three HAs.\n\nFor five bits: FA(x0,x1,x2) gives s1,c1; FA(s1,x3,x4) gives y0,c2; FA(c1,c2,0) gives y1,y2. c1,c2 have weight two, making final Sum weight two and Carry weight four. Three FAs, output zero through five.\n\nTwo HAs process the three units. Their carries cannot coincide, so a third HA combines them without another carry."
+      "he": "אבנה מונה אחדות בשיטת Carry-Save. תחילה אצמצם את שמונת קלטי משקל 1 באמצעות שלושה Full-Adders ו־Half-Adder אחד; אחר כך אצמצם את ארבעת הנשאים בעמודת משקל 2 באמצעות Full-Adder ו־Half-Adder; ולבסוף אשתמש ב־Half-Adder בעמודת משקל 4. התוצאה היא ארבעה ביטי פלט, באמצעות 4 FAs ו־3 HAs. זהו מינימום: ארבעה FAs נדרשים לצמצום שמונה חוטים לארבעה, ומשוואות העמודות מחייבות שלושה HAs.\n\nלחמישה ביטים: FA(x0,x1,x2) נותן s1,c1; FA(s1,x3,x4) נותן y0,c2; FA(c1,c2,0) נותן y1,y2. c1,c2 במשקל שתיים ולכן Sum האחרון הוא ביט השתיים ו־Carry ביט הארבע. שלושה FA; הפלט בטווח 0..5.\n\nשני HA מטפלים בשלוש היחידות. שני הנשאים שלהם זרים ולכן HA שלישי מחבר אותם בלי נשא נוסף.\n\nדוחס בכל משקל עם FA, שומר את כל הנשאים ומקבל ארבע סיביות באמצעות שבעה תאים.",
+      "en": "I would build a carry-save population counter. First reduce the eight weight-1 inputs with three Full-Adders and one Half-Adder; then reduce the four carries in the weight-2 column with one Full-Adder and one Half-Adder; finally use one Half-Adder in the weight-4 column. The result is four output bits and uses 4 FAs plus 3 HAs, which is minimal because four FAs are needed to reduce eight wires to four and the column equations force three HAs.\n\nFor five bits: FA(x0,x1,x2) gives s1,c1; FA(s1,x3,x4) gives y0,c2; FA(c1,c2,0) gives y1,y2. c1,c2 have weight two, making final Sum weight two and Carry weight four. Three FAs, output zero through five.\n\nTwo HAs process the three units. Their carries cannot coincide, so a third HA combines them without another carry.\n\nCompress each weight using FAs, retain every carry, and obtain four output bits with seven cells."
     },
     "relationship_note": {
       "he": "נושאים קשורים של מחברים וספירת אחדות; אין כאן קביעה שמדובר בשאלות כפולות.\n\nמקור נוסף ל־PREP-001 עם רוחב וחוק ספרייה אחרים; גרסאות שמונה ושבעה ביטים נשמרו, ואין כפילות חדשה במאגר.",
@@ -200,6 +212,14 @@
             "נשארו שני נשאים במשקל2. האם הם יכולים להיות1 יחד? חברו אותם ב־HA נוסף וקבעו מה קורה לנשא שלו."
           ],
           "integration_status": ""
+        },
+        {
+          "prompt": "### וריאציה: שמונה סיביות באמצעות Full Adder בלבד\nקבלו x[7:0] במקביל והחזירו בסיביות את מספר האחדות, 0..8. מותר להשתמש רק בתאי FA, בחיווט, בפיצול אות ובקבוע 0; אין תאי HA נפרדים, שערים חיצוניים או אוגרים. תא FA המחובר לאפס עדיין נספר כ־FA. הציגו חיבור לכל תא, משקלי סיביות ואת העלות. הבהרה שנבחרה: מימוש צירופי; אין תוספת של טענת מינימום כללית ללא מודל ספרייה והוכחה. הדרישה שונה מהחלק הישן המתיר גם HA.",
+          "hints": [
+            "מחבר מלא מקיים a+b+c=s+2c_out. איך אפשר לשמור את הסכום תוך צמצום מספר הסיביות באותו משקל?",
+            "רכזו את שמונה הביטים לסיבית יחידות אחת וארבע סיביות שמשקלן שתיים; אין לאבד נשא.",
+            "ארבעה FA מטפלים במשקל 1, שניים במשקל 2 ואחד במשקל 4. בפלט דרושות ארבע סיביות כדי לייצג גם 8."
+          ]
         }
       ],
       "en": [
@@ -275,6 +295,14 @@
             "Two weight-two carries remain. Can both be1? Combine them in another HA and analyze its carry."
           ],
           "integration_status": ""
+        },
+        {
+          "prompt": "### Variant: eight bits using full adders only\nAccept simultaneous x[7:0] and output their population count, zero through eight. Only FA cells, wiring, fanout and constant zero are allowed; no separate HAs, external gates or registers. An FA with a zero pin still counts as an FA. Show every cell connection, bit weights and cost. Chosen clarification: combinational operation; no unsupported global minimum claim is added. This differs from the earlier part that also allows HAs.",
+          "hints": [
+            "A full adder preserves a+b+c=s+2c_out. How can you reduce the number of same-weight bits without changing total value?",
+            "Reduce the eight inputs to one units bit and four weight-two bits; retain every carry.",
+            "Use four FAs at weight one, two at weight two and one at weight four. Four output bits are needed to represent eight."
+          ]
         }
       ]
     },
@@ -284,24 +312,32 @@
         "ערבוב משקלי יחידה ושתיים באותו FA.",
         "החלפת ה־FA השלישי ב־HA למרות איסור הספרייה.",
         "פלט זוגיות של ביט אחד או קיצוץ הספירה לשני ביטים.",
-        "חיבור נשאים כאילו הם סיביות במשקל1; שימוש ב־OR חיצוני; התעלמות מהסיבה שהנשא האחרון0."
+        "חיבור נשאים כאילו הם סיביות במשקל1; שימוש ב־OR חיצוני; התעלמות מהסיבה שהנשא האחרון0.",
+        "קבלת פלט בן שלוש סיביות.",
+        "חיבור נשאים במשקל שגוי.",
+        "ספירת FA עם אפס כרכיב חינם."
       ],
       "en": [
         "Confusing five parallel input bits with a serial counter.",
         "Mixing weight-one and weight-two inputs in one FA.",
         "Replacing the third FA with an HA despite the library restriction.",
         "Returning one parity bit or truncating the count to two bits.",
-        "Treating carries as unit-weight bits; adding an external OR; discarding carry without proving it is0."
+        "Treating carries as unit-weight bits; adding an external OR; discarding carry without proving it is0.",
+        "Using only three output bits.",
+        "Combining carries at the wrong weight.",
+        "Treating a zero-tied FA as free."
       ]
     },
     "source_ambiguities": {
       "he": [
         "״מכונה״ אינה מגדירה שעון או סדרה; הוגדר וקטור בן חמישה ביטים ומעגל צירופי. זמינות אפס ומדד מינימום הוגדרו בעריכה. Intel ו־NVIDIA מדווחות בצילום ולא אומתו עצמאית.",
-        "המקור מבקש HA בלבד; רוחב הפלט והקלט המקביל הובהרו כאן."
+        "המקור מבקש HA בלבד; רוחב הפלט והקלט המקביל הובהרו כאן.",
+        "מניין רכיבים מוגדר ב־FA כולל תאי אפס; הוכחת מינימום מוגבלת הוצהרה."
       ],
       "en": [
         "“Machine” specifies no clock or serial protocol; an explicit five-bit vector/combinational model is selected. Free zero and minimum-count model are explicit assumptions. Intel/NVIDIA are source-reported, not independently verified.",
-        "The source permits HAs only; output width and parallel input timing are clarified here."
+        "The source permits HAs only; output width and parallel input timing are clarified here.",
+        "Cell cost counts every FA including zero-tied ones; minimum-proof scope is explicit."
       ]
     },
     "solution_extensions": {
@@ -315,6 +351,11 @@
           "question": "מה נדרש אם נוסף ביט קלט רביעי?",
           "direction": "התוצאה יכולה להגיע4 ולכן דרושים שלושה ביטי פלט; יש לטפל גם בנשיאה למשקל4.",
           "tests": "רוחב פלט ומשקלי נשיאה."
+        },
+        {
+          "question": "מה משתנה אם יש רק שבע כניסות?",
+          "direction": "אין צורך לחבר את הקלט השמיני; אפשר לצמצם את העמודות לארבעה FA.",
+          "tests": "בדקו 0 ו־7 אחדות וכל 128 הקלטים."
         }
       ],
       "en": [
@@ -327,6 +368,11 @@
           "question": "What changes with a fourth input bit?",
           "direction": "The count can reach4, so three outputs and a weight-four carry are needed.",
           "tests": "Output sizing and carry weights."
+        },
+        {
+          "question": "What changes with only seven inputs?",
+          "direction": "Without the eighth input, columns can be compressed using four FAs.",
+          "tests": "Check zero, seven ones and all 128 input patterns."
         }
       ]
     }

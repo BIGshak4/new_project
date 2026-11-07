@@ -491,6 +491,36 @@ def batch1107b20_source(key):
     return (ROOT / "interview_preparation/solutions" / BATCH1107B20_SOURCES[key]).read_text(encoding="utf-8")
 
 
+# November 7 overnight: three pure Python array/grid contracts and a C++17
+# ASCII parser. Expected values remain exclusively in trusted broker fixtures.
+NIGHT1107N30_SOURCES = {
+    "prep-longest-ones-interval": "prep_289_longest_ones_1107n30.py",
+    "prep-cpp-atoi-style-parser": "prep_295_atoi_1107n30.cpp",
+    "prep-black-component-bounding-boxes": "prep_296_component_boxes_1107n30.py",
+    "prep-monotone-grid-paths-dp": "prep_300_grid_paths_1107n30.py",
+}
+NIGHT1107N30_ORACLES = runpy.run_path(
+    str(BACKEND / "tests/fixtures/execution_night1107n30_oracles.py")
+)["ORACLES"]
+ORACLES.update(NIGHT1107N30_ORACLES)
+
+
+def build_night1107n30_contracts():
+    inputs = json.loads((BACKEND / "tests/fixtures/execution_night1107n30_inputs.json").read_text(encoding="utf-8"))
+    for key, question in inputs.items():
+        for language, spec in question["languages"].items():
+            for case in spec["cases"]:
+                if language == "cpp":
+                    case["expected_stdout"] = NIGHT1107N30_ORACLES[key](case["stdin"])
+                else:
+                    case["expected"] = NIGHT1107N30_ORACLES[key](*case["args"])
+    return inputs
+
+
+def night1107n30_source(key):
+    return (ROOT / "interview_preparation/solutions" / NIGHT1107N30_SOURCES[key]).read_text(encoding="utf-8")
+
+
 COUNTER_STIMULUS = [(1, 1), (0, 0)] + [(int(i in (15, 29)), int(i % 5 not in (0, 1))) for i in range(45)]
 SEQUENCE_STIMULUS = [(1, 1)] + [(0, int(c)) for c in "1101110111010011011010110110"] + [(1, 1)] + [(0, int(c)) for c in "1011101101"]
 
@@ -786,6 +816,7 @@ endmodule
     questions.update(build_batch1107_contracts())
     questions.update(build_batch1107b10_contracts())
     questions.update(build_batch1107b20_contracts())
+    questions.update(build_night1107n30_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -872,6 +903,17 @@ def build_smoke():
         cases.append({"question_key": key, "language": "python", "correct": batch1107b20_source(key),
                       "wrong": f"def {entry}(*args):\n    return None\n",
                       "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, question in build_night1107n30_contracts().items():
+        for language, spec in question["languages"].items():
+            if language == "python":
+                entry = spec["entry"]
+                wrong = f"def {entry}(*args):\n    return None\n"
+                syntax = f"def {entry}(*args)\n    return None\n"
+            else:
+                wrong = '#include <cstdint>\n#include <string_view>\nstd::int32_t parse_int32(std::string_view) { return 0; }\n'
+                syntax = "this is not valid C++ source\n"
+            cases.append({"question_key": key, "language": language, "correct": night1107n30_source(key),
+                          "wrong": wrong, "syntax_error": syntax})
     return {"version": 1, "cases": cases}
 
 
@@ -1406,6 +1448,8 @@ end architecture;
         python[key] = batch1107b10_source(key)
     for key in BATCH1107B20_SOURCES:
         python[key] = batch1107b20_source(key)
+    for key, filename in NIGHT1107N30_SOURCES.items():
+        (c if filename.endswith(".cpp") else python)[key] = night1107n30_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

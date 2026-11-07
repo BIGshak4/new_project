@@ -1,0 +1,39 @@
+{
+  "result": "PASS",
+  "read_only": true,
+  "items": [
+    "PREP-289",
+    "PREP-295",
+    "PREP-296",
+    "PREP-300",
+    "PREP-194",
+    "PREP-225"
+  ],
+  "independent_case_counts": {
+    "longest_ones_regex_oracle": 8191,
+    "bounding_boxes_union_find_oracle": 5219,
+    "paths_binomial_oracle": 80,
+    "recursive_string_reverse_oracle": 1027,
+    "text_mode_direct_count_oracle": 3284
+  },
+  "independent_cases_total": 17801,
+  "source_sha256": {
+    "solutions/prep_289_longest_ones_1107n30.py": "c87013a3b592911da8bdb2b4e703cddf0fbb9700cbbd7e943d1580aa9c456b5b",
+    "solutions/prep_296_component_boxes_1107n30.py": "1c7c371346f7bc0b0492b40add4b03fa73e61eee04b1ca4b577c00d89c29f34e",
+    "solutions/prep_300_grid_paths_1107n30.py": "f373aabc5335c32e5c2a32c77f8369f79e5594178b4b040df41fe54889c3cec5",
+    "solutions/prep_194_recursive_string_1107n30.py": "fc21a977f492f9f4a08d8fbb97a5e5734c2447ee6f13e36ba9f85fc11a09d305",
+    "solutions/prep_225_text_words_1107n30.py": "96281abe295df4f0bb95c8a6b24c206d7535ad6e8b780d68fd650d80efa02ec7",
+    "solutions/prep_295_atoi_1107n30.cpp": "2422047cf8e6fc6ae4ce19d0f1d7c309f31a8837a00e2291bc07f890aa039446"
+  },
+  "native_inputs_current_sha_match": 11,
+  "native_evidence": "checks/night1107n30-native-verification.json",
+  "cpp_review": "Verified ASCII whitespace/digit handling, optional sign, no-digit zero, stop-on-nondigit, pre-multiply signed-limit guard, INT32_MIN magnitude and whole-stdin CLI. Native parser25cases plusCLIevidence are separate; no new local C++ execution claimed.",
+  "copy_finding": {
+    "finding": "New PREP-295 prose used std: : atoi from a generic sanitizer.",
+    "resolution": "Software author corrected new prose only to std::atoi and regenerated before integration; native C++ source unchanged."
+  },
+  "limitations": [
+    "Finite oracles do not replace professional human review.",
+    "No network, physical router, live learner account or hardware signoff in this peer audit."
+  ]
+}

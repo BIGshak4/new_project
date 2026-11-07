@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "scope": "Independent bilingual proposed teaching material in isolated shard; shared integration/publication is separate.",
+  "new_ids": [
+    "PREP-291",
+    "PREP-292",
+    "PREP-298",
+    "PREP-301"
+  ],
+  "append_only_variant": [
+    "PREP-036"
+  ],
+  "proposed_ai_assisted": true,
+  "professional_human_approval_claimed": false,
+  "model_report": "checks/batch1107n30-reasoning-verification.json",
+  "model_checks": 253823,
+  "native_report": "checks/night1107n30-native-verification.json",
+  "native_own_cases": 20146,
+  "native_executed_inputs_unchanged": true,
+  "independent_peer_report": "checks/night1107n30-reasoning-peer-review.json",
+  "visual_inspection": {
+    "bilingual_png_count": 10,
+    "status": "passed",
+    "details": "Ten original HE/EN diagrams inspected; technical expressions remain LTR and036branches the pre-edge state to both updates. No clipped labels observed."
+  },
+  "preservation": {
+    "old036_title_and_hints": true,
+    "old_raw_and_compiled_prompt_solution_prefixes": true,
+    "existing_version_increment": 1
+  },
+  "ruff": {
+    "status": "passed",
+    "files": [
+      "checks/check_reasoning_batch1107n30.py",
+      "solutions/prep_reasoning_batch1107n30.py",
+      "solutions/draw_reasoning_batch1107n30.py"
+    ]
+  },
+  "primary_mapping_after_root_taxonomy_alignment": {
+    "PREP-291": "verification",
+    "PREP-292": "state_machines",
+    "PREP-298": "logic_puzzles",
+    "PREP-301": "state_machines"
+  },
+  "source_sha256": {
+    "diagrams/prep-036-reasoning-batch1107n30-en.png": "7431af3740987b99935cdc0ecb788342ec4df7aab51915d8fc570f3545a7b8ed",
+    "diagrams/prep-036-reasoning-batch1107n30-he.png": "a8f2a2a975dda6b86b4dd68b7c96b55251f75cf8e7041b37cf7c6a9459a2da3e",
+    "diagrams/prep-291-reasoning-batch1107n30-en.png": "8dc7cb055566f90704e9b8f39613ca5089dec6ca97125168c0219ef7e6d4d217",
+    "diagrams/prep-291-reasoning-batch1107n30-he.png": "ea541f1318710e538c5b87de9d71df681a68f298d02884043e498b8f13bfad67",
+    "diagrams/prep-292-reasoning-batch1107n30-en.png": "f3d768d03274c89971308bb289e019141a34ab6e14e80a9a8ded1ac6c3f35385",
+    "diagrams/prep-292-reasoning-batch1107n30-he.png": "80c616b759cc40f1ad6b7e0991ef768f15d597b256cb4261c1c314bbae182c04",
+    "diagrams/prep-298-reasoning-batch1107n30-en.png": "705b737f19c57ad1bd448b85542f350d241ca330bd344ec0b44b85c42697d59c",
+    "diagrams/prep-298-reasoning-batch1107n30-he.png": "80fc37eda3ef1d4e36a596268befab839574c2b07ca37265cc2d16a38239da51",
+    "diagrams/prep-301-reasoning-batch1107n30-en.png": "026585dd1073293b1da76588ad8e6f9339e5a53d4b8731bd18d376ba805cd295",
+    "diagrams/prep-301-reasoning-batch1107n30-he.png": "9b8113410fa5dc2f99ac66feeea4cf999917c39a65c747765fa2dce9173b1dd4",
+    "solutions/prep_reasoning_batch1107n30.py": "cb8c44469ff3717e016720a1adfeabbb6466b9ee07efc0a10a8e76c61a72d12a",
+    "solutions/prep_reasoning_batch1107n30.sv": "04a01105bf1605a8ba53d1854f2131369f90e8c77b5d1b170633c4b4331406c2",
+    "solutions/prep_291_router_driver_batch1107n30.sv": "bc04ba5e671bc91c6e3966fc6896db2b046a0a3b2148006a81da573cba366c29",
+    "solutions/draw_reasoning_batch1107n30.py": "4357761e8b8af8991c16173293854f1382ede23e06679118c22ebf2281b270f5",
+    "checks/prep_reasoning_batch1107n30_tb.sv": "835d747a9ec764ddf44088f6fd4f8e6d578872d5a46d82e32a36a2e39b81f096",
+    "checks/check_reasoning_batch1107n30.py": "9fc6be6efdaa4cbf82bd769680eef871794c5a16c785d58dceaf07580587c10a"
+  },
+  "limitations": [
+    "Router driver validates packet generation with a spy, not a router DUT or physical network.",
+    "Finite models/native simulation supplement correctness proofs; no SPICE, STA or hardware signoff.",
+    "Bounded room capacity and gold-change permission are explicit exercise assumptions, not source facts."
+  ]
+}

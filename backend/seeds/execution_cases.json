@@ -11047,6 +11047,686 @@
           "starter": "def relative_sort(a1, a2):\n    raise NotImplementedError\n"
         }
       }
+    },
+    "prep-longest-ones-interval": {
+      "contract": {
+        "he": "ממשו longest_ones(bits): רשימת שלמים 0/1, פלט [start, end] של רצף האחדות הארוך ביותר, אינדוקס מאפס וקצוות כלולים. בשוויון בחרו התחלה מוקדמת; ללא אחדות החזירו [-1, -1]. אל תשנו את הקלט.",
+        "en": "Implement longest_ones(bits) for a list of integers 0/1. Return inclusive zero-based [start, end] of the longest ones run, earliest start on ties, or [-1, -1] if none. Preserve the input."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "longest_ones",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": [
+                -1,
+                -1
+              ]
+            },
+            {
+              "args": [
+                [
+                  0
+                ]
+              ],
+              "expected": [
+                -1,
+                -1
+              ]
+            },
+            {
+              "args": [
+                [
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ],
+              "expected": [
+                -1,
+                -1
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  0,
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  0,
+                  1,
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  1,
+                  1
+                ]
+              ],
+              "expected": [
+                1,
+                2
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  1,
+                  0,
+                  1,
+                  1,
+                  1
+                ]
+              ],
+              "expected": [
+                3,
+                5
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  1,
+                  1,
+                  0,
+                  1,
+                  1,
+                  1,
+                  0
+                ]
+              ],
+              "expected": [
+                4,
+                6
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  0,
+                  0,
+                  1
+                ]
+              ],
+              "expected": [
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  1,
+                  0
+                ]
+              ],
+              "expected": [
+                4,
+                5
+              ]
+            }
+          ],
+          "starter": "def longest_ones(bits):\n    raise NotImplementedError\n"
+        }
+      }
+    },
+    "prep-cpp-atoi-style-parser": {
+      "contract": {
+        "he": "תוכנית C++17 קוראת את כל stdin ומדפיסה מספר int32 ושורה חדשה. דלגו על רווחי ASCII בתחילה, קראו סימן אופציונלי ורצף ספרות עשרוניות עד התו הראשון שאינו ספרה. ללא ספרות החזירו 0; גלישה נחתכת לגבול int32 לפי הסימן. אין להשתמש בממיר מספרי מהספרייה.",
+        "en": "A C++17 program reads all stdin and prints one int32 and a newline. Skip leading ASCII whitespace, accept one optional sign and a maximal decimal digit prefix. No digits yields 0; overflow clamps to the signed int32 endpoint. Do not use a library numeric converter."
+      },
+      "languages": {
+        "cpp": {
+          "kind": "program",
+          "driver": "#define JOBRUN_PREP295_NO_MAIN\n#include \"solution.cpp\"\n#include <iostream>\n#include <iterator>\n#include <string>\n\nint main() {\n    const std::string text{std::istreambuf_iterator<char>(std::cin), std::istreambuf_iterator<char>()};\n    std::cout << parse_int32(text) << '\\n';\n    return 0;\n}\n",
+          "cases": [
+            {
+              "stdin": "",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": " \t\n",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "0",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "+17",
+              "expected_stdout": "17\n"
+            },
+            {
+              "stdin": "-42xyz",
+              "expected_stdout": "-42\n"
+            },
+            {
+              "stdin": "\n\t+17 rest",
+              "expected_stdout": "17\n"
+            },
+            {
+              "stdin": "+",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "+-12",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "words42",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "0x10",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "00120",
+              "expected_stdout": "120\n"
+            },
+            {
+              "stdin": "2147483647",
+              "expected_stdout": "2147483647\n"
+            },
+            {
+              "stdin": "2147483648",
+              "expected_stdout": "2147483647\n"
+            },
+            {
+              "stdin": "-2147483648",
+              "expected_stdout": "-2147483648\n"
+            },
+            {
+              "stdin": "-2147483649",
+              "expected_stdout": "-2147483648\n"
+            },
+            {
+              "stdin": "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+              "expected_stdout": "2147483647\n"
+            },
+            {
+              "stdin": "-9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+              "expected_stdout": "-2147483648\n"
+            },
+            {
+              "stdin": "12.34",
+              "expected_stdout": "12\n"
+            },
+            {
+              "stdin": " 42",
+              "expected_stdout": "0\n"
+            },
+            {
+              "stdin": "\r\f\u000b-19",
+              "expected_stdout": "-19\n"
+            }
+          ],
+          "starter": "#include <cstdint>\n#include <stdexcept>\n#include <string_view>\n\nstd::int32_t parse_int32(std::string_view text) {\n    (void)text;\n    throw std::logic_error(\"Implement the documented ASCII parser\");\n}\n\n"
+        }
+      }
+    },
+    "prep-black-component-bounding-boxes": {
+      "contract": {
+        "he": "ממשו component_boxes(image): תמונה מלבנית שבה 0 הוא לבן ו־1 הוא שחור. תמונה ריקה [] מותרת; אחרת הרוחב חיובי. החזירו לכל רכיב שחור בארבע שכנויות [min_row, min_col, max_row, max_col], עם קצוות כלולים ובסדר גילוי בסריקת שורות. אל תשנו את הקלט.",
+        "en": "Implement component_boxes(image) for a rectangular image where 0 is white and 1 is black. Empty [] is allowed; otherwise width is positive. Return inclusive [min_row, min_col, max_row, max_col] for every four-connected black component in row-major discovery order. Preserve the input."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "component_boxes",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  [
+                    0
+                  ]
+                ]
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  [
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    1,
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  0,
+                  1,
+                  1
+                ]
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    1,
+                    1,
+                    0,
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  3,
+                  0,
+                  3
+                ]
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    1
+                  ],
+                  [
+                    0
+                  ],
+                  [
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  2,
+                  0,
+                  2,
+                  0
+                ]
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    1,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  2,
+                  1,
+                  2
+                ]
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    1,
+                    1,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    1,
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  0,
+                  2,
+                  2
+                ]
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    1,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  0,
+                  4,
+                  4
+                ],
+                [
+                  2,
+                  2,
+                  2,
+                  2
+                ]
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    0,
+                    1,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              ],
+              "expected": [
+                [
+                  0,
+                  1,
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  3,
+                  2,
+                  3
+                ]
+              ]
+            }
+          ],
+          "starter": "def component_boxes(image):\n    raise NotImplementedError\n"
+        }
+      }
+    },
+    "prep-monotone-grid-paths-dp": {
+      "contract": {
+        "he": "ממשו grid_paths(n): מספר שלם n חיובי, רשת n×n נקודות ללא מכשולים, ותנועה ימינה או למטה בלבד. החזירו מספר דרכים מדויק מ־(0, 0) ל־(n−1, n−1). עבור n=1 מחזירים 1. השתמשו בתכנון דינמי ולא בנוסחה קומבינטורית ישירה.",
+        "en": "Implement grid_paths(n) for a positive integer n on an unobstructed n×n node grid, moving only right or down from (0, 0) to (n−1, n−1). Return the exact count; n=1 returns 1. Use dynamic programming rather than a direct combinatorial formula."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "grid_paths",
+          "cases": [
+            {
+              "args": [
+                1
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": 6
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": 20
+            },
+            {
+              "args": [
+                5
+              ],
+              "expected": 70
+            },
+            {
+              "args": [
+                6
+              ],
+              "expected": 252
+            },
+            {
+              "args": [
+                8
+              ],
+              "expected": 3432
+            },
+            {
+              "args": [
+                10
+              ],
+              "expected": 48620
+            },
+            {
+              "args": [
+                12
+              ],
+              "expected": 705432
+            },
+            {
+              "args": [
+                17
+              ],
+              "expected": 601080390
+            },
+            {
+              "args": [
+                18
+              ],
+              "expected": 2333606220
+            },
+            {
+              "args": [
+                20
+              ],
+              "expected": 35345263800
+            }
+          ],
+          "starter": "def grid_paths(n):\n    raise NotImplementedError\n"
+        }
+      }
     }
   }
 }

@@ -289,3 +289,16 @@ Actual RTL validation: prep036_left_mod3 compiled and passed assertions on all51
 - [solutions/prep_216_220_sequential.sv](../solutions/prep_216_220_sequential.sv)
 - [diagrams/prep-036-batch20-left-msb.png](../diagrams/prep-036-batch20-left-msb.png)
 - [diagrams/prep-036-batch20-left-msb-he.png](../diagrams/prep-036-batch20-left-msb-he.png)
+
+
+## הרחבה ושמירת מקור — 07.11.2026, מקבץ לילה 30
+
+[צילום מקור פרטי 6](../sources/2026-11-07-night30-06.png)
+
+בנו FSM המקבלת מחרוזת אינסופית ביט-ביט, כך שכל ביט חדש הוא ביט ה-MSB החדש במחרוזת, כלומר הביטים משורשרים משמאל. פלט המעגל בזמן t הוא 1 אם המחרוזת בזמן t-1 מתחלקת ב-3, ו-0 אחרת.
+
+שיוכי מקור מדווחים: Marvell, Google.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-036-left_div3_lag-batch1107n30-addendum.md)

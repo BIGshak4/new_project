@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "scope": "Isolated software authorship, model checks, bilingual diagrams and input-only execution proposal. Publication, full backend and browser checks are separate root integration work.",
+  "new_ids": [
+    "PREP-289",
+    "PREP-295",
+    "PREP-296",
+    "PREP-300"
+  ],
+  "append_only_variants": [
+    "PREP-194",
+    "PREP-225"
+  ],
+  "model_report": "checks/1107n30-software-verification.json",
+  "native_report": "checks/night1107n30-native-verification.json",
+  "visual_inspection": {
+    "bilingual_diagrams": 12,
+    "result": "All12 HE/EN diagrams inspected in contact sheet; no clipped labels, overlaps or reversed technical text observed."
+  },
+  "preservation": {
+    "old_title_and_hints": true,
+    "raw_and_compiled_prompt_solution_prefixes": true,
+    "shared_catalog_unmodified_by_shard": true
+  },
+  "execution_proposal": {
+    "profiles": 4,
+    "cases": 56,
+    "cases_by_profile": {
+      "prep-longest-ones-interval": 12,
+      "prep-cpp-atoi-style-parser": 20,
+      "prep-black-component-bounding-boxes": 12,
+      "prep-monotone-grid-paths-dp": 12
+    },
+    "fixture_inputs_only": true,
+    "python_reference_against_independent_oracles": 36,
+    "cpp_expected_stdout_independent_regex_big_integer_oracle": 20,
+    "runtime_not_integrated_in_this_report": true
+  },
+  "ruff": "passed",
+  "source_sha256": {
+    "solutions/prep_289_longest_ones_1107n30.py": "c87013a3b592911da8bdb2b4e703cddf0fbb9700cbbd7e943d1580aa9c456b5b",
+    "solutions/prep_295_atoi_1107n30.cpp": "2422047cf8e6fc6ae4ce19d0f1d7c309f31a8837a00e2291bc07f890aa039446",
+    "solutions/prep_296_component_boxes_1107n30.py": "1c7c371346f7bc0b0492b40add4b03fa73e61eee04b1ca4b577c00d89c29f34e",
+    "solutions/prep_300_grid_paths_1107n30.py": "f373aabc5335c32e5c2a32c77f8369f79e5594178b4b040df41fe54889c3cec5",
+    "solutions/prep_194_recursive_string_1107n30.py": "fc21a977f492f9f4a08d8fbb97a5e5734c2447ee6f13e36ba9f85fc11a09d305",
+    "solutions/prep_225_text_words_1107n30.py": "96281abe295df4f0bb95c8a6b24c206d7535ad6e8b780d68fd650d80efa02ec7",
+    "solutions/draw_software_1107n30.py": "80587a834ffc50db90e418b4837c0665448f3b4fb25763936634672ba5a61c56",
+    "checks/check_software_1107n30.py": "e5c727ff70d6c42f9bc5b175dc4ca4f4adc759b834e7a15039711cac267ac155",
+    "checks/check_prep295_1107n30.cpp": "8c4212041b904ea282f441f342b605af55f864d475bb54561635df33b9eecd19",
+    "diagrams/prep-194-software-1107n30-en.png": "dd0e3d950b1a44d956f60efcfd8e2f1548f8e62bd45302b2f73297aaf2ab4d27",
+    "diagrams/prep-194-software-1107n30-he.png": "0dded6ea17ead5ca64fb34d54bfc3edb87f000a7686e08c3c57d712b6f06a7ad",
+    "diagrams/prep-225-software-1107n30-en.png": "c108d43794cb9fcfd26f6d76318334e6450dd0dbd6581c240d601e51d260549e",
+    "diagrams/prep-225-software-1107n30-he.png": "d75bfcad7a5022bbd2a9f3b2895da4e0cf804b4b88342d9c1d2874cddc8d34ef",
+    "diagrams/prep-289-software-1107n30-en.png": "a88865ebad5680377b91cf735009b6bc4f3970b3475452d7bdac986460dcbbd5",
+    "diagrams/prep-289-software-1107n30-he.png": "05c8ed555b75ebd78d7ed35b98c5709831ba0356b89f36b5b3f3531c0b1920b0",
+    "diagrams/prep-295-software-1107n30-en.png": "cb8a519ed578f207bd70d1c69582602f5827a8213b8107a392b0fa0e91bc97e5",
+    "diagrams/prep-295-software-1107n30-he.png": "66466ab93a2c12a7360a12a12781dac2d060d40a98aa9307a319402e508b728c",
+    "diagrams/prep-296-software-1107n30-en.png": "27d6b7fd762524749cc48602979eb1ba13d3fc2a003e7b1cf9e727e9b58d1308",
+    "diagrams/prep-296-software-1107n30-he.png": "f308860741db3e6c57b8e82773ae053ade4f8d59897fdd8d72eab6fab7f49240",
+    "diagrams/prep-300-software-1107n30-en.png": "fc010de8dfb0f8785ab8e7bff15ac097d92bfe835e2105c202341a4f920944e4",
+    "diagrams/prep-300-software-1107n30-he.png": "17fd4aa888da1c17424728c8b69109565713b1373ea2f493cd96bd8d924d679b"
+  }
+}

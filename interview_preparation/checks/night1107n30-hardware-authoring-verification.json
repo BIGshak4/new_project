@@ -1,0 +1,55 @@
+{
+  "status": "pass",
+  "new_ids": [
+    "PREP-290",
+    "PREP-293",
+    "PREP-294",
+    "PREP-297",
+    "PREP-299",
+    "PREP-302"
+  ],
+  "variant_ids": [
+    "PREP-001",
+    "PREP-122"
+  ],
+  "checks": [
+    "Six new bilingual records, each with three hints and all eight technical fields",
+    "Variant helper asserts exact preservation of old titles/hints and raw/compiled prompt/reference prefixes",
+    "All22 generated clean PNGs visually inspected in HE and EN contact sheets",
+    "Six prompt-role figures for290/294/297 show topology only; sixteen solution-role figures remain gated",
+    "Ruff passed all six Python solution/drawing/check files",
+    "Native-executed SV source hashes remain equal to parent native evidence"
+  ],
+  "visual_scope": "Original locally generated diagrams, not archived source screenshots or browser verification. Contact sheets are ignored local QA artifacts.",
+  "png_sha256": {
+    "diagrams/prep-290-cube-given-1107n30-he.png": "6ca1979584dbc535d70590d718be2d4687e5ca8c27296b203fa2fc27f569cb2c",
+    "diagrams/prep-290-cube-given-1107n30-en.png": "b5d5b864b78bf5770e01f48fad1c728892d470275824510bd4ba143b37085f8a",
+    "diagrams/prep-290-cube-layers-1107n30-he.png": "f9418669c423201bf08aa90471e0baffe642970a6ac6342d0f700787a13a9fc9",
+    "diagrams/prep-290-cube-layers-1107n30-en.png": "b0dff33dc60224233a13e1dcc0ed9e3f07610df4e1c6e34b4e5b4287f37e7ed2",
+    "diagrams/prep-293-times49-datapath-1107n30-he.png": "aaf7308ac275b90bb9e1ec550064141c6f519175acc0de7cf7dc01d3ca94d05a",
+    "diagrams/prep-293-times49-datapath-1107n30-en.png": "6e5fe1e941ea57d0035b35fc293f47005a2d37eb6f7dec336736d25eb217df71",
+    "diagrams/prep-294-bridge-given-1107n30-he.png": "6ac4e4f9f4e98a6f7e411d1c692c2e7376ed736646b0fa9d2bf2281e43a84b6b",
+    "diagrams/prep-294-bridge-given-1107n30-en.png": "6f4450fae981bc26c2d695313c031d53b034512553aec31c5ba9a13b966e16e7",
+    "diagrams/prep-294-bridge-balance-1107n30-he.png": "f2189c56aa56ef7dee3ac87ec870142f0f0c88aec23592aaacc59b7089a2a6dc",
+    "diagrams/prep-294-bridge-balance-1107n30-en.png": "d7a4893c3e07b73e709c5817fbea0fd9589061adcbe9f6f6385edcf1e835ec32",
+    "diagrams/prep-297-noninverting-given-1107n30-he.png": "96b8b9e912e4bf5b7cb68e9ae88284d793927d830d2a0aea6985b1ac2dacc74a",
+    "diagrams/prep-297-noninverting-given-1107n30-en.png": "e7c5a6ab57550fd418a08a8607a974248aba9725497329b1f024b568bdbb7bbb",
+    "diagrams/prep-297-noninverting-three-r-1107n30-he.png": "1cc6bfe2cecfeb1dcc6f128e4589a40a758e109154f77028cd6e22a1b8db2e57",
+    "diagrams/prep-297-noninverting-three-r-1107n30-en.png": "f6045c528810399ca9313bb988953836df738122c9214561c23b84ba88e0aa68",
+    "diagrams/prep-299-sine-phase-fold-1107n30-he.png": "7d01381020799808114ac7146b693f1a0eb67240b4284f89b2f370c659c265ce",
+    "diagrams/prep-299-sine-phase-fold-1107n30-en.png": "ad096297f7a0135a3d03ada0a81149efab8eb359c1356eb5080b7545b4fc361a",
+    "diagrams/prep-302-cmos-nand-1107n30-he.png": "ad5bb389e990234d51b080c159be3d069d87df2e3a2335d0d7585109ceb658de",
+    "diagrams/prep-302-cmos-nand-1107n30-en.png": "39acf9c2f2698e3d36200bba2818c05858655ffbf4b76d78413958b23fa84627",
+    "diagrams/prep-001-eight-fa-compression-1107n30-he.png": "d3d7d8783f1081cf06b17389e5b1e5991eda9dc1493574ad53616681ba306aa9",
+    "diagrams/prep-001-eight-fa-compression-1107n30-en.png": "4d897b01983c9348e418ec5c8cb719be841697be50bb6d87a80d492d8164d839",
+    "diagrams/prep-122-mixed-ha-fa-ripple-1107n30-he.png": "5f943976faa8d1513c51bc0ac8b8bb00c06462d4b59131c1bbf1b3bf37cc0e15",
+    "diagrams/prep-122-mixed-ha-fa-ripple-1107n30-en.png": "4f7a119d29e8e13ebf1006a78d921c8fb6892310c510aaa3cb71f36177b01c98"
+  },
+  "model_report": "checks/night1107n30-hardware-model-verification.json",
+  "native_report": "checks/night1107n30-native-verification.json",
+  "limits": [
+    "AI-assisted proposed educational content; no human expert signoff",
+    "No analog SPICE, physical measurements, synthesis or static timing analysis",
+    "Seven-FA minimum claim only applies to the explicitly restricted weighted-column compression model"
+  ]
+}

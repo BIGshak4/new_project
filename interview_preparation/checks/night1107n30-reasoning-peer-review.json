@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "scope": "Read-only independent peer checks of291/292/298/301 andnew036 variant; no content or frozen native sources mutated. Models use explicit integers, physical ownership, literal occupancy lists and aggregate packet accounting. Finite coverage supplements provided proofs; no physical router/hardware claim.",
+  "counts": {
+    "left_div3_streams": 8191,
+    "left_div3_prefixes": 90114,
+    "room_histories": 4096,
+    "room_transitions": 24576,
+    "room_distinguishing_state_pairs": 6,
+    "counter_transitions": 64,
+    "gold_daily_exchanges": 7,
+    "gold_ownership_subsets": 8,
+    "one_cut_integer_counterexamples": 6,
+    "router_parameter_seed_cases": 824,
+    "router_packets_inspected": 32121
+  },
+  "manual_findings": [
+    "New-MSB normalization s_next=2(s+b) mod3 and previous-prefix registered output agree with exact integers.",
+    "Four0121 Moore phases are distinguishable despite repeated outputone.",
+    "Four occupancy states are sufficient only with explicit enforced capacitythree; pre-edge rejection semantics are stated.",
+    "Gold1/2/4 schedule conserves physical pieces and attains two-cut subset lowerbound.",
+    "Router excludes remainderone, bounds packets and covers exactlyP distinct ports; global partition uniformity is not claimed."
+  ],
+  "material_issues": [],
+  "sha256": {
+    "solutions/prep_reasoning_batch1107n30.py": "cb8c44469ff3717e016720a1adfeabbb6466b9ee07efc0a10a8e76c61a72d12a",
+    "solutions/prep_reasoning_batch1107n30.sv": "04a01105bf1605a8ba53d1854f2131369f90e8c77b5d1b170633c4b4331406c2",
+    "solutions/prep_291_router_driver_batch1107n30.sv": "bc04ba5e671bc91c6e3966fc6896db2b046a0a3b2148006a81da573cba366c29"
+  }
+}

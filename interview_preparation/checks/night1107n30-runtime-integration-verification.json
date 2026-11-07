@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "scope": "Four new deterministic runtime profiles integrated without changing45 old profile objects or developer fixture prefixes. Local tests execute only trusted Python references; C++native compilation and deployedbroker execution have separate evidence.",
+  "profiles": 49,
+  "positive_sources": 88,
+  "smoke_sources": 29,
+  "new_question_keys": [
+    "prep-longest-ones-interval",
+    "prep-cpp-atoi-style-parser",
+    "prep-black-component-bounding-boxes",
+    "prep-monotone-grid-paths-dp"
+  ],
+  "new_private_cases": 56,
+  "case_counts": {
+    "PREP-289": 12,
+    "PREP-295": 20,
+    "PREP-296": 12,
+    "PREP-300": 12
+  },
+  "pytest": {
+    "passed": 366,
+    "exit_code": 0,
+    "elapsed_seconds": 2.700156,
+    "command": [
+      "C:\\Projects\\Job_Run\\new_project\\backend\\.venv\\Scripts\\python.exe",
+      "-X",
+      "utf8",
+      "-m",
+      "pytest",
+      "tests/test_execution_catalog.py",
+      "tests/test_execution_20261107_profiles.py",
+      "tests/test_execution_20261107_batch10_profiles.py",
+      "tests/test_execution_20261107_batch20_profiles.py",
+      "tests/test_execution_20261107_night30_profiles.py",
+      "-q"
+    ],
+    "decomposition": {
+      "tests/test_execution_catalog.py": 251,
+      "tests/test_execution_20261107_profiles.py": 4,
+      "tests/test_execution_20261107_batch10_profiles.py": 18,
+      "tests/test_execution_20261107_batch20_profiles.py": 45,
+      "tests/test_execution_20261107_night30_profiles.py": 48
+    },
+    "disjoint_catalog_addend_to_full_backend": 251,
+    "profile_tests_already_in_full_backend": 115,
+    "database_environment_explicitly_empty": true,
+    "ignored_log": ".impeccable/intake-20261107-night30/runtime-validation-combined.log",
+    "started_at": "2026-11-07T21:53:08.096390+00:00",
+    "finished_at": "2026-11-07T21:53:10.796546+00:00"
+  },
+  "preservation": {
+    "status": "passed",
+    "old_profile_objects_exact": 45,
+    "profile_total": 49,
+    "execution_positive": {
+      "old_exact_prefix": 84,
+      "new_total": 88
+    },
+    "execution_smoke": {
+      "old_exact_prefix": 25,
+      "new_total": 29
+    },
+    "source_only_or_variant_profiles_unchanged": [
+      "prep-most-frequent-word-list",
+      "prep-abstract-list-head-tail-concat-reversal"
+    ],
+    "all_old_contracts_unchanged": true
+  },
+  "boundaries": {
+    "input_only_fixtures_separate_from_oracles": true,
+    "cpp_driver_reads_all_stdin": true,
+    "cpp_no_library_numeric_conversion": true,
+    "native_cpp_evidence": "checks/night1107n30-native-verification.json",
+    "old225_list_api_unchanged": true,
+    "no_learner_source_or_progress_writes": true,
+    "no_app_or_isolation_implementation_change": true,
+    "limitations": [
+      "Finite correctness cases do not establish arbitrary submission time/space complexity or permitted-operation compliance.",
+      "Source/AST checks apply to the committed trusted references, not arbitrary learner submissions.",
+      "Browser Run button and authenticated learner submission flow are checked separately by root.",
+      "The deployed broker rejects embedded NUL in program stdin. PREP-295 runtime cases omit NUL; the separate native25-case C++ harness verifies embedded-NUL parser behavior."
+    ],
+    "runtime_cpp_decimal_stop_case": "12.34"
+  },
+  "artifact_sha256": {
+    "backend/seeds/execution_cases.json": "dbb33d02ffb37cdacac41d80b5058f01da736b69560f5bbf34165498d8a81185",
+    "backend/tests/fixtures/execution_positive.json": "8ae19963992289d74f80b09ae0266e9d9434cb290ada8abdc543fb730f509a49",
+    "backend/tests/fixtures/execution_smoke.json": "f50c0e06ee80b3c4bb69d24a04061b3f25d9abe3c28037f5963ae28a38c4ab9c",
+    "backend/tests/fixtures/execution_catalog_authoring.py": "0b07ca00659309e135891bcf27122de88d35ae0ebe43c01eb5646c06006913d6",
+    "backend/tests/fixtures/execution_night1107n30_inputs.json": "165870e20ba43c11d07ad9aca610bb000b84e5e6d9fbe63b67e8833090915c55",
+    "backend/tests/fixtures/execution_night1107n30_oracles.py": "5f69f97a20945f44f89934a4c90e5ebdd6c945f1801312f39ffb8ffe2a3b1153",
+    "backend/tests/test_execution_20261107_night30_profiles.py": "ab0a5575940dbc1a5438c392349ce72ca2c3a7f0cb2b0854209711858b55e9de",
+    "backend/tests/test_execution_catalog.py": "47f48019ec1c48c62b652f61b2e2225ceb344475db892e5f57c22d578c063e98"
+  }
+}

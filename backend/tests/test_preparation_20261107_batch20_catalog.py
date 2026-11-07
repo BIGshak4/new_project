@@ -16,6 +16,7 @@ from tests.preparation_history import (
     assert_pre_batch1107b20_archive,
     assert_pre_batch1107b20_assets,
     assert_pre_batch1107b20_localization,
+    before_batch1107n30_archive,
     digest,
 )
 from tests.preparation_november7_batch20_history import before_batch1107b20_compiled
@@ -54,12 +55,13 @@ def test_all_twenty_originals_attribution_and_duplicate_decisions_are_preserved(
 
 
 def test_every_old_record_asset_localization_and_compiled_prefix_stays_hash_bound():
-    archive = read(BANK / 'questions.json')
+    current_archive = read(BANK / 'questions.json')
+    archive = before_batch1107n30_archive(current_archive)
     assert len(archive['questions']) == archive['question_count'] == 287
     assert {q['id'] for q in archive['questions']} - BATCH1107B20_BASELINE['records'].keys() == NEW
     assert set(BATCH1107B20_BASELINE['variant_ids']) == VARIANTS
     assert set(BATCH1107B20_BASELINE['source_only_ids']) == SOURCE_ONLY
-    assert_pre_batch1107b20_archive(archive)
+    assert_pre_batch1107b20_archive(current_archive)
     assets = read(SEEDS / 'preparation_uploads.json')['files']
     assert_pre_batch1107b20_assets(assets)
     localized = {}
@@ -67,7 +69,7 @@ def test_every_old_record_asset_localization_and_compiled_prefix_stays_hash_boun
         values = read(path)
         assert not localized.keys() & values.keys()
         localized.update(values)
-    assert localized.keys() == {q['id'] for q in archive['questions']}
+    assert localized.keys() == {q['id'] for q in current_archive['questions']}
     assert_pre_batch1107b20_localization(localized)
     for q in read(SEEDS / 'questions/preparation_bank.json'):
         if q['assets']['preparation_id'] in BATCH1107B20_BASELINE['records']:
@@ -76,7 +78,7 @@ def test_every_old_record_asset_localization_and_compiled_prefix_stays_hash_boun
 
 def test_new_bilingual_tasks_and_variants_remain_proposed_and_media_gated():
     catalog = load_catalog(SEEDS)
-    assert len(catalog.questions) == 317
+    assert len(catalog.questions) == 331
     selected = {q.assets.get('preparation_id'): q for q in catalog.questions.values()
                 if q.assets.get('preparation_id') in NEW | VARIANTS}
     assert set(selected) == NEW | VARIANTS

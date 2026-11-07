@@ -93,7 +93,7 @@ CSV_EXPECTED = {
 
 def test_manifest_is_versioned_and_all_contracts_belong_to_current_catalog():
     assert MANIFEST["version"] == 1
-    assert len(QUESTIONS) == 45
+    assert len(QUESTIONS) == 49
     assert set(QUESTIONS) <= CATALOG.keys()
     for question in QUESTIONS.values():
         assert set(question["contract"]) == {"he", "en"}
@@ -173,6 +173,10 @@ def test_function_expected_results_match_independent_reference_models(key, langu
 @pytest.mark.parametrize("key,language,spec", [item for item in SPECS if item[2]["kind"] == "program"])
 def test_c_and_cpp_driver_cases_use_the_same_independent_scalar_oracles(key, language, spec):
     for case in spec["cases"]:
+        if key == "prep-cpp-atoi-style-parser":
+            assert language == "cpp"
+            assert case["expected_stdout"] == ORACLES[key](case["stdin"])
+            continue
         if key == "prep-c-fifo-write-then-read-requests":
             assert language == "c"
             assert case["expected_stdout"] == fifo_request_transcript_oracle(case["stdin"])

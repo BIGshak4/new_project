@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "scope": "Executed trusted Python models and independent finite oracles.",
+  "PREP-289": {
+    "exhaustive_arrays_through_length": 10,
+    "cases": 2047,
+    "input_preserved": true
+  },
+  "PREP-296": {
+    "cases": 652,
+    "oracle": "Union-find components, independent of candidate BFS",
+    "all_3x3_bitmaps": 512,
+    "input_preserved": true,
+    "overlapping_boxes_case": true
+  },
+  "PREP-300": {
+    "binomial_oracle_cases": 30,
+    "explicit_move_enumeration_cases": 6,
+    "candidate_contains_no_binomial": true,
+    "count_beyond_signed32": true
+  },
+  "PREP-194": {
+    "cases": 1093,
+    "recursive_primitive_only_calls": true,
+    "oracle": "String slicing used only outside candidate ADT function"
+  },
+  "PREP-225": {
+    "cases": 129,
+    "oracle": "Independent token list.count plus first-maximum selection",
+    "base_list_API_unchanged": true
+  },
+  "invalid_cases_total": 8,
+  "PREP-295": {
+    "scope": "Actual C++17 native and CLI execution recorded separately; no Python model claimed as C++ compilation."
+  }
+}

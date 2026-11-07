@@ -402,3 +402,14 @@ All 1,048,576 twenty-bit words passed for each of the two models against an inde
 - [solutions/prep_batch20_combinational.py](../solutions/prep_batch20_combinational.py)
 - [diagrams/prep-107-combinational-batch20-he.png](../diagrams/prep-107-combinational-batch20-he.png)
 - [diagrams/prep-107-combinational-batch20-en.png](../diagrams/prep-107-combinational-batch20-en.png)
+
+
+## הרחבה ושמירת מקור — 07.11.2026, מקבץ לילה 30
+
+[צילום מקור פרטי 11](../sources/2026-11-07-night30-11.png)
+
+נתון וקטור קלט באורך N כאשר כל סיבית 1 או 0. בעזרת לוגיקה יש להוציא וקטור באורך N שבו כל הסיביות אפס חוץ מהסיבית הראשונה מימין שבקלט היה בה ערך 1. לדוגמה קלט 110100100 ופלט 000000100.
+
+שיוכי מקור מדווחים: Amazon.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

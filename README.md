@@ -7,11 +7,15 @@ Interview preparation and a private founders' workspace, built with Next.js, Typ
 | Practice | `apps/web` | https://jobrun-practice.netlify.app |
 | Founder tasks | `apps/tasks` | https://jobrun-tasks.netlify.app |
 
-Both apps require Supabase authentication and an approved email. Task access additionally requires founder permission. The practice database now contains 317 bilingual question records (312 unique families). Practice includes written answers, hints, reference solutions, bookmarks and progress. The deployed backend reports OpenAI configured; authenticated AI-feedback testing was outside this intake’s checks.
+Both apps require Supabase authentication and an approved email. Task access additionally requires founder permission. The practice database now contains 331 bilingual question records (326 unique families). Practice includes written answers, hints, reference solutions, bookmarks and progress. The deployed backend reports OpenAI configured; authenticated AI-feedback testing was outside this intake’s checks.
 
 The task board supports individual tasks, filters, assignees, due dates, subtasks, comments, private files, archive, version history and conflict-safe saves. Drafts persist in the current browser tab; save to synchronize across devices. The two apps share identity and database but require signing in separately on their different domains.
 
-## Latest question intake — 2026-11-07, batch of twenty
+## Latest question intake — 2026-11-07, night batch of thirty
+
+The [night intake report](docs/question-intake-2026-11-07-night30.md) maps all 30 screenshots to 29 identities: 14 new questions, five technical extensions and ten existing questions with new sources. The catalog now has 301 PREP records, 331 raw records and 326 families; 500 short questions and 2,500 active quiz variants are unchanged. Forty-four original bilingual diagrams and 94 new private objects are verified. All 317 old live identities, 624 unchanged translations and 337 skill links were preserved. Validation passed 4,351 unique backend tests, 449 web tests, TypeScript/build, 21,810 native SystemVerilog simulation checks, 25 C++ boundary cases and 56 live broker cases across four new profiles. Browser QA covers 116 local language/width views, separate from authenticated production learner testing. Exact live deployment status is recorded in the report.
+
+## Earlier question intake — 2026-11-07, batch of twenty
 
 The [latest November 7 intake report](docs/question-intake-2026-11-07-batch20.md) records all twenty screenshots: thirteen new questions (PREP-276–288), two technical extensions and four existing questions with additional sources. Two screenshots belong to PREP-151, making nineteen affected question identities. Repository content now builds to 287 PREP records, 317 total records and 312 unique families. The 500 short questions and 2,500 active multiple-choice variants are unchanged. Missing instructions are completed with explicitly labeled assumptions under the existing publication protocol; original sources and historical human-review records are preserved. The [earlier ten-screenshot report](docs/question-intake-2026-11-07-batch10.md) and [thirty-screenshot report](docs/question-intake-2026-11-07-batch30.md) remain separate.
 

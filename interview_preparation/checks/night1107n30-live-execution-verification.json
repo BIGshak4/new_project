@@ -1,0 +1,137 @@
+{
+  "summary": {
+    "live": true,
+    "kind": "four-new-positive-profile-execution",
+    "executor": "https://jobrun-executor-job-runer.vercel.app",
+    "started_at": "2026-11-07T21:51:18.898Z",
+    "finished_at": "2026-11-07T21:53:18.381Z",
+    "concurrency": 1,
+    "checked": 4,
+    "passed": 4,
+    "failed": 0,
+    "question_count": 4,
+    "languages": [
+      "python",
+      "cpp"
+    ],
+    "test_count": 56,
+    "passed_count": 56,
+    "assembled_from_two_bounded_execution_attempts": true
+  },
+  "rows": [
+    {
+      "question": "prep-longest-ones-interval",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 12,
+      "passed_count": 12,
+      "runtime_ms": 12969
+    },
+    {
+      "question": "prep-cpp-atoi-style-parser",
+      "language": "cpp",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 20,
+      "passed_count": 20,
+      "runtime_ms": 6934
+    },
+    {
+      "question": "prep-black-component-bounding-boxes",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 12,
+      "passed_count": 12,
+      "runtime_ms": 4800
+    },
+    {
+      "question": "prep-monotone-grid-paths-dp",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 12,
+      "passed_count": 12,
+      "runtime_ms": 5495
+    }
+  ],
+  "preflight": {
+    "api_http_status": 200,
+    "broker_http_status": 200,
+    "public_key_fingerprint": "480aec11a342cbc3d01585d3dcfd2b983d45a4ca70093eb55373c31ead20bdad",
+    "fingerprints_match": true,
+    "available": true,
+    "isolation": "fresh-microvm",
+    "network": "deny-all",
+    "persistence": false,
+    "max_runtime_ms": 45000,
+    "broker_revision": ""
+  },
+  "scope": {
+    "question_ids": [
+      "PREP-289",
+      "PREP-295",
+      "PREP-296",
+      "PREP-300"
+    ],
+    "question_keys": [
+      "prep-longest-ones-interval",
+      "prep-cpp-atoi-style-parser",
+      "prep-black-component-bounding-boxes",
+      "prep-monotone-grid-paths-dp"
+    ],
+    "positive_cases": 56,
+    "learner_db_or_progress_writes": false,
+    "path": "operator-signed job -> deployed broker -> fresh isolated deny-all nonpersistent microVM -> result",
+    "credential_handling": "Signing material stayed exclusively in launcher/Node child environment; never printed, persisted to disk, sent to learnerVM or placed in logs.",
+    "not_exercised": [
+      "Browser Run button",
+      "Authenticated learner API submission",
+      "Arbitrary submission complexity and permitted-operation compliance"
+    ],
+    "limits": [
+      "Existing broker rejects embedded NUL in program stdin; NUL parser semantics verified by separate native C++ harness.",
+      "Native compiler/CLI evidence is checks/night1107n30-native-verification.json."
+    ]
+  },
+  "attempt_history": [
+    {
+      "stage": "public preflight",
+      "status": "ReadTimeout before signed submission",
+      "metadata": ".impeccable/intake-20261107-night30/four-live-attempt1.exit.json"
+    },
+    {
+      "stage": "four-profile run",
+      "passed_python_cases": 36,
+      "cpp_status": "rejected before compilation, HTTP400 Invalid test input",
+      "reason": "Existing broker NUL validator",
+      "metadata": ".impeccable/intake-20261107-night30/four-live-attempt2.json"
+    },
+    {
+      "stage": "one-profile retry",
+      "question": "PREP-295",
+      "cpp_passed_cases": 20,
+      "change": "Only new CPP input12+NUL+34 replaced by decimal-stop12.34; same independent expected12. No compiler/source or isolation change.",
+      "metadata": ".impeccable/intake-20261107-night30/parser-live.json"
+    }
+  ],
+  "preservation_between_attempts": {
+    "earlier_manifest_sha256_reconstructed_exactly": "f9d7d9a362ad01c932a298a3c82415ac7cf470ee69c4f5e67c3a582d1cb77d35",
+    "only_runtime_case_changed": "PREP-295 embedded-NUL case -> decimal-point stop case",
+    "python_profiles_exactly_unchanged": true,
+    "positive_sources_exactly_unchanged": true
+  },
+  "artifact_sha256": {
+    "backend/seeds/execution_cases.json": "dbb33d02ffb37cdacac41d80b5058f01da736b69560f5bbf34165498d8a81185",
+    "backend/tests/fixtures/execution_positive.json": "8ae19963992289d74f80b09ae0266e9d9434cb290ada8abdc543fb730f509a49",
+    "interview_preparation/solutions/prep_289_longest_ones_1107n30.py": "c87013a3b592911da8bdb2b4e703cddf0fbb9700cbbd7e943d1580aa9c456b5b",
+    "interview_preparation/solutions/prep_295_atoi_1107n30.cpp": "2422047cf8e6fc6ae4ce19d0f1d7c309f31a8837a00e2291bc07f890aa039446",
+    "interview_preparation/solutions/prep_296_component_boxes_1107n30.py": "1c7c371346f7bc0b0492b40add4b03fa73e61eee04b1ca4b577c00d89c29f34e",
+    "interview_preparation/solutions/prep_300_grid_paths_1107n30.py": "f373aabc5335c32e5c2a32c77f8369f79e5594178b4b040df41fe54889c3cec5"
+  }
+}

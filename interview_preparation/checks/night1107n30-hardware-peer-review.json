@@ -1,0 +1,53 @@
+{
+  "result": "pass",
+  "scope": "Independent mathematical/prose/diagram peer review; not human expert approval, SPICE, synthesis or STA.",
+  "checks": {
+    "cube_energy_oracle": 5,
+    "bridge_thevenin_oracle": 729,
+    "finite_gain_feedback_kcl": 27,
+    "sine_phase_values": 30
+  },
+  "native_proof": "night1107n30-native-verification.json",
+  "reviewed_contracts": [
+    "PREP-001 weighted7FA bound qualified",
+    "PREP-122 oneHA threeFA ripple",
+    "PREP-29012edge cube opposite vertices",
+    "PREP-29316bit result and12bit intermediate",
+    "PREP-294 nonzero source and positive finiteR",
+    "PREP-297 ideal linear negative feedback, bias resistor not universally optimal",
+    "PREP-299 discrete10phase quarter budget and explicit hardwired zero",
+    "PREP-302 complementary static4transistor NAND"
+  ],
+  "visual_review": [
+    "hardware-prompt-six.png",
+    "hardware-sheet-0.png",
+    "hardware-sheet-4.png"
+  ],
+  "primary_references": [
+    "https://www.ti.com/tool/CIRCUIT060022",
+    "https://computationstructures.org/notes/cmos/notes.html"
+  ],
+  "source_sha256": {
+    "solutions/draw_hardware_1107n30.py": "b348624fc2f7aba70aef6cfd14e3552cc5af5bdb5b9b9828b9f4b9dabc556fdb",
+    "solutions/draw_reasoning_batch1107n30.py": "4357761e8b8af8991c16173293854f1382ede23e06679118c22ebf2281b270f5",
+    "solutions/draw_software_1107n30.py": "80587a834ffc50db90e418b4837c0665448f3b4fb25763936634672ba5a61c56",
+    "solutions/prep_001_eight_fa_only_1107n30.sv": "fc6b31de05678e00c827b2ad4cb5fdb8595e5bf09924832b31c127a4325b30a1",
+    "solutions/prep_122_mixed_adders_1107n30.sv": "41f2001eb4374545b739c7bb185b7a19a336893b8dd7a283a593fe1bdf0af808",
+    "solutions/prep_194_recursive_string_1107n30.py": "fc21a977f492f9f4a08d8fbb97a5e5734c2447ee6f13e36ba9f85fc11a09d305",
+    "solutions/prep_225_text_words_1107n30.py": "96281abe295df4f0bb95c8a6b24c206d7535ad6e8b780d68fd650d80efa02ec7",
+    "solutions/prep_289_longest_ones_1107n30.py": "c87013a3b592911da8bdb2b4e703cddf0fbb9700cbbd7e943d1580aa9c456b5b",
+    "solutions/prep_290_cube_resistance_1107n30.py": "19376daedf4aaee92aee69c56437ae5e3a112bf54e2820c41a3bcb6dae361825",
+    "solutions/prep_291_router_driver_batch1107n30.sv": "bc04ba5e671bc91c6e3966fc6896db2b046a0a3b2148006a81da573cba366c29",
+    "solutions/prep_293_times49_1107n30.sv": "e53f9fa1e7f895b6ddf50e261f769107d8c247430a01286186337ae5e1e558e9",
+    "solutions/prep_294_bridge_balance_1107n30.py": "7d73a3b0e5e8911c98e66878913a76bc8c1c3be241e45636f5b3b1ac2b49ff0d",
+    "solutions/prep_295_atoi_1107n30.cpp": "2422047cf8e6fc6ae4ce19d0f1d7c309f31a8837a00e2291bc07f890aa039446",
+    "solutions/prep_296_component_boxes_1107n30.py": "1c7c371346f7bc0b0492b40add4b03fa73e61eee04b1ca4b577c00d89c29f34e",
+    "solutions/prep_297_noninverting_gain_1107n30.py": "7916b99e4dc1fcc1755cabf2a4c168ec70c3915da521348c2ca9448e660dfc9f",
+    "solutions/prep_299_sine_model_1107n30.py": "00c0114630165aff05c78908c2e45e0719e2f0a4ca51071226b1c704fd3b38e1",
+    "solutions/prep_299_sine_rom_1107n30.sv": "794913f87bec8524e2d9102ce6e54043cebb8cfda1b63a0006b5d3c96e1210ca",
+    "solutions/prep_300_grid_paths_1107n30.py": "f373aabc5335c32e5c2a32c77f8369f79e5594178b4b040df41fe54889c3cec5",
+    "solutions/prep_302_cmos_nand_switch_1107n30.sv": "8d6b78eab4c99c48e65987370ef2c322d19cb76e66728aef2414b4869381acf1",
+    "solutions/prep_reasoning_batch1107n30.py": "cb8c44469ff3717e016720a1adfeabbb6466b9ee07efc0a10a8e76c61a72d12a",
+    "solutions/prep_reasoning_batch1107n30.sv": "04a01105bf1605a8ba53d1854f2131369f90e8c77b5d1b170633c4b4331406c2"
+  }
+}

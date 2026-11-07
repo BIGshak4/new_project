@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": "Finite independent Python models and exact ownership/state checks",
+  "counts": {
+    "router_partition_and_coverage_cases": 9840,
+    "counter_samples": 8192,
+    "counter_distinguishable_pairs": 6,
+    "room_trace_steps": 145636,
+    "room_distinguishable_pairs": 6,
+    "div3_prefix_steps_with_numeric_invariant": 90114,
+    "gold_subset_sums": 8,
+    "gold_ownership_transitions": 7,
+    "gold_one_cut_integer_splits": 6,
+    "invalid_input_cases": 8
+  },
+  "total_checks": 253823,
+  "source_sha256": "cb8c44469ff3717e016720a1adfeabbb6466b9ee07efc0a10a8e76c61a72d12a",
+  "native_evidence_path": "checks/night1107n30-native-verification.json",
+  "native_evidence_exists": true,
+  "limitations": [
+    "No actual router DUT, network delivery or physical hardware validation.",
+    "Finite enumeration supplements proofs and does not enumerate infinite streams.",
+    "Native SV simulation evidence is separate; no SPICE, STA or hardware signoff."
+  ]
+}

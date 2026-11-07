@@ -2236,24 +2236,28 @@
         "ביט תקף אחד לכל חזית פעילה; המוצא נקבע לאחר צריכת הביט.",
         "עמימות לגבי אפס מתועדת בשתי פרשנויות נפרדות.",
         "מכונת Moore עם reset מפורש.",
-        "וריאציית MSB: ביט חדש נוסף משמאל במשקל2^k; ביט תקף בחזית; אפס מתחלק; seen מבדיל מצב לפני קלט; reset ל־S0."
+        "וריאציית MSB: ביט חדש נוסף משמאל במשקל2^k; ביט תקף בחזית; אפס מתחלק; seen מבדיל מצב לפני קלט; reset ל־S0.",
+        "ביט בכל חזית; zero מתחלק; קידומת ריקה אינה תקפה; השהיה נוספת אחת."
       ],
       "en": [
         "Bits append on the right: V_next=2V+x.",
         "One valid bit per active edge; output after consuming bit.",
         "Zero ambiguity documented as two separate interpretations.",
         "Moore FSM with explicit reset.",
-        "MSB variant: new leftmost bit has weight2^k; edge acceptance; zero is divisible; seen distinguishes pre-input; reset S0."
+        "MSB variant: new leftmost bit has weight2^k; edge acceptance; zero is divisible; seen distinguishes pre-input; reset S0.",
+        "One bit per edge, zero divisible, empty prefix invalid, one additional output cycle."
       ]
     },
     "source_ambiguities": {
       "he": [
         "פלט הדוגמה הראשונה אינו כולל אפס, אף שאפס מתחלק בשלוש מבחינה מתמטית.",
-        "מקור13 מוסיף במפורש משמאל/MSB בניגוד לצירוף מימין במקור הישן; נשמר כווריאציה. אפס ותוקף קדם־נתון הובהרו בעריכה."
+        "מקור13 מוסיף במפורש משמאל/MSB בניגוד לצירוף מימין במקור הישן; נשמר כווריאציה. אפס ותוקף קדם־נתון הובהרו בעריכה.",
+        "זמן t הוגדר כאן כדגימה שאחרי החזית; קידומת קודמת ריקה מדווחת 0 במפורש."
       ],
       "en": [
         "First example output excludes zero although zero is mathematically divisible by three.",
-        "Source13 explicitly says left/MSB, unlike original right appending; preserved as a variant. Zero and pre-input validity are clarified editorially."
+        "Source13 explicitly says left/MSB, unlike original right appending; preserved as a variant. Zero and pre-input validity are clarified editorially.",
+        "Time t means the sample after an edge; an empty previous prefix explicitly produces zero."
       ]
     },
     "transition_tables": {
@@ -2331,13 +2335,15 @@
         "criterion": "מצבי Moore נגישים וניתנים להבחנה",
         "result": "3 מצבים להתחלקות רגילה ו־4 לכפולות חיוביות; 2 רכיבי DFF בכל אחד מהקידודים הבינאריים.",
         "scope": "סמנטיקת reset ומוצא Moore מוגדרת; אין טענה למינימליות שערים או מכונת Mealy.",
-        "batch20_extension": "לבדיקת החלוקה בווריאציה המנורמלת:3 מצבים,2 FF, ועוד seen אם נדרש תוקף לפני נתון. אין צורך לשמור את N הגדל או מונה אורך."
+        "batch20_extension": "לבדיקת החלוקה בווריאציה המנורמלת:3 מצבים,2 FF, ועוד seen אם נדרש תוקף לפני נתון. אין צורך לשמור את N הגדל או מונה אורך.",
+        "חלוקה ב־3 עם ביט חדש משמאל ופלט מושהה": "המימוש מציג 2 FF למצב, seen ו־FF פלט: ארבעה FF בסך הכול, ללא טענת מינימום כולל."
       },
       "en": {
         "criterion": "Reachable distinguishable Moore states",
         "result": "3 states for ordinary divisibility, 4 for positive multiples; 2 DFFs in either binary encoding.",
         "scope": "Defined reset and Moore-output semantics; not gate or Mealy minimality.",
-        "batch20_extension": "Normalized divisibility variant:3 states,2 FFs plus seen if pre-input validity is required; no growing N or length counter."
+        "batch20_extension": "Normalized divisibility variant:3 states,2 FFs plus seen if pre-input validity is required; no growing N or length counter.",
+        "New-MSB divisibility by three with a delayed output": "The direct design has two state FFs, seen and an output FF: four FFs total, without an overall minimum claim."
       }
     },
     "verification": {
@@ -2346,50 +2352,98 @@
         "checked_on": "2026-09-29",
         "script_path": "solutions/register_prep_036.py",
         "method": "כל 8191 המילים הבינאריות באורכים 0..12, 90114 דגימות קידומת, שתי הפרשנויות מול חשבון של מספרים שלמים; סיומות המבחינות בין כל זוג מצבים ונגישות; הדוגמה המקורית המדויקת עבור הפרשנות החיובית.",
-        "batch20_extension": "וריאציית שמאל:32,767 רצפים עד אורך14 ו־425,986 קידומות עם אינווריאנט מספרי, השוואת כיוונים, hold/reset. כל דגלי החלוקה זהים לשיטת צירוף מימין בתחום הנבדק, כנדרש גם מההוכחה. אימות RTL שבוצע בפועל: prep036_left_mod3 קומפל והורץ מול assertions בכל511 הרצפים באורכים0..8, עם3,586 קידומות ואינווריאנט מספרי, seen, hold ו־reset. טווח0..14 הוא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה."
+        "batch20_extension": "וריאציית שמאל:32,767 רצפים עד אורך14 ו־425,986 קידומות עם אינווריאנט מספרי, השוואת כיוונים, hold/reset. כל דגלי החלוקה זהים לשיטת צירוף מימין בתחום הנבדק, כנדרש גם מההוכחה. אימות RTL שבוצע בפועל: prep036_left_mod3 קומפל והורץ מול assertions בכל511 הרצפים באורכים0..8, עם3,586 קידומות ואינווריאנט מספרי, seen, hold ו־reset. טווח0..14 הוא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
+        "חלוקה ב־3 עם ביט חדש משמאל ופלט מושהה": [
+          "בנייה עצמאית של N, בדיקת הנרמול והשוואה לקידומת הקודמת בכל חזית; reset ו־warmup.",
+          "ראיית סימולציה נפרדת: רתמת SystemVerilog הודרה והורצה ב־Icarus בסביבה מבודדת; חלק התרגיל בדק 18,434 מקרי מודל. הדוח הוא checks/night1107n30-native-verification.json. אין זו בדיקת נתב אמיתי, STA או אישור חומרה."
+        ]
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-29",
         "script_path": "solutions/register_prep_036.py",
         "method": "All 8191 binary words of length 0..12, 90114 prefix samples, both interpretations against integer arithmetic; pairwise state-distinguishing suffixes and reachability; exact supplied example for positive interpretation.",
-        "batch20_extension": "Left variant:32,767 streams up to length14 and425,986 prefixes with numeric invariant, direction comparison and hold/reset. Divisibility flags match right-append throughout, as also proved. Actual RTL validation: prep036_left_mod3 compiled and passed assertions on all511 streams of lengths0..8, with3,586 numeric-invariant prefixes plus seen, hold and reset. Lengths0..14 were separately checked in Python. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
+        "batch20_extension": "Left variant:32,767 streams up to length14 and425,986 prefixes with numeric invariant, direction comparison and hold/reset. Divisibility flags match right-append throughout, as also proved. Actual RTL validation: prep036_left_mod3 compiled and passed assertions on all511 streams of lengths0..8, with3,586 numeric-invariant prefixes plus seen, hold and reset. Lengths0..14 were separately checked in Python. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed.",
+        "New-MSB divisibility by three with a delayed output": [
+          "Independently construct N, check normalization, and compare with the previous prefix at each edge, including reset and warmup.",
+          "Separate native evidence: the SystemVerilog harness was compiled and run with Icarus in an isolated environment; this exercise contributed 18,434 model cases. Evidence: checks/night1107n30-native-verification.json. This is not real-router validation, STA or hardware signoff."
+        ]
       }
     },
     "edge_cases": {
       "he": [
-        "לפני נתון ראשון לעומת נתון0; רצף אפסים; הוספת0 כ־MSB משאירה N אך משנה k;1,0 נותן N=1 ולא2; idle אינו מגדיל k."
+        "לפני נתון ראשון לעומת נתון0; רצף אפסים; הוספת0 כ־MSB משאירה N אך משנה k;1,0 נותן N=1 ולא2; idle אינו מגדיל k.",
+        "ביט ראשון 0 או 1; אפסים רצופים; מעבר אל וממספר שמתחלק; reset באמצע."
       ],
       "en": [
-        "Before first input versus accepted zero; all zeros; a new zero MSB holds N but advances k;1,0 gives N=1 rather than2; idle does not advance k."
+        "Before first input versus accepted zero; all zeros; a new zero MSB holds N but advances k;1,0 gives N=1 rather than2; idle does not advance k.",
+        "First zero/one, repeated zeros, entering/leaving divisible prefixes, and mid-stream reset."
       ]
     },
     "common_mistakes": {
       "he": [
         "להשתמש בנוסחת2N+b כדי לתאר הוספה משמאל.",
         "להסיק נכונות של כיוון הבנייה מבדיקת דגל בלבד: כאן שני הכיוונים תמיד מסכימים על התחלקות.",
-        "לחשוב ש־s הוא השארית הרגילה N mod3 במקום השארית המנורמלת."
+        "לחשוב ש־s הוא השארית הרגילה N mod3 במקום השארית המנורמלת.",
+        "עדכון פלט מהמצב החדש במקום הישן, הכרזה שהריקה תקפה, או הוספת enable בלי להגדיר יחידות השהיה."
       ],
       "en": [
         "Using2N+b to describe left insertion.",
         "Inferring direction correctness from flags alone: both directions always agree on divisibility here.",
-        "Interpreting s as ordinary N mod3 instead of the normalized remainder."
+        "Interpreting s as ordinary N mod3 instead of the normalized remainder.",
+        "Using new rather than old state for output, accepting the empty prefix, or adding enable without defining latency units."
       ]
     },
     "interview_answer": {
-      "he": "בגרסת MSB החדש משמאל אשתמש ב־s=N2^(−k) mod3; המעבר הוא2(s+b) mod3. שלושה מצבים מספיקים, ו־seen מונע תשובה לפני קלט. אבדוק אינווריאנט מספרי כי דגלי הכיוונים זהים.",
-      "en": "For new-left-MSB input use s=N2^(−k) mod3 with transition2(s+b) mod3. Three states suffice, with seen for pre-input validity. Check the numeric invariant because directional flags coincide."
+      "he": "בגרסת MSB החדש משמאל אשתמש ב־s=N2^(−k) mod3; המעבר הוא2(s+b) mod3. שלושה מצבים מספיקים, ו־seen מונע תשובה לפני קלט. אבדוק אינווריאנט מספרי כי דגלי הכיוונים זהים.\n\nאני מנרמל את השארית כדי לא לשמור חזקה, ומוסיף FF שמקבל את בדיקת השארית הישנה. seen מונע פלט שגוי לפני שהייתה קידומת אמיתית.",
+      "en": "For new-left-MSB input use s=N2^(−k) mod3 with transition2(s+b) mod3. Three states suffice, with seen for pre-input validity. Check the numeric invariant because directional flags coincide.\n\nNormalize the remainder to avoid storing a growing power, then register the old remainder test. Seen suppresses an empty-prefix result."
     },
     "solution_extensions": {
       "he": {
         "question": "האם אותו נרמול עובד לחלוקה ב־5?",
         "direction": "כן, כי2 הפיך מודולו5:2^(−1)=3, ולכן next_s=3(s+b) mod5. אין להסיק שכיווני הקבלה יתנו אותו דגל לכל קידומת; המיוחד ל־3 הוא2^2=1.",
-        "integration": "מוכן בתוכן; אינו מחובר לתור אינטראקטיבי."
+        "integration": "מוכן בתוכן; אינו מחובר לתור אינטראקטיבי.",
+        "חלוקה ב־3 עם ביט חדש משמאל ופלט מושהה": [
+          {
+            "question": "מה קורה כאשר אין ביט תקף בחלק ממחזורי השעון?",
+            "answer_direction": "קבעו האם ההשהיה היא מחזור שעון או ביט מתקבל. החזיקו את state ו־seen כשאין valid, והוסיפו valid לפייפליין או אפשרו לפלט להתקדם בכל שעון בהתאם לחוזה שנבחר.",
+            "principle": "הפרדת משמעות זרם הביטים מתזמון המוצא."
+          }
+        ]
       },
       "en": {
         "question": "Does normalization also work modulo5?",
         "direction": "Yes: inverse(2) modulo5 is3, giving next_s=3(s+b) mod5. Do not assume both directions give identical prefix flags; the modulo3 argument uses2^2=1.",
-        "integration": "Prepared in content; not connected to the interactive queue."
+        "integration": "Prepared in content; not connected to the interactive queue.",
+        "New-MSB divisibility by three with a delayed output": [
+          {
+            "question": "What if some clocks carry no valid bit?",
+            "answer_direction": "Choose wall-clock versus accepted-bit latency. Hold state/seen without valid and either pipeline validity or advance the output each clock according to the chosen contract.",
+            "principle": "Separate stream semantics from output timing."
+          }
+        ]
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "חלוקה ב־3 עם ביט חדש משמאל ופלט מושהה": {
+          "prompt": "### וריאציה: ביט חדש משמאל ופלט של המחזור הקודם\nבכל חזית עולה מתקבל ביט חדש שהופך ל־MSB של המחרוזת: אחרי k ביטים המספר הוא N_k=Σ b_i·2^(i−1). הוסיפו פלט רשום כך שלאחר החזית ה־k הוא 1 אם ורק אם המחרוזת הלא־ריקה שלאחר החזית k−1 התחלקה ב־3. כלומר יש השהיה נוספת של מחזור שעון אחד ביחס לבדיקת הקידומת שהתקבלה עכשיו.\n\nהנחות ההשלמה: reset סינכרוני פעיל בגבוה; לאחר reset המוצא 0, ובחזית הראשונה הוא עדיין 0 כי אין קידומת קודמת שאינה ריקה. המספר 0 עצמו מתחלק ב־3. מתקבל ביט בכל חזית ללא enable; אין להסיק על התנהגות stalls שלא הוגדרה. דרשו FSM בגודל קבוע למרות אורך המחרוזת שאינו חסום.",
+          "hints": [
+            "אל תחליפו את N ב־2N+b: הביט החדש מגיע למקום הגבוה, והביטים הקיימים נשארים באותם מקומות. מהו משקל הביט החדש?",
+            "אפשר לנרמל את השארית על ידי הכפלה ב־2^(−k) מודולו 3. מאחר ש־2 הפיך, הבדיקה שווה לאפס אינה משתנה.",
+            "למצב המנורמל מתקבל s_next=2(s+b) modulo 3. באותה חזית עדכנו את המצב, אבל את המוצא טענו מהמצב הישן יחד עם seen."
+          ]
+        }
+      },
+      "en": {
+        "New-MSB divisibility by three with a delayed output": {
+          "prompt": "### Variant: new bits on the left, previous-cycle output\nEvery rising edge accepts a bit which becomes the new MSB: after k bits, N_k=Σ b_i·2^(i−1). Add a registered output which after edge k is one exactly when the nonempty prefix after edge k−1 was divisible by three. This is one additional clock cycle beyond classifying the prefix just accepted.\n\nChosen completion: synchronous active-high reset sets output zero. The first accepted edge still outputs zero because no nonempty previous prefix exists. The value zero itself is divisible by three. One bit arrives on every edge, without enable; no unspecified stall behavior is implied. Use a constant-size FSM although the stream is unbounded.",
+          "hints": [
+            "Do not use N_next=2N+b: a new high bit is added while existing bits retain their positions. What is its weight?",
+            "Normalize the remainder by 2^(−k) modulo three. Since two is invertible, the zero-remainder test is preserved.",
+            "The normalized recurrence is s_next=2(s+b) mod 3. At the same edge update state, but load output from the old state and seen flag."
+          ]
+        }
       }
     }
   },

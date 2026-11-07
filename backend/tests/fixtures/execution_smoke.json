@@ -175,6 +175,34 @@
       "correct": "\"\"\"Return A1 grouped by unique A2 priorities, then ascending leftovers.\"\"\"\n\n\ndef relative_sort(a1, a2):\n    if (type(a1) is not list or type(a2) is not list\n            or any(type(x) is not int for x in a1)\n            or any(type(x) is not int for x in a2)):\n        raise ValueError(\"integer lists required\")\n    if len(set(a2)) != len(a2):\n        raise ValueError(\"a2 priorities must be unique\")\n    counts = {}\n    for value in a1:\n        counts[value] = counts.get(value, 0) + 1\n    result = []\n    for value in a2:\n        for _ in range(counts.pop(value, 0)):\n            result.append(value)\n    for value in sorted(counts):\n        for _ in range(counts[value]):\n            result.append(value)\n    return result\n",
       "wrong": "def relative_sort(*args):\n    return None\n",
       "syntax_error": "def relative_sort(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-longest-ones-interval",
+      "language": "python",
+      "correct": "\"\"\"Longest ones run in an array; inclusive endpoints, earliest tie.\"\"\"\n\n\ndef longest_ones(bits):\n    if type(bits) is not list or any(type(bit) is not int or bit not in (0, 1) for bit in bits):\n        raise ValueError(\"a list of integer bits is required\")\n    current_start = 0\n    current_length = 0\n    best_start = best_end = -1\n    best_length = 0\n    for index, bit in enumerate(bits):\n        if bit == 0:\n            current_length = 0\n        else:\n            if current_length == 0:\n                current_start = index\n            current_length += 1\n            if current_length > best_length:\n                best_start, best_end = current_start, index\n                best_length = current_length\n    return [best_start, best_end]\n",
+      "wrong": "def longest_ones(*args):\n    return None\n",
+      "syntax_error": "def longest_ones(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-cpp-atoi-style-parser",
+      "language": "cpp",
+      "correct": "#include <cstdint>\n#include <iostream>\n#include <iterator>\n#include <limits>\n#include <string>\n#include <string_view>\n\nstatic bool ascii_space(char c) {\n    return c == ' ' || c == '\\t' || c == '\\n' || c == '\\r' || c == '\\f' || c == '\\v';\n}\n\n// Deliberately defined safe atoi-style behavior, including clamped overflow.\nstd::int32_t parse_int32(std::string_view text) {\n    std::size_t index = 0;\n    while (index < text.size() && ascii_space(text[index])) ++index;\n    bool negative = false;\n    if (index < text.size() && (text[index] == '+' || text[index] == '-')) {\n        negative = text[index] == '-';\n        ++index;\n    }\n    const std::int64_t limit = negative ? INT64_C(2147483648) : INT64_C(2147483647);\n    std::int64_t value = 0;\n    while (index < text.size() && text[index] >= '0' && text[index] <= '9') {\n        const std::int64_t digit = text[index] - '0';\n        if (value > (limit - digit) / 10) {\n            return negative ? std::numeric_limits<std::int32_t>::min()\n                            : std::numeric_limits<std::int32_t>::max();\n        }\n        value = value * 10 + digit;\n        ++index;\n    }\n    return static_cast<std::int32_t>(negative ? -value : value);\n}\n\n#ifndef JOBRUN_PREP295_NO_MAIN\nint main() {\n    // Read all bytes, including leading newlines and embedded NUL bytes.\n    const std::string input{std::istreambuf_iterator<char>(std::cin), std::istreambuf_iterator<char>()};\n    std::cout << parse_int32(input) << '\\n';\n    return 0;\n}\n#endif\n",
+      "wrong": "#include <cstdint>\n#include <string_view>\nstd::int32_t parse_int32(std::string_view) { return 0; }\n",
+      "syntax_error": "this is not valid C++ source\n"
+    },
+    {
+      "question_key": "prep-black-component-bounding-boxes",
+      "language": "python",
+      "correct": "\"\"\"Four-connected binary image components; inclusive bounding boxes.\"\"\"\nfrom collections import deque\n\n\ndef component_boxes(image):\n    if type(image) is not list or any(type(row) is not list for row in image):\n        raise ValueError(\"a rectangular list of bit rows is required\")\n    height = len(image)\n    width = len(image[0]) if height else 0\n    if (height and width == 0) or any(len(row) != width or any(type(v) is not int or v not in (0, 1) for v in row)\n           for row in image):\n        raise ValueError(\"a rectangular list of integer bits is required\")\n    seen = [[False] * width for _ in range(height)]\n    boxes = []\n    for row in range(height):\n        for column in range(width):\n            if image[row][column] == 0 or seen[row][column]:\n                continue\n            seen[row][column] = True\n            queue = deque([(row, column)])\n            low_row = high_row = row\n            low_col = high_col = column\n            while queue:\n                r, c = queue.popleft()\n                low_row, high_row = min(low_row, r), max(high_row, r)\n                low_col, high_col = min(low_col, c), max(high_col, c)\n                for nr, nc in ((r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)):\n                    if (0 <= nr < height and 0 <= nc < width and image[nr][nc] == 1\n                            and not seen[nr][nc]):\n                        seen[nr][nc] = True\n                        queue.append((nr, nc))\n            boxes.append([low_row, low_col, high_row, high_col])\n    return boxes\n",
+      "wrong": "def component_boxes(*args):\n    return None\n",
+      "syntax_error": "def component_boxes(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-monotone-grid-paths-dp",
+      "language": "python",
+      "correct": "\"\"\"Exact monotone paths on an n-by-n node grid, no binomial in candidate.\"\"\"\n\n\ndef grid_paths(n):\n    if type(n) is not int or n < 1:\n        raise ValueError(\"n must be a positive integer\")\n    ways = [1] * n\n    for _ in range(1, n):\n        for column in range(1, n):\n            ways[column] += ways[column - 1]\n    return ways[-1]\n",
+      "wrong": "def grid_paths(*args):\n    return None\n",
+      "syntax_error": "def grid_paths(*args)\n    return None\n"
     }
   ]
 }

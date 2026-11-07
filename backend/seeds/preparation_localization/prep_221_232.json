@@ -351,48 +351,54 @@
     "assumptions": {
       "he": [
         "קלט הוא רשימת מחרוזות; שוויון מדויק ורישיות נשמרת.",
-        "בשכיחות שווה נבחרת ההופעה הראשונה; קלט ריק מחזיר None."
+        "בשכיחות שווה נבחרת ההופעה הראשונה; קלט ריק מחזיר None.",
+        "split של Python, אותיות ופיסוק נשמרים, שוויון לפי הופעה ראשונה, פלט מילה בלבד או None."
       ],
       "en": [
         "Input is a list of strings with exact case-sensitive equality.",
-        "Equal frequencies select the first appearance; empty input returns None."
+        "Equal frequencies select the first appearance; empty input returns None.",
+        "Python whitespace split, exact case/punctuation, earliest ties, word-only output or None."
       ]
     },
     "optimality": {
-      "he": "O(N) פעולות מילון בתוחלת במודל מפתחות יחידה, או O(L+N) עם עבודת תווים; O(U) רשומות ומונים.",
-      "en": "Expected O(N) dictionary operations for unit-size keys, or O(L+N) including characters; O(U) entries and counters."
+      "he": "O(N) פעולות מילון בתוחלת במודל מפתחות יחידה, או O(L+N) עם עבודת תווים; O(U) רשומות ומונים.\n\nעבודה צפויה O(L+N); אחסון פיצול O(L) ומילון U מונים, בנוסף לעלות הביטית של המונים.",
+      "en": "Expected O(N) dictionary operations for unit-size keys, or O(L+N) including characters; O(U) entries and counters.\n\nExpected O(L+N) work; O(L) split storage and U counters, with counter bit widths accounted for."
     },
     "verification": {
-      "he": "5,463 מקרים מול ספירה עצמאית: כל הרשימות באורכים 0..6 מעל ארבע מילים, ועוד מקרי שוויון ורישיות; נבדק שהקלט לא השתנה.",
-      "en": "5,463 cases against independent counting: every list of lengths 0..6 over four words plus directed tie/case tests; input preservation checked."
+      "he": "5,463 מקרים מול ספירה עצמאית: כל הרשימות באורכים 0..6 מעל ארבע מילים, ועוד מקרי שוויון ורישיות; נבדק שהקלט לא השתנה.\n\n129 טקסטים מול אורקל עצמאי של list.count והופעה ראשונה; דוגמת המקור, שוויון, פיסוק, אות גדולה, טאב, שורה חדשה וריק.",
+      "en": "5,463 cases against independent counting: every list of lengths 0..6 over four words plus directed tie/case tests; input preservation checked.\n\n129 texts against independent list.count/first-maximum selection, including the source example, ties, punctuation, case, tabs/newlines and empty input."
     },
     "edge_cases": {
       "he": [
-        "רשימה ריקה; מילה אחת; כל המילים שונות; שוויון; רישיות; מחרוזת ריקה."
+        "רשימה ריקה; מילה אחת; כל המילים שונות; שוויון; רישיות; מחרוזת ריקה.",
+        "ריק, רווחים בלבד, שוויון, פיסוק, אותיות גדולות וטקסט Unicode."
       ],
       "en": [
-        "Empty list; one word; all unique; ties; case sensitivity; empty string."
+        "Empty list; one word; all unique; ties; case sensitivity; empty string.",
+        "Empty/whitespace-only, ties, punctuation, case and Unicode text."
       ]
     },
     "common_mistakes": {
       "he": [
         "שובר שוויון לפי מי שהגיע ראשון לשיא זמני.",
         "שימוש ב־>= שמעדיף את ההופעה האחרונה.",
-        "פיצול או נרמול מילים ללא דרישה."
+        "פיצול או נרמול מילים ללא דרישה.",
+        "לא להתבלבל בין ספירה סופית לבין שיא זמני; לא לשנות את כללי המילה בלי להצהיר; לא להחליף את פלט API הרשימה הקודם."
       ],
       "en": [
         "Breaking ties by who first reaches a temporary maximum.",
         "Using >= and thereby preferring a later appearance.",
-        "Tokenizing or normalizing words without a requirement."
+        "Tokenizing or normalizing words without a requirement.",
+        "Do not confuse final counts with an online leader, silently normalize tokens, or replace the older list API output."
       ]
     },
     "interview_answer": {
-      "he": "אספור במילון ואז אבחר לפי סדר הקלט, עם החלפה רק עבור שכיחות גדולה יותר. כך שוויון נשאר אצל המילה הראשונה.",
-      "en": "Count with a dictionary, then select in input order with strictly greater replacement; ties remain with the first word."
+      "he": "אספור במילון ואז אבחר לפי סדר הקלט, עם החלפה רק עבור שכיחות גדולה יותר. כך שוויון נשאר אצל המילה הראשונה.\n\nמגדירים tokenization, סופרים במילון ובוחרים בסריקה לפי ספירה סופית וסדר ההופעה.",
+      "en": "Count with a dictionary, then select in input order with strictly greater replacement; ties remain with the first word.\n\nDefine tokenization, count with a dictionary and select by final count and appearance order."
     },
     "source_ambiguities": {
-      "he": "המקור מבקש שכיחות של מילים ברשימה ולא קובע שוויון וריק; מדיניות אלה הוגדרו במפורש, בלי להרחיב לעיבוד טקסט.",
-      "en": "The source asks for word-list frequency and omits ties/empty behavior; these are explicit policies without expanding into text processing."
+      "he": "המקור מבקש שכיחות של מילים ברשימה ולא קובע שוויון וריק; מדיניות אלה הוגדרו במפורש, בלי להרחיב לעיבוד טקסט.\n\nהמקור נותן טקסט ולא רשימה. הפיצול, שוויון וקלט ריק הוגדרו במפורש.",
+      "en": "The source asks for word-list frequency and omits ties/empty behavior; these are explicit policies without expanding into text processing.\n\nThe source provides raw text rather than a token list; splitting, ties and empty behavior are explicit."
     },
     "solution_extensions": {
       "he": [
@@ -400,6 +406,11 @@
           "question": "מה משתנה בזרם שאי אפשר לקרוא שוב?",
           "answer_direction": "שומרים גם אינדקס ראשון לכל מילה ומשווים שכיחות סופית ואינדקס, או מסיימים בסריקת רשומות המילון. ספירה מדויקת עדיין עשויה לדרוש מקום לכל הערכים השונים.",
           "principle": "מגבלת מעבר משנה את המידע שצריך לזכור."
+        },
+        {
+          "question": "מה משתנה בקובץ גדול שלא רוצים לטעון כולו?",
+          "answer_direction": "הפיקו tokens בזרימה ושמרו ספירות והופעה ראשונה; הטיפול בגבולות chunks הוא חלק מממשק הסורק.",
+          "principle": "הרחבת חוזה באופן מפורש"
         }
       ],
       "en": [
@@ -407,8 +418,35 @@
           "question": "What changes for a stream that cannot be reread?",
           "answer_direction": "Store the first index per word and compare final count/index, or scan dictionary entries at completion. Exact frequency can still require all distinct keys.",
           "principle": "A pass restriction changes which information must be retained."
+        },
+        {
+          "question": "What changes for a file too large to load fully?",
+          "answer_direction": "Stream tokens and store counts/first positions; chunk-boundary handling belongs to the tokenizer contract.",
+          "principle": "Make an extension explicit"
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "וריאציה: המילה השכיחה בטקסט גולמי": {
+          "prompt": "### וריאציה: המילה השכיחה בטקסט גולמי\nנתונה מחרוזת, למשל \"aaa aaa bbb ccc ddd aaa\". החזירו את המילה שמופיעה הכי הרבה פעמים באמצעות Python; מותר כל מבנה נתונים.\n\nהשלמת חוזה: מילה היא token שאינו ריק אחרי split על רווחים לפי כללי Python, כולל טאב וירידת שורה. ההשוואה רגישה לאות גדולה/קטנה וסימני פיסוק נשארים חלק מהמילה. בשוויון מחזירים את המילה שהופיעה ראשונה; קלט ריק או רווחים בלבד מחזיר None. פונקציית הווריאציה most_frequent_text_word מחזירה את המילה בלבד. החוזה הישן של רשימת מילים שמחזיר [word, count] נשמר בנפרד.",
+          "hints": [
+            "לפני שסופרים, הגדירו מה נחשב מילה והאם סימני פיסוק ואותיות גדולות נשמרים.",
+            "טבלת גיבוב יכולה לספור כל token, אבל הכרעה בשוויון צריכה להתבסס על סדר ההופעה המקורי.",
+            "אחרי שסיימתם לספור, עברו על ה־ tokens בסדר המקורי והחליפו מועמד רק כשהספירה גדולה ממש. בדקו ריק לפני גישה לאיבר הראשון."
+          ]
+        }
+      },
+      "en": {
+        "Variant: most frequent word in raw text": {
+          "prompt": "### Variant: most frequent word in raw text\nGiven a string such as \"aaa aaa bbb ccc ddd aaa\", use Python to return its most frequent word. Any data structure is allowed.\n\nChosen contract: words are nonempty tokens from Python whitespace split, including tabs/newlines. Equality is case-sensitive and punctuation remains attached. Ties prefer first occurrence; empty/whitespace-only text returns None. The new most_frequent_text_word function returns only the word. The older pre-tokenized list API returning [word, count] remains separate.",
+          "hints": [
+            "Before counting, define tokenization, punctuation and case handling.",
+            "A hash table counts tokens, but frequency ties must respect original appearance order.",
+            "After counting, scan tokens in their original order and replace the candidate only on a strictly greater count. Check empty input before indexing its first word."
+          ]
+        }
+      }
     }
   },
   "PREP-226": {

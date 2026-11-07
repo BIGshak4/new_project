@@ -1,0 +1,622 @@
+{
+  "received_on": "2026-11-07",
+  "screenshot_count": 30,
+  "question_source_count": 30,
+  "sources": [
+    {
+      "screenshot": 1,
+      "question_source": 1,
+      "archive_paths": [
+        "sources/2026-11-07-night30-01.png"
+      ],
+      "sha256": "e2e2320a8d93beb04d193eca15b9f0ccbfce7478f1cf5dd34a5c3d0b3b3e902f",
+      "original_prompt": "נתון מערך בגודל n שמכיל מספרים מ-1 עד n. צריך להדפיס את כל הפרמוטציות.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-162"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 2,
+      "question_source": 2,
+      "archive_paths": [
+        "sources/2026-11-07-night30-02.png"
+      ],
+      "sha256": "f9a649761c09f73236aff911b0ac0098eb0fda24154bedc1b010db523c1eca3c",
+      "original_prompt": "נתון מערך של 0,1. צריך למצוא את הסדרה הכי ארוכה של אחדים ולהחזיר את האינדקס בהתחלה והאינדקס בסיומה.",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-289"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 3,
+      "question_source": 3,
+      "archive_paths": [
+        "sources/2026-11-07-night30-03.png"
+      ],
+      "sha256": "7672efba163ea185a0f14ce501d8c7113f9d1d0ffd31d7475a4da4d6d350cadf",
+      "original_prompt": "חישוב התנגדות שקולה. בתמונה רשת קובייה של נגדים; All resistors are 1 Ω; יש לחשב בין A ל-B כפי שמסומנים בתמונה.",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-290"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 4,
+      "question_source": 4,
+      "archive_paths": [
+        "sources/2026-11-07-night30-04.png"
+      ],
+      "sha256": "f90527deb2536c67c4439fcb1d64067aff820d508e031b5a84ac7b757b7883c4",
+      "original_prompt": "ליצור adder שבנוי מ-FA ו-HA של שני מספרים בני 4 סיביות.",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-122"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 5,
+      "question_source": 5,
+      "archive_paths": [
+        "sources/2026-11-07-night30-05.png"
+      ],
+      "sha256": "c411e95ed58446348abd7ee21ffc489d42dc90009c70c6982b106b2081327bed",
+      "original_prompt": "Design a test that will send packets to the router. The test will randomize total_data_size_to_send (how much data will be sent in the entire test, e.g. 1MB), num_of_active_ports (how many ports are active in the specific test, 1–16); distribute data to random sized packets (1B < packet_size <= 64KB); use already implemented task send_data(int port_num, int data_size). Diagram shows router input ports 0 through 15. The source places the words per port after the active-port line; its scope is ambiguous.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-291"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 6,
+      "question_source": 6,
+      "archive_paths": [
+        "sources/2026-11-07-night30-06.png"
+      ],
+      "sha256": "0ef5c84ffe04d640bc6cf1dc4610a4f068a15c4aa4c81dc940f0904139722fd7",
+      "original_prompt": "בנו FSM המקבלת מחרוזת אינסופית ביט-ביט, כך שכל ביט חדש הוא ביט ה-MSB החדש במחרוזת, כלומר הביטים משורשרים משמאל. פלט המעגל בזמן t הוא 1 אם המחרוזת בזמן t-1 מתחלקת ב-3, ו-0 אחרת.",
+      "source_tags": [
+        "hardware",
+        "google",
+        "marvell"
+      ],
+      "reported_companies": [
+        "Marvell",
+        "Google"
+      ],
+      "question_ids": [
+        "PREP-036"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 7,
+      "question_source": 7,
+      "archive_paths": [
+        "sources/2026-11-07-night30-07.png"
+      ],
+      "sha256": "943c59d587e9cb7aca3ee5169074192118e2ba6a3dc3e93311888b45e2020e74",
+      "original_prompt": "בנה מונה המונה את הערכים הבאים: 0 <- 1 <- 2 <- 1 <- 0 וכן הלאה; הערך 0 פעם אחת.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-292"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 8,
+      "question_source": 8,
+      "archive_paths": [
+        "sources/2026-11-07-night30-08.png"
+      ],
+      "sha256": "0abb24af05e26e8f42dff50e8df067fb570eff9d9789c0e57b844144b1453994",
+      "original_prompt": "בנה XOR באמצעות 4 NANDים בלבד.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-092"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 9,
+      "question_source": 9,
+      "archive_paths": [
+        "sources/2026-11-07-night30-09.png"
+      ],
+      "sha256": "a9bd33e981a54d5384898e198d26dc033081cdd8194005ba4912f4a878c86aa8",
+      "original_prompt": "בנה מעגל שמכפיל מספר באורך 10 ביטים ב-49.",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-293"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "question_source": 10,
+      "archive_paths": [
+        "sources/2026-11-07-night30-10.png"
+      ],
+      "sha256": "df2b7f80dbbe9f157b7a605883599e5dffa0c93f12973479a45a58dc669a9e06",
+      "original_prompt": "לממש רכיב מונה תדר שיודע לספור עד שלוש מחזורי שעון. כל מחזור שעון יעלה את המונה ב-1 עד שיגיע עד המחזור השלישי ויתאפס.",
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-010"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 11,
+      "question_source": 11,
+      "archive_paths": [
+        "sources/2026-11-07-night30-11.png"
+      ],
+      "sha256": "57b25a6ca3901a9230ec097ffa6206a67f65ba0729400bd14e990a9ecc77e6d5",
+      "original_prompt": "נתון וקטור קלט באורך N כאשר כל סיבית 1 או 0. בעזרת לוגיקה יש להוציא וקטור באורך N שבו כל הסיביות אפס חוץ מהסיבית הראשונה מימין שבקלט היה בה ערך 1. לדוגמה קלט 110100100 ופלט 000000100.",
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-107"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 12,
+      "question_source": 12,
+      "archive_paths": [
+        "sources/2026-11-07-night30-12.png"
+      ],
+      "sha256": "b79863b4c63cd4a1a76262a332a70df5ab96f8c456d33f95cb82886f973e326e",
+      "original_prompt": "מה התנאי על R1,R2,R3,R4 כך שלא יזרום זרם דרך R5? בתמונה מקור מתח V מזין שני מחלקי מתח, R1 מעל R2 בשמאל ו-R3 מעל R4 בימין, ו-R5 מחבר בין נקודות האמצע; הקו התחתון מוארק.",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-294"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 13,
+      "question_source": 13,
+      "archive_paths": [
+        "sources/2026-11-07-night30-13.png"
+      ],
+      "sha256": "f9ccd2af0dfb7400ec467674e5e6d0480c8bf6d6f4d4dfe6cd4a4cb2f3e48040",
+      "original_prompt": "יש לבנות מכונת מצבים עבור גלאי כיוון סיבוב. דיסקה עגולה מסתובבת עם או נגד כיוון השעון, חצי לבנה וחצי שחורה. שני גלאים נקודתיים דוגמים צבע: 1 שחור, 0 לבן. הניחו מהירות דגימה אינסופית, כלומר הגלאים דוגמים כל הזמן.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-007"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 14,
+      "question_source": 14,
+      "archive_paths": [
+        "sources/2026-11-07-night30-14.png"
+      ],
+      "sha256": "71846fedbc2028a7b753d82a7b34a2970e7213cafa3a3343a3f44f9ad8f9a0ae",
+      "original_prompt": "שאלה ב-C++: מימוש atoi(). מקבלים מחרוזת שמייצגת מספר וצריכים להחזיר אותו כ-int.",
+      "source_tags": [
+        "c",
+        "software",
+        "checkpoint"
+      ],
+      "reported_companies": [
+        "Checkpoint"
+      ],
+      "question_ids": [
+        "PREP-295"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 15,
+      "question_source": 15,
+      "archive_paths": [
+        "sources/2026-11-07-night30-15.png"
+      ],
+      "sha256": "621bbb2d542ba1cdfbb87224ce6d3a013a14e9d838a9942a6f16a3d6ef9dfb02",
+      "original_prompt": "נתונה תמונה שבה צורות צבועות בשחור והרקע לבן. צריך למצוא את הקואורדינטות של מלבן שמקיף כל צורה.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-296"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "question_source": 16,
+      "archive_paths": [
+        "sources/2026-11-07-night30-16.png"
+      ],
+      "sha256": "3df1ec9e7df4cd4436be767a9fc99a6c7a4247ea433ada7d903765c398d09af0",
+      "original_prompt": "לתכנן מערכת המקבלת מספר המורכב משמונה ביטים. יש לבדוק כמה ביטים דלוקים במספר באמצעות Full adder בלבד, במספר FA מינימלי. לדוגמה עבור 01001010 התשובה 3.",
+      "source_tags": [
+        "hardware",
+        "sandisk"
+      ],
+      "reported_companies": [
+        "Sandisk"
+      ],
+      "question_ids": [
+        "PREP-001"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 17,
+      "question_source": 17,
+      "archive_paths": [
+        "sources/2026-11-07-night30-17.png"
+      ],
+      "sha256": "3fd8c1a554a1d9a3ce0dce6eadf6c4678deb7508dfb34fb50940699b722bcfdf",
+      "original_prompt": "היפוך מחרוזת ברקורסיה בעזרת 4 פונקציות שניתנו מראש: פונקציה שמחזירה את התא הראשון, פונקציה שמחזירה את ה-suffix, פונקציה שמאחדת מחרוזות (concat), ופונקציה שמחזירה את אורך המחרוזת.",
+      "source_tags": [
+        "software",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-194"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 18,
+      "question_source": 18,
+      "archive_paths": [
+        "sources/2026-11-07-night30-18.png"
+      ],
+      "sha256": "49918820ff78d5d8140b6953ba3ef9b67dc897fb4b0da1ec672b254ed390f07e",
+      "original_prompt": "יש לך 9 שקים מלאים במטבעות מסוג כלשהו. רק שק אחד מלא במטבעות מסוג קל יותר. יש מאזניים ורוצים במספר מינימלי של מדידות לבחון איזה שק קל מביניהם.",
+      "source_tags": [
+        "logic",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-168"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 19,
+      "question_source": 19,
+      "archive_paths": [
+        "sources/2026-11-07-night30-19.png"
+      ],
+      "sha256": "ebfdb69d3d1248975331953bce6c3ff00784c2e1e7afd0bfb869defb7444f3a3",
+      "original_prompt": "בהינתן string = 'aaa aaa bbb ccc ddd aaa', מצא את המילה שמופיעה הכי הרבה פעמים בפייתון; אפשר להיעזר בכל מבנה נתונים.",
+      "source_tags": [
+        "software",
+        "mobileye"
+      ],
+      "reported_companies": [
+        "Mobileye"
+      ],
+      "question_ids": [
+        "PREP-225"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 20,
+      "question_source": 20,
+      "archive_paths": [
+        "sources/2026-11-07-night30-20.png"
+      ],
+      "sha256": "08c38d5188cd258e9d64c965d7ab4227724a520401aea58bc5cc6fd38dd59ea6",
+      "original_prompt": "ממש את אלגוריתם פיבונאצי באמצעות חומרה.",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-044"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 21,
+      "question_source": 21,
+      "archive_paths": [
+        "sources/2026-11-07-night30-21.png"
+      ],
+      "sha256": "574b8c592eedc72d0bcece2a6ae563e2fdc3c76b2f9a86fb89d54fdfe4d7c207",
+      "original_prompt": "למצוא הגבר Vout/Vin. בתמונה מגבר שרת: הכניסה הלא-הופכת מחוברת ל-Vin דרך נגד R, הכניסה ההופכת מחוברת לאדמה דרך R ולמוצא במשוב דרך R.",
+      "source_tags": [
+        "hardware",
+        "solaredge"
+      ],
+      "reported_companies": [
+        "SolarEdge"
+      ],
+      "question_ids": [
+        "PREP-297"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 22,
+      "question_source": 22,
+      "archive_paths": [
+        "sources/2026-11-07-night30-22.png"
+      ],
+      "sha256": "458d773a19d7539b13b5a4e96f84dc2dd9860c017598988f551546ac2237e52b",
+      "original_prompt": "קבלן עובד במשרד במשך שבוע, והתשלום על עבודת היום מתבצע בסוף כל יום בזהב בערך יומי קבוע. יש מטיל זהב אחד ששווה את כל תשלום השבוע. חיתוך זהב יקר. מצאו מינימום חיתוכים ואופן התשלום כל יום.",
+      "source_tags": [
+        "hardware",
+        "rafael"
+      ],
+      "reported_companies": [
+        "Rafael"
+      ],
+      "question_ids": [
+        "PREP-298"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 23,
+      "question_source": 23,
+      "archive_paths": [
+        "sources/2026-11-07-night30-23.png"
+      ],
+      "sha256": "3aef72800f23e7dfaf7015f570bb193124062d7dfa262bb8bd49200ed67ddd62",
+      "original_prompt": "קיים גנרטור של אות סינוס בתדר 100kHz. רוצים להוציא את האות בתדר דגימה 1M. א. מה גודל הזיכרון שצריך כדי לשדר לפלט את הסינוס וכיצד נשתמש בו? ב. אם השתמשנו בזיכרון בגודל x ויש רק x/2 תאי זיכרון? ג. אם יש רק x/4 תאי זיכרון?",
+      "source_tags": [
+        "hardware",
+        "elbit"
+      ],
+      "reported_companies": [
+        "Elbit"
+      ],
+      "question_ids": [
+        "PREP-299"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 24,
+      "question_source": 24,
+      "archive_paths": [
+        "sources/2026-11-07-night30-24.png"
+      ],
+      "sha256": "573549d339453ad2ead0efd4661f23fafa9303ac88443c7dadc84bef8e89ba6a",
+      "original_prompt": "ממש מכונה המקבלת את הקלטים a, b=a+2 ומוציאה (a+b)/2 רק עם שערים לוגיים בסיסיים. נוסח הביטוי בצילום מעורב כיווניות ונשמר כפי שהוא בתמונה.",
+      "source_tags": [
+        "verification",
+        "logic",
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-058"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 25,
+      "question_source": 25,
+      "archive_paths": [
+        "sources/2026-11-07-night30-25.png"
+      ],
+      "sha256": "6a2e3b37323ec4efba8605a66f5f0d25683ae658f197dd14a4b6eae6e514fd3b",
+      "original_prompt": "שלוש קופסאות עם כדורים: שחורים, לבנים ומיקס. על כל קופסה כתוב סוגה, וידוע שהכתוב שונה מתוכן הקופסה. כיצד לזהות את התוכן על ידי שליפה, וכמה שפחות כדורים?",
+      "source_tags": [
+        "logic",
+        "verification",
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-002"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 26,
+      "question_source": 26,
+      "archive_paths": [
+        "sources/2026-11-07-night30-26.png"
+      ],
+      "sha256": "bcf0a3a0ec796f1a470e2249e053d855d30c02d1342d7c4e6852b97c6278f289",
+      "original_prompt": "בהינתן n וגריד n על n, כתבו תוכנית שמוצאת את מספר הדרכים השונות בין (0,0) ל-(n-1,n-1). אסור לכתוב ישירות את הנוסחה הקומבינטורית.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-300"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 27,
+      "question_source": 27,
+      "archive_paths": [
+        "sources/2026-11-07-night30-27.png"
+      ],
+      "sha256": "99864c4b59b5a8cfbf798e0b44db6aa7fe41623393c48cf5cb70b677334f14c2",
+      "original_prompt": "כתוב FSM עבור חדר עם נורה שנדלקת אוטומטית כשנכנס האדם הראשון ונכבית כשיצא האדם האחרון. מספר המצבים חייב להיות קטן מ-5.",
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-301"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 28,
+      "question_source": 28,
+      "archive_paths": [
+        "sources/2026-11-07-night30-28.png"
+      ],
+      "sha256": "a12a20045aeaf8adb5dfc2349ea85ad3799c84072f3ef635e43fa7e57ca21fee",
+      "original_prompt": "כתוב פונקציה המדפיסה את כל התמורות של מחרוזת נתונה.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-162"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 29,
+      "question_source": 29,
+      "archive_paths": [
+        "sources/2026-11-07-night30-29.png"
+      ],
+      "sha256": "e438381edc52a09a02f89763d15558e5e0a9c7de8623961837eaa1fd08ce56a2",
+      "original_prompt": "ממש NAND מ-CMOS.",
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-302"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 30,
+      "question_source": 30,
+      "archive_paths": [
+        "sources/2026-11-07-night30-30.png"
+      ],
+      "sha256": "4209fd7e042804a3c63bce66b0f76eafee3402f2f14c999649288fca2d115f4c",
+      "original_prompt": "כתוב פונקציה שמקבלת מספר בעל n ביטים בייצוג בינארי ומחזירה את מספר האחדות בו. דרישה: זמן ריצה של פחות מ-O(n).",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-151"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ],
+  "editorial_policy": "Independently complete missing instructions with explicit reasonable assumptions under user authorization2026-11-07. Preserve originals separately; redraw technical figures rather than copying source images.",
+  "new_question_count": 14,
+  "technical_extension_count": 5,
+  "provenance_only_count": 10,
+  "affected_question_count": 29
+}

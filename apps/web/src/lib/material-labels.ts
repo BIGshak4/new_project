@@ -85,6 +85,17 @@ const hebrew: Record<string, string> = {
 };
 
 const additionalLabels: Record<string, Record<"he" | "en", string>> = {
+  translations: { he: "תרגומים", en: "Translations" },
+  chain: { he: "שרשרת", en: "Chain" },
+  parallel_alternative: { he: "חלופה מקבילית", en: "Parallel alternative" },
+  construction: { he: "המימוש", en: "Construction" },
+  scaling: { he: "הרחבה לרוחב נוסף", en: "Scaling to wider inputs" },
+  batch90_ha_fa: { he: "בניית HA ו־FA מרכיבי בסיס", en: "Constructing HAs and FAs from primitives" },
+  "1107n30_eight_fa_only": { he: "שמונה סיביות עם FA בלבד", en: "Eight bits using FAs only" },
+  "1107n30_mixed_ha_fa": { he: "מחבר ארבע סיביות עם HA ו־FA", en: "Four-bit adder using HAs and FAs" },
+  left_div3_lag: { he: "חלוקה ב־3 עם ביט חדש משמאל ופלט מושהה", en: "New-MSB divisibility by three with a delayed output" },
+  "Variant: recursive string reversal through four primitives": { he: "היפוך מחרוזת ברקורסיה עם ארבע פעולות", en: "Recursive string reversal through four primitives" },
+  "Variant: most frequent word in raw text": { he: "המילה השכיחה בטקסט גולמי", en: "Most frequent word in raw text" },
   rope_two_metres: { he: "תוספת שני מטרים וחתול בגובה מוגדר", en: "Two added metres and a stated cat height" },
   four_byte_count: { he: "ספירת 32 סיביות בארבע פעולות על בתים", en: "Count 32 bits with four byte operations" },
   "Two added metres and a stated cat height": { he: "תוספת שני מטרים וחתול בגובה מוגדר", en: "Two added metres and a stated cat height" },
