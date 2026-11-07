@@ -42,8 +42,12 @@ class CoinRules:
     hard_difficulty_from: int = 5
     strong_interview_turn: int = 10
     max_hints_for_coins: int = 1
-    interview_finished: int = 15                # for finishing an interview, whatever the result (Shaked, 2026-11-02)
-    interview_finished_min_turns: int = 3       # ...once at least this many questions were answered
+    # Finishing an interview is rewarded through its strong answers, never on its own (Shaked, 2026-11-07: "rewarded
+    # by the ability to finish it and the ability to have strong answers; coins will become real money"): the bonus is
+    # this share of what the interview's strong turns earned, paid when the interview ran to its end (not ended early)
+    # with at least `interview_finished_min_turns` answers. 1.0 = finishing doubles; an all-weak interview earns nothing.
+    interview_finish_bonus_share: float = 1.0
+    interview_finished_min_turns: int = 3
     duel_stake: int = 5
     duel_mode_default: str = "quiz"             # quiz (American questions) | judged (one bank question)
     duel_quiz_questions: int = 5
@@ -66,7 +70,7 @@ def load_rules(path: Path) -> CoinRules:
                      hard_difficulty_from=int(data.get("hard_difficulty_from", 5)),
                      strong_interview_turn=int(data.get("strong_interview_turn", 10)),
                      max_hints_for_coins=int(data.get("max_hints_for_coins", 1)),
-                     interview_finished=int(data.get("interview_finished", 15)),
+                     interview_finish_bonus_share=float(data.get("interview_finish_bonus_share", 1.0)),
                      interview_finished_min_turns=int(data.get("interview_finished_min_turns", 3)),
                      duel_stake=int(duel.get("stake", 5)), duel_clock_seconds=int(duel.get("clock_seconds", 180)),
                      duel_mode_default=str(duel.get("mode_default", "quiz")),
@@ -93,10 +97,13 @@ def coins_for_turn(rules: CoinRules, *, band: str | None, hints_seen: int = 0, r
     return rules.strong_interview_turn
 
 
-def coins_for_finish(rules: CoinRules, *, answered_turns: int) -> int:
-    """Finishing an interview earns, whatever the bands, once enough questions were answered: the effort counts
-    (Shaked, 2026-11-02, "i want him to try more"). Start-and-quit earns nothing."""
-    return rules.interview_finished if answered_turns >= rules.interview_finished_min_turns else 0
+def coins_for_finish(rules: CoinRules, *, answered_turns: int, earned_in_interview: int, ended_early: bool = False) -> int:
+    """The finishing bonus: a share of what this interview's strong turns earned (first-time questions only, so
+    nothing here can be farmed), when the interview ran to its end with enough answers. Ending early, too few
+    answers, or no strong answer: nothing (Shaked, 2026-11-07)."""
+    if ended_early or answered_turns < rules.interview_finished_min_turns or earned_in_interview <= 0:
+        return 0
+    return int(round(earned_in_interview * rules.interview_finish_bonus_share))
 
 
 @dataclass
@@ -203,13 +210,16 @@ class CoinsService:
             await self.ensure_gift(tx, user_id)
             return await tx.coin_balance(user_id)
 
-    async def award_for_finish(self, tx, *, user_id: uuid.UUID, session_id: uuid.UUID, answered_turns: int) -> int:
-        """Once per interview (the reference dedups a re-save): coins for finishing, not for the score."""
-        amount = coins_for_finish(self.rules, answered_turns=answered_turns)
+    async def award_for_finish(self, tx, *, user_id: uuid.UUID, session_id: uuid.UUID, answered_turns: int,
+                               earned_in_interview: int, ended_early: bool = False) -> int:
+        """Once per interview (the reference dedups a re-save): the finishing bonus on this interview's strong turns."""
+        amount = coins_for_finish(self.rules, answered_turns=answered_turns, earned_in_interview=earned_in_interview,
+                                  ended_early=ended_early)
         if not await self.enabled(tx) or amount <= 0:
             return 0
         return await self._award(tx, user_id, amount, reference=f"interview:{session_id}:finished",
-                                 meta={"interview": True, "finished": True, "answered_turns": answered_turns})
+                                 meta={"interview": True, "finished": True, "answered_turns": answered_turns,
+                                       "earned_in_interview": earned_in_interview})
 
     # ------------------------------------------------------------------ spending
 

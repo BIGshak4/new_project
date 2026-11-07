@@ -73,7 +73,7 @@ from app.schemas.engine import (
     SkillStatus,
 )
 from app.schemas.visual_answer import VisualAnswer
-from app.services.coins import coins_for_finish, coins_for_turn
+from app.services.coins import coins_for_turn
 from app.services.store import Store
 
 log = logging.getLogger("app.interview")
@@ -331,7 +331,8 @@ class InterviewService:
             # 5. persist everything in one transaction; the candidate's long-lived profile takes this turn's evidence
             merged = self._merge_into_profile(profile, question.primary_skill, state.skill_state[question.primary_skill])
             await self._persist(user_id, row, changed, state=state, metrics=[metrics], usage_rows=usage_rows,
-                                profile=(profile, {question.primary_skill: merged}), seniority=row["seniority"])
+                                profile=(profile, {question.primary_skill: merged}), seniority=row["seniority"],
+                                all_turns=turns)
             return (self._turn_view(turn, language, revealed=row["status"] == "completed"), self._view(stored, state))
 
     async def hint(self, user_id: uuid.UUID, session_id: uuid.UUID) -> tuple[HintView | None, InterviewView]:
@@ -367,7 +368,7 @@ class InterviewService:
                     open_turn["question_generation_meta"]["status"] = "skipped"
                     open_turn["question_generation_meta"]["action_after"] = Action.END.value
                 self._finish(row, state, ended_early=True, answered=self._answered(stored.turns))
-                await self._persist(user_id, row, [open_turn] if open_turn else [], state=state)
+                await self._persist(user_id, row, [open_turn] if open_turn else [], state=state, all_turns=stored.turns)
             return self._view(stored, state)
 
     async def report(self, user_id: uuid.UUID, session_id: uuid.UUID, *, narrative: bool = True) -> InterviewReportView:
@@ -720,7 +721,9 @@ class InterviewService:
     async def _persist(self, user_id: uuid.UUID, row: dict, turns: list[dict], *, state: SessionState | None = None,
                        metrics: list[dict] | None = None, usage_rows: list[dict] | None = None,
                        profile: tuple[LoadedProfile, dict[str, SkillState]] | None = None,
-                       seniority: str | None = None) -> None:
+                       seniority: str | None = None, all_turns: list[dict] | None = None) -> None:
+        """`turns` are the changed rows to save; `all_turns` (when the interview is ending) every turn, so the finishing
+        bonus can count the whole interview's strong turns."""
         if state is not None:                      # the engine mutates the live state; the row must carry the latest
             row["state"]["engine"] = state.model_dump(mode="json")
         session_id = uuid.UUID(row["id"])
@@ -741,6 +744,15 @@ class InterviewService:
                                 hints_seen=int(m.get("hint_level") or 0),
                                 related=scores.OFF_TOPIC_FLAG not in (m.get("flags") or []),
                                 question_id=t.get("question_id"))
+                    if row["status"] == "completed" and row["state"].get("finish_coins") is None:
+                        # the finishing bonus rides on the interview's own strong turns (Shaked, 2026-11-07); recorded
+                        # on the row before it is saved, so the report shows what was really paid
+                        done = [t for t in (all_turns if all_turns is not None else turns)
+                                if (t.get("question_generation_meta") or {}).get("status") == "done"]
+                        earned = sum(int((t.get("question_generation_meta") or {}).get("coins_awarded") or 0) for t in done)
+                        row["state"]["finish_coins"] = await self.coins.award_for_finish(
+                            tx, user_id=user_id, session_id=session_id, answered_turns=len(done), earned_in_interview=earned,
+                            ended_early=bool(row["state"].get("ended_early")))
                 await tx.save_session(user_id=user_id, row=row, turns=turns, plan=None, role_slug=self.config.role,
                                       company_slug=self.config.company, expected_revision=expected)
                 if profile is not None:
@@ -758,11 +770,6 @@ class InterviewService:
                                                     company_slug=self.config.company)
                 if usage_rows:
                     await tx.record_session_usage(user_id=user_id, session_id=session_id, usage_rows=usage_rows)
-                if self.coins is not None and row["status"] == "completed" and not row["state"].get("finish_coins_awarded"):
-                    # finishing counts, not the score (Shaked, 2026-11-02); the reference dedups a re-save
-                    await self.coins.award_for_finish(tx, user_id=user_id, session_id=session_id,
-                                                      answered_turns=int(row["state"].get("answered_turns") or 0))
-                    row["state"]["finish_coins_awarded"] = True
         except StaleSession:
             row["state"]["revision"] = expected
             raise ApiError("conflict", "another request changed this interview at the same time; reload it") from None
@@ -779,7 +786,6 @@ class InterviewService:
         row, language = stored.row, stored.row["config"]["language"]
         labels = self.catalog.skill_labels()
         since = since or {}
-        answered = self._answered(stored.turns)
 
         def labelled(keys: list[str]) -> list[LabelledSkill]:
             return [LabelledSkill(key=k, label=labels.get(k, k)) for k in keys]
@@ -806,7 +812,7 @@ class InterviewService:
                                    skills=labelled(data.next_step.get("skills") or [])) if data.next_step else None,
             since_last_time=[SkillChangeView(**change) for change in since.get("skills", [])],
             previous_session_id=since.get("previous_session_id"), fit_change=since.get("fit_change"),
-            completion_coins=(coins_for_finish(self.coins.rules, answered_turns=answered)
+            completion_coins=(int(row["state"].get("finish_coins") or 0)
                               if self.coins is not None and self.coins.known_enabled else None),
             top_tips=tips_text,
             narrative_md=row["state"].get("narrative") or reporter.fallback_narrative(data, labels, language,

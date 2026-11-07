@@ -1898,11 +1898,26 @@ order of two reads in `start`.
 ## 5zzb. XP is gone; coins are the one reward, once per question (2026-11-06, Shaked: "i dont want the xp anymore but i do want the coins to be shown all the time and i want that when somone manage the get a good answer he will get coins, not if he got on the same question a strong answer"; "good means strong; 10 per strong interview and 5 per strong answer")
 
 **Decided.** XP (the motivation layer computed on read since §5l) is retired. Coins are the single reward: a strong
-main answer in practice earns **5**, flat (the hard-question bonus is gone), a strong interview turn **10**,
-finishing an interview still 15 after three answers; a partial answer earns nothing ("good means strong"). **A
-question pays once per user**: the ledger entry is keyed `question:<question id>` instead of the attempt or the
-turn, so a second strong answer on the same question, in a new attempt or in an interview, writes nothing, and
-the answer records what it really earned.
+main answer in practice earns **5**, flat (the hard-question bonus is gone), a strong interview turn **10**; a
+partial answer earns nothing ("good means strong"). **A question pays once per user**: the ledger entry is keyed
+`question:<question id>` instead of the attempt or the turn, so a second strong answer on the same question, in a
+new attempt or in an interview, writes nothing, and the answer records what it really earned.
+
+**Finishing an interview (2026-11-07, Shaked: "it needs to be rewarded by the ability to finish it and the ability
+to have strong answers; in the end coins will become real money, so do the correct prices").** The flat fifteen for
+finishing is gone. The finishing bonus is a share (`interview_finish_bonus_share`, 1.0) of what that interview's
+strong turns earned, paid when the interview ran to its end, not ended early, with at least three answers. So
+finishing **doubles** an interview's earnings, an all-weak interview earns nothing, ending early forfeits the bonus,
+and because the per-turn earnings are first-time questions only, no coin anywhere can be had without a strong
+first-time answer. The amount paid is recorded on the session (`finish_coins`) and is what the report shows.
+
+**Before coins become money, three things in the design assume they are not.** (1) The starting gift of fifty is
+free money per account: with real value it invites account farming; make it smaller, non-withdrawable, or earned.
+(2) Duels stake coins on a game between two people; the line "no monetary value, never bought, never cashed out" is
+what keeps a duel a game and not gambling, and it is in the API's text and on the screen. With real value the
+duels need a legal opinion before anything else. (3) The shop item (ten more questions for a hundred) prices a
+product feature in coins; with real value that is a price list and needs to be set as one. None of these is changed
+here; they are the decisions the money step forces.
 
 **Built.**
 
@@ -1934,7 +1949,10 @@ protection tests (§5zza) and two were this change's: the who-am-I test's exact 
 
 **Harel, row 24.** Remove the XP displays (answer card, interview results, overview); show the balance from
 `/v1/me.coins` in the header on every screen; show `coins_earned` next to the verdict, including 0 when the question
-was already paid.
+was already paid; `completion_coins` on the report is the finishing bonus actually paid.
+
+**Pilot list.** talbaumgarten@gmail.com joined `jr_members` as 'Tal' on 2026-11-07 (Shaked: "add"; dry run, then
+applied): fourteen members.
 
 ## 6. Known gaps and open items
 

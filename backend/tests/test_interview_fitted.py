@@ -249,20 +249,52 @@ class TestTheReportInvitesTheNextInterview:
 
 
 class TestFinishingEarnsCoins:
-    async def test_finishing_pays_once_whatever_the_bands(self, catalog):
+    """Shaked, 2026-11-07: "rewarded by the ability to finish it and the ability to have strong answers; coins will
+    become real money". The finishing bonus is the interview's own strong-turn earnings, paid once, only when it ran
+    to its end: an all-weak interview earns nothing, and so does ending early."""
+
+    def finish_rows(self, store, user):
+        return [(r["kind"], r["delta"]) for r in store.coin_ledger if r["user_id"] == user and r["reference"].endswith(":finished")]
+
+    async def test_an_all_weak_interview_finishes_with_nothing(self, catalog):
         svc, store = service(catalog, interviewer([WEAK, WEAK, WEAK, WEAK]), step_min=4, coins=True)
         user = uuid.uuid4()
         view = await svc.start(user, duration_min=20, language="en")
         view, asked = await run_to_the_end(svc, user, view)
         assert view.status == "completed" and len(asked) >= RULES.interview_finished_min_turns
-        rows = [r for r in store.coin_ledger if r["user_id"] == user and r["reference"].endswith(":finished")]
-        assert [(r["kind"], r["delta"]) for r in rows] == [("earn", RULES.interview_finished)]
+        assert self.finish_rows(store, user) == []
         report = await svc.report(user, uuid.UUID(view.id), narrative=False)
-        assert report.completion_coins == RULES.interview_finished
-        assert all(t.coins_earned == 0 for t in report.turns if t.band == "WEAK")   # weak turns still earn nothing
-        await svc.report(user, uuid.UUID(view.id))                         # the narrative save re-persists the row
-        rows = [r for r in store.coin_ledger if r["user_id"] == user and r["reference"].endswith(":finished")]
-        assert len(rows) == 1
+        assert report.completion_coins == 0 and all(t.coins_earned == 0 for t in report.turns if t.band == "WEAK")
+
+    async def test_finishing_doubles_what_the_strong_turns_earned_once(self, catalog):
+        svc, store = service(catalog, interviewer([GOOD, GOOD, GOOD, GOOD]), step_min=5, coins=True)
+        user = uuid.uuid4()
+        view = await svc.start(user, duration_min=20, language="en")
+        view, asked = await run_to_the_end(svc, user, view)
+        assert view.status == "completed" and not view.ended_early and len(asked) >= 3
+        report = await svc.report(user, uuid.UUID(view.id), narrative=False)
+        turn_coins = sum(t.coins_earned or 0 for t in report.turns)
+        assert turn_coins == RULES.strong_interview_turn * len(asked)      # four first-time questions, ten each
+        assert report.completion_coins == turn_coins == int(turn_coins * RULES.interview_finish_bonus_share)
+        assert self.finish_rows(store, user) == [("earn", turn_coins)]
+        await svc.report(user, uuid.UUID(view.id))                          # the narrative save re-persists the row
+        assert self.finish_rows(store, user) == [("earn", turn_coins)]      # paid once
+        balance = (await svc.coins.wallet(user)).balance
+        assert balance == RULES.starting_gift + 2 * turn_coins
+
+    async def test_ending_early_keeps_the_turn_coins_but_forfeits_the_bonus(self, catalog):
+        svc, store = service(catalog, interviewer([GOOD, GOOD, GOOD]), step_min=2, coins=True)
+        user = uuid.uuid4()
+        view = await svc.start(user, duration_min=45, language="en")
+        sid = uuid.UUID(view.id)
+        for index in range(3):
+            svc.clock.advance()
+            _, view = await svc.answer(user, sid, view.current_turn.index, f"strong {index}", idempotency_key=f"k{index}")
+        view = await svc.end(user, sid)
+        assert view.status == "completed" and view.ended_early
+        report = await svc.report(user, sid, narrative=False)
+        assert sum(t.coins_earned or 0 for t in report.turns) == 3 * RULES.strong_interview_turn
+        assert report.completion_coins == 0 and self.finish_rows(store, user) == []
 
     async def test_start_and_quit_earns_nothing(self, catalog):
         svc, store = service(catalog, interviewer([GOOD]), coins=True)
@@ -270,15 +302,17 @@ class TestFinishingEarnsCoins:
         view = await svc.start(user, duration_min=20, language="en")
         _, view = await svc.answer(user, uuid.UUID(view.id), 0, "one answer", idempotency_key="k0")
         view = await svc.end(user, uuid.UUID(view.id))
-        assert view.status == "completed"
-        assert not [r for r in store.coin_ledger if r["user_id"] == user and r["reference"].endswith(":finished")]
+        assert view.status == "completed" and self.finish_rows(store, user) == []
         report = await svc.report(user, uuid.UUID(view.id), narrative=False)
         assert report.completion_coins == 0
 
     def test_the_seed_carries_the_numbers_and_the_rule(self):
         from app.services.coins import coins_for_finish
-        assert (RULES.interview_finished, RULES.interview_finished_min_turns) == (15, 3)
-        assert coins_for_finish(RULES, answered_turns=2) == 0 and coins_for_finish(RULES, answered_turns=3) == 15
+        assert (RULES.interview_finish_bonus_share, RULES.interview_finished_min_turns) == (1.0, 3)
+        assert coins_for_finish(RULES, answered_turns=3, earned_in_interview=30) == 30
+        assert coins_for_finish(RULES, answered_turns=2, earned_in_interview=20) == 0          # too few answers
+        assert coins_for_finish(RULES, answered_turns=5, earned_in_interview=0) == 0           # nothing strong
+        assert coins_for_finish(RULES, answered_turns=5, earned_in_interview=50, ended_early=True) == 0
 
 
 def test_resolved_statuses_cover_the_closing_restore():
