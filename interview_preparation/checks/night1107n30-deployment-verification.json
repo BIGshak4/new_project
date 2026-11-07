@@ -1,0 +1,151 @@
+{
+  "status": "verified",
+  "content_commit": "1fd09844c64b63e9a1288dac12b8f63968a82da3",
+  "integrated_remote_base": "f9ba052a4d63f1a9adb0b412060ee730fc1434a5",
+  "verified_at": "2026-11-07T22:04:06.263638+00:00",
+  "live_probes": {
+    "expected_revisions": {
+      "web": "1fd09844c64b63e9a1288dac12b8f63968a82da3",
+      "backend": "1fd09844c64b63e9a1288dac12b8f63968a82da3"
+    },
+    "verified_at": "2026-11-07T22:04:06.263638+00:00",
+    "web": {
+      "service": "jobruner-web",
+      "status": "ok",
+      "revision": "1fd09844c64b63e9a1288dac12b8f63968a82da3",
+      "checks": {
+        "application": "ok"
+      }
+    },
+    "backend": {
+      "status": "ok",
+      "engine_version": "0.1.0",
+      "source_revision": "1fd09844c64b63e9a1288dac12b8f63968a82da3",
+      "env": "staging",
+      "llm_provider": "openai",
+      "database_configured": true,
+      "database_host": "pooler",
+      "database_pooler": "transaction",
+      "auth_configured": true,
+      "allowed_origins": 3,
+      "store": "database",
+      "models": {
+        "evaluator": "gpt-6.1-sol",
+        "feedback": "gpt-6.1-terra",
+        "tip": "gpt-6.1-terra",
+        "generator": "gpt-6.1-terra"
+      },
+      "speed": {
+        "effort": {
+          "evaluator": "low",
+          "generator": "medium",
+          "tip": "none",
+          "report": "medium",
+          "feedback": "none"
+        },
+        "service_tier": "default",
+        "role_service_tier": {
+          "feedback": "flex",
+          "tip": "flex",
+          "generator": "flex"
+        },
+        "fallbacks": {
+          "flex_to_default": 0,
+          "effort_none_to_low": 0
+        }
+      },
+      "judge_warm": {
+        "enabled": true,
+        "active": true,
+        "sent": 0,
+        "failed": 0,
+        "skipped_recent": 0,
+        "images_unavailable": 0,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "cost_usd": 0.0,
+        "last_latency_ms": null
+      },
+      "answer_images": "assessed",
+      "code_execution": {
+        "enabled": true,
+        "wired": true,
+        "last_probe": null
+      },
+      "assess_unreviewed_questions": true,
+      "database": {
+        "round_trip_ms": 2.29,
+        "pool_size": 5,
+        "pool_checked_out": 0,
+        "pool_overflow": -4
+      }
+    }
+  },
+  "live_catalog": {
+    "valid": true,
+    "subjects": [
+      "digital_fundamentals",
+      "fsms",
+      "projects_behavioral",
+      "reasoning",
+      "relevant_programming",
+      "sequential_logic"
+    ],
+    "skills": 35,
+    "roles": [
+      "digital-hardware-engineer"
+    ],
+    "companies": [
+      "generic"
+    ],
+    "questions": 331,
+    "tips": 10,
+    "glossary_terms": 32,
+    "quiz_source_count": 500,
+    "quiz_variant_count": 2500
+  },
+  "checked_endpoints": {
+    "web": "https://jobrun-practice.netlify.app/api/health?expected=1fd09844c64b63e9a1288dac12b8f63968a82da3",
+    "backend": "https://jobrun-api.onrender.com/health?db_check=true",
+    "catalog": "https://jobrun-api.onrender.com/catalog/summary"
+  },
+  "browser": {
+    "url": "https://jobrun-practice.netlify.app/",
+    "observed": "Public landing loaded past loading state with Hebrew content and login controls.",
+    "authenticated": false,
+    "learner_writes": false,
+    "screenshot": "docs/assets/intake-night30-live-landing.jpg"
+  },
+  "local_browser": {
+    "views": 116,
+    "identities": 29,
+    "languages": [
+      "he",
+      "en"
+    ],
+    "content_widths": [
+      1272,
+      382
+    ],
+    "sampled_expanded_panels": 3,
+    "scope": "Production material renderers with synthetic local controls; separate from authenticated production."
+  },
+  "private_objects_verified": 94,
+  "unrelated_local_files_preserved": [
+    "supabase/.gitignore",
+    "supabase/config.toml",
+    "supabase/migrations/20260916224150_initial_schema.sql"
+  ],
+  "evidence_sha256": {
+    ".impeccable/intake-20261107-night30/deployment-verified.json": "400da44c09b07f2603fe4132b03fbd48b0e122e14c2046c046e287f80dea1225",
+    ".impeccable/intake-20261107-night30/catalog-summary-verified.json": "61bcce8aaf5e22764e5d3fae06a30f43aff42cbe611634ac29a3a6f0ffcd722f",
+    ".impeccable/intake-20261107-night30/live-public-landing.txt": "349dc52313fcbbaf543b08dc1b98d4146e322e6a7915b4971ed0c8950ac657e7",
+    ".impeccable/intake-20261107-night30/live-public-landing.jpg": "935c8f9bb8c22304823abbc08bea4137cf1675b25eb2283b1ad1dc68f15112be"
+  },
+  "limitations": [
+    "No authenticated production learner flow or AI-feedback request submitted.",
+    "56cases were direct signed live broker jobs; they were not authenticated Run-button submissions.",
+    "RTL/procedural simulation and finite oracles do not establish physical timing, SPICE or real-router behavior.",
+    "A subsequent documentation-only commit records this verified content revision without changing tested runtime/content."
+  ]
+}
