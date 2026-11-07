@@ -21,6 +21,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+from tests.learner_copy_history import before_learner_copy_text
 from tests.preparation_history import before_batch20_record
 from tests.test_practice_hardening import scripted
 
@@ -72,8 +73,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_eleven_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 255
-    assert len(catalog.questions) == 285
+    assert len(archive()["questions"]) == 270
+    assert len(catalog.questions) == 300
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()
@@ -223,7 +224,7 @@ def test_two_expanded_questions_keep_runtime_prefixes_hints_and_invalidate_whole
             current = question.text(language)
             assert list(current.hints) == previous["hints"]
             for field in ("prompt", "reference_solution"):
-                value = getattr(current, field)
+                value = before_learner_copy_text(question.key, language, field, getattr(current, field))
                 expected = previous[field]
                 assert len(value) > expected["length"]
                 assert (

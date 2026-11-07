@@ -299,57 +299,65 @@
     "assumptions": {
       "he": [
         "כל M היא צעד באותו אורך; פניות מדויקות של 90 מעלות.",
-        "ביצוע יחיד; שוויון מיקום בלבד, ללא דרישה לכיוון סופי."
+        "ביצוע יחיד; שוויון מיקום בלבד, ללא דרישה לכיוון סופי.",
+        "מלבן לא ריק, כיוון 0..3, אין מכשולים; יציאה גורמת חריגה."
       ],
       "en": [
         "Every M has the same unit length; turns are exact right angles.",
-        "One execution; equality of position only, not final heading."
+        "One execution; equality of position only, not final heading.",
+        "Nonempty rectangle, heading 0..3, no obstacles; leaving it raises an error."
       ]
     },
     "optimality": {
-      "he": "O(n) זמן, O(1) מילים נוספות או O(log(n+1)) ביטים לקואורדינטות; אין שמירת מסלול.",
-      "en": "O(n) time, O(1) extra words or O(log(n+1)) coordinate bits; no trail storage."
+      "he": "O(n) זמן, O(1) מילים נוספות או O(log(n+1)) ביטים לקואורדינטות; אין שמירת מסלול.\n\nO(k+rows) זמן כולל בדיקת צורה; O(1) מילים.",
+      "en": "O(n) time, O(1) extra words or O(log(n+1)) coordinate bits; no trail storage.\n\nO(k+rows) including shape validation; O(1) words."
     },
     "verification": {
-      "he": "כל 29,524 הרצפים עד אורך 9 ו־250,959 צעדים נבדקו מול מודל מרוכב נפרד; שלושה קלטים פגומים נדחו.",
-      "en": "All 29,524 sequences through length 9 and 250,959 steps matched an independent complex model; three invalid inputs were rejected."
+      "he": "כל 29,524 הרצפים עד אורך 9 ו־250,959 צעדים נבדקו מול מודל מרוכב נפרד; שלושה קלטים פגומים נדחו.\n\nכל ארבעת הכיוונים ורצפי RLM באורכים 0..7 בלוח 5×5 מול תנועה במספרים מרוכבים.",
+      "en": "All 29,524 sequences through length 9 and 250,959 steps matched an independent complex model; three invalid inputs were rejected.\n\nAll four headings and RLM strings of lengths 0..7 on a 5x5 board versus independent complex motion."
     },
     "edge_cases": {
       "he": [
         "רצף ריק או פניות בלבד: חוזר.",
         "חזרה למיקום עם כיוון אחר נחשבת הצלחה.",
-        "M יחיד אינו חוזר; אות קטנה אינה פקודה חוקית בחוזה שנבחר."
+        "M יחיד אינו חוזר; אות קטנה אינה פקודה חוקית בחוזה שנבחר.",
+        "ריק; סיבובים; גבול; מטריצה לא מלבנית; כיוון לא חוקי."
       ],
       "en": [
         "Empty sequence or turns only return.",
         "Returning with another heading is success.",
-        "One M does not return; lowercase is invalid under the chosen contract."
+        "One M does not return; lowercase is invalid under the chosen contract.",
+        "Empty commands; turns; edge; ragged matrix; invalid heading."
       ]
     },
     "common_mistakes": {
       "he": [
         "לדרוש גם כיוון סופי זהה.",
         "לבלבל חזרה בביצוע יחיד עם חסימות במספר אינסופי של חזרות.",
-        "לשמור כל נקודה במקום לצבור תזוזה."
+        "לשמור כל נקודה במקום לצבור תזוזה.",
+        "להוסיף wrap בשקט; לדרוש כיוון סיום זהה; לסרוק או לשנות את המטריצה שלא לצורך."
       ],
       "en": [
         "Also requiring equal final headings.",
         "Confusing one-run return with bounded repeated motion.",
-        "Storing every point instead of accumulating displacement."
+        "Storing every point instead of accumulating displacement.",
+        "Silently adding wrap; requiring the original heading; unnecessarily scanning/mutating matrix contents."
       ]
     },
     "interview_answer": {
-      "he": "אשמור x,y וכיוון מתוך ארבעה. R ו־L יעדכנו כיוון, M יעדכן מיקום. אחזיר אמת רק אם שתי הקואורדינטות אפס, בלי לבדוק כיוון סופי.",
-      "en": "Keep x,y and one of four headings. R/L change heading; M changes position. Return true exactly when both coordinates are zero, regardless of final heading."
+      "he": "אשמור x,y וכיוון מתוך ארבעה. R ו־L יעדכנו כיוון, M יעדכן מיקום. אחזיר אמת רק אם שתי הקואורדינטות אפס, בלי לבדוק כיוון סופי.\n\nאעקוב אחרי תא וכיוון ואשווה לתא ההתחלתי, עם כלל גבול מפורש.",
+      "en": "Keep x,y and one of four headings. R/L change heading; M changes position. Return true exactly when both coordinates are zero, regardless of final heading.\n\nTrack cell and heading, compare with the initial cell, and state boundary behavior."
     },
     "source_ambiguities": {
       "he": [
         "המילה סיבוב במקור הובהרה כחזרה למיקום אחרי הרצף פעם אחת; זהו התנאי שבסוגריים בצילום.",
-        "הכיוון והראשית נבחרו לצורכי ייצוג בלבד."
+        "הכיוון והראשית נבחרו לצורכי ייצוג בלבד.",
+        "כלל הגבול אינו במקור; נבחרה דחיית יציאה, ולא גלישה."
       ],
       "en": [
         "The source's parenthetical return-to-initial-position defines the one-run contract.",
-        "Initial axes and heading are representation choices only."
+        "Initial axes and heading are representation choices only.",
+        "Boundary behavior is absent; rejection, not wrapping, was chosen."
       ]
     },
     "solution_extensions": {
@@ -358,6 +366,11 @@
           "question": "מה משתנה אם גם הכיוון הסופי חייב להיות זהה?",
           "answer_direction": "מוסיפים לתנאי הסיום d=0; שאר העדכונים נשארים.",
           "principle": "מפרידים בין דרישת מיקום לדרישת מצב מלא."
+        },
+        {
+          "question": "ומה אם הלוח הוא טורוס?",
+          "answer_direction": "עדכון שורה ועמודה נעשה מודולו הממדים; זו גרסה נפרדת.",
+          "principle": "תנאי גבול הם חלק מחוזה המעברים."
         }
       ],
       "en": [
@@ -365,8 +378,35 @@
           "question": "What if final heading must also match?",
           "answer_direction": "Add d=0 to the final condition; retain all updates.",
           "principle": "Distinguish position from full state."
+        },
+        {
+          "question": "What if the board is a torus?",
+          "answer_direction": "Update row/column modulo dimensions as a separate variant.",
+          "principle": "Boundary conditions belong to the transition contract."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "מסלול בתוך מטריצה ומיקום התחלתי כללי": {
+          "prompt": "### הרחבה: חץ בתא התחלתי בתוך מטריצה\nניתנת מטריצה מלבנית לא ריקה, מיקום התחלתי של חץ וכיוון אחת מארבע הרוחות, ומחרוזת R, L, M. R מסובבת 90° ימינה, L שמאלה, ו־ M מזיזה תא אחד בכיוון הנוכחי. החזירו True אם בסוף ביצוע חד־פעמי החץ באותו תא שבו התחיל; הכיוון הסופי לא חשוב.\n\nהמקור אינו מגדיר חריגה מהלוח. נבחר במפורש: תנועה החוצה או פקודה לא מוכרת גורמות ValueError; אין גלישה מעגלית או מכשולים. תאי המטריצה משמשים לתחום בלבד ואינם משתנים.",
+          "hints": [
+            "האם צריך לזכור את כל המסלול כדי להשוות נקודת סיום להתחלה?",
+            "שמרו שורה, עמודה וכיוון, וגם את התא ההתחלתי.",
+            "ייצגו E, S, W, N כ־ 0,1,2,3. סיבוב משנה כיוון מודולו 4; תנועה מוסיפה וקטור. אחרי כל תנועה בדקו גבולות ובסוף השוו רק תא."
+          ]
+        }
+      },
+      "en": {
+        "Finite matrix and arbitrary starting position": {
+          "prompt": "### Extension: an arrow starting inside a matrix\nGiven a nonempty rectangular matrix, initial cell and one of four headings, execute one R, L, M string. R turns clockwise by ninety degrees, L counterclockwise, and M moves one cell forward. Return True exactly when the final cell equals the initial cell; final heading is irrelevant.\n\nThe source omits boundary behavior. Explicitly choose ValueError for leaving the board or an unknown command; no toroidal wrap or obstacles. Matrix contents define dimensions only and are not modified.",
+          "hints": [
+            "Must the entire path be remembered to compare its endpoint to its start?",
+            "Keep row, column and heading, plus the starting cell.",
+            "Encode E, S, W, N as 0,1,2,3. Turns update modulo four; movement adds a vector. Check bounds after moves and compare only the final cell."
+          ]
+        }
+      }
     }
   },
   "PREP-183": {

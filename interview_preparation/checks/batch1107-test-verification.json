@@ -1,0 +1,188 @@
+{
+  "checked_on": "2026-11-07",
+  "status": "passed",
+  "backend": {
+    "result": "PASS",
+    "exit_code": 0,
+    "counts": {
+      "passed": 3928,
+      "failed": 0,
+      "skipped": 13,
+      "deselected": 2,
+      "warnings": 2
+    },
+    "elapsed_seconds": 125.65,
+    "command": [
+      ".venv/Scripts/python.exe",
+      "-X",
+      "utf8",
+      "-m",
+      "pytest",
+      "-q",
+      "--ignore=tests/test_execution_catalog.py",
+      "--ignore=tests/test_live_db.py",
+      "--ignore=tests/test_live_service.py",
+      "--ignore=tests/test_live_interview.py",
+      "--deselect=tests/test_admin_support_security.py::test_admin_support_rollback_only_security_behavior",
+      "--deselect=tests/test_user_inbox_security.py::test_user_inbox_rollback_security_behavior"
+    ],
+    "working_directory": "backend",
+    "blank_environment": [
+      "DATABASE_URL",
+      "SECURITY_DATABASE_CONTRACT_URL",
+      "SECURITY_STORAGE_FIXTURE_URL"
+    ],
+    "live_database_used": false,
+    "execution_catalog_separate_root_partition": true,
+    "log": {
+      "path": ".impeccable/intake-20261107-batch30/backend-full-final.log",
+      "sha256": "5475496f393b67ed29c70eae7f621e8594c4b37b6a0eb1a4d9e7b0bfecea42b1"
+    },
+    "initial_log": {
+      "path": ".impeccable/intake-20261107-batch30/backend-full-initial.log",
+      "sha256": "50624f88be22ad4e4c4a9e4576bc81d7c9d45463a5eb02ad71c09001c6d1b289"
+    },
+    "baseline_failure_classification": {
+      "path": ".impeccable/intake-20261107-batch30/backend-baseline-classification.json",
+      "sha256": "d14c6986fb915e846db68021332ca10c3fb917b30bdc1bd4b968392d33be0e79"
+    },
+    "lint": {
+      "exit_code": 0,
+      "files": [
+        "backend/tests/fixtures/execution_batch1107_oracles.py",
+        "backend/tests/fixtures/execution_catalog_authoring.py",
+        "backend/tests/fundamentals_copy_history.py",
+        "backend/tests/learner_copy_history.py",
+        "backend/tests/preparation_history.py",
+        "backend/tests/preparation_november3_compiled_history.py",
+        "backend/tests/preparation_november7_history.py",
+        "backend/tests/solution_review_history.py",
+        "backend/tests/test_api_routes.py",
+        "backend/tests/test_execution_20261107_profiles.py",
+        "backend/tests/test_execution_catalog.py",
+        "backend/tests/test_fundamentals_expansion_catalog.py",
+        "backend/tests/test_job_fit.py",
+        "backend/tests/test_learner_copy_hygiene.py",
+        "backend/tests/test_practice_service.py",
+        "backend/tests/test_preparation_20261030_batch110_catalog.py",
+        "backend/tests/test_preparation_20261030_batch40_catalog.py",
+        "backend/tests/test_preparation_20261030_batch70_catalog.py",
+        "backend/tests/test_preparation_20261030_batch90_catalog.py",
+        "backend/tests/test_preparation_20261030_catalog.py",
+        "backend/tests/test_preparation_20261031_batch20_catalog.py",
+        "backend/tests/test_preparation_20261031_batch21_catalog.py",
+        "backend/tests/test_preparation_20261031_batch22_catalog.py",
+        "backend/tests/test_preparation_20261101_batch20_catalog.py",
+        "backend/tests/test_preparation_20261103_batch20_catalog.py",
+        "backend/tests/test_preparation_20261107_batch30_catalog.py",
+        "backend/tests/test_preparation_bank.py",
+        "backend/tests/test_preparation_batch10_catalog.py",
+        "backend/tests/test_preparation_batch11_catalog.py",
+        "backend/tests/test_preparation_batch20_catalog.py",
+        "backend/tests/test_preparation_batch20_catalog_v2.py",
+        "backend/tests/test_preparation_batch30_catalog.py",
+        "backend/tests/test_preparation_batch30_reasoning.py",
+        "backend/tests/test_software_execution_validation.py",
+        "backend/tests/test_solution_review.py"
+      ],
+      "result": "All checks passed!"
+    },
+    "known_warnings": [
+      "Starlette testclient deprecated BlockingPortal alias.",
+      "Deliberately short HMAC key in the negative shared-secret-token rejection fixture."
+    ],
+    "changes": {
+      "product_code_changed": false,
+      "human_review_registry_changed": false,
+      "old_frozen_hash_constants_changed": false,
+      "historical_runtime_prefixes": "Verified exact current whole-object hashes and reversed only recorded Nov7 intake / Nov4 learner-copy deltas before old prefix assertions.",
+      "fundamentals_history": "New complete-file-hash-bound learner-text splice fixture from immutable pre-Nov4 commit 08ea983; preserves original 120/200/250 hashes.",
+      "human_reviews": "255 old compiled hashes + unchanged example bank/registry bind exact 44 pre-intake matches; only PREP-035 new variant invalidates one, current43. Mutation tests now start from genuinely reviewed PREP-003.",
+      "route_coverage": "Added existing DELETE interview route to existing unauthenticated/nonmember denial matrix.",
+      "current_software_membership": "Frozen 66/72/79/84 endpoints preserved; current89 and exact five-key delta added.",
+      "job_fit": "Current300-question library hidden counts reflect its actual excluded primary skills.",
+      "source13_correction": "Image13 explicitly asks divisor7. PREP-206 old2/4/8 base remains version1; mistaken briefly published v2 append superseded by corrected v3. Added source-vs-raw-and-compiled bilingual prompt/reference regression, with exact mod7 primary recurrence; only206 historical projection permits a two-version increment."
+    },
+    "new_test_support_files": [
+      "backend/tests/fundamentals_copy_history.py",
+      "backend/tests/solution_review_history.py",
+      "backend/tests/fixtures/fundamentals_copy_before_20261104.json"
+    ],
+    "stable_input_sha256": {
+      "backend/seeds/preparation_localization/prep_001_016.json": "62a421553c22b51cebd1640e2b67ae3b0c595a70c6888e94d0f88d44d082391d",
+      "backend/seeds/preparation_localization/prep_017_019.json": "411df94e969466c9ddaace8cb276d54974ebcd19c4df102ec6086423a5dc8f20",
+      "backend/seeds/preparation_localization/prep_020_037.json": "bf9673e9ffbf13759f692406632c1068e39e118123744808bda937f0ab5c3b3e",
+      "backend/seeds/preparation_localization/prep_038.json": "485795c922776ca2b10a3471f8c1a37dbf12aab4605035de7a128a6c65a2268d",
+      "backend/seeds/preparation_localization/prep_039_043.json": "66b2960e8da88861fbc37d1b0ca8b9ab543908083142f01a5c712125ed805fd7",
+      "backend/seeds/preparation_localization/prep_044_048.json": "1ebbd4f6c3ec0a6a715d9a18d45bb83eca4bbe3c234745f060483fdefdae2f26",
+      "backend/seeds/preparation_localization/prep_049.json": "6a6803bdea010b7322b27d30e53c83b5f2e6e6f3e35328e74fd01aafa9dce291",
+      "backend/seeds/preparation_localization/prep_050_059.json": "434e0d0596a950013c1e4f516d56b63d7c8820941fd5f99861f1c3f9160f5c8c",
+      "backend/seeds/preparation_localization/prep_060_064.json": "b922dd8d3661b532049961d67a36960247cb4f8bccaf88f973f552c44ad7b39e",
+      "backend/seeds/preparation_localization/prep_065_073.json": "3d83d9aa491e4f26d881f5eb6f3eb8efe6352300440b3c0a372d63a7c5fbd9ea",
+      "backend/seeds/preparation_localization/prep_074_082.json": "5953503da39fd8b37b545adeb70fef83619bf53e00f51922cceada8b708d0854",
+      "backend/seeds/preparation_localization/prep_083_088.json": "26e046ce6d0c5293c730c701b4f09e72f13210217eb837b5ea7acdf2758bccfc",
+      "backend/seeds/preparation_localization/prep_089_096.json": "5db6d0c91e706d29142cdf7872685078b6703358ed43a2c168165226296992d3",
+      "backend/seeds/preparation_localization/prep_097_105.json": "176b8e6e083d954aa04cc2d745cecb933a5fc32bdd39bbe0fa6b81372411f7e1",
+      "backend/seeds/preparation_localization/prep_106_114.json": "909a2a9555b0fb4c3a9bf9d1fe075d9a635337fd1887141116f68b20a7eb0737",
+      "backend/seeds/preparation_localization/prep_115_120.json": "c2a107788d50471040fbed0b71275854171bccf3113d193f7942914ada8c8881",
+      "backend/seeds/preparation_localization/prep_121_125.json": "72e8b7facf6f4c131bb43fb52d3b3aa76ba71f419026c0fbdb640516bcdbc7bc",
+      "backend/seeds/preparation_localization/prep_126_136.json": "1ecb43b79a89360c69df81a4574a949a01c72979a153557ee7e81384a3b083f2",
+      "backend/seeds/preparation_localization/prep_137_147.json": "16b446933f4512041d69eebb3676f3ddf2db8f968f35ec4bde977369859b2266",
+      "backend/seeds/preparation_localization/prep_148_159.json": "6077d92606d6e8456f3da9663e58e68b634bb2957cd88d81283ded327e48d193",
+      "backend/seeds/preparation_localization/prep_160_177.json": "17866e9bbcfd4c429b5490d8568f0e8468cf0aa41134ce4c44ed82f385437ecb",
+      "backend/seeds/preparation_localization/prep_178_187.json": "d53f650a1ab9046904dec5198123f616572536b8d3c2fea9b3e686c58637284b",
+      "backend/seeds/preparation_localization/prep_188_198.json": "33de0ed6472e3f7644d92651d4909ea9f091ce0f00ae0f1e798c8381ddd24520",
+      "backend/seeds/preparation_localization/prep_199_209.json": "43d41dff892ae43c387fa6ffec71a3afef8f565b3707d1b33cf8a9e01be59a6e",
+      "backend/seeds/preparation_localization/prep_210_220.json": "74393e6b3f418b02b16fdacda0be9e2a872d184c5128d74ea8013ea7cd177f50",
+      "backend/seeds/preparation_localization/prep_221_232.json": "e1244765c69306ab2a1094474299656610fe2c532ef2a6aed8ef6466ade19146",
+      "backend/seeds/preparation_localization/prep_233_244.json": "25dc11e40dac8d8333dbe945e3b0d1df444482fd3d0c488a5368cda733568fdb",
+      "backend/seeds/preparation_localization/prep_245_256.json": "249bc481080243c9d9c9cd6cfdbad706c893edc47ce2106b0c574afb4d0cb2cb",
+      "backend/seeds/preparation_localization/prep_257_271.json": "f3ce125c6671543519cc78ca7ced3ea0849b8267bb9ef6006243157a352bf48b",
+      "backend/seeds/preparation_uploads.json": "8e0daf2186865d49e00c9b849b525be7adc793b755d51dc22b855e99e8ae7096",
+      "backend/seeds/questions/preparation_bank.json": "c57a558735587709e4ef37451e670299cad7723efc4ce2221c0b3ca6656fad1b",
+      "backend/tests/fixtures/preparation_before_20261107_batch30.json": "0b50446e85cc666ae7d0671b01919179abaafeb91622964b6f373da47974a351",
+      "backend/tests/fixtures/preparation_compiled_before_20261107_batch30.json": "3799d7eb63547f094fbcf5c023832c152714cfe627756053fe68150364f32f22",
+      "interview_preparation/questions.json": "8498b119dc8dc37ec2cbf1d3ab5ed953d33948520e186b1a82b0cad190fb8a23"
+    },
+    "stable_inputs_unchanged_during_run": true,
+    "supersedes": "backend-validation-pre206-correction.json",
+    "intermediate_restart": {
+      "status": "intentionally_terminated",
+      "exit_code": -1,
+      "log": "backend-full-intermediate-media-rebuild.log",
+      "reason": "Four206PNG files and projections rebuilt during session36952; restarted fresh session5279 against frozen final inputs."
+    }
+  },
+  "separate_execution_tests": {
+    "passed": 232,
+    "execution_catalog_only": 228,
+    "new_profiles_also_in_full_partition": 4
+  },
+  "disjoint_backend_total_passed": 4156,
+  "web": {
+    "tests_passed": 443,
+    "failed": 0,
+    "typecheck": "passed",
+    "production_build": "passed"
+  },
+  "log_sha256": {
+    "backend-full-final.log": "5475496f393b67ed29c70eae7f621e8594c4b37b6a0eb1a4d9e7b0bfecea42b1",
+    "execution-tests.log": "4f5ff8be19caba8dd0af7c25156331a195c8756f617cec9c9d46d8ec7c9e7623",
+    "web-full-final.log": "5fb94ef900ceb9357d6c97799e3f66f2bdf14d3b25232897e9a8c84419cc5dbc",
+    "web-typecheck.log": "f65affa838bc46d3821e335237ba49497b7314b23d74699fb5fea9f7b429a87b",
+    "web-build.log": "a3f637073dcfa8f124837f61f5848f9acf11713a3eadcc9f5351f70687e9ac25"
+  },
+  "offline_tests_used_live_database": false,
+  "unchanged_human_review_registry_entries": 93,
+  "human_review_matches": {
+    "before_intake": 44,
+    "after_intake": 43,
+    "newly_invalidated": [
+      "PREP-035"
+    ]
+  },
+  "limits": [
+    "13 environment-dependent backend skips and two deliberately deselected live SQL security tests.",
+    "Native Icarus evidence is separate from Python models; no SPICE, synthesis, STA or physical-hardware signoff."
+  ]
+}

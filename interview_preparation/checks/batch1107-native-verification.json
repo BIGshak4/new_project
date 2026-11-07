@@ -1,0 +1,165 @@
+{
+  "checked_on": "2026-11-07",
+  "status": "partially_superseded",
+  "sandbox": "sbx_63VNlG3eFLAvad7IIuneUodEdy38",
+  "network_during_execution": "deny-all",
+  "tools": {
+    "gcc": "15.2.0",
+    "gpp": "15.2.0",
+    "iverilog": "12.0"
+  },
+  "source_sha256": {
+    "interview_preparation\\solutions\\prep_257_binary_times_five_bcd.sv": "8931aff3ca9401fee5bc43096d6fe314301f750a9eb1bfea9199c479c7589d0b",
+    "interview_preparation\\solutions\\prep_262_binary_to_two_decimal_digits.sv": "944969db81ef50388e3bef9f62b1bfc8296d025962553c3d356162ef8f5b6a62",
+    "interview_preparation\\solutions\\prep_263_more_than_two_asserted.sv": "dbd0c82fd7109443756709ade8f0ba613fbff35708e86a90b94c7d71f3f067eb",
+    "interview_preparation\\solutions\\prep_065_sr_from_dff_batch1107.sv": "e24f4d8dc9e165540e776aa1a54ba5493e0e16189ef75724c4b4d3edb6eaa537",
+    "interview_preparation\\solutions\\prep_206_lsb_divisible_four_batch1107.sv": "b9051e28904030f24abaefa5d5e381cffbb52e92d8f3645effee3cd609362787",
+    "interview_preparation\\solutions\\prep_264_async_gray_fifo.sv": "f10ccc06b46a6d5b26c1c24995c97f205a9dd5876de703ef5363ceda9248ed75",
+    "interview_preparation\\checks\\check_intake20261107_hardware_native.sv": "2e4600498973494b9bb8db6b3901a61473f894a0505876b54c7dd9457353707e",
+    "interview_preparation\\checks\\check_prep_264_async_fifo_native.sv": "606a620b5e66eb3c8ed9267769b6f58d596184945431f855a150feefc46f17a7",
+    "interview_preparation/solutions/prep_265_primality.sv": "6c439d81a63dd7716e23c14014c3c271b490a087b82a57058b4dd57f1a2fd713",
+    "interview_preparation/checks/check_prep_265.sv": "938152f1778b4a1fcbbeaaa1e2d9e8fef8ca6a2fb06743f5b49f99b81f23bd8a"
+  },
+  "runs": {
+    "native265result1107": {
+      "items": [
+        {
+          "command": {
+            "id": "cmd_865aa8b2411348e9b2a145599ab2",
+            "name": "bash",
+            "args": [
+              "-lc",
+              "iverilog -g2012 -Wall -s check_prep_265 -o /vercel/prep265.vvp /vercel/interview_preparation/solutions/prep_265_primality.sv /vercel/interview_preparation/checks/check_prep_265.sv && vvp /vercel/prep265.vvp"
+            ],
+            "cwd": "/vercel",
+            "sessionId": "sbx_63VNlG3eFLAvad7IIuneUodEdy38",
+            "startedAt": 1794053563355,
+            "exitCode": null
+          }
+        },
+        {
+          "data": "PREP-265: 4096 exhaustive 12-bit results; reset, capture and valid passed\n/vercel/interview_preparation/checks/check_prep_265.sv:42: $finish called at 439266000 (1ps)\n",
+          "stream": "stdout"
+        },
+        {
+          "command": {
+            "id": "cmd_865aa8b2411348e9b2a145599ab2",
+            "name": "bash",
+            "args": [
+              "-lc",
+              "iverilog -g2012 -Wall -s check_prep_265 -o /vercel/prep265.vvp /vercel/interview_preparation/solutions/prep_265_primality.sv /vercel/interview_preparation/checks/check_prep_265.sv && vvp /vercel/prep265.vvp"
+            ],
+            "cwd": "/vercel",
+            "sessionId": "sbx_63VNlG3eFLAvad7IIuneUodEdy38",
+            "startedAt": 1794053563355,
+            "exitCode": 0,
+            "durationMs": 183
+          }
+        }
+      ],
+      "context": {
+        "totalItems": 3,
+        "returnedItems": 3,
+        "truncated": false
+      }
+    },
+    "nativeHardware1107_combined": {
+      "items": [
+        {
+          "command": {
+            "id": "cmd_97f8d85ac9654567a4eb3246f048",
+            "name": "bash",
+            "args": [
+              "-lc",
+              "iverilog -g2012 -Wall -s tb -o hardware.out prep_257_binary_times_five_bcd.sv prep_262_binary_to_two_decimal_digits.sv prep_263_more_than_two_asserted.sv prep_065_sr_from_dff_batch1107.sv prep_206_lsb_divisible_four_batch1107.sv check_intake20261107_hardware_native.sv && vvp hardware.out"
+            ],
+            "cwd": "/vercel/hardware1107",
+            "sessionId": "sbx_63VNlG3eFLAvad7IIuneUodEdy38",
+            "startedAt": 1794053607152,
+            "exitCode": null
+          }
+        },
+        {
+          "data": "PASS hardware native checks=172128 (257,262,263,065,206)\ncheck_intake20261107_hardware_native.sv:76: $finish called at 331976000 (1ps)\n",
+          "stream": "stdout"
+        },
+        {
+          "command": {
+            "id": "cmd_97f8d85ac9654567a4eb3246f048",
+            "name": "bash",
+            "args": [
+              "-lc",
+              "iverilog -g2012 -Wall -s tb -o hardware.out prep_257_binary_times_five_bcd.sv prep_262_binary_to_two_decimal_digits.sv prep_263_more_than_two_asserted.sv prep_065_sr_from_dff_batch1107.sv prep_206_lsb_divisible_four_batch1107.sv check_intake20261107_hardware_native.sv && vvp hardware.out"
+            ],
+            "cwd": "/vercel/hardware1107",
+            "sessionId": "sbx_63VNlG3eFLAvad7IIuneUodEdy38",
+            "startedAt": 1794053607152,
+            "exitCode": 0,
+            "durationMs": 588
+          }
+        }
+      ],
+      "context": {
+        "totalItems": 3,
+        "returnedItems": 3,
+        "truncated": false
+      }
+    },
+    "nativeHardware1107_fifo": {
+      "items": [
+        {
+          "command": {
+            "id": "cmd_5cbe5d99c92c41a280ca509cf61b",
+            "name": "bash",
+            "args": [
+              "-lc",
+              "iverilog -g2012 -Wall -s tb_fifo -o fifo.out prep_264_async_gray_fifo.sv check_prep_264_async_fifo_native.sv && vvp fifo.out"
+            ],
+            "cwd": "/vercel/hardware1107",
+            "sessionId": "sbx_63VNlG3eFLAvad7IIuneUodEdy38",
+            "startedAt": 1794053608411,
+            "exitCode": null
+          }
+        },
+        {
+          "data": "PASS async FIFO checks=15729 accepted_writes=5587 accepted_reads=5587\ncheck_prep_264_async_fifo_native.sv:58: $finish called at 152098500 (1ps)\n",
+          "stream": "stdout"
+        },
+        {
+          "command": {
+            "id": "cmd_5cbe5d99c92c41a280ca509cf61b",
+            "name": "bash",
+            "args": [
+              "-lc",
+              "iverilog -g2012 -Wall -s tb_fifo -o fifo.out prep_264_async_gray_fifo.sv check_prep_264_async_fifo_native.sv && vvp fifo.out"
+            ],
+            "cwd": "/vercel/hardware1107",
+            "sessionId": "sbx_63VNlG3eFLAvad7IIuneUodEdy38",
+            "startedAt": 1794053608411,
+            "exitCode": 0,
+            "durationMs": 94
+          }
+        }
+      ],
+      "context": {
+        "totalItems": 3,
+        "returnedItems": 3,
+        "truncated": false
+      }
+    }
+  },
+  "coverage": {
+    "primality12bitInputs": 4096,
+    "combinedAssertions": 172128,
+    "fifoAssertions": 15729,
+    "fifoAcceptedWrites": 5587,
+    "fifoAcceptedReads": 5587
+  },
+  "limitations": [
+    "Compiled and executed SystemVerilog event simulation; no synthesis, static timing, SPICE, physical hardware, metastability or CDC signoff.",
+    "Bootstrap installed tools over HTTPS from official Ubuntu hosts; an unrelated CLI APT source was blocked. All execution ran with deny-all network.",
+    "An initial upload into a nonexistent /vercel/sandbox directory failed; initial elaboration therefore lacked source files. Retried upload into existing /vercel, then all three recorded commands exited zero."
+  ],
+  "superseded_scope": "Initial combined run included a divisor4 extension that misread source13; use the later combined mod7 proof. Unchanged FIFO and prime evidence remains valid.",
+  "current_combined_evidence": "batch1107-native206-correction-verification.json"
+}

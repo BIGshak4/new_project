@@ -22,6 +22,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+from tests.learner_copy_history import before_learner_copy_text
 from tests.preparation_history import assert_pre_batch90_assets, technical_before_batch21
 from tests.test_practice_hardening import scripted
 
@@ -84,8 +85,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_twelve_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 255
-    assert len(catalog.questions) == 285
+    assert len(archive()["questions"]) == 270
+    assert len(catalog.questions) == 300
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()
@@ -242,7 +243,7 @@ def test_four_expanded_questions_keep_runtime_prefixes_hints_and_invalidate_whol
             current = question.text(language)
             assert list(current.hints) == previous["hints"]
             for field in ("prompt", "reference_solution"):
-                value = getattr(current, field)
+                value = before_learner_copy_text(question.key, language, field, getattr(current, field))
                 expected = previous[field]
                 assert len(value) > expected["length"]
                 assert (
@@ -255,7 +256,7 @@ def test_batch40_inventory_retains_source_bytes_and_does_not_alias_new_variation
     sources = [value["local_path"] for value in uploads.values() if value["local_path"].startswith("sources/")]
     assert_pre_batch90_assets(uploads)
     assert len(uploads) > 921
-    assert len(sources) == 415 and len(set(sources)) == 413
+    assert len(sources) == 445 and len(set(sources)) == 443
     source_names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(source_names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch40-{i:02d}.png" in source_names for i in range(1, 21))

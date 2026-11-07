@@ -222,3 +222,14 @@ Verified all eight circuit inputs against both the target and prior solution, an
 נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
 
 [הווריאציה המלאה / Full variant](prep-011-prime_scope-batch21-addendum.md)
+
+
+## מקור נוסף — 07.11.2026, מקבץ 20
+
+[צילום מקור פרטי 4](../sources/2026-11-07-batch30-04.png)
+
+Build the following function out of 2:1 muxs. f = (a(bc)')'
+
+שיוכי מקור מדווחים: NVIDIA.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

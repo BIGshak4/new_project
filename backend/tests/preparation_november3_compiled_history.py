@@ -6,8 +6,8 @@ import hashlib
 import json
 from pathlib import Path
 
-from tests.preparation_history import BATCH1103_BASELINE, _prefix, digest
 from tests.learner_copy_history import before_learner_copy_compiled
+from tests.preparation_history import BATCH1103_BASELINE, _prefix, before_batch1107_record, digest
 
 ROOT = Path(__file__).resolve().parents[2]
 PROJECTIONS = json.loads((Path(__file__).parent / 'fixtures/preparation_compiled_before_20261103_batch20.json').read_bytes())['records']
@@ -24,6 +24,7 @@ def before_batch1103_compiled(question):
     assert question['key'] == frozen['key']
     current = copy.deepcopy(question)
     raw = next(q for q in json.loads((ROOT/'interview_preparation/questions.json').read_bytes())['questions'] if q['id'] == ident)
+    raw = before_batch1107_record(raw)
     assert current['assets']['source_sha256'] == hashlib.sha256(json.dumps(raw,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
     current['assets']['source_sha256'] = frozen['source_sha256_before']
     for transition in frozen['transitions']:

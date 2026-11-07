@@ -1,0 +1,66 @@
+{
+  "checked_on": "2026-11-07",
+  "status": "passed",
+  "sandbox": "sbx_V0Srlvp6LgZeD6zolw3rQDpZMg2N",
+  "sandbox_stopped": true,
+  "network_during_execution": "deny-all",
+  "tool": "Icarus Verilog12.0",
+  "source_sha256": {
+    "interview_preparation/solutions/prep_257_binary_times_five_bcd.sv": "8931aff3ca9401fee5bc43096d6fe314301f750a9eb1bfea9199c479c7589d0b",
+    "interview_preparation/solutions/prep_262_binary_to_two_decimal_digits.sv": "944969db81ef50388e3bef9f62b1bfc8296d025962553c3d356162ef8f5b6a62",
+    "interview_preparation/solutions/prep_263_more_than_two_asserted.sv": "dbd0c82fd7109443756709ade8f0ba613fbff35708e86a90b94c7d71f3f067eb",
+    "interview_preparation/solutions/prep_065_sr_from_dff_batch1107.sv": "e24f4d8dc9e165540e776aa1a54ba5493e0e16189ef75724c4b4d3edb6eaa537",
+    "interview_preparation/solutions/prep_206_serial_divisible_seven_batch1107.sv": "230bf01c6319c971f60b89557012c3ee626e5107f9861c0b5af63a34904e8774",
+    "interview_preparation/checks/check_intake20261107_hardware_native.sv": "f87a6fea068d6998a796a781d965d8f32b39827808136b7fd86124a45492cfe2"
+  },
+  "combined_assertions": 172128,
+  "corrected_contract": "Primary Nnext=2N+b modulo7; alternate lowest-weight-first Nnext=N+b*2^k modulo7, weights1,2,4 repeating.",
+  "retained_native_evidence": "checks/batch1107-native-verification.json remains applicable to unchanged FIFO/prime sources; its earlier206four-specific result is superseded.",
+  "limitations": [
+    "Digital event simulation only; no synthesis,STA,metastability or physical CDC signoff.",
+    "Official Ubuntu HTTPS bootstrap used domain allow-list before switching to deny-all. Unrelated github-cli APT source remained blocked and produced a bootstrap warning.",
+    "The first version probe emitted an Icarus subtool version warning; the final compiler/simulator command recorded here had no stderr and exited zero."
+  ],
+  "run": {
+    "items": [
+      {
+        "command": {
+          "id": "cmd_18d2ab69a1304102a31ec13cd828",
+          "name": "bash",
+          "args": [
+            "-lc",
+            "iverilog -g2012 -Wall -s tb -o hardware-corrected.out prep_257_binary_times_five_bcd.sv prep_262_binary_to_two_decimal_digits.sv prep_263_more_than_two_asserted.sv prep_065_sr_from_dff_batch1107.sv prep_206_serial_divisible_seven_batch1107.sv check_intake20261107_hardware_native.sv && vvp hardware-corrected.out"
+          ],
+          "cwd": "/vercel",
+          "sessionId": "sbx_V0Srlvp6LgZeD6zolw3rQDpZMg2N",
+          "startedAt": 1794055999767,
+          "exitCode": null
+        }
+      },
+      {
+        "data": "PASS hardware native checks=172128 (257,262,263,065,206)\ncheck_intake20261107_hardware_native.sv:76: $finish called at 331976000 (1ps)\n",
+        "stream": "stdout"
+      },
+      {
+        "command": {
+          "id": "cmd_18d2ab69a1304102a31ec13cd828",
+          "name": "bash",
+          "args": [
+            "-lc",
+            "iverilog -g2012 -Wall -s tb -o hardware-corrected.out prep_257_binary_times_five_bcd.sv prep_262_binary_to_two_decimal_digits.sv prep_263_more_than_two_asserted.sv prep_065_sr_from_dff_batch1107.sv prep_206_serial_divisible_seven_batch1107.sv check_intake20261107_hardware_native.sv && vvp hardware-corrected.out"
+          ],
+          "cwd": "/vercel",
+          "sessionId": "sbx_V0Srlvp6LgZeD6zolw3rQDpZMg2N",
+          "startedAt": 1794055999767,
+          "exitCode": 0,
+          "durationMs": 544
+        }
+      }
+    ],
+    "context": {
+      "totalItems": 3,
+      "returnedItems": 3,
+      "truncated": false
+    }
+  }
+}

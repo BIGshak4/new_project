@@ -48,7 +48,7 @@ def test_sources_have_exact_bytes_tags_and_twenty_stable_targets():
 
 def test_all_219_old_records_and_localizations_keep_frozen_prefixes():
     archive = read(BANK/'questions.json')
-    assert len(archive['questions']) == archive['question_count'] == 255
+    assert len(archive['questions']) == archive['question_count'] == 270
     historical_ids = {q['id'] for q in archive['questions']} & BATCH1101_BASELINE['records'].keys()
     assert historical_ids - BATCH22_BASELINE['records'].keys() == NEW
     assert set(BATCH22_BASELINE['variant_ids']) == VARIANTS
@@ -77,7 +77,7 @@ def test_all_219_old_records_and_localizations_keep_frozen_prefixes():
 
 def test_new_and_expanded_content_is_bilingual_proposed_and_private():
     catalog = load_catalog(SEEDS)
-    assert len(catalog.questions) == 285
+    assert len(catalog.questions) == 300
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS|SOURCES}
     assert set(selected) == NEW|VARIANTS|SOURCES

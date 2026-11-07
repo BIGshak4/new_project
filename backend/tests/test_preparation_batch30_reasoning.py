@@ -6,6 +6,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.learner_copy_history import before_learner_copy_localized
+
 ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / "interview_preparation"
 
@@ -50,6 +52,7 @@ def test_source_variants_have_bilingual_supplement_without_new_hint_queue(ident,
             local = value[ident]
             break
     assert local is not None
+    local = before_learner_copy_localized(ident, local)
     for language in ("he", "en"):
         variant = local["prompt_variants"][language]["batch30_variant"]
         assert len(variant["hints"]) == len(set(variant["hints"])) == 3

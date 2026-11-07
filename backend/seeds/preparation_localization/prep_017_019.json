@@ -254,26 +254,30 @@
         "לכל פריט יש בדיוק אחד משלושת הצבעים B/G/R. יש לשמור את כל האובייקטים המקוריים.",
         "אין דרישת יציבות; הסדר בתוך אותו צבע אינו משנה.",
         "מפרשים מעבר יחיד כהקטנת אזור לא מסווג, ולא ככלל מילולי של גישה אחת בלבד לכל כתובת פיזית.",
-        "O(1) מילות מכונה בזיכרון עזר במודל RAM הרגיל."
+        "O(1) מילות מכונה בזיכרון עזר במודל RAM הרגיל.",
+        "רק 0/1, mutation מותר, אין יציבות."
       ],
       "en": [
         "Mutable random-access array; color lookup and swaps take O(1) time.",
         "Each item has exactly one of the three colors B/G/R. Preserve all original objects.",
         "No stability requirement; order inside one color is irrelevant.",
         "Interpret single pass as shrinking an unclassified region, not a literal one-access-per-physical-address rule.",
-        "O(1) auxiliary machine words in the standard RAM model."
+        "O(1) auxiliary machine words in the standard RAM model.",
+        "Promised 0/1 values, mutation allowed, no stability."
       ]
     },
     "optimality": {
       "he": {
         "criterion": "זמן ומקום עזר במקרה הגרוע לחלוקה במקום לשלוש קבוצות",
         "result": "זמן Theta(n), זיכרון עזר של O(1) מילים, בדיוק n איטרציות סיווג",
-        "proof": "גודל האזור הלא ידוע קטן באחד בכל איטרציה; קלט שרירותי דורש עיבוד של Omega(n) במקרה הגרוע."
+        "proof": "גודל האזור הלא ידוע קטן באחד בכל איטרציה; קלט שרירותי דורש עיבוד של Omega(n) במקרה הגרוע.",
+        "מיון אפסים ואחדים ללא מערך עזר": "Θ(n) זמן ו־ O(1) מילים; לא O(1) ביטים לכל n."
       },
       "en": {
         "criterion": "Worst-case time and auxiliary space for in-place three-way partition",
         "result": "Theta(n) time, O(1) auxiliary words, exactly n classification iterations",
-        "proof": "Unknown-region size drops by one each iteration; arbitrary input requires Omega(n) worst-case processing."
+        "proof": "Unknown-region size drops by one each iteration; arbitrary input requires Omega(n) worst-case processing.",
+        "Binary in-place partition": "Theta(n) time and O(1) words, not fixed bit storage for arbitrary n."
       }
     },
     "edge_cases": {
@@ -284,7 +288,8 @@
         "כבר ממוין",
         "קבוצות צבע בסדר הפוך",
         "החלפות אדומים חוזרות באותו אינדקס סריקה",
-        "Low שווה ל־mid או mid שווה ל־high"
+        "Low שווה ל־mid או mid שווה ל־high",
+        "ריק; כל הערכים זהים; סדר הפוך."
       ],
       "en": [
         "Empty array",
@@ -293,7 +298,8 @@
         "Already sorted",
         "Reverse grouped order",
         "Repeated red swaps at the same scan index",
-        "Low equals mid or mid equals high"
+        "Low equals mid or mid equals high",
+        "Empty; homogeneous; reversed."
       ]
     },
     "verification": {
@@ -306,7 +312,8 @@
           "status": "passed",
           "coverage": "9841exhaustive+300seededarrays;read/writebounds;5invalidvalues",
           "scope": "מכשור בדיקה חיצוני בלבד; מימוש המיון אינו שומר מערך נוסף."
-        }
+        },
+        "מיון אפסים ואחדים ללא מערך עזר": "8,191 מערכים ממצים באורכים 0..12 מול מיון עצמאי ושימור זהות הרשימה."
       },
       "en": {
         "status": "passed",
@@ -317,12 +324,13 @@
           "status": "passed",
           "coverage": "9841exhaustive+300seededarrays;read/writebounds;5invalidvalues",
           "scope": "External test instrumentation only; the sorter stores no auxiliary array."
-        }
+        },
+        "Binary in-place partition": "8,191 exhaustive arrays of lengths 0..12 versus independent sorting and list identity."
       }
     },
     "interview_answer": {
-      "he": "אחזיק גבול לכחולים, גבול לאדומים ומצביע לאזור הלא מסווג. אעביר כחול שמאלה, אדום ימינה וירוק אשאיר באמצע. אחרי החלפה מימין לא אקדם את הסורק, כי הגיע כדור שטרם נבדק. בכל צעד האזור הלא מסווג קטן באחד, ולכן הזמן לינארי והזיכרון קבוע.",
-      "en": "I maintain a boundary for blue, a boundary for red, and a pointer into the unclassified region. Move blue left, red right, and leave green in the middle. After swapping from the right, do not advance the scan pointer because the incoming ball has not been checked. At every step the unclassified region shrinks by one, so time is linear and memory constant."
+      "he": "אחזיק גבול לכחולים, גבול לאדומים ומצביע לאזור הלא מסווג. אעביר כחול שמאלה, אדום ימינה וירוק אשאיר באמצע. אחרי החלפה מימין לא אקדם את הסורק, כי הגיע כדור שטרם נבדק. בכל צעד האזור הלא מסווג קטן באחד, ולכן הזמן לינארי והזיכרון קבוע.\n\nאשמור תחום לא מסווג ואצמצם אותו בכל צעד.",
+      "en": "I maintain a boundary for blue, a boundary for red, and a pointer into the unclassified region. Move blue left, red right, and leave green in the middle. After swapping from the right, do not advance the scan pointer because the incoming ball has not been checked. At every step the unclassified region shrinks by one, so time is linear and memory constant.\n\nMaintain an unknown interval and shrink it at each step."
     },
     "common_mistakes": {
       "he": [
@@ -331,7 +339,8 @@
         "הקצאת שלוש רשימות למרות דרישת זיכרון O(1)",
         "החזרת עותק ממוין",
         "טענה לשמירת סדר יציבה",
-        "החלפת אובייקטים בצבעים ואובדן זהותם"
+        "החלפת אובייקטים בצבעים ואובדן זהותם",
+        "להתקדם אחרי swap מימין ולדלג על איבר חדש."
       ],
       "en": [
         "Advancing mid after swapping with high",
@@ -339,7 +348,8 @@
         "Allocating three lists despite O(1) memory",
         "Returning a sorted copy",
         "Claiming stable ordering",
-        "Replacing objects by colors and losing identity"
+        "Replacing objects by colors and losing identity",
+        "Advancing left after swapping in an unknown right item."
       ]
     },
     "prompt_variants": {
@@ -353,6 +363,14 @@
           ],
           "reference_solution": "### אותו עיקרון, קידוד מספרי\nהמיפוי כחול→0, ירוק→1, אדום→2 מחבר את המקור החדש לתרגיל הקיים. נשמור low,mid,high. בתחילה low=mid=0 ו־high=n−1, וכל המערך עדיין לא מסווג.\n\n```text\n[0,low)         מכיל רק 0\n[low,mid)       מכיל רק 1\n[mid,high+1)    עדיין לא סווג\n[high+1,n)      מכיל רק 2\n```\n\nבודקים את values[mid]. אם הוא 0, מחליפים עם values[low] ומקדמים גם low וגם mid. אם low<mid, הערך שהגיע מ־low היה 1 ידוע; אם הם שווים, זו החלפה עם עצמו. בשני המקרים הגבולות החדשים נכונים.\n\nאם הערך 1, הוא כבר בתחילת אזור האחדים ולכן מקדמים רק mid. אם הוא 2, מחליפים עם values[high] ומקטינים רק high. אסור לקדם את mid במקרה האחרון: הערך שהגיע מהקצה עדיין לא סווג. לדוגמה [2,0,1] נעשה [1,0,2] כאשר האינדקס mid עדיין 0; כעת צריך לסווג את ה־1 שהגיע אליו, ובהמשך את ה־0.\n\n### הוכחה והמשמעות של מעבר אחד\nהאינווריאנט הוא ארבעת האזורים שלמעלה. הוא נכון בתחילה כי כל האזורים הידועים ריקים. כל אחד משלושת הצעדים מרחיב אזור ידוע בצורה תקינה ושומר על מספר ההופעות, כי השינוי היחיד בערכים הוא החלפה. גודל האזור הלא־ידוע high−mid+1 קטן באחד בכל איטרציה. אחרי בדיוק n איטרציות הוא ריק, ולכן מתקבל כל האפסים, אחריהם כל האחדים ואז כל השתיים.\n\n״מעבר אחד״ כאן אינו אומר שכל כתובת פיזית נקראת פעם אחת בלבד. החלפה עשויה להביא ערך אחר לאותה כתובת, ואז נבדוק אותו. המדד המתקדם הוא האזור הלא־מסווג. בכל צעד יש לכל היותר שלוש קריאות איברים ושתי כתיבות; כך הזמן O(n), ומספר קבוע של אינדקסים וערך זמני נותנים O(1) מילות עזר. כתובת או אינדקס דורשים O(log n) ביטים במודל כללי. לא נטען ליציבות או למספר החלפות מינימלי.\n\n### גבולות ואימות\nמערך ריק, סוג ערך יחיד, סדר הפוך ומקרים עם הרבה שתיים בתחילת המערך נכללים באותו כלל. הקלט מובטח להיות שלמים 0/1/2. המימוש מזהה ערך שגוי כשהוא מגיע אליו, ואינו מבטיח לבטל החלפות שכבר נעשו; אין סריקת אימות נוספת לפני המיון.\n\nהורצו כל 9,841 המילים מעל שלושת הערכים באורכים 0..8 ועוד 300 מערכים אקראיים. אורקל נפרד בנה פלט מתדירויות. מכשור חיצוני לבדיקה אימת שימור אובייקט הקלט וחסמי 3n קריאות ו־2n כתיבות. המכשור והמערך של האורקל אינם חלק ממימוש המיון.\n\n```python\n\"\"\"In-place three-way partition of promised exact integers 0,1,2.\n\nOne shrinking unclassified interval; positions may be read again after a swap.\nNo input-wide prevalidation pass, auxiliary array or stability guarantee.\nAn invalid value raises when reached; earlier mutations need not roll back.\n\"\"\"\n\n\ndef partition_012(values):\n    low = mid = 0\n    high = len(values) - 1\n    while mid <= high:\n        value = values[mid]\n        if type(value) is not int:\n            raise ValueError(\"expected exact integers 0,1,2\")\n        if value == 0:\n            values[low], values[mid] = values[mid], values[low]\n            low += 1\n            mid += 1\n        elif value == 1:\n            mid += 1\n        elif value == 2:\n            values[mid], values[high] = values[high], values[mid]\n            high -= 1\n        else:\n            raise ValueError(\"expected exact integers 0,1,2\")\n```",
           "integration_status": ""
+        },
+        "מיון אפסים ואחדים ללא מערך עזר": {
+          "prompt": "### הרחבה: רק אפסים ואחדים\nמיינו מערך שערכיו מובטחים להיות 0 או 1, כך שכל האפסים לפני כל האחדים. נדרש זמן מיטבי במקרה הגרוע ו־ O(1) מילות עזר, ללא מערך נוסף. אין דרישת יציבות או מגבלה חדשה על מספר סריקות; זהו מקרה פרטי של החלוקה לשלושה צבעים, לא החלפתה.",
+          "hints": [
+            "איך משתמשים בכך שקיימים רק שני ערכים?",
+            "שמרו אזור אפסים משמאל, אזור אחדים מימין ואזור שעוד לא נבדק ביניהם.",
+            "אם האיבר השמאלי הלא־מסווג הוא אפס, התקדמו; אחרת החליפו עם קצה האזור הלא־מסווג מימין והקטינו אותו. בדקו מחדש את האיבר שהגיע."
+          ]
         }
       },
       "en": {
@@ -365,21 +383,43 @@
           ],
           "reference_solution": "### The same partition with numeric labels\nMap blue→0, green→1 and red→2. Keep low,mid,high, initially low=mid=0 and high=n−1. The entire array is initially unclassified.\n\n```text\n[0,low)         contains only 0\n[low,mid)       contains only 1\n[mid,high+1)    unclassified\n[high+1,n)      contains only 2\n```\n\nInspect values[mid]. For zero, swap with values[low] and increment both low and mid. If low<mid, the incoming item from low is a known one; if the indices coincide, the swap is with itself. Both preserve the new boundaries.\n\nFor one, advance mid only. For two, swap with values[high] and decrease high only. Do not advance mid in this last case: the incoming item from the right is still unknown. For example [2,0,1] becomes [1,0,2] with mid still zero; classify the incoming one, then the remaining zero.\n\n### Correctness and what one traversal means\nThe four regions form the invariant. Initially all known regions are empty. Each case expands the correct known region and preserves multiplicities, since values are only swapped. The unclassified interval high−mid+1 decreases by one every iteration. After exactly n iterations it is empty, leaving zeros, then ones, then twos.\n\nOne traversal does not forbid reading a physical position again after a different item arrives through a swap. The unclassified interval is the monotone progress measure. Each iteration uses at most three element reads and two writes, hence O(n) time. A fixed number of indices and a temporary value use O(1) auxiliary words, or O(log n) bits for arbitrary indices. Neither stability nor a minimum swap count is claimed.\n\n### Boundaries and verification\nEmpty arrays, a single repeated value, reverse order and many leading twos follow the same invariant. Exact integer values 0/1/2 are promised. Invalid data is rejected when reached; earlier mutations are not rolled back. There is no extra input-wide validation pass.\n\nAll 9,841 ternary words of lengths 0..8 and 300 seeded arrays were executed. An independent frequency oracle produced the expected result. External test instrumentation verified the input object's identity and bounds of 3n element reads and 2n writes. Neither the instrumentation nor the oracle's array belongs to the sorting implementation.\n\n```python\n\"\"\"In-place three-way partition of promised exact integers 0,1,2.\n\nOne shrinking unclassified interval; positions may be read again after a swap.\nNo input-wide prevalidation pass, auxiliary array or stability guarantee.\nAn invalid value raises when reached; earlier mutations need not roll back.\n\"\"\"\n\n\ndef partition_012(values):\n    low = mid = 0\n    high = len(values) - 1\n    while mid <= high:\n        value = values[mid]\n        if type(value) is not int:\n            raise ValueError(\"expected exact integers 0,1,2\")\n        if value == 0:\n            values[low], values[mid] = values[mid], values[low]\n            low += 1\n            mid += 1\n        elif value == 1:\n            mid += 1\n        elif value == 2:\n            values[mid], values[high] = values[high], values[mid]\n            high -= 1\n        else:\n            raise ValueError(\"expected exact integers 0,1,2\")\n```",
           "integration_status": ""
+        },
+        "Binary in-place partition": {
+          "prompt": "### Extension: only zero and one\nSort a promised binary array so every zero precedes every one. Require worst-case optimal time and O(1) auxiliary words, with no auxiliary array. Stability and a new scan-count restriction are not required; this specializes the existing three-color problem.",
+          "hints": [
+            "How does having only two values help?",
+            "Maintain zeros on the left, ones on the right and an unclassified interval between them.",
+            "Advance past a zero at the left boundary; otherwise swap it with the right unclassified boundary and shrink that boundary. Recheck the arriving value."
+          ]
         }
       }
     },
     "source_ambiguities": {
-      "he": "המקור החדש משתמש במספרים במקום בצבעים ודורש מעבר אחד. הגרסה מפרשת זאת כאזור לא־מסווג שמצטמצם, לא כאיסור לקרוא שוב כתובת אחרי החלפה. הקלט מובטח תקין; לא נוספה סריקת אימות מוקדמת.",
-      "en": "The new source replaces colors with numeric labels and requests one traversal. This means a shrinking unclassified interval, not a prohibition on revisiting a position after a swap. Valid input is promised; no preliminary validation traversal is added."
+      "he": "המקור החדש משתמש במספרים במקום בצבעים ודורש מעבר אחד. הגרסה מפרשת זאת כאזור לא־מסווג שמצטמצם, לא כאיסור לקרוא שוב כתובת אחרי החלפה. הקלט מובטח תקין; לא נוספה סריקת אימות מוקדמת.\n\nמספר סריקות אינו מוגבל במקור החדש.",
+      "en": "The new source replaces colors with numeric labels and requests one traversal. This means a shrinking unclassified interval, not a prohibition on revisiting a position after a swap. Valid input is promised; no preliminary validation traversal is added.\n\nThe new source does not limit scan count."
     },
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם כל מספר הוא מפתח של רשומה ודורשים יציבות?",
-        "direction": "החלפות DNF אינן שומרות בהכרח סדר של רשומות שוות. מערך פלט ושלוש קבוצות יציבות נותנים חלופה פשוטה בזמן לינארי ומקום לינארי; סיבובי מקטעים יכולים לחסוך זיכרון במחיר זמן. אין כאן טענת חסם אי־אפשרות לכל אלגוריתם יציב."
+        "direction": "החלפות DNF אינן שומרות בהכרח סדר של רשומות שוות. מערך פלט ושלוש קבוצות יציבות נותנים חלופה פשוטה בזמן לינארי ומקום לינארי; סיבובי מקטעים יכולים לחסוך זיכרון במחיר זמן. אין כאן טענת חסם אי־אפשרות לכל אלגוריתם יציב.",
+        "מיון אפסים ואחדים ללא מערך עזר": [
+          {
+            "question": "איך ממיינים 0,1,2?",
+            "answer_direction": "חוזרים לשלושת הגבולות בגרסה המקורית.",
+            "principle": "הבטחת התחום מאפשרת התמחות."
+          }
+        ]
       },
       "en": {
         "question": "What changes if values are record keys and stable order is required?",
-        "direction": "DNF swaps need not preserve equal-key record order. An output array with stable grouping gives a simple linear-time, linear-space alternative; segment rotations can trade time for space. No impossibility bound for every stable algorithm is claimed."
+        "direction": "DNF swaps need not preserve equal-key record order. An output array with stable grouping gives a simple linear-time, linear-space alternative; segment rotations can trade time for space. No impossibility bound for every stable algorithm is claimed.",
+        "Binary in-place partition": [
+          {
+            "question": "What changes for 0,1,2?",
+            "answer_direction": "Use the original three-boundary partition.",
+            "principle": "Domain promises permit specialization."
+          }
+        ]
       }
     }
   }

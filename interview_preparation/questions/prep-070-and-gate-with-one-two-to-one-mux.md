@@ -385,3 +385,14 @@ All four A,B rows passed, giving twenty function assertions including nB. These 
 - [solutions/prep_batch20_combinational.py](../solutions/prep_batch20_combinational.py)
 - [diagrams/prep-070-combinational-batch20-he.png](../diagrams/prep-070-combinational-batch20-he.png)
 - [diagrams/prep-070-combinational-batch20-en.png](../diagrams/prep-070-combinational-batch20-en.png)
+
+
+## מקור נוסף — 07.11.2026, מקבץ 20
+
+[צילום מקור פרטי 5](../sources/2026-11-07-batch30-05.png)
+
+ממש XOR בעזרת MUX 2:1 וקבועים 0,1.
+
+שיוכי מקור מדווחים: Apple.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

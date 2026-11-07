@@ -7430,6 +7430,231 @@
           "starter": "def street_meeting_point(vertex_count, edges, people):\n    raise NotImplementedError\n"
         }
       }
+    },
+    "prep-primality-predicate-finite-input-domain": {
+      "contract": {
+        "he": "ממשו is_prime(n), המחזירה bool לבדיקת ראשוניות של קלט unsigned בטווח 0..2^32−1. זהו פרופיל תוכנה שקול לפונקציה הלוגית בלבד; אינו בודק את busy/valid, שטח או תזמון של החומרה.",
+        "en": "Implement is_prime(n), returning bool for unsigned 0..2^32−1. This software profile checks the logical predicate only, not hardware busy/valid, area or timing."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "is_prime",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                9
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                25
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                49
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                97
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                341
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                561
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                65521
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                4293001441
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                2147483647
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                4294967291
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                4294967295
+              ],
+              "expected": false
+            }
+          ],
+          "starter": "def is_prime(n):\n    raise NotImplementedError\n"
+        }
+      }
+    },
+    "prep-branch-free-saturating-speed-controls": {
+      "contract": {
+        "he": "ממשו speed_controls(speed) המחזירה [gas(speed),brake(speed)] עבור int מובטח בין 0 ל־10. הפלטים רוויים ב־10 וב־0 בהתאמה. בדיקות פלט אינן מוכיחות שהקוד חסר if/while; מגבלת התחביר נבדקת בנפרד.",
+        "en": "Implement speed_controls(speed), returning [gas(speed),brake(speed)] for a promised integer 0..10, saturated at ten and zero respectively. Output tests do not prove the no-if/while source constraint; inspect syntax separately."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "speed_controls",
+          "cases": [
+            {
+              "args": [
+                0
+              ],
+              "expected": [
+                1,
+                0
+              ]
+            },
+            {
+              "args": [
+                1
+              ],
+              "expected": [
+                2,
+                0
+              ]
+            },
+            {
+              "args": [
+                2
+              ],
+              "expected": [
+                3,
+                1
+              ]
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": [
+                4,
+                2
+              ]
+            },
+            {
+              "args": [
+                4
+              ],
+              "expected": [
+                5,
+                3
+              ]
+            },
+            {
+              "args": [
+                5
+              ],
+              "expected": [
+                6,
+                4
+              ]
+            },
+            {
+              "args": [
+                6
+              ],
+              "expected": [
+                7,
+                5
+              ]
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": [
+                8,
+                6
+              ]
+            },
+            {
+              "args": [
+                8
+              ],
+              "expected": [
+                9,
+                7
+              ]
+            },
+            {
+              "args": [
+                9
+              ],
+              "expected": [
+                10,
+                8
+              ]
+            },
+            {
+              "args": [
+                10
+              ],
+              "expected": [
+                10,
+                9
+              ]
+            }
+          ],
+          "starter": "def speed_controls(speed):\n    raise NotImplementedError\n"
+        }
+      }
     }
   }
 }

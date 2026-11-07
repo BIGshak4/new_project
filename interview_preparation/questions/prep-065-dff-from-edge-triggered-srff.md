@@ -212,3 +212,16 @@ Python checks covered all four Q,D combinations, eight Q,S,R rows, and 4,094 dat
 - [Code](../solutions/prep_065_dff_from_sr.sv)
 - [Verification](../checks/check_prep_065.py)
 - [Evidence](../checks/prep-065-verification.json)
+
+
+## מקור נוסף — 07.11.2026, מקבץ 20
+
+[צילום מקור פרטי 3](../sources/2026-11-07-batch30-03.png)
+
+בנה דלגלג SR מן DFF. פעם שאם בכניסה 11 יוצא 1; פעם אחרת שאם בכניסה 11 יוצא 0.
+
+שיוכי מקור מדווחים: NVIDIA.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-065-sr_from_dff_priorities-batch1107-addendum.md)

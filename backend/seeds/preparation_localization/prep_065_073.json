@@ -4,12 +4,16 @@
       "he": [
         "פליפ-פלופ SR בחזית עולה עם S,R סינכרוניים פעילים בגבוה; 11 אסור.",
         "D עומד בתזמון בשני הנתיבים, כולל המהפך; אין איפוס נוסף.",
-        "הקשר בין DFF ללאץ׳ מוסבר בנפרד ואינו משנה בשקט את הרכיב הנתון."
+        "הקשר בין DFF ללאץ׳ מוסבר בנפרד ואינו משנה בשקט את הרכיב הנתון.",
+        "שני מימושים נפרדים, כל אחד פליפ-פלופ D יחיד; דגימה בחזית עולה.",
+        "rst סינכרוני גובר ומאתחל0;00 משמר את Q הקודם."
       ],
       "en": [
         "Rising-edge synchronous active-high SR primitive; 11 forbidden.",
         "D meets timing on both paths, including inversion; no additional reset.",
-        "Transparent-latch interpretation is distinguished explicitly."
+        "Transparent-latch interpretation is distinguished explicitly.",
+        "Two separate alternatives, each one rising-edge DFF.",
+        "Synchronous rst overrides and initializes0;00 holds old Q."
       ]
     },
     "optimality": {
@@ -17,31 +21,37 @@
         "criterion": "מספר ביטי מצב.",
         "result": "ביט מצב אחד ומהפך אחד מספיקים במודל.",
         "proof": "יש לשמר שני מצבים, ולכן נדרש לפחות ביט אחד.",
-        "scope": "אין הוכחת מינימום שערים, שטח או השהיה; סוג ה־primitive מהותי."
+        "scope": "אין הוכחת מינימום שערים, שטח או השהיה; סוג ה־primitive מהותי.",
+        "batch1107_sr_from_dff_priorities": "ביט מצב אחד וכל מספר קבוע של שערים דו־כניסתיים; אין טענת מינימום טרנזיסטורים או השהיה."
       },
       "en": {
         "criterion": "State-bit count.",
         "result": "One state bit plus one inverter suffices.",
         "proof": "Two stored values require at least one state bit.",
-        "scope": "No minimum gate/area/delay claim; primitive semantics matter."
+        "scope": "No minimum gate/area/delay claim; primitive semantics matter.",
+        "batch1107_sr_from_dff_priorities": "One state bit and constant-size two-input gate logic, without a transistor-count/delay minimum."
       }
     },
     "verification": {
-      "he": "עברו 4 שילובי Q,D, שמונת שילובי SR, 4,094 רצפים ו־36,868 חזיתות במודל פייתון. קוד HDL לא קומפל ולא סומלץ; תזמון וגליצ׳ים פיזיים לא נבדקו.",
-      "en": "Passed four Q,D combinations, eight SR rows, 4,094 streams and 36,868 edges in Python. HDL uncompiled/unsimulated; physical timing and glitches untested."
+      "he": "עברו 4 שילובי Q,D, שמונת שילובי SR, 4,094 רצפים ו־36,868 חזיתות במודל פייתון. קוד HDL לא קומפל ולא סומלץ; תזמון וגליצ׳ים פיזיים לא נבדקו.\n\n16 בדיקות Python ממצות: שני מצבים ישנים, ארבע בקשות ושתי עדיפויות, מול טבלת אמת נפרדת. RTL ואיפוס נבדקים בנפרד בדוח הסימולציה.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה172,128 בדיקות; רתמת FIFO נפרדת עברה15,729 בדיקות עם5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
+      "en": "Passed four Q,D combinations, eight SR rows, 4,094 streams and 36,868 edges in Python. HDL uncompiled/unsimulated; physical timing and glitches untested.\n\nSixteen exhaustive Python checks cover two old states, four requests and two priorities against a separate truth table. RTL/reset checks are recorded separately in simulation evidence.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed172,128 checks; the separate FIFO harness passed15,729 checks with5,587 accepted writes and5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
     },
     "edge_cases": {
       "he": [
         "Q ראשוני אינו חייב להיות ידוע; החזית החוקית הראשונה קובעת D.",
         "אין חזית: Q נשמר.",
         "שינוי D סמוך לחזית עלול להפר תזמון.",
-        "S,R אסינכרוניים או לאץ׳ שקוף אינם מממשים את אותו חוזה."
+        "S,R אסינכרוניים או לאץ׳ שקוף אינם מממשים את אותו חוזה.",
+        "11 בשני המימושים,00 במצב0 ובמצב1, איפוס יחד עם11.",
+        "קלט לא יציב סביב החזית אינו מבטיח פונקציה דיגיטלית אידאלית."
       ],
       "en": [
         "Initial Q may be unknown; the first valid edge establishes D.",
         "No edge means hold.",
         "D changes near the edge may violate timing.",
-        "Asynchronous S,R or transparent latches have a different contract."
+        "Asynchronous S,R or transparent latches have a different contract.",
+        "11 under both priorities,00 holding0/1 and reset coinciding with11.",
+        "Unstable inputs near capture do not guarantee ideal digital behavior."
       ]
     },
     "common_mistakes": {
@@ -49,29 +59,67 @@
         "לחבר S=D וגם R=D, וכך להגיע ל־11.",
         "להשתמש בלאץ׳ שקוף ולקרוא לו DFF.",
         "להניח שהמהפך מוחק כל חפיפה רגעית.",
-        "להציג איפוס אסינכרוני כקלט נתונים סינכרוני."
+        "להציג איפוס אסינכרוני כקלט נתונים סינכרוני.",
+        "החלפת שתי הנוסחאות; פירוש ״פעם״ כ־toggle ללא ביט היסטוריה; טענה ש־11 בלאץ׳ NOR מוגדר; שימוש ב־preset/clear במקום נתון D."
       ],
       "en": [
         "Driving both S and R from D, reaching 11.",
         "Calling a transparent latch a DFF.",
         "Assuming inversion removes every transient overlap.",
-        "Treating asynchronous clear as a synchronous data input."
+        "Treating asynchronous clear as a synchronous data input.",
+        "Swapping priority equations; interpreting the wording as toggle without history; treating NOR-latch11 as defined; using preset/clear instead of D logic."
       ]
     },
     "interview_answer": {
-      "he": "בהנחה שזה פליפ-פלופ SR סינכרוני בחזית, אחבר S=D ו־R=NOT D ואשתמש באותו clk. D=0 בוחר איפוס ו־D=1 בוחר קביעה, לכן אחרי החזית Q=D. אם נתון לאץ׳ או S,R אסינכרוניים, זה אינו אותו מימוש וצריך לדון במבנה שעון מתאים.",
-      "en": "For an edge-triggered synchronous SR primitive, wire S=D and R=NOT D on the same clock. D=0 resets and D=1 sets, so Q after the edge equals D. A transparent latch or asynchronous controls need a different clocked construction."
+      "he": "בהנחה שזה פליפ-פלופ SR סינכרוני בחזית, אחבר S=D ו־R=NOT D ואשתמש באותו clk. D=0 בוחר איפוס ו־D=1 בוחר קביעה, לכן אחרי החזית Q=D. אם נתון לאץ׳ או S,R אסינכרוניים, זה אינו אותו מימוש וצריך לדון במבנה שעון מתאים.\n\nאני כותב Qnext לפי טבלת SR. עדיפות להצבה נותנת S OR(Q AND NOT R), ועדיפות לאיפוס נותנת NOT R AND(S OR Q). זהו DFF רגיל עם משוב נתונים.",
+      "en": "For an edge-triggered synchronous SR primitive, wire S=D and R=NOT D on the same clock. D=0 resets and D=1 sets, so Q after the edge equals D. A transparent latch or asynchronous controls need a different clocked construction.\n\nWrite Qnext from the SR table. Set priority is S OR(Q AND NOT R), reset priority is NOT R AND(S OR Q): an ordinary DFF with data feedback."
     },
     "solution_extensions": {
       "he": {
         "question": "כיצד תוסיפו אפשור EN כך שב־EN=0 נשמור Q?",
         "direction": "ל־SR סינכרוני אפשר לבחור S=EN AND D ו־R=EN AND NOT D. ב־EN=0 מתקבל 00 ושמירה. בדקו גם תזמון של EN.",
-        "status": "מוכן בתוכן; לא מחובר לתור המשך חי."
+        "status": "מוכן בתוכן; לא מחובר לתור המשך חי.",
+        "batch1107_sr_from_dff_priorities": {
+          "question": "כיצד יוצרים התחלפות אוטומטית של התוצאה בכל בקשת11?",
+          "direction": "זהו חוזה אחר התלוי בהיסטוריה; אפשר להגדיר11 כ־Qnext=NOT Q, אבל אין לקרוא לזה עדיפות set/reset.",
+          "tests": "הבחנה בין עדיפות לבין toggle."
+        }
       },
       "en": {
         "question": "How would you add an enable EN that holds Q when zero?",
         "direction": "For synchronous SR use S=EN AND D and R=EN AND NOT D. Disabled gives 00 and hold; EN also has timing constraints.",
-        "status": "Prepared in content, not connected to the live follow-up queue."
+        "status": "Prepared in content, not connected to the live follow-up queue.",
+        "batch1107_sr_from_dff_priorities": {
+          "question": "How could11 alternate the result on each occurrence?",
+          "direction": "That is another history-dependent contract: define11 as Qnext=NOT Q, rather than calling it set/reset priority.",
+          "tests": "Priority versus toggle semantics."
+        }
+      }
+    },
+    "source_ambiguities": {
+      "he": "הנוסח המקוצר פורש כשתי חלופות בעלות עדיפות שונה; reset וסוג החזית נוספו במפורש. לא שונה החוזה המקורי של PREP-065.",
+      "en": "The terse wording is interpreted as two priority alternatives; reset and edge sensitivity are explicit additions. The original PREP-065 contract is retained."
+    },
+    "prompt_variants": {
+      "he": {
+        "batch1107_sr_from_dff_priorities": {
+          "prompt": "### וריאציה הפוכה: SR בעזרת פליפ-פלופ D, עם שתי אפשרויות עדיפות\nממשו רכיב SR דוגם בחזית עולה באמצעות פליפ-פלופ D אחד ושערים. בנו שתי חלופות נפרדות: S=R=1 יוצר1 בחלופה הראשונה, ו־0 בשנייה. בשתיהן00 משמר מצב,10 מציב1 ו־01 מאפס.\n\nזו פרשנות מפורשת למקור המקוצר: ״פעם״ מתאר שני מימושים חלופיים, לא החלפה אוטומטית בכל הופעת11. נוספה כניסת rst סינכרונית פעילה בגבוה לאתחול ידוע0; עדיפותה גבוהה מ־S,R. הקלטים עומדים ב־setup/hold. אין לשנות בדיעבד את רכיב ה־SR המקורי, שבו11 אסור, ואין כאן לאץ׳ אסינכרוני.",
+          "hints": [
+            "כתבו טבלת מצב הבא הכוללת גם את המצב הנוכחי Q.",
+            "בגרסת עדיפות להצבה, S=1 צריך להכריע בלי קשר ל־R. בגרסת עדיפות לאיפוס, R=1 צריך להכריע בלי קשר ל־S.",
+            "הזינו לפליפ-פלופ D את S OR(Q AND NOT R) להצבה, ואת NOT R AND(S OR Q) לאיפוס. המשוב הוא נתון ולא שעון."
+          ]
+        }
+      },
+      "en": {
+        "batch1107_sr_from_dff_priorities": {
+          "prompt": "### Reverse conversion: SR from one DFF, with two priority choices\nImplement rising-edge SR behavior using one D flip-flop and gates. Construct two separate alternatives: S=R=1 produces1 in the first, and0 in the second. Both hold at00, set at10 and reset at01.\n\nThis explicitly interprets the terse source as two alternative implementations, not automatic alternation on successive11 events. A synchronous active-high rst is added for known initialization to0 and overrides S,R. Inputs meet setup/hold. Do not retroactively change the original SR primitive, whose11 was forbidden; this is not an asynchronous latch.",
+          "hints": [
+            "Write next-state behavior including current Q.",
+            "With set priority, S1 overrides R; with reset priority, R1 overrides S.",
+            "Drive D with S OR(Q AND NOT R) for set priority, or NOT R AND(S OR Q) for reset priority. Feedback is data, not a clock."
+          ]
+        }
       }
     }
   },

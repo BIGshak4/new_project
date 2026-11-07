@@ -10,6 +10,8 @@ import json
 import re
 from pathlib import Path
 
+from tests.preparation_november7_history import baseline, before_batch1107_compiled
+
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = Path(__file__).parent / "fixtures/learner_copy_invariants_20261104.json"
 
@@ -59,9 +61,13 @@ def code_blocks(question):
 def test_all_long_question_identities_grading_and_code_are_unchanged():
     expected = read(FIXTURE)
     questions = sorted(long_questions(), key=lambda q: q["key"])
-    assert len(questions) == 285
-    assert digest([controls(q) for q in questions]) == expected["long_controls_sha256"]
-    assert digest({q["key"]: code_blocks(q) for q in questions}) == expected["long_code_blocks_sha256"]
+    assert len(questions) == 300
+    previous = [before_batch1107_compiled(q) if q.get("assets", {}).get("preparation_id") else q
+                for q in questions if not q.get("assets", {}).get("preparation_id")
+                or q["assets"]["preparation_id"] in baseline()["records"]]
+    assert len(previous) == 285
+    assert digest([controls(q) for q in previous]) == expected["long_controls_sha256"]
+    assert digest({q["key"]: code_blocks(q) for q in previous}) == expected["long_code_blocks_sha256"]
     balanced = next(q for q in questions if q["key"] == "example-balanced-brackets")
     assert balanced["deterministic_check"]["spec"]["cases"][3]["args"] == [""]
     missing = next(q for q in questions if q["key"] == "prep-one-two-missing-values")

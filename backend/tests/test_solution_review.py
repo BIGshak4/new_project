@@ -12,6 +12,7 @@ import pytest
 from app.engine.catalog import load_catalog
 from app.engine.solution_review import attach_registered_reviews, solution_content_hash, solution_review
 from app.repo.questions import LoadedQuestion, detail, summary
+from tests.solution_review_history import expected_reviewed_keys
 
 BACKEND = Path(__file__).resolve().parents[1]
 REVISED_SOLUTION_KEY = "prep-seventeen-prisoners-two-mandatory-switches"
@@ -45,8 +46,9 @@ def catalog():
 def test_frozen_attestation_covers_only_existing_snapshot(catalog):
     registry = json.loads((BACKEND / "seeds/solution_review_attestations.json").read_text(encoding="utf-8"))
     assert len(registry["questions"]) == 93
+    expected_reviewed = expected_reviewed_keys()
     for question in catalog.questions.values():
-        if question.key not in registry["questions"] or question.key in REVISED_SOLUTION_KEYS:
+        if question.key not in expected_reviewed:
             assert solution_review(question).status == "pending_review"
             assert solution_review(question).reviewed_on is None
             continue
@@ -77,8 +79,8 @@ def test_prisoner_explanation_revision_preserves_but_does_not_inherit_old_attest
         assert summary(row, language).solution_review.status == "pending_review"
         assert detail(row, language).solution_review.status == "pending_review"
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
-    assert len(reviewed) == 69
-    assert reviewed == set(registry["questions"]) - REVISED_SOLUTION_KEYS
+    assert len(reviewed) == 43
+    assert reviewed == expected_reviewed_keys()
 
 
 def test_robot_rewrite_keeps_frozen_attestation_without_approving_new_sensing_contract(catalog):
@@ -99,7 +101,8 @@ def test_robot_rewrite_keeps_frozen_attestation_without_approving_new_sensing_co
 @pytest.mark.parametrize("change", ["reference", "prompt", "technical_material", "media", "code", "correct_choice"])
 def test_changed_content_loses_attestation(catalog, change):
     question = next(q.model_copy(deep=True) for q in catalog.questions.values()
-                    if q.assets.get("preparation_id") == "PREP-060")
+                    if q.assets.get("preparation_id") == "PREP-003")
+    assert solution_review(question).status == "human_reviewed"
     if change in {"reference", "prompt"}:
         field = "reference_solution" if change == "reference" else "prompt"
         setattr(question.translations["he"], field, getattr(question.translations["he"], field) + " changed")
@@ -117,7 +120,8 @@ def test_changed_content_loses_attestation(catalog, change):
 
 def test_operational_metadata_and_private_sources_do_not_change_scope(catalog):
     question = next(q.model_copy(deep=True) for q in catalog.questions.values()
-                    if q.assets.get("preparation_id") == "PREP-002")
+                    if q.assets.get("preparation_id") == "PREP-003")
+    assert solution_review(question).status == "human_reviewed"
     baseline = solution_content_hash(question)
     question.times_served += 7
     question.assets["content_hash"] = "operational"
@@ -166,7 +170,8 @@ def test_solution_review_metadata_does_not_reset_general_seed_approval(catalog):
     spec = importlib.util.spec_from_file_location("review_seed_db", BACKEND / "scripts/seed_db.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    question = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == "PREP-002")
+    question = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == "PREP-003")
+    assert solution_review(question).status == "human_reviewed"
     before = question.model_copy(deep=True)
     before.assets.pop("solution_review")
     assert module.content_hash(before) == module.content_hash(question)

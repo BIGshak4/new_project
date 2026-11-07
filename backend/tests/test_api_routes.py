@@ -438,6 +438,7 @@ def every_route():
         ("POST", f"{BASE}/{aid}/follow-ups/1/skip", None), ("POST", f"{BASE}/{aid}/submissions/1/retry", None),
         # mock interviews
         ("POST", "/v1/interviews", {"duration_min": 20}), ("GET", "/v1/interviews", None),
+        ("DELETE", f"/v1/interviews/{aid}", None),
         ("GET", f"/v1/interviews/{aid}", None), ("POST", f"/v1/interviews/{aid}/turns/0/answer", {"answer": "x"}),
         ("POST", f"/v1/interviews/{aid}/hints/next", None), ("POST", f"/v1/interviews/{aid}/end", None),
         ("GET", f"/v1/interviews/{aid}/report", None),

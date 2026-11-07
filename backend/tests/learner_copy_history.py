@@ -12,6 +12,8 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
+from tests.preparation_november7_history import before_batch1107_compiled, before_batch1107_localized
+
 
 def _digest(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -47,10 +49,12 @@ def _before_copy(kind, key, value):
 
 
 def before_learner_copy_compiled(question):
+    question = before_batch1107_compiled(question)
     return _before_copy("compiled", question["key"], question)
 
 
 def before_learner_copy_localized(ident, value):
+    value = before_batch1107_localized(ident, value)
     return _before_copy("localized", ident, value)
 
 

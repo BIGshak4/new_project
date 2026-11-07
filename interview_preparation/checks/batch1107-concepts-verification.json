@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "results": {
+    "258": {
+      "status": "passed",
+      "checked_on": "2026-11-07",
+      "checks": 30210,
+      "method": "30 parameter sets:1,001 RK4 ODE samples each, voltage/current boundary identities, and180 frequency-domain magnitude checks.",
+      "scope": "Declared capacitor-terminated lossless-line model, matched source, zero initial voltage. No missing-topology reconstruction, SPICE, threshold classification or hardware test."
+    },
+    "259": {
+      "status": "passed",
+      "checked_on": "2026-11-07",
+      "checks": 36,
+      "method": "18 circular/square finite-difference cavity relaxations with constant walls, plus18 exterior coax capacitance comparisons against10,000-cell radial field integration.",
+      "scope": "The uniqueness theorem supplies the general result; finite grids illustrate it only. The external coax ground is an explicit example, not inferred source geometry.",
+      "maximum_cavity_potential_error": 3.985700658404312e-12
+    },
+    "260": {
+      "status": "passed",
+      "checked_on": "2026-11-07",
+      "checks": 216,
+      "method": "216 abrupt-junction parameter cases:depletion-charge neutrality, triangular-field potential integral, matching peak fields and monotone width/capacitance under more reverse bias.",
+      "scope": "Ideal SI-unit depletion-approximation equations only. Material intrinsic concentration is a supplied independent parameter, not predicted versus temperature. No device simulation, breakdown model or measured diode curve."
+    },
+    "270": {
+      "status": "passed",
+      "checked_on": "2026-11-07",
+      "checks": 19322,
+      "method": "9840 exhaustive arbitrary sequences over0,1,2 at lengths1..8;9481 promised strict-slope/maximum-plateau sequences at lengths1..80, with oracle query counts and final setting checked.",
+      "scope": "Deterministic simulated callback instrument, no real optics or noisy measurements. Includes an explicit weak-unimodality counterexample outside the faster algorithm contract.",
+      "outside_contract_counterexample": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "271": {
+      "status": "passed",
+      "checked_on": "2026-11-07",
+      "checks": 51060,
+      "method": "All nondecreasing physical-coin inventories of0..8coins valued1..6, everytarget0..16, independently enumerated subsets;120target examples, greedy failure and forbidden reuse cases.",
+      "scope": "Parameterized positive-integer inventory model. No universal numeric answer for the source is asserted; runtime is pseudopolynomial in the supplied target."
+    }
+  },
+  "invalid_cases": 12,
+  "total_positive_checks": 100844,
+  "scope": "Executed Python models and independent finite oracles only; no SPICE, HDL, synthesis, physical measurement or production browser run."
+}

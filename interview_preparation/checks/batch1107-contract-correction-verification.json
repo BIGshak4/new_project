@@ -1,0 +1,45 @@
+{
+  "verified_at": "2026-11-07T13:04:15.885580+00:00",
+  "status": "passed",
+  "source13": {
+    "original_divisor": 7,
+    "preparation_id": "PREP-206",
+    "previous_published_version": 2,
+    "corrected_published_version": 3,
+    "preserved_original_base": "Divisibility by2,4,8; frozen prompts/solutions/hints retained.",
+    "correction": "Only the newly authored serial extension was replaced by mod7 behavior, transition tables, dual-order RTL and four clean diagrams.",
+    "native_proof": "batch1107-native206-correction-verification.json"
+  },
+  "source21": {
+    "preparation_id": "PREP-269",
+    "version": 1,
+    "clarification": "Source does not define step size; unit increment/decrement is explicitly an editorial assumption.",
+    "algorithm_cases_hints_code_and_diagrams_unchanged": true
+  },
+  "database": {
+    "dry_run_rollback": true,
+    "commit": true,
+    "question_rows": 2,
+    "translation_rows": 4,
+    "version_identity_guards": true,
+    "all_catalog_fingerprints_checked_before_correction": true,
+    "post_readback": "All29 affected questions and58 translations exactly match final payload; preservation checks pass.",
+    "intermediate_text_encoding_issue": "Readback detected JSON serialization in requirements TEXT columns; scoped2-row/4-translation decode was rolled back first, committed, and full exact readback passed."
+  },
+  "media": {
+    "current_new_objects_sha256_verified": 99,
+    "distinct_uploaded_objects": 104,
+    "superseded_private_objects_retained": 5,
+    "final_manifest_assets": 1557
+  },
+  "browser": {
+    "refreshed_after_correction": [
+      "PREP-206",
+      "PREP-269"
+    ],
+    "refreshed_observations": 8,
+    "current_total_observations": 116
+  },
+  "schema_auth_rls_or_learner_writes": false,
+  "backups": "Initial, intermediate correction and final snapshots retained outside Git under C:/Projects/Job_Run/backups."
+}

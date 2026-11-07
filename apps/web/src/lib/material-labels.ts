@@ -85,6 +85,11 @@ const hebrew: Record<string, string> = {
 };
 
 const additionalLabels: Record<string, Record<"he" | "en", string>> = {
+  numeric_variant: { he: "וריאציה למערך מספרים", en: "Numeric-array variant" },
+  numeric_012: { he: "מיון המספרים 0, 1 ו־2", en: "Sorting 0, 1 and 2" },
+  batch20_extension: { he: "סעיפים נוספים", en: "Additional sections" },
+  batch1107_sr_from_dff_priorities: { he: "מימוש SR באמצעות DFF עם קדימות מוגדרת", en: "SR behavior using a DFF with explicit priority" },
+  batch1107_serial_into_lsb_and_lsb_first: { he: "הכנסה למיקום LSB לעומת הגעת LSB ראשון", en: "Inserting at the LSB versus receiving the LSB first" },
   examples: { he: "דוגמאות", en: "Examples" },
   batch11_five_input_fa: { he: "ספירת חמישה ביטים באמצעות מחברים מלאים", en: "Five-bit population count using full adders" },
   batch1103_three_bit_ha_only: { he: "ספירת שלושה ביטים באמצעות חצאי מחבר", en: "Three-bit population count using half adders" },

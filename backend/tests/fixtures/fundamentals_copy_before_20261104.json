@@ -1,0 +1,1018 @@
+{
+  "source_commit": "08ea983f04b7f13d0efc55cb3e5eed04bb846650",
+  "authorized_on": "2026-11-04",
+  "scope": "Exact reverse-only learner-copy wording projection; identities, grading, code and old frozen hashes are unchanged.",
+  "files": {
+    "fundamentals-code-250.json": {
+      "before_sha256": "fb0afc81e0b9b9ff8589444a145f1aa345717f715d99af3b727dcbe5ef061617",
+      "after_sha256": "fb0afc81e0b9b9ff8589444a145f1aa345717f715d99af3b727dcbe5ef061617",
+      "changes": []
+    },
+    "fundamentals-code-400.json": {
+      "before_sha256": "4c80a8f3c057d6e8c68bcf2eb25319914bd81198c448f131223917016d316b3c",
+      "after_sha256": "4c80a8f3c057d6e8c68bcf2eb25319914bd81198c448f131223917016d316b3c",
+      "changes": []
+    },
+    "fundamentals-code-500.json": {
+      "before_sha256": "b8e90d56afe57ba498c1cfcdbf03829b79e3758465b0da65aa05857a35f8363a",
+      "after_sha256": "b8e90d56afe57ba498c1cfcdbf03829b79e3758465b0da65aa05857a35f8363a",
+      "changes": []
+    },
+    "fundamentals-code-expansion.json": {
+      "before_sha256": "1d4107827da302025649ed9d499f99d2d5fd20c41392ec7883caa845d89c3033",
+      "after_sha256": "1d4107827da302025649ed9d499f99d2d5fd20c41392ec7883caa845d89c3033",
+      "changes": []
+    },
+    "fundamentals-code-logic.json": {
+      "before_sha256": "7a8ae03476127b604ee02e6b2b718ba2379fcb44c9e82aef43859070579fa779",
+      "after_sha256": "7a8ae03476127b604ee02e6b2b718ba2379fcb44c9e82aef43859070579fa779",
+      "changes": []
+    },
+    "fundamentals-hardware-250.json": {
+      "before_sha256": "b96efe2497e9277a800800a971dafcf611050b239ccd30d8468acc47e2cf4c6f",
+      "after_sha256": "5a5f260950d07df4af6ca4788901cd162ac29c677624660df3d842ad66c6ccfd",
+      "changes": [
+        {
+          "id": "quick-hw-107",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              14,
+              14,
+              "נוע"
+            ],
+            [
+              15,
+              18,
+              ""
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-107",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              74,
+              74,
+              "נוע"
+            ],
+            [
+              75,
+              78,
+              ""
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-108",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              4,
+              4,
+              "נוע"
+            ],
+            [
+              5,
+              8,
+              ""
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-108",
+          "field": "title",
+          "language": "he",
+          "splices": [
+            [
+              9,
+              9,
+              "נוע"
+            ],
+            [
+              10,
+              13,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    "fundamentals-hardware-400.json": {
+      "before_sha256": "4b3d1c2495622789dfb1391b56e3e30ea843f597c2897ac6b79ff2cf3def87cc",
+      "after_sha256": "4b3d1c2495622789dfb1391b56e3e30ea843f597c2897ac6b79ff2cf3def87cc",
+      "changes": []
+    },
+    "fundamentals-hardware-500.json": {
+      "before_sha256": "ffd01ec8f697b863988dfd2241e9dad4baaf7518b53e32906f80d1e1986e8919",
+      "after_sha256": "9e5a2b618d6d8a2d486e1ddfd2e0d8cdc5c39b7924365231f919c3a0c52d66bc",
+      "changes": [
+        {
+          "id": "quick-hw-234",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              3,
+              8,
+              "מפענח"
+            ]
+          ]
+        }
+      ]
+    },
+    "fundamentals-hardware-expansion.json": {
+      "before_sha256": "a2e0dcfaf4c2ce31503f7fe35b208eec12a1af4ff50c740180bf743cba7701bf",
+      "after_sha256": "56ebca88579680919ec127a8ba580624c58ff856905a087a482eced79f366d5a",
+      "changes": [
+        {
+          "id": "quick-hw-63",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              0,
+              2,
+              "מ"
+            ],
+            [
+              5,
+              6,
+              "ד"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-64",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              7,
+              9,
+              "מ"
+            ],
+            [
+              12,
+              13,
+              "ד"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-79",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              5,
+              6,
+              "ד"
+            ],
+            [
+              7,
+              11,
+              "ג"
+            ],
+            [
+              12,
+              14,
+              "ג"
+            ],
+            [
+              119,
+              120,
+              "ד"
+            ],
+            [
+              121,
+              125,
+              "ג"
+            ],
+            [
+              126,
+              128,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-79",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              138,
+              138,
+              "נוע"
+            ],
+            [
+              139,
+              142,
+              ""
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-80",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              0,
+              0,
+              "נוע"
+            ],
+            [
+              1,
+              4,
+              ""
+            ],
+            [
+              27,
+              28,
+              "ד"
+            ],
+            [
+              29,
+              33,
+              "ג"
+            ],
+            [
+              34,
+              36,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-80",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              1,
+              1,
+              "נוע"
+            ],
+            [
+              2,
+              5,
+              ""
+            ],
+            [
+              51,
+              52,
+              "ד"
+            ],
+            [
+              53,
+              57,
+              "ג"
+            ],
+            [
+              58,
+              60,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-85",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              42,
+              43,
+              "ד"
+            ],
+            [
+              44,
+              48,
+              "ג"
+            ],
+            [
+              49,
+              51,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-86",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              54,
+              55,
+              "ד"
+            ],
+            [
+              56,
+              60,
+              "ג"
+            ],
+            [
+              61,
+              63,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-86",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              137,
+              138,
+              "ד"
+            ],
+            [
+              139,
+              143,
+              "ג"
+            ],
+            [
+              144,
+              146,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-93",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              97,
+              97,
+              "נוע"
+            ],
+            [
+              98,
+              101,
+              ""
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-93",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              127,
+              127,
+              "נוע"
+            ],
+            [
+              128,
+              131,
+              ""
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-93",
+          "field": "title",
+          "language": "he",
+          "splices": [
+            [
+              18,
+              18,
+              "נוע"
+            ],
+            [
+              19,
+              22,
+              ""
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-99",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              34,
+              35,
+              "ד"
+            ],
+            [
+              36,
+              40,
+              "ג"
+            ],
+            [
+              41,
+              43,
+              "ג"
+            ]
+          ]
+        }
+      ]
+    },
+    "fundamentals-hardware.json": {
+      "before_sha256": "5298fb43580d1224439c9e5f07cf33c67f7747d5fe00470b59f1d38e3024759f",
+      "after_sha256": "beec3b87e4ef2308b8500aae6d90aed264541d0d78b96a2812e2e03779a651ae",
+      "changes": [
+        {
+          "id": "quick-hw-15",
+          "field": "takeaway",
+          "language": "he",
+          "splices": [
+            [
+              1,
+              2,
+              "ד"
+            ],
+            [
+              3,
+              7,
+              "ג"
+            ],
+            [
+              8,
+              10,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-15",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              0,
+              1,
+              "ד"
+            ],
+            [
+              2,
+              6,
+              "ג"
+            ],
+            [
+              7,
+              9,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-15",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              96,
+              97,
+              "ד"
+            ],
+            [
+              98,
+              102,
+              "ג"
+            ],
+            [
+              103,
+              105,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-16",
+          "field": "takeaway",
+          "language": "he",
+          "splices": [
+            [
+              0,
+              1,
+              "ד"
+            ],
+            [
+              2,
+              6,
+              "ג"
+            ],
+            [
+              7,
+              9,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-16",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              4,
+              5,
+              "ד"
+            ],
+            [
+              6,
+              10,
+              "ג"
+            ],
+            [
+              11,
+              13,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-16",
+          "field": "title",
+          "language": "he",
+          "splices": [
+            [
+              4,
+              5,
+              "ד"
+            ],
+            [
+              6,
+              10,
+              "ג"
+            ],
+            [
+              11,
+              13,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-17",
+          "field": "takeaway",
+          "language": "he",
+          "splices": [
+            [
+              0,
+              1,
+              "ד"
+            ],
+            [
+              2,
+              6,
+              "ג"
+            ],
+            [
+              7,
+              9,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-17",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              0,
+              1,
+              "ד"
+            ],
+            [
+              2,
+              6,
+              "ג"
+            ],
+            [
+              7,
+              9,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-18",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              1,
+              2,
+              "ד"
+            ],
+            [
+              3,
+              7,
+              "ג"
+            ],
+            [
+              8,
+              10,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-18",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              28,
+              29,
+              "ד"
+            ],
+            [
+              30,
+              34,
+              "ג"
+            ],
+            [
+              35,
+              37,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-22",
+          "field": "takeaway",
+          "language": "he",
+          "splices": [
+            [
+              9,
+              10,
+              "ד"
+            ],
+            [
+              11,
+              15,
+              "ג"
+            ],
+            [
+              16,
+              18,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-22",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              16,
+              17,
+              "ד"
+            ],
+            [
+              18,
+              22,
+              "ג"
+            ],
+            [
+              23,
+              25,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-22",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              88,
+              89,
+              "ד"
+            ],
+            [
+              90,
+              94,
+              "ג"
+            ],
+            [
+              95,
+              97,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-47",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              0,
+              1,
+              "ד"
+            ],
+            [
+              2,
+              6,
+              "ג"
+            ],
+            [
+              7,
+              9,
+              "ג"
+            ],
+            [
+              130,
+              131,
+              "ד"
+            ],
+            [
+              132,
+              136,
+              "ג"
+            ],
+            [
+              137,
+              139,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-47",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              64,
+              65,
+              "ד"
+            ],
+            [
+              66,
+              70,
+              "ג"
+            ],
+            [
+              71,
+              73,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-51",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              1,
+              2,
+              "ד"
+            ],
+            [
+              3,
+              7,
+              "ג"
+            ],
+            [
+              8,
+              10,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-51",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              73,
+              74,
+              "ד"
+            ],
+            [
+              75,
+              79,
+              "ג"
+            ],
+            [
+              80,
+              82,
+              "ג"
+            ],
+            [
+              123,
+              124,
+              "ד"
+            ],
+            [
+              125,
+              129,
+              "ג"
+            ],
+            [
+              130,
+              132,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-53",
+          "field": "takeaway",
+          "language": "he",
+          "splices": [
+            [
+              7,
+              8,
+              "ד"
+            ],
+            [
+              9,
+              13,
+              "ג"
+            ],
+            [
+              14,
+              16,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-53",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              6,
+              7,
+              "ד"
+            ],
+            [
+              8,
+              12,
+              "ג"
+            ],
+            [
+              13,
+              15,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-53",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              46,
+              47,
+              "ד"
+            ],
+            [
+              48,
+              52,
+              "ג"
+            ],
+            [
+              53,
+              55,
+              "ג"
+            ],
+            [
+              79,
+              80,
+              "ד"
+            ],
+            [
+              81,
+              85,
+              "ג"
+            ],
+            [
+              86,
+              88,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-57",
+          "field": "takeaway",
+          "language": "he",
+          "splices": [
+            [
+              5,
+              6,
+              "ד"
+            ],
+            [
+              7,
+              11,
+              "ג"
+            ],
+            [
+              12,
+              14,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-57",
+          "field": "prompt",
+          "language": "he",
+          "splices": [
+            [
+              84,
+              85,
+              "ד"
+            ],
+            [
+              86,
+              90,
+              "ג"
+            ],
+            [
+              91,
+              93,
+              "ג"
+            ]
+          ]
+        },
+        {
+          "id": "quick-hw-57",
+          "field": "answer",
+          "language": "he",
+          "splices": [
+            [
+              11,
+              12,
+              "ד"
+            ],
+            [
+              13,
+              17,
+              "ג"
+            ],
+            [
+              18,
+              20,
+              "ג"
+            ],
+            [
+              88,
+              89,
+              "ד"
+            ],
+            [
+              90,
+              94,
+              "ג"
+            ],
+            [
+              95,
+              97,
+              "ג"
+            ]
+          ]
+        }
+      ]
+    },
+    "fundamentals-reasoning-250.json": {
+      "before_sha256": "dac938513efb1447df2a01201d9c2c7322064d840826f41988335898b0074995",
+      "after_sha256": "dac938513efb1447df2a01201d9c2c7322064d840826f41988335898b0074995",
+      "changes": []
+    },
+    "fundamentals-reasoning-400.json": {
+      "before_sha256": "cbd671d57085d33769a2bf13ae998093fddd1d51a526f3887939024d1e6960e3",
+      "after_sha256": "cbd671d57085d33769a2bf13ae998093fddd1d51a526f3887939024d1e6960e3",
+      "changes": []
+    },
+    "fundamentals-reasoning-500.json": {
+      "before_sha256": "354b796a6111c0ee1b1d30c8d95e869d7b1078bdd6b240fed37f4b4bbe276762",
+      "after_sha256": "354b796a6111c0ee1b1d30c8d95e869d7b1078bdd6b240fed37f4b4bbe276762",
+      "changes": []
+    },
+    "fundamentals-reasoning-expansion.json": {
+      "before_sha256": "06cd576f058da9a587eb7c2603c334084155d3c67055eec3a1a88f7c0cb5a529",
+      "after_sha256": "06cd576f058da9a587eb7c2603c334084155d3c67055eec3a1a88f7c0cb5a529",
+      "changes": []
+    }
+  }
+}

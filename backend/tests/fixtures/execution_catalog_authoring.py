@@ -420,6 +420,29 @@ def batch1103_source(key):
     return (ROOT / "interview_preparation/solutions" / BATCH1103_SOURCES[key]).read_text(encoding="utf-8")
 
 
+# November 7 keeps every earlier contract and developer fixture unchanged.
+BATCH1107_SOURCES = {
+    "prep-primality-predicate-finite-input-domain": "prep_265_primality.py",
+    "prep-branch-free-saturating-speed-controls": "prep_269_speed_tables.py",
+}
+BATCH1107_ORACLES = runpy.run_path(
+    str(BACKEND / "tests/fixtures/execution_batch1107_oracles.py")
+)["ORACLES"]
+ORACLES.update(BATCH1107_ORACLES)
+
+
+def build_batch1107_contracts():
+    inputs = json.loads((BACKEND / "tests/fixtures/execution_batch1107_inputs.json").read_text(encoding="utf-8"))
+    for key, question in inputs.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = BATCH1107_ORACLES[key](*case["args"])
+    return inputs
+
+
+def batch1107_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1107_SOURCES[key]).read_text(encoding="utf-8")
+
+
 COUNTER_STIMULUS = [(1, 1), (0, 0)] + [(int(i in (15, 29)), int(i % 5 not in (0, 1))) for i in range(45)]
 SEQUENCE_STIMULUS = [(1, 1)] + [(0, int(c)) for c in "1101110111010011011010110110"] + [(1, 1)] + [(0, int(c)) for c in "1011101101"]
 
@@ -712,6 +735,7 @@ endmodule
     questions.update(build_batch22_contracts())
     questions.update(build_batch1101_contracts())
     questions.update(build_batch1103_contracts())
+    questions.update(build_batch1107_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -783,6 +807,11 @@ def build_smoke():
         syntax = f"def {entry}(*args)\n    return None\n"
         cases.append({"question_key": key, "language": "python", "correct": batch1103_source(key),
                       "wrong": wrong, "syntax_error": syntax})
+    for key, question in build_batch1107_contracts().items():
+        entry = question["languages"]["python"]["entry"]
+        cases.append({"question_key": key, "language": "python", "correct": batch1107_source(key),
+                      "wrong": f"def {entry}(*args):\n    return None\n",
+                      "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
 
@@ -1311,6 +1340,8 @@ end architecture;
         (c if filename.endswith(".c") else python)[key] = batch1101_source(key)
     for key in BATCH1103_SOURCES:
         python[key] = batch1103_source(key)
+    for key in BATCH1107_SOURCES:
+        python[key] = batch1107_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

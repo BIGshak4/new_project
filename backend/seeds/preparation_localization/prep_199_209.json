@@ -695,33 +695,41 @@
     "assumptions": {
       "he": [
         "מספר שלם לא שלילי בייצוג בינארי רגיל; אפס ואפסים מובילים מותרים.",
-        "לניתוח זמן קבוע מניחים ערך זמין במילת מכונה ומחלקים קבועים 2,4,8."
+        "לניתוח זמן קבוע מניחים ערך זמין במילת מכונה ומחלקים קבועים 2,4,8.",
+        "שתי חלופות נפרדות על מודולו7: הכנסה מימין או משקל נמוך תחילה.",
+        "rst גובר, bit_valid=0 משמר את כל המצב, פלט ריק0; אפס לא־ריק מתחלק."
       ],
       "en": [
         "Nonnegative ordinary binary integer; zero and leading zeros allowed.",
-        "Constant-time analysis assumes a value already in a machine word and the fixed divisors two, four and eight."
+        "Constant-time analysis assumes a value already in a machine word and the fixed divisors two, four and eight.",
+        "Separate modulo7 right-append and lowest-weight-first contracts.",
+        "Reset overrides, invalid cycles hold all state, empty output0; nonempty zero is divisible."
       ]
     },
     "optimality": {
-      "he": "התחלקות ב־2^k שקולה לאפס ב־k הסיביות הנמוכות. שלוש הבדיקות הקבועות דורשות O(1) פעולות מילים; קלט טקסטואלי דורש O(L) לאימותו. אין טענת קבוע בביטים למספרים ול־k בלתי חסומים.",
-      "en": "Divisibility by 2^k is equivalent to zero in the low k bits. The three fixed tests take O(1) word operations; validating text takes O(L). No constant-bit-cost claim for unbounded numbers and k."
+      "he": "התחלקות ב־2^k שקולה לאפס ב־k הסיביות הנמוכות. שלוש הבדיקות הקבועות דורשות O(1) פעולות מילים; קלט טקסטואלי דורש O(L) לאימותו. אין טענת קבוע בביטים למספרים ול־k בלתי חסומים.\n\nמימוש ראשי:3 ביטי שארית ו־seen; חלופה ישירה:3 ביטי שארית,2 ביטי פאזה ו־seen. עדכון בעל רוחב קבוע, ללא אחסון המספר כולו או טענת מינימום.",
+      "en": "Divisibility by 2^k is equivalent to zero in the low k bits. The three fixed tests take O(1) word operations; validating text takes O(L). No constant-bit-cost claim for unbounded numbers and k.\n\nPrimary: three remainder bits plus seen; direct alternative: three remainder bits, two phase bits and seen. Constant-width update without storing the complete integer or claiming a minimum."
     },
     "verification": {
-      "he": "65,536 קלטי 16 סיביות נבדקו בכל שלוש הבדיקות. בנוסף בוצעו 589,852 השוואות כלליות של חזקה ומסכה מול שארית, כולל ערכים סביב 2^200.",
-      "en": "All 65,536 16-bit inputs were checked for the three divisors. General exponent tests made 589,852 mask-versus-remainder comparisons, including values around 2^200."
+      "he": "65,536 קלטי 16 סיביות נבדקו בכל שלוש הבדיקות. בנוסף בוצעו 589,852 השוואות כלליות של חזקה ומסכה מול שארית, כולל ערכים סביב 2^200.\n\n360,456 בדיקות Python לכל הקידומות של כל המילים באורכים1..12 השוו שאריות ופלטים לשחזור מספר שלם עצמאי בשני סדרי הקלט. הרתמה המתוקנת קומפלה והורצה בפועל ב־Icarus12:172,128 בדיקות עברו, כולל שתי חלופות מודולו7, איפוס ו־valid. ראיה: checks/batch1107-native206-correction-verification.json. אין סינתזה או אישור תזמון/CDC פיזי.",
+      "en": "All 65,536 16-bit inputs were checked for the three divisors. General exponent tests made 589,852 mask-versus-remainder comparisons, including values around 2^200.\n\n360,456 Python checks over all prefixes of all words length1..12 compare exact remainders and outputs with independent integer reconstruction in both input orders. The corrected combined harness was compiled/run with Icarus12:172,128 checks passed, including both modulo7 variants, reset and valid. Evidence: checks/batch1107-native206-correction-verification.json. No synthesis or physical timing/CDC closure is claimed."
     },
     "edge_cases": {
       "he": [
         "0 מתחלק בכל מחלק חיובי מבין אלה.",
         "1 אינו מתחלק ב־2,4,8; 2 מתחלק רק ב־2; 4 ב־2 וב־4.",
         "מספר קצר מושלם באפסים משמאל; אפסים מובילים אינם משנים ערך.",
-        "k=0 משמעו חלוקה ב־1."
+        "k=0 משמעו חלוקה ב־1.",
+        "מילה ריקה,0 ו־1 בודדים,111=7,100=4, גלישות שארית.",
+        "איפוס באמצע מילה, valid=0 ופאזה שאינה מתקדמת במחזור לא תקף."
       ],
       "en": [
         "Zero is divisible by each specified positive divisor.",
         "One passes none; two passes only divisor two; four passes two and four.",
         "Short representations are left-zero-padded; leading zeros preserve value.",
-        "k=0 means divisor one."
+        "k=0 means divisor one.",
+        "Empty word, single0/1,111=7,100=4 and remainder wrap.",
+        "Midword reset, invalid cycles and phase holding when no bit is accepted."
       ]
     },
     "common_mistakes": {
@@ -729,25 +737,29 @@
         "לבדוק סיבית במיקום 2 או 3 בלבד במקום את כל הסיומת הנמוכה.",
         "להשתמש במסכה 4 לבדיקת התחלקות ב־4 במקום במסכה 3.",
         "לבלבל התחלקות בחזקה של שתיים עם היות המספר חזקה של שתיים.",
-        "לטעון לזמן קבוע גם כאשר חייבים לסרוק ולאמת מחרוזת ארוכה."
+        "לטעון לזמן קבוע גם כאשר חייבים לסרוק ולאמת מחרוזת ארוכה.",
+        "בדיקת שתי סיביות אחרונות במקום שארית7; החלפת סדרי קלט; שכחת פאזה ב־LSB-first; גלישה לפני חיסור; פלט1 למילה ריקה."
       ],
       "en": [
         "Inspecting bit two or three alone instead of the entire low suffix.",
         "Using mask four for divisibility by four instead of mask three.",
         "Confusing divisible by a power of two with being a power of two.",
-        "Claiming constant time while parsing and validating a long text input."
+        "Claiming constant time while parsing and validating a long text input.",
+        "Checking final two bits instead of modulo7; interchanging input orders; losing LSB-first phase; truncating before subtraction; reporting an empty word as valid."
       ]
     },
     "interview_answer": {
-      "he": "הסיבית הנמוכה קובעת התחלקות ב־2; שתי הנמוכות חייבות להיות 00 ל־4, ושלוש הנמוכות 000 ל־8. כל שאר הסיביות כבר תורמות כפולות של המחלק, ולכן בדיקת הסיומת מספיקה. אפס עובר את כולן.",
-      "en": "The low bit must be zero for two, the low pair 00 for four, and the low triple 000 for eight. Higher bits already contribute multiples of the divisor, so the suffix is sufficient. Zero passes all three."
+      "he": "הסיבית הנמוכה קובעת התחלקות ב־2; שתי הנמוכות חייבות להיות 00 ל־4, ושלוש הנמוכות 000 ל־8. כל שאר הסיביות כבר תורמות כפולות של המחלק, ולכן בדיקת הסיומת מספיקה. אפס עובר את כולן.\n\nאשמור את השארית בשבע. בהכנסה מימין rnext=(2r+b) mod7; אם המשקל הנמוך מגיע ראשון, אוסיף b כפול משקל מחזורי1,2,4 ואקדם פאזה.",
+      "en": "The low bit must be zero for two, the low pair 00 for four, and the low triple 000 for eight. Higher bits already contribute multiples of the divisor, so the suffix is sufficient. Zero passes all three.\n\nStore a remainder modulo7. For right append rnext=(2r+b) mod7; for lowest-weight-first add b times cyclic weight1,2,4 and advance the phase."
     },
     "source_ambiguities": {
       "he": [
-        "המקור אינו מגדיר סימן, רוחב או שבר. העריכה בוחרת מספר שלם לא שלילי ומפרידה קריאת טקסט מפעולת הסיביות."
+        "המקור אינו מגדיר סימן, רוחב או שבר. העריכה בוחרת מספר שלם לא שלילי ומפרידה קריאת טקסט מפעולת הסיביות.",
+        "המקור אומר התחלקות בשבע וכניסה ״ל־LSB״. שתי משמעויות סדר הקלט מוצגות בנפרד; סעיף ההמשך שנשכח אינו משוחזר."
       ],
       "en": [
-        "The source omits signedness, width and fractional semantics. The edited contract selects nonnegative integers and separates parsing from bit tests."
+        "The source omits signedness, width and fractional semantics. The edited contract selects nonnegative integers and separates parsing from bit tests.",
+        "The source says divisibility by seven and insertion into the LSB. The two arrival-order interpretations are separate; the forgotten follow-up is not reconstructed."
       ]
     },
     "solution_extensions": {
@@ -756,6 +768,11 @@
           "question": "מהו המחלק הגדול ביותר שהוא חזקה של שתיים עבור מספר חיובי?",
           "answer_direction": "ספרו את מספר האפסים הרצופים מה־LSB. אם יש k כאלה, 2^k מחלק את המספר אך 2^(k+1) אינו מחלק. אפס דורש טיפול נפרד כי אין לו חזקה מרבית כזו.",
           "principle": "הופכים בדיקת סיומת לניתוח של מספר האפסים הסופיים."
+        },
+        {
+          "question": "שאלת המשך שלנו: איך משתנה המימוש למודולוס חיובי אחר?",
+          "direction": "בהכנסה מימין משתמשים ב־(2r+b) modm. ב־LSB-first צריך לעקוב אחר2^k modm או לבחור קידוד אחר ולהוכיחו; מחזור המשקלים תלוי ב־m.",
+          "tests": "הכללת אינווריאנט השארית והבחנה בין סדרי קלט."
         }
       ],
       "en": [
@@ -763,8 +780,35 @@
           "question": "What is the largest power-of-two divisor of a positive number?",
           "answer_direction": "Count trailing zero bits. With k trailing zeros, 2^k divides the number but 2^(k+1) does not. Zero needs separate treatment because no greatest such divisor exists.",
           "principle": "Extend a suffix test to trailing-zero analysis."
+        },
+        {
+          "question": "Our authored follow-up: how does another positive modulus change the machine?",
+          "direction": "Right append uses (2r+b) modm. Lowest-weight-first tracks2^k modm or uses another proved encoding; the weight cycle depends on m.",
+          "tests": "Generalizing remainder invariants while preserving input order."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch1107_serial_into_lsb_and_lsb_first": {
+          "prompt": "### וריאציה מקושרת: מכונה טורית להתחלקות בשבע\nבנו מכונת מצבים המקבלת ביט בכל מחזור ומחזירה האם המספר הנוכחי מתחלק בשבע. המקור אומר ״ל־LSB״: בקריאה העיקרית ביט חדש מוכנס מימין, ולכן Nnext=2N+b. הציגו מצבים, טבלת מעברים, פלט ומימוש.\n\nבנפרד נתחו חלופת LSB-first אמיתית: סיבית המשקל1 מגיעה ראשונה ואחריה משקלים2,4,8,..., ולכן Nnext=N+b·2^k. זהו סדר קלט שונה, שיש לו משוואת מצב אחרת.\n\nהבהרות לשתי החלופות: כל חזית עולה עם bit_valid=1 מקבלת ביט;0 משמר מצב. rst סינכרוני פעיל בגבוה גובר ומתחיל מילה חדשה. הפלט מתאר את הקידומת הלא־ריקה אחרי החזית; במילה ריקה הפלט0. אפסים מותרים והמספר0 מתחלק בשבע. אין לאחסן את המספר השלם, ואין מגבלת אורך מילה. השאלה המקורית על התחלקות ב־2,4,8 נשמרת בחלקה הקודם; זהו תרגיל טורי נפרד על7. במקור מוזכר סעיף המשך שנשכח: הוא נשאר לא ידוע; ההמשך המוצע שלנו הוא חומר ערוך.",
+          "hints": [
+            "בררו כיצד ביט חדש משנה את המספר: כניסה מימין או הגעת המשקל הנמוך תחילה. איזה מידע על המספר דרוש להכרעת התחלקות בשבע?",
+            "בהכנסה מימין, אם המספר הוא7q+r, אחרי הביט b הוא14q+2r+b. לכן רק השארית r נחוצה.",
+            "השתמשו בשבע שאריות0..6 ובעדכון (2r+b) mod7. בחלופת LSB-first עקבו גם אחר משקל הביט modulo7: המחזור הוא1,2,4."
+          ]
+        }
+      },
+      "en": {
+        "batch1107_serial_into_lsb_and_lsb_first": {
+          "prompt": "### Linked variant: serial divisibility by seven\nBuild a machine accepting one bit per cycle and indicating whether the current number is divisible by seven. The source says into the LSB: the primary reading appends at the right, Nnext=2N+b. Give states, a transition table, output and implementation.\n\nSeparately analyze true LSB-first arrival: weight1 arrives first, then2,4,8,..., so Nnext=N+b·2^k. That is a different input order and requires a different state update.\n\nFor both alternatives, a rising edge with bit_valid1 accepts a bit; zero holds. Synchronous active-high rst overrides and begins a word. Output describes the nonempty prefix after capture, with output0 for the empty word. Zeros are legal and zero is divisible by seven. Do not store the whole integer; word length is unbounded. The preceding original2/4/8 exercise remains unchanged; this is a separate serial7 exercise. The forgotten source follow-up remains unknown; our proposed follow-up is explicitly authored material.",
+          "hints": [
+            "First define how a new bit changes the number: right append or lowest-weight-first arrival. What information suffices for divisibility by seven?",
+            "For right append, write N=7q+r: the next value is14q+2r+b, so only r matters.",
+            "Use seven remainders0..6 with update (2r+b) mod7. For true LSB-first also track the bit weight modulo7, repeating1,2,4."
+          ]
+        }
+      }
     }
   }
 }

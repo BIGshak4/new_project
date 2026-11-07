@@ -18,6 +18,7 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+from tests.solution_review_history import expected_reviewed_keys
 from tests.test_practice_hardening import GOOD, SEEDS, scripted
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -41,12 +42,12 @@ def test_compilation_preserves_every_question_and_all_original_images(catalog):
     built, uploads = builder.load()
     assert built == json.loads((SEEDS / "questions/preparation_bank.json").read_text(encoding="utf-8"))
     assert uploads == manifest["files"]
-    assert len(source["questions"]) == len(built) == 255
+    assert len(source["questions"]) == len(built) == 270
     for q in built:
         for media in q["assets"]["bank_media"]:
             if any(word in media["filename"] for word in ("external-answer", "clarification", "style-reference", "course-adder-summary")):
                 assert media["role"] == "solution", "An explanation screenshot must never leak before reference reveal"
-    assert len(catalog.questions) == 285
+    assert len(catalog.questions) == 300
     archived_images = {p.relative_to(ROOT / "interview_preparation").as_posix()
                        for folder in ("sources", "diagrams")
                        for p in (ROOT / "interview_preparation" / folder).glob("*.png")}
@@ -156,7 +157,7 @@ async def test_unsafe_storage_path_is_rejected_before_network():
 async def test_archive_screenshots_never_receive_learner_links(catalog):
     archive = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])
                if m.get("source_path", "").startswith("sources/")]
-    assert len(archive) == 415
+    assert len(archive) == 445
     # No credentials or network needed: the boundary applies before signing.
     assert await question_resources.sign_media(archive, "", "") == []
     all_media = [m for q in catalog.questions.values() for m in q.assets.get("bank_media", [])]
@@ -214,32 +215,7 @@ def test_third_intake_is_bilingual_study_only_and_preserves_frozen_solution_revi
     registry = json.loads((SEEDS / "solution_review_attestations.json").read_text(encoding="utf-8"))
     reviewed = {q.key for q in catalog.questions.values() if solution_review(q).status == "human_reviewed"}
     assert len(registry["questions"]) == 93
-    assert reviewed == set(registry["questions"]) - {
-        "prep-power-of-two-check",
-        "prep-unique-odd-frequency-digit",
-        "prep-clock-hands-angle-six-thirty",
-        "prep-two-crystal-balls-hundred-floors",
-        "prep-xor-from-high-impedance-components",
-        "prep-seventeen-prisoners-two-mandatory-switches",
-        "prep-identical-robots-trains-static-marker-rendezvous",
-        "prep-xor-mux-zero-only",
-        "prep-one-two-missing-values",
-        "prep-three-bit-up-down-counter-gates",
-        "prep-eight-bit-popcount-adders",
-        "prep-three-color-in-place-partition",
-        "prep-twenty-one-prisoners-one-light",
-        "prep-circuit-from-clock-input-output-waveforms",
-        "prep-serial-safe-abcd-sequence-detector",
-        "prep-twenty-five-horses",
-        "prep-dark-room-ten-tails-equal-groups",
-        "prep-balanced-brackets-mixed-text",
-        "prep-doorway-occupancy-two-sensors",
-        "prep-sixteen-input-interrupt-controller",
-        "prep-random-permutation-fisher-yates",
-        "prep-bridge-torch-twelve-hours",
-        "prep-boolean-function-two-muxes",
-        "prep-serial-binary-divisibility-by-three-fsm",
-    }
+    assert reviewed == expected_reviewed_keys()
     assert not (set(q.key for q in additions.values()) & reviewed)
 
 

@@ -92,3 +92,16 @@ At the outer boundary after k iterations the invariant is (r1,r2,r3,r4)=(a,b-k,0
 Exactly 5ab+b increment/decrement instructions plus branch overhead. For positive inputs time is Theta(ab), space four registers (O(1) registers, not O(1) bits for unbounded values). This is asymptotically time-optimal for the specified instruction set: starting r4 at zero and only modifying it by one means at least ab increments of r4 are necessary. No claim of exact minimum instruction count. Each if is a conditional branch; DONE is program completion. Do not replace transfers with forbidden assignments or additions, forget restoration, or use hidden extra counters. Interview summary: count repetitions in r2, preserve consumed r1 through temporary r3, restore it after each repeated addition.
 
 Verification: 965 interpreted cases passed. AI-assisted proposal; no expert review.
+
+
+## מקור נוסף — 07.11.2026, מקבץ 20
+
+[צילום מקור פרטי 6](../sources/2026-11-07-batch30-06.png)
+
+יש רגיסטרים R1,R2,R3,R4. כתוב אסמבלי המממש R4=R1*R2 באמצעות Inc (מוסיף 1), Dec (מחסיר 1), Clear (מאפס) ו-Jump_nz (מקבל רגיסטר וכתובת וקופץ אם הרגיסטר אינו אפס).
+
+שיוכי מקור מדווחים: NVIDIA.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-035-named_register-batch1107-addendum.md)

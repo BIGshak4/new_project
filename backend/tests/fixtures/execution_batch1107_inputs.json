@@ -1,0 +1,167 @@
+{
+  "prep-primality-predicate-finite-input-domain": {
+    "contract": {
+      "he": "ממשו is_prime(n), המחזירה bool לבדיקת ראשוניות של קלט unsigned בטווח 0..2^32−1. זהו פרופיל תוכנה שקול לפונקציה הלוגית בלבד; אינו בודק את busy/valid, שטח או תזמון של החומרה.",
+      "en": "Implement is_prime(n), returning bool for unsigned 0..2^32−1. This software profile checks the logical predicate only, not hardware busy/valid, area or timing."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "is_prime",
+        "cases": [
+          {
+            "args": [
+              0
+            ]
+          },
+          {
+            "args": [
+              1
+            ]
+          },
+          {
+            "args": [
+              2
+            ]
+          },
+          {
+            "args": [
+              3
+            ]
+          },
+          {
+            "args": [
+              4
+            ]
+          },
+          {
+            "args": [
+              9
+            ]
+          },
+          {
+            "args": [
+              25
+            ]
+          },
+          {
+            "args": [
+              49
+            ]
+          },
+          {
+            "args": [
+              97
+            ]
+          },
+          {
+            "args": [
+              341
+            ]
+          },
+          {
+            "args": [
+              561
+            ]
+          },
+          {
+            "args": [
+              65521
+            ]
+          },
+          {
+            "args": [
+              4293001441
+            ]
+          },
+          {
+            "args": [
+              2147483647
+            ]
+          },
+          {
+            "args": [
+              4294967291
+            ]
+          },
+          {
+            "args": [
+              4294967295
+            ]
+          }
+        ],
+        "starter": "def is_prime(n):\n    raise NotImplementedError\n"
+      }
+    }
+  },
+  "prep-branch-free-saturating-speed-controls": {
+    "contract": {
+      "he": "ממשו speed_controls(speed) המחזירה [gas(speed),brake(speed)] עבור int מובטח בין 0 ל־10. הפלטים רוויים ב־10 וב־0 בהתאמה. בדיקות פלט אינן מוכיחות שהקוד חסר if/while; מגבלת התחביר נבדקת בנפרד.",
+      "en": "Implement speed_controls(speed), returning [gas(speed),brake(speed)] for a promised integer 0..10, saturated at ten and zero respectively. Output tests do not prove the no-if/while source constraint; inspect syntax separately."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "speed_controls",
+        "cases": [
+          {
+            "args": [
+              0
+            ]
+          },
+          {
+            "args": [
+              1
+            ]
+          },
+          {
+            "args": [
+              2
+            ]
+          },
+          {
+            "args": [
+              3
+            ]
+          },
+          {
+            "args": [
+              4
+            ]
+          },
+          {
+            "args": [
+              5
+            ]
+          },
+          {
+            "args": [
+              6
+            ]
+          },
+          {
+            "args": [
+              7
+            ]
+          },
+          {
+            "args": [
+              8
+            ]
+          },
+          {
+            "args": [
+              9
+            ]
+          },
+          {
+            "args": [
+              10
+            ]
+          }
+        ],
+        "starter": "def speed_controls(speed):\n    raise NotImplementedError\n"
+      }
+    }
+  }
+}

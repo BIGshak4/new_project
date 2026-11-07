@@ -22,6 +22,8 @@ from app.repo.questions import LoadedQuestion, summary
 from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
+from tests.fundamentals_copy_history import before_learner_copy_short_manifest
+from tests.learner_copy_history import before_learner_copy_text
 from tests.preparation_history import technical_before_batch90, technical_before_batch110
 from tests.test_practice_hardening import scripted
 
@@ -1193,7 +1195,7 @@ def test_thirty_sources_keep_bytes_full_transcriptions_and_exact_identity_mappin
 
 def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_prefixes(catalog):
     questions = archive()
-    assert len(questions) == 255 and len(catalog.questions) == 285
+    assert len(questions) == 270 and len(catalog.questions) == 300
     current_runtime = {q.assets.get("preparation_id"): q for q in catalog.questions.values() if q.assets.get("preparation_id")}
     for ident, expected in UNCHANGED_TECHNICAL_SHA256.items():
         original = questions[ident]
@@ -1212,7 +1214,7 @@ def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_p
             assert digest({key: raw.get(key) for key in ("title", "hint", "hints")}) == prior["raw_hint_title_sha256"]
             assert digest({"title": live.title, "hints": list(live.hints)}) == prior["runtime_hint_title_sha256"]
             for field in ("prompt", "reference_solution"):
-                for kind, value in (("raw", raw[field]), ("runtime", getattr(live, field))):
+                for kind, value in (("raw", raw[field]), ("runtime", before_learner_copy_text(runtime.key, language, field, getattr(live, field)))):
                     prefix = prior[kind][field]
                     assert len(value) > prefix["length"]
                     assert hashlib.sha256(value[:prefix["length"]].encode()).hexdigest() == prefix["sha256"], (ident, language, kind, field)
@@ -1254,7 +1256,7 @@ def test_inventory_retains_old_asset_hashes_and_private_originals(catalog):
         assert by_local[path]["sha256"] == previous_digest
         assert hashlib.sha256((BANK / path).read_bytes()).hexdigest() == previous_digest
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 415 and len(set(sources)) == 413
+    assert len(sources) == 445 and len(set(sources)) == 443
     names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(names) == {Path(path).name for path in sources}
     for question in catalog.questions.values():
@@ -1273,7 +1275,7 @@ def test_existing_250_short_questions_and_frozen_attestations_are_unchanged():
     for relative, expected in UNTOUCHED_FILE_SHA256.items():
         data = (ROOT / relative).read_bytes()
         if relative == "backend/seeds/fundamentals_catalog.json":
-            original = json.loads(data)
+            original = before_learner_copy_short_manifest(json.loads(data))
             original["questions"] = {key: value for key, value in original["questions"].items()
                                      if int(key.rsplit("-", 1)[1]) <= 125}
             data = (json.dumps(original, ensure_ascii=False, indent=2) + "\n").encode()

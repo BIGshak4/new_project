@@ -4,6 +4,8 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from tests.fundamentals_copy_history import before_learner_copy_short_file
+
 ROOT = Path(__file__).resolve().parents[2]
 CONTENT = ROOT / "apps/web/src/content"
 ORIGINAL = ("fundamentals-hardware.json", "fundamentals-code-logic.json")
@@ -18,7 +20,7 @@ def cards(names):
 
 
 def test_all_120_original_cards_are_unchanged_including_ids_and_nested_content():
-    original = cards(ORIGINAL)
+    original = [card for name in ORIGINAL for card in before_learner_copy_short_file(name, cards((name,)))]
     canonical = json.dumps(original, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     assert len(original) == 120
     assert hashlib.sha256(canonical.encode()).hexdigest() == (
@@ -49,7 +51,7 @@ def test_each_added_card_has_its_actual_revision_in_both_runtime_manifests():
 
 
 def test_all_200_previous_cards_and_revisions_are_frozen():
-    old = cards(ORIGINAL + ADDED)
+    old = [card for name in ORIGINAL + ADDED for card in before_learner_copy_short_file(name, cards((name,)))]
     assert len(old) == 200
     canonical = json.dumps(old, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     assert hashlib.sha256(canonical.encode()).hexdigest() == (

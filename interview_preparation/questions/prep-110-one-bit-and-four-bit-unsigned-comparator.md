@@ -428,3 +428,14 @@ Exhaustive checks covered all 87,380 unsigned operand pairs across widths 1..8 f
 - [solutions/prep_batch20_combinational.py](../solutions/prep_batch20_combinational.py)
 - [diagrams/prep-110-combinational-batch20-he.png](../diagrams/prep-110-combinational-batch20-he.png)
 - [diagrams/prep-110-combinational-batch20-en.png](../diagrams/prep-110-combinational-batch20-en.png)
+
+
+## מקור נוסף — 07.11.2026, מקבץ 20
+
+[צילום מקור פרטי 16](../sources/2026-11-07-batch30-16.png)
+
+רכיב מקבל שתי סיביות x,y. מוציא 1 אם x גדול מ-y, ואחרת 0.
+
+שיוכי מקור מדווחים: NVIDIA.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

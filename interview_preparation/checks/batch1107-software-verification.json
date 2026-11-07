@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "checked_on": "2026-11-07",
+  "evidence_scope": "Executed Python/local processes only; RTL separate",
+  "questions": {
+    "265": {
+      "exhaustive_nonnegative_through": 20000,
+      "boundary_cases": 6,
+      "invalid_cases": 4,
+      "oracle": "independent full-range sieve plus known integer identities",
+      "hdl_executed_by_this_check": false
+    },
+    "266": {
+      "real_local_subprocess_cases": 6,
+      "mock_launch_failure": 1,
+      "mock_invalid_utf8": 1,
+      "semantic_zero_exit_counterexample": true,
+      "external_process_sources": false
+    },
+    "267": {
+      "fake_transport_successes": 4,
+      "fake_transport_failures": 14,
+      "cli_output_contracts": 2,
+      "external_http_requests": 0
+    },
+    "268": {
+      "new_sends": 30,
+      "deduplicated_retries": 30,
+      "cursor_snapshots": 31,
+      "invalid_and_disconnected_cases": 9,
+      "scope": "application model only; no socket/browser/load test"
+    },
+    "269": {
+      "exhaustive_calls": 22,
+      "long_saturation_calls": 660,
+      "ast_forbidden_control_flow_absent": true,
+      "domain": "promised integers 0..10 only"
+    },
+    "19": {
+      "exhaustive_arrays": 8191,
+      "lengths": "0..12",
+      "oracle": "independent sorting; same list identity"
+    },
+    "41": {
+      "exhaustive_domain_sizes": "0..200",
+      "omission_cases": 20301,
+      "input_unchanged": true
+    },
+    "35": {
+      "input_and_dirty_scratch_cases": 5625,
+      "exact_interpreter": "CLEAR INC DEC named-register JUMP_NZ only",
+      "no_negative_decrement": true,
+      "completion": "fall-through END"
+    },
+    "182": {
+      "valid_board_traces": 11004,
+      "rejected_outside_or_invalid_cases": 2120,
+      "headings": 4,
+      "command_lengths": "0..7",
+      "oracle": "independent complex motion"
+    }
+  }
+}

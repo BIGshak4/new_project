@@ -93,7 +93,7 @@ CSV_EXPECTED = {
 
 def test_manifest_is_versioned_and_all_contracts_belong_to_current_catalog():
     assert MANIFEST["version"] == 1
-    assert len(QUESTIONS) == 39
+    assert len(QUESTIONS) == 41
     assert set(QUESTIONS) <= CATALOG.keys()
     for question in QUESTIONS.values():
         assert set(question["contract"]) == {"he", "en"}

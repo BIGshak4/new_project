@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "live": true,
+    "kind": "all-authored-positive-execution",
+    "executor": "https://jobrun-executor-job-runer.vercel.app",
+    "started_at": "2026-11-07T12:21:10.377Z",
+    "finished_at": "2026-11-07T12:21:24.927Z",
+    "concurrency": 1,
+    "checked": 2,
+    "passed": 2,
+    "failed": 0,
+    "question_count": 2,
+    "languages": [
+      "python"
+    ]
+  },
+  "rows": [
+    {
+      "question": "prep-primality-predicate-finite-input-domain",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 16,
+      "passed_count": 16,
+      "runtime_ms": 6170
+    },
+    {
+      "question": "prep-branch-free-saturating-speed-controls",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 11,
+      "passed_count": 11,
+      "runtime_ms": 4394
+    }
+  ]
+}

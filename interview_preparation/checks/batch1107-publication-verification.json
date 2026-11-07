@@ -1,0 +1,142 @@
+{
+  "verified_at": "2026-11-07T13:05:31.087058+00:00",
+  "status": "database_and_assets_verified",
+  "integration": {
+    "new": [
+      "PREP-257",
+      "PREP-258",
+      "PREP-259",
+      "PREP-260",
+      "PREP-261",
+      "PREP-262",
+      "PREP-263",
+      "PREP-264",
+      "PREP-265",
+      "PREP-266",
+      "PREP-267",
+      "PREP-268",
+      "PREP-269",
+      "PREP-270",
+      "PREP-271"
+    ],
+    "content_updates": [
+      "PREP-019",
+      "PREP-035",
+      "PREP-041",
+      "PREP-065",
+      "PREP-182",
+      "PREP-206"
+    ],
+    "provenance_only": [
+      "PREP-009",
+      "PREP-011",
+      "PREP-037",
+      "PREP-045",
+      "PREP-070",
+      "PREP-077",
+      "PREP-110",
+      "PREP-112"
+    ],
+    "affected": 29,
+    "source_count": 30,
+    "question_source_count": 29,
+    "primary": {
+      "PREP-257": "binary_arithmetic",
+      "PREP-261": "debugging_methodology",
+      "PREP-262": "number_representation",
+      "PREP-263": "boolean_algebra",
+      "PREP-264": "clock_domain_crossing",
+      "PREP-265": "fsm_state_tables",
+      "PREP-266": "debugging_methodology",
+      "PREP-267": "debugging_methodology",
+      "PREP-268": "debugging_methodology",
+      "PREP-269": "arrays_and_search",
+      "PREP-258": "tradeoff_reasoning",
+      "PREP-259": "tradeoff_reasoning",
+      "PREP-260": "tradeoff_reasoning",
+      "PREP-270": "arrays_and_search",
+      "PREP-271": "arrays_and_search"
+    }
+  },
+  "transaction": {
+    "project_ref": "djpwvqpsqbkvprlncjjg",
+    "dry_run_rollback_verified": true,
+    "commit_verified": true,
+    "content_only": true,
+    "new_questions": 15,
+    "existing_content_updates": 6,
+    "source_only_updates": 8,
+    "learners_written": false
+  },
+  "readback": {
+    "project_ref": "djpwvqpsqbkvprlncjjg",
+    "question_count": 300,
+    "translation_count": 600,
+    "skill_count": 320,
+    "new_records": 15,
+    "new_primary_skill_links": 15,
+    "canonicalized_examples": 0,
+    "provenance_only_updates": 8,
+    "existing_content_revisions": [
+      "PREP-019",
+      "PREP-035",
+      "PREP-041",
+      "PREP-065",
+      "PREP-182",
+      "PREP-206"
+    ],
+    "existing_identities_preserved": 285,
+    "unrelated_question_fingerprints_preserved": 271,
+    "unchanged_existing_translations": 558,
+    "expanded_translation_prefixes_and_hints_preserved": 12,
+    "existing_skill_links_preserved": 305,
+    "affected_question_rows_read_back": 29,
+    "affected_translation_rows_read_back": 58,
+    "private_bucket": true,
+    "learner_writes": false
+  },
+  "asset_upload": {
+    "bucket_private": true,
+    "objects_verified": 99
+  },
+  "catalog": {
+    "raw_records": 300,
+    "unique_families": 295,
+    "archived_preparation_records": 270,
+    "source_references": 445,
+    "unique_source_filenames": 443,
+    "private_asset_manifest": 1557,
+    "new_source_images": 30,
+    "new_clean_diagrams": 46,
+    "new_code_asset_references": 23
+  },
+  "runtime": {
+    "old_profiles_preserved": 39,
+    "current_profiles": 41,
+    "positive_fixtures": 80,
+    "smoke_fixtures": 21,
+    "new_cases": 27,
+    "new_keys": [
+      "prep-branch-free-saturating-speed-controls",
+      "prep-primality-predicate-finite-input-domain"
+    ],
+    "old_execution_sha256": "04ed97661dc2abc1672a6e8a56d901610a53b9d2b8e8ecb47c88d5e61f1d7e4e"
+  },
+  "unchanged_short_banks": {
+    "fundamentals": 500,
+    "quiz_raw": 2540,
+    "quiz_active": 2500
+  },
+  "backup_location": "Outside Git: C:/Projects/Job_Run/backups/intake-20261107-batch30-{before,after}.json",
+  "schema_auth_rls_or_learner_changes": false,
+  "publication_protocol_changed": false,
+  "deployment": "Exact deployed revisions recorded separately in batch1107-deployment-verification.json after Git push.",
+  "post_publication_correction": {
+    "preparation_id": "PREP-206",
+    "old_version": 2,
+    "corrected_version": 3,
+    "reason": "Source13 says divisor7; replace the mistaken newly authored divisor4 suffix while preserving the historical2/4/8 base.",
+    "additional_clarification": "PREP-269 labels unit speed steps as editorial assumptions, with no functional/runtime change.",
+    "five_superseded_private_objects": "Retained for version history; five corrected asset objects are referenced by the final99-new-asset manifest."
+  }
+}

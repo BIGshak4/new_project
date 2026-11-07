@@ -1,0 +1,630 @@
+{
+  "received_on": "2026-11-07",
+  "screenshot_count": 30,
+  "question_source_count": 29,
+  "duplicate_statement_pairs": [
+    [
+      12,
+      14
+    ]
+  ],
+  "sources": [
+    {
+      "screenshot": 1,
+      "question_source": 1,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-01.png"
+      ],
+      "sha256": "3927086fa3fa2ff31a634275a52595549d46e52e2e558730cd51716c571417b6",
+      "original_prompt": "תכנן מערכת המכפילה ב-5. כניסה: 4 ביטים. יציאה: להציג את התוצאה בשתי ספרות עשרוניות A,B.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-257"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 2,
+      "question_source": 2,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-02.png"
+      ],
+      "sha256": "c9a82886d32b1f4565385507a626bbb4f9c5af5f2a9afe51526d502acdca140f",
+      "original_prompt": "נתון מערך של מספרים שלמים, לדוגמה 1,2,3,5,6,7,... וגודל המערך n. רשום פונקציה שמחזירה את ערך המספר שדילגו עליו, בדוגמה 4.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-041"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 3,
+      "question_source": 3,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-03.png"
+      ],
+      "sha256": "e8354fb5ef3d43c5c9755ba0f9013a87c4e4f9cfd12be35be21444ab802ada05",
+      "original_prompt": "בנה דלגלג SR מן DFF. פעם שאם בכניסה 11 יוצא 1; פעם אחרת שאם בכניסה 11 יוצא 0.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-065"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 4,
+      "question_source": 4,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-04.png"
+      ],
+      "sha256": "81c1b5fe022aece493c2ef3c5986cd299290cebe6df99ff9145f05507fe04244",
+      "original_prompt": "Build the following function out of 2:1 muxs. f = (a(bc)')'",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-011"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "question_source": 5,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-05.png"
+      ],
+      "sha256": "30781515960931b4ddb1920b828a13a6ed6742cea9c232f422ec9ad3494eab1c",
+      "original_prompt": "ממש XOR בעזרת MUX 2:1 וקבועים 0,1.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-070"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 6,
+      "question_source": 6,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-06.png"
+      ],
+      "sha256": "a8efb7df6aa7579e4f8dec0dc2f25bd17461d8f6b6665b87bc91426e2b63d588",
+      "original_prompt": "יש רגיסטרים R1,R2,R3,R4. כתוב אסמבלי המממש R4=R1*R2 באמצעות Inc (מוסיף 1), Dec (מחסיר 1), Clear (מאפס) ו-Jump_nz (מקבל רגיסטר וכתובת וקופץ אם הרגיסטר אינו אפס).",
+      "source_tags": [
+        "nvidia",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-035"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 7,
+      "question_source": 7,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-07.png"
+      ],
+      "sha256": "49d519bd2b82584e75374943837b1ba5a99ec7e3126c3d2f0c827494c5418e73",
+      "original_prompt": "ממש מערכת שמחזירה 1 עבור מספר ראשוני ו-0 אחרת.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-265"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 8,
+      "question_source": 8,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-08.png"
+      ],
+      "sha256": "62fc496810d676361a5ebc1a3ccb4e604708016c53ef81e90a005d97a4b18ee2",
+      "original_prompt": "שאלת קווי תמסורת חסרי הפסדים וקבל במעגל. משדרים בית: 1. מה יכול להיות בעייתי במעגל? 2. אם המערכת דוגמת באפס זמן ואין ענייני setup וכדומה, אילו בתים לא יידגמו כראוי ולמה? 3. באיזו התנגדות מדובר?",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "logic"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-258"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 9,
+      "question_source": 9,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-09.png"
+      ],
+      "sha256": "a0706e492d28e9dd15d663b56af33b4b20058ed4242161604df61fafa1f2bd63",
+      "original_prompt": "בהינתן מערך של אפסים ואחדים, מיין בסיבוכיות היעילה ביותר ללא זיכרון נוסף.",
+      "source_tags": [
+        "software",
+        "c-3",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-019"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 10,
+      "question_source": 10,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-10.png"
+      ],
+      "sha256": "c02a62d45b4b54f9c42f45ff5280a76f7a714c1984be31b9ee4f7aa070e4c329",
+      "original_prompt": "נתונות שתי מערכות קיבוליות: גליל חלול עד רדיוס r וממולא עד רדיוס R במוליך מושלם, והשנייה זהה אך החתך הפנימי ריבועי. יש אדמה הנחשבת מוליך מושלם. 1. מצא קיבול. 2. למי קיבול גדול יותר? 3. מחברים מקור מתח בין הגליל לאדמה: מה התפלגות המטען? 4. האם יש מטען בפנים?",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-259"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 11,
+      "question_source": 11,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-11.png"
+      ],
+      "sha256": "23697426872e9e4ab245f5f10176df87177598e4d0eebf759470bcf87c333a9b",
+      "original_prompt": "הסבר צומת NP.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-260"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 12,
+      "question_source": 12,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-12.png"
+      ],
+      "sha256": "0d40b29e0db065ecb8e936c0e72ef57e815f4f27da1a2117ffb1d575d13b04f2",
+      "original_prompt": "נתונים שני שערים: OR עם כניסה אחת מהופכת ו-AND עם כניסה אחת מהופכת. בנה באמצעותם AND.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-112"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 13,
+      "question_source": 13,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-13.png"
+      ],
+      "sha256": "ef278a3e7b063711b23d3c667c52fa5777fa2df334e5136c779e1708880d27c3",
+      "original_prompt": "ממש מכונת מצבים המקבלת בכל מחזור שעון ביט סדרתי ל-LSB ומחזירה אם המספר הנוכחי מתחלק ב-7. היה גם פולואפ שאינו זכור במקור.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-206"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 14,
+      "question_source": 12,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-14.png"
+      ],
+      "sha256": "ca73d3f1c86dbd0c56b9bd7432874d5082347471d9bfbea544ee7b13893e07e5",
+      "original_prompt": "נתונים AND ו-OR אשר אחת הכניסות של כל אחד מהם מהופכת. צור באמצעותם AND.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-112"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 15,
+      "question_source": 15,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-15.png"
+      ],
+      "sha256": "56bdd9df16faac2bec88238358b5ba54cbed9de94c5399073637ee1be9887ddb",
+      "original_prompt": "באילו דרכים משתמש שקיבל script ב-Python יכול לדעת שהוא רץ כהלכה? הנח שה-script מדפיס string ולכן לא ניתן להדפיס הודעת שגיאה.",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-266"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "question_source": 16,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-16.png"
+      ],
+      "sha256": "33e4b1698a98ff4192a1983272a94615605e5f68daf5411977d70336658c4eb9",
+      "original_prompt": "רכיב מקבל שתי סיביות x,y. מוציא 1 אם x גדול מ-y, ואחרת 0.",
+      "source_tags": [
+        "logic",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-110"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 17,
+      "question_source": 17,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-17.png"
+      ],
+      "sha256": "314f4991b7a31cce287a04a42ce2e1c47691939f760725b5d3faa0507e732715",
+      "original_prompt": "מרוץ בין שלושה מתחרים; לכל אחד כפתור המוציא פולס בן מחזור אחד בסיום. בנה מערכת המזהה ושומרת את המנצח הראשון בעזרת שערים ו-FF.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-045"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 18,
+      "question_source": 18,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-18.png"
+      ],
+      "sha256": "af5fdaed8759b6580b5d004693a1a606bb74f215be5ab446505d5c68b880f577",
+      "original_prompt": "כתוב אלגוריתם הבודק מחרוזת סוגריים תקינה מסוגי (),{},[]. סוגר סוגר אינו יכול לבוא לפני הפותח המתאים; דוגמת קלט לא חוקי: ([).",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-037"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 19,
+      "question_source": 19,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-19.png"
+      ],
+      "sha256": "c7efd795f4c2c552c282c5662fdd075304b76cb24042be359ec123bbd79c38d7",
+      "original_prompt": "קיים URL API של בדיחות Chuck Norris; כל רענון יוצר בדיחה אקראית עם מידע נוסף. 1. כתוב קטע Python המציג רק את הבדיחה. 2. חשוב מה לעשות בשגיאה ומה עלול לגרום לה.",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-267"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 20,
+      "question_source": 20,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-20.png"
+      ],
+      "sha256": "e0c300b7bfbc018492d615a1f61cb079c34d5e7c9ad8d76a7a9253cae72d8128",
+      "original_prompt": "קיים Client-server model עם תקשורת דו-כיוונית בין לקוחות לשרת מרכזי. תן דוגמה יומיומית, והסבר מה בודקים לפני שקובעים שהמערכת תקינה ואילו בדיקות מבצעים.",
+      "source_tags": [
+        "nvidia",
+        "software"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-268"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 21,
+      "question_source": 21,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-21.png"
+      ],
+      "sha256": "e4989dc0203346d9a11c18adfeac8729c6866df9d598c050b066efe6173145b7",
+      "original_prompt": "ממש שתי פונקציות לרכב: גז וברקס, מהירות בטווח 0 עד 10. גז במהירות 10 משאיר 10; ברקס במהירות 0 משאיר 0. אסור להשתמש בתנאים כגון if,while.",
+      "source_tags": [
+        "nvidia",
+        "software",
+        "logic",
+        "mellanox"
+      ],
+      "reported_companies": [
+        "NVIDIA",
+        "Mellanox"
+      ],
+      "question_ids": [
+        "PREP-269"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 22,
+      "question_source": 22,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-22.png"
+      ],
+      "sha256": "0ef2b8249b960ff7c32666d9f4696b68b4cad61d72dc4b511557b7eeb70c63ed",
+      "original_prompt": "נתון דיזיין צ׳יפ עם שרשראות של באפרים. מצא והתרע על שרשראות בנות יותר מעשרה באפרים, כשיש פונקציה שמחזירה לכל בלוק את חיבוריו (netlist). בנוסף: כיצד להימנע מלמצוא את reset של המעגל, ובמה הוא מאופיין?",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-261"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 23,
+      "question_source": 23,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-23.png"
+      ],
+      "sha256": "92b1c5eebdd8ad2be85a019ab2c62cc0705739d979a0de1666e6648a558cdc4e",
+      "original_prompt": "יש לך מקרו עם זום. יש 1000 אפשרויות שבהן אפשר לשים את הזום. יש שתי פונקציות set,get לקביעת זום וקבלת הפוקוס. צריך להגיע לנקודה שבה ערך הפוקוס הגבוה ביותר. מה היו ההנחות בפתרון?",
+      "source_tags": [
+        "nvidia",
+        "logic"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-270"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 24,
+      "question_source": 24,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-24.png"
+      ],
+      "sha256": "fff8e9ebbb3d6fb05add6421237b8b0f8e30a249f3a830597b6e254c1c504055",
+      "original_prompt": "יש 25 סוסים ורק 5 מסלולים. באמצעות מרוצים יש למצוא את שלושת הסוסים המהירים ביותר. מהו מספר המרוצים המינימלי ומה האסטרטגיה?",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-009"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 25,
+      "question_source": 25,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-25.png"
+      ],
+      "sha256": "581334436dc0d0160a46271cdb87e4522a030b74f50fb712728fa27f83450f8b",
+      "original_prompt": "פונקציה מקבלת מטריצה, תא התחלתי עם חץ לאחד מארבעה כיוונים, ומחרוזת R/L/M. R מסובב 90 מעלות ימינה, L שמאלה, M מזיז לכיוון הנוכחי. החזר true אם בסוף חוזרים למיקום ההתחלתי ואחרת false.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-182"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 26,
+      "question_source": 26,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-26.png"
+      ],
+      "sha256": "45dd4b40463812f811b8f84aa349a6b925b5fcd0d4907dc560d101033a51281f",
+      "original_prompt": "נתונים שני רכיבי מסך המקבלים BCD בן 4 ביטים ומציגים ספרה 0..9. קלט בינארי בן 6 ביטים בתחום 0..32: השתמש בשני המסכים להצגת המספר העשרוני; למשל 1011 יוצג 1 ו-3. המסך אינו מקבל ערכים מחוץ ל-0..9.",
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-262"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 27,
+      "question_source": 27,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-27.png"
+      ],
+      "sha256": "e182b2bdf9a5244bd90364a8fcc0684ad2f1288cbd7d1bf44dd67ee8318c8674",
+      "original_prompt": "נתונה מערכת המחזירה 1 אם יותר משתי כניסות דולקות.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-263"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 28,
+      "question_source": 28,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-28.png"
+      ],
+      "sha256": "59fc6376140c2add75f5be0ef5d2af18913d48e54a15d853a854f893489de7c1",
+      "original_prompt": "סוחר מציע סחורה במחיר 120 מטבעות. מצא מספר מטבעות מינימלי לתשלום 120 בלי להשתמש במטבע פעמיים.",
+      "source_tags": [
+        "logic",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-271"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 29,
+      "question_source": 29,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-29.png"
+      ],
+      "sha256": "78ab49eceeb378bb689097310afd91eaa931e0f865b5bc44fa149c5454c694bd",
+      "original_prompt": "ממש FIFO אסינכרוני עם Gray code. מתי מתקבל empty בצד הקריאה? כלומר מתי שעון הקריאה מקבל את הכתיבה הראשונה?",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-264"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 30,
+      "question_source": 30,
+      "archive_paths": [
+        "sources/2026-11-07-batch30-30.png"
+      ],
+      "sha256": "16831825874a03ddf3686917f8187ea6d3a5144c55d898c054613b1aab3824e0",
+      "original_prompt": "החלף את ערכי שני משתנים ללא temp.",
+      "source_tags": [
+        "software",
+        "qa",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-077"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ],
+  "new_question_count": 15,
+  "technical_extension_count": 6,
+  "provenance_only_count": 8,
+  "affected_question_count": 29
+}
