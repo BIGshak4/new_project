@@ -130,14 +130,16 @@
         "שני מקומות שונים נדרשים; ערכים זהים בשני מקומות שונים מותרים.",
         "נדרשת תשובת קיום בלבד. אין צורך להחזיר את כל הזוגות או לבחור זוג מסוים.",
         "זיכרון עזר מותר לשיפור זמן צפוי. המימושים שסופקו משאירים את הקלט המקורי ללא שינוי.",
-        "חסמי הסיבוכיות מניחים פעולות על שלמים בגודל מילה. שלמים בלתי מוגבלים בפייתון אינם גולשים, אך לפעולות עליהם עלות התלויה באורך הייצוג."
+        "חסמי הסיבוכיות מניחים פעולות על שלמים בגודל מילה. שלמים בלתי מוגבלים בפייתון אינם גולשים, אך לפעולות עליהם עלות התלויה באורך הייצוג.",
+        "השלמה: תת־קבוצה לא ריקה, גדלים 1..n, שלמים חתומים, כל אינדקס פעם אחת ופלט bool."
       ],
       "en": [
         "Assumptions: an unsorted integer array; empty and one-element inputs return false.",
         "Two distinct positions are required; equal values at different positions are allowed.",
         "Only existence is required, not all pairs or a prescribed pair.",
         "Auxiliary storage is allowed to improve expected time. Supplied implementations preserve the input.",
-        "Complexity uses word-sized integer operations. Python arbitrary-precision integers avoid overflow but incur bit-length-dependent arithmetic and hashing costs."
+        "Complexity uses word-sized integer operations. Python arbitrary-precision integers avoid overflow but incur bit-length-dependent arithmetic and hashing costs.",
+        "Completion: nonempty subset, sizes one through n, signed integers, each index once and Boolean output."
       ]
     },
     "optimality": {
@@ -145,13 +147,15 @@
         "criterion": "פשרה בין זמן ריצה לזיכרון עזר במערך כללי לא ממוין.",
         "result": "בדיקת כל הזוגות: זמן ריבועי במקרה הגרוע וזיכרון קבוע. קבוצת גיבוב: זמן לינארי צפוי וזיכרון לינארי. מיון ושני מצביעים: זמן O(n log n) במקרה הגרוע; הקוד משתמש בעותק ולכן בזיכרון לינארי.",
         "proof": "בחיפוש עם קבוצה נשמרים רק ערכים ממקומות קודמים; זוג במקומות p<q מתגלה כשהמקום המאוחר נבדק. בשני מצביעים המיון מאפשר לפסול ערך קטן מדי או גדול מדי בלי לאבד זוג אפשרי.",
-        "scope": "אין הבטחת זמן לינארי במקרה הגרוע לטבלת גיבוב. אין טענה למינימום זיכרון מוחלט. אם המערך כבר ממוין, שני מצביעים לבדם נותנים זמן לינארי וזיכרון קבוע."
+        "scope": "אין הבטחת זמן לינארי במקרה הגרוע לטבלת גיבוב. אין טענה למינימום זיכרון מוחלט. אם המערך כבר ממוין, שני מצביעים לבדם נותנים זמן לינארי וזיכרון קבוע.",
+        "סכום של תת־קבוצה לא ריקה בגודל כלשהו": "O(ΣR_i) פעולות set צפויות ו־ O(max R_i) ערכים; גרוע־ביותר O(2^n). רוחב שלמים מוסיף עלות."
       },
       "en": {
         "criterion": "Runtime versus auxiliary storage for a general unsorted array.",
         "result": "All pairs: quadratic worst-case time and constant extra words. Hash set: expected linear time and linear space. Sorting and two pointers: O(n log n) worst-case time; the supplied copy-preserving code uses linear storage.",
         "proof": "The set contains only earlier positions; any pair p<q is discovered when q is checked. Sorted two-pointer elimination safely discards a value too small or too large to participate in any remaining solution.",
-        "scope": "No linear worst-case hashing guarantee or universal minimum-space claim. For already-sorted input, two pointers alone take linear time and constant extra words."
+        "scope": "No linear worst-case hashing guarantee or universal minimum-space claim. For already-sorted input, two pointers alone take linear time and constant extra words.",
+        "A nonempty subset of any size": "Expected O(sum R_i) set operations, O(max R_i) values; worst-case O(2^n), with integer-width costs added."
       }
     },
     "verification": {
@@ -160,14 +164,16 @@
         "method": "215,863 מקרי מערך ויעד מול אורקל עצמאי של צירופי שני אינדקסים. בכל מקרה נבדקו שלושה פתרונות קיום ופתרון המחזיר אינדקסים, כולל תקינות האינדקסים ושמירת הקלט.",
         "coverage": "214,841 מקרים ממצים: 19,531 מערכים באורכים 0–6 מעל חמישה ערכים, כפול 11 יעדים. בנוסף 16 מקרי גבול מפורשים, שני מקרי התנגשות גיבוב, 1,000 דגימות עם seed קבוע וארבעה מקרי קלט בלתי ניתן לשינוי.",
         "script_path": "checks/check_prep_040.py",
-        "scope": "אימות פונקציונלי סופי ונדגם; נימוק הסיבוכיות נפרד. לא נערך מבחן ביצועים שמוכיח זמן ריצה ולא נרשם אישור מומחה."
+        "scope": "אימות פונקציונלי סופי ונדגם; נימוק הסיבוכיות נפרד. לא נערך מבחן ביצועים שמוכיח זמן ריצה ולא נרשם אישור מומחה.",
+        "סכום של תת־קבוצה לא ריקה בגודל כלשהו": "10,043 מקרים מול מניית מסכות אינדקס לא ריקות, עם שימור הקלט."
       },
       "en": {
         "status": "Software checks passed.",
         "method": "215,863 array/target cases against an independent index-combination oracle. Each case checks three Boolean solvers and the index-returning extension, including index validity and input preservation.",
         "coverage": "214,841 exhaustive cases: 19,531 arrays of lengths 0–6 over five values, each with 11 targets. Also 16 explicit boundaries, two hash-collision cases, 1,000 seeded samples and four immutable-sequence cases.",
         "script_path": "checks/check_prep_040.py",
-        "scope": "Finite exhaustive and sampled functional checks; complexity is justified separately. No benchmark-based runtime proof or expert sign-off."
+        "scope": "Finite exhaustive and sampled functional checks; complexity is justified separately. No benchmark-based runtime proof or expert sign-off.",
+        "A nonempty subset of any size": "10,043 cases versus independent nonempty-index-mask enumeration, preserving input."
       }
     },
     "edge_cases": {
@@ -178,7 +184,8 @@
         "מספרים שליליים ויעד שלילי מותרים: `[-8, -2, 4]` עם יעד `-10` מחזיר אמת.",
         "ייתכנו כמה זוגות חוקיים; מחזירים אמת עם הראשון שנמצא.",
         "יעד שלא ניתן להגיע אליו מחייב חזרה תקינה של שקר בסוף הסריקה.",
-        "בפייתון שלמים גדולים אינם גולשים. במימוש בעל רוחב קבוע יש למנוע גלישה בחישוב סכום או משלים."
+        "בפייתון שלמים גדולים אינם גולשים. במימוש בעל רוחב קבוע יש למנוע גלישה בחישוב סכום או משלים.",
+        "[] ו־ K=0; [0]; ביטול חיובי/שלילי; כפילויות; יחיד שאסור להשתמש בו פעמיים."
       ],
       "en": [
         "Empty and one-element arrays have no two distinct indices.",
@@ -187,7 +194,8 @@
         "Negative values and targets are allowed: `[-8, -2, 4]` with target `-10` returns true.",
         "Several valid pairs may exist; return true on the first match.",
         "An unreachable target must return false after a completed scan.",
-        "Python integers do not overflow. Fixed-width implementations must prevent overflow in sums and complements."
+        "Python integers do not overflow. Fixed-width implementations must prevent overflow in sums and complements.",
+        "Empty input at zero target; [0]; positive/negative cancellation; duplicates; one item cannot be reused."
       ]
     },
     "common_mistakes": {
@@ -198,7 +206,8 @@
         "הבטחת זמן לינארי במקרה הגרוע בלי הנחת גיבוב מתאימה.",
         "שימוש בשני מצביעים על מערך לא ממוין, או שכחת התנאי `left < right`.",
         "ייחוס זיכרון קבוע לקוד שיוצר עותק באמצעות `sorted`, או התעלמות מזיכרון העבודה של מיון פייתון.",
-        "מיון ואז החזרת המקומות הממוינים כאילו היו האינדקסים המקוריים."
+        "מיון ואז החזרת המקומות הממוינים כאילו היו האינדקסים המקוריים.",
+        "לפרש 1..n כטווח הערכים; להתחיל ב־{0} ולספור ריק; לעדכן set תוך מעבר עליו; לקצץ לפי סכום גדול מהיעד."
       ],
       "en": [
         "Inserting before lookup, which lets a single occurrence pair with itself.",
@@ -207,23 +216,64 @@
         "Promising worst-case linear time without suitable hash assumptions.",
         "Using two pointers on unsorted input or forgetting `left < right`.",
         "Claiming constant storage for code using `sorted`, or ignoring Python sorting workspace.",
-        "Returning sorted positions as if they were original indices."
+        "Returning sorted positions as if they were original indices.",
+        "Reading one through n as a value domain; starting with {0} and accepting empty; mutating the set while iterating it; pruning above target with negatives."
       ]
     },
     "interview_answer": {
-      "he": "אתחיל בשתי לולאות על i<j, בזמן ריבועי ובזיכרון קבוע. כדי לשפר, אעבור פעם אחת עם קבוצה של ערכים קודמים. לכל ערך אחפש את המשלים ליעד לפני שאוסיף אותו, כך שאי אפשר להשתמש באותו מופע פעמיים. הזמן צפוי להיות לינארי והזיכרון לינארי בהנחות גיבוב רגילות; מיון ושני מצביעים הם חלופה בזמן O(n log n). אם מבקשים אינדקסים, אשמור מילון מערך לאינדקס קודם.",
-      "en": "Start with nested loops over i<j: quadratic time and constant extra words. Improve with one pass and a set of earlier values. Look up the complement before inserting the current value so the same occurrence cannot be reused. This gives expected linear time and linear storage under ordinary hash assumptions. Sorting and two pointers give an O(n log n) alternative. To return indices, store a value-to-earlier-index dictionary."
+      "he": "אתחיל בשתי לולאות על i<j, בזמן ריבועי ובזיכרון קבוע. כדי לשפר, אעבור פעם אחת עם קבוצה של ערכים קודמים. לכל ערך אחפש את המשלים ליעד לפני שאוסיף אותו, כך שאי אפשר להשתמש באותו מופע פעמיים. הזמן צפוי להיות לינארי והזיכרון לינארי בהנחות גיבוב רגילות; מיון ושני מצביעים הם חלופה בזמן O(n log n). אם מבקשים אינדקסים, אשמור מילון מערך לאינדקס קודם.\n\nאשמור את הסכומים הלא ריקים של כל קידומת. איבר חדש יוצר יחידון או מצטרף לסכום קודם, ורק אחר כך אאחד.",
+      "en": "Start with nested loops over i<j: quadratic time and constant extra words. Improve with one pass and a set of earlier values. Look up the complement before inserting the current value so the same occurrence cannot be reused. This gives expected linear time and linear storage under ordinary hash assumptions. Sorting and two pointers give an O(n log n) alternative. To return indices, store a value-to-earlier-index dictionary.\n\nStore nonempty prefix-subset sums. A new item creates a singleton or extends an old sum; union only afterward."
     },
     "solution_extensions": {
       "he": {
         "question": "אם נדרשים האינדקסים המקוריים של זוג חוקי במקום תשובת קיום, מה משנים? ומה אם המערך כבר ממוין ואסור זיכרון עזר לינארי?",
         "answer_outline": "למקומות המקוריים שומרים מילון מערך לאינדקס קודם ומחזירים את ההתאמה לפני הכנסת האיבר הנוכחי. במערך שכבר ממוין משתמשים בשני מצביעים בזמן לינארי ובזיכרון עזר קבוע, בתנאי שמבקשים זוג או קיום ולא את כל הזוגות.",
-        "integration_status": "שאלת המשך מוכנה בתוכן הארכיון; חיבור לתהליך שאלות ההמשך החי טרם בוצע."
+        "integration_status": "שאלת המשך מוכנה בתוכן הארכיון; חיבור לתהליך שאלות ההמשך החי טרם בוצע.",
+        "סכום של תת־קבוצה לא ריקה בגודל כלשהו": [
+          {
+            "question": "איך מחזירים גם אינדקסים של עדות אחת?",
+            "answer_direction": "שומרים לכל סכום חדש קשר הורה למצב מהקידומת הקודמת, או משתמשים בחיפוש חזרה; יש לשמור מסלול שלא ידרוס הורה לאותו אינדקס.",
+            "principle": "הגדרת תת־קבוצה והתחום המספרי קובעים את ה־ DP ואת הסיבוכיות."
+          }
+        ]
       },
       "en": {
         "question": "How would you return original indices rather than just existence? What if the input is already sorted and linear auxiliary storage is forbidden?",
         "answer_outline": "For original indices, store a value-to-earlier-index map and return a match before insertion. For already-sorted input use two pointers in linear time and constant extra words when only existence or one pair is required.",
-        "integration_status": "Follow-up prepared in archived content; not connected to the live follow-up workflow."
+        "integration_status": "Follow-up prepared in archived content; not connected to the live follow-up workflow.",
+        "A nonempty subset of any size": [
+          {
+            "question": "How can one witness index set be returned?",
+            "answer_direction": "Store predecessor information referencing the previous-prefix state, or backtrack; avoid overwriting parent chains into index reuse.",
+            "principle": "Subset semantics and numeric domain determine the DP and its complexity."
+          }
+        ]
+      }
+    },
+    "source_ambiguities": {
+      "he": "הנוסח העמום פורש כהכללת גודל תת־הקבוצה, לא כסכומי רצפים רציפים. אין דרישה לפלט כל האפשרויות.",
+      "en": "The terse generalization is interpreted as arbitrary subset cardinality, not contiguous subarrays; enumerating every answer is not requested."
+    },
+    "prompt_variants": {
+      "he": {
+        "סכום של תת־קבוצה לא ריקה בגודל כלשהו": {
+          "prompt": "### הרחבה: סכום של תת־קבוצה בגודל 1 עד n\nהסעיף הראשון בצילום חוזר על שאלת שני האינדקסים המקורית. בסעיף החדש יש רשימת n שלמים ויעד K, ויש להחזיר האם תת־קבוצה לא ריקה של 1..n איברים מסתכמת ב־ K. 1..n הם גדלי תת־הקבוצה, לא הגבלה על ערכי המערך.\n\nנבחר במפורש: שליליים, אפסים וכפילויות מותרים; כל אינדקס זמין לכל היותר פעם אחת, והקלט אינו משתנה. מותר זיכרון עזר. הפלט bool בלבד, לא כל תתי־הקבוצות. רשימה ריקה מחזירה False גם ל־ K=0; [0] או [3, −3] מאפשרות True ל־ 0. הסבירו למה קיצוץ ענף לפי סכום גדול מ־ K אינו נכון כשיש שליליים.",
+          "hints": [
+            "איך מתארים את כל הסכומים שאפשר לקבל מהאיברים שכבר נקראו?",
+            "כאשר מוסיפים ערך v, תת־קבוצה חדשה היא או v לבדו או סכום קודם ועוד v. הסכומים הקודמים נשארים אפשריים.",
+            "החזיקו set של סכומים מתתי־קבוצות לא ריקות. חשבו new_sums מתוך snapshot של ה־ set הישן בלבד, ורק אחר כך חברו; כך אין שימוש כפול באינדקס הנוכחי. אל תאתחלו את ה־ set ב־ 0."
+          ]
+        }
+      },
+      "en": {
+        "A nonempty subset of any size": {
+          "prompt": "### Extension: a subset containing one through n elements\nThe screenshot's first part repeats the existing two-distinct-index question. The new part receives n integers and target K and asks whether some nonempty subset of one through n elements sums to K. One through n refers to subset cardinality, not a restriction on array values.\n\nExplicitly allow negatives, zeroes and duplicate values; use each index at most once and preserve input. Auxiliary storage is allowed. Return bool, not every subset. Empty input returns False even for K=0; [0] and [3, -3] can return True for zero. Explain why pruning when a partial sum exceeds K is invalid with negative values.",
+          "hints": [
+            "How can all sums obtainable from the processed prefix be represented?",
+            "With a new v, a new subset is either v alone or an old subset plus v. Old sums remain possible too.",
+            "Store sums of nonempty subsets. Build new_sums from the old set before updating it, preventing reuse of the current index. Do not initialize the set with zero."
+          ]
+        }
       }
     }
   },

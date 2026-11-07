@@ -27,6 +27,7 @@ from tests.preparation_history import (
     BATCH1101_BASELINE,
     BATCH1103_BASELINE,
     BATCH1107_BASELINE,
+    BATCH1107B10_BASELINE,
 )
 
 
@@ -55,7 +56,7 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
         allocate(questions, positives, maximum=1)
 
 
-def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_89_membership():
+def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_91_membership():
     scope = json.loads((BACKEND / 'tests/fixtures/software_question_scope.json').read_bytes())
     seeds = {q['key']: q for name in ('example_bank.json', 'preparation_bank.json')
              for q in json.loads((BACKEND / 'seeds/questions' / name).read_bytes())}
@@ -77,7 +78,10 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_89_
     november3_endpoint = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
                          or seeds[key]['assets']['preparation_id'] in BATCH1107_BASELINE['records']}
     assert len(november3_endpoint) == 84
-    assert len(expected) == 89
+    november7_first_endpoint = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
+                               or seeds[key]['assets']['preparation_id'] in BATCH1107B10_BASELINE['records']}
+    assert len(november7_first_endpoint) == 89
+    assert len(expected) == 91
     assert november1_endpoint - october_endpoint == {
         'prep-c-linked-list-dictionary-ownership', 'prep-reverse-singly-linked-list-in-place',
         'prep-streaming-csv-parser-without-library', 'prep-networking-basics-and-interview-answer-prompts',
@@ -89,12 +93,16 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_89_
         'prep-first-missing-positive-in-place', 'prep-cpp-copy-constructor-and-ownership',
         'prep-planned-spike-load-readiness',
     }
-    assert expected - november3_endpoint == {
+    assert november7_first_endpoint - november3_endpoint == {
         'prep-python-script-exit-status-and-output-contract',
         'prep-random-joke-http-api-field-extraction',
         'prep-bidirectional-client-server-test-design',
         'prep-branch-free-saturating-speed-controls',
         'prep-black-box-focus-maximum-search-assumptions',
+    }
+    assert expected - november7_first_endpoint == {
+        'prep-general-in-place-integer-array-sort',
+        'prep-cpp-constructor-initialization-and-invariants',
     }
     assert october_endpoint - rows.keys() == {
         'prep-merge-k-sorted-linked-lists', 'prep-most-frequent-word-list',

@@ -1,0 +1,30 @@
+Assumed device: two-axis photovoltaic panel with shadow-cross quadrant sensors,
+independent axis encoders, bounded motor drives and hard travel-limit inputs.
+The complete system below is design pseudocode, not deployed actuator code.
+
+INIT:
+  calibrate sensor gains/offsets and axis direction with a known light source
+  verify limit switches and encoder/drive response at low test speed
+  enter HOLD until references and measurements are valid
+
+EVERY CONTROL TICK:
+  read monotonic time, timestamped quadrants, encoders and limit/fault inputs
+  if stale, nonfinite, out-of-range, overcurrent, limit conflict or watchdog failure:
+      request zero drive; latch FAULT; require inspection and explicit reset
+  else if direct-sun confidence is inadequate:
+      request zero tracking rate; HOLD (night parking is a separate verified plan)
+  else if sun is outside the calibrated sensor capture cone:
+      ACQUIRE with bounded ephemeris/coarse-search targets and verified travel limits
+  else:
+      compute normalized right-minus-left and top-minus-bottom errors
+      apply calibrated direction, deadband/filtering, rate and travel limits
+      request angular rates in degrees/second through the motor-drive interface
+      compare commanded motion with independent encoder motion over a dwell window
+      if commanded movement persists without measured progress: stop and latch FAULT
+
+INDEPENDENT VALIDATION:
+  compare encoder-derived panel normal with a known lamp/sun direction reference
+  check signed angular error, settling time, overshoot, limits and tracking loss
+  separately measure electrical output power; clouds alone can change power
+  inject stale/stuck/swapped sensors and jammed-drive faults on a controlled rig
+  record pass/fail against declared tolerances; software simulation is not a rig test

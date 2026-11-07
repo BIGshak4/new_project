@@ -88,64 +88,114 @@
       "he": [
         "אין כלל המשך מובטח מעבר לתחיליות המקור.",
         "הענף המחושב מציין מראש מספור מיקומים, יום0 ושתי נוסחאות.",
-        "מהירות תנועה קבועה בין ימים היא הנחה נוספת בלבד."
+        "מהירות תנועה קבועה בין ימים היא הנחה נוספת בלבד.",
+        "השלמה נבחרת: בדיוק 100 דלתות במספור 1..100 ובמרווח מטר; יום 0 הוא אירוע הצביעה הראשון.",
+        "A(n)=1+2n; B(n)=100−n(n+3)/2; צביעה רק בימים שלמים חוקיים.",
+        "בחלופת התנועה בלבד מותרת אינטרפולציה ישרה בין ימי צביעה חוקיים."
       ],
       "en": [
         "No guaranteed rule beyond the supplied prefixes.",
         "The calculated branch explicitly declares position labels, day0 and both formulas.",
-        "Constant-speed travel between days is an additional assumption only."
+        "Constant-speed travel between days is an additional assumption only.",
+        "Selected completion: exactly 100 doors labeled 1..100, one meter apart; day 0 is the first painting event.",
+        "A(n)=1+2n; B(n)=100−n(n+3)/2; paint only on legal integer days.",
+        "Only the motion variant linearly interpolates between legal painting events."
       ]
     },
     "optimality": {
-      "he": "המטרה היא לזהות מידע חסר ולא להמציא תשובה. לכלל המותנה אפשר לבדוק ימים בקבוע זיכרון, או לפתור את המשוואה; אין טענת מיטביות של מסלול שלא הוגדר.",
-      "en": "The goal is specification analysis, not inventing an answer. The conditional rule allows constant-space day checks or an equation; no optimal route is claimed for an unspecified route."
+      "he": "המטרה היא לזהות מידע חסר ולא להמציא תשובה. לכלל המותנה אפשר לבדוק ימים בקבוע זיכרון, או לפתור את המשוואה; אין טענת מיטביות של מסלול שלא הוגדר.\n\nהמטרה היא תשובה חד־משמעית תחת החוזה הנבחר, לא מסלול צביעה מיטבי. המפגש היומי והרציף היחיד הוא ביום 11 בדלת 23.",
+      "en": "The goal is specification analysis, not inventing an answer. The conditional rule allows constant-space day checks or an equation; no optimal route is claimed for an unspecified route.\n\nThe goal is a determinate answer under the selected contract, not an optimal painting route. The unique integer-event and continuous meeting is day 11 at door 23."
     },
     "verification": {
-      "he": "1,001 השוואות לנוסחת סכום, שתי השלמות לתחילית, בדיקת ריבועיות849 ומפגש רציף166/15 במיקום332/15 תחת מודל תנועה מוצהר.",
-      "en": "1,001 comparisons with a step sum, two prefix continuations, a perfect-square check for849 and a conditional continuous intersection at time166/15 and position332/15."
+      "he": "1,001 השוואות לנוסחת סכום, שתי השלמות לתחילית, בדיקת ריבועיות849 ומפגש רציף166/15 במיקום332/15 תחת מודל תנועה מוצהר.\n\n200 גדלי מסדרון, 2,889 בדיקות מיקום/תוצאה מול סכימת צעדים ואימות שברים; המקרה הנבחר מחזיר 13 ימי צביעה ומפגש יחיד [11,23].",
+      "en": "1,001 comparisons with a step sum, two prefix continuations, a perfect-square check for849 and a conditional continuous intersection at time166/15 and position332/15.\n\n200 corridor sizes, 2,889 position/result checks against accumulated steps and exact rational interpolation; the selected instance has thirteen painting days and one meeting [11,23]."
     },
     "edge_cases": {
       "he": [
         "מספור0 מול1 ומספר הדלתות בפועל.",
         "צביעה באותו יום מול ביקור באותה דלת בימים שונים.",
-        "דילוג מעל דלת, יציאה מהטווח, זמן נסיעה ויום התחלה."
+        "דילוג מעל דלת, יציאה מהטווח, זמן נסיעה ויום התחלה.",
+        "יום 0 נספר; בדיוק 100 תוויות, 1..100.",
+        "יום 13 אינו חוקי; אירוע מספר 12 הוא יום 11.",
+        "קלט יום שלילי או שאינו שלם נפסל."
       ],
       "en": [
         "Zero-based versus one-based labels and the actual door count.",
         "Same-day painting versus visiting a door on different days.",
-        "Skipping a door, leaving range, travel time and starting day."
+        "Skipping a door, leaving range, travel time and starting day.",
+        "Day 0 counts; exactly 100 labels, 1..100.",
+        "Day 13 is illegal; event number twelve is day eleven.",
+        "Negative or noninteger day input is rejected."
       ]
     },
     "common_mistakes": {
       "he": [
         "תיקון שקט של איבר בסדרה כדי לקבל תשובה מוכרת.",
         "הסקת מהירות הליכה משוויון בהספק צביעה.",
-        "לקיחת שורש לא שלם כאילו היה יום צביעה תקף."
+        "לקיחת שורש לא שלם כאילו היה יום צביעה תקף.",
+        "ערבוב ההתחלה הישנה 0 עם החוזה החדש 1..100.",
+        "קריאת יום 11 כיום 12 בגלל מספור פעולות.",
+        "הנחת מהירות קבועה לכל המסלול במקום לכל קטע, או ייחוס ההשלמה לצילום."
       ],
       "en": [
         "Silently changing a prefix term to obtain a familiar answer.",
         "Inferring walking speed from equal painting output.",
-        "Treating a noninteger equation root as a valid painting day."
+        "Treating a noninteger equation root as a valid painting day.",
+        "Mixing the old starting 0 with the new 1..100 contract.",
+        "Calling day eleven day twelve because events are counted from one.",
+        "Assuming one speed for the entire route instead of each segment, or attributing the completion to the source."
       ]
     },
     "interview_answer": {
-      "he": "שלוש דלתות ראשונות אינן מגדירות המשך. אבקש כלל סדרה, מספור והגדרת מפגש. בענף של צעדים2 מול2,3,4 אין יום צביעה משותף; מפגש תוך תנועה דורש מודל נוסף ואינו בהכרח בדלת.",
-      "en": "Three starting labels do not determine a rule. Ask for continuation, numbering and meeting definition. For steps2 versus2,3,4 there is no common integer painting day; travel intersections need a separate model and need not occur at a door."
+      "he": "שלוש דלתות ראשונות אינן מגדירות המשך. אבקש כלל סדרה, מספור והגדרת מפגש. בענף של צעדים2 מול2,3,4 אין יום צביעה משותף; מפגש תוך תנועה דורש מודל נוסף ואינו בהכרח בדלת.\n\nבחוזה הנבחר משווים 1+2n ל־100−n(n+3)/2 ומקבלים (n−11)(n+18)=0. היום החוקי היחיד הוא 11 ושניהם בדלת 23; תחת תנועה ישרה בין האירועים אין מפגש מוקדם יותר.",
+      "en": "Three starting labels do not determine a rule. Ask for continuation, numbering and meeting definition. For steps2 versus2,3,4 there is no common integer painting day; travel intersections need a separate model and need not occur at a door.\n\nUnder the selected contract, equating positions gives (n−11)(n+18)=0. The only legal meeting is day 11 at door 23, with no earlier crossing under linear inter-event travel."
     },
     "source_ambiguities": {
-      "he": "הסדרות, מספור100 הדלתות עם התוויות0 ו100, תנועת הצבעים ומשמעות מפגש אינם נקבעים בטקסט. נשמר95 ללא תיקון.",
-      "en": "Continuation rules,100-door numbering using labels0 and100, travel and the meaning of meeting are unspecified. The95 term was preserved without correction."
+      "he": "הסדרות, מספור100 הדלתות עם התוויות0 ו100, תנועת הצבעים ומשמעות מפגש אינם נקבעים בטקסט. נשמר95 ללא תיקון.\n\nהמקור מערבב התחלה 0 עם סוף 100 תחת הכותרת מאה דלתות. התרגיל הערוך בוחר במפורש 100 תוויות 1..100 והתחלת A ב־1, וכללי סדרה ותנועה מוגדרים. התמלול והניתוח המותנה הקודמים נשמרים.",
+      "en": "Continuation rules,100-door numbering using labels0 and100, travel and the meaning of meeting are unspecified. The95 term was preserved without correction.\n\nThe source mixes starting 0 and ending 100 while saying one hundred doors. The edited exercise explicitly chooses 100 labels 1..100 and A starting at 1, with defined sequence/motion rules. Earlier source text and conditional analysis remain intact."
     },
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם95 הוחלף במפורש ב96 ושני הצדדים מתקדמים2?",
         "direction": "זהו כלל חדש. תחת התחלה בו־זמנית במיקומים0 ו100 מתקבל2t=100−2t, כלומרt=25 ומיקום50. אין לייחס זאת למקור הנוכחי.",
-        "status": "המשך מוכן בחומר בלבד."
+        "status": "המשך מוכן בחומר בלבד.",
+        "batch1107b10_completed_painters": {
+          "question": "מה משתנה אם מותר להשתהות או לנוע במהירות משתנה בין הימים?",
+          "direction": "ימי הצביעה נשארים כפי שהוגדרו, אבל יכול להתווסף מפגש מוקדם יותר בין אירועים. בלי חוזה תנועה אין זמן ראשון יחיד.",
+          "status": "המשך לימודי נפרד."
+        }
       },
       "en": {
         "question": "What if95 is explicitly corrected to96 and both step by2?",
         "direction": "That defines a different rule. Starting simultaneously at0 and100 yields2t=100−2t, so t=25 at position50. Do not attribute this to the uncorrected source.",
-        "status": "Prepared supplemental follow-up only."
+        "status": "Prepared supplemental follow-up only.",
+        "batch1107b10_completed_painters": {
+          "question": "What changes if waiting or varying speed is allowed between days?",
+          "direction": "Integer painting events stay fixed, but earlier inter-event meetings may become possible. Without a motion rule the first crossing time is not unique.",
+          "status": "Separate teaching follow-up."
+        }
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "batch1107b10_completed_painters": {
+          "prompt": "### תרגיל מוגדר: מאה דלתות וכלל מפורש\nהנתונים הבאים הם השלמה לימודית שלנו, ולא נתונים נוספים מצילום הראיון. במסדרון ישר יש בדיוק 100 דלתות, המסומנות 1..100 במרווח מטר אחד. יום n=0 הוא רגע הצביעה הראשון: A בדלת 1 ו־B בדלת 100. בחירת תחילת A בדלת 1 היא תיקון מספור מפורש לתרגיל הערוך; בנוסח המקור נשמרו 0 בתחילת A ו־100 בתחילת B, שאינם מגדירים יחד מספור אחיד של מאה דלתות.\n\nבכל יום שלם n≥0 כל צבעי צובע פעם אחת, בנקודות `A(n)=1+2n` ו־`B(n)=100−n(n+3)/2`. לכן רשימת A היא 1,3,5,...; רשימת B היא 100,98,95,91,..., עם צעדים לאחור 2,3,4,... . עוצרים אחרי יום הצביעה החוקי האחרון: כל נקודת צביעה חייבת להיות בטווח 1..100.\n\nא. האם יש יום שלם שבו שניהם צובעים באותה דלת באותו זמן? מצאו את היום, את הדלת ואת כל הימים החוקיים, והוכיחו שהמפגש יחיד.\nב. בווריאציית תנועה נפרדת, בין כל שני ימי צביעה חוקיים כל אחד נע בקו ישר במהירות קבועה משלו ומגיע בדיוק לנקודת היום הבא. הצביעה עצמה מיידית ואין המתנה. מתי ייפגשו לראשונה בתנועה זו? השוו ליום הצביעה; ביקור באותה דלת בימים שונים אינו מפגש. אין תנועה נוספת אחרי יום הצביעה האחרון.\n\nהכללים הללו נבחרו כדי לתת תרגיל פתיר אחד. הם אינם מחליפים את תמלול המקור או הופכים את ניתוח העמימות הקודם לשגוי. בין הימים משתמשים באינטרפולציה ישרה, לא בהרחבה ריבועית של נוסחת B לזמן רציף.",
+          "hints": [
+            "כתבו את המיקומים בימים 0, 1, 2, 10, 11, 12 ו־13. מתי יוצאים מטווח הדלתות 1..100?",
+            "השוו 1+2n אל 100−n(n+3)/2. העבירו הכול לאגף אחד ונסו לפרק את n²+7n−198 לגורמים.",
+            "ביום 10 הפער 14 מטר וביום 11 שתי נקודות הצביעה שוות. תחת תנועה ישרה בין האירועים, האם הפער יכול להתאפס קודם?"
+          ]
+        }
+      },
+      "en": {
+        "batch1107b10_completed_painters": {
+          "prompt": "### Fully specified exercise: one hundred doors and an explicit rule\nThe following data are our authored teaching completion, not additional screenshot facts. A straight corridor contains exactly 100 doors labeled 1..100, one meter apart. Day n=0 is the first painting event: A is at door 1 and B at door 100. Starting A at 1 is an explicit indexing choice for this edited exercise; the source retains A's starting label 0 and B's label 100, which do not jointly define consistent numbering of one hundred doors.\n\nOn every integer day n≥0 each painter paints once, at `A(n)=1+2n` and `B(n)=100−n(n+3)/2`. Thus A visits 1,3,5,...; B visits 100,98,95,91,... with backward steps 2,3,4,... . Stop after the last legal painting day: all painting positions must lie in 1..100.\n\n(a) Is there an integer day when they paint the same door at the same time? Find that day, door and all legal days, and prove the meeting is unique.\n(b) In a separate motion variant, between any two legal painting days each travels straight at their own constant speed, arriving at the next day's position. Painting is instantaneous and there is no waiting. When do they first meet under this motion rule? Compare with the painting event; visiting a door on different days is not a meeting. No further travel occurs after the last painting day.\n\nThese rules select one solvable exercise. They do not replace the source transcription or invalidate the earlier ambiguity analysis. Inter-day travel uses linear interpolation, not a quadratic extension of B's integer-day formula.",
+          "hints": [
+            "Write positions on days 0, 1, 2, 10, 11, 12 and 13. When does a position leave 1..100?",
+            "Equate 1+2n with 100−n(n+3)/2 and factor n²+7n−198.",
+            "Day 10 has a fourteen-meter gap and day 11 has equal positions. With linear inter-event travel, could the gap vanish earlier?"
+          ]
+        }
       }
     }
   },

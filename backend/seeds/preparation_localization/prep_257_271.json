@@ -687,36 +687,36 @@
   },
   "PREP-271": {
     "assumptions": {
-      "he": "רשימת מטבעות פיזיים נתונה, ערכים שלמים חיוביים, כל אינדקס חד־פעמי; יעד שלם לא־שלילי ותשלום מדויק, ללא עודף.",
-      "en": "Supplied physical inventory, positive integer values, each index used once; nonnegative integer target, exact payment, no change."
+      "he": "רשימת מטבעות פיזיים נתונה, ערכים שלמים חיוביים, כל אינדקס חד־פעמי; יעד שלם לא־שלילי ותשלום מדויק, ללא עודף.\n\n[\"מלאי שנבחר במפורש: [100,60,35,25,15,10], אינדקסים 0..5 ועותק פיזי אחד לכל אינדקס.\", \"יעד מדויק 120, בלי עודף, תשלום יתר, פירוק או מטבע נוסף.\"]",
+      "en": "Supplied physical inventory, positive integer values, each index used once; nonnegative integer target, exact payment, no change.\n\n[\"Explicitly selected inventory: [100,60,35,25,15,10], indices 0..5 and one physical coin per index.\", \"Exact target 120; no change, overpayment, splitting or additional coin.\"]"
     },
     "optimality": {
-      "he": "מינימום מספר המטבעות מוכח ברקורסיית שתי אפשרויות. מימוש עם שחזור O(n(T+1)) זמן ומקום; יעד120 קבוע, אך יעד משתנה פסאודו־פולינומי.",
-      "en": "Minimum cardinality is proved by the take/skip recurrence. Reconstruction uses O(n(T+1)) time/space;120 is fixed, variable T gives pseudopolynomial cost."
+      "he": "מינימום מספר המטבעות מוכח ברקורסיית שתי אפשרויות. מימוש עם שחזור O(n(T+1)) זמן ומקום; יעד120 קבוע, אך יעד משתנה פסאודו־פולינומי.\n\nהמינימום הוא 3: [1,2,3]. שלישייה חוקית משיגה 120, ואין יחיד או זוג אפשרי; אין צורך בהנחה שחמדנות מיטבית.",
+      "en": "Minimum cardinality is proved by the take/skip recurrence. Reconstruction uses O(n(T+1)) time/space;120 is fixed, variable T gives pseudopolynomial cost.\n\nMinimum 3, at indices [1,2,3]. A legal triple achieves 120 and no single/pair can; greedy optimality is not assumed."
     },
     "verification": {
-      "he": "51,060 מקרי מלאי/יעד מול מניית תת־קבוצות בלתי תלויה; אינדקסים ייחודיים, סכום מדויק, מספר מיטבי, כישלון חמדנות ואי־מחזור.",
-      "en": "51,060 inventory/target cases against independent subset enumeration; unique indices, exact sums, optimal counts, greedy failure and no reuse."
+      "he": "51,060 מקרי מלאי/יעד מול מניית תת־קבוצות בלתי תלויה; אינדקסים ייחודיים, סכום מדויק, מספר מיטבי, כישלון חמדנות ואי־מחזור.\n\n7,854 מקרי מלאי/יעד מול אורקל תתי־קבוצות; כל 64 תתי־הקבוצות של המופע הנבחר מאשרות מינימום 3 ושלישייה יחידה [1,2,3].",
+      "en": "51,060 inventory/target cases against independent subset enumeration; unique indices, exact sums, optimal counts, greedy failure and no reuse.\n\n7,854 inventory/target cases against a subset oracle; all 64 subsets of the selected instance confirm minimum 3 and unique optimal indices [1,2,3]."
     },
     "edge_cases": {
-      "he": "רשימה ריקה; יעד0; מטבע גדול מהיעד; עריכים שווים; אין פתרון; ערך לא חיובי; יעד גדול וצריכת זיכרון; פתרונות מינימליים רבים.",
-      "en": "Empty inventory; zero target; oversized coin; duplicate denominations; impossible target; invalid value; large-target memory; multiple minimum subsets."
+      "he": "רשימה ריקה; יעד0; מטבע גדול מהיעד; עריכים שווים; אין פתרון; ערך לא חיובי; יעד גדול וצריכת זיכרון; פתרונות מינימליים רבים.\n\n[\"60 יחיד אינו שני מטבעות; שוויון עריך אינו זהות פיזית.\", \"חמדנות בוחרת 100+15 ונתקעת ביתרה 5.\", \"הכללה ליעד 0 מחזירה קבוצה ריקה; מלאי שאינו מאפשר יעד מחזיר None.\"]",
+      "en": "Empty inventory; zero target; oversized coin; duplicate denominations; impossible target; invalid value; large-target memory; multiple minimum subsets.\n\n[\"One 60 coin is not two coins; denomination and physical identity differ.\", \"Greedy takes 100+15 and stalls with unpaid 5.\", \"The general zero target returns an empty subset; unreachable targets return None.\"]"
     },
     "common_mistakes": {
-      "he": "להניח עריכים; להחזיר7 בלי דרישה לכל סכום; לעדכן DP עולה; למחזר60 יחיד; להבטיח חמדנות; לשחזר דרך הורים שנדרסו.",
-      "en": "Inventing denominations; answering seven without all-amount coverage; ascending DP; reusing one60coin; assuming greedy; backtracking through overwritten parents."
+      "he": "להניח עריכים; להחזיר7 בלי דרישה לכל סכום; לעדכן DP עולה; למחזר60 יחיד; להבטיח חמדנות; לשחזר דרך הורים שנדרסו.\n\n[\"שימוש ב־60 פעמיים, או הוספת מטבע 5 שלא ניתן.\", \"הצגת שלישייה בלי להוכיח שאין זוג.\", \"ייחוס המלאי הלימודי למקור הראיון.\"]",
+      "en": "Inventing denominations; answering seven without all-amount coverage; ascending DP; reusing one60coin; assuming greedy; backtracking through overwritten parents.\n\n[\"Using 60 twice or inventing an unavailable 5 coin.\", \"Showing a triple without excluding pairs.\", \"Attributing the teaching inventory to the interview source.\"]"
     },
     "interview_answer": {
-      "he": "ללא מלאי אין מספר יחיד. עם מטבעות פיזיים נתונים אבחר מינימום בין דילוג ולקיחה פעם אחת; שתי האפשרויות משתמשות רק במטבעות הקודמים.",
-      "en": "Without inventory there is no unique number. Given physical coins, minimize skip versus take-once, with both branches using only earlier coins."
+      "he": "ללא מלאי אין מספר יחיד. עם מטבעות פיזיים נתונים אבחר מינימום בין דילוג ולקיחה פעם אחת; שתי האפשרויות משתמשות רק במטבעות הקודמים.\n\nבמלאי הנבחר אבחר 60,35,25 באינדקסים 1,2,3. אין 120 יחיד ואין זוג משלים, ולכן 3 מינימלי. חמדנות נתקעת ב־100+15 למרות הפתרון.",
+      "en": "Without inventory there is no unique number. Given physical coins, minimize skip versus take-once, with both branches using only earlier coins.\n\nChoose 60,35,25 at indices 1,2,3. No single 120 or completing pair exists, proving minimum 3. Greedy stalls at 100+15 despite this solution."
     },
     "source_ambiguities": {
-      "he": "הצילום אינו נותן עריכים, מלאי או דרישת כיסוי כל סכום. ההשלמה היא בעיה פרמטרית מוצהרת, לא שחזור של נתון חסר.",
-      "en": "The source omits denominations, inventory and all-amount coverage. The completion is explicitly parameterized, not reconstruction of missing facts."
+      "he": "הצילום אינו נותן עריכים, מלאי או דרישת כיסוי כל סכום. ההשלמה היא בעיה פרמטרית מוצהרת, לא שחזור של נתון חסר.\n\nהמלאי המספרי הוא השלמה לימודית ערוכה שנבחרה כאן. הוא אינו משוחזר מהצילום; הדיון המקורי בחוסר נתונים והבעיה הפרמטרית נשמרו.",
+      "en": "The source omits denominations, inventory and all-amount coverage. The completion is explicitly parameterized, not reconstruction of missing facts.\n\nThe numerical inventory is an explicitly authored teaching completion, not reconstructed screenshot data. The original insufficiency analysis and parameterized problem remain intact."
     },
     "solution_extensions": {
-      "he": "אם צריך רק מספר מטבעות, צמצמו לשורה אחת ועדכנו בסדר יורד. אם נדרשת מערכת שמכסה כל סכום0..120, זו בעיה אחרת:7 משקולות בינאריות מספיקות וחסם2^m≥121 הכרחי.",
-      "en": "For count only, use one row updated descending. Designing coins covering every amount0..120 is different:seven binary weights suffice and2^m≥121 is necessary."
+      "he": "אם צריך רק מספר מטבעות, צמצמו לשורה אחת ועדכנו בסדר יורד. אם נדרשת מערכת שמכסה כל סכום0..120, זו בעיה אחרת:7 משקולות בינאריות מספיקות וחסם2^m≥121 הכרחי.\n\n{\"question\": \"מה משתנה אם נוסף מטבע פיזי נוסף בערך 60?\", \"direction\": \"60+60 נותן כעת פתרון בשני אינדקסים שונים; כל מטבע עדיין חד־פעמי. האלגוריתם אינו משתנה, רק המלאי.\", \"status\": \"המשך לימודי נפרד.\"}",
+      "en": "For count only, use one row updated descending. Designing coins covering every amount0..120 is different:seven binary weights suffice and2^m≥121 is necessary.\n\n{\"question\": \"What changes if another physical 60 coin is added?\", \"direction\": \"60+60 now gives two distinct indices; each coin remains single-use. The algorithm is unchanged, only inventory changes.\", \"status\": \"Separate teaching follow-up.\"}"
     },
     "technical_references": {
       "he": [
@@ -725,6 +725,28 @@
       "en": [
         "The dynamic-programming proof and independent subset oracle are included; no source supplied the missing denominations."
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "batch1107b10_concrete_coin_inventory": {
+          "prompt": "### תרגיל מספרי מלא: מלאי מטבעות שנבחר לצורך הלימוד\n**המלאי הבא הוא השלמה לימודית שלנו, ולא נתון שהיה בצילום הראיון.** הניתוח הקודם והאלגוריתם לרשימת מטבעות כללית נשמרים.\n\nברשותכם בדיוק שישה מטבעות פיזיים, לפי אינדקסים 0..5: `coins=[100,60,35,25,15,10]`. לכל אינדקס עותק אחד בלבד. יש לשלם בדיוק 120 יחידות, ללא עודף, תשלום יתר, פירוק מטבע או מטבעות נוספים. מצאו מספר מינימלי של מטבעות, החזירו את האינדקסים שנבחרו והוכיחו שהמספר מינימלי. בדקו גם מה עושה חמדנות שבכל שלב לוקחת את המטבע הגדול שנותר ושאינו עולה על היתרה.\n\nאפשר להשתמש בתכנות הדינמי הכללי שהוצג קודם. ציינו במפורש מדוע אסור להשתמש פעמיים בערך 60 במלאי הזה.",
+          "hints": [
+            "בדקו אם מטבע יחיד מספיק, ואז אילו זוגות יכולים להשלים את 120. האם יש במלאי עותק שני של 60?",
+            "נסו להשלים 60 בעזרת שני מטבעות אחרים. שימו לב ל־35 ול־25 ולזהויות הפיזיות שלהם.",
+            "אם מצאתם שלישייה חוקית והוכחתם שאין יחיד או זוג, הוכחתם מינימום. לחמדנות עקבו אחרי היתרה אחרי בחירת 100 ואז 15."
+          ]
+        }
+      },
+      "en": {
+        "batch1107b10_concrete_coin_inventory": {
+          "prompt": "### Complete numerical exercise: an explicitly selected coin inventory\n**The inventory below is our authored teaching completion, not data supplied by the interview screenshot.** The earlier specification analysis and general physical-inventory algorithm remain available.\n\nYou own exactly six physical coins, at indices 0..5: `coins=[100,60,35,25,15,10]`. There is exactly one coin at each index. Pay exactly 120 units, without change, overpayment, splitting coins or extra inventory. Minimize the number of coins, return the selected indices and prove optimality. Also test greedy selection that repeatedly takes the largest remaining coin not exceeding the unpaid amount.\n\nYou may use the earlier general dynamic program. Explain explicitly why value 60 cannot be used twice in this inventory.",
+          "hints": [
+            "Check one coin, then possible two-coin complements to 120. Is a second 60 coin available?",
+            "Try completing 60 with two other coins; inspect 35 and 25 and their physical indices.",
+            "A legal triple plus proof that no single or pair works proves optimality. For greedy, track the remainder after taking 100 and then 15."
+          ]
+        }
+      }
     }
   }
 }

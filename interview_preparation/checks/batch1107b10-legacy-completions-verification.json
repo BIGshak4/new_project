@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "checked_on": "2026-11-07",
+  "painter_parameter_cases": 200,
+  "painter_position_and_result_checks": 2889,
+  "coin_inventory_target_cases": 7854,
+  "fixed_coin_subsets": 64,
+  "fixed_payment_minimum": 3,
+  "fixed_payment_indices": [
+    1,
+    2,
+    3
+  ],
+  "fixed_painting_same_day_meetings": [
+    [
+      11,
+      23
+    ]
+  ],
+  "fixed_continuous_crossing": {
+    "day": "11",
+    "position": "23"
+  },
+  "invalid_cases_rejected": 6,
+  "scope": "Executed exact Python models and independent finite oracles; not source reconstruction, physical experiment or human technical review."
+}

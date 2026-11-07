@@ -1,0 +1,69 @@
+{
+  "summary": {
+    "live": true,
+    "kind": "single-new-positive-profile-execution",
+    "executor": "https://jobrun-executor-job-runer.vercel.app",
+    "started_at": "2026-11-07T13:59:59.520Z",
+    "finished_at": "2026-11-07T14:00:08.929Z",
+    "concurrency": 1,
+    "checked": 1,
+    "passed": 1,
+    "failed": 0,
+    "question_count": 1,
+    "languages": [
+      "python"
+    ]
+  },
+  "rows": [
+    {
+      "question": "prep-general-in-place-integer-array-sort",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 14,
+      "passed_count": 14,
+      "runtime_ms": 6826
+    }
+  ],
+  "preflight": {
+    "api_http_status": 200,
+    "broker_http_status": 200,
+    "public_key_fingerprint": "480aec11a342cbc3d01585d3dcfd2b983d45a4ca70093eb55373c31ead20bdad",
+    "fingerprints_match": true,
+    "available": true,
+    "isolation": "fresh-microvm",
+    "network": "deny-all",
+    "persistence": false,
+    "max_runtime_ms": 45000,
+    "broker_revision": ""
+  },
+  "scope": {
+    "question_id": "PREP-273",
+    "question_key": "prep-general-in-place-integer-array-sort",
+    "positive_cases": 14,
+    "learner_db_or_progress_writes": false,
+    "path": "operator-signed job -> deployed broker -> fresh isolated microVM -> result",
+    "not_exercised": [
+      "browser Run button",
+      "authenticated learner API submission",
+      "arbitrary submission complexity/in-place guarantees",
+      "negative/syntax/timeout jobs (local regression suite covers them)"
+    ],
+    "credential_handling": "Signing material remained in launcher and Node child environment; never placed in VM or logs.",
+    "grading_limit": "The live profile compares function return values against 14 authored cases; same-list identity, no built-ins and algorithmic complexity are checked separately in the local authored-solution harness, not inferred from the live verdict."
+  },
+  "artifact_sha256": {
+    "backend/seeds/execution_cases.json": "ba08fda24f5e1a110a8885f17f364249e6fe38b207c99e0a283e685ee7dcd289",
+    "backend/tests/fixtures/execution_positive.json": "624226a139da1a1bf8724fc22c5e32c1bdd046d5c6dc7b4ad74ff2ee0ae9bf39",
+    "interview_preparation/solutions/prep_273_heapsort_batch1107b10.py": "2ed75f733c6f32e0eb858f228e5d131e00990ac1d38449c02c5f18e43e587a54"
+  },
+  "provenance": {
+    "runner_exit_code": 0,
+    "started_at": "2026-11-07T13:59:25.955300+00:00",
+    "finished_at": "2026-11-07T14:00:08.946660+00:00",
+    "signing_material_absent_from_artifacts": true,
+    "deployed_revision_disclosed": false,
+    "deployed_revision_note": "The live health endpoint returned an empty revision. Its isolation/network/persistence/45s deadline are observed fields; local source hashes bind the submitted profile and authored solution."
+  }
+}

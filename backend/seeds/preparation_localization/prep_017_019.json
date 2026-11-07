@@ -134,26 +134,30 @@
         "ההסבר העיקרי הוא עבור מספרים ללא סימן; נכללת גם חלופה עם סימן במשלים ל־2.",
         "די במוצא קומבינטורי; היתר להשתמש בזיכרון אינו מחייב שימוש בו.",
         "המוצא הוא המספר המקורי הגדול יותר; בשוויון בוחרים A.",
-        "אפשר לממש את פעולת ה־MUX מהשערים המותרים."
+        "אפשר לממש את פעולת ה־MUX מהשערים המותרים.",
+        "שני קלטי unsigned בתחום0..3, יציאת שתי סיביות, לוגיקה צירופית."
       ],
       "en": [
         "Two equal-width N-bit integers, N>=1; width and numeric format are unspecified in the source.",
         "Unsigned is the primary explanation; signed two's-complement alternative is included.",
         "Combinational output is sufficient; permission to use memory does not require it.",
         "Output is the larger original number; equality selects A.",
-        "MUX behavior can be implemented from permitted gates."
+        "MUX behavior can be implemented from permitted gates.",
+        "Unsigned inputs0..3, two-bit output, combinational logic."
       ]
     },
     "optimality": {
       "he": {
         "criterion": "מימוש קומבינטורי פשוט ונכון של השוואה ובחירה",
         "result": "מחסר מורחב להשוואה ומבחר ברוחב N ביטים; ללא מצב.",
-        "scope": "אי אפשר לקבוע מינימום מדויק של תאים/שטח/עומק ללא ספריית שערים ויעד מיטוב. מתועדים שיקולי הפשרה בין השוואה בשרשור לבין השוואה מאוזנת."
+        "scope": "אי אפשר לקבוע מינימום מדויק של תאים/שטח/עומק ללא ספריית שערים ויעד מיטוב. מתועדים שיקולי הפשרה בין השוואה בשרשור לבין השוואה מאוזנת.",
+        "batch1107b10_two-bit-max-or-not-mux": "שני OR ושלושה MUX; עד שלוש רמות רכיבים ל־y0, ללא FF. אין הוכחת מינימום גלובלי."
       },
       "en": {
         "criterion": "Simple correct combinational compare-and-select construction",
         "result": "Extended subtractor for comparison plus N-bit selector; no state.",
-        "scope": "No exact cell/area/depth minimum without a gate library and objective. Ripple and balanced comparison tradeoffs documented."
+        "scope": "No exact cell/area/depth minimum without a gate library and objective. Ripple and balanced comparison tradeoffs documented.",
+        "batch1107b10_two-bit-max-or-not-mux": "Two OR and three MUX primitives; up to three primitive levels for y0, no flip-flops; no global minimum proof."
       }
     },
     "edge_cases": {
@@ -164,7 +168,8 @@
         "שני מספרים שליליים בייצוג עם סימן",
         "סימנים מנוגדים בייצוג עם סימן",
         "הערך המינימלי עם סימן לעומת הערך המקסימלי עם סימן",
-        "ביט הסימן של הפרש שנחתך אינו בדרך כלל דגל השוואה תקף"
+        "ביט הסימן של הפרש שנחתך אינו בדרך כלל דגל השוואה תקף",
+        "כל16 זוגות, לרבות0/3,1/2 ושוויון."
       ],
       "en": [
         "A=B",
@@ -173,7 +178,8 @@
         "Both signed negative",
         "Opposite signed signs",
         "Minimum signed value versus maximum signed value",
-        "Truncated subtractor sign is not generally a valid comparison flag"
+        "Truncated subtractor sign is not generally a valid comparison flag",
+        "All16 pairs including0/3,1/2 and ties."
       ]
     },
     "verification": {
@@ -182,19 +188,21 @@
         "checked_on": "2026-09-27",
         "script_path": "checks/check_prep_018.py",
         "method": "174,760 זוגות: מיצוי עבור רוחבים 1..8 עם סימן/ללא סימן; נבדקו ההפרש המורחב המדויק, דגל ההשוואה והתוצאה.",
-        "scope": "חשבון וקטורי ביטים ברוחב קבוע ב־Python; ללא סימולציית HDL, סינתזה או תזמון פיזי."
+        "scope": "חשבון וקטורי ביטים ברוחב קבוע ב־Python; ללא סימולציית HDL, סינתזה או תזמון פיזי.",
+        "batch1107b10_two-bit-max-or-not-mux": "אימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-27",
         "script_path": "checks/check_prep_018.py",
         "method": "174,760 pairs: exhaustive widths 1..8, signed/unsigned; exact extended difference, comparison flag and result checked.",
-        "scope": "Python fixed-width bit-vector arithmetic; no HDL simulation, synthesis or physical timing."
+        "scope": "Python fixed-width bit-vector arithmetic; no HDL simulation, synthesis or physical timing.",
+        "batch1107b10_two-bit-max-or-not-mux": "Executed RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
       }
     },
     "interview_answer": {
-      "he": "ארחיב את שני הקלטים בביט אחד ואחשב A−B. ביט הסימן של ההפרש יבחר ב־MUX את B אם ההפרש שלילי ואת A אחרת. ללא סימן מרחיבים באפס, ובמשלים ל־2 מרחיבים בסימן. ההרחבה מונעת גלישה; אין צורך בזיכרון.",
-      "en": "I extend both inputs by one bit and compute A−B. The difference sign bit controls a MUX, selecting B if the difference is negative and A otherwise. For unsigned inputs use zero extension; for two’s-complement inputs use sign extension. Extension prevents overflow; no memory is needed."
+      "he": "ארחיב את שני הקלטים בביט אחד ואחשב A−B. ביט הסימן של ההפרש יבחר ב־MUX את B אם ההפרש שלילי ואת A אחרת. ללא סימן מרחיבים באפס, ובמשלים ל־2 מרחיבים בסימן. ההרחבה מונעת גלישה; אין צורך בזיכרון.\n\nאבדיל בין ארבעת מצבי הסיביות הגבוהות. הגבוהה ביציאה היא OR; הנמוכה היא OR כשיש שוויון גבוה, וביתר המקרים הביט של הקלט הזוכה.",
+      "en": "I extend both inputs by one bit and compute A−B. The difference sign bit controls a MUX, selecting B if the difference is negative and A otherwise. For unsigned inputs use zero extension; for two’s-complement inputs use sign extension. Extension prevents overflow; no memory is needed.\n\nSplit the four high-bit cases. Output high is OR; output low is OR on high-bit equality, otherwise the winning input low bit."
     },
     "common_mistakes": {
       "he": [
@@ -203,7 +211,8 @@
         "הרחבה באפס של קלטים שליליים עם סימן",
         "בחירת הקלט הקטן עקב היפוך חיבורי הנתונים של ה־MUX",
         "החזרת דגל ההשוואה במקום המספר",
-        "הוספת מצב בלי דרישה לכך"
+        "הוספת מצב בלי דרישה לכך",
+        "התייחסות לקלט כמסומן; מימוש OR לכל הווקטור בלבד; שימוש במחסר שאינו מותר."
       ],
       "en": [
         "Using the sign of a truncated unsigned difference",
@@ -211,7 +220,8 @@
         "Zero-extending negative signed inputs",
         "Selecting the smaller input by reversing mux data wiring",
         "Returning the comparison flag instead of the number",
-        "Adding state without a requirement"
+        "Adding state without a requirement",
+        "Treating inputs as signed; ORing the whole vectors; using a forbidden subtractor."
       ]
     },
     "recursive_two_bit_alternative": {
@@ -244,6 +254,50 @@
         "diagram_generator": "solutions/draw_prep_018_comparison.py",
         "verification": "All 16 N=2 cases: recursive comparator, borrow-only logic, extended sign and maximum equivalent; schematics visually reviewed.",
         "text": "### Comparing the two circuits for N=2: divide and conquer versus subtraction\n\nBoth diagrams assume unsigned A=A1A0,B=B1B0, in the range 0..3. Select S is 1 when A<B. The same S controls both output MUXes: input 0 is a bit from A and input 1 is the corresponding bit from B. The result is therefore an entire original number; ties select A. There is no clock or FF.\n\n**The divide-and-conquer circuit:** Two sub-comparators handle the bit pairs. LT1=NOT(A1) AND B1 indicates that A's upper bit is smaller, EQ1=XNOR(A1,B1) indicates upper-bit equality, and LT0=NOT(A0) AND B0 indicates that A's lower bit is smaller. Combine them as S=LT1 OR (EQ1 AND LT0). This means B wins if it is greater in the upper position, or if the upper position is equal and it is greater in the lower one. For the final two-bit maximum, neither EQ0 nor whole-number EQ is needed, so they are not implemented in the diagram. When the unit serves as a sub-comparator within a larger recursion, it should also return EQ=EQ1 AND XNOR(A0,B0).\n\n![N=2: divide-and-conquer comparison and selection](../diagrams/prep-018-n2-recursive.png)\n\n**The subtractor circuit:** Add a zero to the left of both numbers and subtract D[2:0]={0,A1,A0}−{0,B1,B0}. This is a three-bit subtractor, not a two-bit one. The difference ranges from −3..3, so it fits in three-bit two's complement. S=D2, and the other two difference bits are not used for the result. For example, A=01,B=10 gives 001−010=111, or −1, so S=1 and B=10 is selected. Zero extension is appropriate here because the numbers are unsigned.\n\n![N=2: extended subtractor and selection](../diagrams/prep-018-n2-subtractor.png)\n\n**Which solution is more efficient?** The final selection is identical in both, so the main comparison concerns computation of S. A dedicated comparator directly expresses the needed information — which value is larger — without requiring every difference bit. If a full subtractor is used as a fixed unpruned block, some outputs and logic are unnecessary for this task. However, this does not imply that the recursive approach is always smaller or faster: when synthesis can simplify the subtractor for the only output consumed, the logic can be identical.\n\nThe equivalence can be seen explicitly. In A−B, the borrow from the lower bit is borrow0=NOT(A0) AND B0, exactly LT0. The borrow from the upper bit is:\n\n```text\nborrow1 = (NOT(A1) AND B1) OR (XNOR(A1,B1) AND borrow0)\n```\n\nWhen A1=0,B1=1, a borrow is required regardless of the preceding bit. When A1=B1, an incoming borrow propagates. When A1=1,B1=0, no outgoing borrow is needed. Thus borrow1 is exactly LT1 OR (EQ1 AND LT0), namely S from the recursive circuit. Bit D2 of the extended subtractor equals this borrow. Computing D0,D1 is entirely unnecessary for the task.\n\nIn the explicit comparator implementation shown, assuming XNOR is one cell, computing S uses 2 NOT gates, 3 two-input AND gates, one OR and one XNOR — seven gates — plus two one-bit MUXes to select the number. This counts the shown implementation; it is not a proof of a minimum for N=2 or a transistor-area comparison. Further simplification or different mapping is possible depending on the cell library. For example, in unsigned max, the upper bit M1 equals A1 OR B1, but both diagrams deliberately retain the same MUX stage to compare decision methods without also changing the data side.\n\nFor general width N, a balanced LT/EQ comparison tree gives O(log N) depth and O(N) size in a bounded-fan-in gate model. A ripple subtractor can have O(N) depth, but a subtractor with carry/borrow lookahead or prefix computation can also achieve O(log N) depth. Thus the comparison is between particular structures, rather than between the words “recursion” and “subtraction.” Determining physical area or delay requires a cell library and synthesis, neither of which was performed here.\n\nBoth diagrams were visually checked, and all 16 pairs of numbers were checked for equivalence of the comparison formula, subtraction borrow, extended sign bit and output. [Diagram generator](../solutions/draw_prep_018_comparison.py). The equivalence check is at the beginning of the [update script](../solutions/update_prep_018_comparison.py).\n"
+      }
+    },
+    "source_ambiguities": {
+      "he": "תחום unsigned ועלות הבוחרים הם הבהרות שהוספנו. המקור אינו מגדיר בעיית מינימום רכיבים.",
+      "en": "Unsigned interpretation and MUX convention are added clarifications; the source does not define a minimum-component optimization."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "כיצד משתנה ההשוואה למספרים מסומנים?",
+        "direction": "סיביות סימן שונות הופכות את עדיפות ה־MSB; אותו סימן מאפשר השוואת שאר הסיביות.",
+        "tests": [
+          "10 לעומת01",
+          "11 לעומת10"
+        ]
+      },
+      "en": {
+        "question": "What changes for signed numbers?",
+        "direction": "Different signs reverse the high-bit priority; same-sign inputs compare their remaining bits.",
+        "tests": [
+          "10 versus01",
+          "11 versus10"
+        ]
+      }
+    },
+    "prompt_variants": {
+      "he": {
+        "batch1107b10_two-bit-max-or-not-mux": {
+          "prompt": "### וריאציה מוגבלת לשערי OR, NOT ובוחרים\nתכננו רכיב צירופי המקבל שני מספרים unsigned בני שתי סיביות A,B ומוציא את הגדול מהם. מותרים רק שערי OR, שערי NOT ובוחרי MUX2:1; קבועים וחיווט מותרים. אין להשתמש במשווה, מחבר או מחסר כרכיב חופשי. שוויון מחזיר את אותו ערך. אין דרישה להוכחת מינימום שערים.",
+          "hints": [
+            "הפרידו את ההחלטה לפי שתי הסיביות הגבוהות.",
+            "אם הסיביות הגבוהות שונות, הסיבית הגבוהה קובעת; אם הן זהות, מהו המקסימום של שני ביטים?",
+            "הסיבית הגבוהה ביציאה היא OR. הסיבית הנמוכה נבחרת בין a0,b0 ו־a0 OR b0 לפי ארבעת מצבי a1,b1."
+          ]
+        }
+      },
+      "en": {
+        "batch1107b10_two-bit-max-or-not-mux": {
+          "prompt": "### Variant restricted to OR, NOT and multiplexers\nDesign a combinational maximum of two unsigned two-bit inputs A,B. Only OR, NOT and MUX2:1 primitives are allowed; constants and wiring are permitted. Do not introduce a free comparator, adder or subtractor. Equal inputs return that value. A globally minimum gate count is not required.",
+          "hints": [
+            "Split the decision by the two high bits.",
+            "Different high bits decide the winner; equal high bits reduce to the maximum of two single bits.",
+            "The output high bit is OR. Select the low bit from a0, b0 and a0 OR b0 according to the four high-bit cases."
+          ]
+        }
       }
     }
   },

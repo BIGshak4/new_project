@@ -406,3 +406,16 @@ Start with nested loops over i<j: quadratic time and constant extra words. Impro
 The trace uses A=[4,1,6] and target 10. The seen column is the set before testing the current entry; the final column tests membership of the complement. Insert only after an unsuccessful check. On the third row complement 4 is already present, identifying distinct indices 0 and 2.
 
 ![PREP-040](../diagrams/prep-040-complement-trace.png)
+
+
+## הרחבה ושמירת מקור — 07.11.2026, מקבץ 10
+
+[צילום מקור פרטי 8](../sources/2026-11-07-batch10-08.png)
+
+1. יש מערך של מספרים שלמים בגודל n. כתוב פונקציה שמקבלת מספר K ומחזירה אם יש סכום של שני איברים שיהיה בדיוק K. 2. אותה שאלה אבל עם סכום של 1,2,3,...,N איברים (כלומר כל סכום אפשרי).
+
+שיוכי מקור מדווחים: Google.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-040-subset_sum-batch1107b10-addendum.md)

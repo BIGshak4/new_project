@@ -7,15 +7,15 @@ Interview preparation and a private founders' workspace, built with Next.js, Typ
 | Practice | `apps/web` | https://jobrun-practice.netlify.app |
 | Founder tasks | `apps/tasks` | https://jobrun-tasks.netlify.app |
 
-Both apps require Supabase authentication and an approved email. Task access additionally requires founder permission. Practice includes 300 bilingual question records (295 unique families), written answers, hints, reference solutions, bookmarks and progress. AI evaluation is not connected yet.
+Both apps require Supabase authentication and an approved email. Task access additionally requires founder permission. Practice includes 304 bilingual question records (299 unique families), written answers, hints, reference solutions, bookmarks and progress. AI evaluation is not connected yet.
 
 The task board supports individual tasks, filters, assignees, due dates, subtasks, comments, private files, archive, version history and conflict-safe saves. Drafts persist in the current browser tab; save to synchronize across devices. The two apps share identity and database but require signing in separately on their different domains.
 
-## Latest question intake — 2026-11-07
+## Latest question intake — 2026-11-07, batch of ten
 
-The [November 7 intake report](docs/question-intake-2026-11-07-batch30.md) records all 30 screenshots: 15 new questions (PREP-257–271), six extensions and eight provenance-only additions, covering 29 distinct questions. The catalog now contains 270 PREP records, 300 total records and 295 unique families; the 500 short questions and 2,500 active multiple-choice variants are unchanged. The existing publication protocols and historical human-review registry are unchanged.
+The [latest November 7 intake report](docs/question-intake-2026-11-07-batch10.md) records ten screenshots: four new questions (PREP-272–275), six variants of existing questions and two completions of older exercises. The catalog contains 274 PREP records, 304 total records and 299 unique families; the 500 short questions and 2,500 active multiple-choice variants are unchanged. The publication protocol now records the user's authorization to supply clearly labeled, reasonable assumptions when instructions are incomplete. Original sources and historical human-review records are preserved; no new human approval is claimed.
 
-The content-only database update and all 99 currently referenced new private asset readbacks passed. Of 104 distinct uploads, five superseded PREP-206 objects remain private historical artifacts. Validation includes 4,156 non-overlapping backend tests, 443 frontend tests, TypeScript, a production build, SystemVerilog simulation, 27 live executor cases and 116 local bilingual desktop/mobile content views. Code execution now has 41 profiles. Netlify and Render both served verified content commit `feb50f9`, and the live catalog reported300 questions/500 quiz sources/2500 variants; the intake report distinguishes these checks from physical hardware, SPICE/STA, real-device and production learner-session testing.
+The content-only database update and readback passed for 304 questions and 608 translations. The media inventory has 1,602 assets, including 45 new private assets in this intake. Validation includes 4,194 non-overlapping backend tests, 444 frontend tests, TypeScript, a production build, native SystemVerilog simulation, Verilator/Z3 Sudoku generation, C++ compilation and 48 local bilingual desktop/mobile content views. Code execution has 42 profiles; the new sorting profile passed 14 live signed-broker cases. Deployment verification for this batch is pending. The report distinguishes finite models and local fixture views from physical hardware, SPICE/STA, real-device and authenticated production learner testing. The [earlier 30-screenshot intake](docs/question-intake-2026-11-07-batch30.md) remains documented separately.
 
 ## Develop
 

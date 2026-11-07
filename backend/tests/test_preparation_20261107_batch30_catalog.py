@@ -17,8 +17,11 @@ from tests.preparation_history import (
     assert_pre_batch1107_assets,
     assert_pre_batch1107_localization,
     before_batch1107_record,
+    before_batch1107b10_archive,
+    before_batch1107b10_record,
     digest,
 )
+from tests.preparation_november7_batch10_history import before_batch1107b10_compiled
 from tests.preparation_november7_history import before_batch1107_compiled
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -63,9 +66,12 @@ def test_source13_divisor_seven_matches_the_new_serial_contract_in_both_banks():
     raw=next(q for q in read(BANK/'questions.json')['questions'] if q['id']=='PREP-206')
     compiled=next(q for q in read(SEEDS/'questions/preparation_bank.json')
                   if q['assets']['preparation_id']=='PREP-206')
+    latest_raw,latest_compiled=raw,compiled
+    raw=before_batch1107b10_record(latest_raw)
+    compiled=before_batch1107b10_compiled(latest_compiled)
     assert raw['version']==compiled['version']==3
-    for current,previous in ((raw,before_batch1107_record(raw)),
-                             (compiled,before_batch1107_compiled(compiled))):
+    for current,previous in ((raw,before_batch1107_record(latest_raw)),
+                             (compiled,before_batch1107_compiled(latest_compiled))):
         for language in ('he','en'):
             old=previous['translations'][language]['prompt']
             prompt=current['translations'][language]['prompt']
@@ -83,19 +89,20 @@ def test_source13_divisor_seven_matches_the_new_serial_contract_in_both_banks():
 
 
 def test_all255_previous_records_assets_translations_and_compiled_values_are_frozen():
-    archive=read(BANK/'questions.json')
+    current_archive=read(BANK/'questions.json')
+    archive=before_batch1107b10_archive(current_archive)
     assert len(archive['questions'])==archive['question_count']==270
     assert {q['id'] for q in archive['questions']}-BATCH1107_BASELINE['records'].keys()==NEW
     assert set(BATCH1107_BASELINE['variant_ids'])==VARIANTS
     assert set(BATCH1107_BASELINE['source_only_ids'])==SOURCE_ONLY
-    assert_pre_batch1107_archive(archive)
+    assert_pre_batch1107_archive(current_archive)
     assert_pre_batch1107_assets(read(SEEDS/'preparation_uploads.json')['files'])
     localized={}
     for path in (SEEDS/'preparation_localization').glob('*.json'):
         rows=read(path)
         assert not localized.keys()&rows.keys()
         localized.update(rows)
-    assert localized.keys()=={q['id'] for q in archive['questions']}
+    assert localized.keys()=={q['id'] for q in current_archive['questions']}
     assert_pre_batch1107_localization(localized)
     for q in read(SEEDS/'questions/preparation_bank.json'):
         if q['assets']['preparation_id'] in BATCH1107_BASELINE['records']:
@@ -104,7 +111,7 @@ def test_all255_previous_records_assets_translations_and_compiled_values_are_fro
 
 def test_bilingual_hints_material_and_protected_media_stay_gated():
     catalog=load_catalog(SEEDS)
-    assert len(catalog.questions)==300
+    assert len(catalog.questions)==304
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS|SOURCE_ONLY}
     assert set(selected)==NEW|VARIANTS|SOURCE_ONLY

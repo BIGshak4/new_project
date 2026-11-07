@@ -1,0 +1,216 @@
+{
+  "received_on": "2026-11-07",
+  "screenshot_count": 10,
+  "question_source_count": 10,
+  "sources": [
+    {
+      "screenshot": 1,
+      "question_source": 1,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-01.png"
+      ],
+      "sha256": "a2ac31938322274b52c1f4c80d052344072d12c99970ca5ddd69fafcc91f2c35",
+      "original_prompt": "כתוב פסאודו קוד למכונה שמקבלת בכניסה ביט בודד 1/0 ומוציאה 1 אם באלף המחזורים האחרונים נכנס 1.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-095"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 2,
+      "question_source": 2,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-02.png"
+      ],
+      "sha256": "96df250ce62ebf71b6992b7ce39a1a0bb767ab46cbaf0a0be9291fedd174c450",
+      "original_prompt": "נתון ביט-סטרים / מספר בינארי אינסופי שבכל רגע מתווספות אליו עוד ספרות. ידוע שכאשר שתי הספרות הימניות הן 0 אז המספר מתחלק ב-4. איך ניתן לבדוק בכל רגע נתון שהמספר מתחלק ב-4?",
+      "source_tags": [
+        "logic",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-206"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 3,
+      "question_source": 3,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-03.png"
+      ],
+      "sha256": "c53e0601461c40b7967061ab2e67466daffbadbd1ab5d4145485e2738c77e061",
+      "original_prompt": "קופסה בעלת שתי כניסות, כל כניסה מורכבת משני ביטים. יש להוציא את הכניסה המייצגת מספר גדול יותר על ידי שימוש בשערי OR, NOT, MUX.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-018"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 4,
+      "question_source": 4,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-04.png"
+      ],
+      "sha256": "868970c6df6c1fa31f493bcd2f51f578ca7996f6ee98d016c0bbd833665d2c8e",
+      "original_prompt": "ממש רכיב FIFO עם עומק 4 וכן יציאת ready שאומרת שניתן לקבל מידע, ויציאת vld שאומרת שניתן לקרוא מידע מהרכיב. ניתן להשתמש בכמה FF שרוצים, בבוררים ובשערים לוגיים.",
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-067"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 5,
+      "question_source": 5,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-05.png"
+      ],
+      "sha256": "7e1f8794686bfbe02d09a67eca617ad7d73ad0fbdc849093b4de02fe1e8e807b",
+      "original_prompt": "ממש מיון מערך מספרים בעזרת פונקציה.",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-273"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 6,
+      "question_source": 6,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-06.png"
+      ],
+      "sha256": "b3f558fc8a04cc6a93ba99ae06d8daa86b15342d1a6721eb0b11143a5a7e9553",
+      "original_prompt": "מה זה constractor? ולמה הוא משמש?",
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-274"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 7,
+      "question_source": 7,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-07.png"
+      ],
+      "sha256": "8ef92b01f979d46e4fe707af5c843401ba5c163ea8f2ac6fb5582147242ee2cd",
+      "original_prompt": "ממש מכונת מצבים שמוציאה 1 כל פעם שהמספר מתחלק ב-5, פעם כאשר נכנס ביט מה-LSB ואחרת מה-MSB.",
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "reported_companies": [
+        "NVIDIA"
+      ],
+      "question_ids": [
+        "PREP-050"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 8,
+      "question_source": 8,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-08.png"
+      ],
+      "sha256": "8d2069ba30a814ed70fd0920288dbb73e77f915130f72829980a89339057d660",
+      "original_prompt": "1. יש מערך של מספרים שלמים בגודל n. כתוב פונקציה שמקבלת מספר K ומחזירה אם יש סכום של שני איברים שיהיה בדיוק K. 2. אותה שאלה אבל עם סכום של 1,2,3,...,N איברים (כלומר כל סכום אפשרי).",
+      "source_tags": [
+        "hardware",
+        "google"
+      ],
+      "reported_companies": [
+        "Google"
+      ],
+      "question_ids": [
+        "PREP-040"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 9,
+      "question_source": 9,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-09.png"
+      ],
+      "sha256": "ff5b3996e8df2afded877c4c50b22d27049bd36e28aff6d8b82be24e4006eb63",
+      "original_prompt": "Write SystemVerilog constraint(s) to generate a 9x9 array of integers with Sudoku rules.",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "broadcom"
+      ],
+      "reported_companies": [
+        "Broadcom"
+      ],
+      "question_ids": [
+        "PREP-272"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "question_source": 10,
+      "archive_paths": [
+        "sources/2026-11-07-batch10-10.png"
+      ],
+      "sha256": "0e2c5bc7fdcd5d3d7a477c20e0c13a2f9a115114f6d6385376b56ba138011556",
+      "original_prompt": "תכנן מערכת למעקב אחרי השמש שמוציאה פלט עם משמעות פיזיקלית. פרט שיטות גילוי והרכב פיזיקלי. תאר בעיות שעלולות לעלות וכיצד תטפל בהן. תאר כיצד תוודא שהמערכת עובדת נכון ולא מוציאה פלט שגוי. כתוב pseudocode למימוש. שאלות נוספות יישאלו תוך כדי המענה.",
+      "source_tags": [
+        "hardware",
+        "apple",
+        "verification"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-275"
+      ],
+      "decision": "new_question"
+    }
+  ],
+  "editorial_policy": "Missing instructions may be completed autonomously as explicitly labelled assumptions, per user instruction2026-11-07.",
+  "new_question_count": 4,
+  "technical_extension_count": 8,
+  "provenance_only_count": 0,
+  "affected_question_count": 12
+}

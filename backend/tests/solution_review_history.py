@@ -62,6 +62,7 @@ PRE_INTAKE_REVIEWED_KEYS = frozenset(
 ]
 )
 NOVEMBER7_INVALIDATED_KEYS = frozenset({"prep-multiply-four-registers-unit-instructions"})
+NOVEMBER7_BATCH10_INVALIDATED_KEYS = frozenset({"prep-maximum-of-two-numbers-circuit"})
 
 
 def expected_reviewed_keys():
@@ -78,6 +79,9 @@ def expected_reviewed_keys():
                and solution_content_hash(q) == registry["questions"][q["key"]]["content_sha256"]}
     assert matched == PRE_INTAKE_REVIEWED_KEYS and len(matched) == 44
     assert NOVEMBER7_INVALIDATED_KEYS.issubset(matched)
-    expected = matched - NOVEMBER7_INVALIDATED_KEYS
-    assert len(expected) == 43
+    after_first_intake = matched - NOVEMBER7_INVALIDATED_KEYS
+    assert len(after_first_intake) == 43
+    assert NOVEMBER7_BATCH10_INVALIDATED_KEYS.issubset(after_first_intake)
+    expected = after_first_intake - NOVEMBER7_BATCH10_INVALIDATED_KEYS
+    assert len(expected) == 42
     return expected

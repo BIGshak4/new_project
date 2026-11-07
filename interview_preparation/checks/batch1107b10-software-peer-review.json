@@ -1,0 +1,22 @@
+{
+  "reviewed_on": "2026-11-07",
+  "reviewer_role": "independent AI peer review; no professional human sign-off",
+  "status": "no_material_correctness_findings_in_reviewed_scope",
+  "records": {
+    "PREP-273": "Inspected iterative in-place heapsort, heap construction/extraction invariants, no recursive stack or input-sized scratch array, and independent exhaustive/random sort oracle.",
+    "PREP-274": "Inspected C++17 Range construction, invariant rejection by exception, delegation, copy/assignment example, and widening before endpoint subtraction. Native execution evidence is separate from this review.",
+    "PREP-040": "Inspected appended nonempty arbitrary signed subset-sum contract. New sums are produced from the old reachable set before union, preserving physical index uniqueness. Empty input cannot satisfy target zero. Original two-sum learner prefix and execution contract are preserved by author assertions."
+  },
+  "not_in_scope": [
+    "PREP-275 solar tracker is independently reviewed by the hardware agent",
+    "This read-only review did not rerun the software or native harnesses"
+  ],
+  "files_sha256": {
+    "interview_preparation/solutions/prep_273_heapsort_batch1107b10.py": "2ed75f733c6f32e0eb858f228e5d131e00990ac1d38449c02c5f18e43e587a54",
+    "interview_preparation/solutions/prep_274_constructor_batch1107b10.hpp": "9ba07a9beaae9f4a369ad4295fc00191a6caa062cae4cc87628c16f5de24de77",
+    "interview_preparation/solutions/prep_040_subset_sum_batch1107b10.py": "378cf70220dfc79c49af039366905ee678b4f397eab900f8f00006da0992e079",
+    "interview_preparation/checks/check_prep_274_batch1107b10.cpp": "3be0004ec5b884042374af9ee90c4e6f61550511cdb7a83212a1d4af1ef415ff",
+    "interview_preparation/checks/check_batch1107b10_software.py": "22cdff1c9e5ec777f140bfa1c6ef36cc5a062b587afa19958775604c1dffa93b",
+    ".impeccable/intake-20261107-batch10/chunk-software.json": "ed53221aef495454ab8605dd6cf0275566c90f75fa33ec229a3f4aafc0c05d42"
+  }
+}

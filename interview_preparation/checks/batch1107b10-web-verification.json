@@ -1,0 +1,79 @@
+{
+  "recorded_on": "2026-11-07",
+  "status": "passed",
+  "scope": "Full apps/web test suite, typecheck and production build on the integrated batch10 content. Browser/DB validation is separate.",
+  "checks": [
+    {
+      "name": "test",
+      "command": "npm test",
+      "exit_code": 0,
+      "elapsed_seconds": 21.131,
+      "log": ".impeccable/intake-20261107-batch10/web-test.log",
+      "log_sha256": "fd52a4b828617ab2da88c6a1663b0efb560562984068ddc6ad72f3321c352843",
+      "summary": "444 passed; zero failed, skipped or cancelled."
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "elapsed_seconds": 5.191,
+      "log": ".impeccable/intake-20261107-batch10/web-typecheck.log",
+      "log_sha256": "f65affa838bc46d3821e335237ba49497b7314b23d74699fb5fea9f7b429a87b",
+      "summary": "TypeScript noEmit exit0."
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "exit_code": 0,
+      "elapsed_seconds": 9.361,
+      "log": ".impeccable/intake-20261107-batch10/web-build.log",
+      "log_sha256": "ffb76e565eb3e6876f38788d5c7d7103de8cb86c2ae71b4fb2d56c5806307bae",
+      "summary": "Optimized production compilation and TypeScript passed; all16 static pages generated."
+    }
+  ],
+  "source_screenshot_registry": {
+    "old_count": 443,
+    "new_count": 453,
+    "all_old_entries_preserved_in_original_order": true,
+    "duplicates": 0,
+    "added": [
+      "2026-11-07-batch10-01.png",
+      "2026-11-07-batch10-02.png",
+      "2026-11-07-batch10-03.png",
+      "2026-11-07-batch10-04.png",
+      "2026-11-07-batch10-05.png",
+      "2026-11-07-batch10-06.png",
+      "2026-11-07-batch10-07.png",
+      "2026-11-07-batch10-08.png",
+      "2026-11-07-batch10-09.png",
+      "2026-11-07-batch10-10.png"
+    ],
+    "sha256": "b74e3823bfeb73c188c2ab759c18bc2f2e892f289e349a00c4416d2891cb660e"
+  },
+  "critical_input_sha256": {
+    "apps/web/package.json": "4cd83f5c58532be58d6626d7179b84fb97973356d7e856521747c0a682cbb1d6",
+    "apps/web/package-lock.json": "efda5d938aaf40c4ffb129c30f36581728585f19860f593b2ca868a01cd02cfa",
+    "apps/web/tsconfig.json": "55134881a23efd2a1f9266d2d0752731ff9c40d0e867136cd8863ea679560a09",
+    "apps/web/src/lib/source-screenshots.json": "b74e3823bfeb73c188c2ab759c18bc2f2e892f289e349a00c4416d2891cb660e",
+    "apps/web/src/lib/material-labels.ts": "dc3bd2060ae0ff63eed570413f77a414a9e10522733ead26521bab4b9c072a1c",
+    "apps/web/tests/material-locale.test.ts": "ed7bfb0028ca97fe88ec651603586fed06686dfec5770379c7a756aaaf6cfe62",
+    "apps/web/tests/question-families.test.ts": "1a1240d477515251cbd62a50263cb0918eb70315b4b6e7e21062327de5e87f18",
+    "apps/web/tests/study-text.test.ts": "162890376b2b1a0704e408a369cf66ecd7c4f495027ebfa75b5261c86a0ba38e",
+    "backend/seeds/questions/preparation_bank.json": "33a8f09f95d502d9054b2226e301724aa36fb70ad3a9e941e4ab751ef79a152d",
+    "interview_preparation/intakes/2026-11-07-batch10-sources.json": "1123ef0f3ff86a8b1c136db142edb1105884088aebce4e7f4f6905108b76c2c5",
+    "interview_preparation/solutions/draw_hardware_batch1107b10.py": "b88381e4dfb7cd0d51d642d7342487708203184ab8cf5a54ddf203fd0129f7d0"
+  },
+  "frontend_tree": {
+    "files": 275,
+    "canonical_manifest_sha256": "d278687a659ce34f22b5acdcd82a4a03b075e5340e0dfa4768f431fc5979e319",
+    "local_manifest": ".impeccable/intake-20261107-batch10/web-input-sha256.json"
+  },
+  "changes_by_verifier": [
+    "Appended ten source screenshot names; no changes to prior443 entries.",
+    "Bound renderer loop variable via default arguments to satisfy Ruff B023; no PNG regenerated."
+  ],
+  "product_tsx_edits_by_verifier": false,
+  "limitations": [
+    "These build/test checks do not replace browser or runtime integration validation."
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "old_profiles_preserved": 41,
+  "new_profile": "prep-general-in-place-integer-array-sort",
+  "new_cases": 14,
+  "profiles": 42,
+  "positive": 81,
+  "smoke": 22,
+  "old_positive_prefix_preserved": 80,
+  "old_smoke_prefix_preserved": 21,
+  "existing_two_sum_profile_unchanged": true,
+  "checked_on": "2026-11-07",
+  "baseline_commit": "1ccaafd",
+  "verification_scope": "Offline authoring/catalog and trusted candidate-reference tests; actual sandbox/broker execution is reported separately.",
+  "combined_pytest": {
+    "command": "python -X utf8 -m pytest tests/test_execution_catalog.py tests/test_execution_20261107_profiles.py tests/test_execution_20261107_batch10_profiles.py -q",
+    "passed": 253,
+    "failed": 0,
+    "reported_seconds": 1.56,
+    "wall_seconds": 2.245572,
+    "started_at": "2026-11-07T13:45:18.078338+00:00",
+    "finished_at": "2026-11-07T13:45:20.323910+00:00",
+    "exit_code": 0,
+    "database_environment_explicitly_empty": true
+  },
+  "focused_new_pytest": {
+    "passed": 18,
+    "failed": 0,
+    "reported_seconds": 0.09,
+    "overlaps_combined_run": true
+  },
+  "source_sha256": {
+    "backend/seeds/execution_cases.json": "ba08fda24f5e1a110a8885f17f364249e6fe38b207c99e0a283e685ee7dcd289",
+    "backend/tests/fixtures/execution_catalog_authoring.py": "0acd2a77bd6f7d994bf34151a6c18ba23ffda5609799de4d92e9b7243576a5e8",
+    "backend/tests/fixtures/execution_batch1107b10_inputs.json": "a0e28bc6a34b7b5dbd27d2f105719e7c875053ee4777ff007c3416fa11e8a19c",
+    "backend/tests/fixtures/execution_batch1107b10_oracles.py": "e3513f2a8521407c13e4cd69448f0da7eb22a87ab6f6a7b19833995e97bbf896",
+    "backend/tests/fixtures/execution_positive.json": "624226a139da1a1bf8724fc22c5e32c1bdd046d5c6dc7b4ad74ff2ee0ae9bf39",
+    "backend/tests/fixtures/execution_smoke.json": "a9bd78d2afc025b3d88e6b1dce5dc570348e458e5baca839834f0dbd4721ebfe",
+    "backend/tests/test_execution_20261107_batch10_profiles.py": "05aa947ce64652986e276d6a501181caaf0d48ad237de28cf9937222c8c70428",
+    "interview_preparation/solutions/prep_273_heapsort_batch1107b10.py": "2ed75f733c6f32e0eb858f228e5d131e00990ac1d38449c02c5f18e43e587a54"
+  },
+  "input_fixture_contains_expected_values": false,
+  "learner_output_guarantees": "Exact output only; in-place behavior and forbidden built-ins inspected on the saved reference separately, not proved for arbitrary learner code by this profile.",
+  "existing_pair_profiles_preserved": [
+    "example-pair-sum-indices"
+  ]
+}

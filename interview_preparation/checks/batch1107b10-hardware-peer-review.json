@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "material_issues": [],
+  "checks": {
+    "PREP-133": {
+      "corridor_sizes": 200,
+      "summed_step_positions": 2489,
+      "selected_instance": {
+        "doors": 100,
+        "labels": "1..100",
+        "legal_days": "0..12",
+        "unique_integer_and_continuous_meeting": [
+          11,
+          23
+        ]
+      },
+      "source_vs_authored_indexing": "Clearly distinguished; original0/100 and prior branch preserved."
+    },
+    "PREP-271": {
+      "physical_subsets_enumerated": 64,
+      "minimum": 3,
+      "unique_optimum_indices": [
+        1,
+        2,
+        3
+      ],
+      "values": [
+        60,
+        35,
+        25
+      ],
+      "no_reuse_duplicate_value_cases": 2,
+      "authored_inventory": "Explicitly labeled, not attributed to screenshot."
+    },
+    "PREP-275": {
+      "extra_local_numeric_cases": 89,
+      "units": "requested angular rate, degrees/second",
+      "sign": "right-minus-left and top-minus-bottom align with declared calibrated axes",
+      "fault_behavior": "stale/future values latch zero requested motion; darkness/uncertainty hold; boundaries reject outward commands",
+      "limits": "Core is explicitly partial; independent hard limits/watchdog/acquisition/encoder checks are in system pseudocode; no physical qualification claim."
+    }
+  },
+  "source_sha256": {
+    "solutions/prep_133_explicit_painters_batch1107b10.py": "8e8149e3a77a570e4664b3e21ce1dc2ec8e54c3ebc354ce05a0263c477cd593d",
+    "solutions/prep_271_concrete_inventory_batch1107b10.py": "2ce26b08820ff29f407dbc808dda95d4a8ba490dbaebc03610bfebdc33fbcad1",
+    "solutions/prep_275_solar_tracker_batch1107b10.py": "4b38ec21f34f45e3960866aba5a58ffa323ea127a7c081ed475f88a14348c3a6"
+  }
+}

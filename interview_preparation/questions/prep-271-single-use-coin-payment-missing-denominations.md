@@ -212,3 +212,10 @@ The dynamic-programming proof and independent subset oracle are included; no sou
   }
 }
 ```
+
+
+## הרחבה ושמירת מקור — 07.11.2026, מקבץ 10
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-271-concrete_coin_inventory-batch1107b10-addendum.md)

@@ -130,14 +130,16 @@
         "אין bypass בריק; במלא אפשר לקרוא ולכתוב יחד ולהחזיר את הפריט הישן.",
         "dout רשום; rd_valid תקף אחרי חזית קריאה שהתקבלה. בלי קריאה dout נשמר.",
         "איפוס מנקה את מצב הבקרה והפלט, אך לא את הזיכרון; נדרשת חזית איפוס לפני שימוש.",
-        "מערך אוגרים תומך בקריאת ערך ישן וכתיבה יחד; מימוש RAM חלופי מחייב חוזה תואם."
+        "מערך אוגרים תומך בקריאת ערך ישן וכתיבה יחד; מימוש RAM חלופי מחייב חוזה תואם.",
+        "שעון יחיד; W>0; ללא מעקף ריק; החלפה בתור מלא; הצגת ראש צירופית."
       ],
       "en": [
         "Depth eight, W≥1; one rising-edge clock and synchronous active-high reset.",
         "No bypass at empty; full permits simultaneous read/write with old-data return.",
         "Registered dout; rd_valid marks the cycle after an accepted read. No read holds dout.",
         "Reset clears control/output state, not memory; reset edge required before use.",
-        "Register array provides old-data simultaneous read/write; replacement RAM requires a matching contract."
+        "Register array provides old-data simultaneous read/write; replacement RAM requires a matching contract.",
+        "One clock; W>0; no empty bypass; full replacement; combinational head visibility."
       ]
     },
     "optimality": {
@@ -145,18 +147,20 @@
         "criterion": "קצב וסיבוכיות למימוש שנבחר.",
         "result": "עד קריאה וכתיבה אחת בחזית; O(1) פעולות בקרה למחזור. מצב לוגי 9W+11 ביטים.",
         "proof": "אין הזזת התור; רק גישה ממוספרת, קידום שני מצביעים ועדכון תפוסה.",
-        "scope": "אין מינימום שטח/מספר FF/השהיה; העלות הפיזית תלויה במיפוי זיכרון."
+        "scope": "אין מינימום שטח/מספר FF/השהיה; העלות הפיזית תלויה במיפוי זיכרון.",
+        "batch1107b10_depth-four-ready-valid": "4W+7 ביטי זיכרון ובוחר4:1; זמן פעולה אלגוריתמי O(1) לתור בעל עומק קבוע."
       },
       "en": {
         "criterion": "Throughput and operation count for this construction.",
         "result": "Up to one read and one write per edge; O(1) control operations/cycle; 9W+11 logical state bits.",
         "proof": "No shifting: indexed access, at most two pointer advances and occupancy update.",
-        "scope": "No minimum area/FF/delay claim; physical cost depends on storage mapping."
+        "scope": "No minimum area/FF/delay claim; physical cost depends on storage mapping.",
+        "batch1107b10_depth-four-ready-valid": "4W+7 storage bits and a4:1 selector; O(1) operations for fixed depth."
       }
     },
     "verification": {
-      "he": "עברו 65,408 מעברים ממצבי תור בני ביט אחד, 16,352 מקרי עדיפות איפוס ו־100,000 חזיתות מדגמיות עם נתוני 16 ביט מול deque עצמאי. קוד SystemVerilog לא קומפל ולא סומלץ.",
-      "en": "Passed 65,408 one-bit-state transitions, 16,352 reset-priority cases and 100,000 sampled sixteen-bit edges against independent deque. SystemVerilog uncompiled/unsimulated."
+      "he": "עברו 65,408 מעברים ממצבי תור בני ביט אחד, 16,352 מקרי עדיפות איפוס ו־100,000 חזיתות מדגמיות עם נתוני 16 ביט מול deque עצמאי. קוד SystemVerilog לא קומפל ולא סומלץ.\n\nאימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון.",
+      "en": "Passed 65,408 one-bit-state transitions, 16,352 reset-priority cases and 100,000 sampled sixteen-bit edges against independent deque. SystemVerilog uncompiled/unsimulated.\n\nExecuted RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
     },
     "edge_cases": {
       "he": [
@@ -165,7 +169,9 @@
         "במלא שתי בקשות מתקבלות יחד; יש להחזיר את הערך הישן.",
         "ב־count=1 שתי בקשות מחליפות את הפריט בלי שינוי תפוסה.",
         "איפוס בעת שתי בקשות דוחה אותן ומאפס פלט.",
-        "כמה סיבובים אינם משנים סדר; אין לאפס את הזיכרון כדי למנוע קריאת זבל."
+        "כמה סיבובים אינם משנים סדר; אין לאפס את הזיכרון כדי למנוע קריאת זבל.",
+        "ריק, מלא, חסימת הצרכן, מילוי עד מלא וריקון.",
+        "push+pop בתפוסה1 ובתפוסה4; גלישת מצביעים ואיפוס."
       ],
       "en": [
         "Equal pointers mean empty or full; count distinguishes them.",
@@ -173,7 +179,9 @@
         "Full with both requests accepts both and must return old data.",
         "At count one both requests replace the item without changing occupancy.",
         "Reset with both requests rejects both and clears read outputs.",
-        "Wrap preserves order; occupancy prevents stale reads without resetting memory."
+        "Wrap preserves order; occupancy prevents stale reads without resetting memory.",
+        "Empty, full, backpressure, fill and drain.",
+        "Simultaneous transfers at occupancy1 and4, pointer wrap and reset."
       ]
     },
     "common_mistakes": {
@@ -183,7 +191,8 @@
         "הגדלת count על בקשה שנדחתה.",
         "שינוי מדיניות גבול בלי לתעד אותה.",
         "לקרוא mem לאחר שדרסנו את התא במודל תוכנה.",
-        "להציג FIFO חד־שעוני כפתרון בטוח לשני שעונים בלתי תלויים."
+        "להציג FIFO חד־שעוני כפתרון בטוח לשני שעונים בלתי תלויים.",
+        "קידום מצביע על בקשה שנדחתה; קריאת כניסה בתור ריק כאילו יש מעקף; פירוש data כש־valid=0; בלבול בין ready לבין בקשת כתיבה."
       ],
       "en": [
         "Using a three-bit count that cannot represent eight.",
@@ -191,23 +200,66 @@
         "Changing occupancy on rejected requests.",
         "Silently changing boundary policy.",
         "Overwriting before reading in a software model.",
-        "Claiming single-clock control safely handles unrelated clocks."
+        "Claiming single-clock control safely handles unrelated clocks.",
+        "Advancing on rejected requests; inventing empty bypass; consuming data while invalid; confusing ready with a write request."
       ]
     },
     "interview_answer": {
-      "he": "אשתמש במערך 8×W, שני מצביעים בני שלושה ביטים ומונה תפוסה בן ארבעה. pop חוקי רק כשהתור אינו ריק; push חוקי כשאינו מלא או כשיש pop באותה חזית. אקרא את הפריט הישן, אכתוב בקצה, אקדם רק מצביעים של פעולות שהתקבלו ואעדכן count ב־push פחות pop. הפלט רשום עם rd_valid.",
-      "en": "Use eight W-bit cells, two three-bit pointers and four-bit occupancy. Pop only when nonempty; push when not full or with a same-edge valid pop. Read old front, write at tail, advance only accepted-operation pointers and update count by push minus pop. Read output is registered with rd_valid."
+      "he": "אשתמש במערך 8×W, שני מצביעים בני שלושה ביטים ומונה תפוסה בן ארבעה. pop חוקי רק כשהתור אינו ריק; push חוקי כשאינו מלא או כשיש pop באותה חזית. אקרא את הפריט הישן, אכתוב בקצה, אקדם רק מצביעים של פעולות שהתקבלו ואעדכן count ב־push פחות pop. הפלט רשום עם rd_valid.\n\nאשמור ארבע מילים ומונה תפוסה. valid אומר שיש ראש, ready אומר שיש מקום או שבדיוק מתפנה מקום. רק לחיצת יד מאושרת מזיזה מצביע.",
+      "en": "Use eight W-bit cells, two three-bit pointers and four-bit occupancy. Pop only when nonempty; push when not full or with a same-edge valid pop. Read old front, write at tail, advance only accepted-operation pointers and update count by push minus pop. Read output is registered with rd_valid.\n\nUse four words and occupancy. Valid means a head exists; ready means there is space or one is being freed. Only accepted handshakes advance pointers."
     },
     "solution_extensions": {
       "he": {
         "question": "מה נדרש אם צד הקריאה והכתיבה פועלים בשעונים שונים?",
         "direction": "זה FIFO אסינכרוני: נדרשים מצביעים וביטי גלישה, קידוד Gray וסנכרון לכל תחום שעון, חישוב דגלים מקומי וניתוח CDC. אין להעביר count בינארי רב־ביטי ישירות.",
-        "status": "מוכן בתוכן; לא מחובר לתור המשך חי."
+        "status": "מוכן בתוכן; לא מחובר לתור המשך חי.",
+        "batch1107b10_depth-four-ready-valid": {
+          "question": "איך שוברים את נתיב ready הצירופי?",
+          "direction": "הוספת מאגר החלקה או רישום ready דורשים מקום שמור נוסף ושינוי השהיה.",
+          "tests": [
+            "עצירת צרכן לאחר רצף כתיבות",
+            "אימות שאין אובדן או שכפול"
+          ]
+        }
       },
       "en": {
         "question": "What changes when readers and writers use unrelated clocks?",
         "direction": "An asynchronous FIFO needs wrap-aware pointers, Gray encoding, cross-domain synchronizers, local flags and CDC analysis. Do not pass a multi-bit binary occupancy count directly between clocks.",
-        "status": "Prepared in content, not connected to the live follow-up queue."
+        "status": "Prepared in content, not connected to the live follow-up queue.",
+        "batch1107b10_depth-four-ready-valid": {
+          "question": "How can the combinational ready path be broken?",
+          "direction": "A skid buffer or registered-ready contract needs reserved capacity and a changed latency.",
+          "tests": [
+            "Consumer stalls after consecutive writes",
+            "Check no loss or duplication"
+          ]
+        }
+      }
+    },
+    "source_ambiguities": {
+      "he": "רוחב המילה, כיוון ready/valid וההתנהגות במלא/ריק הוגדרו כהשלמה; המקור מזכיר רק דגלי ready ו־vld.",
+      "en": "Word width, handshake direction and boundary behavior are explicit additions; the source states only ready and vld indications."
+    },
+    "prompt_variants": {
+      "he": {
+        "batch1107b10_depth-four-ready-valid": {
+          "prompt": "### וריאציה: FIFO בעומק ארבע עם ready ו־valid\nממשו תור חומרה בן ארבע מילים באמצעות FF, בוחרים ושערים. הציגו ממשק שמודיע מתי ניתן להכניס מידע ומתי ניתן לקרוא מידע.\n\nהשלמות חוזה: כל מילה היא W סיביות, W חיובי. יש שעון יחיד ואיפוס סינכרוני. לכניסה in_valid,in_ready,in_data; ליציאה out_valid,out_ready,out_data. פעולה מתקבלת בעליית שעון כאשר שני אותות לחיצת היד 1. הראש מוצג בצירוף ללא קריאה הרסנית; בעת חסימת הצרכן הוא יציב. בתור ריק אין מעקף ישיר מהכניסה ליציאה. בתור מלא מותר לקבל כתיבה רק יחד עם קריאה מאושרת באותה עלייה. זו וריאציה נפרדת מממשק הקריאה הרשומה בפתרון המקורי.",
+          "hints": [
+            "איך תבחינו בין ריק ומלא כשהמצביעים שווים?",
+            "מונה תפוסה0..4 מגדיר valid. האם תור מלא יכול לקבל מילה אם מוציאים ממנו מילה באותה עלייה?",
+            "הגדירו pop=out_valid AND out_ready; אז in_ready=(count<4) OR pop. קדמו כל מצביע רק על פעולה מאושרת ועדכנו count לפי ההפרש."
+          ]
+        }
+      },
+      "en": {
+        "batch1107b10_depth-four-ready-valid": {
+          "prompt": "### Variant: depth-four ready/valid FIFO\nImplement a four-word hardware FIFO using flip-flops, multiplexers and gates. Indicate when input can be accepted and when output can be read.\n\nCompleted contract: positive word width W, one clock and synchronous reset. Input has in_valid,in_ready,in_data; output has out_valid,out_ready,out_data. Transfer occurs at a rising edge with both handshake signals high. The head is shown combinationally and remains stable under downstream backpressure. There is no empty input-to-output bypass. A full FIFO accepts replacement only with a simultaneous accepted read. This is distinct from the original registered-read interface.",
+          "hints": [
+            "How do equal pointers distinguish empty from full?",
+            "Occupancy0..4 defines valid. Can a full FIFO accept a word when one is removed at the same edge?",
+            "Set pop=out_valid AND out_ready; then in_ready=(count<4) OR pop. Advance pointers only on accepted transfers and update count by their difference."
+          ]
+        }
       }
     }
   },

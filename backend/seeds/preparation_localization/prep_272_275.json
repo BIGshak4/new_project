@@ -1,0 +1,220 @@
+{
+  "PREP-272": {
+    "assumptions": {
+      "he": [
+        "מערך9×9 של int unsigned; תחום1..9; ללא תאים נתונים מראש.",
+        "לוח פתרון מלא, בלי דרישת אחידות או יצירת חידה יחידה."
+      ],
+      "en": [
+        "A9×9 unsigned integer array; domain1..9; no givens.",
+        "A complete solution grid, with no uniformity or unique-puzzle requirement."
+      ]
+    },
+    "optimality": {
+      "he": "81 משתני מספר שלם,81 אילוצי תחום ו־810 זוגות שכנים שונים. הרחבת הלולאות בוחנת6561 זוגות. זמן פתרון תלוי ב־solver; אין הבטחת O(1) רק מפני שגודל הלוח קבוע.",
+      "en": "81 integer variables,81 domain constraints and810 unique peer inequalities. Loop expansion considers6561 pairs. Solving time depends on the solver; a fixed board size does not justify a practical constant-time guarantee."
+    },
+    "verification": {
+      "he": "אימות ממשי: הקוד קומפל ב־Verilator5.032 ונקרא solver מקומי Z3 4.13.3, במכונה מבודדת עם רשת חסומה. הוגרלו שישה לוחות, שניים לכל seed11,37,101; בודק Python בלתי תלוי אימת לכל לוח9 שורות,9 עמודות ו־9 אזורים,162 קבוצות בסך הכול. בודק התקינות עצמו עבר82 מקרי קבלה/דחייה. Icarus שימש לתרגילי RTL האחרים, לא לפתרון אילוצי המחלקה. ראיה: checks/batch1107b10-native-verification.json. שישה לוחות אינם הוכחת אחידות סטטיסטית ואינם בדיקה של כל הלוחות האפשריים.",
+      "en": "Executed verification: Verilator5.032 compiled the code and invoked local Z3 4.13.3 in a network-denied isolated VM. Six grids were generated, two each for seeds11,37,101. An independent Python validator checked all nine rows, nine columns and nine boxes per board,162 groups total. The validator itself passed82 acceptance/rejection cases. Icarus ran the other RTL exercises, not this class-constraint solver. Evidence: checks/batch1107b10-native-verification.json. Six grids do not prove uniform sampling or exhaust all possible solutions."
+    },
+    "edge_cases": {
+      "he": [
+        "לוח חוקי מול ערך0/10, כפילות שורה, עמודה או אזור.",
+        "כישלון randomize; כמה הגרלות; seed זהה לעומת שונה."
+      ],
+      "en": [
+        "Valid boards versus0/10 values and row, column or box duplicates.",
+        "Randomize failure, repeated draws and equal/different seeds."
+      ]
+    },
+    "common_mistakes": {
+      "he": "אילוץ סכום45 בלבד; השוואת תא לעצמו; אזור לפי שארית בחלוקה3 במקום חלוקה שלמה; התעלמות מערך randomize; טענה שהלוחות אחידים.",
+      "en": "Only constraining sum45; self-inequality; using modulo3 instead of integer division for boxes; ignoring randomize failure; claiming uniform output."
+    },
+    "interview_answer": {
+      "he": "אגריל81 תאים בתחום1..9 ואחייב אי־שוויון לכל זוג באותה שורה, עמודה או קופסה. אבדוק randomize ואז אאמת27 קבוצות באופן עצמאי.",
+      "en": "Randomize81 cells in1..9 and constrain every row/column/box peer pair unequal. Check randomize, then independently validate27 groups."
+    },
+    "source_ambiguities": {
+      "he": "המקור אומר רק ליצור מערך לפי חוקי סודוקו. בחירת לוח פתרון מלא, היעדר נתונים קבועים וטיפול בכישלון הוגדרו כהשלמות לימודיות.",
+      "en": "The source only requests a Sudoku array. A complete solution grid, no givens and explicit failure handling are added teaching assumptions."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך מכניסים מספרים קבועים של חידה?",
+        "direction": "הוסיפו אילוצי שוויון לתאים הנתונים ובדקו אם יש פתרון; הצלחת randomize אינה מוכיחה יחידות פתרון.",
+        "tests": [
+          "נתונים סותרים באותה שורה",
+          "חידה בעלת כמה פתרונות",
+          "חידה בעלת פתרון יחיד"
+        ]
+      },
+      "en": {
+        "question": "How can puzzle givens be added?",
+        "direction": "Constrain the specified cells equal to their givens and check satisfiability; a successful randomize does not prove uniqueness.",
+        "tests": [
+          "Conflicting row givens",
+          "Multiple-solution puzzle",
+          "Unique-solution puzzle"
+        ]
+      }
+    }
+  },
+  "PREP-273": {
+    "assumptions": {
+      "he": "השלמות שבחרנו: רשימת שלמים, סדר עולה, שינוי במקום, בלי builtin וללא יציבות; התחום אינו מצומצם ל־ 0/1/2.",
+      "en": "Chosen completions: integer list, ascending in-place mutation, no built-in sort and no stability; values are not restricted to 0/1/2."
+    },
+    "optimality": {
+      "he": "O(n log n) גרוע־ביותר ו־ O(1) מילים; אופטימלי אסימפטוטית במודל השוואות, לא בכל מודל ערכים.",
+      "en": "Worst-case O(n log n), O(1) words; asymptotically optimal in the comparison model, not every numeric model."
+    },
+    "verification": {
+      "he": "10,085 קלטים מול sorted כאורקל בדיקה בלבד, זהות הרשימה ובדיקת AST שאין sort/sorted במימוש.",
+      "en": "10,085 inputs versus sorted as a test-only oracle, list identity and AST absence of sort/sorted in the implementation."
+    },
+    "edge_cases": {
+      "he": "ריק; יחיד; כל הערכים זהים; מספרים שליליים; סדר הפוך; שלמים גדולים.",
+      "en": "Empty; singleton; homogeneous; negatives; reversed; large integers."
+    },
+    "common_mistakes": {
+      "he": "להשתמש ב־ heap חיצוני למרות מגבלת המקום; להשאיר את סוף הרשימה בתוך אזור התיקון; לטעון ליציבות.",
+      "en": "Allocating an external heap despite the space constraint; repairing through the sorted suffix; claiming stability."
+    },
+    "interview_answer": {
+      "he": "אבנה max-heap בתוך הרשימה ואוציא בכל פעם את המקסימום לסופה. תיקון איטרטיבי שומר על המקום הקבוע.",
+      "en": "Build an in-array max-heap and repeatedly move its maximum to the end; iterative repair preserves constant extra words."
+    },
+    "source_ambiguities": {
+      "he": "הצילום אומר רק לממש מיון בפונקציה. סדר, טיפוס, מגבלת מקום והיעדר built-in הם בחירת תרגול מפורשת.",
+      "en": "The screenshot only asks for a sorting function; order, type, space and no-built-in constraints are explicit exercise choices."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם נדרשת יציבות?",
+          "answer_direction": "אפשר לבחור merge sort עם מערך עזר לינארי, או לדון באלגוריתם יציב במקום ובמחירו; אין להציג heapsort רגיל כיציב.",
+          "principle": "אופטימליות תלויה במודל ההשוואה ובאילוצי הזיכרון."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if stability is required?",
+          "answer_direction": "Choose merge sort with linear auxiliary storage or analyze a stable in-place alternative and its cost; ordinary heapsort is not stable.",
+          "principle": "Optimality depends on the comparison model and memory constraints."
+        }
+      ]
+    }
+  },
+  "PREP-274": {
+    "assumptions": {
+      "he": "פירוש מפורש: C++17, טווח עם קצוות int32_t, חריגה בכישלון; זו דוגמה נבחרת ולא נתונים מהמקור.",
+      "en": "Explicit interpretation: C++17, int32_t Range endpoints and exception on failure; this example is chosen, not source-supplied."
+    },
+    "optimality": {
+      "he": "בדוגמה O(1) זמן ואחסון לשני שדות; בנאים כלליים אינם בהכרח בעלי עלות קבועה.",
+      "en": "The two-field example uses O(1) time/storage; constructors in general need not have constant cost."
+    },
+    "verification": {
+      "he": "רתמת C++17 בודקת 627 מקרי ברירת מחדל/קצוות/טווחים/העתקה/השמה. ראיות הידור בנפרד.",
+      "en": "A C++17 harness covers 627 default/boundary/range/copy/assignment cases; native execution evidence is separate."
+    },
+    "edge_cases": {
+      "he": "low=high; טווח הפוך; בנאי חסר ללא ארגומנטים; חברים שלא אותחלו; כשל בניית חבר משאב.",
+      "en": "Equal endpoints; reversed range; unavailable default constructor; uninitialized members; failure while constructing a resource member."
+    },
+    "common_mistakes": {
+      "he": "לכתוב void לפני הבנאי; לחשוב שבנאי הוא הקצאה; להניח סדר אתחול לפי הרשימה; לערבב העתקה והשמה.",
+      "en": "Giving a constructor return type void; equating construction with allocation; trusting initializer-list order; conflating copy initialization and assignment."
+    },
+    "interview_answer": {
+      "he": "בנאי מאתחל אובייקט חדש ומבסס את האינווריאנט שלו. אתחול חברים מתרחש לפני הגוף; כישלון יכול למנוע השלמת אובייקט פסול.",
+      "en": "A constructor initializes a new object and establishes its invariant. Members initialize before the body; failure can prevent completion of an invalid object."
+    },
+    "source_ambiguities": {
+      "he": "constractor פורש כ־ constructor. השפה, המחלקה והמדיניות בכישלון נבחרו במפורש משום שלא הופיעו בצילום.",
+      "en": "The misspelling constractor is interpreted as constructor; language, class and failure policy are explicit completions absent from the screenshot."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתנה התשובה למחלקה שמחזיקה קובץ פתוח?",
+          "answer_direction": "חבר RAII רוכש בעלות ומשתחרר אוטומטית; בנאי כושל מנקה חברים שכבר נבנו. יש להגדיר העתקה/הזזה לפי סוג הבעלות.",
+          "principle": "תנאי תקינות ובעלות מתחילים בזמן האתחול."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes for a class owning an open file?",
+          "answer_direction": "An RAII member owns/releases the file; failed construction cleans completed members. Define copying/moving according to ownership semantics.",
+          "principle": "Invariants and ownership begin during initialization."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        "[Microsoft: בנאים ב־ C++ ורשימות אתחול](https://learn.microsoft.com/en-us/cpp/cpp/constructors-cpp)",
+        "[טיוטת תקן C++: סדר אתחול בסיסים וחברים](https://eel.is/c++draft/class.base.init)"
+      ],
+      "en": [
+        "[Microsoft: C++ constructors and member initializer lists](https://learn.microsoft.com/en-us/cpp/cpp/constructors-cpp)",
+        "[C++ working draft: base/member initialization order](https://eel.is/c++draft/class.base.init)"
+      ]
+    }
+  },
+  "PREP-275": {
+    "assumptions": {
+      "he": "השלמה: פאנל דו־צירי, ארבעה רבעים מכוילים, מקודדים עצמאיים ופקודות במעלות לשנייה; confident מסופק משכבת אבחון.",
+      "en": "Completion: two-axis panel, calibrated quadrants, independent encoders and degree/second commands; confidence is supplied by diagnostics."
+    },
+    "optimality": {
+      "he": "ליבה O(1) זמן ומקום לדגימה; אין טענת שטח, דיוק או יציבות פיזית למערכת השלמה.",
+      "en": "Core O(1) time/state per sample; no full-system physical accuracy, area or stability claim."
+    },
+    "verification": {
+      "he": "1,681 תגובות, 16 מקרי עצירה ו־ 2,000 צעדי צמח סינתטי; ללא ציוד, חיזוי, ריג או בדיקת שטח.",
+      "en": "1,681 responses, sixteen stop cases and 2,000 synthetic-plant steps; no equipment, ephemeris, rig or field test."
+    },
+    "edge_cases": {
+      "he": "חושך; אור מפוזר; timestamp ישן; חיישן תקוע/מלוכלך; גבולות; מנוע תקוע; כיוון הפוך.",
+      "en": "Darkness; diffuse light; stale timestamp; stuck/dirty sensor; limits; jammed drive; reversed direction."
+    },
+    "common_mistakes": {
+      "he": "להוכיח הצלחה רק מאיזון אותם חיישנים; לקרוא לפקודת מנוע זווית נמדדת; לחלק ב־ S≈0; להציג סימולציה כבדיקת חומרה.",
+      "en": "Using balanced feedback as the sole correctness proof; calling a motor command a measured angle; dividing by near-zero S; calling simulation a hardware test."
+    },
+    "interview_answer": {
+      "he": "אגדיר זווית יעד ופלט עם יחידות, אסגור לולאה עם גבולות ואבחון, ואאמת זווית בפועל מול מקור עצמאי.",
+      "en": "Define target orientation and physical units, close a bounded diagnostic loop, and compare measured orientation with an independent reference."
+    },
+    "source_ambiguities": {
+      "he": "במקור אין התקן, צירים, חיישנים או ספי ביצועים. כולם נבחרו במפורש לדוגמת תכנון; פרמטרי הליבה אינם כיול של ציוד קיים.",
+      "en": "The source supplies no device, axes, sensors or performance thresholds; these are explicit design choices, not calibration of existing equipment."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם איזון ארבעת החיישנים מספיק גם ביום מעונן?",
+          "answer_direction": "לא. אור מפוזר עלול להיות מאוזן בכיוונים שונים; יש להוריד ביטחון, להחזיק מצב או להסתמך על חיזוי/מקור נוסף לפי החוזה.",
+          "principle": "משוב ובדיקת נכונות צריכים תצפיות שאינן זהות."
+        }
+      ],
+      "en": [
+        {
+          "question": "Are equal quadrant readings sufficient under cloud cover?",
+          "answer_direction": "No. Diffuse light can be balanced at different orientations; reduce confidence, hold or use prediction/another reference according to the contract.",
+          "principle": "Feedback and correctness validation need distinct observations."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        "[NLR SOLPOS: מיקום השמש לפי תאריך, זמן ומיקום](https://www.nlr.gov/grid/solar-resource/solpos)"
+      ],
+      "en": [
+        "[NLR SOLPOS: solar position from date, time and location](https://www.nlr.gov/grid/solar-resource/solpos)"
+      ]
+    }
+  }
+}

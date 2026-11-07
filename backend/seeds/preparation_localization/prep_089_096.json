@@ -956,7 +956,9 @@
         "חלון חופף בן7 הכולל את הדגימה הנוכחית; לפחות6 ולא בדיוק6.",
         "לעניין ההתחלה נבחר חלון מלא; זו תוספת מוצהרת ואינה משנה את המקור095.",
         "חלון חופף בן 7 הכולל את הדגימה הנוכחית; לפחות 6 ולא בדיוק 6.",
-        "לעניין ההתחלה נבחר חלון מלא; זו תוספת מוצהרת ואינה משנה את המקור 095."
+        "לעניין ההתחלה נבחר חלון מלא; זו תוספת מוצהרת ואינה משנה את המקור 095.",
+        "אחד לפחות; חלון כולל דגימה נוכחית; אפסים לפני תחילת הקלט.",
+        "אין bit_valid; כל עלייה היא דגימה."
       ],
       "en": [
         "Last ten includes the current logical sample; Y iff the count is at least three.",
@@ -965,7 +967,9 @@
         "An overlapping seven-sample window including the current sample; at least six, not exactly six.",
         "Full-window startup is an explicit added policy; original095 is unchanged.",
         "An overlapping seven-sample window including the current sample; at least six, not exactly six.",
-        "Full-window startup is an explicit added policy; original095 is unchanged."
+        "Full-window startup is an explicit added policy; original095 is unchanged.",
+        "Any one; include the present sample and zero-pad startup.",
+        "No bit_valid: every edge samples."
       ]
     },
     "waveform_observations": {
@@ -985,7 +989,8 @@
         "המקור אינו קובע התנהגות באתחול; נבחר חלון מלא.",
         "הביטוי „בכל7” מפורש כאן כחלון נע של הדגימות האחרונות, לא כבלוקים.",
         "המקור אינו קובע התנהגות באתחול; נבחר חלון מלא.",
-        "הביטוי „בכל 7” מפורש כאן כחלון נע של הדגימות האחרונות, לא כבלוקים."
+        "הביטוי „בכל 7” מפורש כאן כחלון נע של הדגימות האחרונות, לא כבלוקים.",
+        "המשמעות ״לפחות אחד״ והכללת המחזור הנוכחי נבחרו במפורש כהשלמה לימודית. הצילום אינו דורש שכל האלף יהיו אחד."
       ],
       "en": [
         "Source does not define otherwise-zero behavior, reset, warmup, output latency or scheduling for X changes on clock edges.",
@@ -993,7 +998,8 @@
         "The source omits startup; full windows are chosen explicitly.",
         "“Every7” is interpreted as a sliding recent-sample window, not disjoint blocks.",
         "The source omits startup; full windows are chosen explicitly.",
-        "“Every7” is interpreted as a sliding recent-sample window, not disjoint blocks."
+        "“Every7” is interpreted as a sliding recent-sample window, not disjoint blocks.",
+        "Any-one semantics and inclusion of the current cycle are explicit teaching clarifications; the screenshot does not demand all thousand bits be one."
       ]
     },
     "edge_cases": {
@@ -1007,7 +1013,9 @@
         "ירידה טבעית של count אחרי יציאת שגיאה; reset מתחיל חלון חדש.",
         "דגימה 6 עדיין אינה חלון מלא.",
         "בדיוק 6 או 7 שגיאות בחלון: פלט 1.",
-        "ירידה טבעית של count אחרי יציאת שגיאה; reset מתחיל חלון חדש."
+        "ירידה טבעית של count אחרי יציאת שגיאה; reset מתחיל חלון חדש.",
+        "איפוס, זרם אפסים, שני אחדים סמוכים, אחד נוסף לפני התפוגה.",
+        "999 לעומת 1000 אפסים אחרי אחד; חלון W=1."
       ],
       "en": [
         "Exactly two versus exactly three ones.",
@@ -1019,7 +1027,9 @@
         "Count decreases as an old error expires; reset starts a fresh window.",
         "Sample six is not a full window.",
         "Exactly six or seven errors in the window: output 1.",
-        "Count decreases as an old error expires; reset starts a fresh window."
+        "Count decreases as an old error expires; reset starts a fresh window.",
+        "Reset, all zeros, adjacent ones and refresh before expiry.",
+        "999 versus 1000 zeros after a one; W=1."
       ]
     },
     "common_mistakes": {
@@ -1033,7 +1043,8 @@
         "אי־הגדרת התנהגות לפני שבע דגימות.",
         "בדיקה פעם בשבעה מחזורים בלבד.",
         "בדיקת count הישן וחלון שזז מחזור מאוחר.",
-        "אי־הגדרת התנהגות לפני שבע דגימות."
+        "אי־הגדרת התנהגות לפני שבע דגימות.",
+        "החלפת ״לפחות אחד״ ב״כל האלף אחד״; טעינת 999; חיתוך המונה לתשע סיביות; גלישה מאפס."
       ],
       "en": [
         "Counting lifetime ones or disjoint ten-sample blocks.",
@@ -1045,20 +1056,21 @@
         "Leaving startup behavior unstated.",
         "Checking only every seventh cycle.",
         "Using old count and reporting one cycle late.",
-        "Leaving startup behavior unstated."
+        "Leaving startup behavior unstated.",
+        "Confusing any one with all ones; loading 999; using nine bits; underflowing zero."
       ]
     },
     "optimality": {
-      "he": "היסטוריה של עשרה ביטים נותנת אחסון ועבודה חסומים לכל מחזור. לחלון W נדרשים W ביטים; אין טענת מינימום שטח חומרה.\n\nאוגר היסטוריה בן7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.\n\nאוגר היסטוריה בן 7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.",
-      "en": "A fixed ten-bit history is bounded storage with fixed per-cycle work. Generalized W-bit history costs W bits; no minimum circuit-area claim.\n\nSeven history bits and small counters; constant work per sample. No hardware minimum claimed.\n\nSeven history bits and small counters; constant work per sample. No hardware minimum claimed."
+      "he": "היסטוריה של עשרה ביטים נותנת אחסון ועבודה חסומים לכל מחזור. לחלון W נדרשים W ביטים; אין טענת מינימום שטח חומרה.\n\nאוגר היסטוריה בן7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.\n\nאוגר היסטוריה בן 7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.\n\nעשרה ביטי מצב עבור W=1000; עדכון קבוע באלגוריתם ומחסר בן עשרה ביטים. בכלליות O(log W) זיכרון סיביות.",
+      "en": "A fixed ten-bit history is bounded storage with fixed per-cycle work. Generalized W-bit history costs W bits; no minimum circuit-area claim.\n\nSeven history bits and small counters; constant work per sample. No hardware minimum claimed.\n\nSeven history bits and small counters; constant work per sample. No hardware minimum claimed.\n\nTen state bits for W=1000, with a fixed algorithmic update and a ten-bit decrementer; generally O(log W) bits."
     },
     "verification": {
-      "he": "עברו 32,767 רצפים בינאריים עד אורך 14, 425,986 השוואות דגימה לסכומי פרוסות מפורשים וזוהו 98,298 שיבושי מוצא במחזור יחיד. נבדקו איפוס, כניסה לסף ופקיעה, קלט שגוי ואורך לא תואם. Python בלבד; ללא DUT חי או סימולציית HDL.\n\n8,191 מילים ו־90,114 תצפיות קידומת מול סכומי חלונות בלתי תלויים. ה־SV לא הודר.\n\n8,191 מילים ו־90,114 תצפיות קידומת מול סכומי חלונות בלתי תלויים. ה־SV לא הודר.",
-      "en": "Passed 32,767 binary streams through length fourteen, 425,986 sample comparisons against explicit suffix sums, and 98,298 injected single-cycle output corruptions. Reset, threshold arrival/expiry, invalid samples and length mismatch checked. Python only; no live DUT or HDL simulation.\n\n8,191 words and90,114 prefix observations against independent window sums. SV was not compiled.\n\n8,191 words and 90,114 prefix observations against independent window sums. SV was not compiled."
+      "he": "עברו 32,767 רצפים בינאריים עד אורך 14, 425,986 השוואות דגימה לסכומי פרוסות מפורשים וזוהו 98,298 שיבושי מוצא במחזור יחיד. נבדקו איפוס, כניסה לסף ופקיעה, קלט שגוי ואורך לא תואם. Python בלבד; ללא DUT חי או סימולציית HDL.\n\n8,191 מילים ו־90,114 תצפיות קידומת מול סכומי חלונות בלתי תלויים. ה־SV לא הודר.\n\n8,191 מילים ו־90,114 תצפיות קידומת מול סכומי חלונות בלתי תלויים. ה־SV לא הודר.\n\nאימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון.",
+      "en": "Passed 32,767 binary streams through length fourteen, 425,986 sample comparisons against explicit suffix sums, and 98,298 injected single-cycle output corruptions. Reset, threshold arrival/expiry, invalid samples and length mismatch checked. Python only; no live DUT or HDL simulation.\n\n8,191 words and90,114 prefix observations against independent window sums. SV was not compiled.\n\n8,191 words and 90,114 prefix observations against independent window sums. SV was not compiled.\n\nExecuted RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
     },
     "interview_answer": {
-      "he": "מכניסים X לחלון זז של עשר דגימות ומוציאים את הישנה. מצפים ל־Y=1 אם יש לפחות שלושה אחדים ומשווים למוצא המיוצב לפי איפוס, התחלה והשהיה שהוגדרו.\n\nאשמור את שבע הדגימות האחרונות ואת סכומן. אוסיף את הקלט ואחסיר את היוצא, ואשווה את הסכום החדש לשש כאשר יש חלון מלא.\n\nאשמור את שבע הדגימות האחרונות ואת סכומן. אוסיף את הקלט ואחסיר את היוצא, ואשווה את הסכום החדש לשש כאשר יש חלון מלא.",
-      "en": "Retain a ten-sample sliding history, insert current X and expire the oldest, then expect Y iff at least three bits are one. Compare with settled DUT Y using an explicit reset, warmup and latency convention.\n\nRetain seven samples and their sum, add the incoming bit, subtract the outgoing bit and compare the updated sum with six once the window is full.\n\nRetain seven samples and their sum, add the incoming bit, subtract the outgoing bit and compare the updated sum with six once the window is full."
+      "he": "מכניסים X לחלון זז של עשר דגימות ומוציאים את הישנה. מצפים ל־Y=1 אם יש לפחות שלושה אחדים ומשווים למוצא המיוצב לפי איפוס, התחלה והשהיה שהוגדרו.\n\nאשמור את שבע הדגימות האחרונות ואת סכומן. אוסיף את הקלט ואחסיר את היוצא, ואשווה את הסכום החדש לשש כאשר יש חלון מלא.\n\nאשמור את שבע הדגימות האחרונות ואת סכומן. אוסיף את הקלט ואחסיר את היוצא, ואשווה את הסכום החדש לשש כאשר יש חלון מלא.\n\nאזכור רק כמה דגימות נשארו עד שהאחד האחרון יוצא מהחלון. אחד טוען 1000, אפס מקטין עד אפס, והיציאה בודקת חיוביות.",
+      "en": "Retain a ten-sample sliding history, insert current X and expire the oldest, then expect Y iff at least three bits are one. Compare with settled DUT Y using an explicit reset, warmup and latency convention.\n\nRetain seven samples and their sum, add the incoming bit, subtract the outgoing bit and compare the updated sum with six once the window is full.\n\nRetain seven samples and their sum, add the incoming bit, subtract the outgoing bit and compare the updated sum with six once the window is full.\n\nRemember only how many samples remain before the latest one leaves. A one loads 1000; a zero decrements toward zero; output tests positivity."
     },
     "solution_extensions": {
       "he": {
@@ -1071,7 +1083,15 @@
             "answer_direction": "אפשר להסיר את חסימת filled; שש 1 ראשונות ידליקו כבר בדגימה 6. שאר משוואות הספירה נשארות.",
             "principle": "מדיניות אתחול משנה את העקבות הראשונות."
           }
-        ]
+        ],
+        "batch1107b10_window1000-any-one": {
+          "question": "מה משתנה אם נדרשים שני אחדים בחלון?",
+          "direction": "צריך גם את גיל האחד השני האחרון; מונה תפוגה יחיד אינו מספיק.",
+          "tests": [
+            "שני אחדים במרחק 999",
+            "שני אחדים במרחק 1000"
+          ]
+        }
       },
       "en": {
         "question": "How can hardware update a count without recounting the whole window?",
@@ -1083,7 +1103,15 @@
             "answer_direction": "Remove the filled gate: six initial ones can assert on sample six. Count updates stay the same.",
             "principle": "Startup policy changes initial traces."
           }
-        ]
+        ],
+        "batch1107b10_window1000-any-one": {
+          "question": "What changes for at least two ones?",
+          "direction": "Also track the second-most-recent one; a single expiry counter is insufficient.",
+          "tests": [
+            "Ones 999 samples apart",
+            "Ones 1000 samples apart"
+          ]
+        }
       }
     },
     "technical_references": {
@@ -1112,6 +1140,14 @@
             "שמרו 7 סיביות ומונה שגיאות. השתמשו ב־count_next=count+error−oldest, והכריעו לפי count_next כדי לכלול את הדגימה הנוכחית."
           ],
           "integration_status": ""
+        },
+        "batch1107b10_window1000-any-one": {
+          "prompt": "### וריאציה: לפחות אחד בחלון של אלף מחזורים\nכתבו פסאודו קוד ומימוש סינכרוני שמוציאים 1 אם התקבלה לפחות סיבית 1 אחת באלף הדגימות האחרונות, ו־0 אחרת.\n\nהבהרה שנבחרה למקור הקצר: ״נכנס 1״ פירושו לפחות אחד, ולא אלף אחדים רצופים. החלון כולל את הדגימה הנוכחית; אחרי איפוס ההיסטוריה חסרה ומושלמת באפסים. בכל עליית שעון נקלט ביט; האיפוס סינכרוני וגובר על הקלט. היציאה לאחר העלייה מתאימה לחלון המעודכן.",
+          "hints": [
+            "האם צריך לזכור כל סיבית, או רק מתי יפסיק האחד האחרון להשפיע?",
+            "בכל אחד חדש אפשר לחדש זמן תפוגה של אלף דגימות. מה עושים כשנכנס אפס?",
+            "טענו מונה רווי ל־1000 באחד, הקטינו באפס עד 0, והוציאו 1 כל עוד המונה חיובי. בדקו את האפס ה־999 ואת האפס ה־1000 אחרי האחד."
+          ]
         }
       },
       "en": {
@@ -1123,6 +1159,14 @@
             "Store seven history bits and a count. Use count_next=count+error−oldest so the current sample is included in the decision."
           ],
           "integration_status": ""
+        },
+        "batch1107b10_window1000-any-one": {
+          "prompt": "### Variant: any one in a thousand-cycle window\nWrite pseudocode and synchronous hardware producing 1 exactly when at least one of the latest thousand samples was one.\n\nChosen clarification of the terse source: this means any one, not a thousand consecutive ones. Include the current sample and zero-pad missing startup history. Every rising edge accepts one bit; synchronous active-high reset overrides data. The post-edge output describes the updated window.",
+          "hints": [
+            "Must you remember every bit, or only when the most recent one expires?",
+            "Each new one refreshes a thousand-sample expiry. What should a zero do?",
+            "Load 1000 on one; on zero decrement toward zero. Output whether the count is positive. Check the 999th and 1000th zero after a one."
+          ]
         }
       }
     }

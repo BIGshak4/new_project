@@ -85,6 +85,13 @@ const hebrew: Record<string, string> = {
 };
 
 const additionalLabels: Record<string, Record<"he" | "en", string>> = {
+  "batch1107b10_two-bit-max-or-not-mux": { he: "בחירת המספר הגדול בשני ביטים באמצעות שערים ומוקסים", en: "Two-bit maximum using gates and multiplexers" },
+  "batch1107b10_msb-and-lsb-five": { he: "התחלקות בחמש בשני סדרי קלט", en: "Divisibility by five in both bit orders" },
+  "batch1107b10_depth-four-ready-valid": { he: "תור בעומק ארבע עם ready ו־valid", en: "Depth-four FIFO with ready and valid" },
+  "batch1107b10_window1000-any-one": { he: "זיהוי אחד באלף המחזורים האחרונים", en: "Any one in the last thousand cycles" },
+  "batch1107b10_serial-four-right-append": { he: "התחלקות בארבע כשהביט החדש נכנס מימין", en: "Divisibility by four with right-appended bits" },
+  batch1107b10_completed_painters: { he: "חוזה מלא לצבעים ולמפגש", en: "Complete painter and meeting contract" },
+  batch1107b10_concrete_coin_inventory: { he: "מלאי מטבעות מוגדר ותשובה מספרית", en: "Concrete coin inventory and numerical answer" },
   numeric_variant: { he: "וריאציה למערך מספרים", en: "Numeric-array variant" },
   numeric_012: { he: "מיון המספרים 0, 1 ו־2", en: "Sorting 0, 1 and 2" },
   batch20_extension: { he: "סעיפים נוספים", en: "Additional sections" },

@@ -1,0 +1,94 @@
+{
+  "recorded_on": "2026-11-07",
+  "status": "passed",
+  "environment": "Ubuntu26.04 ephemeral Vercel Sandbox; deny-all network policy during compile and execution",
+  "tools": {
+    "iverilog": "12.0-3",
+    "verilator": "5.032-1",
+    "z3": "4.13.3-1build1",
+    "g++": "15.2.0"
+  },
+  "source_sha256": {
+    "solutions/prep018_two_bit_max_batch1107b10.sv": "2c0257fa6f64581a9a0ec9da24dc51f156e582f2eb5e9bcfcf871107f6ac27d9",
+    "solutions/prep050_mod5_orders_batch1107b10.sv": "5539a7c6dc7968aa21e949198d4dd39eb9024ccd50f64545ce39293828445b77",
+    "solutions/prep067_fifo4_batch1107b10.sv": "5275192844cf0cb090eab4af2d040a0acd2c5a9e2cd6e7f9672cba4644e1de88",
+    "solutions/prep095_recent_one_batch1107b10.sv": "f48ffdee8e6d5409ceab9361ccb3d25f2babb8e1d9e69b095446ec8b7e5792b1",
+    "solutions/prep206_serial_four_batch1107b10.sv": "fae895026325e7d5296210aee2ab878e8a638f151e0d939ea94eb131c2e685db",
+    "solutions/prep_272_sudoku_constraints_batch1107b10.sv": "cc83df4f2b2cbc0a445df180f2fe6b6665b36ea17f38247a2a796c48a49f4586",
+    "checks/tb_hardware_variants_batch1107b10.sv": "c25ec65b47d3cd89ce26fe853d827c200c0a8fa08c2ab19fc7126da9b05c02d3",
+    "checks/check_hardware_batch1107b10.py": "5a0cf000436230dd8362555a2b9b3c9f48a44612b12ab984a68a47a6d8615cb5",
+    "solutions/prep_274_constructor_batch1107b10.hpp": "9ba07a9beaae9f4a369ad4295fc00191a6caa062cae4cc87628c16f5de24de77",
+    "checks/check_prep_274_batch1107b10.cpp": "3be0004ec5b884042374af9ee90c4e6f61550511cdb7a83212a1d4af1ef415ff"
+  },
+  "counts": {
+    "rtl_assertions": 138967,
+    "rtl_serial_words": 2046,
+    "rtl_fifo_cycles": 5000,
+    "rtl_window_cycles": 1300,
+    "rtl_max_pairs": 16,
+    "sudoku_boards": 6,
+    "sudoku_seeds": [
+      11,
+      37,
+      101
+    ],
+    "sudoku_groups": 162,
+    "cpp274_cases": 627
+  },
+  "limitations": [
+    "Bounded digital simulation; no synthesis, STA or physical signoff.",
+    "Constraint solver generated six distinct valid grids; no uniform sampling proof.",
+    "Verilator5.032 emits foreach-index undriven/unused lint diagnostics with -Wall; final build uses -Wno-fatal and independently validates every generated grid.",
+    "Bootstrap initially lacked make; installed the official Ubuntu package then re-disabled network."
+  ],
+  "native_run": {
+    "command": {
+      "id": "cmd_63ba6f2ea1634fd5ba70c57c40dc",
+      "name": "bash",
+      "args": [
+        "-lc",
+        "iverilog -g2012 -Wall -s tb_hardware_variants_batch1107b10 -o rtl-final.out prep018_two_bit_max_batch1107b10.sv prep050_mod5_orders_batch1107b10.sv prep067_fifo4_batch1107b10.sv prep095_recent_one_batch1107b10.sv prep206_serial_four_batch1107b10.sv tb_hardware_variants_batch1107b10.sv && vvp rtl-final.out && for seed in 11 37 101; do ./obj_dir/sudoku +verilator+seed+$seed > sudoku-$seed.log || exit 1; done && python3 -c \"import json; from check_hardware_batch1107b10 import validate_solver_output; boards=[b for s in (11,37,101) for b in validate_solver_output(open('sudoku-%s.log'%s).read())]; print(json.dumps({'sudoku_boards':len(boards),'independent_groups_checked':27*len(boards),'unique_boards_observed':len({str(b) for b in boards}),'boards':boards}))\" && g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic -I. check_prep_274_batch1107b10.cpp -o check274 && ./check274"
+      ],
+      "cwd": "/vercel",
+      "sessionId": "sbx_vAdz9mMa0aE95gmRrgwJDMAptPXY",
+      "startedAt": 1794058685152,
+      "exitCode": 0,
+      "durationMs": 36828
+    }
+  },
+  "native_logs": {
+    "logs": [
+      {
+        "data": "PASS hardware variants checks=138967 serial_words=2046 fifo_cycles=5000 window_cycles=1300 max_pairs=16\ntb_hardware_variants_batch1107b10.sv:68: $finish called at 452186000 (1ps)\n{\"sudoku_boards\": 6, \"independent_groups_checked\": 162, \"unique_boards_observed\": 6, \"boards\": [[[7, 9, 2, 8, 1, 6, 3, 5, 4], [8, 3, 6, 2, 5, 4, 9, 7, 1], [4, 5, 1, 3, 9, 7, 6, 2, 8], [9, 4, 3, 7, 2, 5, 8, 1, 6], [5, 6, 8, 4, 3, 1, 7, 9, 2], [1, 2, 7, 9, 6, 8, 4, 3, 5], [3, 8, 4, 5, 7, 2, 1, 6, 9], [2, 1, 9, 6, 4, 3, 5, 8, 7], [6, 7, 5, 1, 8, 9, 2, 4, 3]], [[4, 8, 2, 9, 1, 3, 7, 6, 5], [5, 9, 7, 8, 6, 4, 3, 1, 2], [6, 1, 3, 2, 7, 5, 4, 9, 8], [7, 2, 5, 1, 8, 6, 9, 3, 4], [9, 6, 4, 3, 2, 7, 8, 5, 1], [8, 3, 1, 5, 4, 9, 6, 2, 7], [3, 4, 6, 7, 5, 2, 1, 8, 9], [2, 7, 8, 6, 9, 1, 5, 4, 3], [1, 5, 9, 4, 3, 8, 2, 7, 6]], [[8, 3, 7, 6, 4, 1, 2, 5, 9], [6, 2, 1, 9, 3, 5, 8, 4, 7], [4, 9, 5, 7, 2, 8, 1, 6, 3], [2, 7, 8, 1, 6, 9, 5, 3, 4], [5, 1, 3, 4, 8, 7, 9, 2, 6], [9, 6, 4, 2, 5, 3, 7, 1, 8], [3, 4, 9, 8, 1, 2, 6, 7, 5], [7, 5, 2, 3, 9, 6, 4, 8, 1], [1, 8, 6, 5, 7, 4, 3, 9, 2]], [[7, 1, 8, 6, 2, 4, 3, 9, 5], [6, 9, 3, 5, 1, 7, 2, 4, 8], [2, 4, 5, 9, 8, 3, 7, 1, 6], [4, 7, 1, 8, 6, 2, 9, 5, 3], [9, 3, 2, 1, 4, 5, 8, 6, 7], [5, 8, 6, 7, 3, 9, 4, 2, 1], [3, 5, 4, 2, 7, 6, 1, 8, 9], [8, 6, 7, 4, 9, 1, 5, 3, 2], [1, 2, 9, 3, 5, 8, 6, 7, 4]], [[4, 3, 6, 2, 8, 1, 7, 5, 9], [1, 8, 5, 9, 7, 4, 6, 3, 2], [2, 9, 7, 6, 5, 3, 1, 4, 8], [7, 5, 8, 1, 9, 2, 3, 6, 4], [6, 4, 9, 5, 3, 7, 8, 2, 1], [3, 2, 1, 4, 6, 8, 5, 9, 7], [9, 7, 3, 8, 2, 5, 4, 1, 6], [8, 1, 2, 3, 4, 6, 9, 7, 5], [5, 6, 4, 7, 1, 9, 2, 8, 3]], [[4, 6, 8, 7, 9, 3, 1, 5, 2], [2, 9, 5, 1, 8, 4, 7, 6, 3], [7, 1, 3, 6, 5, 2, 9, 4, 8], [6, 3, 9, 2, 4, 8, 5, 1, 7], [5, 7, 4, 3, 1, 9, 2, 8, 6], [1, 8, 2, 5, 7, 6, 4, 3, 9], [9, 4, 1, 8, 6, 7, 3, 2, 5], [8, 2, 7, 4, 3, 5, 6, 9, 1], [3, 5, 6, 9, 2, 1, 8, 7, 4]]]}\nPREP-274: 627 constructor/copy/assignment/boundary cases passed\n",
+        "stream": "stdout"
+      }
+    ],
+    "context": {
+      "totalItems": 1,
+      "returnedItems": 1,
+      "truncated": false
+    }
+  },
+  "sudoku_build": {
+    "command": {
+      "id": "cmd_22db6506c53d4dbc98a2bbcedb93",
+      "name": "bash",
+      "args": [
+        "-lc",
+        "verilator --binary --timing -Wno-fatal --top-module prep272_sudoku_tb_batch1107b10 prep_272_sudoku_constraints_batch1107b10.sv -o sudoku > sudoku-build.log 2>&1 && ./obj_dir/sudoku +verilator+seed+11 > sudoku-11.log && python3 -c \"from check_hardware_batch1107b10 import validate_solver_output; print(len(validate_solver_output(open('sudoku-11.log').read())), 'valid boards seed 11')\""
+      ],
+      "cwd": "/vercel",
+      "sessionId": "sbx_vAdz9mMa0aE95gmRrgwJDMAptPXY",
+      "startedAt": 1794058434154,
+      "exitCode": 0,
+      "durationMs": 17160
+    }
+  },
+  "post_execution_tooling_normalization": {
+    "checks/check_hardware_batch1107b10.py": {
+      "executed_sha256": "5a0cf000436230dd8362555a2b9b3c9f48a44612b12ab984a68a47a6d8615cb5",
+      "current_sha256": "7006fb470ad7fd8bbdc3fd3b67ca88c69645d4d042651aa6ec7ee8c8f845b5b5",
+      "change": "Import-order normalization only after execution; recorded original native-execution digest is retained."
+    }
+  }
+}

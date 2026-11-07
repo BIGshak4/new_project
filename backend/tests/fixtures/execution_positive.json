@@ -400,6 +400,11 @@
       "question_key": "prep-branch-free-saturating-speed-controls",
       "language": "python",
       "source": "\"\"\"Branch-free core for promised integer speed in [0,10].\"\"\"\nGAS = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10)\nBRAKE = (0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\n\ndef gas(speed):\n    return GAS[speed]\n\n\ndef brake(speed):\n    return BRAKE[speed]\n\n\ndef speed_controls(speed):\n    \"\"\"Runtime adapter: return [gas(speed), brake(speed)] for one promised speed.\"\"\"\n    return [gas(speed), brake(speed)]\n"
+    },
+    {
+      "question_key": "prep-general-in-place-integer-array-sort",
+      "language": "python",
+      "source": "\"\"\"In-place ascending comparison sort; integer inputs promised, not stable.\"\"\"\n\n\ndef sort_array(values):\n    def sift_down(root, end):\n        while 2 * root + 1 < end:\n            child = 2 * root + 1\n            if child + 1 < end and values[child + 1] > values[child]:\n                child += 1\n            if values[root] >= values[child]:\n                break\n            values[root], values[child] = values[child], values[root]\n            root = child\n\n    n = len(values)\n    for root in range(n // 2 - 1, -1, -1):\n        sift_down(root, n)\n    for end in range(n - 1, 0, -1):\n        values[0], values[end] = values[end], values[0]\n        sift_down(0, end)\n    return values\n"
     }
   ]
 }

@@ -5,13 +5,15 @@
         "הקלט הוא מספר בינארי ללא סימן, מהביט הפחות משמעותי תחילה, באורך לא מוגבל.",
         "כל חזית עולה עם bit_valid=1 מקבלת ביט אחד; מחזור לא תקף שומר מצב. איפוס סינכרוני פעיל בגבוה גובר על תקפות ומפריד בין מילים.",
         "אפס מתחלק ב־5. המילה הריקה מוגדרת מתמטית כאפס ולכן הפלט לאחר איפוס הוא 1; תקפות של מילה לא ריקה היא אות ממשק נפרד.",
-        "קוראים את הפלט המעודכן אחרי חזית הביט האחרון. אות סוף מילה מגיע מבחוץ ואינו משנה את חישוב השארית."
+        "קוראים את הפלט המעודכן אחרי חזית הביט האחרון. אות סוף מילה מגיע מבחוץ ואינו משנה את חישוב השארית.",
+        "שני סדרי קלט נפרדים; מילה ריקה כאפס לפי החוזה הקודם; איפוס ותקפות משותפים."
       ],
       "en": [
         "Unsigned binary input, least-significant bit first, without a fixed maximum word length.",
         "A rising edge with bit_valid accepts one bit; invalid cycles hold. Synchronous active-high reset overrides validity and separates words.",
         "Zero is divisible by five. Empty input mathematically denotes zero, so reset output is one; nonempty-word validity is a separate interface signal.",
-        "Read the updated output after the last accepted edge. An external end-of-word indication does not alter the residue computation."
+        "Read the updated output after the last accepted edge. An external end-of-word indication does not alter the residue computation.",
+        "Two separate input orders; empty-as-zero follows the prior contract; shared reset and validity."
       ]
     },
     "optimality": {
@@ -19,18 +21,20 @@
         "criterion": "מספר מצבים לוגיים לזיהוי חלוקה ב־5 בכל אורך מילה בסדר קליטה זה.",
         "result": "חמישה מצבים מספיקים ונחוצים; שלושה פליפ-פלופים בקידוד בינארי. פתרון ישיר של שארית ומשקל עם עד 20 מצבים תקף גם הוא.",
         "proof": "השארית המנורמלת מתעדכנת לפי s_next=3(s+b) mod5. כל המצבים נגישים וכל זוג מובחן בעזרת המשך בן שלושה ביטים שערכו (-s) mod5.",
-        "scope": "אין טענה למינימום שערים, שטח, השהיה או מספר מצבים כשמוסיפים למפרט דגל פנימי של מילה לא ריקה."
+        "scope": "אין טענה למינימום שערים, שטח, השהיה או מספר מצבים כשמוסיפים למפרט דגל פנימי של מילה לא ריקה.",
+        "batch1107b10_msb-and-lsb-five": "חמישה מצבים לכל סדר, שלושה FF במימוש בינארי; עדכון קבוע לכל סיבית."
       },
       "en": {
         "criterion": "Logical state count for arbitrary-length divisibility-by-five recognition in this bit order.",
         "result": "Five states are necessary and sufficient; three binary-encoded flip-flops. A direct residue/weight design with up to twenty states is also valid.",
         "proof": "Normalized residue updates as s_next=3(s+b) mod5. All states are reachable and each pair is distinguished by a three-bit suffix valued (-s) mod5.",
-        "scope": "No minimum physical gates, area or delay claim, nor a state-count claim for a different specification requiring an internal nonempty-word flag."
+        "scope": "No minimum physical gates, area or delay claim, nor a state-count claim for a different specification requiring an internal nonempty-word flag.",
+        "batch1107b10_msb-and-lsb-five": "Five states per order, three flip-flops per binary encoding and fixed work per bit."
       }
     },
     "verification": {
-      "he": "עברו כל 131,071 המילים באורכים 0–16, עם 1,966,082 בדיקות קידומת מול סכום מספרי מדויק והאינווריאנט המנורמל. עברו כל 16,384 עקבות הבקרה באורך 7, עם 114,688 חזיתות, עשרת מעברי מצב/ביט, נגישות חמשת המצבים והבחנה בכל עשרת זוגות המצבים. אלו בדיקות מודל פייתון; קוד HDL לא קומפל או הורץ, ולא בוצעו סינתזה או מדידות חומרה.",
-      "en": "All 131,071 words of lengths zero through sixteen passed, with 1,966,082 prefix checks against exact integer accumulation and the normalized invariant. All 16,384 length-seven control traces passed across 114,688 edges, plus all ten state/input transitions, five-state reachability and all ten state-pair distinctions. Python models only; HDL not compiled or simulated, no synthesis or physical measurements."
+      "he": "עברו כל 131,071 המילים באורכים 0–16, עם 1,966,082 בדיקות קידומת מול סכום מספרי מדויק והאינווריאנט המנורמל. עברו כל 16,384 עקבות הבקרה באורך 7, עם 114,688 חזיתות, עשרת מעברי מצב/ביט, נגישות חמשת המצבים והבחנה בכל עשרת זוגות המצבים. אלו בדיקות מודל פייתון; קוד HDL לא קומפל או הורץ, ולא בוצעו סינתזה או מדידות חומרה.\n\nאימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון.",
+      "en": "All 131,071 words of lengths zero through sixteen passed, with 1,966,082 prefix checks against exact integer accumulation and the normalized invariant. All 16,384 length-seven control traces passed across 114,688 edges, plus all ten state/input transitions, five-state reachability and all ten state-pair distinctions. Python models only; HDL not compiled or simulated, no synthesis or physical measurements.\n\nExecuted RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
     },
     "edge_cases": {
       "he": [
@@ -38,14 +42,18 @@
         "הוספת אפסים בקצה המשמעותי אחרי קליטת המספר אינה משנה את הערך; מצב מנורמל לא אפס עשוי בכל זאת להשתנות.",
         "איפוס ותקפות יחד מאפסים ואינם קולטים ביט באותה חזית.",
         "אין לקשר מילים עצמאיות בלי לאפס ביניהן; 25 בסדר 1,0,0,1,1 מבדיל מסדר MSB.",
-        "קודי מצב בינאריים 5–7 אינם מצבי המכונה; ענף ברירת המחדל בקוד הוא התאוששות הגנתית, לא מודל לתקלת חומרה."
+        "קודי מצב בינאריים 5–7 אינם מצבי המכונה; ענף ברירת המחדל בקוד הוא התאוששות הגנתית, לא מודל לתקלת חומרה.",
+        "קידומת0, המילה10011, אפסים מובילים והשהיות.",
+        "אותה סדרת ביטים בשני הסדרים; איפוס חוזר."
       ],
       "en": [
         "Empty input, a single zero and all-zero streams output one under the mathematical convention.",
         "Appending high-order zeros preserves the integer, although a nonzero normalized state can still change.",
         "Reset and validity together reset without accepting a bit at that edge.",
         "Independent words require reset between them; twenty-five in order 1,0,0,1,1 distinguishes MSB from LSB reception.",
-        "Binary codes five through seven are outside the FSM; default recovery is defensive code, not a hardware fault model."
+        "Binary codes five through seven are outside the FSM; default recovery is defensive code, not a hardware fault model.",
+        "Zero prefix,10011, leading zeros and pauses.",
+        "The same incoming bits under both interpretations; repeated reset."
       ]
     },
     "common_mistakes": {
@@ -54,30 +62,74 @@
         "לכנות את s השארית הרגילה; למשל אחרי ביט 1 ראשון המצב S3, אבל השארית המספרית היא 1.",
         "לשמור שארית בלבד בעדכון r+b בלי משקל מיקום.",
         "לאפס את המכונה בכל ביט או לקרוא פלט לפני חזית הקליטה האחרונה.",
-        "להכריז שאפס אינו מתחלק ב־5 או שמוצא החלוקה לבדו מציין מילה תקפה ולא ריקה."
+        "להכריז שאפס אינו מתחלק ב־5 או שמוצא החלוקה לבדו מציין מילה תקפה ולא ריקה.",
+        "שימוש בטבלת MSB עבור LSB; הצגת s כאילו תמיד שארית N; שינוי פתאומי של חוזה הריקות."
       ],
       "en": [
         "Using the MSB-first update 2*r+b unchanged.",
         "Calling s the ordinary remainder: after first bit one, state is S3 while the numeric remainder is one.",
         "Updating r+b without retaining the positional weight or normalizing.",
         "Resetting before every bit or sampling output before the last acceptance edge.",
-        "Treating zero as nondivisible or interpreting divisibility alone as nonempty-word validity."
+        "Treating zero as nondivisible or interpreting divisibility alone as nonempty-word validity.",
+        "Using the MSB table for LSB; claiming s always equals N modulo5; silently changing the empty-word convention."
       ]
     },
     "interview_answer": {
-      "he": "אשמור מצב מנורמל: אחרי k ביטים s=N*2^(-k) מודולו 5. כיוון שההופכי של 2 הוא 3, כל ביט b מעדכן s ל־3(s+b) מודולו 5. הפלט 1 רק במצב אפס. כך מספיקים חמישה מצבים בלי מונה מיקום, עם איפוס בין מילים וקליטה מהביט הפחות משמעותי.",
-      "en": "Store normalized state s=N*2^(-k) modulo five after k bits. Since the inverse of two is three, input b updates s to 3(s+b) modulo five. Output one only in state zero. This needs five states and no position counter, with reset between LSB-first words."
+      "he": "אשמור מצב מנורמל: אחרי k ביטים s=N*2^(-k) מודולו 5. כיוון שההופכי של 2 הוא 3, כל ביט b מעדכן s ל־3(s+b) מודולו 5. הפלט 1 רק במצב אפס. כך מספיקים חמישה מצבים בלי מונה מיקום, עם איפוס בין מילים וקליטה מהביט הפחות משמעותי.\n\nב־MSB השארית מתעדכנת בכפל בשתיים וחיבור הביט. ב־LSB אשתמש בנרמול לפי המשקל, ולכן שני הסדרים דורשים טבלאות שונות אף שבשניהם בודקים מצב אפס.",
+      "en": "Store normalized state s=N*2^(-k) modulo five after k bits. Since the inverse of two is three, input b updates s to 3(s+b) modulo five. Output one only in state zero. This needs five states and no position counter, with reset between LSB-first words.\n\nMSB remainder doubles and adds the bit; LSB uses weight normalization, so the transition tables differ although both test state zero."
     },
     "solution_extensions": {
       "he": {
         "question": "איך תתכננו פתרון ישיר ללא שימוש בהופכי מודולרי, ומה משתנה במחלק זוגי כמו 6?",
         "direction": "שומרים שארית r ואת משקל הביט הבא w, ומעדכנים r+b*w ו־2*w מודולו המחלק. זה תקף גם ל־6, אך 2 אינו הפיך מודולו 6 ולכן אסור להעתיק את נוסחת הנרמול. נתחו נגישות וצמצום מחדש.",
-        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי."
+        "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי.",
+        "batch1107b10_msb-and-lsb-five": {
+          "question": "האם נרמול זה יעבוד מודולו4?",
+          "direction": "לא;2 אינו הפיך מודולו4. הגעת LSB-first נעזרת בשתי הסיביות הראשונות.",
+          "tests": [
+            "הוכחת היעדר הופכי",
+            "השוואת00 ו־01 בסדר LSB"
+          ]
+        }
       },
       "en": {
         "question": "How can you solve this without modular inverses, and what changes for an even divisor such as six?",
         "direction": "Track residue r and next weight w, updating r+b*w and 2*w modulo the divisor. This works for six too, but two is not invertible modulo six, so the normalized recurrence cannot be copied. Reanalyse reachable states and minimization.",
-        "status": "Follow-up prepared in content; not connected to the live follow-up queue."
+        "status": "Follow-up prepared in content; not connected to the live follow-up queue.",
+        "batch1107b10_msb-and-lsb-five": {
+          "question": "Does this normalization work modulo four?",
+          "direction": "No:2 is not invertible modulo4. LSB-first divisibility depends on the first two bits.",
+          "tests": [
+            "Show no inverse exists",
+            "Compare00 and01 under LSB-first arrival"
+          ]
+        }
+      }
+    },
+    "source_ambiguities": {
+      "he": "הצילום מבקש שני סדרי הגעה. הסבר ההבחנה בין הוספה ל־LSB להגעת LSB ראשון נוסף כדי למנוע פירוש שגוי.",
+      "en": "The screenshot requests both arrival orders. The insertion-versus-arrival distinction is added to prevent misinterpretation."
+    },
+    "prompt_variants": {
+      "he": {
+        "batch1107b10_msb-and-lsb-five": {
+          "prompt": "### הרחבה: חלוקה בחמש בשני סדרי הגעה\nהציגו גם מכונת מצבים כאשר הסיביות מגיעות מן ה־MSB, והשוו למכונת ה־LSB שלעיל. בכל ביט תקף יש לקבוע אם הקידומת שהתקבלה מתחלקת בחמש.\n\nהשלמות נשמרות: שעון יחיד, איפוס סינכרוני בתחילת מילה ו־bit_valid להשהיות. בהתאם לחוזה המקורי של השאלה, המילה הריקה מייצגת אפס ולכן אחרי איפוס היציאה 1. אם מעוניינים לפסול ריקות מוסיפים דגל seen בנפרד. אין להחליף בין ״סיבית נכנסת למקום ה־LSB״ לבין ״הסיבית הפחות משמעותית מגיעה ראשונה״.",
+          "hints": [
+            "בסדר MSB-first, הוספת ביט מימין מכפילה את המספר הישן בשתיים ואז מוסיפה את הביט.",
+            "האם שארית מודולו5 מספיקה כדי לעדכן את עצמה, בלי לזכור את כל המספר?",
+            "ל־MSB שמרו r ועדכנו (2r+b)%5. ל־LSB ניתן לשמור שארית מנורמלת s ולעדכן 3(s+b)%5, כי3 הוא ההופכי של2 מודולו5."
+          ]
+        }
+      },
+      "en": {
+        "batch1107b10_msb-and-lsb-five": {
+          "prompt": "### Extension: divisibility by five in both arrival orders\nAlso give an FSM for MSB-first arrival and compare it with the preceding LSB-first machine. At each accepted bit determine whether the received prefix is divisible by five.\n\nRetain the original contract: one clock, synchronous reset between words and bit_valid pauses. As in the existing exercise, the empty word represents zero, so reset output is one. Add a separate seen flag if an application rejects empty words. Inserting a new bit at the LSB is different from receiving the least-significant bit first.",
+          "hints": [
+            "MSB-first append doubles the old value and adds the bit.",
+            "Does the remainder modulo five determine its own update?",
+            "For MSB first update r=(2r+b)%5. For LSB first a normalized remainder updates s=3(s+b)%5 because3 is the inverse of2 modulo5."
+          ]
+        }
       }
     }
   },
