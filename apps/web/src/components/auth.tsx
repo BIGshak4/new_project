@@ -1,13 +1,14 @@
 "use client";
 
 import { PracticeLanding } from "./practice-landing";
-import { AvatarOnboardingGate } from "./wardrobe/avatar-onboarding";
+import { PracticeEntry } from "./practice-entry-splash";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, LockKeyhole, LogOut, Mail } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import { AccessCheck, accessForUser, observeAuthUser, type AccessState } from "../lib/auth-access";
 import { recordGreeting } from "../lib/practice-entry";
+import { personalAreaEntryUrl } from "../lib/workspace-route";
 import { usernameAvailability } from "../lib/identity-api";
 import { IdentityApiError, identityErrorMessage, normalizeUsername, validUsernameFormat } from "../lib/identity-types";
 import { UsernameField } from "./username-field";
@@ -44,8 +45,28 @@ export function Auth({
     [message, setMessage] = useState(""),
     [error, setError] = useState("");
   useEffect(() => {
+    let sawSignedOut = false;
+    let leavingForHome = false;
     const stop = observeAuthUser(supabase.auth, (next) => {
-      if (kind === "practice" && !next) recordGreeting(null);
+      if (leavingForHome) return;
+      if (kind === "practice" && !next) {
+        sawSignedOut = true;
+        recordGreeting(null);
+      }
+      if (kind === "practice" && next && currentUser.current?.id !== next.id) {
+        const url = new URL(window.location.href);
+        const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+        const target = personalAreaEntryUrl(url, document.referrer, navigation?.type, sawSignedOut || !!currentUser.current);
+        if (target !== null) {
+          if (url.pathname !== "/") {
+            leavingForHome = true;
+            window.location.replace(target);
+            return;
+          }
+          if (url.pathname + url.search + url.hash !== target) window.history.replaceState(window.history.state, "", target);
+          window.scrollTo({ top: 0, behavior: "instant" });
+        }
+      }
       if (currentUser.current?.id !== next?.id) {
         authRevision.current++;
         submitRevision.current++;
@@ -166,7 +187,7 @@ export function Auth({
       </div>
     );
   if (user && member) return kind === "practice"
-    ? <AvatarOnboardingGate key={user.id} userId={user.id} lang={lang}>{children(user, signOut)}</AvatarOnboardingGate>
+    ? <PracticeEntry key={user.id} owner={user.id} lang={lang}>{children(user, signOut)}</PracticeEntry>
     : children(user, signOut);
   const gate = (
     <div className="auth-form">

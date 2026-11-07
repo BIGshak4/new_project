@@ -1,20 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { Check, ArrowLeft, ArrowRight, CircleHelp } from "lucide-react";
-import { avatarApi } from "../../lib/avatar-api";
 import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
 import { AVATAR_COLORS, DEFAULT_AVATAR, type AvatarClient, type AvatarLanguage, type AvatarPayload } from "../../lib/avatar-types";
 import { LogicAvatar } from "./logic-avatar";
-import { PracticeEntry } from "../practice-entry-splash";
 import styles from "./avatar-onboarding.module.css";
 
-export function AvatarWelcome({ client, data, lang, onContinue }: { client: AvatarClient; data: AvatarPayload; lang: AvatarLanguage; onContinue: () => void }) {
+export function AvatarWelcome({ client, data, lang, onContinue, inline = false }: { client: AvatarClient; data: AvatarPayload; lang: AvatarLanguage; onContinue: () => void; inline?: boolean }) {
   const t = (he: string, en: string) => lang === "he" ? he : en;
   const [draft, setDraft] = useState(data.avatar ?? DEFAULT_AVATAR);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
   const Next = lang === "he" ? ArrowLeft : ArrowRight;
+  const Container = inline ? "section" : "main";
+  const Heading = inline ? "h3" : "h1";
   async function finish(keepDefault: boolean) {
     if (busy) return;
     setBusy(true); setError(false);
@@ -25,13 +25,13 @@ export function AvatarWelcome({ client, data, lang, onContinue }: { client: Avat
     } catch { setError(true); }
     finally { setBusy(false); }
   }
-  return <main className={styles.welcome} dir={lang === "he" ? "rtl" : "ltr"}>
-    <header className={styles.header}><a className={styles.brand} href="/">JobRun</a><button className={styles.support} type="button" aria-label={t("דיווח על בעיה", "Report a problem")} aria-haspopup="dialog" onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={20} aria-hidden="true" /></button></header>
+  return <Container className={inline ? styles.inline : styles.welcome} dir={lang === "he" ? "rtl" : "ltr"}>
+    {!inline && <header className={styles.header}><a className={styles.brand} href="/">JobRun</a><button className={styles.support} type="button" aria-label={t("דיווח על בעיה", "Report a problem")} aria-haspopup="dialog" onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={20} aria-hidden="true" /></button></header>}
     <div className={styles.layout}>
       <section className={styles.preview}><LogicAvatar config={draft} size={340} label={t("הדמות הראשונה שלכם", "Your first character")} /></section>
       <section className={styles.form}>
-        <h1>{t("נעים להכיר. איזה רכיב אתם?", "Nice to meet you. What's your logic?")}</h1>
-        <p>{t("לפני שמתחילים, אפשר לתת לדמות שלכם קצת אופי. הרכיב והצבע חינמיים, ואפשר לשנות אותם בכל רגע בחנות של מוקסי.", "Before you begin, give your character a little personality. Components and colors are free, and you can change them any time at Muxi's shop.")}</p>
+        <Heading>{t("נעים להכיר. איזה רכיב אתם?", "Nice to meet you. What's your logic?")}</Heading>
+        <p>{t("הרכיב והצבע חינמיים, ואפשר לשנות אותם בכל רגע בחנות של מוקסי.", "Components and colors are free, and you can change them any time at Muxi's shop.")}</p>
         <fieldset disabled={busy}><legend>{t("הרכיב שלכם", "Your component")}</legend><div className={styles.components}>
           {data.components.map(c => <button type="button" key={c.key} aria-pressed={draft.component === c.key} onClick={() => setDraft(v => ({ ...v, component: c.key }))}>
             <LogicAvatar config={{ ...draft, component: c.key }} size={68} /><span>{c.label[lang]}</span>
@@ -46,29 +46,26 @@ export function AvatarWelcome({ client, data, lang, onContinue }: { client: Avat
         </div>
       </section>
     </div>
-  </main>;
+  </Container>;
 }
 
-/** Optional first-use step; authorization stays in Auth and inventory stays on the server. */
-export function AvatarOnboardingGate({ userId, lang, children }: { userId: string; lang: AvatarLanguage; children: ReactNode }) {
-  const client = useMemo(() => avatarApi(userId), [userId]);
-  const [data, setData] = useState<AvatarPayload | null>(null);
-  const [checked, setChecked] = useState(false);
-  const [finished, setFinished] = useState(false);
+/** First-time character setup is available from the dashboard as soon as its own data is ready. */
+export function DashboardAvatarSetup({ userId, lang }: { userId: string; lang: AvatarLanguage }) {
+  const [setup, setSetup] = useState<{ client: AvatarClient; data: AvatarPayload } | null>(null);
+  const [opened, setOpened] = useState(false);
   useEffect(() => {
     let current = true;
-    const query = new URLSearchParams(window.location.search);
-    // Do not interrupt an existing focused attempt or invite with a welcome step.
-    if (query.has("question") || query.has("attempt") || query.has("interview") || query.get("view") === "interview" || window.location.pathname.startsWith("/duel/")) {
-      setChecked(true); return;
-    }
-    void client.get().then(value => { if (current) setData(value); }).catch(() => {}).finally(() => { if (current) setChecked(true); });
+    void import("../../lib/avatar-api").then(async ({ avatarApi }) => {
+      if (!current) return;
+      const client = avatarApi(userId);
+      const data = await client.get();
+      if (current && data.enabled && data.onboarding_completed === false) setSetup({ client, data });
+    }).catch(() => {});
     return () => { current = false; };
-  }, [client]);
-  let content = children;
-  if (!checked) content = <div className="loading" role="status">{lang === "he" ? "מכינים את סביבת העבודה…" : "Preparing your workspace…"}</div>;
-  else if (!finished && data?.enabled && data.onboarding_completed === false) {
-    content = <AvatarWelcome client={client} data={data} lang={lang} onContinue={() => setFinished(true)} />;
-  }
-  return <PracticeEntry owner={userId} lang={lang} gateReady={checked}>{content}</PracticeEntry>;
+  }, [userId]);
+  if (!setup) return null;
+  return <details className={styles.setup} onToggle={event => { if (event.currentTarget.open) setOpened(true); }}>
+    <summary>{lang === "he" ? "בחירת הדמות שלי" : "Choose my character"}</summary>
+    {opened && <AvatarWelcome {...setup} inline lang={lang} onContinue={() => setSetup(null)} />}
+  </details>;
 }

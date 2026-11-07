@@ -76,7 +76,7 @@ test("destinations stay on known site routes and preserve cross-page practice in
     assert.ok(["/", "/games", "/games/shop"].includes(url.pathname));
     assert.equal(url.hash, "");
     if (["learn", "library", "interview"].includes(destination)) {
-      assert.equal(readWorkspaceRoute(url.search, true).route.view, destination, "A category link must survive initial workspace routing");
+      assert.equal(readWorkspaceRoute(url.search).route.view, destination, "A category link must open its selected category");
       assert.deepEqual([...url.searchParams.keys()].sort(), ["nav", "view"]);
     } else assert.equal(url.search, "");
   }

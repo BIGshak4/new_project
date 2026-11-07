@@ -1,19 +1,28 @@
 export type WorkspaceRoute = { view: string; question?: string; attempt?: string; interview?: string; quick?: string; source?: "retry" | "suggestion"; duration?: number };
 export const DEFAULT_WORKSPACE_VIEW = "learn";
 
-/** New visits start in Personal Area; focused practice links keep their destination. */
-export function readWorkspaceRoute(search: string, entry = false): { route: WorkspaceRoute; search: string } {
+/** Choose the landing URL once when the practice account becomes available. */
+export function personalAreaEntryUrl(url: URL, referrer: string, navigationType: NavigationTimingType | undefined, signedInNow: boolean): string | null {
+  // Invitations and public pages have independent entry flows.
+  if (!["/", "/games", "/games/shop"].includes(url.pathname)) return null;
+  const internalLink = referrer.startsWith(url.origin + "/");
+  if (!signedInNow && (navigationType === "back_forward" || (navigationType !== "reload" && internalLink))) return null;
+  if (url.pathname !== "/") return "/";
+  const query = new URLSearchParams(url.search);
+  for (const key of ["view", "question", "attempt", "interview", "quick", "duration", "source", "nav"]) query.delete(key);
+  return query.size ? `/?${query}` : "/";
+}
+
+/** Decode the current in-workspace destination, including Back and Forward. */
+export function readWorkspaceRoute(search: string): { route: WorkspaceRoute; search: string } {
   const query = new URLSearchParams(search);
-  // Cross-page category links carry a one-use intent; refreshing that URL still starts in Personal Area.
-  const navigation = query.get("nav") === "1" && ["learn", "library", "interview"].includes(query.get("view") ?? "");
   query.delete("nav");
   const quick = query.get("view") === "fundamentals" && /^quick-(hw|sw)-\d{2,4}$/.test(query.get("quick") ?? "")
     ? query.get("quick")! : undefined;
   if (!quick) query.delete("quick");
-  const focused = !!(query.get("question") || query.get("attempt") || query.get("interview") || quick);
-  if (query.get("view") === "progress" || (entry && !focused && !navigation)) {
+  if (query.get("view") === "progress") {
     query.delete("view");
-    if (!focused) query.delete("duration");
+    query.delete("duration");
   }
   return {
     route: {

@@ -51,9 +51,9 @@ test("home verifies live attempts, skips completed or hidden records, and opens 
   assert.equal(await findContinuation({ ...inputs, api: completedApi }, records, () => false), null);
 });
 
-test("only a valid focused fundamentals link survives a new workspace visit", () => {
-  assert.deepEqual(readWorkspaceRoute("?view=fundamentals&quick=quick-hw-01", true).route.quick, "quick-hw-01");
-  assert.equal(readWorkspaceRoute("?view=fundamentals&quick=quick-hw-01", true).route.view, "fundamentals");
-  assert.equal(readWorkspaceRoute("?view=fundamentals&quick=unknown", true).route.view, "learn");
-  assert.equal(readWorkspaceRoute("?view=library&quick=quick-hw-01", true).route.quick, undefined);
+test("only a valid short question ID can open a card when continuing practice", () => {
+  assert.equal(readWorkspaceRoute("?view=fundamentals&quick=quick-hw-01").route.quick, "quick-hw-01");
+  assert.equal(readWorkspaceRoute("?view=fundamentals&quick=quick-hw-01").route.view, "fundamentals");
+  assert.equal(readWorkspaceRoute("?view=fundamentals&quick=unknown").route.quick, undefined);
+  assert.equal(readWorkspaceRoute("?view=library&quick=quick-hw-01").route.quick, undefined);
 });

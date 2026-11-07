@@ -76,8 +76,8 @@ const emptyProgress: Progress = {
   attempts_today: 0,
   daily_limit: 30,
 };
-function currentRoute(entry = false): Route {
-  const next = readWorkspaceRoute(window.location.search, entry);
+function currentRoute(): Route {
+  const next = readWorkspaceRoute(window.location.search);
   if (next.search !== window.location.search.replace(/^\?/, "")) {
     window.history.replaceState({}, "", `${window.location.pathname}${next.search ? `?${next.search}` : ""}${window.location.hash}`);
   }
@@ -128,7 +128,6 @@ function Workspace({
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [api] = useState(() => practiceApi());
   const [route, setRoute] = useState<Route>({ view: DEFAULT_VIEW });
-  const entryRoute = useRef<Route | null>(null);
   const [questions, setQuestions] = useState<QuestionSummary[]>([]);
   const orderSeed = useQuestionOrderSeed();
   const orderedQuestions = useMemo(() => shuffleQuestions(questions, orderSeed, q => q.key), [questions, orderSeed]);
@@ -153,7 +152,7 @@ function Workspace({
   const [refreshing, setRefreshing] = useState(false);
   const [progressLoading, setProgressLoading] = useState(true);
   const [entriesLoading, setEntriesLoading] = useState(true);
-  const entrySplashVisible = usePracticeEntryReady(!loading && !progressLoading && !entriesLoading);
+  usePracticeEntryReady(!loading && !progressLoading && !entriesLoading);
   const [cachedQuestions, setCachedQuestions] = useState(false);
   // Goals guide the personal plan; the library starts with all questions and no filters.
   const [goal, setGoal] = useState<Goal | null>(null);
@@ -175,9 +174,7 @@ function Workspace({
 
   useEffect(() => {
     const sync = () => setRoute(currentRoute());
-    // Strict Mode replays effects; consume a cross-page destination only once per workspace mount.
-    entryRoute.current ??= currentRoute(true);
-    setRoute(entryRoute.current);
+    sync();
     window.addEventListener("popstate", sync);
     return () => window.removeEventListener("popstate", sync);
   }, []);
@@ -403,7 +400,7 @@ function Workspace({
         <AccountStats userId={user.id} lang={lang} refreshKey={refreshKey} onActivity={setAccountActivity} />
         <div className={`topnav-actions ${headerStyles.toolbar}`}>
           <UserInboxButton lang={lang} />
-          <MuxiTourLauncher userId={user.id} lang={lang} controls={languageControl} ready={!loading && !entrySplashVisible} />
+          <MuxiTourLauncher userId={user.id} lang={lang} controls={languageControl} />
           {languageControl}
           <button
             className="icon-button"

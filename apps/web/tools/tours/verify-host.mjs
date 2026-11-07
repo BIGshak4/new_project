@@ -36,12 +36,12 @@ try {
   const page = await context.newPage();
   page.on("pageerror", error => report.errors.push(error.message));
   await page.goto(base, { waitUntil: "domcontentloaded" });
-  try { await page.getByRole("heading", { name: "נעים להכיר, אני מוקסי.", exact: true }).waitFor({ timeout: 20000 }); }
+  const home = page.locator(".learn-head").getByRole("heading", { level: 1 });
+  try { await home.waitFor({ timeout: 20000 }); }
   catch (error) { console.error((await page.locator("body").innerText()).slice(0, 1500)); throw error; }
-  check(true, "A first authenticated visit offers the tour chooser");
-  await page.getByRole("button", { name: "אדלג בינתיים — אכיר את האתר לבד", exact: true }).click();
-  await page.getByRole("button", { name: "סיור עם מוקסי", exact: true }).waitFor();
-  await page.getByRole("button", { name: "מאגר", exact: true }).click();
+  check(await page.locator("[data-muxi-station]").count() === 0, "A first authenticated visit shows the personal dashboard with the tour closed");
+  const library = page.getByRole("link", { name: "מאגר", exact: true }).filter({ visible: true }).first();
+  await library.click();
   await page.getByRole("textbox", { name: "חיפוש שאלות", exact: true }).fill("Intel");
   await page.getByRole("button", { name: "סיור עם מוקסי", exact: true }).click();
   check(await page.locator(".app-shell").evaluate(el => el.closest("[inert]") !== null), "Covered workspace is inert while its state stays mounted");
@@ -49,10 +49,34 @@ try {
   check(await page.getByRole("textbox", { name: "חיפוש שאלות", exact: true }).inputValue() === "Intel", "Closing a replayed tour preserves the real library search");
   check(await page.evaluate(() => document.body.style.overflow) !== "hidden", "Closing restores document scrolling");
   await page.reload({ waitUntil: "domcontentloaded" });
-  await page.getByRole("textbox", { name: "חיפוש שאלות", exact: true }).waitFor();
-  check(await page.locator("[data-muxi-station]").count() === 0, "The offer does not repeat after reload");
-  await page.goto(base + "/?question=example-sensor-majority", { waitUntil: "domcontentloaded" });
+  await home.waitFor();
+  check(await page.locator("[data-muxi-station]").count() === 0, "Reload returns to the dashboard without reopening the tour");
+  for (const path of ["/?view=library&question=example-sensor-majority", "/games/shop"]) {
+    await page.goto(base + path, { waitUntil: "domcontentloaded" });
+    await home.waitFor();
+    check(new URL(page.url()).pathname + new URL(page.url()).search === "/", `A fresh visit to ${path} opens the dashboard`);
+  }
+  const shop = page.getByRole("link", { name: "החנות של מוקסי", exact: true }).filter({ visible: true }).first();
+  await shop.click();
+  await page.locator('a[aria-current="page"]').getByText("החנות של מוקסי", { exact: true }).first().waitFor();
+  check(new URL(page.url()).pathname === "/games/shop", "Selecting the shop in the dashboard opens the real shop");
+  await page.goBack();
+  await home.waitFor();
+  check(new URL(page.url()).pathname === "/", "Browser Back from the shop restores the dashboard");
+  await page.getByRole("button", { name: "פתיחת העוזר האישי", exact: true }).click();
+  await page.getByRole("button", { name: "הדמות שלי והמשחקים", exact: true }).click();
+  await page.getByRole("button", { name: "איך משנים את הדמות?", exact: true }).click();
+  const newPage = context.waitForEvent("page");
+  await page.getByRole("link", { name: "פתיחת החנות של מוקסי" }).click();
+  const helperShop = await newPage;
+  await helperShop.locator('a[aria-current="page"]').getByText("החנות של מוקסי", { exact: true }).first().waitFor();
+  check(new URL(helperShop.url()).pathname === "/games/shop", "The helper can open the real shop in a new tab");
+  await helperShop.close();
+  await page.getByRole("button", { name: "מזעור העוזר", exact: true }).click();
+  await library.click();
+  await page.getByRole("button", { name: "הכרעת רוב בין שלושה חיישנים", exact: true }).click();
   await page.getByRole("button", { name: "כתיבת פתרון", exact: true }).click();
+  await page.getByRole("button", { name: "כתיבת הסבר לפתרון", exact: true }).click();
   const explanation = page.getByRole("textbox", { name: "הסבר הפתרון", exact: true });
   await explanation.fill("טיוטה שצריכה להישמר בזמן הסיור");
   await page.getByRole("button", { name: "סיור עם מוקסי", exact: true }).click();

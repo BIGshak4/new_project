@@ -6,14 +6,12 @@ import { lockBodyScroll } from "../lib/body-scroll-lock";
 import { MuxiMascot } from "./tour/muxi-mascot";
 import styles from "./practice-entry-splash.module.css";
 
-const EntryContext = createContext<{ visible: boolean; reportReady: (ready: boolean) => void } | null>(null);
+const EntryContext = createContext<((ready: boolean) => void) | null>(null);
 
-/** The dashboard can prepare behind the greeting and defer its automatic tour until the greeting is over. */
+/** Report when the dashboard has finished its initial load behind the greeting. */
 export function usePracticeEntryReady(ready: boolean) {
-  const entry = useContext(EntryContext);
-  const reportReady = entry?.reportReady;
+  const reportReady = useContext(EntryContext);
   useEffect(() => { reportReady?.(ready); }, [ready, reportReady]);
-  return entry?.visible ?? false;
 }
 
 export function PracticeEntrySplash({ lang }: { lang: "he" | "en" }) {
@@ -40,8 +38,8 @@ export function PracticeEntrySplash({ lang }: { lang: "he" | "en" }) {
   );
 }
 
-export function PracticeEntry({ owner, lang, gateReady, children }: {
-  owner: string; lang: "he" | "en"; gateReady: boolean; children: ReactNode;
+export function PracticeEntry({ owner, lang, children }: {
+  owner: string; lang: "he" | "en"; children: ReactNode;
 }) {
   const [visible, setVisible] = useState(() => !hasGreeted(owner));
   const [greetingComplete, setGreetingComplete] = useState(false);
@@ -55,10 +53,10 @@ export function PracticeEntry({ owner, lang, gateReady, children }: {
     return () => { window.clearTimeout(greeting); window.clearTimeout(deadline); releaseScroll(); };
   }, [owner, visible]);
   useEffect(() => {
-    if (greetingComplete && gateReady && workspaceReady) setVisible(false);
-  }, [gateReady, greetingComplete, workspaceReady]);
+    if (greetingComplete && workspaceReady) setVisible(false);
+  }, [greetingComplete, workspaceReady]);
   return (
-    <EntryContext.Provider value={{ visible, reportReady: setWorkspaceReady }}>
+    <EntryContext.Provider value={setWorkspaceReady}>
       {visible && <PracticeEntrySplash lang={lang} />}
       <div className={styles.workspace} inert={visible}>{children}</div>
     </EntryContext.Provider>

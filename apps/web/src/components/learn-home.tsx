@@ -17,6 +17,7 @@ import { goalRoleLabel } from "../lib/goal-selection";
 import { RecommendationWaves } from "./recommendation-waves";
 import type { AccountActivity } from "../lib/account-stats-api";
 import { GoalSummary } from "./goal-summary";
+import { DashboardAvatarSetup } from "./wardrobe/avatar-onboarding";
 
 /** The real adaptive program, displayed in the approved Ion shell. */
 export function LearnHome({
@@ -231,6 +232,7 @@ export function LearnHome({
         </header>
 
         {resumeSlot}
+        <DashboardAvatarSetup userId={userId} lang={lang} />
 
         {loading ? (
           <p className="loading loading-sheet" role="status">

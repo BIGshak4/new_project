@@ -24,7 +24,7 @@ test("the initial workspace prepares under Muxi's greeting; section navigation s
     removeItem: (key: string) => data.delete(key),
   } } });
   const draw = (owner: string, lang: "he" | "en") => renderToStaticMarkup(createElement(Entry, {
-    owner, lang, gateReady: true, children: createElement("main", null, "workspace"),
+    owner, lang, children: createElement("main", null, "workspace"),
   }));
   const first = draw("alice", "he");
   assert.match(first, /נתחיל בשאלה טובה/);

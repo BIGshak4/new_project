@@ -36,18 +36,8 @@ function ExpandedCoach({ children, lang, onExit }: { children: ReactNode; lang: 
 }
 
 /** The production workspace remains mounted while this locally scoped tour is open. */
-export function MuxiTourLauncher({ userId, lang, controls, ready = true }: { userId: string; lang: Lang; controls: ReactNode; ready?: boolean }) {
+export function MuxiTourLauncher({ userId, lang, controls }: { userId: string; lang: Lang; controls: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const initialized = useRef("");
-  useEffect(() => {
-    if (!ready || initialized.current === userId) return;
-    initialized.current = userId;
-    const key = tourKey(userId), progress = read(key);
-    if (!progress.offered) {
-      write(key, { ...progress, offered: true, updatedAt: Date.now() });
-      setOpen(true);
-    }
-  }, [ready, userId]);
   return <>
     <button type="button" className={styles.launcher} onClick={() => setOpen(true)} aria-haspopup="dialog">
       <MuxiMascot className={styles.launcherMascot} />

@@ -150,7 +150,7 @@ function HelperConversation({ userId, demo, lang }: { userId?: string; demo: boo
           })}
           <div className={styles.choices} role="group" aria-label={t("איך ממשיכים?", "What would you like to do?")}>
             {topic.choices.map((choice, index) => choice.action?.type === "navigate"
-              ? <a key={index} className={styles.choice} href={href(choice.action)} target="_blank" rel="noopener noreferrer">
+              ? <a key={index} className={styles.choice} href={href(choice.action)} target="_blank" rel="noopener" referrerPolicy="same-origin">
                   <span><BidiText>{choice.label[lang]}</BidiText><small>{t("פתיחה בלשונית חדשה", "Opens in a new tab")}</small></span><ExternalLink size={16} aria-hidden="true" />
                 </a>
               : <button key={index} type="button" className={styles.choice} onClick={() => goTo(choice)}>

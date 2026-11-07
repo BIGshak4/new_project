@@ -25,4 +25,14 @@
 .actions .primary { background: var(--action); color: var(--action-ink); border-color: var(--action); padding: 12px 22px; display: inline-flex; gap: 10px; align-items: center; font-weight: 700; }
 .actions .skip { background: transparent; border-color: transparent; color: var(--muted); padding: 10px; }
 .form .error { color: var(--danger); }
+.setup { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.setup > summary { padding: 14px 18px; color: var(--link); font-weight: 700; cursor: pointer; }
+.setup > summary:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+.inline { container-type: inline-size; padding: 0 18px 18px; }
+.inline .layout { margin: 0; gap: 24px; grid-template-columns: minmax(130px, .6fr) minmax(0, 1fr); }
+.inline .preview { min-height: 200px; background: var(--surface-2); }
+.inline .preview svg { width: 180px; height: auto; }
+.inline .components svg { max-width: 100%; height: auto; }
+.inline .form h3 { font-size: 1.25rem; margin: 0; }
+@container (max-width: 580px) { .inline .layout { grid-template-columns: minmax(0, 1fr); } }
 @media(max-width:700px) { .layout { grid-template-columns: 1fr; gap: 28px; margin: 28px auto; } .preview { min-height: 240px; } .preview svg { width: 240px; height: 250px; } .form h1 { font-size: 31px; } .actions { flex-direction: column; align-items: stretch; } .components button { font-size: 11px; } }
