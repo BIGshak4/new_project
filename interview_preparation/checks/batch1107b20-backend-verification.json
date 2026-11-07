@@ -2,12 +2,12 @@
   "result": "passed",
   "exit_code": 0,
   "counts": {
-    "passed": 4016,
+    "passed": 4039,
     "skipped": 13,
     "deselected": 2,
     "warnings": 2
   },
-  "elapsed_seconds": 145.7,
+  "elapsed_seconds": 150.11,
   "command": [
     "C:\\Projects\\Job_Run\\new_project\\backend\\.venv\\Scripts\\python.exe",
     "-X",
@@ -33,7 +33,7 @@
   "log": "backend-full-final.log",
   "stable_input_sha256": {
     "interview_preparation/questions.json": "a920b678d44b0005dcdc1ade4d8a782e73332e9477c15c1e3c53a34049eff2c4",
-    "apps/web/src/lib/source-screenshots.json": "f98dd21c61eca99f1f976e8879e9399ed6789d1a1ceaec4df0a7cd7be20574aa",
+    "apps/web/src/lib/source-screenshots.json": "6bc01ed9c1da318987599978623517bf270bb7472ffaf0eefcb183b9972781c6",
     "backend/seeds/preparation_uploads.json": "d1e7155a4556867ce049cf26d8586a9dc1621c8e9b94ade7dd78cfedddef08a3",
     "backend/seeds/preparation_editorial.json": "a11207fbbc346e2d0bd774280e1c01604de8f8c5ae993eaa23caf3cd905c0fc1",
     "backend/seeds/execution_cases.json": "b7e3e972b82d3d656aac41387a6418aa9c5f06d640ef08df827987a832c3ea3d",
@@ -78,7 +78,9 @@
   },
   "stable_inputs_unchanged_during_run": true,
   "recorded_on": "2026-11-07",
-  "reported_seconds": 143.78,
+  "reported_seconds": 147.93,
+  "tested_commit": "a0f2f61cd41730e048f807dca760aeadf3cc4de2",
+  "integrated_remote_base": "9e2f241",
   "separate_execution_partition": {
     "combined_passed": 307,
     "test_execution_catalog_passed": 240,
@@ -89,58 +91,37 @@
     },
     "overlap_total": 67,
     "disjoint_addition": 240,
-    "unique_backend_passed_total": 4256,
-    "scope": "Exact current collection decomposition supplied by root and confirmed by software execution verifier; no reuse of historical totals."
+    "unique_backend_passed_total": 4279,
+    "scope": "Exact current collection decomposition supplied by root and confirmed by software execution verifier; all67 profile tests are part of this full run."
   },
-  "lint": {
-    "files": [
-      "backend/tests/fixtures/execution_batch1107b20_oracles.py",
-      "backend/tests/fixtures/execution_catalog_authoring.py",
-      "backend/tests/preparation_history.py",
-      "backend/tests/preparation_november7_batch10_history.py",
-      "backend/tests/preparation_november7_batch20_history.py",
-      "backend/tests/test_execution_20261107_batch20_profiles.py",
-      "backend/tests/test_execution_catalog.py",
-      "backend/tests/test_job_fit.py",
-      "backend/tests/test_learner_copy_hygiene.py",
-      "backend/tests/test_practice_service.py",
-      "backend/tests/test_preparation_20261030_batch110_catalog.py",
-      "backend/tests/test_preparation_20261030_batch40_catalog.py",
-      "backend/tests/test_preparation_20261030_batch70_catalog.py",
-      "backend/tests/test_preparation_20261030_batch90_catalog.py",
-      "backend/tests/test_preparation_20261030_catalog.py",
-      "backend/tests/test_preparation_20261031_batch20_catalog.py",
-      "backend/tests/test_preparation_20261031_batch21_catalog.py",
-      "backend/tests/test_preparation_20261031_batch22_catalog.py",
-      "backend/tests/test_preparation_20261101_batch20_catalog.py",
-      "backend/tests/test_preparation_20261103_batch20_catalog.py",
-      "backend/tests/test_preparation_20261107_batch10_catalog.py",
-      "backend/tests/test_preparation_20261107_batch20_catalog.py",
-      "backend/tests/test_preparation_20261107_batch30_catalog.py",
-      "backend/tests/test_preparation_bank.py",
-      "backend/tests/test_preparation_batch10_catalog.py",
-      "backend/tests/test_preparation_batch11_catalog.py",
-      "backend/tests/test_preparation_batch20_catalog.py",
-      "backend/tests/test_preparation_batch20_catalog_v2.py",
-      "backend/tests/test_preparation_batch30_catalog.py",
-      "backend/tests/test_software_execution_validation.py",
-      "interview_preparation/checks/check_hardware_batch1107b20.py",
-      "interview_preparation/checks/check_reasoning_batch1107b20.py",
-      "interview_preparation/checks/check_software_batch1107b20.py"
-    ],
-    "exit_code": 0,
-    "output": "All checks passed!\n"
+  "prior_pre_rebase_validation": {
+    "passed": 4016,
+    "unique_with_disjoint_catalog": 4256,
+    "reported_seconds": 143.78,
+    "log": "backend-full-pre-rebase.log",
+    "log_sha256": "3e46f8ec53f20a15357b3facb2acd25e56bec71f4ee6246f164af4ac57792440",
+    "evidence_retained": "backend-verification-pre-rebase.json",
+    "superseded_by": "This integrated-tree regression run after rebase onto9e2f241."
   },
   "known_warnings": [
     "Starlette testclient deprecated BlockingPortal alias.",
     "Intentionally short HMAC key in negative shared-secret-token rejection fixture."
   ],
-  "validation_scope": "Full offline backend partition. Excludes execution catalog (separately run), three live modules and two rollback-only live SQL tests. No learner DB connection.",
+  "validation_scope": "Full offline backend partition on the integrated tree. Excludes execution catalog (separately run), three live modules and two rollback-only live SQL tests. No learner DB connection.",
   "pre_run_copy_corrections": "Before the final run, root corrected new Score::score inline spelling and 0x800001FF formatting in new-only text, Markdown and projections. Native source and PNG files were unchanged.",
   "old_frozen_hash_constants_changed": false,
   "human_review_registry_changed": false,
   "test_assertions_weakened": false,
-  "changes_by_test_worker": "Two pure import blocks sorted in historical backend test files. No data, public solution or asset mutation after the final freeze.",
-  "log_sha256": "3e46f8ec53f20a15357b3facb2acd25e56bec71f4ee6246f164af4ac57792440",
-  "lint_log_sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+  "changes_during_post_rebase_validation": "No application, seed, test, solution or asset edits. No dependency installation needed.",
+  "dependency_check": {
+    "Pillow_installed": "13.0.0",
+    "declared_minimum": "13.0.0",
+    "installation_performed": false
+  },
+  "pre_rebase_lint": {
+    "exit_code": 0,
+    "file_count": 33,
+    "scope": "33 test/check files passed Ruff before rebase. This second validation reruns the full backend suite; it does not relabel that earlier lint invocation as a new run."
+  },
+  "log_sha256": "b249c58d79a883d6404787bb6d359c498d3fa4c9396f6d930d026507a34f5e00"
 }
