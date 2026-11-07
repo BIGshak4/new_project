@@ -1952,7 +1952,8 @@ protection tests (§5zza) and two were this change's: the who-am-I test's exact 
 was already paid; `completion_coins` on the report is the finishing bonus actually paid.
 
 **Pilot list.** talbaumgarten@gmail.com joined `jr_members` as 'Tal' on 2026-11-07 (Shaked: "add"; dry run, then
-applied): fourteen members.
+applied): fourteen members. yaron3500@gmail.com joined as 'Yaron' later the same day (Shaked: "add him"; dry run,
+then applied): fifteen members.
 
 ## 5zzc. Cutting expenses: the background prose on flex with no reasoning (2026-11-07, Shaked: "lets check how can we cut expenses even more"; "run 1 and 2")
 
