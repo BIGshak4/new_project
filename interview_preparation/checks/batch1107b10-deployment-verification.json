@@ -1,0 +1,88 @@
+{
+  "expected_revisions": {
+    "web": "c5d3d1dfb1faccb9d1fa72fb8e8942b38ed6dfdd",
+    "backend": "c5d3d1dfb1faccb9d1fa72fb8e8942b38ed6dfdd"
+  },
+  "verified_at": "2026-11-07T14:07:46.174699+00:00",
+  "web": {
+    "service": "jobruner-web",
+    "status": "ok",
+    "revision": "c5d3d1dfb1faccb9d1fa72fb8e8942b38ed6dfdd",
+    "checks": {
+      "application": "ok"
+    }
+  },
+  "backend": {
+    "status": "ok",
+    "engine_version": "0.1.0",
+    "source_revision": "c5d3d1dfb1faccb9d1fa72fb8e8942b38ed6dfdd",
+    "env": "staging",
+    "llm_provider": "openai",
+    "database_configured": true,
+    "database_host": "pooler",
+    "database_pooler": "transaction",
+    "auth_configured": true,
+    "allowed_origins": 3,
+    "store": "database",
+    "models": {
+      "evaluator": "gpt-6.1-sol",
+      "feedback": "gpt-6.1-terra",
+      "tip": "gpt-6.1-terra",
+      "generator": "gpt-6.1-terra"
+    },
+    "speed": {
+      "effort": {
+        "evaluator": "low",
+        "generator": "medium",
+        "tip": "low",
+        "report": "medium",
+        "feedback": "low"
+      },
+      "service_tier": "default"
+    },
+    "answer_images": "assessed",
+    "code_execution": {
+      "enabled": true,
+      "wired": true,
+      "last_probe": null
+    },
+    "assess_unreviewed_questions": true,
+    "database": {
+      "round_trip_ms": 1.71,
+      "pool_size": 5,
+      "pool_checked_out": 0,
+      "pool_overflow": -4
+    }
+  },
+  "catalog_summary": {
+    "valid": true,
+    "subjects": [
+      "digital_fundamentals",
+      "fsms",
+      "projects_behavioral",
+      "reasoning",
+      "relevant_programming",
+      "sequential_logic"
+    ],
+    "skills": 35,
+    "roles": [
+      "digital-hardware-engineer"
+    ],
+    "companies": [
+      "generic"
+    ],
+    "questions": 304,
+    "tips": 10,
+    "glossary_terms": 32,
+    "quiz_source_count": 500,
+    "quiz_variant_count": 2500
+  },
+  "catalog_checked_at": "2026-11-07T14:09:23.410121+00:00",
+  "public_browser_check": {
+    "url": "https://jobrun-practice.netlify.app/",
+    "observed": "Public Hebrew landing page rendered with navigation, explanatory content, email/password login form and approved-account access notice.",
+    "authentication_used": false,
+    "learner_submission_tested": false,
+    "scope": "Public page only; protected question content tested with local production material components, not an authenticated production session."
+  }
+}
