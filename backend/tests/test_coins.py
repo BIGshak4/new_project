@@ -37,7 +37,8 @@ def ledger(store, user=USER):
 
 class TestTheRules:
     def test_the_seed_carries_shakeds_numbers(self):
-        assert (RULES.starting_gift, RULES.strong_answer, RULES.strong_hard_answer, RULES.hard_difficulty_from) == (50, 10, 20, 5)
+        # 2026-11-06, Shaked: "i dont want so many coins: 10 per strong interview and 5 per strong answer" (flat, no hard bonus)
+        assert (RULES.starting_gift, RULES.strong_answer, RULES.strong_hard_answer, RULES.hard_difficulty_from) == (50, 5, 5, 5)
         assert (RULES.strong_interview_turn, RULES.duel_stake, RULES.duel_clock_seconds) == (10, 5, 180)
         assert RULES.duel_daily_cap is None and RULES.duel_daily_earning_cap == 100       # "not sure about the daily cap yet"
         assert [i.key for i in RULES.shop] == ["extra_questions_10"]
@@ -45,16 +46,16 @@ class TestTheRules:
         assert item.price == 100 and item.effect == {"extra_questions_today": 10}
         assert item.text("label", "he").startswith("עוד") and item.text("label", "en") == "10 more questions today"
 
-    def test_only_a_strong_main_answer_earns_and_a_hard_one_earns_double(self):
-        assert coins_for_answer(RULES, band="STRONG", difficulty=2) == 10
-        assert coins_for_answer(RULES, band="STRONG", difficulty=5) == 20
-        assert coins_for_answer(RULES, band="STRONG", difficulty=4) == 10
-        assert coins_for_answer(RULES, band="PARTIAL", difficulty=5) == 0
+    def test_only_a_strong_main_answer_earns_five_whatever_the_difficulty(self):
+        assert coins_for_answer(RULES, band="STRONG", difficulty=2) == 5
+        assert coins_for_answer(RULES, band="STRONG", difficulty=5) == 5                     # no hard-question bonus any more
+        assert coins_for_answer(RULES, band="STRONG", difficulty=4) == 5
+        assert coins_for_answer(RULES, band="PARTIAL", difficulty=5) == 0                    # "good means strong"
         assert coins_for_answer(RULES, band="STRONG", difficulty=2, turn=1) == 0            # follow-ups earn nothing
         assert coins_for_answer(RULES, band="STRONG", difficulty=2, reference_seen=True) == 0
-        assert coins_for_answer(RULES, band="STRONG", difficulty=2, hints_seen=1) == 10      # one hint is allowed
+        assert coins_for_answer(RULES, band="STRONG", difficulty=2, hints_seen=1) == 5       # one hint is allowed
         assert coins_for_answer(RULES, band="STRONG", difficulty=2, hints_seen=2) == 0
-        assert coins_for_answer(RULES, band="STRONG", difficulty=2, related=False) == 0      # the unrelated rule, as for XP
+        assert coins_for_answer(RULES, band="STRONG", difficulty=2, related=False) == 0      # the unrelated rule
         assert coins_for_answer(RULES, band=None, difficulty=2) == 0
 
     def test_a_strong_interview_turn_earns_ten(self):
@@ -132,14 +133,51 @@ class TestPracticeEarns:
         view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en", self_confidence=3)
         aid = uuid.UUID(view.id)
         sub, _ = await svc.submit(USER, aid, {"text": "a majority: (A&B)|(B&C)|(A&C)"}, idempotency_key="k1")
-        assert sub.band == "STRONG" and sub.coins_earned == 10 and sub.xp_earned and sub.xp_earned > 0
+        assert sub.band == "STRONG" and sub.coins_earned == 5 and sub.xp_earned is None      # XP is gone (2026-11-06)
         rows = ledger(store)
-        assert ("gift", 50, "gift") in rows and ("earn", 10, f"answer:{aid}:{sub.revision}") in rows
+        question_id = store.question_id("example-sensor-majority")
+        assert ("gift", 50, "gift") in rows and ("earn", 5, f"question:{question_id}") in rows
         replay, _ = await svc.submit(USER, aid, {"text": "a majority: (A&B)|(B&C)|(A&C)"}, idempotency_key="k1")
-        assert replay.replayed and replay.coins_earned == 10 and ledger(store) == rows      # paid once
-        assert (await svc.coins.wallet(USER)).balance == 60
+        assert replay.replayed and replay.coins_earned == 5 and ledger(store) == rows       # paid once
+        assert (await svc.coins.wallet(USER)).balance == 55
         again = await svc.get(USER, aid)
-        assert again.submission.coins_earned == 10
+        assert again.submission.coins_earned == 5
+
+    async def test_the_same_question_never_pays_twice_even_in_a_new_attempt(self, catalog):
+        """Shaked, 2026-11-06: coins for a strong answer, "not if he got on the same question a strong answer"."""
+        svc, store = practice(catalog, [GOOD, GOOD, GOOD, GOOD])
+        first = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        one, _ = await svc.submit(USER, uuid.UUID(first.id), {"text": "(A&B)|(B&C)|(A&C)"}, idempotency_key="a")
+        assert one.coins_earned == 5
+        second = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        two, _ = await svc.submit(USER, uuid.UUID(second.id), {"text": "(A&B)|(B&C)|(A&C) again"}, idempotency_key="b")
+        assert two.band == "STRONG" and two.coins_earned == 0                                # the view tells the truth
+        assert (await svc.get(USER, uuid.UUID(second.id))).submission.coins_earned == 0     # ...and so does a reload
+        assert [r for r in ledger(store) if r[0] == "earn"] == [("earn", 5, f"question:{store.question_id('example-sensor-majority')}")]
+        other = await svc.start(USER, question_key="example-masked-equality", mode="quick", language="en")
+        three, _ = await svc.submit(USER, uuid.UUID(other.id), {"text": "mask then compare"}, idempotency_key="c")
+        assert three.coins_earned == 5                                                       # another question pays
+        assert (await svc.coins.wallet(USER)).balance == 60
+
+    async def test_an_interview_turn_on_a_question_already_paid_in_practice_earns_nothing(self, catalog):
+        from tests.test_interview_service import interviewer
+        from tests.test_interview_service import service as interview_service
+        svc, store = practice(catalog, [GOOD])
+        coins = svc.coins
+        view = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        paid, _ = await svc.submit(USER, uuid.UUID(view.id), {"text": "(A&B)|(B&C)|(A&C)"}, idempotency_key="a")
+        assert paid.coins_earned == 5
+        interview, _ = interview_service(catalog, interviewer([GOOD]))
+        interview.store, interview.coins = store, coins                       # the same ledger, the same user
+        session = await interview.start(USER, duration_min=20, language="en")
+        asked = session.current_turn.question_key
+        interview.clock.advance()
+        await interview.answer(USER, uuid.UUID(session.id), 0, "a strong answer", idempotency_key="i0")
+        ended = await interview.end(USER, uuid.UUID(session.id))
+        turn = next(t for t in ended.turns if t.band)
+        expected = 0 if asked == "example-sensor-majority" else 10
+        assert turn.coins_earned == expected
+        assert sum(r[1] for r in ledger(store) if r[0] == "earn") == 5 + expected
 
     async def test_a_weak_answer_and_a_follow_up_earn_nothing(self, catalog):
         svc, store = practice(catalog, [WEAK, GOOD, GOOD])
@@ -181,15 +219,17 @@ class TestInterviewEarns:
         svc = InterviewService(store, catalog, interviewer([GOOD, WEAK]), InterviewConfig(reviewed_only=False), coins=coins)
         view = await svc.start(USER, duration_min=20, language="en")
         sid = uuid.UUID(view.id)
+        first_key = view.current_turn.question_key
         turn, view = await svc.answer(USER, sid, 0, "a careful, correct answer", idempotency_key="t0")
         assert turn.status == "done" and turn.coins_earned is None                 # hidden until the end, like the band
         rows = ledger(store)
-        assert ("earn", 10, f"turn:{sid}:0") in rows
+        reference = f"question:{store.question_id(first_key)}"                      # per question, shared with practice
+        assert ("earn", 10, reference) in rows
         turn, view = await svc.answer(USER, sid, 1, "alarm = A ^ B ^ C", idempotency_key="t1")
-        assert [r for r in ledger(store) if r[0] == "earn"] == [("earn", 10, f"turn:{sid}:0")]   # the weak turn: nothing
+        assert [r for r in ledger(store) if r[0] == "earn"] == [("earn", 10, reference)]   # the weak turn: nothing
         ended = await svc.end(USER, sid)
         assert [t.coins_earned for t in ended.turns[:2]] == [10, 0]
-        assert [r for r in ledger(store) if r[0] == "earn"] == [("earn", 10, f"turn:{sid}:0")]   # the end's re-save: once
+        assert [r for r in ledger(store) if r[0] == "earn"] == [("earn", 10, reference)]   # the end's re-save: once
 
 
 MEMBER = "member@example.com"
@@ -216,8 +256,10 @@ class TestOverHttp:
         assert body["balance"] == 50 and body["enabled"] is True and body["no_monetary_value"] is True
         assert body["movements"][0]["kind"] == "gift" and body["movements"][0]["delta"] == 50
         assert body["shop"][0]["key"] == "extra_questions_10" and body["shop"][0]["affordable"] is False
-        assert body["shop"][0]["label"].startswith("עוד") and body["rules"]["strong_answer"] == 10
+        assert body["shop"][0]["label"].startswith("עוד") and body["rules"]["strong_answer"] == 5
         assert body["daily_limit"] == get_settings().daily_attempt_limit and body["extra_questions_today"] == 0
+        me = (await client.get("/v1/me", headers=headers)).json()
+        assert me["coins"] == 50                                             # the balance rides on every screen's first call
         short = await client.post("/v1/me/coins/buy", json={"item": "extra_questions_10"}, headers=headers)
         assert short.status_code == 402 and short.json()["error"]["code"] == "usage_limit"
         assert (await client.post("/v1/me/coins/buy", json={"item": "nope"}, headers=headers)).status_code == 422
@@ -227,8 +269,9 @@ class TestOverHttp:
         answered = await client.post(f"/v1/practice/attempts/{aid}/submissions", json={"answer": {"text": "a majority of the three"}},
                                      headers={**headers, "Idempotency-Key": "k1"})
         assert answered.status_code == 200, answered.text
-        assert answered.json()["submission"]["coins_earned"] == 10
-        assert (await client.get("/v1/me/coins", headers=headers)).json()["balance"] == 60
+        assert answered.json()["submission"]["coins_earned"] == 5 and answered.json()["submission"]["xp_earned"] is None
+        assert (await client.get("/v1/me/coins", headers=headers)).json()["balance"] == 55
+        assert (await client.get("/v1/me", headers=headers)).json()["coins"] == 55
 
     async def test_a_bought_top_up_shows_in_the_limit(self, client):
         _, token = make_token(email=MEMBER)

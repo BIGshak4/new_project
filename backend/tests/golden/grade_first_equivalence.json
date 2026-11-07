@@ -91,7 +91,7 @@
    "status": "done",
    "summary": "",
    "turn": 0,
-   "xp_earned": 4
+   "xp_earned": null
   },
   {
    "answer": "maybe an AND of each pair, then an OR",
@@ -118,7 +118,7 @@
    "status": "done",
    "summary": "",
    "turn": 1,
-   "xp_earned": 3
+   "xp_earned": null
   },
   {
    "answer": "def count_set_bits(x):\n    n = 0\n    while x:\n        x &= x - 1\n        n += 1\n    return n",
@@ -150,7 +150,7 @@
    "status": "done",
    "summary": "",
    "turn": 0,
-   "xp_earned": 24
+   "xp_earned": null
   },
   {
    "answer": "each step clears the lowest set bit, so at most 32 steps",
@@ -177,7 +177,7 @@
    "status": "done",
    "summary": "",
    "turn": 1,
-   "xp_earned": 12
+   "xp_earned": null
   },
   {
    "answer": "equal = ~|((A ^ B) & M), כלומר NOR על אי־ההתאמות במסכה",
@@ -204,7 +204,7 @@
    "status": "done",
    "summary": "",
    "turn": 0,
-   "xp_earned": 6
+   "xp_earned": null
   },
   {
    "answer": "One five-gate implementation is nA=NAND(A,A), nB=NAND(B,B), R=NAND(nA,nB), nY=NAND(E,R), Y=NAND(nY,nY). R implements A OR B by De Morgan. Either disabled E or no requests forces Y=0.",
@@ -231,7 +231,7 @@
    "status": "done",
    "summary": "",
    "turn": 0,
-   "xp_earned": 24
+   "xp_earned": null
   },
   {
    "answer": "the stuck input dominates the NAND output",
@@ -258,7 +258,7 @@
    "status": "done",
    "summary": "",
    "turn": 1,
-   "xp_earned": 12
+   "xp_earned": null
   }
  ],
  "attempts": [
@@ -300,7 +300,7 @@
       "tip": null,
       "turn": 1,
       "visual": null,
-      "xp_earned": 3
+      "xp_earned": null
      },
      "turn": 1
     }
@@ -468,7 +468,7 @@
     },
     "turn": 0,
     "visual": null,
-    "xp_earned": 4
+    "xp_earned": null
    }
   },
   {
@@ -509,7 +509,7 @@
       "tip": null,
       "turn": 1,
       "visual": null,
-      "xp_earned": 12
+      "xp_earned": null
      },
      "turn": 1
     }
@@ -605,7 +605,7 @@
     "tip": null,
     "turn": 0,
     "visual": null,
-    "xp_earned": 24
+    "xp_earned": null
    }
   },
   {
@@ -701,7 +701,7 @@
     "tip": null,
     "turn": 0,
     "visual": null,
-    "xp_earned": 6
+    "xp_earned": null
    }
   },
   {
@@ -742,7 +742,7 @@
       "tip": null,
       "turn": 1,
       "visual": null,
-      "xp_earned": 12
+      "xp_earned": null
      },
      "turn": 1
     }
@@ -833,7 +833,7 @@
     "tip": null,
     "turn": 0,
     "visual": null,
-    "xp_earned": 24
+    "xp_earned": null
    }
   }
  ],
@@ -857,8 +857,8 @@
    "streak_days": 1,
    "strong": 3,
    "weak": 1,
-   "xp_today": 85,
-   "xp_total": 85
+   "xp_today": 0,
+   "xp_total": 0
   },
   "skills": [
    {
@@ -876,7 +876,7 @@
     "status": "assessed",
     "subject": "relevant_programming",
     "trend": "improving",
-    "xp": 36
+    "xp": 0
    },
    {
     "assessments": 3,
@@ -893,7 +893,7 @@
     "status": "assessed",
     "subject": "digital_fundamentals",
     "trend": "stable",
-    "xp": 15
+    "xp": 0
    },
    {
     "assessments": 0,
@@ -910,7 +910,7 @@
     "status": "not_assessed",
     "subject": "digital_fundamentals",
     "trend": "stable",
-    "xp": 3
+    "xp": 0
    },
    {
     "assessments": 1,
@@ -927,7 +927,7 @@
     "status": "insufficient_evidence",
     "subject": "digital_fundamentals",
     "trend": "stable",
-    "xp": 2
+    "xp": 0
    },
    {
     "assessments": 2,
@@ -944,7 +944,7 @@
     "status": "assessed",
     "subject": "digital_fundamentals",
     "trend": "improving",
-    "xp": 29
+    "xp": 0
    }
   ]
  },

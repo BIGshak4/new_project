@@ -154,14 +154,24 @@ class CoinsService:
 
     # ------------------------------------------------------------------ earning (inside the caller's transaction)
 
+    @staticmethod
+    def question_reference(question_id) -> str:
+        """One earn per user per question (Shaked, 2026-11-06: "not if he got on the same question a strong answer"):
+        practice answers and interview turns share this reference, so whichever comes first pays, once."""
+        return f"question:{question_id}"
+
     async def award_for_answer(self, tx, *, user_id: uuid.UUID, attempt_id: uuid.UUID, revision: int, band: str | None,
-                               difficulty: int, hints_seen: int, reference_seen: bool, related: bool, turn: int) -> int:
+                               difficulty: int, hints_seen: int, reference_seen: bool, related: bool, turn: int,
+                               question_id=None) -> int:
+        """The coins this answer earned and wrote: 0 when the rule gives nothing, and 0 when this user already earned
+        on this question (any attempt, or an interview turn). The caller stores the amount on the answer."""
         amount = coins_for_answer(self.rules, band=band, difficulty=difficulty, hints_seen=hints_seen,
                                   reference_seen=reference_seen, related=related, turn=turn)
         if not await self.enabled(tx) or amount <= 0:        # look at the ledger first: the views promise only after
             return 0
-        return await self._award(tx, user_id, amount, reference=f"answer:{attempt_id}:{revision}",
-                                 meta={"band": band, "difficulty": difficulty})
+        reference = self.question_reference(question_id) if question_id is not None else f"answer:{attempt_id}:{revision}"
+        return await self._award(tx, user_id, amount, reference=reference,
+                                 meta={"band": band, "difficulty": difficulty, "attempt_id": str(attempt_id), "revision": revision})
 
     async def _award(self, tx, user_id: uuid.UUID, amount: int, *, reference: str, meta: dict) -> int:
         """The earn row in a savepoint: a ledger error is logged and the caller's transaction (the answer, the
@@ -176,12 +186,22 @@ class CoinsService:
         return amount if written else 0
 
     async def award_for_turn(self, tx, *, user_id: uuid.UUID, session_id: uuid.UUID, turn_index: int, band: str | None,
-                             hints_seen: int = 0, related: bool = True) -> int:
+                             hints_seen: int = 0, related: bool = True, question_id=None) -> int:
         amount = coins_for_turn(self.rules, band=band, hints_seen=hints_seen, related=related)
         if not await self.enabled(tx) or amount <= 0:        # look at the ledger first: the views promise only after
             return 0
-        return await self._award(tx, user_id, amount, reference=f"turn:{session_id}:{turn_index}",
-                                 meta={"band": band, "interview": True})
+        reference = self.question_reference(question_id) if question_id is not None else f"turn:{session_id}:{turn_index}"
+        return await self._award(tx, user_id, amount, reference=reference,
+                                 meta={"band": band, "interview": True, "session_id": str(session_id), "turn": turn_index})
+
+    async def balance(self, user_id: uuid.UUID) -> int | None:
+        """The balance alone, for the header of every screen (Shaked, 2026-11-06: "coins shown all the time");
+        None when coins are not enabled on this database. A first look still writes the starting gift."""
+        async with self.store.transaction() as tx:
+            if not await self.enabled(tx):
+                return None
+            await self.ensure_gift(tx, user_id)
+            return await tx.coin_balance(user_id)
 
     async def award_for_finish(self, tx, *, user_id: uuid.UUID, session_id: uuid.UUID, answered_turns: int) -> int:
         """Once per interview (the reference dedups a re-save): coins for finishing, not for the score."""

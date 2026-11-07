@@ -130,23 +130,20 @@ async def run_flow(svc):
 
 
 class TestOnTheService:
-    async def test_xp_appears_after_a_scored_answer(self, catalog):
+    async def test_xp_is_gone_from_every_view_but_the_streak_stays(self, catalog):
+        """Shaked, 2026-11-06: "i dont want the xp anymore". The fields wait in the API for the screens to drop them
+        and carry nothing; the streak, which the same reader computed, is still there."""
         svc, store = service(catalog)
         submission, attempt, progress = await run_flow(svc)
         question = catalog.questions[Q]
         assert submission.status == "done" and submission.band is not None
-        expected = xp.answer_xp(submission.band, difficulty=question.difficulty)
-        assert submission.xp_earned == expected > 0
-        assert attempt.submission.xp_earned == expected                    # the reloaded view agrees
-        assert progress.overview.xp_total == expected and progress.overview.xp_today == expected
+        assert submission.xp_earned is None and attempt.submission.xp_earned is None
+        assert progress.overview.xp_total == 0 and progress.overview.xp_today == 0
         assert progress.overview.streak_days == 1
-        split = xp.split_by_skill(expected, [(link.skill, link.weight) for link in question.skills])
         by_key = {s.key: s for s in progress.skills}
-        for key, part in split.items():
-            if key in by_key:
-                assert by_key[key].xp == part
+        assert all(s.xp == 0 for s in progress.skills)
         primary = by_key[question.primary_skill]
-        assert 0.0 <= primary.level_progress <= 1.0
+        assert 0.0 <= primary.level_progress <= 1.0                        # the fill is the engine's level score, kept
         # the store rows have the shape the database reader returns as well
         async with store.transaction() as tx:
             stored = await tx.scored_submissions(USER)
@@ -166,15 +163,15 @@ class TestOnTheService:
                                                idempotency_key="k1")
         assert submission.status == "done" and submission.band == "WEAK"            # still graded
         assert submission.related is False and "off_topic" in submission.flags
-        assert submission.xp_earned == 0 and attempt.submission.xp_earned == 0
+        assert submission.xp_earned is None and attempt.submission.xp_earned is None
         progress = await svc.progress(USER, language="en")
         assert progress.overview.xp_total == 0 and progress.overview.xp_today == 0 and progress.overview.streak_days == 0
         assert progress.overview.answered == 1                                       # the answer itself still counts
-        # the same question answered properly afterwards earns as before
+        # the same question answered properly afterwards counts for the streak
         again = await svc.start(USER, question_key="example-masked-equality", mode="quick", language="en")
         second, _ = await svc.submit(USER, uuid.UUID(again.id), "mask the bits, then compare", idempotency_key="k2")
-        assert second.related is True and second.xp_earned > 0
-        assert (await svc.progress(USER, language="en")).overview.xp_total == second.xp_earned
+        assert second.related is True and second.xp_earned is None
+        assert (await svc.progress(USER, language="en")).overview.streak_days == 1
 
     def test_the_rule_reads_only_what_the_judge_returned(self):
         from app.engine import scores
@@ -220,7 +217,7 @@ class TestOnTheService:
                       progress2.overview.level_rank, progress2.overview.answered,
                       {k: v["engine_state"] for k, v in store2.profiles.items()})
         assert with_xp == without_xp
-        assert submission2.xp_earned == 0 and progress2.overview.xp_total == 0        # only the layer went dark
+        assert submission2.xp_earned is None and progress2.overview.xp_total == 0     # the layer is dark either way
 
     def test_the_xp_module_imports_nothing_from_the_engine(self):
         """A static proof: xp.py depends on the standard library only, so it cannot change an evaluation."""
@@ -242,12 +239,10 @@ class TestTheInterviewTurn:
         await svc.answer(USER, uuid.UUID(view.id), turn.index, "alarm = AB + BC + AC", idempotency_key="i1")
         ended = await svc.end(USER, uuid.UUID(view.id))
         scored = [t for t in ended.turns if t.band]
-        assert scored and all(t.xp_earned == xp.answer_xp(t.band, difficulty=t.difficulty, hints_seen=len(t.hints), interview=True)
-                              for t in scored)
+        assert scored and all(t.xp_earned is None for t in scored)                   # XP is gone (2026-11-06)
         async with store.transaction() as tx:
             rows = await tx.scored_interview_turns(USER)
-        assert len(rows) == len(scored) and all(r["interview"] for r in rows)
-        assert sum(a.xp for a in xp.from_rows(rows)) == sum(t.xp_earned for t in scored)
+        assert len(rows) == len(scored) and all(r["interview"] for r in rows)       # the reader the streak uses still works
 
 
 # ----------------------------------------------------------------------------- review fixes (2026-09-25)

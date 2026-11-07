@@ -14,7 +14,7 @@ import uuid
 
 import pytest
 
-from app.engine import generator, xp
+from app.engine import generator
 from app.engine.catalog import load_catalog
 from app.schemas.engine import RESOLVED_STATUSES, Action, Decision, SkillStatus
 from app.services.coins import CoinsService, load_rules
@@ -82,8 +82,9 @@ class TestTheHintArrivesWithTheNextQuestion:
         assert view.status == "completed"
         second = next(t for t in view.turns if t.index == 1)
         assert second.band == "STRONG" and second.hints[0].level == delivered
-        assert second.xp_earned == xp.answer_xp("STRONG", difficulty=second.difficulty, hints_seen=delivered, interview=True)
-        assert second.xp_earned < xp.answer_xp("STRONG", difficulty=second.difficulty, hints_seen=0, interview=True)
+        assert second.xp_earned is None                                         # XP is gone (Shaked, 2026-11-06)
+        meta = store.sessions[sid]["turns"][1]["question_generation_meta"]
+        assert meta["hint_level"] == delivered                                  # the judge and the coin rule saw the nudge
 
     def test_the_richest_hint_the_question_has_up_to_the_engines_level(self, catalog):
         svc, _ = service(catalog, interviewer([GOOD]))

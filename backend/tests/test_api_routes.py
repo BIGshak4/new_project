@@ -166,7 +166,7 @@ class TestTheContract:
         sub = body["submission"]
         assert sub["status"] == "done" and sub["band"] == "WEAK" and sub["check"]["passed"] is False
         # grade first: the result is complete, its words follow (the app polls)
-        assert sub["feedback_pending"] and sub["card"] is None and sub["xp_earned"] and sub["key"] == "k1"
+        assert sub["feedback_pending"] and sub["card"] is None and sub["xp_earned"] is None and sub["key"] == "k1"
         assert body["attempt"]["pending_follow_up"]["turn"] == 1 and not body["attempt"]["can_submit"]
         assert body["attempt"]["pending_follow_up"]["question_pending"] and body["attempt"]["feedback_pending"]
         assert "evaluation" not in sub and "evidence_weight" not in sub          # internals never leave

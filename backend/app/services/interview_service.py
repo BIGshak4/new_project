@@ -34,7 +34,6 @@ from app.engine import (
     scores,
     subject_router,
     visual_evidence,
-    xp,
 )
 from app.engine.catalog import Catalog
 from app.engine.job_selection import JobSelection, combined_job
@@ -731,6 +730,17 @@ class InterviewService:
         row["state"]["revision"] = expected + 1
         try:
             async with self.store.transaction() as tx:
+                if self.coins is not None:
+                    # before the turns are saved, so each turn records what it really earned: one earn per user per
+                    # question, shared with practice (Shaked, 2026-11-06); a re-save of a decided turn writes nothing
+                    for t in turns:
+                        m = t.get("question_generation_meta") or {}
+                        if m.get("status") == "done" and m.get("band") and m.get("coins_awarded") is None:
+                            m["coins_awarded"] = await self.coins.award_for_turn(
+                                tx, user_id=user_id, session_id=session_id, turn_index=int(t["turn_index"]), band=m["band"],
+                                hints_seen=int(m.get("hint_level") or 0),
+                                related=scores.OFF_TOPIC_FLAG not in (m.get("flags") or []),
+                                question_id=t.get("question_id"))
                 await tx.save_session(user_id=user_id, row=row, turns=turns, plan=None, role_slug=self.config.role,
                                       company_slug=self.config.company, expected_revision=expected)
                 if profile is not None:
@@ -748,19 +758,11 @@ class InterviewService:
                                                     company_slug=self.config.company)
                 if usage_rows:
                     await tx.record_session_usage(user_id=user_id, session_id=session_id, usage_rows=usage_rows)
-                if self.coins is not None:
-                    for t in turns:                     # idempotent by (session, turn): a re-save never pays twice
-                        m = t.get("question_generation_meta") or {}
-                        if m.get("status") == "done" and m.get("band"):
-                            await self.coins.award_for_turn(tx, user_id=user_id, session_id=session_id,
-                                                            turn_index=int(t["turn_index"]), band=m["band"],
-                                                            hints_seen=int(m.get("hint_level") or 0),
-                                                            related=scores.OFF_TOPIC_FLAG not in (m.get("flags") or []))
-                    if row["status"] == "completed" and not row["state"].get("finish_coins_awarded"):
-                        # finishing counts, not the score (Shaked, 2026-11-02); the reference dedups a re-save
-                        await self.coins.award_for_finish(tx, user_id=user_id, session_id=session_id,
-                                                          answered_turns=int(row["state"].get("answered_turns") or 0))
-                        row["state"]["finish_coins_awarded"] = True
+                if self.coins is not None and row["status"] == "completed" and not row["state"].get("finish_coins_awarded"):
+                    # finishing counts, not the score (Shaked, 2026-11-02); the reference dedups a re-save
+                    await self.coins.award_for_finish(tx, user_id=user_id, session_id=session_id,
+                                                      answered_turns=int(row["state"].get("answered_turns") or 0))
+                    row["state"]["finish_coins_awarded"] = True
         except StaleSession:
             row["state"]["revision"] = expected
             raise ApiError("conflict", "another request changed this interview at the same time; reload it") from None
@@ -840,11 +842,10 @@ class InterviewService:
             action_after=meta.get("action_after") if revealed else None,
             subject_switch=bool(meta.get("subject_switch", False)), closing=bool(meta.get("closing")),
             related=(scores.OFF_TOPIC_FLAG not in (meta.get("flags") or [])) if revealed else True,
-            xp_earned=(xp.answer_xp(meta["band"], difficulty=turn["difficulty"], hints_seen=int(meta.get("hint_level") or 0),
-                                    interview=True, related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []))
-                       if revealed and meta.get("status") == "done" and meta.get("band") else None),
-            coins_earned=(coins_for_turn(self.coins.rules, band=meta["band"], hints_seen=int(meta.get("hint_level") or 0),
-                                         related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or []))
+            xp_earned=None,                                   # XP is gone (Shaked, 2026-11-06); the field waits for the screens
+            coins_earned=((meta["coins_awarded"] if meta.get("coins_awarded") is not None else
+                           coins_for_turn(self.coins.rules, band=meta["band"], hints_seen=int(meta.get("hint_level") or 0),
+                                          related=scores.OFF_TOPIC_FLAG not in (meta.get("flags") or [])))
                           if revealed and meta.get("status") == "done" and meta.get("band") and self.coins is not None
                           and self.coins.known_enabled else None))
 

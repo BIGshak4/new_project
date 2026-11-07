@@ -33,6 +33,7 @@ class TestTokens:
     async def test_a_valid_token_identifies_the_user(self, client):
         user_id, token = make_token()
         body = (await client.get("/v1/me", headers=auth(token))).json()
+        assert body.pop("coins", None) in (None, 50)                      # the balance rides along (2026-11-06); None without coins
         assert body == {"id": str(user_id), "email": MEMBER, "pilot_member": True, "can_manage_tasks": False}
 
     async def test_no_token_is_401_with_the_error_shape(self, client):

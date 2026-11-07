@@ -6,13 +6,23 @@ import uuid
 from datetime import date
 from typing import Annotated, Literal
 
-from fastapi import APIRouter, Header, Query
+from fastapi import APIRouter, Depends, Header, Query, Request
 from pydantic import BaseModel, Field
 
 from app.api.deps import CurrentAccess, Practice
 from app.schemas.api import GoalView, ProgramStartView, ProgramView, ProgressView, ReadinessView
+from app.services.coins import CoinsService
 
 router = APIRouter(prefix="/v1/me", tags=["me"])
+
+
+def _coins_if_started(request: Request) -> CoinsService | None:
+    """Who-am-I must answer even on a server where coins are not started (tests, a bare runtime): then no balance."""
+    runtime = getattr(request.app.state, "runtime", None)
+    return getattr(runtime, "coins", None) if runtime is not None else None
+
+
+CoinsIfStarted = Annotated[CoinsService | None, Depends(_coins_if_started)]
 
 
 class Me(BaseModel):
@@ -20,12 +30,14 @@ class Me(BaseModel):
     email: str | None
     pilot_member: bool
     can_manage_tasks: bool
+    coins: int | None = None                    # the balance, for the header of every screen (Shaked, 2026-11-06); None: coins off
 
 
-@router.get("", response_model=Me, summary="Who am I, as the backend sees me")
-async def me(access: CurrentAccess) -> Me:
+@router.get("", response_model=Me, summary="Who am I, as the backend sees me, and my coin balance")
+async def me(access: CurrentAccess, coins: CoinsIfStarted) -> Me:
     return Me(id=str(access.user_id), email=access.email, pilot_member=access.is_member,
-              can_manage_tasks=access.can_manage_tasks)
+              can_manage_tasks=access.can_manage_tasks,
+              coins=await coins.balance(access.user_id) if coins is not None else None)
 
 
 @router.get("/progress", response_model=ProgressView,

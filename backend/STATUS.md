@@ -1895,6 +1895,47 @@ list; `tzdata` as a dependency; Harel's to-do row 23; this record. The practice,
 pass after the fix (64 tests); the full offline suite ran before it (4,128 passed) and the change is confined to the
 order of two reads in `start`.
 
+## 5zzb. XP is gone; coins are the one reward, once per question (2026-11-06, Shaked: "i dont want the xp anymore but i do want the coins to be shown all the time and i want that when somone manage the get a good answer he will get coins, not if he got on the same question a strong answer"; "good means strong; 10 per strong interview and 5 per strong answer")
+
+**Decided.** XP (the motivation layer computed on read since §5l) is retired. Coins are the single reward: a strong
+main answer in practice earns **5**, flat (the hard-question bonus is gone), a strong interview turn **10**,
+finishing an interview still 15 after three answers; a partial answer earns nothing ("good means strong"). **A
+question pays once per user**: the ledger entry is keyed `question:<question id>` instead of the attempt or the
+turn, so a second strong answer on the same question, in a new attempt or in an interview, writes nothing, and
+the answer records what it really earned.
+
+**Built.**
+
+- `seeds/coins.json`: 5 / 5 / 10, the `_about` note.
+- `CoinsService.question_reference`; `award_for_answer` and `award_for_turn` take `question_id` and use it as the
+  reference (the old attempt/turn references remain the fallback when no id is known); `CoinsService.balance`.
+- Practice: the award happens *before* the attempt row is saved and its result lands on the answer
+  (`Submission.coins_awarded`), so `coins_earned` on the screen is the truth: 5 the first time, 0 after. Answers
+  scored before this field existed fall back to the pure rule, as before.
+- Interview: the per-turn award moved ahead of `save_session` in `_persist` for the same reason; the turn's
+  `coins_awarded` is what the revealed view shows.
+- XP: `xp_earned` is always None on answers and interview turns; `xp`, `xp_total`, `xp_today` are 0; the streak,
+  which the same reader computed, stays. The field names remain in the API until Harel's screens drop them
+  (then they go on both sides); the schema comments say so.
+- `GET /v1/me` carries `coins` (the balance; None when coins are off), so the header can show it on every screen
+  from the call every page already makes. The TypeScript contract test lists it as pending in the client.
+- The golden grade-first record has its XP values nulled; `tests/test_coins.py` carries the new numbers, the
+  once-per-question rule across attempts and across practice → interview, and the balance on `/v1/me`;
+  `tests/test_xp.py` now pins that XP is dark everywhere and the streak is not.
+
+**Not changed.** One hint still allowed for an earn, a revealed solution still earns nothing, unrelated answers
+earn nothing, the judge is untouched. Users who earned on a question under the old attempt reference can earn
+once more on it under the new one; a one-time effect, accepted.
+
+**Verification.** Offline suite: 4,132 passed / 13 skipped; 18 failed, of which 16 are Harel's known content and
+protection tests (§5zza) and two were this change's: the who-am-I test's exact body (the balance now rides along;
+`/v1/me` answers without a balance on a server where coins are not started) and the coin-race test's amounts
+(5, not 10). Both updated and green with the coins, auth and route suites.
+
+**Harel, row 24.** Remove the XP displays (answer card, interview results, overview); show the balance from
+`/v1/me.coins` in the header on every screen; show `coins_earned` next to the verdict, including 0 when the question
+was already paid.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1935,6 +1976,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-06 | XP retired, coins once per question (§5zzb): strong practice answer 5 flat, strong interview turn 10, a question pays once per user across attempts and interviews (ledger reference `question:<id>`, the answer and the turn record what they earned); `GET /v1/me` carries the coin balance for every screen's header; XP fields always None/0 until the screens drop them, the streak stays. Harel's row 24. |
 | 2026-11-06 | Full check and verification (§5zza): rebased the unpushed warm-up onto Harel's seventeen commits; production health, smoke (61 routes), web, broker and signing key all good; offline 4,128 passed with 18 of Harel's own tests failing on a clean `origin/master` too (content attestations, a missing protection test, two needing `tzdata`, now a dependency); live database 3, live service 18 (in pieces), live interview 1, coins/duels scenario 33 checks; three real-model flows. Found and fixed: `PracticeService.start` opened a second transaction inside its own for the day's cap (a deadlock on a single-connection store, a pool-exhaustion hazard under load in production); the live HTTP test's fixture picks a pilot member again. Harel's to-do row 23. |
 | 2026-11-02 | The judge's prompt cache is warmed when a question opens, and pictures are bounded (§5zz): `JudgeWarmer` sends the judge's exact prefix with an empty answer in the background on practice start / hint / reveal and on every interview turn, once per question per four minutes (`JUDGE_WARM`, counters on `/health.judge_warm`); question figures and answer photos go to the model at 1024 px (Pillow), a question's figures are cached ten minutes. Measured on the real model: judge 10.0 s / $0.0116 cold, 5.4 s / $0.0024 after the warm-up, same verdict. 12 new tests; `scripts/judge_warm_check.py`. |
 | 2026-11-02 | The interview, fitted to the person (§5zy; usage before: five interviews ever, one answered question): the controller's hint after a weak answer is now delivered with the next question (it was decided and never shown); an interview that would end on a weak answer asks one closing question on a strength and ends after it; the report opens with what held up, proposes the next interview (harder / same / easier) and compares with the previous one; finishing earns 15 coins after three answers. Report prompt v2. `InterviewTurnView.closing`, `InterviewReportView.held_up / next_step / since_last_time / fit_change / completion_coins`. 15 new tests; real-model dry runs on the mock interview script (now `--pattern`, `--minutes-per-answer`, `--twice`). Screen side: Harel's row 22. |

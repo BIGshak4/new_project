@@ -635,6 +635,16 @@ class PracticeService:
                     if outcome.usage:
                         await tx.record_usage(user_id=user_id, attempt_id=attempt.attempt_id_uuid,
                                               usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
+                    sub = outcome.submission
+                    if (self.coins is not None and sub.status == EvaluationStatus.DONE and sub.band is not None
+                            and "content_review_pending" not in sub.flags and sub.coins_awarded is None):
+                        # before the attempt row is saved, so the answer records what it really earned: one earn per
+                        # user per question (a replay or a later attempt on it writes nothing; Shaked, 2026-11-06)
+                        sub.coins_awarded = await self.coins.award_for_answer(
+                            tx, user_id=user_id, attempt_id=attempt.attempt_id_uuid, revision=sub.revision,
+                            band=sub.band.value, difficulty=attempt.question.difficulty, hints_seen=sub.hints_seen,
+                            reference_seen=sub.reference_seen, related=scores.OFF_TOPIC_FLAG not in sub.flags,
+                            turn=sub.turn, question_id=stored.question_id)
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                           revisions=changed, known_revisions=len(attempt.submissions))
                     if (outcome.status == EvaluationStatus.DONE and outcome.band is not None and outcome.submission.turn == 0
@@ -643,15 +653,6 @@ class PracticeService:
                         await self._complete_program_item(tx, user_id, attempt_id=attempt.attempt_id_uuid,
                                                           skills=[primary, *(link.skill for link in attempt.question.skills
                                                                              if link.skill != primary)])
-                    sub = outcome.submission
-                    if (self.coins is not None and sub.status == EvaluationStatus.DONE and sub.band is not None
-                            and "content_review_pending" not in sub.flags):
-                        # idempotent by (attempt, revision): a replay never pays twice; the service decides the amount
-                        await self.coins.award_for_answer(tx, user_id=user_id, attempt_id=attempt.attempt_id_uuid,
-                                                          revision=sub.revision, band=sub.band.value,
-                                                          difficulty=attempt.question.difficulty, hints_seen=sub.hints_seen,
-                                                          reference_seen=sub.reference_seen,
-                                                          related=scores.OFF_TOPIC_FLAG not in sub.flags, turn=sub.turn)
                 return attempt, stored, loaded, outcome
             except StaleProfile as exc:
                 log.warning("profile moved during attempt %s (%s): re-applying the scores", attempt.attempt_id, exc)
@@ -1069,7 +1070,7 @@ class PracticeService:
                 retention_due_at=retention.get("due").isoformat() if retention.get("due") else None,
                 loyalty=value, needs_refresh=level is not None and scores.needs_refresh(value),
                 expired=level is not None and scores.expired(value),
-                xp=experience.per_skill.get(key, 0) if experience else 0, level_progress=xp.level_progress(level, level_score)))
+                xp=0, level_progress=xp.level_progress(level, level_score)))     # XP is gone (2026-11-06); the fill is the engine's level score
         return skills
 
     FOCUS_SKILLS = 5
@@ -1432,7 +1433,7 @@ class PracticeService:
                                 skills_assessed=assessed, skills_to_refresh=to_refresh, skills_total=len(plan_keys),
                                 level=words[rank], level_rank=rank,
                                 message=texts[kind].format(answered=answered, strong=totals["STRONG"]),
-                                xp_total=experience.total, xp_today=experience.today, streak_days=experience.streak)
+                                xp_total=0, xp_today=0, streak_days=experience.streak)     # XP is gone (2026-11-06); the streak stays
 
     @staticmethod
     def _timeline(daily: list[dict], profile: LoadedProfile) -> list[TimelinePoint]:
@@ -1629,24 +1630,22 @@ class PracticeService:
 
     @staticmethod
     def _xp_for(attempt: PracticeAttempt, submission) -> int | None:
-        """The XP a scored answer earned, from what the submission already records. None until it is scored."""
-        if submission.status != EvaluationStatus.DONE or submission.band is None:
-            return None
-        if "content_review_pending" in submission.flags:
-            return 0
-        return xp.answer_xp(submission.band.value, difficulty=attempt.question.difficulty, hints_seen=submission.hints_seen,
-                            reference_seen=submission.reference_seen, follow_up=submission.turn > 0,
-                            related=scores.OFF_TOPIC_FLAG not in submission.flags)
+        """XP is gone (Shaked, 2026-11-06: "i dont want the xp anymore"): the field stays in the API until the
+        screens drop it, and is always None. Coins are the one reward."""
+        return None
 
     def _coins_for(self, attempt: PracticeAttempt, submission) -> int | None:
-        """The coins a scored main answer earned, by the pure rule (app.services.coins). None until scored, or when
-        this server has no ledger (the migration is pending: nothing is credited, so nothing is promised)."""
+        """The coins a scored main answer really earned: what the ledger wrote when it was scored (0 once this user
+        had already earned on the question), or, for answers scored before that was recorded, the pure rule. None
+        until scored, or when this server has no ledger (nothing is credited, so nothing is promised)."""
         if self.coins is None or not self.coins.known_enabled:   # None: nobody looked yet, so nothing is promised
             return None
         if submission.status != EvaluationStatus.DONE or submission.band is None:
             return None
         if "content_review_pending" in submission.flags:
             return 0
+        if submission.coins_awarded is not None:
+            return submission.coins_awarded
         return coins_for_answer(self.coins.rules, band=submission.band.value, difficulty=attempt.question.difficulty,
                                 hints_seen=submission.hints_seen, reference_seen=submission.reference_seen,
                                 related=scores.OFF_TOPIC_FLAG not in submission.flags, turn=submission.turn)

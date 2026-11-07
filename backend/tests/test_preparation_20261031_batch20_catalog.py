@@ -349,7 +349,7 @@ async def test_new_question_feedback_cannot_create_assessment_metrics_or_xp(cata
         result, view = await service.submit(user, uuid.UUID(started.id), 'Offline proposed reasoning for content review.',
                                             idempotency_key=ident)
         assert result.status == 'done' and 'content_review_pending' in result.flags
-        assert result.xp_earned == 0 and result.next_question is None and view.pending_follow_up is None
+        assert result.xp_earned is None and result.next_question is None and view.pending_follow_up is None
     assert store.profiles == before and not store.metrics
 
 

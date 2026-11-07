@@ -40,6 +40,7 @@ PENDING_IN_CLIENT = {"SkillProgress": {"expired"},         # evidence older than
                      "JobTypeView": {"excluded_skills"},   # skills not part of a job type (task 8, 2026-10-15)
                      "SubmissionView": {"related", "coins_earned"},   # unrelated: no XP (2026-10-18); coins (2026-10-22)
                      "InterviewTurnView": {"related", "coins_earned", "closing"},   # closing question (Shaked, 2026-11-02, Harel row 22)
+                     "Me": {"coins"},                                 # the balance on every screen (Shaked, 2026-11-06, row 24)
                      "InterviewReportView": {"held_up", "next_step", "since_last_time", "previous_session_id", "fit_change",
                                              "completion_coins"}}     # the report fitted to the person (2026-11-02, row 22)
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.

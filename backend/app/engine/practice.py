@@ -133,6 +133,7 @@ class Submission(BaseModel):
     tip_text: str | None = None
     follow_up: str | None = None
     evaluator_model: str | None = None         # which model judged this revision ("demo" for the scripted stand-in)
+    coins_awarded: int | None = None           # what this answer really earned (0 once the question was paid before); None: not decided
 
     @property
     def feedback_pending(self) -> bool:

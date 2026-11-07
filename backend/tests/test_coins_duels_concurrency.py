@@ -163,8 +163,8 @@ class TestCoinRaces:
                 return await coins.award_for_answer(tx, user_id=A, attempt_id=attempt, revision=1, band="STRONG", difficulty=2,
                                                     hints_seen=0, reference_seen=False, related=True, turn=0)
         results = await gather_errors(award(), award())
-        assert sorted(r for r in results if not isinstance(r, Exception)) == [0, 10]
-        assert (await coins.wallet(A)).balance == 60
+        assert sorted(r for r in results if not isinstance(r, Exception)) == [0, 5]
+        assert (await coins.wallet(A)).balance == 55
 
     async def test_the_gift_under_two_first_reads(self, catalog):
         svc, coins, store = services(catalog)

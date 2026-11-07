@@ -118,7 +118,7 @@ async def test_unrated_feedback_keeps_profile_metrics_and_xp_unchanged(catalog):
     sub, view = await svc.submit(user, aid, "I count every input bit with a balanced adder tree.", idempotency_key="prepared")
     assert sub.status == "done" and "content_review_pending" in sub.flags
     assert store.profiles == before and not store.metrics
-    assert sub.xp_earned == 0 and sub.next_question is None and view.pending_follow_up is None
+    assert sub.xp_earned is None and sub.next_question is None and view.pending_follow_up is None   # XP is gone (2026-11-06)
     assert not await store_score_rows(store, user)
 
 

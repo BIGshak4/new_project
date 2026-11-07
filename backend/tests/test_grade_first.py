@@ -272,7 +272,7 @@ class TestGradeFirst:
         aid = uuid.UUID(view.id)
         sub, view = await svc.submit(USER, aid, {"text": "alarm = A ^ B ^ C"}, idempotency_key="k")
         # the grade is complete ...
-        assert sub.status == "done" and sub.band == "WEAK" and sub.xp_earned and sub.check is not None and sub.evidence != "none"
+        assert sub.status == "done" and sub.band == "WEAK" and sub.xp_earned is None and sub.check is not None and sub.evidence != "none"
         # ... the words are not, and the app is told so
         assert sub.feedback_pending and view.feedback_pending and sub.card is None and sub.tip is None
         assert view.pending_follow_up is not None and view.pending_follow_up.question_pending
