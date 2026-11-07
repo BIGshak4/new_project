@@ -134,7 +134,7 @@ Verification: 57000 test cases passed. AI-assisted proposal, no independent expe
 ```
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 18](../sources/2026-11-07-batch30-18.png)
 

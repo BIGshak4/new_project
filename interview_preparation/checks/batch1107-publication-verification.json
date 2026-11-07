@@ -1,6 +1,6 @@
 {
   "verified_at": "2026-11-07T13:05:31.087058+00:00",
-  "status": "database_and_assets_verified",
+  "status": "published_and_deployment_verified",
   "integration": {
     "new": [
       "PREP-257",
@@ -130,7 +130,13 @@
   "backup_location": "Outside Git: C:/Projects/Job_Run/backups/intake-20261107-batch30-{before,after}.json",
   "schema_auth_rls_or_learner_changes": false,
   "publication_protocol_changed": false,
-  "deployment": "Exact deployed revisions recorded separately in batch1107-deployment-verification.json after Git push.",
+  "deployment": {
+    "content_commit": "feb50f95c8d7afc3957a52495636dff72cc81297",
+    "verified_at": "2026-11-07T13:07:37.602720+00:00",
+    "web": "Netlify: exact revision and application health passed",
+    "backend": "Render: exact revision, database-store health and catalog counts passed",
+    "proof": "batch1107-deployment-verification.json"
+  },
   "post_publication_correction": {
     "preparation_id": "PREP-206",
     "old_version": 2,

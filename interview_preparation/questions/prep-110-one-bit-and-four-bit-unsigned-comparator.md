@@ -430,7 +430,7 @@ Exhaustive checks covered all 87,380 unsigned operand pairs across widths 1..8 f
 - [diagrams/prep-110-combinational-batch20-en.png](../diagrams/prep-110-combinational-batch20-en.png)
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 16](../sources/2026-11-07-batch30-16.png)
 

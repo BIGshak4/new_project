@@ -387,7 +387,7 @@ All four A,B rows passed, giving twenty function assertions including nB. These 
 - [diagrams/prep-070-combinational-batch20-en.png](../diagrams/prep-070-combinational-batch20-en.png)
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 5](../sources/2026-11-07-batch30-05.png)
 

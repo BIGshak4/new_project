@@ -214,7 +214,7 @@ Python checks covered all four Q,D combinations, eight Q,S,R rows, and 4,094 dat
 - [Evidence](../checks/prep-065-verification.json)
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 3](../sources/2026-11-07-batch30-03.png)
 

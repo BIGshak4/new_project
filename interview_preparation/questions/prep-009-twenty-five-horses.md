@@ -111,7 +111,7 @@ Seven races guarantee the fastest three, assuming only finishing order is observ
 מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 24](../sources/2026-11-07-batch30-24.png)
 

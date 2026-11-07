@@ -1,0 +1,102 @@
+{
+  "status": "passed",
+  "content_commit": "feb50f95c8d7afc3957a52495636dff72cc81297",
+  "git_remote": "https://github.com/BIGshak4/new_project.git",
+  "branch": "master",
+  "expected_revisions": {
+    "web": "feb50f95c8d7afc3957a52495636dff72cc81297",
+    "backend": "feb50f95c8d7afc3957a52495636dff72cc81297"
+  },
+  "verified_at": "2026-11-07T13:07:37.602720+00:00",
+  "web": {
+    "service": "jobruner-web",
+    "status": "ok",
+    "revision": "feb50f95c8d7afc3957a52495636dff72cc81297",
+    "checks": {
+      "application": "ok"
+    }
+  },
+  "backend": {
+    "status": "ok",
+    "engine_version": "0.1.0",
+    "source_revision": "feb50f95c8d7afc3957a52495636dff72cc81297",
+    "env": "staging",
+    "llm_provider": "openai",
+    "database_configured": true,
+    "database_host": "pooler",
+    "database_pooler": "transaction",
+    "auth_configured": true,
+    "allowed_origins": 3,
+    "store": "database",
+    "models": {
+      "evaluator": "gpt-6.1-sol",
+      "feedback": "gpt-6.1-terra",
+      "tip": "gpt-6.1-terra",
+      "generator": "gpt-6.1-terra"
+    },
+    "speed": {
+      "effort": {
+        "evaluator": "low",
+        "generator": "medium",
+        "tip": "low",
+        "report": "medium",
+        "feedback": "low"
+      },
+      "service_tier": "default"
+    },
+    "answer_images": "assessed",
+    "code_execution": {
+      "enabled": true,
+      "wired": true,
+      "last_probe": null
+    },
+    "assess_unreviewed_questions": true,
+    "database": {
+      "round_trip_ms": 2.69,
+      "pool_size": 5,
+      "pool_checked_out": 0,
+      "pool_overflow": -4
+    }
+  },
+  "catalog": {
+    "valid": true,
+    "subjects": [
+      "digital_fundamentals",
+      "fsms",
+      "projects_behavioral",
+      "reasoning",
+      "relevant_programming",
+      "sequential_logic"
+    ],
+    "skills": 35,
+    "roles": [
+      "digital-hardware-engineer"
+    ],
+    "companies": [
+      "generic"
+    ],
+    "questions": 300,
+    "tips": 10,
+    "glossary_terms": 32,
+    "quiz_source_count": 500,
+    "quiz_variant_count": 2500,
+    "verified_url": "https://jobrun-api.onrender.com/catalog/summary"
+  },
+  "urls": {
+    "web": "https://jobrun-practice.netlify.app/",
+    "api": "https://jobrun-api.onrender.com/"
+  },
+  "public_browser": {
+    "observed": true,
+    "authenticated": false,
+    "result": "The live public landing and approved-account login form loaded; no protected question content exposed while signed out."
+  },
+  "local_browser_content_qa": "batch1107-browser-verification.json",
+  "live_database_content_readback": "batch1107-publication-verification.json",
+  "live_executor_jobs": "batch1107-live-execution-verification.json",
+  "limits": [
+    "No production learner account session or physical-device browser run was performed.",
+    "Live broker tests used signed operator jobs, not the production browser Run button.",
+    "This proof identifies the content commit; the following documentation-only commit does not change runnable application content."
+  ]
+}

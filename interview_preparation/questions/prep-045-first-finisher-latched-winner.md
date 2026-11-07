@@ -660,7 +660,7 @@ A priority encoder produces a two-bit candidate. Store it in a register enabled 
 מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 17](../sources/2026-11-07-batch30-17.png)
 

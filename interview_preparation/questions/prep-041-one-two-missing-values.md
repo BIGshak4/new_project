@@ -501,7 +501,7 @@ Source does not explicitly specify the value domain or whether one hundred means
 ```
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 2](../sources/2026-11-07-batch30-02.png)
 

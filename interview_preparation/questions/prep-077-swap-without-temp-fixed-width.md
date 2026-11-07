@@ -297,7 +297,7 @@ The follow-up is prepared as content only; it is not connected to the interactiv
 זהו מקור נוסף לשאלה הקיימת; הגרסה והתוכן הטכני נשמרו ללא שינוי.
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 30](../sources/2026-11-07-batch30-30.png)
 

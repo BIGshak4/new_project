@@ -104,7 +104,7 @@ Exhaustive tests covered 9,841 arrays of lengths 0..8, the source example, monoc
 נוספה גרסה מספרית0/1/2 עם מעבר חלוקה יחיד ומקום קבוע. [הרחבה מלאה](prep-019-numeric-012-variant.md).
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 9](../sources/2026-11-07-batch30-09.png)
 

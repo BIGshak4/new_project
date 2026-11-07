@@ -94,7 +94,7 @@ Exactly 5ab+b increment/decrement instructions plus branch overhead. For positiv
 Verification: 965 interpreted cases passed. AI-assisted proposal; no expert review.
 
 
-## מקור נוסף — 07.11.2026, מקבץ 20
+## מקור נוסף — 07.11.2026, מקבץ 30
 
 [צילום מקור פרטי 6](../sources/2026-11-07-batch30-06.png)
 
