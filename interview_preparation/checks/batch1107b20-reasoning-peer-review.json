@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "reviewed": [
+    "PREP-276",
+    "PREP-284",
+    "PREP-090",
+    "PREP-151"
+  ],
+  "independent_checks": {
+    "parent_maps": 2712,
+    "identity_model": "Distinct unhashable nodes compare equal; fresh-walk oracle uses identity; every interface exactly once.",
+    "rope_length_height_pairs": 36,
+    "rope_pi_oracle": "60-digit Decimal constant; cancellation-based radius difference.",
+    "byte_count_values": 312,
+    "byte_spy": "Exactly four calls and little-endian numerical byte decomposition, independent of implementation shifts.",
+    "inheritance": "521 native semantic assertions were already executed by root; source SHA verified, manual dispatch/slicing/destructor review passed. Not a benchmark."
+  },
+  "material_copy_findings": [
+    {
+      "question": "PREP-276",
+      "issue": "Score: : score / FixedScore: : score corrupt C++ scope-token notation in explanation. Code unchanged.",
+      "resolution": "Resolved by root in new text only; verified raw and compiled HE/EN. Native source and PNGs unchanged."
+    },
+    {
+      "question": "PREP-151",
+      "issue": "0x800001 FF corrupts the hexadecimal example literal. Code unchanged.",
+      "resolution": "Resolved by root in new text only; verified raw and compiled HE/EN. Native source and PNGs unchanged."
+    }
+  ],
+  "source_sha256": {
+    "solutions/prep_276_inheritance_costs_batch1107b20.cpp": "d50496153bd99c00ec08fe736adfad680610dca91a6e9def0cd6ff7cad416b0b",
+    "solutions/prep_284_parent_components_batch1107b20.py": "79b799df8c14c28e8077eb78d8c9fc481ee06821a6c001fdb6b0aa30d7306e4a",
+    "solutions/prep_090_two_metre_rope_batch1107b20.py": "c2241cdddb5ecb84e1a9d412602a84d9f65a3690a7384a910368cd874c92306b",
+    "solutions/prep_151_four_bytes_batch1107b20.py": "98d45631c5851cc24c675f05813e50a2f21942d1fc7e9979ddbcc145f7ef19d5"
+  },
+  "limitations": [
+    "No new native execution by this peer reviewer.",
+    "Finite small-graph and bit samples complement the author proofs, not universal runtime benchmarks."
+  ],
+  "copy_resolution_verified_in": [
+    "raw HE/EN reference solutions",
+    "compiled HE/EN reference solutions"
+  ]
+}

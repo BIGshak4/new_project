@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "scope": "Logical finite models, independent suffix/sort/schedule checks and two-NOR lower-bound enumeration. Not analog transistor characterization.",
+  "counts": {
+    "ordered_sample_triples": 64,
+    "truth_rows": 4,
+    "two_nor_networks_excluded": 18,
+    "serial_words": 4094,
+    "serial_prefixes": 40962,
+    "pipeline_schedules": 161
+  },
+  "source18_example": {
+    "input": "1100100101",
+    "output": "0000010010",
+    "matches": [
+      6,
+      9
+    ]
+  }
+}

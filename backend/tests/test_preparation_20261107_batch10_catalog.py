@@ -16,6 +16,7 @@ from tests.preparation_history import (
     assert_pre_batch1107b10_archive,
     assert_pre_batch1107b10_assets,
     assert_pre_batch1107b10_localization,
+    before_batch1107b20_archive,
     digest,
 )
 from tests.preparation_november7_batch10_history import before_batch1107b10_compiled
@@ -49,21 +50,22 @@ def test_every_original_source_and_reported_attribution_is_preserved():
 
 
 def test_all270_old_records1557_assets_and_bilingual_content_remain_hash_bound():
-    archive=read(BANK/'questions.json')
+    current_archive=read(BANK/'questions.json')
+    archive=before_batch1107b20_archive(current_archive)
     assert len(archive['questions'])==archive['question_count']==274
     assert {q['id'] for q in archive['questions']}-BATCH1107B10_BASELINE['records'].keys()==NEW
     assert set(BATCH1107B10_BASELINE['variant_ids'])==VARIANTS
     assert not BATCH1107B10_BASELINE['source_only_ids']
-    assert_pre_batch1107b10_archive(archive)
+    assert_pre_batch1107b10_archive(current_archive)
     assets=read(SEEDS/'preparation_uploads.json')['files']
-    assert len(assets)==1602
+    assert len(assets)==1668
     assert_pre_batch1107b10_assets(assets)
     localized={}
     for path in (SEEDS/'preparation_localization').glob('*.json'):
         rows=read(path)
         assert not localized.keys()&rows.keys()
         localized.update(rows)
-    assert localized.keys()=={q['id'] for q in archive['questions']}
+    assert localized.keys()=={q['id'] for q in current_archive['questions']}
     assert_pre_batch1107b10_localization(localized)
     for q in read(SEEDS/'questions/preparation_bank.json'):
         if q['assets']['preparation_id'] in BATCH1107B10_BASELINE['records']:
@@ -72,7 +74,7 @@ def test_all270_old_records1557_assets_and_bilingual_content_remain_hash_bound()
 
 def test_complete_bilingual_content_and_answer_media_are_still_gated():
     catalog=load_catalog(SEEDS)
-    assert len(catalog.questions)==304
+    assert len(catalog.questions)==317
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS}
     assert set(selected)==NEW|VARIANTS

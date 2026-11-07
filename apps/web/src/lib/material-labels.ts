@@ -85,6 +85,10 @@ const hebrew: Record<string, string> = {
 };
 
 const additionalLabels: Record<string, Record<"he" | "en", string>> = {
+  rope_two_metres: { he: "תוספת שני מטרים וחתול בגובה מוגדר", en: "Two added metres and a stated cat height" },
+  four_byte_count: { he: "ספירת 32 סיביות בארבע פעולות על בתים", en: "Count 32 bits with four byte operations" },
+  "Two added metres and a stated cat height": { he: "תוספת שני מטרים וחתול בגובה מוגדר", en: "Two added metres and a stated cat height" },
+  "Count 32 bits with four byte operations": { he: "ספירת 32 סיביות בארבע פעולות על בתים", en: "Count 32 bits with four byte operations" },
   "batch1107b10_two-bit-max-or-not-mux": { he: "בחירת המספר הגדול בשני ביטים באמצעות שערים ומוקסים", en: "Two-bit maximum using gates and multiplexers" },
   "batch1107b10_msb-and-lsb-five": { he: "התחלקות בחמש בשני סדרי קלט", en: "Divisibility by five in both bit orders" },
   "batch1107b10_depth-four-ready-valid": { he: "תור בעומק ארבע עם ready ו־valid", en: "Depth-four FIFO with ready and valid" },

@@ -1,0 +1,101 @@
+{
+  "summary": {
+    "live": true,
+    "kind": "three-new-positive-profile-execution",
+    "executor": "https://jobrun-executor-job-runer.vercel.app",
+    "started_at": "2026-11-07T18:45:18.964Z",
+    "finished_at": "2026-11-07T18:45:42.681Z",
+    "concurrency": 1,
+    "checked": 3,
+    "passed": 3,
+    "failed": 0,
+    "question_count": 3,
+    "languages": [
+      "python"
+    ],
+    "total_cases": 37,
+    "total_cases_passed": 37
+  },
+  "rows": [
+    {
+      "question": "prep-circular-packed-bit-array-move",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 10,
+      "passed_count": 10,
+      "runtime_ms": 5715
+    },
+    {
+      "question": "prep-reverse-signed-decimal-integer",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 15,
+      "passed_count": 15,
+      "runtime_ms": 8042
+    },
+    {
+      "question": "prep-relative-sort-by-second-array",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 12,
+      "passed_count": 12,
+      "runtime_ms": 4452
+    }
+  ],
+  "preflight": {
+    "api_http_status": 200,
+    "broker_http_status": 200,
+    "public_key_fingerprint": "480aec11a342cbc3d01585d3dcfd2b983d45a4ca70093eb55373c31ead20bdad",
+    "fingerprints_match": true,
+    "available": true,
+    "isolation": "fresh-microvm",
+    "network": "deny-all",
+    "persistence": false,
+    "max_runtime_ms": 45000,
+    "broker_revision": ""
+  },
+  "scope": {
+    "question_ids": [
+      "PREP-278",
+      "PREP-285",
+      "PREP-287"
+    ],
+    "question_keys": [
+      "prep-circular-packed-bit-array-move",
+      "prep-reverse-signed-decimal-integer",
+      "prep-relative-sort-by-second-array"
+    ],
+    "positive_cases": 37,
+    "learner_db_or_progress_writes": false,
+    "path": "operator-signed job -> deployed broker -> fresh isolated microVM -> result",
+    "not_exercised": [
+      "browser Run button",
+      "authenticated learner API submission",
+      "arbitrary submission complexity/in-place guarantees",
+      "negative/syntax/timeout live jobs (local regression suite covers negative/syntax fixtures)"
+    ],
+    "credential_handling": "Signing material remained in launcher and Node child environment; never placed in VM or logs.",
+    "grading_limit": "Finite output grading of 10 packed-bit movement, 15 decimal reversal and 12 relative-sort cases. Identity, input preservation and algorithmic restrictions are additionally checked by the local authored-solution suite, not inferred for arbitrary learner code."
+  },
+  "artifact_sha256": {
+    "backend/seeds/execution_cases.json": "b7e3e972b82d3d656aac41387a6418aa9c5f06d640ef08df827987a832c3ea3d",
+    "backend/tests/fixtures/execution_positive.json": "6cf5e7b5c796a968a73322c412f06bfcb3be1871bab404fa8de41f301ec34655",
+    "interview_preparation/solutions/prep_278_packed_move_batch1107b20.py": "76d9d033c2099ebf115f20f8ceed4d562d9f8cda0ac584a42dcc4694900d4f12",
+    "interview_preparation/solutions/prep_285_decimal_reverse_batch1107b20.py": "d93342aee9ae3001b82b6a8bf014d4112e031370933cd3863df5ba34cae45e18",
+    "interview_preparation/solutions/prep_287_relative_sort_batch1107b20.py": "3c038be4ce1b30d0b8149c768125ae35fd24618998632c025c76fc6288010078"
+  },
+  "provenance": {
+    "runner_exit_code": 0,
+    "started_at": "2026-11-07T18:44:34.227380+00:00",
+    "finished_at": "2026-11-07T18:45:42.696976+00:00",
+    "signing_material_absent_from_artifacts": true,
+    "deployed_revision_disclosed": false,
+    "deployed_revision_note": "The health endpoint returned an empty revision. Isolation/network/persistence/deadline values are observed health fields; submitted source/profile SHA hashes are bound separately."
+  }
+}

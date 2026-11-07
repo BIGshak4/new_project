@@ -111,7 +111,7 @@ def test_all255_previous_records_assets_translations_and_compiled_values_are_fro
 
 def test_bilingual_hints_material_and_protected_media_stay_gated():
     catalog=load_catalog(SEEDS)
-    assert len(catalog.questions)==304
+    assert len(catalog.questions)==317
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS|SOURCE_ONLY}
     assert set(selected)==NEW|VARIANTS|SOURCE_ONLY

@@ -22,6 +22,7 @@ BATCH1101_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_b
 BATCH1103_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261103_batch20.json").read_bytes())
 BATCH1107_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261107_batch30.json").read_bytes())
 BATCH1107B10_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261107_batch10.json").read_bytes())
+BATCH1107B20_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261107_batch20.json").read_bytes())
 VARIANT_IDS = frozenset(BASELINE["variant_ids"])
 
 
@@ -89,7 +90,11 @@ def before_batch1107_record(question):
 
 
 def before_batch1107b10_record(question):
-    return _before_record(question, BATCH1107B10_BASELINE)
+    return _before_record(before_batch1107b20_record(question), BATCH1107B10_BASELINE)
+
+
+def before_batch1107b20_record(question):
+    return _before_record(question, BATCH1107B20_BASELINE)
 
 
 def before_batch1101_record(question):
@@ -137,7 +142,7 @@ def _assert_archive(archive, baseline, restore):
     by_id = {question["id"]: question for question in archive["questions"]}
     assert set(baseline["record_order"]) <= by_id.keys()
     original = {key: archive[key] for key in baseline["top_level"]}
-    assert archive["question_count"] == len(archive["questions"]) == 274
+    assert archive["question_count"] == len(archive["questions"]) == 287
     original["question_count"] = baseline["top_level"]["question_count"]
     original["questions"] = [restore(by_id[ident]) for ident in baseline["record_order"]]
     assert digest(original) == baseline["canonical_sha256"]
@@ -310,4 +315,26 @@ def before_batch1107b10_archive(archive):
     restored = copy.deepcopy(BATCH1107B10_BASELINE['top_level'])
     restored['questions'] = [before_batch1107b10_record(by_id[ident]) for ident in BATCH1107B10_BASELINE['record_order']]
     assert digest(restored) == BATCH1107B10_BASELINE['canonical_sha256']
+    return restored
+
+def assert_pre_batch1107b20_archive(archive):
+    _assert_archive(archive, BATCH1107B20_BASELINE, before_batch1107b20_record)
+
+
+def assert_pre_batch1107b20_assets(uploads):
+    for path, previous_hash in BATCH1107B20_BASELINE['asset_sha256'].items():
+        assert digest(uploads[path]) == previous_hash, path
+
+
+def assert_pre_batch1107b20_localization(localization):
+    from tests.preparation_november7_batch20_history import before_batch1107b20_localized
+    for ident in BATCH1107B20_BASELINE['localized_material']:
+        before_batch1107b20_localized(ident, localization[ident])
+
+
+def before_batch1107b20_archive(archive):
+    by_id = {q['id']: q for q in archive['questions']}
+    restored = copy.deepcopy(BATCH1107B20_BASELINE['top_level'])
+    restored['questions'] = [before_batch1107b20_record(by_id[ident]) for ident in BATCH1107B20_BASELINE['record_order']]
+    assert digest(restored) == BATCH1107B20_BASELINE['canonical_sha256']
     return restored

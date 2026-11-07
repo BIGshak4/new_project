@@ -1,0 +1,1657 @@
+{
+  "recorded_on": "2026-11-07",
+  "status": "passed",
+  "scope": "Local browser exercise of actual production StudyText, TechnicalMaterial and QuestionFigures components with synthetic local QA reveal/hint controls and local hash-checked media; not an authenticated production learner or full-app workflow.",
+  "coverage": {
+    "question_ids": [
+      "PREP-022",
+      "PREP-090",
+      "PREP-140",
+      "PREP-151",
+      "PREP-176",
+      "PREP-204",
+      "PREP-276",
+      "PREP-277",
+      "PREP-278",
+      "PREP-279",
+      "PREP-280",
+      "PREP-281",
+      "PREP-282",
+      "PREP-283",
+      "PREP-284",
+      "PREP-285",
+      "PREP-286",
+      "PREP-287",
+      "PREP-288"
+    ],
+    "identities": 19,
+    "languages": [
+      "he",
+      "en"
+    ],
+    "iframe_content_widths_css_px": [
+      1272,
+      382
+    ],
+    "observations": 76,
+    "hint_controls": "Three hints revealed in every observation.",
+    "solutions_open": 76,
+    "all_material_details_open": 76,
+    "code_blocks_ltr_in_all_observations": true,
+    "horizontal_page_overflow_observations": 0,
+    "document_directions": "Hebrew RTL and English LTR in every observation."
+  },
+  "image_loading": {
+    "image_dom_observations": 104,
+    "loaded_at_observation": 78,
+    "lazy_or_not_yet_loaded_at_observation": 26,
+    "is_a_104_image_fetch_pass_claim": false,
+    "interpretation": "These are repeated DOM observations, not104distinct images or successful fetches. Lazy/offscreen images were not all awaited.",
+    "separate_visual_observation": {
+      "question": "PREP-282",
+      "natural_width_px": 2400,
+      "fully_loaded": true,
+      "source": "Root agent CUA visual inspection reported after the observation sweep.",
+      "scope": "The redrawn transistor diagram was visually observed loaded; this is separate from the104DOM status observations."
+    }
+  },
+  "separate_existing_evidence": {
+    "authored_new_pngs": 30,
+    "author_visual_review_scope": "Authors visually reviewed the30new localized diagrams before freezing; not a claim inferred from104DOM observations.",
+    "private_uploads_verified": 66,
+    "evidence": "checks/batch1107b20-publication-verification.json",
+    "scope": "Private-upload hash verification is distinct from browser image fetching."
+  },
+  "source_observations": {
+    "local_path": ".impeccable/intake-20261107-batch20/browser-observations.json",
+    "sha256": "3996ea4092a52503f6969f4f306ff8dc8630195702dd7965d96b1578e1926fee",
+    "embedded_in_this_report": true
+  },
+  "screenshots": [
+    {
+      "path": ".impeccable/intake-20261107-batch20/desktop-he.png",
+      "sha256": "d68b9c2c248bb2b85d0b162719d201f0e46d502479c9f06fc33beaa631133082",
+      "bytes": 87339,
+      "retained_outside_git": true
+    },
+    {
+      "path": ".impeccable/intake-20261107-batch20/mobile-he.png",
+      "sha256": "df45fd938d3719038c9467802595560d5a0e7203966ceb125ab4f32eb225fcee",
+      "bytes": 48547,
+      "retained_outside_git": true
+    }
+  ],
+  "current_input_sha256": {
+    "backend/seeds/questions/preparation_bank.json": "1bd861689c1e0a9a3c793e39f1102d8712a91e4df458c482581ddc348e8ff627",
+    "apps/web/src/components/question-materials.tsx": "713ccf1bba466344169a060247439a078e613d55c4cfd9b256a600b4afb659a1",
+    "apps/web/src/lib/material-labels.ts": "21e2b6d0f2fb041ae59c8c7493d3f69425f7440a84f284f6785ef08b73d6f2c1",
+    "apps/web/src/lib/source-screenshots.json": "f98dd21c61eca99f1f976e8879e9399ed6789d1a1ceaec4df0a7cd7be20574aa",
+    "apps/web/src/app/globals.css": "e68b7656c0c22be91feb2ee675058f2f2d268ab747d257f69d693e30d7f89269",
+    "apps/web/src/app/ion.css": "71026d36b560a2caa4c2c1ea43f19c4f1932cc0d9f642a9399fe66569754094f"
+  },
+  "local_fixture_sha256": "d817b4924a1522f45a5275e7a9381eaace4fec72984ec6ee7ba7b5735fe2232e",
+  "observations": [
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-022",
+      "images": [
+        {
+          "alt": "תרשים עקרון הפתרון",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 26219,
+      "scroll": 1272,
+      "solution": true,
+      "title": "פרמוטציה אקראית ללא חזרות",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-022",
+      "images": [
+        {
+          "alt": "Proposed solution principle diagram",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 27581,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Random permutation without duplicates",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-090",
+      "images": [
+        {
+          "alt": "מודל החבל ושני המעגלים לפני החישוב",
+          "loaded": true
+        },
+        {
+          "alt": "תוספת ההיקף קובעת את המרווח",
+          "loaded": true
+        },
+        {
+          "alt": "חבל עם תוספת שני מטרים",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 7440,
+      "scroll": 1272,
+      "solution": true,
+      "title": "חבל סביב כדור הארץ — מה משנים עשרה מטרים?",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-090",
+      "images": [
+        {
+          "alt": "Rope model and two circles before calculation",
+          "loaded": false
+        },
+        {
+          "alt": "The circumference increment determines clearance",
+          "loaded": false
+        },
+        {
+          "alt": "Rope with a two-metre extension",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 9200,
+      "scroll": 1272,
+      "solution": true,
+      "title": "A rope around the Earth — what do ten extra metres change?",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-140",
+      "images": [
+        {
+          "alt": "ממשק הרכיב: שעון ואיפוס מול n וריבועו",
+          "loaded": true
+        },
+        {
+          "alt": "שני אוגרים ומסכמים, עם עדכון מקביל ודוגמת גלישה.",
+          "loaded": true
+        },
+        {
+          "alt": "עדכון שני אוגרים לפי ההפרש האי־זוגי",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 8221,
+      "scroll": 1272,
+      "solution": true,
+      "title": "מספר המחזור וריבועו — עדכון מצטבר ללא מכפל",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-140",
+      "images": [
+        {
+          "alt": "Component interface: clock/reset and index/square outputs",
+          "loaded": false
+        },
+        {
+          "alt": "Two registers/adders with simultaneous updates and an explicit wrap example.",
+          "loaded": false
+        },
+        {
+          "alt": "Two-register update using the odd difference",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 9834,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Cycle number and its square using a recurrence",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-151",
+      "images": [
+        {
+          "alt": "ספירת אחדות בבית: סריקה, קבוצות וטבלת חיפוש",
+          "loaded": true
+        },
+        {
+          "alt": "ספירת 32 סיביות בעזרת פעולת בית",
+          "loaded": true
+        },
+        {
+          "alt": "צוברים ספירות בתים וממסכים את הסיומת",
+          "loaded": true
+        },
+        {
+          "alt": "כל צעד מוחק את ביט האחד הנמוך ביותר",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 20419,
+      "scroll": 1272,
+      "solution": true,
+      "title": "ספירת אחדות בבית: סריקה, קבוצות וטבלת חיפוש",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-151",
+      "images": [
+        {
+          "alt": "Byte popcount: scan, parallel groups and lookup",
+          "loaded": false
+        },
+        {
+          "alt": "Count 32 bits using a byte operation",
+          "loaded": false
+        },
+        {
+          "alt": "Accumulate byte counts and mask the tail",
+          "loaded": false
+        },
+        {
+          "alt": "Each step clears the lowest set bit",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 23120,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Byte popcount: scan, parallel groups and lookup",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-176",
+      "images": [
+        {
+          "alt": "נתיב אוגרים,חלון יציבות ותקציבי זמן",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 5010,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Setup ו־Hold — חלון יציבות ושני כיווני תקלה",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-176",
+      "images": [
+        {
+          "alt": "Register path,stability window and timing budgets",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 5576,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Setup and hold: a stability window and two failure directions",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-204",
+      "images": [
+        {
+          "alt": "מכונת Moore עם חפיפה וטבלת מעברים",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 5080,
+      "scroll": 1272,
+      "solution": true,
+      "title": "זיהוי 1101 וכמות סיביות המצב",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-204",
+      "images": [
+        {
+          "alt": "Overlapping Moore machine and transition table",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 5941,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Detecting 1101 and counting state storage",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-276",
+      "images": [
+        {
+          "alt": "ירושה ב־ C++: משמעות, שיגור ועלות הפעולה",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6936,
+      "scroll": 1272,
+      "solution": true,
+      "title": "ירושה ב־ C++: משמעות, שיגור ועלות הפעולה",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-276",
+      "images": [
+        {
+          "alt": "C++ inheritance: meaning, dispatch and operation cost",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 7957,
+      "scroll": 1272,
+      "solution": true,
+      "title": "C++ inheritance: meaning, dispatch and operation cost",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-277",
+      "images": [
+        {
+          "alt": "זיהוי והסבר של Direct k-means: שיוך ואז עדכון מרכזים",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6585,
+      "scroll": 1272,
+      "solution": true,
+      "title": "זיהוי והסבר של Direct k-means: שיוך ואז עדכון מרכזים",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-277",
+      "images": [
+        {
+          "alt": "Explain direct k-means: assignment and centroid updates",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 7469,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Explain direct k-means: assignment and centroid updates",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-278",
+      "images": [
+        {
+          "alt": "העברה יציבה של ביט במאגר ארוז מעגלי",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 4317,
+      "scroll": 1272,
+      "solution": true,
+      "title": "העברה יציבה של ביט במאגר ארוז מעגלי",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-278",
+      "images": [
+        {
+          "alt": "Stable bit move in a circular packed buffer",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 4880,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Stable bit move in a circular packed buffer",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-279",
+      "images": [
+        {
+          "alt": "היסטוריית קליטה ורשת מיון",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6863,
+      "scroll": 1272,
+      "solution": true,
+      "title": "שלוש דגימות בנות שתי סיביות: מקסימום, אמצע ומינימום",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-279",
+      "images": [
+        {
+          "alt": "Accepted-sample history and sorting network",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 7843,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Sort the latest three two-bit samples: maximum, middle and minimum",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-280",
+      "images": [
+        {
+          "alt": "חפיפת ארבע הוראות בחמישה שלבים",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 7136,
+      "scroll": 1272,
+      "solution": true,
+      "title": "פייפליין של מעבד: זמן תגובה, מחזורי שעון וקצב השלמה",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-280",
+      "images": [
+        {
+          "alt": "Four instructions overlapping in five stages",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 8371,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Processor pipeline: latency, clock cycles and throughput",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-281",
+      "images": [
+        {
+          "alt": "מנעול סחרור באמצעות TestAndSet אטומי",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 4488,
+      "scroll": 1272,
+      "solution": true,
+      "title": "מנעול סחרור באמצעות TestAndSet אטומי",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-281",
+      "images": [
+        {
+          "alt": "A spinlock using atomic TestAndSet",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 5161,
+      "scroll": 1272,
+      "solution": true,
+      "title": "A spinlock using atomic TestAndSet",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-282",
+      "images": [
+        {
+          "alt": "מסילות A ו־NOT A בזוג הימני",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6728,
+      "scroll": 1272,
+      "solution": true,
+      "title": "ארבעה טרנזיסטורים ומסילות אות: איזו פונקציה מתקבלת?",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-282",
+      "images": [
+        {
+          "alt": "A and NOT A drive the right-hand diffusion rails",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 8000,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Four transistors with signal-connected rails: which function results?",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-283",
+      "images": [
+        {
+          "alt": "טבלת אמת והכשל היחיד של גרירה",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 5802,
+      "scroll": 1272,
+      "solution": true,
+      "title": "מימוש גרירה בוליאנית: אם A אז B",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-283",
+      "images": [
+        {
+          "alt": "Truth table and the sole implication counterexample",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 6909,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Implement Boolean implication: if A then B",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-284",
+      "images": [
+        {
+          "alt": "אילו צמתים אינם מגיעים לשורש דרך מצביעי ההורים?",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6516,
+      "scroll": 1272,
+      "solution": true,
+      "title": "אילו צמתים אינם מגיעים לשורש דרך מצביעי ההורים?",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-284",
+      "images": [
+        {
+          "alt": "Which nodes do not reach the designated root through parent links?",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 7246,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Which nodes do not reach the designated root through parent links?",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-285",
+      "images": [
+        {
+          "alt": "היפוך ספרות עשרוניות של מספר signed int32",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 4592,
+      "scroll": 1272,
+      "solution": true,
+      "title": "היפוך ספרות עשרוניות של מספר signed int32",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-285",
+      "images": [
+        {
+          "alt": "Reverse the decimal digits of a signed int32",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 5179,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Reverse the decimal digits of a signed int32",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-286",
+      "images": [
+        {
+          "alt": "שלוש רשתות חוקיות לאותה פעולת AND",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6416,
+      "scroll": 1272,
+      "solution": true,
+      "title": "שער AND באמצעות NAND, NOR ושילוב שניהם",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-286",
+      "images": [
+        {
+          "alt": "Three legal networks for the same AND function",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 7420,
+      "scroll": 1272,
+      "solution": true,
+      "title": "AND using NAND-only, NOR-only and mixed gates",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-287",
+      "images": [
+        {
+          "alt": "מיון יחסי: סדר עדיפויות ממערך שני",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 4180,
+      "scroll": 1272,
+      "solution": true,
+      "title": "מיון יחסי: סדר עדיפויות ממערך שני",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-287",
+      "images": [
+        {
+          "alt": "Relative sorting by a second array’s priorities",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 4898,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Relative sorting by a second array’s priorities",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-288",
+      "images": [
+        {
+          "alt": "מצבי קידומת ומעבר זיהוי עם חפיפה",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 7015,
+      "scroll": 1272,
+      "solution": true,
+      "title": "זיהוי הרצף0010 בזרם סיביות, כולל חפיפות",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-288",
+      "images": [
+        {
+          "alt": "Prefix states and the overlapping detection transition",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 8372,
+      "scroll": 1272,
+      "solution": true,
+      "title": "Detect0010 in a serial stream, including overlaps",
+      "width": 1272
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-022",
+      "images": [
+        {
+          "alt": "תרשים עקרון הפתרון",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 26219,
+      "scroll": 382,
+      "solution": true,
+      "title": "פרמוטציה אקראית ללא חזרות",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-022",
+      "images": [
+        {
+          "alt": "Proposed solution principle diagram",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 27581,
+      "scroll": 382,
+      "solution": true,
+      "title": "Random permutation without duplicates",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-090",
+      "images": [
+        {
+          "alt": "מודל החבל ושני המעגלים לפני החישוב",
+          "loaded": true
+        },
+        {
+          "alt": "תוספת ההיקף קובעת את המרווח",
+          "loaded": true
+        },
+        {
+          "alt": "חבל עם תוספת שני מטרים",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 7440,
+      "scroll": 382,
+      "solution": true,
+      "title": "חבל סביב כדור הארץ — מה משנים עשרה מטרים?",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-090",
+      "images": [
+        {
+          "alt": "Rope model and two circles before calculation",
+          "loaded": true
+        },
+        {
+          "alt": "The circumference increment determines clearance",
+          "loaded": false
+        },
+        {
+          "alt": "Rope with a two-metre extension",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 9200,
+      "scroll": 382,
+      "solution": true,
+      "title": "A rope around the Earth — what do ten extra metres change?",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-140",
+      "images": [
+        {
+          "alt": "ממשק הרכיב: שעון ואיפוס מול n וריבועו",
+          "loaded": true
+        },
+        {
+          "alt": "שני אוגרים ומסכמים, עם עדכון מקביל ודוגמת גלישה.",
+          "loaded": true
+        },
+        {
+          "alt": "עדכון שני אוגרים לפי ההפרש האי־זוגי",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 8221,
+      "scroll": 382,
+      "solution": true,
+      "title": "מספר המחזור וריבועו — עדכון מצטבר ללא מכפל",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-140",
+      "images": [
+        {
+          "alt": "Component interface: clock/reset and index/square outputs",
+          "loaded": true
+        },
+        {
+          "alt": "Two registers/adders with simultaneous updates and an explicit wrap example.",
+          "loaded": false
+        },
+        {
+          "alt": "Two-register update using the odd difference",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 9834,
+      "scroll": 382,
+      "solution": true,
+      "title": "Cycle number and its square using a recurrence",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-151",
+      "images": [
+        {
+          "alt": "ספירת אחדות בבית: סריקה, קבוצות וטבלת חיפוש",
+          "loaded": true
+        },
+        {
+          "alt": "ספירת 32 סיביות בעזרת פעולת בית",
+          "loaded": true
+        },
+        {
+          "alt": "צוברים ספירות בתים וממסכים את הסיומת",
+          "loaded": true
+        },
+        {
+          "alt": "כל צעד מוחק את ביט האחד הנמוך ביותר",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 20419,
+      "scroll": 382,
+      "solution": true,
+      "title": "ספירת אחדות בבית: סריקה, קבוצות וטבלת חיפוש",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-151",
+      "images": [
+        {
+          "alt": "Byte popcount: scan, parallel groups and lookup",
+          "loaded": false
+        },
+        {
+          "alt": "Count 32 bits using a byte operation",
+          "loaded": false
+        },
+        {
+          "alt": "Accumulate byte counts and mask the tail",
+          "loaded": false
+        },
+        {
+          "alt": "Each step clears the lowest set bit",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 23120,
+      "scroll": 382,
+      "solution": true,
+      "title": "Byte popcount: scan, parallel groups and lookup",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-176",
+      "images": [
+        {
+          "alt": "נתיב אוגרים,חלון יציבות ותקציבי זמן",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 5010,
+      "scroll": 382,
+      "solution": true,
+      "title": "Setup ו־Hold — חלון יציבות ושני כיווני תקלה",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-176",
+      "images": [
+        {
+          "alt": "Register path,stability window and timing budgets",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 5576,
+      "scroll": 382,
+      "solution": true,
+      "title": "Setup and hold: a stability window and two failure directions",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-204",
+      "images": [
+        {
+          "alt": "מכונת Moore עם חפיפה וטבלת מעברים",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 5080,
+      "scroll": 382,
+      "solution": true,
+      "title": "זיהוי 1101 וכמות סיביות המצב",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-204",
+      "images": [
+        {
+          "alt": "Overlapping Moore machine and transition table",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 5941,
+      "scroll": 382,
+      "solution": true,
+      "title": "Detecting 1101 and counting state storage",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-276",
+      "images": [
+        {
+          "alt": "ירושה ב־ C++: משמעות, שיגור ועלות הפעולה",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6936,
+      "scroll": 382,
+      "solution": true,
+      "title": "ירושה ב־ C++: משמעות, שיגור ועלות הפעולה",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-276",
+      "images": [
+        {
+          "alt": "C++ inheritance: meaning, dispatch and operation cost",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 7957,
+      "scroll": 382,
+      "solution": true,
+      "title": "C++ inheritance: meaning, dispatch and operation cost",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-277",
+      "images": [
+        {
+          "alt": "זיהוי והסבר של Direct k-means: שיוך ואז עדכון מרכזים",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6585,
+      "scroll": 382,
+      "solution": true,
+      "title": "זיהוי והסבר של Direct k-means: שיוך ואז עדכון מרכזים",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-277",
+      "images": [
+        {
+          "alt": "Explain direct k-means: assignment and centroid updates",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 7469,
+      "scroll": 382,
+      "solution": true,
+      "title": "Explain direct k-means: assignment and centroid updates",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-278",
+      "images": [
+        {
+          "alt": "העברה יציבה של ביט במאגר ארוז מעגלי",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 4317,
+      "scroll": 382,
+      "solution": true,
+      "title": "העברה יציבה של ביט במאגר ארוז מעגלי",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-278",
+      "images": [
+        {
+          "alt": "Stable bit move in a circular packed buffer",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 4880,
+      "scroll": 382,
+      "solution": true,
+      "title": "Stable bit move in a circular packed buffer",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-279",
+      "images": [
+        {
+          "alt": "היסטוריית קליטה ורשת מיון",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6863,
+      "scroll": 382,
+      "solution": true,
+      "title": "שלוש דגימות בנות שתי סיביות: מקסימום, אמצע ומינימום",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-279",
+      "images": [
+        {
+          "alt": "Accepted-sample history and sorting network",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 7843,
+      "scroll": 382,
+      "solution": true,
+      "title": "Sort the latest three two-bit samples: maximum, middle and minimum",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-280",
+      "images": [
+        {
+          "alt": "חפיפת ארבע הוראות בחמישה שלבים",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 7136,
+      "scroll": 382,
+      "solution": true,
+      "title": "פייפליין של מעבד: זמן תגובה, מחזורי שעון וקצב השלמה",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-280",
+      "images": [
+        {
+          "alt": "Four instructions overlapping in five stages",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 8371,
+      "scroll": 382,
+      "solution": true,
+      "title": "Processor pipeline: latency, clock cycles and throughput",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-281",
+      "images": [
+        {
+          "alt": "מנעול סחרור באמצעות TestAndSet אטומי",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 4488,
+      "scroll": 382,
+      "solution": true,
+      "title": "מנעול סחרור באמצעות TestAndSet אטומי",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-281",
+      "images": [
+        {
+          "alt": "A spinlock using atomic TestAndSet",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 5161,
+      "scroll": 382,
+      "solution": true,
+      "title": "A spinlock using atomic TestAndSet",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-282",
+      "images": [
+        {
+          "alt": "מסילות A ו־NOT A בזוג הימני",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6728,
+      "scroll": 382,
+      "solution": true,
+      "title": "ארבעה טרנזיסטורים ומסילות אות: איזו פונקציה מתקבלת?",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-282",
+      "images": [
+        {
+          "alt": "A and NOT A drive the right-hand diffusion rails",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 8000,
+      "scroll": 382,
+      "solution": true,
+      "title": "Four transistors with signal-connected rails: which function results?",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-283",
+      "images": [
+        {
+          "alt": "טבלת אמת והכשל היחיד של גרירה",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 5802,
+      "scroll": 382,
+      "solution": true,
+      "title": "מימוש גרירה בוליאנית: אם A אז B",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-283",
+      "images": [
+        {
+          "alt": "Truth table and the sole implication counterexample",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 6909,
+      "scroll": 382,
+      "solution": true,
+      "title": "Implement Boolean implication: if A then B",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-284",
+      "images": [
+        {
+          "alt": "אילו צמתים אינם מגיעים לשורש דרך מצביעי ההורים?",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6516,
+      "scroll": 382,
+      "solution": true,
+      "title": "אילו צמתים אינם מגיעים לשורש דרך מצביעי ההורים?",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-284",
+      "images": [
+        {
+          "alt": "Which nodes do not reach the designated root through parent links?",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 7246,
+      "scroll": 382,
+      "solution": true,
+      "title": "Which nodes do not reach the designated root through parent links?",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-285",
+      "images": [
+        {
+          "alt": "היפוך ספרות עשרוניות של מספר signed int32",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 4592,
+      "scroll": 382,
+      "solution": true,
+      "title": "היפוך ספרות עשרוניות של מספר signed int32",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-285",
+      "images": [
+        {
+          "alt": "Reverse the decimal digits of a signed int32",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 5179,
+      "scroll": 382,
+      "solution": true,
+      "title": "Reverse the decimal digits of a signed int32",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-286",
+      "images": [
+        {
+          "alt": "שלוש רשתות חוקיות לאותה פעולת AND",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 6416,
+      "scroll": 382,
+      "solution": true,
+      "title": "שער AND באמצעות NAND, NOR ושילוב שניהם",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-286",
+      "images": [
+        {
+          "alt": "Three legal networks for the same AND function",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 7420,
+      "scroll": 382,
+      "solution": true,
+      "title": "AND using NAND-only, NOR-only and mixed gates",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-287",
+      "images": [
+        {
+          "alt": "מיון יחסי: סדר עדיפויות ממערך שני",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 4180,
+      "scroll": 382,
+      "solution": true,
+      "title": "מיון יחסי: סדר עדיפויות ממערך שני",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-287",
+      "images": [
+        {
+          "alt": "Relative sorting by a second array’s priorities",
+          "loaded": true
+        }
+      ],
+      "lang": "en",
+      "length": 4898,
+      "scroll": 382,
+      "solution": true,
+      "title": "Relative sorting by a second array’s priorities",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "rtl",
+      "hintsDone": true,
+      "id": "PREP-288",
+      "images": [
+        {
+          "alt": "מצבי קידומת ומעבר זיהוי עם חפיפה",
+          "loaded": true
+        }
+      ],
+      "lang": "he",
+      "length": 7015,
+      "scroll": 382,
+      "solution": true,
+      "title": "זיהוי הרצף0010 בזרם סיביות, כולל חפיפות",
+      "width": 382
+    },
+    {
+      "closed": 0,
+      "codesLtr": true,
+      "dir": "ltr",
+      "hintsDone": true,
+      "id": "PREP-288",
+      "images": [
+        {
+          "alt": "Prefix states and the overlapping detection transition",
+          "loaded": false
+        }
+      ],
+      "lang": "en",
+      "length": 8372,
+      "scroll": 382,
+      "solution": true,
+      "title": "Detect0010 in a serial stream, including overlaps",
+      "width": 382
+    }
+  ],
+  "limitations": [
+    "Synthetic local QA controls bypass account authentication and learner attempt persistence.",
+    "The382pxiframe is a narrow-screen simulation, not a physical-device test.",
+    "Twenty-six image DOM observations were lazy or not yet loaded at the instant read; no claim of104successful image fetches.",
+    "This local material-renderer pass does not verify Netlify/Render deployment, production authentication or a full application workflow."
+  ]
+}

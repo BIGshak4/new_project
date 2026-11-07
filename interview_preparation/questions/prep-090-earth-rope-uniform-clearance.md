@@ -231,3 +231,16 @@ A one-metre clearance requires 2π metres of added rope, about 6.28. Since ten m
 [checks/check_prep_090.py](../checks/check_prep_090.py)
 
 [checks/prep-090-verification.json](../checks/prep-090-verification.json)
+
+
+## הרחבה ושמירת מקור — 07.11.2026, מקבץ 20
+
+[צילום מקור פרטי 20](../sources/2026-11-07-batch20-20.png)
+
+חבל מקיף את כדור הארץ בדיוק במרכזו. כעת נוסיף 2 מטר לאורכו של החבל ונקיף בעזרתו את כדור הארץ. האם חתול יכול לעבור בין כדור הארץ לחבל?
+
+שיוכי מקור מדווחים: Apple.
+
+נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
+
+[הווריאציה המלאה / Full variant](prep-090-rope_two_metres-batch1107b20-addendum.md)

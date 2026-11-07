@@ -1,0 +1,96 @@
+{
+  "recorded_on": "2026-11-07",
+  "status": "passed",
+  "scope": "Full frontend checks after root corrected two presentation tokens and rebuilt the integrated batch20 content. Browser and DB validation are separate.",
+  "checks": [
+    {
+      "name": "test",
+      "command": "npm test",
+      "exit_code": 0,
+      "elapsed_seconds": 10.64,
+      "log": ".impeccable/intake-20261107-batch20/web-test.log",
+      "log_sha256": "72f81554a16bd830f31a2afbc285d9b71767397a0b48c02d5379b47e4b00538b",
+      "summary": "446 passed; zero failed, skipped or cancelled, including19affected-resource bilingual metadata regression."
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "elapsed_seconds": 4.885,
+      "log": ".impeccable/intake-20261107-batch20/web-typecheck.log",
+      "log_sha256": "f65affa838bc46d3821e335237ba49497b7314b23d74699fb5fea9f7b429a87b",
+      "summary": "TypeScript noEmit passed."
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "exit_code": 0,
+      "elapsed_seconds": 8.067,
+      "log": ".impeccable/intake-20261107-batch20/web-build.log",
+      "log_sha256": "058a84bfa37cba94ddfae068bdde89b22736db61e07a3ed9fe4dc7d67efbb89d",
+      "summary": "Optimized Next production compilation and TypeScript passed;16static pages generated."
+    }
+  ],
+  "source_screenshot_registry": {
+    "old_count": 453,
+    "new_count": 473,
+    "all_old_entries_preserved_in_original_order": true,
+    "duplicates": 0,
+    "added": [
+      "2026-11-07-batch20-01.png",
+      "2026-11-07-batch20-02.png",
+      "2026-11-07-batch20-03.png",
+      "2026-11-07-batch20-04.png",
+      "2026-11-07-batch20-05.png",
+      "2026-11-07-batch20-06.png",
+      "2026-11-07-batch20-07.png",
+      "2026-11-07-batch20-08.png",
+      "2026-11-07-batch20-09.png",
+      "2026-11-07-batch20-10.png",
+      "2026-11-07-batch20-11.png",
+      "2026-11-07-batch20-12.png",
+      "2026-11-07-batch20-13.png",
+      "2026-11-07-batch20-14.png",
+      "2026-11-07-batch20-15.png",
+      "2026-11-07-batch20-16.png",
+      "2026-11-07-batch20-17.png",
+      "2026-11-07-batch20-18.png",
+      "2026-11-07-batch20-19.png",
+      "2026-11-07-batch20-20.png"
+    ],
+    "sha256": "f98dd21c61eca99f1f976e8879e9399ed6789d1a1ceaec4df0a7cd7be20574aa"
+  },
+  "critical_input_sha256": {
+    "apps/web/package.json": "4cd83f5c58532be58d6626d7179b84fb97973356d7e856521747c0a682cbb1d6",
+    "apps/web/package-lock.json": "efda5d938aaf40c4ffb129c30f36581728585f19860f593b2ca868a01cd02cfa",
+    "apps/web/tsconfig.json": "55134881a23efd2a1f9266d2d0752731ff9c40d0e867136cd8863ea679560a09",
+    "apps/web/src/lib/source-screenshots.json": "f98dd21c61eca99f1f976e8879e9399ed6789d1a1ceaec4df0a7cd7be20574aa",
+    "apps/web/src/lib/material-labels.ts": "21e2b6d0f2fb041ae59c8c7493d3f69425f7440a84f284f6785ef08b73d6f2c1",
+    "apps/web/tests/material-batch1107b20.test.ts": "54e2600ab0a9919a3aedf30516e79204c1c294aa378defb803838a181ea1936b",
+    "apps/web/tests/material-locale.test.ts": "d2e7ff8a15f4d6c9460adddc6d40ac1292ab26262e6e0bbf6f62723a098841fd",
+    "apps/web/tests/question-families.test.ts": "c709d2725daeb468ca84ac4e81eb2a2a8c37840609610a363fe8b7425cb22f2f",
+    "apps/web/tests/study-text.test.ts": "364101033c2b32535e525052d73af88846a93932d307cdea453d973edc2c0175",
+    "backend/seeds/questions/preparation_bank.json": "1bd861689c1e0a9a3c793e39f1102d8712a91e4df458c482581ddc348e8ff627",
+    "interview_preparation/questions.json": "a920b678d44b0005dcdc1ade4d8a782e73332e9477c15c1e3c53a34049eff2c4",
+    "interview_preparation/intakes/2026-11-07-batch20-sources.json": "f78996200b770d35adc0c64678e4d0f6ca889280e79de3827bdb22c0b41edb0f"
+  },
+  "frontend_tree": {
+    "files": 276,
+    "canonical_manifest_sha256": "f9826e6072bde194f4ddfdaafe5304a38dfac0778d1458a90d2cc7301c3e96c7",
+    "local_manifest": ".impeccable/intake-20261107-batch20/web-input-sha256.json"
+  },
+  "guidance_read": [
+    "apps/web/AGENTS.md",
+    "apps/web/node_modules/next/dist/docs/01-app/02-guides/testing/index.md",
+    "apps/web/node_modules/next/dist/docs/01-app/03-api-reference/05-config/02-typescript.md"
+  ],
+  "changes_by_verifier": [
+    "Appended20source screenshot names; prior453entry prefix untouched.",
+    "Added readable rope and four-byte-count labels, including English-title aliases.",
+    "Added two regression tests covering19affectedresources and stable variant label keys."
+  ],
+  "product_tsx_edits_by_verifier": false,
+  "limitations": [
+    "Build/unit checks do not replace browser, DB or runtime integration verification."
+  ]
+}

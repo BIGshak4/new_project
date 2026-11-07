@@ -779,7 +779,8 @@
         "הקוד המוצע ללא intrinsic הוא אפשרות ולא דרישת המקור.",
         "למספר מסומן או לרוחב אחר נדרשת פרשנות מפורשת.",
         "בתים בני שמונה ביטים; bit_length תקף; שארית נחשבת מהביטים הנמוכים.",
-        "מונה יכול להכיל את כל התוצאה; קריאה בלבד; ספירה והקצאה הן שאלות נפרדות."
+        "מונה יכול להכיל את כל התוצאה; קריאה בלבד; ספירה והקצאה הן שאלות נפרדות.",
+        "פעולת בית/טבלה נתונה ומוכנה, קלט unsigned בן 32 סיביות, ארבע קריאות בדיוק; אין בניית טבלה בכל קריאה."
       ],
       "en": [
         "Unsigned0..255 input and0..8 output; no built-in popcount or string conversion in the solution.",
@@ -789,12 +790,13 @@
         "The intrinsic-free code is an option, not a source restriction.",
         "Signed values and other widths need an explicit interpretation.",
         "Eight-bit bytes, valid bit_length, low-order partial tail.",
-        "Counter can represent the full result; read-only input; counting and allocation are separate tasks."
+        "Counter can represent the full result; read-only input; counting and allocation are separate tasks.",
+        "Supplied ready byte operation/table, uint32 input, exactly four calls; no per-call table construction."
       ]
     },
     "optimality": {
-      "he": "כל שיטה קבועה בתחום של8 ביט. נוסחת הקבוצות אינה כוללת לולאת ביטים; טבלה עולה256 רשומות והכנתן. לרוחב משתנה יש לחשב מחדש זמן ומקום.\n\nk איטרציות עבור k אחדים, O(1) מילים נוספות במודל מילה; עד 32 צעדים בתחום uint32_t. אין טענת ביצועים אופטימליים או זמן ריצה אחיד.\n\nO(B) זמן עבור B בתים; מספר משתנים קבוע ומונה O(log(N+1)) ביטים. lookup ומקטעים מוסיפים זיכרון מוכרז.",
-      "en": "Every method is bounded on8 bits. Grouping has no bit loop; a table needs256 entries and setup. Variable-width time/storage require separate analysis.\n\nk iterations for k set bits and O(1) auxiliary words; at most 32 steps for uint32_t. No optimal-performance or constant-runtime claim.\n\nO(B) time for B bytes; fixed variable count with an O(log(N+1))-bit total. Lookup/chunks add explicit storage."
+      "he": "כל שיטה קבועה בתחום של8 ביט. נוסחת הקבוצות אינה כוללת לולאת ביטים; טבלה עולה256 רשומות והכנתן. לרוחב משתנה יש לחשב מחדש זמן ומקום.\n\nk איטרציות עבור k אחדים, O(1) מילים נוספות במודל מילה; עד 32 צעדים בתחום uint32_t. אין טענת ביצועים אופטימליים או זמן ריצה אחיד.\n\nO(B) זמן עבור B בתים; מספר משתנים קבוע ומונה O(log(N+1)) ביטים. lookup ומקטעים מוסיפים זיכרון מוכרז.\n\nקבוע לרוחב 32: ארבע קריאות, O(1) עזר. לרוחב W נדרשות Θ(ceil(W/8)) קריאות. טבלת העזר 256 מונים בנפרד.",
+      "en": "Every method is bounded on8 bits. Grouping has no bit loop; a table needs256 entries and setup. Variable-width time/storage require separate analysis.\n\nk iterations for k set bits and O(1) auxiliary words; at most 32 steps for uint32_t. No optimal-performance or constant-runtime claim.\n\nO(B) time for B bytes; fixed variable count with an O(log(N+1))-bit total. Lookup/chunks add explicit storage.\n\nFixed32: four calls, O(1) auxiliary words. General W: Theta(ceil(W/8)) calls; table storage separately has 256 counters."
     },
     "edge_cases": {
       "he": [
@@ -805,7 +807,8 @@
         "`0xFFFFFFFF` מחזיר 32.",
         "ביט 31 לבדו מחזיר 1.",
         "ביטים מובילים אפס אינם משנים את הספירה.",
-        "אורך אפס; אפסים ואחדים; סיומת חלקית עם ביטים לא תקפים דולקים; גלישת מונה; גבול קריאה."
+        "אורך אפס; אפסים ואחדים; סיומת חלקית עם ביטים לא תקפים דולקים; גלישת מונה; גבול קריאה.",
+        "0; כל הסיביות 1; סיבית במקום 31; אפסים בבתים אמצעיים; ערך שלילי או גדול מרוחב 32."
       ],
       "en": [
         "0,255, every one-hot, alternating and consecutive-one patterns.",
@@ -815,7 +818,8 @@
         "`0xFFFFFFFF` returns 32.",
         "Bit 31 alone returns 1.",
         "Leading zero bits do not affect the count.",
-        "Zero length; all zero/one; partial tail with invalid high ones; counter overflow; read boundary."
+        "Zero length; all zero/one; partial tail with invalid high ones; counter overflow; read boundary.",
+        "Zero; all ones; bit 31; zero middle bytes; negative/too-wide value."
       ]
     },
     "common_mistakes": {
@@ -830,7 +834,8 @@
         "להחזיר ספירת בית אחד במקום סכום מערך.",
         "לספור ביטי padding או לקרוא מילה מעבר לסוף.",
         "לטעון O(1) לכל מערך בגלל פקודת popcount אחת.",
-        "מונה 32 ביטים בלי חסם לגודל המערך."
+        "מונה 32 ביטים בלי חסם לגודל המערך.",
+        "להקצות טבלה בגודל 2^32; לשכוח מסכה אחרי הזזה; לפרש uint32 כחתום; להסתמך על endian; לקרוא לטבלה רק לבתים שאינם אפס."
       ],
       "en": [
         "Calling an eight-step loop O(N) without a varying N.",
@@ -843,20 +848,21 @@
         "Returning one byte count instead of an array total.",
         "Counting padding or reading a word past the boundary.",
         "Claiming an entire array is O(1) because popcount is one instruction.",
-        "A 32-bit total without an array-size bound."
+        "A 32-bit total without an array-size bound.",
+        "Allocating 2^32 table entries; forgetting post-shift masks; signed interpretation; relying on endian; skipping zero-byte calls despite the four-call contract."
       ]
     },
     "interview_answer": {
-      "he": "לבית יש רק8 ביטים ולכן גם סריקה היא O(1). כדי להימנע מלולאה אספור במקביל זוגות, רביעיות ובית באמצעות מסכות; חלופה היא טבלה בת256 תשובות שהוכנה מראש. את מחיר ההכנה והמקום אפריד ממחיר השאילתה.\n\nכל x&(x−1) מוחק את האחד הימני ביותר. אספור מחיקות עד אפס; האינווריאנט ומספר האחדים מוכיחים נכונות ועצירה. אגדיר unsigned ורוחב לפני ניתוח העלות.\n\nאסרוק יחידות קלט, אצבור במונה מספיק רחב ואמסך את הסיומת. popcount מזרז יחידה, אבל העלות הכוללת תלויה בכמות המידע שנקרא.",
-      "en": "A byte has eight bits, so scanning is already O(1). Without a loop, combine pair, nibble and byte counts with masks; alternatively use256 precomputed answers, separating setup/storage from query cost.\n\nEach x&(x−1) clears the lowest one. Count deletions until zero; the invariant and remaining-one count prove correctness and termination. Specify unsigned width before complexity.\n\nScan input units, accumulate in a wide-enough total and mask the tail. Popcount speeds a unit, while total work still scales with data read."
+      "he": "לבית יש רק8 ביטים ולכן גם סריקה היא O(1). כדי להימנע מלולאה אספור במקביל זוגות, רביעיות ובית באמצעות מסכות; חלופה היא טבלה בת256 תשובות שהוכנה מראש. את מחיר ההכנה והמקום אפריד ממחיר השאילתה.\n\nכל x&(x−1) מוחק את האחד הימני ביותר. אספור מחיקות עד אפס; האינווריאנט ומספר האחדים מוכיחים נכונות ועצירה. אגדיר unsigned ורוחב לפני ניתוח העלות.\n\nאסרוק יחידות קלט, אצבור במונה מספיק רחב ואמסך את הסיומת. popcount מזרז יחידה, אבל העלות הכוללת תלויה בכמות המידע שנקרא.\n\nאפרק את המילה לארבעה שדות בני שמונה ביטים, אספור כל שדה בפעולה הנתונה ואחבר. הקבוצות זרות ומכסות את כל הסיביות.",
+      "en": "A byte has eight bits, so scanning is already O(1). Without a loop, combine pair, nibble and byte counts with masks; alternatively use256 precomputed answers, separating setup/storage from query cost.\n\nEach x&(x−1) clears the lowest one. Count deletions until zero; the invariant and remaining-one count prove correctness and termination. Specify unsigned width before complexity.\n\nScan input units, accumulate in a wide-enough total and mask the tail. Popcount speeds a unit, while total work still scales with data read.\n\nExtract four disjoint eight-bit fields, count each with the supplied operation and add; the groups cover every bit once."
     },
     "source_ambiguities": {
-      "he": "במקור נראה o(1), והרוחב קבוע. הובהרה ההבחנה בלי לטעון שהסריקה אינה קבועה. קשורה ל־SW-001 ול־VSW-001 אך לא מפרסמת או מאשרת אותן; PREP-001 חומרתית.\n\nרוחב וסימן אינם מוגדרים בנוסח הכללי. הווריאציה מגדירה uint32_t ודנה בנפרד בחלופות; מגבלות בית אחד אינן מועתקות אליה.\n\nmassive אינו גודל מספרי והמקור אינו קובע אריזה או padding. אלה הוגדרו להדגמה; מגבלת המקצה בסעיף השני נשמרת בנפרד.",
-      "en": "Source resembles o(1) on a fixed width. Clarify without falsely denying constant-time scanning. Linked to SW-001/VSW-001 without publishing or approving them; PREP-001 is hardware.\n\nWidth and sign are unspecified in the generic wording. This variant chooses uint32_t and treats alternatives separately; byte-only restrictions are not copied into it.\n\nMassive is not a numeric size and packing/padding were unspecified. The demonstration defines them; the second part’s allocator constraint remains separate."
+      "he": "במקור נראה o(1), והרוחב קבוע. הובהרה ההבחנה בלי לטעון שהסריקה אינה קבועה. קשורה ל־SW-001 ול־VSW-001 אך לא מפרסמת או מאשרת אותן; PREP-001 חומרתית.\n\nרוחב וסימן אינם מוגדרים בנוסח הכללי. הווריאציה מגדירה uint32_t ודנה בנפרד בחלופות; מגבלות בית אחד אינן מועתקות אליה.\n\nmassive אינו גודל מספרי והמקור אינו קובע אריזה או padding. אלה הוגדרו להדגמה; מגבלת המקצה בסעיף השני נשמרת בנפרד.\n\nהמקור אומר int בלי להגדיר סימן. בחרנו uint32, ואת טעות 3=101 תיקנו בלי לשנות את התמלול המקורי.",
+      "en": "Source resembles o(1) on a fixed width. Clarify without falsely denying constant-time scanning. Linked to SW-001/VSW-001 without publishing or approving them; PREP-001 is hardware.\n\nWidth and sign are unspecified in the generic wording. This variant chooses uint32_t and treats alternatives separately; byte-only restrictions are not copied into it.\n\nMassive is not a numeric size and packing/padding were unspecified. The demonstration defines them; the second part’s allocator constraint remains separate.\n\nSource says int without signedness. We chose uint32 and corrected 3=101 without altering original transcription."
     },
     "verification": {
-      "he": "כל256 ערכי הבית בארבע שיטות,256 רשומות טבלה, ארבע דחיות לכל שיטה וזוגיות המשלים מול אורקל טקסט עצמאי. Python בלבד.\n\nכל 65536 ערכי 16 הביטים ומדגם דטרמיניסטי של ערכי 32 ביטים נבדקו מול אורקל עצמאי. קוד C מוצע נשמר; המודל אינו הידור C או בדיקת תזמון CPU.\n\n1,116,417 מקרי Python מול ביטים מפורשים, כולל כל בית חלקי; אין טענה שנבדק מערך massive פיזי או ביצועי SIMD.",
-      "en": "All256 bytes in four methods,256 table entries, four invalid values each and complement identity against independent text oracle. Python only.\n\nAll 65536 sixteen-bit values and a deterministic 32-bit sample matched an independent oracle. Proposed C is retained; model execution is not C compilation or CPU timing measurement.\n\n1,116,417 Python cases against explicit bits, including every partial tail; no physical massive-array or SIMD benchmark claim."
+      "he": "כל256 ערכי הבית בארבע שיטות,256 רשומות טבלה, ארבע דחיות לכל שיטה וזוגיות המשלים מול אורקל טקסט עצמאי. Python בלבד.\n\nכל 65536 ערכי 16 הביטים ומדגם דטרמיניסטי של ערכי 32 ביטים נבדקו מול אורקל עצמאי. קוד C מוצע נשמר; המודל אינו הידור C או בדיקת תזמון CPU.\n\n1,116,417 מקרי Python מול ביטים מפורשים, כולל כל בית חלקי; אין טענה שנבדק מערך massive פיזי או ביצועי SIMD.\n\n65,536 ערכי 16 סיביות, מקרי קצה ו־ 1,000 ערכים אקראיים; בדיקת מספר הקריאות והארגומנטים, וחמישה קלטים פסולים.",
+      "en": "All256 bytes in four methods,256 table entries, four invalid values each and complement identity against independent text oracle. Python only.\n\nAll 65536 sixteen-bit values and a deterministic 32-bit sample matched an independent oracle. Proposed C is retained; model execution is not C compilation or CPU timing measurement.\n\n1,116,417 Python cases against explicit bits, including every partial tail; no physical massive-array or SIMD benchmark claim.\n\n65,536 low-sixteen-bit values, boundaries and 1,000 random words; exact call count/arguments and five invalid inputs."
     },
     "solution_extensions": {
       "he": [
@@ -874,6 +880,11 @@
           "question": "מה ישתנה אם הקלט מוזרם ואי אפשר לקרוא אותו שוב?",
           "answer_direction": "סופרים כל מקטע פעם אחת ושומרים סכום ומידע על מספר הביטים התקפים במקטע האחרון. אין צורך לשמור את כל המקטעים.",
           "principle": "צבירה אסוציאטיבית מתאימה לזרימה."
+        },
+        {
+          "question": "איך מטפלים ברוחב W שאינו מתחלק בשמונה?",
+          "answer_direction": "מעבדים ceil(W/8) שדות ומאפסים במפורש את סיביות הריפוד בשדה העליון; מגדירים את התחום ומניעת החריגה.",
+          "principle": "פירוק לקבוצות זרות ועלות הכנה לעומת עלות שאילתה."
         }
       ],
       "en": [
@@ -891,6 +902,11 @@
           "question": "What changes if data streams once and cannot be reread?",
           "answer_direction": "Count each chunk once, retaining the total and final valid-tail information; earlier chunks need not remain stored.",
           "principle": "Associative accumulation supports streaming."
+        },
+        {
+          "question": "How do you handle W not divisible by eight?",
+          "answer_direction": "Process ceil(W/8) fields and mask padding bits in the top field; define the width/domain and bounds.",
+          "principle": "Partition into disjoint groups; distinguish preprocessing from query cost."
         }
       ]
     },
@@ -913,6 +929,14 @@
             "אפשר לספור כל בית באמצעות value &= value−1, או טבלה קבועה. לולאת בתים נמנעת מהעתקת מערך מלא; מספר קריאות עדיין תלוי בגודל הקלט."
           ],
           "integration_status": ""
+        },
+        "ספירת 32 סיביות בארבע פעולות על בתים": {
+          "prompt": "### הרחבה: 32 סיביות באמצעות פעולה נתונה על בית\nנתונה פעולה byte_count המחזירה את מספר סיביות ה־ 1 בערך unsigned בן 8 סיביות, או טבלה מוכנה בת 256 תאים עם אותן תוצאות. השתמשו בה כדי לספור סיביות 1 בערך unsigned בן 32 סיביות. אין לבנות מחדש את הטבלה בכל קריאה.\n\nנבחר תחום מדויק 0≤value<2^32; ערכים מחוץ לתחום נדחים. יש להפריד לארבעה בתים, לבצע בדיוק ארבע קריאות לפעולה הנתונה ולחבר את התוצאות. אין תלות בסדר הבתים בזיכרון: מדובר במיסוך והזזה של הערך המספרי. כהבהרת נוסח לדוגמה שגויה במקור נוסף: 3 הוא 11 בבינארי, ואילו 101 הוא 5; בשניהם מספר האחדות הוא 2.",
+          "hints": [
+            "לכמה קבוצות זרות של שמונה סיביות אפשר לפרק מילה בת 32 סיביות?",
+            "מיסוך ב־ 0xff נותן בית אחד. מה יש להזיז כדי לקבל את שלושת הבתים האחרים?",
+            "קראו byte_count על value&255 ועל (value>>8)&255, (value>>16)&255 ו־(value>>24)&255. סכמו ארבע תוצאות בתחום 0..8 לקבלת 0..32."
+          ]
         }
       },
       "en": {
@@ -933,6 +957,14 @@
             "Use value &= value−1 per byte or a fixed lookup table. Byte scanning avoids a full-array copy, but reads still scale with input size."
           ],
           "integration_status": ""
+        },
+        "Count 32 bits with four byte operations": {
+          "prompt": "### Extension: 32 bits through a supplied byte operation\nA supplied byte_count operation, or an already built 256-entry table, returns the population count of an unsigned eight-bit value. Use it to count ones in an unsigned 32-bit value. Do not rebuild the table per call.\n\nChoose the exact domain 0≤value<2^32 and reject other values. Extract four bytes, call the supplied operation exactly four times and add their counts. Numeric masking/shifting does not depend on memory byte order. Clarify a typo in another supplied example: decimal three is binary 11, while binary 101 is five; both have population count two.",
+          "hints": [
+            "How many disjoint eight-bit groups partition a 32-bit word?",
+            "Masking by 0xff yields one byte. Which shifts expose the other three?",
+            "Call byte_count for value&255 and masked shifts by 8, 16 and 24; add four counts in 0..8 to obtain 0..32."
+          ]
         }
       }
     }

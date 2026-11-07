@@ -11,6 +11,11 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
+from tests.preparation_november7_batch20_history import (
+    before_batch1107b20_compiled,
+    before_batch1107b20_localized,
+)
+
 
 def digest(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -42,6 +47,7 @@ def compiled_projections():
 
 
 def before_batch1107b10_compiled(question):
+    question = before_batch1107b20_compiled(question)
     ident = question["assets"]["preparation_id"]
     if ident not in baseline()["records"]:
         return copy.deepcopy(question)
@@ -52,6 +58,8 @@ def before_batch1107b10_compiled(question):
     current = copy.deepcopy(question)
     raw_path = Path(__file__).resolve().parents[2] / "interview_preparation/questions.json"
     raw = next(q for q in json.loads(raw_path.read_bytes())["questions"] if q["id"] == ident)
+    from tests.preparation_history import before_batch1107b20_record
+    raw = before_batch1107b20_record(raw)
     assert current["assets"]["source_sha256"] == hashlib.sha256(json.dumps(raw, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
     current["assets"]["source_sha256"] = frozen["source_sha256_before"]
     for transition in frozen["transitions"]:
@@ -78,6 +86,7 @@ def before_batch1107b10_compiled(question):
 
 
 def before_batch1107b10_localized(ident, value):
+    value = before_batch1107b20_localized(ident, value)
     if ident not in baseline()["localized_material"]:
         return copy.deepcopy(value)
     frozen = baseline()["localized_material"][ident]

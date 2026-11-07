@@ -56,7 +56,7 @@ def test_all21_sources_are_preserved_and_reversal_pair_shares_identity():
 
 def test_all243_previous_records_assets_translations_and_compiled_values_are_frozen():
     archive=read(BANK/'questions.json')
-    assert len(archive['questions'])==archive['question_count']== 274
+    assert len(archive['questions'])==archive['question_count']== 287
     assert {q['id'] for q in archive['questions'] if int(q['id'][5:])<257}-BATCH1103_BASELINE['records'].keys()==NEW
     assert set(BATCH1103_BASELINE['variant_ids'])==VARIANTS
     assert set(BATCH1103_BASELINE['source_only_ids'])==SOURCE_ONLY
@@ -76,7 +76,7 @@ def test_all243_previous_records_assets_translations_and_compiled_values_are_fro
 
 def test_bilingual_hints_material_and_protected_media_stay_gated():
     catalog=load_catalog(SEEDS)
-    assert len(catalog.questions)== 304
+    assert len(catalog.questions)== 317
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS|SOURCE_ONLY}
     assert set(selected)==NEW|VARIANTS|SOURCE_ONLY

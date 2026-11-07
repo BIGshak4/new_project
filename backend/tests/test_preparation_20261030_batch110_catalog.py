@@ -91,7 +91,7 @@ def test_twenty_sources_keep_the_exact_original_bytes_and_identity_mapping():
 
 def test_authorized_extensions_preserve_all_186_original_records_and_999_assets(catalog):
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == 274 and len(catalog.questions) == 304
+    assert len(archive["questions"]) == 287 and len(catalog.questions) == 317
     previous_ids = {question["id"] for question in archive["questions"] if int(question["id"].split("-")[1]) <= 198}
     assert previous_ids - set(BATCH110_BASELINE["records"]) == NEW_IDS
     assert_pre_batch110_archive(archive)
@@ -108,7 +108,7 @@ def test_authorized_extensions_preserve_all_186_original_records_and_999_assets(
         "example-reverse-singly-linked-list": "prep-reverse-singly-linked-list-in-place",
     }
     assert set(aliases) | set(aliases.values()) <= catalog.questions.keys()
-    assert len({aliases.get(key, key) for key in catalog.questions}) == 299
+    assert len({aliases.get(key, key) for key in catalog.questions}) == 312
 
 
 def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_gated(catalog):
@@ -188,7 +188,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             if item["language"] == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in item["caption"])
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 455 and len(set(sources)) == 453
+    assert len(sources) == 475 and len(set(sources)) == 473
     names = read(ROOT / "apps/web/src/lib/source-screenshots.json")
     assert set(names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch110-{number:02d}.png" in names for number in range(1, 21))

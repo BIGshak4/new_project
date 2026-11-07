@@ -28,6 +28,7 @@ from tests.preparation_history import (
     BATCH1103_BASELINE,
     BATCH1107_BASELINE,
     BATCH1107B10_BASELINE,
+    BATCH1107B20_BASELINE,
 )
 
 
@@ -56,7 +57,7 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
         allocate(questions, positives, maximum=1)
 
 
-def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_91_membership():
+def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_98_membership():
     scope = json.loads((BACKEND / 'tests/fixtures/software_question_scope.json').read_bytes())
     seeds = {q['key']: q for name in ('example_bank.json', 'preparation_bank.json')
              for q in json.loads((BACKEND / 'seeds/questions' / name).read_bytes())}
@@ -81,7 +82,10 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_91_
     november7_first_endpoint = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
                                or seeds[key]['assets']['preparation_id'] in BATCH1107B10_BASELINE['records']}
     assert len(november7_first_endpoint) == 89
-    assert len(expected) == 91
+    november7_second_endpoint = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
+                                or seeds[key]['assets']['preparation_id'] in BATCH1107B20_BASELINE['records']}
+    assert len(november7_second_endpoint) == 91
+    assert len(expected) == 98
     assert november1_endpoint - october_endpoint == {
         'prep-c-linked-list-dictionary-ownership', 'prep-reverse-singly-linked-list-in-place',
         'prep-streaming-csv-parser-without-library', 'prep-networking-basics-and-interview-answer-prompts',
@@ -100,9 +104,15 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_91_
         'prep-branch-free-saturating-speed-controls',
         'prep-black-box-focus-maximum-search-assumptions',
     }
-    assert expected - november7_first_endpoint == {
+    assert november7_second_endpoint - november7_first_endpoint == {
         'prep-general-in-place-integer-array-sort',
         'prep-cpp-constructor-initialization-and-invariants',
+    }
+    assert expected - november7_second_endpoint == {
+        'prep-inheritance-operation-costs', 'prep-kmeans-explain-and-lloyd-iterations',
+        'prep-circular-packed-bit-array-move', 'prep-test-and-set-spinlock',
+        'prep-parent-links-disconnected-from-root', 'prep-reverse-signed-decimal-integer',
+        'prep-relative-sort-by-second-array',
     }
     assert october_endpoint - rows.keys() == {
         'prep-merge-k-sorted-linked-lists', 'prep-most-frequent-word-list',

@@ -1,0 +1,67 @@
+{
+  "recorded_on": "2026-11-07",
+  "status": "passed",
+  "environment": "Ubuntu26.04.1 ephemeral Vercel Sandbox, persistent:false; network deny-all during compile and execution.",
+  "source_sha256": {
+    "solutions/prep_279_latest_three_batch1107b20.sv": "51ef4a40472a6bea9f2efb295747fc52a4171ea662242f96d819495bb6451d98",
+    "solutions/prep_282_ideal_switch_xor_batch1107b20.sv": "c7eeaf64d72f5d94d0753e4b79a912912f946f4bfe0776511d5b46cfa64323da",
+    "solutions/prep_283_implication_batch1107b20.sv": "4a2c08b120921acb53495f179add1c1f9a4357138fa49e6f86679714012e674d",
+    "solutions/prep_286_and_bases_batch1107b20.sv": "261e21989e42b635abd3bb4e45ada883db47f5a2d3b0eb62315efd58976b5bad",
+    "solutions/prep_288_sequence0010_batch1107b20.sv": "a5a450e4d9c8be5b5976acc462eac1d58a4ad2015b11ac326208b65dfa73e7e1",
+    "checks/tb_hardware_batch1107b20.sv": "e9aa176c374ee5b550cc8cf9c51645c3efd216f3bd1a57087ee4118ad640bae8",
+    "solutions/prep_281_spinlock_batch1107b20.h": "906688676e776248cbfcfde2c06c2f0935b74f9e3fa119435ba7e941c4ce5394",
+    "solutions/prep_285_decimal_reverse_batch1107b20.c": "792856b4b5ed8327086a37d5bb4a9194e0682ea1c719a87687fab5e98e8e2f13",
+    "checks/check_prep_281_batch1107b20.c": "fcfcad97114467945642bbe30609ff3e5a200de23b8bbd61648944da04936f07",
+    "solutions/prep_276_inheritance_costs_batch1107b20.cpp": "d50496153bd99c00ec08fe736adfad680610dca91a6e9def0cd6ff7cad416b0b"
+  },
+  "counts": {
+    "rtl_checks": 96555,
+    "serial_words": 4094,
+    "serial_prefixes": 40962,
+    "latest_three_history_cycles": 5256,
+    "truth_rows": 4,
+    "cpp_inheritance_assertions": 521,
+    "spinlock_threads": 4,
+    "spinlock_protected_increments": 100000,
+    "c_int32_reversal_boundaries": 8
+  },
+  "tools": {
+    "gcc": "15.2.0",
+    "gpp": "15.2.0",
+    "iverilog": "12.0-3"
+  },
+  "native_run": {
+    "command": {
+      "id": "cmd_38e334b64c7a47c480ac768b7b14",
+      "name": "bash",
+      "args": [
+        "-lc",
+        "gcc -std=c11 -O2 -Wall -Wextra -Werror -pedantic -pthread checks/check_prep_281_batch1107b20.c -o /tmp/check281 && /tmp/check281 && g++ -std=c++17 -O2 -Wall -Wextra -Werror -pedantic solutions/prep_276_inheritance_costs_batch1107b20.cpp -o /tmp/check276 && /tmp/check276 && iverilog -g2012 -Wall -s tb_hardware_batch1107b20 -o /tmp/hardware.out solutions/prep_279_latest_three_batch1107b20.sv solutions/prep_282_ideal_switch_xor_batch1107b20.sv solutions/prep_283_implication_batch1107b20.sv solutions/prep_286_and_bases_batch1107b20.sv solutions/prep_288_sequence0010_batch1107b20.sv checks/tb_hardware_batch1107b20.sv && vvp /tmp/hardware.out && dpkg-query -W gcc g++ iverilog"
+      ],
+      "cwd": "/vercel",
+      "sessionId": "sbx_ACua4XyWNiMFkeEHzSzzLALnVFkG",
+      "startedAt": 1794076526353,
+      "exitCode": 0,
+      "durationMs": 844
+    }
+  },
+  "native_logs": {
+    "logs": [
+      {
+        "data": "PASS: 100000 protected increments across four pthreads; 8 int32 reversal boundary cases.\nPREP-276: 521 semantic assertions passed\nPASS batch1107b20 hardware checks=96555 serial_words=4094 serial_prefixes=40962 history_cycles=5256 truth_rows=4\nchecks/tb_hardware_batch1107b20.sv:52: $finish called at 912766000 (1ps)\ng++\t4:15.2.0-5ubuntu1\ngcc\t4:15.2.0-5ubuntu1\niverilog\t12.0-3\n",
+        "stream": "stdout"
+      }
+    ],
+    "context": {
+      "totalItems": 1,
+      "returnedItems": 1,
+      "truncated": false
+    }
+  },
+  "limitations": [
+    "Finite RTL simulation, no synthesis/STA/SPICE or physical signoff.",
+    "Four-transistor XOR uses an ideal switch abstraction; threshold loss discussed separately, not analog simulated.",
+    "Spinlock bounded contention stress does not prove fairness, bounded waiting, or all interleavings.",
+    "Package bootstrap used only official Ubuntu mirrors; switched mirror URLs from HTTP to HTTPS after HTTP networking failed, then restored deny-all before executing authored code."
+  ]
+}

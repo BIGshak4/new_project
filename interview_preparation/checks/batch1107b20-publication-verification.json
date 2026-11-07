@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-11-07T18:54:52.373332+00:00",
+  "status": "passed",
+  "project_ref": "djpwvqpsqbkvprlncjjg",
+  "transaction": {
+    "dry_run_rollback_completed": true,
+    "guarded_content_commit_completed": true,
+    "basis": "Root operator confirmed dry-run rollback and guarded commit; saved scoped before/after snapshots were parsed and verify_live.py assertions passed."
+  },
+  "before": {
+    "question_count": 304,
+    "translation_count": 608,
+    "skill_count": 324
+  },
+  "after": {
+    "question_count": 317,
+    "translation_count": 634,
+    "skill_count": 337
+  },
+  "readback_verification": {
+    "project_ref": "djpwvqpsqbkvprlncjjg",
+    "question_count": 317,
+    "translation_count": 634,
+    "skill_count": 337,
+    "new_records": 13,
+    "new_primary_skill_links": 13,
+    "canonicalized_examples": 0,
+    "provenance_only_updates": 4,
+    "existing_content_revisions": [
+      "PREP-090",
+      "PREP-151"
+    ],
+    "existing_identities_preserved": 304,
+    "unrelated_question_fingerprints_preserved": 298,
+    "unchanged_existing_translations": 604,
+    "expanded_translation_prefixes_and_hints_preserved": 4,
+    "existing_skill_links_preserved": 324,
+    "affected_question_rows_read_back": 19,
+    "affected_translation_rows_read_back": 38,
+    "private_bucket": true,
+    "learner_writes": false
+  },
+  "private_media": {
+    "bucket_private": true,
+    "objects_verified": 66,
+    "new_source_images": 20,
+    "new_bilingual_diagrams": 30,
+    "new_code_assets": 16,
+    "inventory_asset_count": 1668,
+    "source_reference_count": 475,
+    "unique_source_names": 473
+  },
+  "artifact_sha256": {
+    ".impeccable/intake-20261107-batch20/live-readback-verification.json": "66207d078a793940400516e5f47fc7516514a967edfffabd3b61819a09fd5dbd",
+    ".impeccable/intake-20261107-batch20/upload-verified.json": "08c3118e8ba8b7def612df6844e3cd6d77dcc46be6c69c700cd2e2c64d38fce1",
+    ".impeccable/intake-20261107-batch20/verify_live.py": "c43549320f2a18060c6ac9342d3fe59d9ee3f8b919b600fcbe0621dce24a1f1b",
+    ".impeccable/intake-20261107-batch20/dry-run.sql": "76a5fed904cb246456bfc91f3b01972b92eaa025daa35180854bc310cd777fd8",
+    ".impeccable/intake-20261107-batch20/apply.sql": "b082161f41fc7a6ddfae8bcebaa4a4ba04798a0f770c574927217ac9d914cdb2",
+    "C:/Projects/Job_Run/backups/intake-20261107-batch20-before.json": "8e6b8fd5c843d4413c23f9eeaeb417c4346e1ebcf8de987edf2831d0e3ff76bc",
+    "C:/Projects/Job_Run/backups/intake-20261107-batch20-after.json": "569899e80655b8e3dd1c801d62d2187e74f3dbf95523e56a8491ee8f24e485aa",
+    "backend/seeds/preparation_uploads.json": "d1e7155a4556867ce049cf26d8586a9dc1621c8e9b94ade7dd78cfedddef08a3",
+    "backend/seeds/questions/preparation_bank.json": "1bd861689c1e0a9a3c793e39f1102d8712a91e4df458c482581ddc348e8ff627"
+  },
+  "limits": [
+    "Content-only transaction: no learner account, attempt, answer, score or progress writes.",
+    "Database and private-storage readback does not by itself prove Git push, deployment health or an authenticated production browser session.",
+    "Snapshot copies and publication SQL remain outside the committed evidence file; only counts, preservation results and hashes are recorded here."
+  ]
+}

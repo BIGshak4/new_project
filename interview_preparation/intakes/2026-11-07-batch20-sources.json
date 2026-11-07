@@ -1,0 +1,425 @@
+{
+  "received_on": "2026-11-07",
+  "screenshot_count": 20,
+  "question_source_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "question_source": 1,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-01.png"
+      ],
+      "sha256": "60ea6e5b1b616b0684bd2992420b3135d277a33175cce073ce67e9bc6eb1c028",
+      "original_prompt": "מה היא ירושה? תאר סיבוכיות זמן והסבר את המשמעות.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-276"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 2,
+      "question_source": 2,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-02.png"
+      ],
+      "sha256": "44a5186c4302eb6b7ee69b1c4738a6c67480c29e01aaa490771bdce68c3c8745",
+      "original_prompt": "להלן הסבר קצר ופסאודו קוד בנושא כל שהוא. הסבר על איזה נושא מדובר, מה ההסבר בפסקה ואיך האלגוריתם בפסאודו קוד עובד. בתמונה מוצג Direct k-means: מאתחלים k אבות-טיפוס מתוך n וקטורי הקלט; משייכים כל וקטור למרכז הקרוב; מעדכנים כל מרכז לממוצע האשכול; מחשבים E=sum_j sum_(i in C_j) ||i-w_j||^2; חוזרים עד שהשגיאה אינה משתנה משמעותית או שהשיוכים אינם משתנים.",
+      "source_tags": [
+        "hardware",
+        "software",
+        "microsoft"
+      ],
+      "reported_companies": [
+        "Microsoft"
+      ],
+      "question_ids": [
+        "PREP-277"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 3,
+      "question_source": 3,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-03.png"
+      ],
+      "sha256": "be6c1000016a8a156e70f51ea02cedbd56f4dc1761da0c1af65879fc64fd9e23",
+      "original_prompt": "ממש תוכנית המקבלת מערך ושני מספרים ומחזירה את המערך כאשר המיקום של המספר הראשון מוזז לפי המספר השני. func(A,x,y): תעביר את האיבר במקום ה-X והאיברים הבאים אחריו כ-Y מקומות קדימה. המערך בגודל 1024 ביטים ויש לחזור להתחלה בצורה ציקלית אם חורגים מגודל זה.",
+      "source_tags": [
+        "arm",
+        "google",
+        "logic",
+        "verification"
+      ],
+      "reported_companies": [
+        "Google",
+        "ARM"
+      ],
+      "question_ids": [
+        "PREP-278"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 4,
+      "question_source": 4,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-04.png"
+      ],
+      "sha256": "4d34ee942667e752bb16c3e9486a018c1735feb79d24e93a61d29405aa3cf685",
+      "original_prompt": "ממש רכיב סינכרוני שמקבל מידע של 2 סיביות, וממקם את המידע הזה ב-3 יציאות כאשר היציאות הן מהמספר המקסימלי שהתקבל עד המינימלי שהתקבל.",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-279"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 5,
+      "question_source": 5,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-05.png"
+      ],
+      "sha256": "5d335d4ec5eab12a4782079304ab0fc2e43072f3037faad1cac5e56397af9aab",
+      "original_prompt": "עליך לממש מערכת המוציאה 1 בהינתן אינפוט סיריאלי של 1101: מימוש מכונת מצבים ומימוש מעגל סינכרוני.",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-204"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 6,
+      "question_source": 6,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-06.png"
+      ],
+      "sha256": "811af8b2761324212f333445395b0abdc4c6365bbd3154478b2f80c3bd6adbfb",
+      "original_prompt": "הסבר את אופן הפעולה של מעבד פייפליין. מה מספר מחזורי השעון הנדרשים כדי לקבל מידע במוצא?",
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-280"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 7,
+      "question_source": 7,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-07.png"
+      ],
+      "sha256": "4424b981c6806e6518447da414e7eb3d04721ba3b009042f415ef26b408c46f4",
+      "original_prompt": "קיימת רשימה של מספרים מ-0 עד 99. כתוב פעולה שמגרילה מספרים מתוך הרשימה, כך שכל מספר יופיע בדיוק פעם אחת. עדיפות לקוד שההשהיה שלו קטנה מ-O(n^2).",
+      "source_tags": [
+        "software",
+        "hardware",
+        "google"
+      ],
+      "reported_companies": [
+        "Google"
+      ],
+      "question_ids": [
+        "PREP-022"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 8,
+      "question_source": 8,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-08.png"
+      ],
+      "sha256": "dfaac8f0fb8d1f376376481e868493689971931644bfcecf752b0e2c28820bf6",
+      "original_prompt": "Implement a spinlock using the function Test_and_Set.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-281"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 9,
+      "question_source": 9,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-09.png"
+      ],
+      "sha256": "632f6f0c3a78dc08b7f19b4c5ab4137f386d601c92bbd1941e6f6b15d6bbddc4",
+      "original_prompt": "איזה שער לוגי מהווה המעגל הזה? השרטוט המקורי כולל שני זוגות טרנזיסטורים משלימים; יש לנתח את החיווט כפי שמופיע בתמונה.",
+      "source_tags": [
+        "hardware",
+        "marvell",
+        "actelis-networks"
+      ],
+      "reported_companies": [
+        "Marvell",
+        "Actelis Networks"
+      ],
+      "question_ids": [
+        "PREP-282"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "question_source": 10,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-10.png"
+      ],
+      "sha256": "9f4a8fa90a6308b704071f499e4caa5963490bc93a9592b6b34d5e72f038d1c2",
+      "original_prompt": "הסבירו מה זה t_hold, t_setup, t_skew והראו את הנוסחאות שקשורות אליהן. איך שינוי התדר משפיע על כל אחד מהם?",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-176"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 11,
+      "question_source": 11,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-11.png"
+      ],
+      "sha256": "1597809e9c143d490bcf8a3fb8ca63d2072adbab71679f92bf2e2ee7e466cbf0",
+      "original_prompt": "מימוש יחס גרירה (אם-אז).",
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "Intel"
+      ],
+      "question_ids": [
+        "PREP-283"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 12,
+      "question_source": 12,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-12.png"
+      ],
+      "sha256": "111ad839df6bcb5014865f56dfd4b5056b67a39757d3dcbd5908c671864d80ca",
+      "original_prompt": "ממש מעגל שהקלט שלו הוא ביט reset ושעון, והפלט שלו בכל מחזור שעון הוא ...0,1,4,9,16 כאשר reset=0. כאשר הביט reset נדלק, יש לאפס את סדרת הפלטים הזו ולהתחיל את הרצף מחדש.",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-140"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 13,
+      "question_source": 13,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-13.png"
+      ],
+      "sha256": "a10ef271e2c9415103439a0eeb98365e6711fe49e882d88bcdc9a05e956fb89e",
+      "original_prompt": "נתונה רשימה של NODES של עץ (לאו דווקא כל החוליות מחוברות בדרך כל שהיא אחת לשנייה). לכל NODE יש 2 פעולות: get parent ו-isroot. ברשימה קיים ROOT יחיד. מצא את כל ה-NODES שלא מחוברים לשורש של העץ.",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-284"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 14,
+      "question_source": 14,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-14.png"
+      ],
+      "sha256": "6c1514c390f4d101084f3a58ca45a200b8aa0680defffc9ed52cb4eddadbbd63",
+      "original_prompt": "אתה מקבל מספר בטווח ייצוג של int וצריך להפוך את סדר הספרות, כלומר 12345 יהפוך ל-54321.",
+      "source_tags": [
+        "software",
+        "amazon"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-285"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 15,
+      "question_source": 15,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-15.png"
+      ],
+      "sha256": "8486b0960e0ea16d5f8fd9d2ab764000d31fd31129bd226d32fad16b7551be53",
+      "original_prompt": "צריך לממש AND באמצעות שערי NAND ו-NOR.",
+      "source_tags": [
+        "verification",
+        "hardware",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-286"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "question_source": 16,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-16.png"
+      ],
+      "sha256": "3aa457630cf19d58ea85a15c0243f326a9276f36146a80d95b522d435672f847",
+      "original_prompt": "A1=[2,1,2,4,6,5,9,8,3,8,7], A2=[2,1,8,3], output=[2,2,1,8,8,3,4,5,6,7,9]. צריך להדפיס את המערך הראשון כתלות במערך השני, לפי סדר איברי המערך השני ולפי כמות הפעמים שהם מופיעים בראשון. שאר איברי הראשון שאינם בשני מודפסים בסדר עולה.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-287"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 17,
+      "question_source": 17,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-17.png"
+      ],
+      "sha256": "3bc46fc7cb51d10ebdabbbb53205bd231f4ae7fa7379a47c89e11d24bfe5e262",
+      "original_prompt": "א. נתון מספר בעל 8 ביטים מסוג int; ממש פונקציה שמחזירה את כמות הביטים שהם 1, ללא תוספת מקום. לדוגמה 10110100 מחזיר 4. ב. נתון מערך שמחזיר את מספר הביטים שהם 1 כמו בסעיף א; ממש את אותה פונקציה עבור 32 ביטים.",
+      "source_tags": [
+        "hardware",
+        "amazon",
+        "verification"
+      ],
+      "reported_companies": [
+        "Amazon"
+      ],
+      "question_ids": [
+        "PREP-151"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 18,
+      "question_source": 18,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-18.png"
+      ],
+      "sha256": "d6824acc5f5fa1844cdc400878019e90ee1f7234a5ca861932ac843b48067017",
+      "original_prompt": "בנה מכונת מצבים המקבלת רצף של סיביות ומזהה את הרצף 0010. לדוגמה קלט 1100100101 ופלט 0000010010.",
+      "source_tags": [
+        "intel",
+        "hardware",
+        "verification",
+        "texas-instruments"
+      ],
+      "reported_companies": [
+        "Intel",
+        "Texas Instruments"
+      ],
+      "question_ids": [
+        "PREP-288"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 19,
+      "question_source": 19,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-19.png"
+      ],
+      "sha256": "0719a8fa9a344a98bc9a02b65e77545f13f4d0f84412144e2b3de877b96278fe",
+      "original_prompt": "קלט של מספר כלשהו מסוג int; צריך להחזיר את מספר האחדות בייצוג הבינארי של אותו מספר. לדוגמה 3=101 ולכן הפונקציה תחזיר 2. שאלת בונוס: לפתור בסיבוכיות זמן נמוכה יותר גם על חשבון מקום נוסף.",
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-151"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 20,
+      "question_source": 20,
+      "archive_paths": [
+        "sources/2026-11-07-batch20-20.png"
+      ],
+      "sha256": "7f9d04e88f039187faacec88db56beaf1eb8a623c8ea983c86d7fd01891093ac",
+      "original_prompt": "חבל מקיף את כדור הארץ בדיוק במרכזו. כעת נוסיף 2 מטר לאורכו של החבל ונקיף בעזרתו את כדור הארץ. האם חתול יכול לעבור בין כדור הארץ לחבל?",
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "reported_companies": [
+        "Apple"
+      ],
+      "question_ids": [
+        "PREP-090"
+      ],
+      "decision": "existing_question_source_and_variant"
+    }
+  ],
+  "editorial_policy": "Choose clearly labeled reasonable assumptions where needed, per user authorization2026-11-07. Preserve original wording and examples even when corrected.",
+  "new_question_count": 13,
+  "technical_extension_count": 2,
+  "provenance_only_count": 4,
+  "affected_question_count": 19
+}

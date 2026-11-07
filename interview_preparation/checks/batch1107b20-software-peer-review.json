@@ -1,0 +1,43 @@
+{
+  "recorded_on": "2026-11-07",
+  "status": "no_material_correctness_findings",
+  "reviewer": "Independent AI peer; not professional human sign-off",
+  "source_sha256": {
+    "solutions/prep_277_kmeans_batch1107b20.py": "cfb1cbb79ce0a23db7d6ec5adc001396e4e15ded75d83ff67766cc511f392cdd",
+    "solutions/prep_278_packed_move_batch1107b20.py": "76d9d033c2099ebf115f20f8ceed4d562d9f8cda0ac584a42dcc4694900d4f12",
+    "solutions/prep_281_spinlock_batch1107b20.h": "906688676e776248cbfcfde2c06c2f0935b74f9e3fa119435ba7e941c4ce5394",
+    "solutions/prep_285_decimal_reverse_batch1107b20.py": "d93342aee9ae3001b82b6a8bf014d4112e031370933cd3863df5ba34cae45e18",
+    "solutions/prep_285_decimal_reverse_batch1107b20.c": "792856b4b5ed8327086a37d5bb4a9194e0682ea1c719a87687fab5e98e8e2f13",
+    "solutions/prep_287_relative_sort_batch1107b20.py": "3c038be4ce1b30d0b8149c768125ae35fd24618998632c025c76fc6288010078",
+    "solutions/prep_276_inheritance_costs_batch1107b20.cpp": "d50496153bd99c00ec08fe736adfad680610dca91a6e9def0cd6ff7cad416b0b"
+  },
+  "executed_independent_checks": {
+    "PREP-277": {
+      "rational_one_dimensional_oracle_cases": 3006,
+      "capped_postupdate_non_nearest_labels_explicitly_checked": true
+    },
+    "PREP-278": {
+      "independent_unpacked_circular_oracle_cases": 347
+    },
+    "PREP-285": {
+      "independent_string_reversal_oracle_cases": 11007
+    },
+    "PREP-287": {
+      "independent_rank_sort_oracle_cases": 23660
+    }
+  },
+  "spinlock_review": "Inspected C11 atomic_flag initialization, atomic TAS acquire, owner release clear, mutual exclusion argument and unbounded-wait caveats. Native four-thread100000-increment evidence is separate; this peer did not rerun it.",
+  "scope_notes": [
+    "277 cap semantics preserve means of returned labels, without falsely guaranteeing those labels nearest postupdate centers.",
+    "278 core Theta(y+1), validation scans128bytes; circular single-bit interpretation is explicitly authored.",
+    "285 sign/magnitude and pre-multiply overflow bounds inspected in Python and C.",
+    "287 duplicates in A1 retained; duplicate A2 priorities explicitly rejected.",
+    "276 current source hash matches actual native521-assertion evidence."
+  ],
+  "native276_source_still_current": true,
+  "not_proved_by_peer": [
+    "Physical performance, all thread schedules or fairness",
+    "Global k-means optimum",
+    "Runtime learner submission properties"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "recorded_on": "2026-11-07",
+  "parent_map": {
+    "all_parent_maps_through_five_nodes": 8476,
+    "long_chain_nodes": 5000,
+    "invalid_cases": 7,
+    "identity_not_equality_and_one_snapshot_call": true
+  },
+  "four_bytes": {
+    "uint32_cases": 66571,
+    "exhaustive_low_16_bits": 65536,
+    "exactly_four_byte_operations_per_valid_call": true,
+    "invalid_cases": 5
+  },
+  "rope": {
+    "length_height_pairs": 36,
+    "invalid_cases": 5,
+    "gap_metres": 0.3183098861837907,
+    "fits": true,
+    "margin_metres": 0.06830988618379069,
+    "scope": "Ideal circumference algebra only; no physical rope or animal trial."
+  },
+  "inheritance_cpp": "Separate native compiler/harness execution required; not claimed by this Python check."
+}

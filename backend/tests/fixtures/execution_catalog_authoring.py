@@ -466,6 +466,31 @@ def batch1107b10_source(key):
     return (ROOT / "interview_preparation/solutions" / BATCH1107B10_SOURCES[key]).read_text(encoding="utf-8")
 
 
+# November 7 batch20: deterministic packed movement, decimal reversal and
+# relative sorting. Float k-means and threaded spinlocks have separate checks.
+BATCH1107B20_SOURCES = {
+    "prep-circular-packed-bit-array-move": "prep_278_packed_move_batch1107b20.py",
+    "prep-reverse-signed-decimal-integer": "prep_285_decimal_reverse_batch1107b20.py",
+    "prep-relative-sort-by-second-array": "prep_287_relative_sort_batch1107b20.py",
+}
+BATCH1107B20_ORACLES = runpy.run_path(
+    str(BACKEND / "tests/fixtures/execution_batch1107b20_oracles.py")
+)["ORACLES"]
+ORACLES.update(BATCH1107B20_ORACLES)
+
+
+def build_batch1107b20_contracts():
+    inputs = json.loads((BACKEND / "tests/fixtures/execution_batch1107b20_inputs.json").read_text(encoding="utf-8"))
+    for key, question in inputs.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = BATCH1107B20_ORACLES[key](*case["args"])
+    return inputs
+
+
+def batch1107b20_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1107B20_SOURCES[key]).read_text(encoding="utf-8")
+
+
 COUNTER_STIMULUS = [(1, 1), (0, 0)] + [(int(i in (15, 29)), int(i % 5 not in (0, 1))) for i in range(45)]
 SEQUENCE_STIMULUS = [(1, 1)] + [(0, int(c)) for c in "1101110111010011011010110110"] + [(1, 1)] + [(0, int(c)) for c in "1011101101"]
 
@@ -760,6 +785,7 @@ endmodule
     questions.update(build_batch1103_contracts())
     questions.update(build_batch1107_contracts())
     questions.update(build_batch1107b10_contracts())
+    questions.update(build_batch1107b20_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -841,6 +867,11 @@ def build_smoke():
         cases.append({"question_key": key, "language": "python", "correct": batch1107b10_source(key),
                       "wrong": f"def {entry}(values):\n    return values\n",
                       "syntax_error": f"def {entry}(values)\n    return values\n"})
+    for key, question in build_batch1107b20_contracts().items():
+        entry = question["languages"]["python"]["entry"]
+        cases.append({"question_key": key, "language": "python", "correct": batch1107b20_source(key),
+                      "wrong": f"def {entry}(*args):\n    return None\n",
+                      "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
 
@@ -1373,6 +1404,8 @@ end architecture;
         python[key] = batch1107_source(key)
     for key in BATCH1107B10_SOURCES:
         python[key] = batch1107b10_source(key)
+    for key in BATCH1107B20_SOURCES:
+        python[key] = batch1107b20_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

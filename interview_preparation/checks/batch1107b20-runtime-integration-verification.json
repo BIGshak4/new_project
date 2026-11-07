@@ -1,0 +1,75 @@
+{
+  "recorded_at": "2026-11-07T18:45:10.295080+00:00",
+  "status": "passed",
+  "profile_counts": {
+    "before": 42,
+    "added": 3,
+    "after": 45
+  },
+  "positive_fixture_counts": {
+    "before": 81,
+    "added": 3,
+    "after": 84
+  },
+  "smoke_fixture_counts": {
+    "before": 22,
+    "added": 3,
+    "after": 25
+  },
+  "new_case_counts": {
+    "PREP-278": 10,
+    "PREP-285": 15,
+    "PREP-287": 12,
+    "total": 37
+  },
+  "preservation": {
+    "baseline_head": "52d279a",
+    "all42_old_profile_objects_exact": true,
+    "old81_positive_prefix_exact": true,
+    "old22_smoke_prefix_exact": true,
+    "existing_pair_sum_profiles_preserved": true
+  },
+  "combined_validation": {
+    "tests_passed": 307,
+    "pytest_seconds": 1.66,
+    "command": [
+      "C:\\Projects\\Job_Run\\new_project\\backend\\.venv\\Scripts\\python.exe",
+      "-X",
+      "utf8",
+      "-m",
+      "pytest",
+      "tests/test_execution_catalog.py",
+      "tests/test_execution_20261107_profiles.py",
+      "tests/test_execution_20261107_batch10_profiles.py",
+      "tests/test_execution_20261107_batch20_profiles.py",
+      "-q"
+    ],
+    "cwd": "C:\\Projects\\Job_Run\\new_project\\backend",
+    "started_at": "2026-11-07T18:44:33.413456+00:00",
+    "finished_at": "2026-11-07T18:44:35.786507+00:00",
+    "elapsed_seconds": 2.373051,
+    "exit_code": 0,
+    "log_path": "runtime-validation-combined.log",
+    "database_environment_explicitly_empty": true,
+    "log_sha256": "968fc619e1ea01882d55c108090833960d3777ee11e59cc36fdc9242272f1def"
+  },
+  "ruff": "passed",
+  "input_fixture_contains_expected_outputs": false,
+  "artifact_sha256": {
+    "backend/seeds/execution_cases.json": "b7e3e972b82d3d656aac41387a6418aa9c5f06d640ef08df827987a832c3ea3d",
+    "backend/tests/fixtures/execution_positive.json": "6cf5e7b5c796a968a73322c412f06bfcb3be1871bab404fa8de41f301ec34655",
+    "backend/tests/fixtures/execution_smoke.json": "381f6ad6e5ac52a557d88b2b344fab318fea7c156f7a0edd94f5ce172f527d7d",
+    "backend/tests/fixtures/execution_catalog_authoring.py": "bb919bdcc657f3bc9411aa7fb5c7d8d785aceb9b4a5633c4bd2baa3dec382f3a",
+    "backend/tests/fixtures/execution_batch1107b20_inputs.json": "1b69da4e73f4fcf89846fc2d82e4b026c06a7cfbb70a240e44a927ecbd775c98",
+    "backend/tests/fixtures/execution_batch1107b20_oracles.py": "ca4c2b42b217c7ed22ea874c0036cfe3b0998e8a8dd6c0684efa333a39260644",
+    "backend/tests/test_execution_20261107_batch20_profiles.py": "1d4a37e1f51c1ccda7381af47bb2f9bebeb65d32b5a2360b20a0e970fb1bacc6",
+    "interview_preparation/solutions/prep_278_packed_move_batch1107b20.py": "76d9d033c2099ebf115f20f8ceed4d562d9f8cda0ac584a42dcc4694900d4f12",
+    "interview_preparation/solutions/prep_285_decimal_reverse_batch1107b20.py": "d93342aee9ae3001b82b6a8bf014d4112e031370933cd3863df5ba34cae45e18",
+    "interview_preparation/solutions/prep_287_relative_sort_batch1107b20.py": "3c038be4ce1b30d0b8149c768125ae35fd24618998632c025c76fc6288010078"
+  },
+  "limits": [
+    "Authored trusted references and private independent oracles only; no learner code or learner DB/progress writes.",
+    "Output grading checks the 37 finite examples. In-place identity, input preservation and no-string structural constraints are additionally checked by the focused local suite; finite cases do not prove arbitrary learner complexity.",
+    "K-means numerical models and C11 spinlock native stress have separate reports; no function execution profile was added for them."
+  ]
+}

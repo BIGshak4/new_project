@@ -1,0 +1,716 @@
+{
+  "PREP-279": {
+    "assumptions": {
+      "he": "שלוש האחרונות בלבד; unsigned; כפילויות חוקיות; תקפות אחרי שלוש קבלות.",
+      "en": "Latest three only; unsigned; legal duplicates; validity after three acceptances."
+    },
+    "optimality": {
+      "he": "שמונה ביטי מצב ושלושה compare/exchange בני שתי סיביות. זמן עדכון קבוע לעומק3; אין טענת שטח מינימלי.",
+      "en": "Eight state bits and three two-bit compare/exchange stages; fixed work at depth3, without a minimum-area claim."
+    },
+    "verification": {
+      "he": "בדיקות Python עצמאיות עברו:64 שלשות למיון,4 שורות אמת, שלילת18 רשתות NOR בנות שני שערים,4,094 מילים טוריות עם40,962 קידומות ו־161 לוחות זמנים של פייפליין. ראיה: checks/batch1107b20-hardware-model-verification.json. קוד RTL ומודל מתגי MOS הם חומר נפרד מהמודל; קומפילציה וסימולציה נרשמות בדוח native של האצווה. מודל המתגים אינו מדמה מתח סף או שולי רעש; לא בוצעו סינתזה או אישור תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.",
+      "en": "Independent Python checks passed:64 sorting triples,4 truth-table rows, exclusion of18 two-NOR networks,4,094 serial words with40,962 prefixes and161 pipeline schedules. Evidence: checks/batch1107b20-hardware-model-verification.json. RTL and the MOS switch abstraction are separate from these models; compilation and simulation are recorded in the batch native report. Digital switches do not model threshold loss or noise margin; no synthesis or timing signoff is claimed.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification."
+    },
+    "edge_cases": {
+      "he": [
+        "איפוס,0/1/2 דגימות, שלוש שוות, החלפת הישנה והשהיית קליטה."
+      ],
+      "en": [
+        "Reset,0/1/2 samples, equal triples, evicting the oldest and paused acceptance."
+      ]
+    },
+    "common_mistakes": {
+      "he": "מיון היסטוריה במקום שמירת סדר הקבלה; אובדן כפילויות; סימון תקפות לפני שלוש דגימות.",
+      "en": "Sorting the retained chronological state in place; discarding duplicates; asserting validity before three samples."
+    },
+    "interview_answer": {
+      "he": "אשמור שלוש דגימות לפי זמן הקבלה, ואמיין עותק שלהן בשלוש השוואות. מונה מילוי יבדיל בין דגימות אמיתיות לאיפוס.",
+      "en": "Keep three chronological samples, sort a copy with three comparisons and use a fill count to distinguish real samples from reset values."
+    },
+    "source_ambiguities": {
+      "he": "הצילום אינו מגדיר אם מתייחסים לכל ההיסטוריה או לשלוש האחרונות. בחרנו שלוש אחרונות והוספנו תקפות ואיפוס מפורשים.",
+      "en": "The source omits whether all history or just three latest values count; latest-three retention, reset and validity are explicit additions."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה אם רוצים את שלושת השיאים בכל ההיסטוריה?",
+        "direction": "ממיינים את הרשימה המדורגת עם הדגימה החדשה; אין מוציאים לפי גיל. זה חוזה אחר.",
+        "tests": [
+          "3,1,2,0 משאיר3,2,1",
+          "ערכים שווים"
+        ]
+      },
+      "en": {
+        "question": "What changes for the historical top three?",
+        "direction": "Merge the new value into retained ranked records instead of evicting by age; this is a different contract.",
+        "tests": [
+          "3,1,2,0 retains3,2,1",
+          "Tied values"
+        ]
+      }
+    }
+  },
+  "PREP-280": {
+    "assumptions": {
+      "he": "חמישה שלבים אידאליים; תחילת/סיום משבצת מוגדרים; עצירה גלובלית בלבד בדגם.",
+      "en": "Five ideal stages, explicit slot endpoints and only global freeze in the model."
+    },
+    "optimality": {
+      "he": "ללא עצירות K+n−1 משבצות; throughput מרבי הוראה לתקופה, והשהיית הוראה K תקופות. הדגם שומר K אסימונים.",
+      "en": "Without stalls K+n−1 slots; at most one completion per period and K-period instruction latency. The toy model stores K tokens."
+    },
+    "verification": {
+      "he": "בדיקות Python עצמאיות עברו:64 שלשות למיון,4 שורות אמת, שלילת18 רשתות NOR בנות שני שערים,4,094 מילים טוריות עם40,962 קידומות ו־161 לוחות זמנים של פייפליין. ראיה: checks/batch1107b20-hardware-model-verification.json. קוד RTL ומודל מתגי MOS הם חומר נפרד מהמודל; קומפילציה וסימולציה נרשמות בדוח native של האצווה. מודל המתגים אינו מדמה מתח סף או שולי רעש; לא בוצעו סינתזה או אישור תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.",
+      "en": "Independent Python checks passed:64 sorting triples,4 truth-table rows, exclusion of18 two-NOR networks,4,094 serial words with40,962 prefixes and161 pipeline schedules. Evidence: checks/batch1107b20-hardware-model-verification.json. RTL and the MOS switch abstraction are separate from these models; compilation and simulation are recorded in the batch native report. Digital switches do not model threshold loss or noise margin; no synthesis or timing signoff is claimed.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification."
+    },
+    "edge_cases": {
+      "he": [
+        "אין הוראות, הוראה אחת, K=1, בועות, שתי עצירות ומילוי/ריקון."
+      ],
+      "en": [
+        "No instructions, one instruction, K=1, bubbles, two stalls and filling/draining."
+      ]
+    },
+    "common_mistakes": {
+      "he": "אמירה שכל מעבד דורש5 מחזורים; בלבול בין latency ל־throughput; קבלת נתון בעת freeze; התעלמות מתקורת אוגרים.",
+      "en": "Claiming every processor needs five cycles; confusing latency with throughput; accepting work during freeze; ignoring register overhead."
+    },
+    "interview_answer": {
+      "he": "מספר השלבים קובע השהיה רק אחרי הגדרת נקודות הזמן. במודל חמישה שלבים התוצאה הראשונה בסוף משבצת5 ואחריה אחת למשבצת, ללא עצירות.",
+      "en": "Stage count determines latency only after naming endpoints: first completion ends slot5, then one per slot in the unstalled five-stage model."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מציין מספר שלבים או ISA. המודל וחמש ההשהיות המספריות הם השלמות מפורשות.",
+      "en": "The source gives no stage count or ISA; the chosen model and numerical delay example are explicit additions."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "האם חלוקה לעוד שלבים תמיד עוזרת?",
+        "direction": "לוגיקה קצרה יותר מול תקורת אוגרים, ענישות הסתעפות ומורכבות forwarding; אין שיפור חופשי.",
+        "tests": [
+          "שלב קצר מתקורת האוגר",
+          "הסתעפות מתגלה מאוחר"
+        ]
+      },
+      "en": {
+        "question": "Do more stages always help?",
+        "direction": "Balance shorter logic against register overhead, branch penalties and forwarding complexity.",
+        "tests": [
+          "Logic shorter than register overhead",
+          "Late branch resolution"
+        ]
+      }
+    }
+  },
+  "PREP-282": {
+    "assumptions": {
+      "he": "יציבות קלט ורמות אספקה; חיבורי A/X נשמרים; קשרי גוף נוספו כהנחה בלבד.",
+      "en": "Stable rail-valued inputs; retain A/X connectivity; body ties are assumptions only."
+    },
+    "optimality": {
+      "he": "ארבעה טרנזיסטורים בציור; צורך במהפך ליצירת NOT A. אין טענת שטח/השהיה מינימליים או רמות מלאות.",
+      "en": "Four drawn devices, including the inverter producing NOT A; no minimum area/delay or full-swing guarantee."
+    },
+    "verification": {
+      "he": "בדיקות Python עצמאיות עברו:64 שלשות למיון,4 שורות אמת, שלילת18 רשתות NOR בנות שני שערים,4,094 מילים טוריות עם40,962 קידומות ו־161 לוחות זמנים של פייפליין. ראיה: checks/batch1107b20-hardware-model-verification.json. קוד RTL ומודל מתגי MOS הם חומר נפרד מהמודל; קומפילציה וסימולציה נרשמות בדוח native של האצווה. מודל המתגים אינו מדמה מתח סף או שולי רעש; לא בוצעו סינתזה או אישור תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.",
+      "en": "Independent Python checks passed:64 sorting triples,4 truth-table rows, exclusion of18 two-NOR networks,4,094 serial words with40,962 prefixes and161 pipeline schedules. Evidence: checks/batch1107b20-hardware-model-verification.json. RTL and the MOS switch abstraction are separate from these models; compilation and simulation are recorded in the batch native report. Digital switches do not model threshold loss or noise margin; no synthesis or timing signoff is claimed.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification."
+    },
+    "edge_cases": {
+      "he": [
+        "כל ארבעת הקלטים;00/01 חלשים לעומת10/11 חזקים.",
+        "מעבר B, קיבול עומס ורגישות למתח סף שייכים למודל אנלוגי נפרד."
+      ],
+      "en": [
+        "All four inputs; weak00/01 versus strong10/11.",
+        "B switching, capacitive load and threshold sensitivity require separate analog models."
+      ]
+    },
+    "common_mistakes": {
+      "he": "קריאת שני הזוגות כמהפכים רגילים; תשובת XNOR בלי לעקוב אחרי המסילות; הנחה שמודל pmos/nmos דיגיטלי מדמה אובדן סף.",
+      "en": "Reading both pairs as ordinary inverters; answering XNOR without tracing rails; treating digital switch primitives as threshold-loss simulation."
+    },
+    "interview_answer": {
+      "he": "ב־B=0 מוציאים A וב־B=1 מוציאים NOT A, לכן זה XOR אידאלי. אך כאן PMOS נדרש להעביר אפס ו־NMOS אחד, ולכן שתי שורות אינן רמות חזקות.",
+      "en": "B0 selects A and B1 selects NOT A, giving ideal XOR. But the PMOS must pass zero and the NMOS one, making two cases degraded."
+    },
+    "source_ambiguities": {
+      "he": "חיבורי הספק הימניים הם אותות במקור. סימון חיבורי הגוף והערכת רמות איכותית הם השלמות; אין ערכי תהליך.",
+      "en": "The source’s right-hand supply terminals carry signals. Body ties and qualitative level analysis are additions; no process values are supplied."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך בונים XOR בעל רמות מלאות?",
+        "direction": "שקלו CMOS סטטי או transmission gates ושחזור; הגדירו ספריית רכיבים ועלות לפני השוואה.",
+        "tests": [
+          "ארבע שורות תחת עומס",
+          "ספי כניסה ושלבי שרשור"
+        ]
+      },
+      "en": {
+        "question": "How can full-swing XOR be built?",
+        "direction": "Consider static CMOS or transmission gates with restoration; declare library and costs before comparing.",
+        "tests": [
+          "All rows under load",
+          "Input thresholds and cascading"
+        ]
+      }
+    }
+  },
+  "PREP-283": {
+    "assumptions": {
+      "he": "שני ביטים בו־זמנית; גרירה חומרית; קבוע1 מותר בבוחר; אין מהפכים חופשיים ב־NAND.",
+      "en": "Simultaneous Boolean bits; material implication; constant1 for MUX; no free NAND inversions."
+    },
+    "optimality": {
+      "he": "NOT+OR בשני רכיבים, MUX אחד או שני NAND; עלויות הספריות שונות.",
+      "en": "Two NOT/OR primitives, one MUX or two NAND gates; library costs differ."
+    },
+    "verification": {
+      "he": "בדיקות Python עצמאיות עברו:64 שלשות למיון,4 שורות אמת, שלילת18 רשתות NOR בנות שני שערים,4,094 מילים טוריות עם40,962 קידומות ו־161 לוחות זמנים של פייפליין. ראיה: checks/batch1107b20-hardware-model-verification.json. קוד RTL ומודל מתגי MOS הם חומר נפרד מהמודל; קומפילציה וסימולציה נרשמות בדוח native של האצווה. מודל המתגים אינו מדמה מתח סף או שולי רעש; לא בוצעו סינתזה או אישור תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.",
+      "en": "Independent Python checks passed:64 sorting triples,4 truth-table rows, exclusion of18 two-NOR networks,4,094 serial words with40,962 prefixes and161 pipeline schedules. Evidence: checks/batch1107b20-hardware-model-verification.json. RTL and the MOS switch abstraction are separate from these models; compilation and simulation are recorded in the batch native report. Digital switches do not model threshold loss or noise margin; no synthesis or timing signoff is claimed.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification."
+    },
+    "edge_cases": {
+      "he": [
+        "כל ארבע השורות; הנחה שקרית בשתי אפשרויות B;1,0 ככשל יחיד."
+      ],
+      "en": [
+        "All four rows, both false-premise cases and1,0 as the sole failure."
+      ]
+    },
+    "common_mistakes": {
+      "he": "החלפה ב־AND או XNOR; הסקת סיבתיות; בלבול עם הגרירה ההפוכה או עם SVA בזמן.",
+      "en": "Substituting AND or XNOR; inferring causality; confusing converse or temporal SVA implication."
+    },
+    "interview_answer": {
+      "he": "גרירה נכשלת רק כש־A אמת ו־B שקר, לכן אשלול A AND NOT B ואקבל NOT A OR B.",
+      "en": "Only a true A with false B violates implication; negate A AND NOT B to obtain NOT A OR B."
+    },
+    "source_ambiguities": {
+      "he": "המקור קצר; בחרנו במפורש גרירה בוליאנית ולא טענת זמן או משמעות סיבתית.",
+      "en": "The terse source is completed as Boolean material implication, not a temporal or causal claim."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה משתנה בטענה ״אם req אז ack במחזור הבא״?",
+        "direction": "זו תכונת עקבה הדורשת שעון, איפוס והגדרת חפיפה; אין להחליפה ב־NOT req OR ack באותו רגע.",
+        "tests": [
+          "ack במחזור הבא",
+          "ack רק באותו מחזור",
+          "req בזמן איפוס"
+        ]
+      },
+      "en": {
+        "question": "What changes for “req implies ack next cycle”?",
+        "direction": "This is a trace property requiring clock, reset and overlap semantics; NOT req OR ack at one instant is insufficient.",
+        "tests": [
+          "Ack next cycle",
+          "Ack only this cycle",
+          "Req during reset"
+        ]
+      }
+    }
+  },
+  "PREP-286": {
+    "assumptions": {
+      "he": "שערי שתי כניסות, A/B ללא משלימים; fanout וכניסות קשורות; רשת אציקלית.",
+      "en": "Two-input gates, uncomplemented A/B, fanout and tied inputs, acyclic networks."
+    },
+    "optimality": {
+      "he": "מינימום2 NAND,3 NOR,2 בשילוב המחייב שני סוגים. כולן שתי רמות במודל; לא מינימום שטח או תזמון.",
+      "en": "Minimum2 NAND,3 NOR and2 mixed gates requiring both types; all have two logical levels, not a physical area/timing guarantee."
+    },
+    "verification": {
+      "he": "בדיקות Python עצמאיות עברו:64 שלשות למיון,4 שורות אמת, שלילת18 רשתות NOR בנות שני שערים,4,094 מילים טוריות עם40,962 קידומות ו־161 לוחות זמנים של פייפליין. ראיה: checks/batch1107b20-hardware-model-verification.json. קוד RTL ומודל מתגי MOS הם חומר נפרד מהמודל; קומפילציה וסימולציה נרשמות בדוח native של האצווה. מודל המתגים אינו מדמה מתח סף או שולי רעש; לא בוצעו סינתזה או אישור תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.",
+      "en": "Independent Python checks passed:64 sorting triples,4 truth-table rows, exclusion of18 two-NOR networks,4,094 serial words with40,962 prefixes and161 pipeline schedules. Evidence: checks/batch1107b20-hardware-model-verification.json. RTL and the MOS switch abstraction are separate from these models; compilation and simulation are recorded in the batch native report. Digital switches do not model threshold loss or noise margin; no synthesis or timing signoff is claimed.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification."
+    },
+    "edge_cases": {
+      "he": [
+        "ארבע שורות אמת; A=B; שימוש מפורש באותו מוצא בשתי כניסות.",
+        "אימות כל18 רשתות NOR בנות שני שערים במודל."
+      ],
+      "en": [
+        "All four rows, equal inputs and explicit tied-output fanout.",
+        "All18 two-NOR networks under the declared model."
+      ]
+    },
+    "common_mistakes": {
+      "he": "שימוש ב־NOT שלא נספר; חיבור שער יחיד עם קלטים משלימים שלא סופקו; הסקת תדר משתי רמות בלבד.",
+      "en": "Using an uncounted NOT, assuming unavailable complemented inputs or inferring clock rate from two levels alone."
+    },
+    "interview_answer": {
+      "he": "ב־NAND אהפוך את המכפלה השלולה פעם נוספת. ב־NOR אהפוך כל קלט ואז אשלול את ה־OR שלהם. אפשר גם NAND ואחריו NOR קשור לעצמו.",
+      "en": "Invert a NAND product again; for NOR invert each input and NOR the results. A NAND followed by tied-input NOR also works."
+    },
+    "source_ambiguities": {
+      "he": "המילה ״ו־NOR״ עשויה להתפרש כשילוב או כחלופה; פתרנו במפורש שלוש ספריות והגדרנו עלות.",
+      "en": "“NAND and NOR” can mean mixed or alternative libraries; all three are solved under explicit primitive-count assumptions."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "מה קורה אם זמינים מראש גם NOT A ו־NOT B?",
+        "direction": "NOR יחיד נותן AND; מספר השערים תלוי במשאבים שקיבלנו, לא רק בטבלת היעד.",
+        "tests": [
+          "השוואת עלות עם/בלי מהפכים בחינם",
+          "תמחור יצירת המשלימים"
+        ]
+      },
+      "en": {
+        "question": "What if NOT A and NOT B are supplied?",
+        "direction": "One NOR gives AND; the resource model changes the minimum.",
+        "tests": [
+          "Cost with and without free inversion",
+          "Include the cost of generating complements"
+        ]
+      }
+    }
+  },
+  "PREP-288": {
+    "assumptions": {
+      "he": "0010 עם חפיפות; קלט תקף בלבד מקדם מצב; פלט אירוע רשום; איפוס לפני מילה.",
+      "en": "Overlapping0010, valid-only state advancement, registered event and reset between words."
+    },
+    "optimality": {
+      "he": "שני ביטי מצב ועוד FF לפולס; זמן/מקום קבועים עבור יעד באורך4. לא מינימום שערים פיזי.",
+      "en": "Two state bits plus one pulse FF, constant work/storage for a four-bit target; no physical minimum-gate claim."
+    },
+    "verification": {
+      "he": "בדיקות Python עצמאיות עברו:64 שלשות למיון,4 שורות אמת, שלילת18 רשתות NOR בנות שני שערים,4,094 מילים טוריות עם40,962 קידומות ו־161 לוחות זמנים של פייפליין. ראיה: checks/batch1107b20-hardware-model-verification.json. קוד RTL ומודל מתגי MOS הם חומר נפרד מהמודל; קומפילציה וסימולציה נרשמות בדוח native של האצווה. מודל המתגים אינו מדמה מתח סף או שולי רעש; לא בוצעו סינתזה או אישור תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.\n\nאימות native נוסף: חמש יחידות ה־RTL/מתגים ורתמת האצווה קומפלו ב־Icarus Verilog12.0-3 והורצו בפועל ב־Ubuntu26.04.1 בסביבה מבודדת עם רשת חסומה. עברו96,555 בדיקות:4,094 מילים טוריות,40,962 קידומות,5,256 מחזורי היסטוריה ו־4 שורות אמת. ראיה וחתימות קבצים: checks/batch1107b20-native-verification.json. הבדיקה של המעגל בן ארבעת הטרנזיסטורים היא מתגים לוגיים אידאליים בלבד, ללא מתח סף, SPICE או אישור רעש/תזמון.",
+      "en": "Independent Python checks passed:64 sorting triples,4 truth-table rows, exclusion of18 two-NOR networks,4,094 serial words with40,962 prefixes and161 pipeline schedules. Evidence: checks/batch1107b20-hardware-model-verification.json. RTL and the MOS switch abstraction are separate from these models; compilation and simulation are recorded in the batch native report. Digital switches do not model threshold loss or noise margin; no synthesis or timing signoff is claimed.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification.\n\nAdditional native execution: the five RTL/switch units and batch harness were compiled with Icarus Verilog12.0-3 and executed on Ubuntu26.04.1 in an isolated network-denied environment. All96,555 checks passed:4,094 serial words,40,962 prefixes,5,256 history cycles and4 truth rows. Evidence and source hashes: checks/batch1107b20-native-verification.json. The four-transistor check uses ideal digital switches only, without MOS threshold, SPICE or noise/timing qualification."
+    },
+    "edge_cases": {
+      "he": [
+        "פחות מארבעה ביטים,0010,0010010,00010 ו־0011.",
+        "דוגמת המקור, אפסים רבים, valid=0 אחרי זיהוי ואיפוס באמצע התאמה."
+      ],
+      "en": [
+        "Fewer than four bits,0010,0010010,00010 and0011.",
+        "Source example, long zero runs, idle immediately after a match and mid-prefix reset."
+      ]
+    },
+    "common_mistakes": {
+      "he": "חזרה ל־S0 במקוםS1 לאחר זיהוי; אפסי אתחול שנחשבים קלט; השארת found=1 בזמן השהיה; בלבול פלט Mealy צירופי עם פולס רשום.",
+      "en": "Returning to S0 instead of S1 after detection; counting reset zeros as input; holding found high during idle; confusing combinational Mealy output with a registered pulse."
+    },
+    "interview_answer": {
+      "he": "אשמור את הסיומת שהיא קידומת היעד.001 ועוד0 נותנים פולס, והאפס האחרון נשמר כהתחלת הזיהוי הבא.",
+      "en": "Keep the suffix that is a target prefix.001 followed by0 emits a pulse, retaining that final zero as the next match’s beginning."
+    },
+    "source_ambiguities": {
+      "he": "בדוגמת המקור אין סתירה: הזיהויים ב־6 וב־9. איפוס, תקפות, חפיפות ורישום הפלט נוספו כהנחות מפורשות.",
+      "en": "The source example is consistent, detecting at6 and9. Reset, validity, overlap and output registration are explicit additions."
+    },
+    "solution_extensions": {
+      "he": {
+        "question": "איך עוברים לגרסה ללא חפיפות?",
+        "direction": "אחרי זיהוי חוזריםS0 ולא שומרים את האפס האחרון; יתר השורות נשמרות בהתאם לחוזה.",
+        "tests": [
+          "0010010 נותן זיהוי ראשון בלבד",
+          "00100010 נותן שתי התאמות נפרדות"
+        ]
+      },
+      "en": {
+        "question": "How would non-overlapping detection differ?",
+        "direction": "After a match return to S0 instead of retaining its final zero; keep other transitions under the declared contract.",
+        "tests": [
+          "0010010 detects only the first",
+          "00100010 has two disjoint matches"
+        ]
+      }
+    }
+  },
+  "PREP-277": {
+    "assumptions": {
+      "he": [
+        "מרחב אוקלידי, מרכזי התחלה נתונים, שוויון לאינדקס נמוך וקבוצה ריקה שומרת מרכז."
+      ],
+      "en": [
+        "Euclidean distance, supplied initialization, lowest-index ties and retained empty centers."
+      ]
+    },
+    "optimality": {
+      "he": "O(tnkd) זמן ו־ O(n+kd) מקום נוסף; אין טענת אופטימום גלובלי.",
+      "en": "O(tnkd) time and O(n+kd) auxiliary space; no global optimum claim."
+    },
+    "verification": {
+      "he": "35 צעדי שיוך/ממוצע מול אורקל שברים מדויק; 280 בדיקות מסלול בתקציבים 1..8 ובדיקת הדוגמה. מודל מספרי סופי בלבד.",
+      "en": "35 assignment/mean steps compared with a rational oracle; 280 trajectory checks for budgets 1..8 and an exact example. Finite numerical model only."
+    },
+    "edge_cases": {
+      "he": [
+        "k=1, k=n, נקודות כפולות, מרחק שווה, קבוצה ריקה ותקציב שנגמר."
+      ],
+      "en": [
+        "k=1, k=n, duplicate points, ties, empty clusters and budget exhaustion."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לא לחלק באפס בקבוצה ריקה; לא להבטיח מינימום גלובלי; לא להתבלבל בין ממוצע לבין נקודת קלט."
+      ],
+      "en": [
+        "Do not divide by zero for empty groups, promise global optimality, or require every mean to remain an input point."
+      ]
+    },
+    "interview_answer": {
+      "he": "משייכים למרכז הקרוב ומחשבים ממוצעים לסירוגין; כל שלב מקטין או משמר SSE אך התוצאה תלויה באתחול.",
+      "en": "Alternate nearest-center assignment and means; each step decreases or preserves SSE, but the result depends on initialization."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר שוויון, אשכול ריק, תקציב או נתוני בדיקה. החוזה הראשי משלים אותם במפורש.",
+      "en": "The source omits ties, empty clusters, budget and test data; the primary contract explicitly completes them."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד לשפר את האתחול?",
+          "answer_direction": "השוו כמה אתחולים או k-means++ לפי SSE, בלי להבטיח אופטימום גלובלי.",
+          "principle": "הבחנה בין החוזה לבין הרחבה שלו"
+        }
+      ],
+      "en": [
+        {
+          "question": "How can initialization be improved?",
+          "answer_direction": "Compare multiple starts or k-means++ by SSE without promising global optimality.",
+          "principle": "Distinguish the contract from an extension"
+        }
+      ]
+    }
+  },
+  "PREP-278": {
+    "assumptions": {
+      "he": [
+        "128 בתים, LSB-first, מסלול קדימה עם y≤1023; ההעברה יציבה ומשנה במקום."
+      ],
+      "en": [
+        "128 bytes, LSB-first, clockwise path with y≤1023; stable in-place movement."
+      ]
+    },
+    "optimality": {
+      "he": "ליבה Θ(y+1), אימות כולל Θ(128+y+1), O(1) מילות עזר; אין טענת מינימום הוראות.",
+      "en": "Core Θ(y+1), with validation Θ(128+y+1), O(1) auxiliary words; no minimum-instruction claim."
+    },
+    "verification": {
+      "he": "155 מקרי מודל מול אורקל שפורס את הביטים ומסובב צילום של המסלול; 4 קלטים שגויים ללא שינוי.",
+      "en": "155 model cases against an unpacked snapshot-arc oracle; 4 invalid inputs rejected without mutation."
+    },
+    "edge_cases": {
+      "he": [
+        "y=0, y=1023, מעבר בית, מעבר הקצה, כל הביטים אפס או אחד."
+      ],
+      "en": [
+        "y=0, y=1023, byte boundaries, ring boundary, all-zero and all-one data."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לא לדרוס בית שלם; לא לקרוא מקור שכבר הוזז; לא להניח שפעולה מעגלית היא תמיד סיבוב גלובלי."
+      ],
+      "en": [
+        "Do not overwrite a whole byte, read an already-moved source, or equate every circular operation with global rotation."
+      ]
+    },
+    "interview_answer": {
+      "he": "שומרים ביט אחד ומעבירים את החור לאורך המסלול; מסכות משמרות את השכנים ומודולו מטפל במעבר הקצה.",
+      "en": "Save one bit and propagate the hole along the path; masks preserve neighbors and modulo handles wraparound."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו קובע מה קורה לביטים שבין המקור ליעד. העברה יציבה היא השלמה שלנו; המקור נשמר בנפרד.",
+      "en": "The source omits intervening-bit semantics. Stable movement is our explicit completion; the original is retained separately."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם מעבירים מקטע של k ביטים?",
+          "answer_direction": "הגדירו קודם חפיפה, סדר ופינוי; אפשר לשמור סדר באמצעות סיבובי תתי־מקטעים.",
+          "principle": "הבחנה בין החוזה לבין הרחבה שלו"
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes when moving a block of k bits?",
+          "answer_direction": "First define overlap, order and vacated positions; subrange rotations can preserve order.",
+          "principle": "Distinguish the contract from an extension"
+        }
+      ]
+    }
+  },
+  "PREP-281": {
+    "assumptions": {
+      "he": [
+        "C11, דגל משותף אטומי, false בהתחלה, בעלים יחיד משחרר וללא reentrancy."
+      ],
+      "en": [
+        "C11, shared atomic flag initially false, owner-only release and no reentrancy."
+      ]
+    },
+    "optimality": {
+      "he": "O(1) אחסון; ניסיון מוצלח ללא תחרות קבוע. מספר ניסיונות ההמתנה אינו חסום.",
+      "en": "O(1) storage; constant uncontended successful attempt. Waiting attempts have no finite bound."
+    },
+    "verification": {
+      "he": "קומפל והורץ עם GCC 15.2 ב־ Vercel Sandbox: ארבעה threads השלימו 100,000 הגדלות מוגנות. פירוט וחתימות מקור בדוח native. אין טענה שנבדקו כל השזירות.",
+      "en": "Compiled and executed with GCC 15.2 in Vercel Sandbox: four threads completed 100,000 protected increments. Source hashes and details are in the native report. Not every interleaving is tested."
+    },
+    "edge_cases": {
+      "he": [
+        "תחרות, בעלים שלא מתוזמן, נעילה חוזרת אסורה, שחרור בידי thread שגוי."
+      ],
+      "en": [
+        "Contention, descheduled owner, forbidden recursion and non-owner release."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "volatile אינו תחליף לאטומי; TestAndSet מחזיר ערך קודם; clear משחרר; אין הבטחת הוגנות."
+      ],
+      "en": [
+        "volatile is not atomicity; TestAndSet returns the old value; clear unlocks; fairness is not promised."
+      ]
+    },
+    "interview_answer": {
+      "he": "רק TestAndSet שמחזיר false מקנה בעלות; release בשחרור ו־ acquire ברכישה מסדרים את הנתונים המוגנים.",
+      "en": "Only TestAndSet returning false acquires ownership; release and acquire order protected data."
+    },
+    "source_ambiguities": {
+      "he": "המקור לא מגדיר שפה, סדר זיכרון או תזמון. נבחר C11 וההנחות מוצגות במפורש.",
+      "en": "The source omits language, memory ordering and scheduling; C11 and explicit assumptions complete it."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך להפחית תעבורת כתיבה בזמן המתנה?",
+          "answer_direction": "Test-test-and-set, backoff או מנעול תורים; לכל חלופה חוזה ועלות משלה.",
+          "principle": "הבחנה בין החוזה לבין הרחבה שלו"
+        }
+      ],
+      "en": [
+        {
+          "question": "How can spinning cause less write traffic?",
+          "answer_direction": "Consider test-test-and-set, backoff or a queue lock, each with its own contract and costs.",
+          "principle": "Distinguish the contract from an extension"
+        }
+      ]
+    }
+  },
+  "PREP-285": {
+    "assumptions": {
+      "he": [
+        "signed int32, הסימן נשמר, גלישה מחזירה 0; C רשאי להרחיב ל־ int64_t."
+      ],
+      "en": [
+        "signed int32, preserved sign, overflow returns 0; C may widen to int64_t."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(D) פעולות ספרה, O(1) מילים; תחום int32 קבוע.",
+      "en": "Θ(D) digit operations, O(1) words; int32 is a fixed domain."
+    },
+    "verification": {
+      "he": "165 מקרי Python מול אורקל מחרוזת עצמאי; בנוסף מימוש C קומפל והורץ עם GCC 15.2 ועבר שמונה מקרי גבול.",
+      "en": "165 Python cases against an independent string oracle; the C implementation additionally compiled and ran with GCC 15.2, passing eight boundary cases."
+    },
+    "edge_cases": {
+      "he": [
+        "0, מספר שלילי, אפסים בסוף, INT32_MIN, מספר שההיפוך שלו גולש."
+      ],
+      "en": [
+        "Zero, negatives, trailing zeros, INT32_MIN and reversal overflow."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לא להפוך ביטים במקום ספרות; לא לשלל INT32_MIN לפני הרחבה; לא לבדוק גלישה אחרי שכבר קרתה."
+      ],
+      "en": [
+        "Do not reverse bits, negate INT32_MIN before widening, or check overflow after causing it."
+      ]
+    },
+    "interview_answer": {
+      "he": "מוציאים ספרה עם %10, מצרפים עם כפל ב־ 10 ובודקים גבול לפני העדכון.",
+      "en": "Extract with %10, append by multiplying by ten, and pre-check the bound."
+    },
+    "source_ambiguities": {
+      "he": "המקור לא קובע סימן, רוחב או תגובת גלישה; הבחירות מוצגות במפורש.",
+      "en": "The source omits signedness, width and overflow behavior; these choices are explicit."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד להבחין בין גלישה לבין היפוך של אפס?",
+          "answer_direction": "החזירו הצלחה וערך בנפרד, או השתמשו בתוצאה אופציונלית.",
+          "principle": "הבחנה בין החוזה לבין הרחבה שלו"
+        }
+      ],
+      "en": [
+        {
+          "question": "How can overflow be distinguished from reversing zero?",
+          "answer_direction": "Return success separately from the value, or use an optional result.",
+          "principle": "Distinguish the contract from an extension"
+        }
+      ]
+    }
+  },
+  "PREP-287": {
+    "assumptions": {
+      "he": [
+        "שלמים, A2 ייחודי, ערכים חסרים בעדיפות מדולגים, הקלט אינו משתנה."
+      ],
+      "en": [
+        "Integers, unique A2, absent priorities skipped, input preserved."
+      ]
+    },
+    "optimality": {
+      "he": "זמן צפוי O(n+m+r log r); O(u+m) אחסון עזר ועוד O(n) לפלט. אין טענת אופטימום לכל מודל.",
+      "en": "Expected O(n+m+r log r) time; O(u+m) auxiliary storage plus O(n) output. No universal optimality claim."
+    },
+    "verification": {
+      "he": "161 דוגמאות ומדגמים מול אורקל מיון מלא לפי rank; בדיקת כפילות עדיפות שגויה ושימור קלט.",
+      "en": "161 examples/samples against a rank-key full-sort oracle; invalid duplicate priority and input-preservation checks."
+    },
+    "edge_cases": {
+      "he": [
+        "A1 ריק, A2 ריק, עדיפות חסרה, שליליים וריבויים רבים."
+      ],
+      "en": [
+        "Empty A1/A2, absent priorities, negatives and repeated values."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לא להסיק מספר הופעות מ־ A2; לא להדפיס שוב קבוצות שכבר הופקו; לא לשכוח למיין את השאר."
+      ],
+      "en": [
+        "Do not infer multiplicities from A2, emit a processed group again, or forget sorting leftovers."
+      ]
+    },
+    "interview_answer": {
+      "he": "סופרים את הראשון, מפיקים קבוצות בסדר השני ואז ממיינים ומפיקים את הספירות שנותרו.",
+      "en": "Count the first array, emit groups by the second array’s order, then sort and emit remaining counts."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר כפילויות במערך העדיפויות או שינוי קלט. נבחרו ייחודיות והחזרת רשימה חדשה.",
+      "en": "The source omits duplicate-priority and mutation behavior; unique priorities and a new output list are explicit choices."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אפשר לשפר כאשר כל הערכים בתחום קטן ידוע?",
+          "answer_direction": "מערך ספירות עשוי להחליף גיבוב ומיון, בעלות תלויה בגודל התחום.",
+          "principle": "הבחנה בין החוזה לבין הרחבה שלו"
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if all values lie in a known small range?",
+          "answer_direction": "A counting array can replace hashing and sorting, with cost depending on domain size.",
+          "principle": "Distinguish the contract from an extension"
+        }
+      ]
+    }
+  },
+  "PREP-276": {
+    "assumptions": {
+      "he": "בחירות שלנו: C++17, ירושה ציבורית יחידה, n כאורך הקלט, סכום שנכנס ב־ int64_t; אין הבטחת ABI או השוואת ביצועים פיזית.",
+      "en": "Our choices: C++17, single public inheritance, n as input length, sum fitting int64_t; no ABI or physical benchmark promise."
+    },
+    "optimality": {
+      "he": "גוף הסכימה Θ(n), גוף הקבוע O(1), כל אחד עם O(1) עזר. עלות שיגור/בנייה/הקצאה נידונה בנפרד ובהתאם למימוש.",
+      "en": "Summing body Theta(n), constant body O(1), each O(1) auxiliary space; dispatch/construction/allocation analyzed separately."
+    },
+    "verification": {
+      "he": "רתמת C++17 מכילה 521 טענות; ראיית הידור והרצה תירשם בנפרד. אין benchmark או בדיקה של כל ABI.",
+      "en": "C++17 harness contains 521 assertions; native compilation/execution is recorded separately. No benchmark or all-ABI validation."
+    },
+    "edge_cases": {
+      "he": "קלט ריק; הפניה לבסיס; slicing; קריאה מוסמכת; פונקציה מוסתרת שאינה וירטואלית; ניקוי דרך בעלות לבסיס.",
+      "en": "Empty input; base reference; slicing; qualified call; hidden nonvirtual member; destruction through base ownership."
+    },
+    "common_mistakes": {
+      "he": "לתת O(1) ל״ירושה״ בלי להגדיר פעולה; לבלבל override והסתרה; לספור הקצאת קלט כחלק ממתודה; להסיק פריסה אוניברסלית.",
+      "en": "Giving inheritance an intrinsic O(1); confusing overriding with hiding; charging caller input allocation to the method; assuming a universal layout."
+    },
+    "interview_answer": {
+      "he": "ירושה היא קשר טיפוסים. אגדיר את הפעולה ואת n, אזהה איזה גוף נבחר ואנתח אותו; שיגור והקצאה אינם אותו דבר.",
+      "en": "Inheritance is a type relationship. Define the operation and n, identify the selected body, and analyze it separately from dispatch/allocation."
+    },
+    "source_ambiguities": {
+      "he": "המקור לא ציין שפה או פעולה לניתוח. C++17 והדוגמה הן השלמה לימודית מוצהרת.",
+      "en": "The source names no language or operation. C++17 and the example are explicit teaching completions."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם score עצמה אינה virtual?",
+          "answer_direction": "דרך Score& תיבחר פונקציית הבסיס לפי הטיפוס הסטטי; יש להסיר override מהנגזרת. אין להציג זאת כפולימורפיזם דינמי.",
+          "principle": "הפרדה בין סמנטיקת שפה, גוף אלגוריתמי ופרטי מימוש."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if score is not virtual?",
+          "answer_direction": "A Score& call selects the base member by static type; remove override from the derived declaration. This is not dynamic polymorphism.",
+          "principle": "Separate language semantics, algorithm body and implementation details."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        "[טיוטת C++: מחלקות נגזרות](https://eel.is/c++draft/class.derived)",
+        "[טיוטת C++: פונקציות וירטואליות](https://eel.is/c++draft/class.virtual)",
+        "[טיוטת C++: מחיקה פולימורפית](https://eel.is/c++draft/expr.delete)"
+      ],
+      "en": [
+        "[C++ draft: derived classes](https://eel.is/c++draft/class.derived)",
+        "[C++ draft: virtual functions](https://eel.is/c++draft/class.virtual)",
+        "[C++ draft: polymorphic deletion](https://eel.is/c++draft/expr.delete)"
+      ]
+    }
+  },
+  "PREP-284": {
+    "assumptions": {
+      "he": "מפה סופית וסגורה, זהויות ייחודיות, שורש מסומן אחד, ממשק יציב O(1), השורש טרמינלי ופלט בסדר הקלט.",
+      "en": "Finite closed map, unique identities, one marked root, stable O(1) interface, terminal root and input-order output."
+    },
+    "optimality": {
+      "he": "O(N) קריאות ממשק ועבודת מילון צפויה, O(N) מקום; Ω(N) קריאה במקרה הגרוע. אין הליכה ריבועית או רקורסיה עמוקה.",
+      "en": "O(N) interface calls/expected dictionary work, O(N) space; Omega(N) worst-case inspection, without repeated-chain quadratic work or recursion depth."
+    },
+    "verification": {
+      "he": "כל מפות ההורים עד חמישה צמתים; שרשרת 5,000; השוואה לאורקל הליכה חדשה וקלטים פסולים.",
+      "en": "Every parent map through five nodes; a 5,000-node chain; independent fresh-walk oracle and invalid inputs."
+    },
+    "edge_cases": {
+      "he": "השורש לבדו; root.parent שאינו None; מעגל עצמי; זנב למעגל; כמה חוליות בעלות ערך שווה; הורה חיצוני.",
+      "en": "Root alone; non-None root.parent; self-cycle; cycle tail; equal-valued distinct nodes; external parent."
+    },
+    "common_mistakes": {
+      "he": "להשתמש בערך כמזהה; להתחיל מכל חוליה מחדש; לזהות כל None כשורש; להשאיר אפורים בין מסלולים; להיתקע במעגל.",
+      "en": "Using value as identity; restarting every chain; treating every None as root; leaving gray nodes between paths; looping forever."
+    },
+    "interview_answer": {
+      "he": "אצלם ואאמת הורים לפי זהות, אסווג כל מסלול פעם אחת ואשמור תוצאה לכל חוליה. השורש פותר True, ומעגל או None פותרים False.",
+      "en": "Snapshot/validate identities, resolve each path once and memoize every node. Root gives True; a nonroot cycle or None gives False."
+    },
+    "source_ambiguities": {
+      "he": "המקור מכנה את המבנה עץ אך מאפשר רכיבים מנותקים. אושר מודל הורים כללי עם מעגלים; לא הונח שכל הורה חסר הוא שורש.",
+      "en": "The source calls it a tree while allowing disconnected components. The chosen general parent map permits cycles; missing parents are not additional roots."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם הרשימה כוללת ילדים אבל חלק מההורים מחוץ לה?",
+          "answer_direction": "זה מפר את החוזה הסגור ונזרקת שגיאה. בחוזה אחר אפשר לגלות אבות נוספים, אך העלות תהיה לפי כל האובייקטים שהתגלו ולא רק N המקורי.",
+          "principle": "זהות, סגירות וגבול הסריקה הם חלק מהגדרת הבעיה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if some parent objects are outside the list?",
+          "answer_direction": "Reject under the closed-map contract. Another contract could discover external ancestors, but its cost depends on all discovered objects, not only original N.",
+          "principle": "Identity, closure and traversal boundaries are part of the problem definition."
+        }
+      ]
+    }
+  }
+}

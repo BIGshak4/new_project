@@ -405,6 +405,21 @@
       "question_key": "prep-general-in-place-integer-array-sort",
       "language": "python",
       "source": "\"\"\"In-place ascending comparison sort; integer inputs promised, not stable.\"\"\"\n\n\ndef sort_array(values):\n    def sift_down(root, end):\n        while 2 * root + 1 < end:\n            child = 2 * root + 1\n            if child + 1 < end and values[child + 1] > values[child]:\n                child += 1\n            if values[root] >= values[child]:\n                break\n            values[root], values[child] = values[child], values[root]\n            root = child\n\n    n = len(values)\n    for root in range(n // 2 - 1, -1, -1):\n        sift_down(root, n)\n    for end in range(n - 1, 0, -1):\n        values[0], values[end] = values[end], values[0]\n        sift_down(0, end)\n    return values\n"
+    },
+    {
+      "question_key": "prep-circular-packed-bit-array-move",
+      "language": "python",
+      "source": "\"\"\"Stable clockwise move of one bit in 1024 LSB-first packed bits.\"\"\"\n\n\ndef move_bit(data, x, y):\n    if (type(data) is not list or len(data) != 128\n            or any(type(v) is not int or not 0 <= v <= 255 for v in data)):\n        raise ValueError(\"data must contain exactly 128 unsigned bytes\")\n    if type(x) is not int or type(y) is not int or not 0 <= x < 1024 or not 0 <= y < 1024:\n        raise ValueError(\"x and y must be integers in 0..1023\")\n\n    def get(index):\n        return (data[index >> 3] >> (index & 7)) & 1\n\n    def put(index, bit):\n        byte, mask = index >> 3, 1 << (index & 7)\n        data[byte] = (data[byte] & (255 ^ mask)) | (bit << (index & 7))\n\n    saved = get(x)\n    for step in range(y):\n        put((x + step) & 1023, get((x + step + 1) & 1023))\n    put((x + y) & 1023, saved)\n    return data\n"
+    },
+    {
+      "question_key": "prep-reverse-signed-decimal-integer",
+      "language": "python",
+      "source": "\"\"\"Signed int32 decimal reversal; 0 is also the overflow sentinel.\"\"\"\n\n\ndef reverse_int32(n):\n    if type(n) is not int or not -(1 << 31) <= n < (1 << 31):\n        raise ValueError(\"n must be signed int32\")\n    negative = n < 0\n    remaining = -n if negative else n  # Python magnitude is unbounded.\n    limit = 1 << 31 if negative else (1 << 31) - 1\n    result = 0\n    while remaining:\n        digit = remaining % 10\n        remaining //= 10\n        if result > (limit - digit) // 10:\n            return 0\n        result = result * 10 + digit\n    return -result if negative else result\n"
+    },
+    {
+      "question_key": "prep-relative-sort-by-second-array",
+      "language": "python",
+      "source": "\"\"\"Return A1 grouped by unique A2 priorities, then ascending leftovers.\"\"\"\n\n\ndef relative_sort(a1, a2):\n    if (type(a1) is not list or type(a2) is not list\n            or any(type(x) is not int for x in a1)\n            or any(type(x) is not int for x in a2)):\n        raise ValueError(\"integer lists required\")\n    if len(set(a2)) != len(a2):\n        raise ValueError(\"a2 priorities must be unique\")\n    counts = {}\n    for value in a1:\n        counts[value] = counts.get(value, 0) + 1\n    result = []\n    for value in a2:\n        for _ in range(counts.pop(value, 0)):\n            result.append(value)\n    for value in sorted(counts):\n        for _ in range(counts[value]):\n            result.append(value)\n    return result\n"
     }
   ]
 }
