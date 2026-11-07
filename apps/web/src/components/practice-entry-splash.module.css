@@ -1,0 +1,38 @@
+.screen {
+  position: fixed;
+  z-index: 510;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+  overflow: auto;
+  padding: clamp(20px, 5vw, 64px);
+  background: var(--paper);
+  color: var(--ink);
+  text-align: center;
+}
+.scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: min(440px, 82vw);
+  aspect-ratio: 440 / 180;
+}
+.traces { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.board { stroke: var(--line); stroke-width: 1.5; opacity: .65; }
+.signal, .output { stroke: var(--link); stroke-width: 2.5; stroke-linecap: round; }
+.signal, .output {
+  stroke-dasharray: 1;
+  animation: connect 420ms cubic-bezier(.22,.61,.36,1) both;
+}
+.output { animation-delay: 300ms; stroke: var(--signal); }
+.scene > .mascot { position: relative; width: 41%; height: auto; }
+.copy { display: grid; justify-items: center; gap: 7px; }
+.brand { color: var(--ink); font-family: var(--font-display); font-size: 20px; font-weight: 900; letter-spacing: -.035em; }
+.brand b { color: var(--signal); }
+.copy p { margin: 0; font-family: var(--font-display); font-size: clamp(26px, 4.5vw, 40px); font-weight: 800; line-height: 1.18; }
+.srOnly { position: absolute; inline-size: 1px; block-size: 1px; clip-path: inset(50%); overflow: hidden; white-space: nowrap; }
+.workspace { display: contents; }
+@keyframes connect { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .signal, .output { animation: none; } }

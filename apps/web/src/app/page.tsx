@@ -30,6 +30,7 @@ import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
 import { goalProgramKey } from "../lib/goal-selection";
 import { DEFAULT_WORKSPACE_VIEW, readWorkspaceRoute, type WorkspaceRoute } from "../lib/workspace-route";
 import { Auth, type Lang } from "../components/auth";
+import { usePracticeEntryReady } from "../components/practice-entry-splash";
 import { FeatureNav } from "../components/wardrobe/feature-nav";
 import headerStyles from "../components/wardrobe/workspace-header.module.css";
 import { PracticeSession } from "../components/practice-session";
@@ -43,6 +44,7 @@ import { AccountStats } from "../components/account-stats";
 import type { AccountActivity } from "../lib/account-stats-api";
 import { AnimatePresence, motion, useReducedMotion } from "../components/ui/motion";
 import { LearnHome } from "../components/learn-home";
+import { ResumeQuestion } from "../components/resume-question";
 import { AccountIdentity } from "../components/account-identity";
 import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
@@ -151,6 +153,7 @@ function Workspace({
   const [refreshing, setRefreshing] = useState(false);
   const [progressLoading, setProgressLoading] = useState(true);
   const [entriesLoading, setEntriesLoading] = useState(true);
+  const entrySplashVisible = usePracticeEntryReady(!loading && !progressLoading && !entriesLoading);
   const [cachedQuestions, setCachedQuestions] = useState(false);
   // Goals guide the personal plan; the library starts with all questions and no filters.
   const [goal, setGoal] = useState<Goal | null>(null);
@@ -184,6 +187,7 @@ function Workspace({
     if (next.attempt) q.set("attempt", next.attempt);
     else if (next.question) q.set("question", next.question);
     if (next.interview) q.set("interview", next.interview);
+    if (next.quick) q.set("quick", next.quick);
     if (next.duration) q.set("duration", String(next.duration));
     if (next.question && next.source) q.set("source", next.source);
     window.history[replace ? "replaceState" : "pushState"](
@@ -399,7 +403,7 @@ function Workspace({
         <AccountStats userId={user.id} lang={lang} refreshKey={refreshKey} onActivity={setAccountActivity} />
         <div className={`topnav-actions ${headerStyles.toolbar}`}>
           <UserInboxButton lang={lang} />
-          <MuxiTourLauncher userId={user.id} lang={lang} controls={languageControl} ready={!loading} />
+          <MuxiTourLauncher userId={user.id} lang={lang} controls={languageControl} ready={!loading && !entrySplashVisible} />
           {languageControl}
           <button
             className="icon-button"
@@ -435,7 +439,7 @@ function Workspace({
           >
         {route.view === "fundamentals" && !active ? <>
           {libraryViews}
-          <QuickPractice key={user.id} lang={lang} api={api} userId={user.id} />
+          <QuickPractice key={`${user.id}:${route.quick ?? ""}`} lang={lang} api={api} userId={user.id} initialQuestionKey={route.quick} />
         </> : route.view === "interview" ? (
           <InterviewSession
             key={route.interview ?? "lobby"}
@@ -499,6 +503,8 @@ function Workspace({
               userName={firstName(user)}
               goal={goal}
               accountSlot={<AccountIdentity key={user.id} userId={user.id} lang={lang} />}
+              resumeSlot={<ResumeQuestion api={api} userId={user.id} lang={lang} questions={questions} recent={progress.recent} entries={entries}
+                ready={progressReady && entriesReady && !loading && !refreshing} navigate={navigate} />}
               progress={demo ? { ...progress, overview: null, skills: [] } : progress}
               refreshKey={refreshKey}
               goalSlot={

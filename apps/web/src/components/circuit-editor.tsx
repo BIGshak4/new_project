@@ -41,6 +41,7 @@ import {
   hasCount,
   powerCount,
   mask,
+  sequential,
   simulate,
   signalKey,
   type Circuit,
@@ -268,8 +269,14 @@ export default function CircuitEditor({
     [selectedWire, setSelectedWire] = useState<string | null>(null);
   const [group, setGroup] = useState(0),
     [notice, setNotice] = useState("");
-  const [running, setRunning] = useState(false),
-    [simulation, setSimulation] = useState<Simulation | null>(null);
+  const [clockSimulation, setClockSimulation] = useState<Simulation | null>(null);
+  const clocked = value.parts.some((part) => sequential(part.kind));
+  const running = clocked && clockSimulation !== null;
+  const liveSignals = useMemo(
+    () => !clocked && value.parts.length ? simulate(value) : null,
+    [value, clocked],
+  );
+  const simulation = clocked ? clockSimulation : liveSignals;
   const [undo, setUndo] = useState<Circuit[]>([]),
     [redo, setRedo] = useState<Circuit[]>([]);
   const [layout, setLayout] = useState<"inline" | "expanded" | "fullscreen">("inline");
@@ -284,8 +291,9 @@ export default function CircuitEditor({
     flow = useRef<ReactFlowInstance<GateNode, Edge> | null>(null);
   const part = value.parts.find((p) => p.id === selected);
   useEffect(() => {
-    if (running) setSimulation((old) => simulate(value, old ?? undefined));
-  }, [value, running]);
+    // Removing the last storage element ends the clock session, including on undo.
+    setClockSimulation((old) => clocked && old ? simulate(value, old) : null);
+  }, [value, clocked]);
   useEffect(() => {
     const element = dialog.current;
     if (!element) return;
@@ -459,9 +467,9 @@ export default function CircuitEditor({
         type: "gate",
         position: { x: p.x, y: p.y },
         selected: p.id === selected,
-        data: { part: p, simulation: running ? simulation : null },
+        data: { part: p, simulation },
       })),
-    [value.parts, selected, simulation, running],
+    [value.parts, selected, simulation],
   );
   const edges: Edge[] = useMemo(
     () =>
@@ -475,9 +483,9 @@ export default function CircuitEditor({
           targetHandle: w.targetPort,
           type: "smoothstep",
           selected: w.id === selectedWire,
-          label: running ? signalText(n) : undefined,
+          label: simulation ? signalText(n) : undefined,
           style: {
-            stroke: running
+            stroke: simulation
               ? n == null
                 ? "var(--circuit-unknown)"
                 : n > 0
@@ -490,7 +498,7 @@ export default function CircuitEditor({
           labelBgStyle: { fill: "var(--surface)" },
         };
       }),
-    [value.wires, simulation, running, selectedWire],
+    [value.wires, simulation, selectedWire],
   );
   const outputs = value.parts.flatMap((p) =>
     ports(p).outputs.map((port) => ({ p, port })),
@@ -632,8 +640,8 @@ export default function CircuitEditor({
       <p className="circuit-guide">
         {readOnly
           ? t(
-              "זהו השרטוט שנשלח. אפשר להגדיל ולהריץ אותו בלי לשנות את התשובה.",
-              "This is your submitted circuit. Zoom and simulate without changing the answer.",
+              "זהו השרטוט שנשלח. אפשר להגדיל את הלוח ולבדוק את האותות.",
+              "This is your submitted circuit. Zoom in to inspect its signals.",
             )
           : t(
               "בחרו רכיב להוספה. גררו אותו למקום, ואז חברו נקודת יציאה מימין לנקודת כניסה משמאל. לחיצה על רכיב פותחת את ההגדרות שלו.",
@@ -892,10 +900,11 @@ export default function CircuitEditor({
         <details className="circuit-connect" data-muxi-control="circuit-wire-details">
           <summary data-muxi-control="circuit-wire-open">
             {t(
-              "חיבור באמצעות רשימה (גם למקלדת ולנייד)",
-              "Connect using a list (keyboard & mobile)",
+              "חיבור חוט בלי גרירה",
+              "Connect pins without dragging",
             )}
           </summary>
+          <p className="small muted">{t("בחרו יציאה וכניסה ולחצו על „חיבור”.", "Select an output and an input, then choose Connect.")}</p>
           <div className="row">
             <label>
               {t("יציאה", "Output")}
@@ -949,30 +958,28 @@ export default function CircuitEditor({
         </details>
       )}
       <div className="simulation-bar">
-        <button
+        {clocked && <button
           type="button"
           data-muxi-control="circuit-simulate"
           className={running ? "" : "primary"}
-          disabled={!value.parts.length}
           aria-pressed={running}
           onClick={() => {
-            setRunning(!running);
-            setSimulation(simulate(value));
+            setClockSimulation(running ? null : simulate(value));
             onActivity?.(running ? "circuit-stopped" : "circuit-simulated");
           }}
         >
           {running
             ? t("עצירת סימולציה", "Stop simulation")
             : t("הרצת סימולציה", "Run simulation")}
-        </button>
+        </button>}
         {running && (
           <>
             <button
               type="button"
               data-muxi-control="circuit-clock-step"
               onClick={() => {
-                setSimulation((old) =>
-                  simulate(value, old ?? undefined, old?.clock ? 0 : 1),
+                setClockSimulation((old) =>
+                  old ? simulate(value, old, old.clock ? 0 : 1) : null,
                 );
                 onActivity?.("clock-stepped");
               }}
@@ -983,7 +990,7 @@ export default function CircuitEditor({
             <button
               type="button"
               data-muxi-control="circuit-reset"
-              onClick={() => { setSimulation(simulate(value)); onActivity?.("simulation-reset"); }}
+              onClick={() => { setClockSimulation(simulate(value)); onActivity?.("simulation-reset"); }}
             >
               <RotateCcw size={16} />
               {t("איפוס", "Reset")}
@@ -995,11 +1002,14 @@ export default function CircuitEditor({
           {value.wires.length}/200 {t("חוטים", "wires")}
         </span>
       </div>
-      {running && (
+      {simulation && (
         <p className="small muted circuit-guide">
-          {t(
-            "? = ערך לא ידוע או חיבור חסר. הרכיבים הסדרתיים מתחילים ב־0 ודוגמים בעליית שעון. איפוס פעיל ב־1. הסימולציה לוגית וללא זמני השהיה; היא לא בודקת אם הפתרון עונה לשאלה.",
-            "? = unknown or missing input. Sequential components start at 0 and sample on a rising clock; reset is active-high. This is zero-delay logic simulation, not an assessment of your answer.",
+          {clocked ? t(
+            "הרכיבים הסינכרוניים מתחילים ב־0 ודוגמים בעליית שעון. איפוס פעיל ב־1. סימן שאלה מציין ערך לא ידוע או חיבור חסר.",
+            "Clocked components start at 0 and sample on a rising edge. Reset is active-high. A question mark means an unknown value or missing connection.",
+          ) : t(
+            "הערכים על הרכיבים והחוטים מתעדכנים מיד עם שינוי הכניסות או החיבורים. סימן שאלה מציין ערך לא ידוע או חיבור חסר.",
+            "Values on components and wires update as you change inputs or connections. A question mark means an unknown value or missing connection.",
           )}
           {simulation?.unstable && (
             <strong>

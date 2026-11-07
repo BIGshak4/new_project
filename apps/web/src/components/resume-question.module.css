@@ -1,0 +1,20 @@
+.resume {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 18px 22px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  color: var(--ink);
+}
+.resume > svg { color: var(--link); flex-shrink: 0; }
+.copy { flex: 1 1 200px; min-width: 0; }
+.copy h2 { margin: 0; font-size: 19px; }
+.copy p { margin: 4px 0 0; color: var(--muted); overflow-wrap: anywhere; }
+.resume button { min-height: 44px; background: var(--surface); }
+@media (max-width: 520px) {
+  .resume { padding: 16px; }
+  .resume button { width: 100%; }
+}

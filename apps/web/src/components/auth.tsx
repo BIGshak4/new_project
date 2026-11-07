@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, LockKeyhole, LogOut, Mail } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import { AccessCheck, accessForUser, observeAuthUser, type AccessState } from "../lib/auth-access";
+import { recordGreeting } from "../lib/practice-entry";
 import { usernameAvailability } from "../lib/identity-api";
 import { IdentityApiError, identityErrorMessage, normalizeUsername, validUsernameFormat } from "../lib/identity-types";
 import { UsernameField } from "./username-field";
@@ -44,6 +45,7 @@ export function Auth({
     [error, setError] = useState("");
   useEffect(() => {
     const stop = observeAuthUser(supabase.auth, (next) => {
+      if (kind === "practice" && !next) recordGreeting(null);
       if (currentUser.current?.id !== next?.id) {
         authRevision.current++;
         submitRevision.current++;

@@ -24,6 +24,7 @@ import {
   type VisualAnswer as Visual,
 } from "../lib/circuit";
 import { AnswerEditor } from "./answer-editor";
+import { forgetVisit, rememberVisit } from "../lib/question-visit-store";
 import { EvaluationPanel, NextUpCard } from "./evaluation-panel";
 import { ExecutionResultView } from "./code-execution-result";
 import { HelpPopover } from "./ui/popover";
@@ -117,6 +118,18 @@ export function PracticeSession({
   const requestFeedback = useFeedbackArrival({ attempt, attemptId, loading, enabled: !demo, feedbackRef });
   const key = `jr-attempt-draft-v1-${user.id}-${attemptId}`;
   const entry = entries.find((e) => e.question_id === question?.id);
+  const visitKey = question?.key;
+  const visitAttempt = attempt?.id ?? null;
+  const answered = !!attempt?.submission;
+  const lastVisitEvent = useRef("");
+  useEffect(() => {
+    if (loading || !visitKey || (attemptId && visitAttempt !== attemptId)) return;
+    const event = JSON.stringify([user.id, visitKey, visitAttempt, answered]);
+    if (lastVisitEvent.current === event) return;
+    lastVisitEvent.current = event;
+    const visit = { kind: "practice" as const, questionKey: visitKey, attemptId: visitAttempt, visitedAt: Date.now() };
+    void (answered ? forgetVisit(user.id, visit) : rememberVisit(user.id, visit)).catch(() => {});
+  }, [loading, visitKey, visitAttempt, attemptId, answered, user.id]);
 
   useEffect(() => {
     if (loading || !attempt?.reference) return;

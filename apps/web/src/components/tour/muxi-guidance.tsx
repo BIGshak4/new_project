@@ -65,9 +65,11 @@ export function MuxiGuidance({ root, station, lang, actions, ready, onAction }: 
           if (!seen("guide-wire-target")) return target("circuit-wire-target", "בחרו את הכניסה AND.A1 כאן", "Select input AND.A1 here");
           return target("circuit-wire-connect", "לחצו כאן כדי לחבר את החוט", "Click here to connect the wire");
         }
-        case "simulate":
-          if (active.querySelectorAll(".react-flow__edge").length < 3 && !ready) return target("circuit-prewired", "טענו קודם את המעגל המחובר", "First load the connected circuit");
-          return run();
+        case "simulate": {
+          const reading = active.querySelector<HTMLElement>('[data-muxi-control="circuit-node"][data-muxi-part="y"] .part-reading');
+          if (ready && reading) return { element: reading, label: t("כאן רואים את הערך ביציאה Y", "Read the value at output Y here") };
+          return target("circuit-prewired", "טענו את דוגמת ה־AND המחוברת", "Load the wired AND example");
+        }
         case "inputs":
           if (!seen("guide-component-selected") || !find("circuit-input-toggle")) return selectInput("A");
           return target("circuit-input-toggle", "כאן מחליפים בין 0 ל־1 ורואים את הפלט משתנה", "Toggle 0 / 1 here and watch the output change");
@@ -83,13 +85,11 @@ export function MuxiGuidance({ root, station, lang, actions, ready, onAction }: 
         case "expand": return target("circuit-expand", "פתחו כאן את סביבת השרטוט המורחבת", "Open the expanded drawing workspace here");
         case "export-circuit": return target("circuit-download", "כאן מורידים עותק של השרטוט", "Download a copy of the circuit here");
         case "mux":
-          if (find("circuit-simulate")?.getAttribute("aria-pressed") !== "true") return run();
           if (input("circuit-component")?.value !== "s" || !seen("guide-component-selected")) return selectInput("S");
           return target("circuit-input-toggle", "החליפו את S וראו איזה נתון מגיע לפלט", "Toggle S and watch which input reaches the output");
         case "clock-start": return run();
-        case "clock": return (find("circuit-clock-step") as HTMLButtonElement | undefined)?.disabled ? run()
-          : target("circuit-clock-step", "כאן מקדמים את השעון צעד אחד", "Advance the clock one step here");
-        case "reset": return target("circuit-reset", "כאן מאפסים את מצב הסימולציה", "Reset the simulation state here");
+        case "clock": return target("circuit-clock-step", "כאן מקדמים את השעון צעד אחד", "Advance the clock one step here") ?? run();
+        case "reset": return target("circuit-reset", "כאן מאפסים את מצב הסימולציה", "Reset the simulation state here") ?? run();
         case "hint": return target("hint-next", "כאן מבקשים את הרמז הבא", "Request the next hint here");
         case "solution": return target("solution-confirm", "אשרו כאן את חשיפת הפתרון", "Confirm reference exposure here")
           ?? target("solution-open", "כאן מבקשים לראות את הפתרון", "Request the reference solution here");

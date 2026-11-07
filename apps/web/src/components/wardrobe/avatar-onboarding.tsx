@@ -6,6 +6,7 @@ import { avatarApi } from "../../lib/avatar-api";
 import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
 import { AVATAR_COLORS, DEFAULT_AVATAR, type AvatarClient, type AvatarLanguage, type AvatarPayload } from "../../lib/avatar-types";
 import { LogicAvatar } from "./logic-avatar";
+import { PracticeEntry } from "../practice-entry-splash";
 import styles from "./avatar-onboarding.module.css";
 
 export function AvatarWelcome({ client, data, lang, onContinue }: { client: AvatarClient; data: AvatarPayload; lang: AvatarLanguage; onContinue: () => void }) {
@@ -64,7 +65,10 @@ export function AvatarOnboardingGate({ userId, lang, children }: { userId: strin
     void client.get().then(value => { if (current) setData(value); }).catch(() => {}).finally(() => { if (current) setChecked(true); });
     return () => { current = false; };
   }, [client]);
-  if (!checked) return <div className="loading" role="status">{lang === "he" ? "מכינים את סביבת העבודה…" : "Preparing your workspace…"}</div>;
-  if (!finished && data?.enabled && data.onboarding_completed === false) return <AvatarWelcome client={client} data={data} lang={lang} onContinue={() => setFinished(true)} />;
-  return children;
+  let content = children;
+  if (!checked) content = <div className="loading" role="status">{lang === "he" ? "מכינים את סביבת העבודה…" : "Preparing your workspace…"}</div>;
+  else if (!finished && data?.enabled && data.onboarding_completed === false) {
+    content = <AvatarWelcome client={client} data={data} lang={lang} onContinue={() => setFinished(true)} />;
+  }
+  return <PracticeEntry owner={userId} lang={lang} gateReady={checked}>{content}</PracticeEntry>;
 }

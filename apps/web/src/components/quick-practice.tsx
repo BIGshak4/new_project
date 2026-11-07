@@ -12,8 +12,9 @@ import { filterQuickQuestions, quickAnswerMarkdown, quickQuestions, quickTopics,
 import { confirmQuickCompletion, filterQuickHistory, quickCompletionState, quickRevision, readQuickProgress, type QuickHistoryView, type QuickProgressApi } from "../lib/fundamentals-progress";
 import type { FundamentalCompletion } from "../lib/practice-api";
 import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
+import { forgetVisit, rememberVisit } from "../lib/question-visit-store";
 
-export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: QuickProgressApi; userId: string }) {
+export function QuickPractice({ lang, api, userId, initialQuestionKey }: { lang: "he" | "en"; api: QuickProgressApi; userId: string; initialQuestionKey?: string }) {
   const quiz = useQuickQuiz(userId);
   const [quizDialogOpen, setQuizDialogOpen] = useState(false);
   const quizTrigger = useRef<HTMLButtonElement>(null);
@@ -25,11 +26,11 @@ export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: Q
   const [topic, setTopic] = useState<QuickTopic | "all">("all");
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(initialQuestionKey ?? null);
   const orderSeed = useQuestionOrderSeed();
   const orderedQuestions = useMemo(() => shuffleQuestions(quickQuestions, orderSeed, q => q.id), [orderSeed]);
   const [revealedId, setRevealedId] = useState<string | null>(null);
-  const [historyView, setHistoryView] = useState<QuickHistoryView>("unanswered");
+  const [historyView, setHistoryView] = useState<QuickHistoryView>(initialQuestionKey ? "all" : "unanswered");
   const [records, setRecords] = useState<Record<string, FundamentalCompletion>>({});
   const [loadState, setLoadState] = useState<"loading" | "ready" | "error">("loading");
   const [refreshError, setRefreshError] = useState(false);
@@ -49,6 +50,13 @@ export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: Q
   const question = questions[index];
   const revealed = question && revealedId === question.id;
   const record = question && records[question.id];
+  const visibleKey = !quiz.run && loadState === "ready" && question && !record ? question.id : null;
+  const lastVisitKey = useRef<string | null>(null);
+  useEffect(() => {
+    if (lastVisitKey.current === visibleKey) return;
+    lastVisitKey.current = visibleKey;
+    if (visibleKey) void rememberVisit(userId, { kind: "quick", questionKey: visibleKey, attemptId: null, visitedAt: Date.now() }).catch(() => {});
+  }, [userId, visibleKey]);
   const state = question && quickCompletionState(question, records);
   const completedCount = quickQuestions.filter(q => !!records[q.id]).length;
   const NextArrow = lang === "he" ? ArrowLeft : ArrowRight;
@@ -100,6 +108,7 @@ export function QuickPractice({ lang, api, userId }: { lang: "he" | "en"; api: Q
     setSaving(true); setSaveError(null);
     try {
       const confirmed = confirmQuickCompletion(await api.completeFundamental(userId, key, quickRevision(key)), key);
+      void forgetVisit(userId, { kind: "quick", questionKey: key, attemptId: null, visitedAt: Date.now() }).catch(() => {});
       if (request !== generation.current) return;
       setRecords(old => ({ ...old, [key]: confirmed }));
       setRevealedId(null); focusQuestion.current = true;

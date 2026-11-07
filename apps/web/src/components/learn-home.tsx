@@ -27,6 +27,7 @@ export function LearnHome({
   refreshKey,
   goalSlot,
   accountSlot,
+  resumeSlot,
   userName,
   userId,
   activity,
@@ -45,6 +46,7 @@ export function LearnHome({
   goalSlot?: React.ReactNode;
   /** Account identity remains available independently of the learning goal. */
   accountSlot?: React.ReactNode;
+  resumeSlot?: React.ReactNode;
   /** the user's first name, for the kicker */
   userName?: string;
   /** Bind recommended question starts to the account which owns this workspace. */
@@ -227,6 +229,8 @@ export function LearnHome({
             </p>
           )}
         </header>
+
+        {resumeSlot}
 
         {loading ? (
           <p className="loading loading-sheet" role="status">
