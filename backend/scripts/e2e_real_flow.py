@@ -136,6 +136,17 @@ async def main() -> None:
             print(f"  {s.key}: bands={s.bands} assessed={s.skills_assessed}/{s.skills_total} avg={s.average_level}")
     cost = sum(u["cost_usd"] for u in store.usage)
     print(f"\nTOTAL: {len(store.usage)} model calls, ${cost:.2f}, {time.perf_counter() - started:.0f}s wall")
+    by_role = {}
+    for u in store.usage:                                             # per role (2026-11-07, the expense cuts)
+        row = by_role.setdefault(u["action"], {"n": 0, "cost": 0.0, "ms": 0, "tier": set()})
+        row["n"] += 1
+        row["cost"] += float(u.get("cost_usd") or 0)
+        row["ms"] += int(u.get("latency_ms") or 0)
+        row["tier"].add((u.get("meta") or {}).get("service_tier") or "default")
+    print("  provider fallbacks:", getattr(provider, "fallbacks", None))      # flex refused -> default; effort none -> low
+    for action, row in sorted(by_role.items(), key=lambda kv: -kv[1]["cost"]):
+        print(f"  {action:<10} n={row['n']:<3} ${row['cost']:.4f} total, ${row['cost']/row['n']:.4f} each, "
+              f"{row['ms']//row['n']} ms mean, tier {','.join(sorted(row['tier']))}")
 
 
 if __name__ == "__main__":

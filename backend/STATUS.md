@@ -1954,6 +1954,52 @@ was already paid; `completion_coins` on the report is the finishing bonus actual
 **Pilot list.** talbaumgarten@gmail.com joined `jr_members` as 'Tal' on 2026-11-07 (Shaked: "add"; dry run, then
 applied): fourteen members.
 
+## 5zzc. Cutting expenses: the background prose on flex with no reasoning (2026-11-07, Shaked: "lets check how can we cut expenses even more"; "run 1 and 2")
+
+**Where the money went.** Per practice answer in production since the OpenAI switch: judge 0.95 cent (0.24 once
+the warm-up of §5zz is deployed), feedback card 0.31, follow-up question 0.42, tip 0.08. Once the judge is cached,
+three quarters of the cost is prose written after the verdict is already on screen.
+
+**Built.**
+
+1. **Processing tier per role.** `ROLE_SERVICE_TIER` in `providers.py` puts `feedback`, `tip` and `generator` on
+   OpenAI's flex tier (half price; may start later, which the user never sees because all three run in the
+   background after the verdict). The judge and the interview report, which the user waits for, keep the account's
+   tier. Precedence: `OPENAI_ROLE_SERVICE_TIER` (new setting, e.g. `feedback=default`) beats the code's per-role
+   default, which beats the global `OPENAI_SERVICE_TIER`; so `OPENAI_SERVICE_TIER=priority` speeds up the judge
+   without paying double for the prose. Flex that OpenAI cannot serve (429 "unavailable", 503) is retried once at
+   the standard tier; the usage record then says `default`. Validated in `production_problems`, shown on
+   `/health.speed.role_service_tier` with `fallbacks` counters.
+2. **No reasoning for the card and the tip.** `ROLE_EFFORT` sets `feedback` and `tip` to `none` (Terra accepts it;
+   a model that refuses it, like gpt-6.1-sol, gets `low` once, counted in `fallbacks.effort_none_to_low`). The
+   follow-up generator stays at medium: it has to think of an edge case.
+
+**Measured on the real model** (`scripts/e2e_real_flow.py`, which now prints cost and latency per role; the same two
+flows with the old settings forced through the environment, then with the new defaults):
+
+| Role, per call | Before | After | Note |
+|---|---|---|---|
+| feedback card | $0.0025, 4.0 s | $0.0013 then $0.0008, 4 to 12 s | flex, no reasoning; runs in the background |
+| tip | $0.0009, 1.8 s | $0.0004, 2 to 6 s | flex, no reasoning |
+| follow-up question | $0.0033, 3.6 s | $0.0033 once (fallback), $0.0017 the next run, 3 to 11 s | flex, medium reasoning; one of six calls was refused flex and retried at standard, as designed |
+| judge | unchanged by this change | | the warm-up (§5zz) is what cuts it |
+
+The prose after the verdict costs about half of what it did; the same answers got the same bands and the same
+kind of card. The price of flex is latency: the card and the follow-up can take ten seconds instead of four, after
+the verdict is already on screen. If the follow-up feels late, `OPENAI_ROLE_SERVICE_TIER=generator=default` puts
+only that role back at full price. The generator's usage record now carries the tier it was served on (its
+accumulator over retries dropped it, which is why the first measurement showed "default" at a halved price).
+
+**Verification.** `tests/test_openai_provider.py` (+6: the defaults per role, the global tier against the role
+defaults, a host role tier over both, flex refused → standard once, "none" refused → low once, the setting parsed
+and validated); the warm-up and grade-first suites unchanged. Offline suite: **4,140 passed / 13 skipped**; 17
+failed, of which 16 are Harel's known content and protection tests (§5zza) and one was this change's: the Anthropic
+fallback provider received the prose roles' "none", which it does not take; it now maps "none" and "minimal" to its
+lowest effort and the top words to its highest (`anthropic_effort`), and its test is green again.
+
+**Not done, by Shaked's choice for now.** Terra as the judge (his call), the tip skipped after a strong answer,
+card and tip in one call, figures in words.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -1994,6 +2040,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-07 | Expense cuts (§5zzc): the background prose (feedback, tip, follow-up) runs on OpenAI's flex tier at half price with a once-only fallback to standard, and the card and tip run with no reasoning (fallback to low); `OPENAI_ROLE_SERVICE_TIER` per role, `/health.speed.role_service_tier` and `fallbacks`; `e2e_real_flow.py` prints cost per role. Finishing bonus rule (§5zzb) and Tal on the pilot list the same day. |
 | 2026-11-06 | XP retired, coins once per question (§5zzb): strong practice answer 5 flat, strong interview turn 10, a question pays once per user across attempts and interviews (ledger reference `question:<id>`, the answer and the turn record what they earned); `GET /v1/me` carries the coin balance for every screen's header; XP fields always None/0 until the screens drop them, the streak stays. Harel's row 24. |
 | 2026-11-06 | Full check and verification (§5zza): rebased the unpushed warm-up onto Harel's seventeen commits; production health, smoke (61 routes), web, broker and signing key all good; offline 4,128 passed with 18 of Harel's own tests failing on a clean `origin/master` too (content attestations, a missing protection test, two needing `tzdata`, now a dependency); live database 3, live service 18 (in pieces), live interview 1, coins/duels scenario 33 checks; three real-model flows. Found and fixed: `PracticeService.start` opened a second transaction inside its own for the day's cap (a deadlock on a single-connection store, a pool-exhaustion hazard under load in production); the live HTTP test's fixture picks a pilot member again. Harel's to-do row 23. |
 | 2026-11-02 | The judge's prompt cache is warmed when a question opens, and pictures are bounded (§5zz): `JudgeWarmer` sends the judge's exact prefix with an empty answer in the background on practice start / hint / reveal and on every interview turn, once per question per four minutes (`JUDGE_WARM`, counters on `/health.judge_warm`); question figures and answer photos go to the model at 1024 px (Pillow), a question's figures are cached ten minutes. Measured on the real model: judge 10.0 s / $0.0116 cold, 5.4 s / $0.0024 after the warm-up, same verdict. 12 new tests; `scripts/judge_warm_check.py`. |

@@ -49,7 +49,7 @@ from app.auth import TokenVerifier
 from app.config import get_settings
 from app.engine import ENGINE_VERSION
 from app.engine.catalog import CatalogError, load_catalog
-from app.engine.providers import ROLE_EFFORT
+from app.engine.providers import ROLE_EFFORT, ROLE_SERVICE_TIER
 from app.runtime import build_runtime
 
 log = logging.getLogger("app")
@@ -325,7 +325,10 @@ async def health(request: Request, db_check: bool = False) -> dict:
             "models": ({"evaluator": settings.judge_model, **settings.role_models}
                        if settings.llm_provider in ("anthropic", "openai") else None),
             # the speed knobs (2026-11-01): each role's reasoning effort and the processing tier asked for
-            "speed": ({"effort": {**ROLE_EFFORT, **settings.role_effort}, "service_tier": settings.service_tier or "default"}
+            "speed": ({"effort": {**ROLE_EFFORT, **settings.role_effort}, "service_tier": settings.service_tier or "default",
+                       # per role (2026-11-07): the background prose on flex unless the host says otherwise
+                       "role_service_tier": {**ROLE_SERVICE_TIER, **settings.role_service_tier},
+                       "fallbacks": getattr(runtime.provider, "fallbacks", None) if runtime is not None else None}
                       if settings.llm_provider == "openai" else None),
             # the judge's cache warm-up (Shaked, 2026-11-02): active = OpenAI with a key; the counters since start
             "judge_warm": ({"enabled": settings.judge_warm, "active": runtime.warmer.active, **runtime.warmer.stats}

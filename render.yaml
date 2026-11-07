@@ -37,6 +37,7 @@ services:
         value: gpt-6.1-sol             # the judge; OPENAI_ROLE_MODELS (default in app/config.py) picks the prose models
       # Speed knobs (2026-11-01), set in the dashboard when Shaked picks a row of scripts/judge_speed_matrix.py:
       #   OPENAI_ROLE_EFFORT=evaluator=minimal   (reasoning depth per role; changes how answers are judged)
+      #   OPENAI_ROLE_SERVICE_TIER=feedback=default (per role; the code puts feedback, tip and generator on flex, half price, 2026-11-07)
       #   OPENAI_SERVICE_TIER=priority           (faster processing at a higher price; flex = slower, cheaper)
       - key: ALLOW_IN_REVIEW_CONTENT
         value: "true"                  # the pilot serves in_review questions until the first ones are published

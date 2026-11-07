@@ -25,9 +25,17 @@ from typing import Protocol
 from pydantic import BaseModel, ValidationError
 
 # Effort per engine role (MVP_Build_Guide §7.1). One model keeps one prompt cache.
-# feedback measured on the real model (2026-09-19): low effort gives the same card in ~10 s instead of ~16 s
-ROLE_EFFORT = {"evaluator": "low", "generator": "medium", "tip": "low", "report": "medium", "feedback": "low"}
+# feedback measured on the real model (2026-09-19): low effort gives the same card in ~10 s instead of ~16 s.
+# 2026-11-07 (Shaked, "cut expenses"): the card and the tip are prose, not judgement; they run with no reasoning at
+# all ("none", which the prose model accepts; a model that refuses it falls back to "low" once, see complete()).
+ROLE_EFFORT = {"evaluator": "low", "generator": "medium", "tip": "none", "report": "medium", "feedback": "none"}
 ROLE_MAX_TOKENS = {"evaluator": 8000, "generator": 8000, "tip": 2000, "report": 4000, "feedback": 2000}
+# Processing tier per role (2026-11-07, Shaked: "cut expenses"): the card, the tip and the follow-up question are
+# written AFTER the verdict is on screen, so OpenAI's flex processing (half price, may start later) costs the user
+# nothing; the judge and the interview report, which the user waits for, keep the account's tier. A role here beats
+# the global OPENAI_SERVICE_TIER; OPENAI_ROLE_SERVICE_TIER beats both. Flex that OpenAI cannot serve falls back to
+# the standard tier once, in complete().
+ROLE_SERVICE_TIER = {"feedback": "flex", "tip": "flex", "generator": "flex"}
 
 # USD per million tokens. Anthropic: cache reads bill at 0.1x input, cache writes at 1.25x.
 PRICES = {"claude-opus-5-5": (4.00, 20.00), "claude-opus-5": (5.00, 25.00), "claude-sonnet-5": (2.00, 10.00), "claude-haiku-4-5": (1.00, 5.00)}
@@ -52,6 +60,12 @@ class LLMRefusal(LLMError):
 
 # OpenAI bills priority processing at twice the standard token prices and flex at half (pricing page, 2026-11-01).
 SERVICE_TIER_MULTIPLIER = {"priority": 2.0, "flex": 0.5}
+
+
+def anthropic_effort(effort: str) -> str:
+    """The role efforts are OpenAI's words; Anthropic's `output_config.effort` takes low, medium and high. The prose
+    roles' "none" (2026-11-07) is the lowest Anthropic has, and the top words are its highest."""
+    return {"none": "low", "minimal": "low", "xhigh": "high", "max": "high"}.get(effort, effort)
 
 
 @dataclass
@@ -339,7 +353,7 @@ class AnthropicProvider:
         common = dict(
             model=self.model_for(request.role), max_tokens=request.resolved_max_tokens(), system=self._system_blocks(request),
             messages=[{"role": "user", "content": self._user_content(request)}],
-            output_config={"effort": request.resolved_effort()}, **self._extras(),
+            output_config={"effort": anthropic_effort(request.resolved_effort())}, **self._extras(),
         )
         try:
             message = await self._send(request, common)
@@ -397,7 +411,7 @@ class OpenAIProvider:
 
     def __init__(self, *, model: str = "gpt-6.1-sol", api_key: str | None = None, timeout_seconds: float = 120.0,
                  max_retries: int = 2, role_models: dict[str, str] | None = None, role_effort: dict[str, str] | None = None,
-                 service_tier: str | None = None):
+                 service_tier: str | None = None, role_service_tier: dict[str, str] | None = None):
         import openai
 
         self._openai = openai
@@ -405,6 +419,8 @@ class OpenAIProvider:
         self.role_models = dict(role_models or {})            # cheaper models for the prose roles
         self.role_effort = dict(role_effort or {})            # reasoning effort per role, over the code's ROLE_EFFORT
         self.service_tier = service_tier or None              # priority | flex | default | auto; None = not sent
+        self.role_service_tier = dict(role_service_tier or {})   # per role, over the code's ROLE_SERVICE_TIER
+        self.fallbacks = {"flex_to_default": 0, "effort_none_to_low": 0}   # how often OpenAI refused the cheap settings
         self._schema_unsupported = False
         api_key = api_key or os.environ.get("OPENAI_API_KEY") or None       # an empty OPENAI_API_KEY= line is no key
         if api_key is None:
@@ -420,6 +436,11 @@ class OpenAIProvider:
 
     def effort_for(self, request: LLMRequest) -> str:
         return self.role_effort.get(request.role) or request.resolved_effort()
+
+    def tier_for(self, request: LLMRequest) -> str | None:
+        """The processing tier for this call: the host's per-role setting, else the code's per-role default (the
+        background prose on flex), else the host's global tier, else nothing (the account default)."""
+        return self.role_service_tier.get(request.role) or ROLE_SERVICE_TIER.get(request.role) or self.service_tier
 
     @staticmethod
     def _instructions(request: LLMRequest) -> str:
@@ -463,13 +484,34 @@ class OpenAIProvider:
             raise LLMError("OPENAI_API_KEY is not set (put it in backend/.env or the host's environment)", retryable=False)
         openai = self._openai
         started = time.perf_counter()
+        effort, tier = self.effort_for(request), self.tier_for(request)
         common = dict(model=self.model_for(request.role), instructions=self._instructions(request), input=self._input(request),
-                      max_output_tokens=request.resolved_max_tokens(), reasoning={"effort": self.effort_for(request)},
+                      max_output_tokens=request.resolved_max_tokens(), reasoning={"effort": effort},
                       prompt_cache_key=f"jobrun:{request.role}", store=False)
-        if self.service_tier:
-            common["service_tier"] = self.service_tier
+        if tier:
+            common["service_tier"] = tier
         try:
-            response = await self._send(request, common)
+            try:
+                response = await self._send(request, common)
+            except openai.BadRequestError as exc:
+                # a model that does not take "none" (gpt-6.1-sol does not) gets the cheapest effort it accepts, once
+                message = str(getattr(exc, "message", exc)).lower()
+                if effort == "none" and ("reasoning" in message or "effort" in message):
+                    self.fallbacks["effort_none_to_low"] += 1
+                    response = await self._send(request, {**common, "reasoning": {"effort": "low"}})
+                else:
+                    raise
+            except (openai.RateLimitError, openai.APIStatusError) as exc:
+                # flex processing can be refused when OpenAI has no spare capacity (429 resource_unavailable / 503):
+                # the call is made once more at the standard tier rather than failing the card or the tip
+                status = getattr(exc, "status_code", None)
+                message = str(getattr(exc, "message", exc)).lower()
+                if tier == "flex" and (status == 503 or (status == 429 and "unavailable" in message)):
+                    self.fallbacks["flex_to_default"] += 1
+                    tier = "default"                                 # what the usage record will say was asked for
+                    response = await self._send(request, {**common, "service_tier": tier})
+                else:
+                    raise
         except openai.RateLimitError as exc:
             raise LLMError(f"rate limited: {exc.message}", retryable=True) from exc
         except openai.APIStatusError as exc:
@@ -501,7 +543,7 @@ class OpenAIProvider:
         usage = getattr(response, "usage", None)
         total_in = int(getattr(usage, "input_tokens", 0) or 0)
         cached = int(getattr(getattr(usage, "input_tokens_details", None), "cached_tokens", 0) or 0)
-        served_on = getattr(response, "service_tier", None) or self.service_tier     # what OpenAI says it used, else what we asked
+        served_on = getattr(response, "service_tier", None) or tier                  # what OpenAI says it used, else what we asked
         return LLMResponse(text=text, parsed=parsed,
                            usage=LLMUsage(input_tokens=max(0, total_in - cached), output_tokens=int(getattr(usage, "output_tokens", 0) or 0),
                                           cache_read_tokens=cached, cache_write_tokens=0,

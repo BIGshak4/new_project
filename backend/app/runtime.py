@@ -71,7 +71,7 @@ def make_provider(settings: Settings) -> Provider:
     if settings.llm_provider == "openai":
         return build_provider("openai", api_key=settings.openai_api_key, model=settings.openai_model,
                               role_models=settings.role_models, role_effort=settings.role_effort,
-                              service_tier=settings.service_tier)
+                              service_tier=settings.service_tier, role_service_tier=settings.role_service_tier)
     if settings.llm_provider == "anthropic":
         return build_provider("anthropic", api_key=settings.anthropic_api_key, model=settings.anthropic_model,
                               enable_fallbacks=settings.anthropic_enable_fallbacks, role_models=settings.role_models)

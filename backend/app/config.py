@@ -80,6 +80,9 @@ class Settings(BaseSettings):
     # empty = the account default. Changing the evaluator's effort changes how answers are judged: Shaked's call.
     openai_role_effort: str = ""
     openai_service_tier: str | None = None
+    # Per-role processing tier, e.g. "feedback=default,tip=default" (2026-11-07). The code already puts the background
+    # prose (feedback, tip, generator) on flex, half price; this overrides it per role, and beats OPENAI_SERVICE_TIER.
+    openai_role_service_tier: str = ""
     # The fallback real provider (anthropic), kept selectable with LLM_PROVIDER=anthropic.
     anthropic_api_key: str | None = None
     anthropic_model: str = "claude-opus-5-5"               # the judge (evaluator), and any role not overridden; Opus 5 → 5.5 on 2026-10-01 (13/13 bands, same misconception keys)
@@ -192,6 +195,11 @@ class Settings(BaseSettings):
         return (self.openai_service_tier or None) if self.llm_provider == "openai" else None
 
     @property
+    def role_service_tier(self) -> dict[str, str]:
+        """OPENAI_ROLE_SERVICE_TIER parsed; only the OpenAI provider reads it."""
+        return self._pairs(self.openai_role_service_tier) if self.llm_provider == "openai" else {}
+
+    @property
     def is_production(self) -> bool:
         return self.env == "production"
 
@@ -255,6 +263,9 @@ class Settings(BaseSettings):
         for role, effort in self.role_effort.items():
             if effort not in OPENAI_EFFORTS:
                 problems.append(f"OPENAI_ROLE_EFFORT {role}={effort!r} is not one of {', '.join(OPENAI_EFFORTS)}")
+        for role, tier in self.role_service_tier.items():
+            if tier not in OPENAI_SERVICE_TIERS:
+                problems.append(f"OPENAI_ROLE_SERVICE_TIER {role}={tier!r} is not one of {', '.join(OPENAI_SERVICE_TIERS)}")
         if self.llm_provider == "manual":
             problems.append("LLM_PROVIDER=manual waits for a person to answer each model call")
         if self.llm_provider == "scripted":

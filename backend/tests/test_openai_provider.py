@@ -90,8 +90,8 @@ class TestWhatIsSent:
         assert response.usage.cost_usd("gpt-6.1-sol-2026-09-01") == round((200 * 2.00 + 1000 * 0.10 + 300 * 10.00) / 1e6, 6)
 
     async def test_effort_and_model_follow_the_role(self, provider):
-        for role, effort, model in (("generator", "medium", "gpt-6.1-sol"), ("tip", "low", "gpt-6.1-terra"),
-                                    ("report", "medium", "gpt-6.1-sol"), ("feedback", "low", "gpt-6.1-terra")):
+        for role, effort, model in (("generator", "medium", "gpt-6.1-sol"), ("tip", "none", "gpt-6.1-terra"),
+                                    ("report", "medium", "gpt-6.1-sol"), ("feedback", "none", "gpt-6.1-terra")):
             install(provider, create_outcome=fake_response(text="a polished sentence"))
             await provider.complete(LLMRequest(role=role, system=["s"], user="u", schema=None))
             kind, sent = provider.sent[-1]
@@ -245,18 +245,101 @@ class TestSpeedKnobs:
         await p.complete(request())
         await p.complete(LLMRequest(role="tip", system=["s"], user="u", schema=None))
         assert p.sent[0][1]["reasoning"] == {"effort": "minimal"}
-        assert p.sent[1][1]["reasoning"] == {"effort": "low"}                   # the code's ROLE_EFFORT still applies
-        assert "service_tier" not in p.sent[0][1] and "service_tier" not in p.sent[1][1]   # not asked = not sent
+        assert p.sent[1][1]["reasoning"] == {"effort": "none"}                  # the code's ROLE_EFFORT still applies (tip: none)
+        assert "service_tier" not in p.sent[0][1]                               # the judge: not asked = not sent
+        assert p.sent[1][1]["service_tier"] == "flex"                           # the tip: background prose, half price
 
-    async def test_service_tier_is_sent_on_every_call_when_set(self):
+    async def test_the_global_tier_covers_the_judge_and_the_background_prose_keeps_flex(self):
         p = OpenAIProvider(api_key="k", service_tier="priority")
         p.sent = []
         install(p, parse_outcome=fake_response(text=GOOD.model_dump_json(), parsed=GOOD),
                 create_outcome=fake_response(text="a sentence"))
         await p.complete(request())
         await p.complete(LLMRequest(role="feedback", system=["s"], user="u", schema=None))
-        assert all(sent["service_tier"] == "priority" for _, sent in p.sent)
+        await p.complete(LLMRequest(role="report", system=["s"], user="u", schema=None))
+        assert [sent["service_tier"] for _, sent in p.sent] == ["priority", "flex", "priority"]
         assert OpenAIProvider(api_key="k", service_tier="").service_tier is None
+
+    async def test_the_background_prose_runs_on_flex_with_no_reasoning_by_default(self):
+        """2026-11-07 (Shaked: "cut expenses"): card, tip and follow-up are written after the verdict is shown."""
+        p = OpenAIProvider(api_key="k")
+        p.sent = []
+        install(p, parse_outcome=fake_response(text=GOOD.model_dump_json(), parsed=GOOD),
+                create_outcome=fake_response(text="a sentence"))
+        for role in ("evaluator", "feedback", "tip", "generator", "report"):
+            await p.complete(LLMRequest(role=role, system=["s"], user="u", schema=Evaluation if role == "evaluator" else None))
+        by_role = {role: sent for role, (_, sent) in zip(("evaluator", "feedback", "tip", "generator", "report"), p.sent, strict=True)}
+        assert by_role["evaluator"]["reasoning"] == {"effort": "low"} and "service_tier" not in by_role["evaluator"]
+        assert by_role["feedback"]["reasoning"] == {"effort": "none"} and by_role["feedback"]["service_tier"] == "flex"
+        assert by_role["tip"]["reasoning"] == {"effort": "none"} and by_role["tip"]["service_tier"] == "flex"
+        assert by_role["generator"]["reasoning"] == {"effort": "medium"} and by_role["generator"]["service_tier"] == "flex"
+        assert by_role["report"]["reasoning"] == {"effort": "medium"} and "service_tier" not in by_role["report"]
+
+    async def test_a_role_tier_from_the_host_beats_the_code_default_and_the_global_tier(self):
+        p = OpenAIProvider(api_key="k", service_tier="priority", role_service_tier={"feedback": "default", "evaluator": "flex"})
+        p.sent = []
+        install(p, parse_outcome=fake_response(text=GOOD.model_dump_json(), parsed=GOOD),
+                create_outcome=fake_response(text="a sentence"))
+        await p.complete(request())
+        await p.complete(LLMRequest(role="feedback", system=["s"], user="u", schema=None))
+        await p.complete(LLMRequest(role="tip", system=["s"], user="u", schema=None))
+        assert [sent["service_tier"] for _, sent in p.sent] == ["flex", "default", "flex"]
+
+    async def test_flex_refused_for_capacity_is_retried_once_at_the_standard_tier(self):
+        p = OpenAIProvider(api_key="k")
+        p.sent = []
+        calls = {"n": 0}
+
+        async def create(**kwargs):
+            p.sent.append(("create", kwargs))
+            calls["n"] += 1
+            if calls["n"] == 1:
+                raise http_error(openai.RateLimitError, 429, "The flex tier is currently unavailable (resource_unavailable)")
+            return fake_response(text="a sentence")
+        p.client.responses.create = create
+        r = await p.complete(LLMRequest(role="tip", system=["s"], user="u", schema=None))
+        assert r.text == "a sentence" and [s["service_tier"] for _, s in p.sent] == ["flex", "default"]
+        assert r.usage.service_tier == "default" and p.fallbacks["flex_to_default"] == 1
+        # an ordinary rate limit on flex is still a rate limit
+        calls["n"] = 0
+        p.sent = []
+
+        async def limited(**kwargs):
+            p.sent.append(("create", kwargs))
+            raise http_error(openai.RateLimitError, 429, "Rate limit reached for requests")
+        p.client.responses.create = limited
+        with pytest.raises(LLMError, match="rate limited"):
+            await p.complete(LLMRequest(role="tip", system=["s"], user="u", schema=None))
+        assert len(p.sent) == 1
+
+    async def test_a_model_that_refuses_no_reasoning_gets_low_once(self):
+        p = OpenAIProvider(api_key="k", role_models={"feedback": "gpt-6.1-sol"})   # sol does not take "none"
+        p.sent = []
+        calls = {"n": 0}
+
+        async def create(**kwargs):
+            p.sent.append(("create", kwargs))
+            calls["n"] += 1
+            if calls["n"] == 1 and kwargs["reasoning"] == {"effort": "none"}:
+                raise http_error(openai.BadRequestError, 400, "Unsupported value: 'none' is not supported with this model. Supported values for reasoning.effort are low, medium")
+            return fake_response(text="the card")
+        p.client.responses.create = create
+        r = await p.complete(LLMRequest(role="feedback", system=["s"], user="u", schema=None))
+        assert r.text == "the card" and [s["reasoning"]["effort"] for _, s in p.sent] == ["none", "low"]
+        assert p.fallbacks["effort_none_to_low"] == 1
+
+    def test_the_role_tier_is_a_setting_and_is_validated(self):
+        s = Settings(_env_file=None, llm_provider="openai", openai_api_key="k", openai_role_service_tier=" feedback=default, tip=priority ")
+        assert s.role_service_tier == {"feedback": "default", "tip": "priority"}
+        p = make_provider(s)
+        assert p.tier_for(LLMRequest(role="feedback", system=["s"], user="u")) == "default"
+        assert p.tier_for(LLMRequest(role="tip", system=["s"], user="u")) == "priority"
+        assert p.tier_for(LLMRequest(role="generator", system=["s"], user="u")) == "flex"      # the code default
+        assert p.tier_for(request()) is None
+        bad = Settings(_env_file=None, llm_provider="openai", openai_api_key="k", openai_role_service_tier="tip=cheap")
+        assert "OPENAI_ROLE_SERVICE_TIER tip='cheap'" in "\n".join(bad.production_problems())
+        other = Settings(_env_file=None, llm_provider="anthropic", anthropic_api_key="k", openai_role_service_tier="tip=flex")
+        assert other.role_service_tier == {}
 
     def test_the_knobs_are_settings_and_reach_the_provider(self):
         s = Settings(_env_file=None, llm_provider="openai", openai_api_key="k",
@@ -264,7 +347,7 @@ class TestSpeedKnobs:
         assert s.role_effort == {"evaluator": "minimal", "feedback": "low"} and s.service_tier == "priority"
         p = make_provider(s)
         assert p.role_effort == {"evaluator": "minimal", "feedback": "low"} and p.service_tier == "priority"
-        assert p.effort_for(request()) == "minimal" and p.effort_for(request(role="tip")) == "low"
+        assert p.effort_for(request()) == "minimal" and p.effort_for(request(role="tip")) == "none"
         assert not [x for x in s.production_problems() if "OPENAI_" in x and "KEY" not in x]
 
     def test_defaults_send_nothing_new_and_other_providers_ignore_them(self):

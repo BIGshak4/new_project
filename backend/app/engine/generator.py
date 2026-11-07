@@ -204,7 +204,8 @@ def _add_usage(total: LLMUsage, more: LLMUsage) -> LLMUsage:
     return LLMUsage(input_tokens=total.input_tokens + more.input_tokens,
                     output_tokens=total.output_tokens + more.output_tokens,
                     cache_read_tokens=total.cache_read_tokens + more.cache_read_tokens,
-                    cache_write_tokens=total.cache_write_tokens + more.cache_write_tokens)
+                    cache_write_tokens=total.cache_write_tokens + more.cache_write_tokens,
+                    service_tier=more.service_tier or total.service_tier)      # the tier the calls were served on (flex, 2026-11-07)
 
 
 def _sentences(text: str) -> list[str]:
