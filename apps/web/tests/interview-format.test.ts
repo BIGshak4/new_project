@@ -57,7 +57,7 @@ test("live/report question prose and report feedback isolate formulas inside Heb
   const { TurnCard } = await import("../src/components/interview-session");
   const turn: InterviewTurn = {
     index: 0, skill: "logic", skill_label: "פעולת XOR ושימושיה", subject: "digital_logic",
-    difficulty: 2, archetype: "explain", question: "מתי A XOR B שווה לאפס?", question_key: "xor",
+    archetype: "explain", question: "מתי A XOR B שווה לאפס?", question_key: "xor",
     trial: false, status: "done", hints: [], answer: "אם A = B התוצאה אפס",
     asked_at: "2026-10-15T10:00:00Z", answered_at: "2026-10-15T10:01:00Z",
     band: "STRONG", summary: "הסבר נכון עבור A XOR B בשוויון", key_points_hit: [],

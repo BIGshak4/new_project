@@ -1,7 +1,7 @@
 """A whole mock interview on the REAL model (LLM_PROVIDER=openai, fallback anthropic), without database writes (in-memory store).
 
 Answers alternate between a good and a weak canned reply so the router has something to react to.
-Prints each turn (skill, difficulty, question, hidden band), the closing report, timings and cost.
+Prints each turn (skill, question, hidden band), the closing report, timings and cost.
 The seed bank is still in review, so reviewed_only is switched off here; production keeps it on.
 
     uv run python scripts/e2e_mock_interview.py [--duration 20] [--language en]
@@ -58,7 +58,7 @@ async def one_interview(svc, store, catalog, user, args, label: str) -> None:
         n += 1
         tags = (" · CLOSING QUESTION" if turn.closing else "") + (f" · hint with the question (level {turn.hints[0].level})"
                                                                  if turn.hints else "")
-        print(f"\n[{turn.index}] {turn.skill_label} (d{turn.difficulty}, {turn.archetype}) — {turn.question_key}{tags}")
+        print(f"\n[{turn.index}] {turn.skill_label} ({turn.archetype}) — {turn.question_key}{tags}")
         print("    Q:", " ".join(turn.question.split())[:160])
         if turn.hints:
             print("    nudge:", turn.hints[0].text[:120])

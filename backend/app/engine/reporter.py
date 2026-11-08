@@ -141,7 +141,7 @@ def build_report(state: SessionState, plan: list[PlanSkill], metrics_rows: list[
                          "turns_planned": subject.turns_planned_original, "rebalance_reasons": reasons})
 
     timeline = [{"turn": row.get("turn_index"), "subject": row.get("subject_key"), "skill": row.get("skill_key"),
-                 "difficulty": row.get("difficulty_asked"), "action": row.get("decision_action"),
+                 "action": row.get("decision_action"),
                  "band": scores.classify_band_from_row(row)} for row in metrics_rows]
 
     # next focus: combined_weight x gap, core first; insufficient evidence is "cover next time"
@@ -237,7 +237,8 @@ async def narrative(provider: Provider | None, data: ReportData, *, language: st
         "practice_language": i18n.LANGUAGE_NAMES.get(language, "English"), "tone": tone,
         "skill_labels": labels,
         "held_up": data.held_up,
-        "assessments": [{**asdict(a), "level_gap": a.level_gap} for a in data.assessments],
+        "assessments": [{k: v for k, v in (asdict(a) | {"level_gap": a.level_gap}).items()
+                         if k != "demonstrated_ceiling"} for a in data.assessments],
         "subjects": data.subjects,
         "scorecards": {k: asdict(v) for k, v in data.scorecards.items()},
         "timeline": data.timeline, "recommended_next_skills": data.recommended_next_skills,

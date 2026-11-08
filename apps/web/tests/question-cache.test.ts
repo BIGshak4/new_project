@@ -49,6 +49,7 @@ test("catalog cache isolates users/languages, expires and excludes hidden answer
   assert.equal(readQuestionCache("alice", "en"), null);
   const [key, raw] = [...values.entries()][0];
   assert.equal(raw.includes("SECRET"), false);
+  assert.equal("difficulty" in JSON.parse(raw).questions[0], false);
   values.set(
     key,
     JSON.stringify({

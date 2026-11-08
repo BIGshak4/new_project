@@ -94,7 +94,7 @@ def test_eleven_new_questions_are_bilingual_pending_review_and_never_assessment_
     for ident, question in additions.items():
         assert question.status == "trial" and question.reuse_status == "pending_review", ident
         assert not question.reviewed_by and not question.assets["assessment_ready"], ident
-        assert question.assets["difficulty_status"] == "unrated", ident
+        assert question.assets["difficulty_status"] == "rated", ident
         assert solution_review(question).model_dump() == {"status": "pending_review", "reviewed_on": None}
         resource = question.assets["preparation_resource"]
         assert resource["solution_status"] == "proposed" and resource["ai_assisted"]
@@ -119,7 +119,7 @@ def test_eleven_new_questions_are_bilingual_pending_review_and_never_assessment_
                 )
             public = summary(LoadedQuestion(uuid.uuid4(), question, question.version), language)
             assert public.preparation_id == ident
-            assert public.difficulty is None and not public.assessment_ready and not public.reviewed
+            assert "difficulty" not in public.model_dump() and not public.assessment_ready and not public.reviewed
             assert text.reference_solution not in public.model_dump_json()
             assert not bank._servable(
                 question, mode="deep", language=language, allow_in_review=True, require_parity=False

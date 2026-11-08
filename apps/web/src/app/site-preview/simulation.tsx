@@ -750,13 +750,11 @@ function Library({
   toggle: (id: string) => void;
 }) {
   const [query, setQuery] = useState(""),
-    [category, setCategory] = useState("all"),
-    [difficulty, setDifficulty] = useState("all");
+    [category, setCategory] = useState("all");
   const list = questions.filter(
     (q) =>
       (!savedOnly || bookmarks.includes(q.id)) &&
       (category === "all" || q.category === category) &&
-      (difficulty === "all" || q.difficulty[1] === difficulty) &&
       [
         ...q.title,
         ...q.topic,
@@ -815,18 +813,6 @@ function Library({
             </button>
           )}
         </label>
-        <label className={s.selectLabel}>
-          {t("רמה", "Level")}
-          <select
-            value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value)}
-          >
-            <option value="all">{t("כל הרמות", "All levels")}</option>
-            <option value="Foundations">{t("יסודות", "Foundations")}</option>
-            <option value="Intermediate">{t("ביניים", "Intermediate")}</option>
-            <option value="Warm-up">{t("חימום", "Warm-up")}</option>
-          </select>
-        </label>
       </div>
       <div className={s.filterBar}>
         <div className={s.segmented}>
@@ -863,7 +849,6 @@ function Library({
               <h2>{t(...q.title)}</h2>
               <Meta q={q} t={t} />
             </button>
-            <span className={s.difficulty}>{t(...q.difficulty)}</span>
             <span className={s.time}>
               <Clock3 size={15} />
               {q.minutes} {t("דק׳", "min")}
@@ -907,7 +892,6 @@ function Library({
               onClick={() => {
                 setQuery("");
                 setCategory("all");
-                setDifficulty("all");
                 if (savedOnly) go("library");
               }}
             >
@@ -1025,7 +1009,6 @@ function Practice({
       <div className={s.practiceGrid}>
         <section className={s.questionPane}>
           <div className={s.questionFacts}>
-            <span>{t(...q.difficulty)}</span>
             <span>
               <Clock3 size={15} />
               {q.minutes} {t("דקות", "minutes")}

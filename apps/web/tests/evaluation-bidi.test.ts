@@ -40,7 +40,7 @@ test("next-question titles, focus and reasons keep their expression order", asyn
   const { NextUpCard } = await import("../src/components/evaluation-panel");
   const next = {
     key: "q", title: "בדיקת A XOR B", focus: "הסבר על A XOR B",
-    reason: "כדי לתרגל A XOR B שוב", subject: "digital_logic", difficulty: 2, why: "reinforce",
+    reason: "כדי לתרגל A XOR B שוב", subject: "digital_logic", why: "reinforce",
   } as NextQuestion;
   const html = renderToStaticMarkup(createElement(NextUpCard, { next, lang: "he", onStart: () => {} }));
   assert.equal((html.match(/<bdi dir="ltr">A XOR B<\/bdi>/g) ?? []).length, 3);
@@ -56,7 +56,7 @@ test("new plan-based recommendation reasons render readable badges in both langu
   for (const why of ["map", "same_skill"] as const) {
     for (const lang of ["he", "en"] as const) {
       const next: NextQuestion = {
-        key: "q", title: "Question", subject: "digital_logic", skill: "gates", difficulty: 2,
+        key: "q", title: "Question", subject: "digital_logic", skill: "gates",
         why, reason: "The next planned skill to practise.",
       };
       const html = renderToStaticMarkup(createElement(NextUpCard, { next, lang, onStart: () => {} }));

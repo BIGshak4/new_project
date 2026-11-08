@@ -111,7 +111,7 @@ def test_authorized_extensions_preserve_all_186_original_records_and_999_assets(
     assert len({aliases.get(key, key) for key in catalog.questions}) == 326
 
 
-def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_gated(catalog):
+def test_all_new_questions_and_extensions_remain_bilingual_proposed_rated_and_gated(catalog):
     selected = {q.assets.get("preparation_id"): q for q in catalog.questions.values()
                 if q.assets.get("preparation_id") in NEW_IDS | VARIANT_IDS}
     assert set(selected) == NEW_IDS | VARIANT_IDS
@@ -128,7 +128,7 @@ def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_
         assert original["company_attribution_status"] == attribution
         assert question.status == "trial" and question.reuse_status == "pending_review"
         assert not question.reviewed_by and not question.assets["assessment_ready"]
-        assert question.assets["difficulty_status"] == "unrated"
+        assert question.assets["difficulty_status"] == "rated"
         assert solution_review(question).model_dump() == {"status": "pending_review", "reviewed_on": None}
         resource = question.assets["preparation_resource"]
         assert resource["solution_status"] == "proposed" and resource["ai_assisted"]
@@ -157,7 +157,7 @@ def test_all_new_questions_and_extensions_remain_bilingual_proposed_unrated_and_
             if language == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in text.prompt + text.reference_solution + "".join(text.hints))
             public = summary(LoadedQuestion(uuid.uuid4(), question, question.version), language)
-            assert public.difficulty is None and not public.assessment_ready and not public.reviewed
+            assert "difficulty" not in public.model_dump() and not public.assessment_ready and not public.reviewed
             assert text.reference_solution not in public.model_dump_json()
             assert not bank._servable(question, mode="deep", language=language, allow_in_review=True, require_parity=False)
 

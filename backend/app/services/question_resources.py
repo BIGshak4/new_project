@@ -32,7 +32,7 @@ class ResourceMedia(BaseModel):
 
 class QuestionResources(BaseModel):
     media: list[ResourceMedia] = Field(default_factory=list)
-    # Full technical material, only after an OWNED attempt records reference exposure.
+    # Study material, only after an OWNED attempt records reference exposure.
     technical_material: dict | None = None
     solution_revealed: bool = False
     reference: str | None = None

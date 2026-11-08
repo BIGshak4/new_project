@@ -1227,7 +1227,7 @@ def test_eighteen_additions_have_complete_bilingual_material_and_stay_pending(ca
     for ident, question in additions.items():
         assert question.status == "trial" and question.reuse_status == "pending_review"
         assert not question.reviewed_by and not question.assets["assessment_ready"]
-        assert question.assets["difficulty_status"] == "unrated"
+        assert question.assets["difficulty_status"] == "rated"
         assert solution_review(question).model_dump() == {"status": "pending_review", "reviewed_on": None}
         resource = question.assets["preparation_resource"]
         assert resource["solution_status"] == "proposed" and resource["ai_assisted"]
@@ -1244,7 +1244,7 @@ def test_eighteen_additions_have_complete_bilingual_material_and_stay_pending(ca
             if language == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in text.prompt + text.reference_solution + "".join(text.hints))
             public = summary(LoadedQuestion(uuid.uuid4(), question, question.version), language)
-            assert public.difficulty is None and not public.assessment_ready and not public.reviewed
+            assert "difficulty" not in public.model_dump() and not public.assessment_ready and not public.reviewed
             assert text.reference_solution not in public.model_dump_json()
             assert not bank._servable(question, mode="deep", language=language, allow_in_review=True, require_parity=False)
 

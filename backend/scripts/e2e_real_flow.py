@@ -72,7 +72,7 @@ def show_next(view) -> None:
     if n is None:
         print("  next question: none")
         return
-    print(f"  next question: {n.key} ({n.subject}, {n.skill}, difficulty {n.difficulty}) why={n.why}")
+    print(f"  next question: {n.key} ({n.subject}, {n.skill}) why={n.why}")
     if n.focus:
         print(f"    focus: {n.focus}")
     print(f"    reason: {n.reason}")

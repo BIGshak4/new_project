@@ -854,17 +854,6 @@
   min-width: 0;
   line-height: 1.8;
 }
-.selectLabel {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  font-size: 13px;
-}
-.selectLabel select {
-  width: 140px;
-  font-size: 13px;
-  padding-block: 12px;
-}
 .filterBar {
   display: flex;
   justify-content: space-between;
@@ -929,14 +918,6 @@
 }
 .meta span:first-child {
   color: var(--link);
-}
-.difficulty {
-  font-size: 11px;
-  background: var(--soft);
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 3px 9px;
-  white-space: nowrap;
 }
 .time {
   display: flex;
@@ -2304,14 +2285,6 @@
   .search input {
     font-size: 14px !important;
   }
-  .selectLabel {
-    margin-top: 13px;
-    justify-content: space-between;
-  }
-  .selectLabel select {
-    width: 160px;
-    padding: 8px 12px;
-  }
   .filterBar {
     align-items: start;
     gap: 9px;
@@ -2355,12 +2328,6 @@
     align-self: start;
     width: 30px;
     height: 30px;
-  }
-  .difficulty {
-    grid-column: 1;
-    grid-row: 2;
-    justify-self: start;
-    font-size: 10px;
   }
   .time {
     grid-column: 1;

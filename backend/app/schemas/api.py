@@ -42,7 +42,6 @@ class NextQuestionView(BaseModel):
     title: str
     subject: str
     skill: str
-    difficulty: int
     why: str                                    # reinforce | consolidate | advance | explore | map | same_skill
     reason: str                                 # one sentence in the practice language, true to the band that produced it
     focus: str | None = None                    # what was hard in this attempt (a bank misconception's explanation)
@@ -276,7 +275,6 @@ class ReadinessQuestionView(BaseModel):
     title: str
     skill: str
     skill_label: str
-    difficulty: int
     why: str                                    # gap | unassessed | confirm | refresh
     reason: str                                 # one sentence in the practice language
 
@@ -331,7 +329,6 @@ class InterviewTurnView(BaseModel):
     skill: str
     skill_label: str
     subject: str
-    difficulty: int
     archetype: str
     question: str
     question_key: str | None = None

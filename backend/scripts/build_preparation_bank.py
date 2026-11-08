@@ -2,7 +2,7 @@
 
 Run from any directory. Produces an engine seed and a content-addressed upload manifest.
 Original content lives in interview_preparation; editorial additions live beside this script's inputs.
-Uncalibrated questions are study-only: feedback is provisional and does not earn skill evidence.
+Difficulty is reviewed independently of technical approval and assessment eligibility.
 """
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "backend"))
 
+from app.engine.question_difficulty import apply_question_difficulty  # noqa: E402
 from app.engine.solution_review import attach_registered_reviews  # noqa: E402
 
 BANK = ROOT / "interview_preparation"
@@ -277,18 +278,17 @@ def load():
             "format": "code" if q["category"] == "software" else "construct" if q["category"] == "hardware" else "explain",
             "practice_modes": ["quick", "deep"],
             "subject": skill_subject[primary],
-            # Compatibility sentinel only: never displayed as calibrated difficulty, never scored as evidence.
-            "difficulty": 5, "estimated_minutes": q.get("estimated_minutes"),
+            "estimated_minutes": q.get("estimated_minutes"),
             "archetype": "coding" if q["category"] == "software" else "design" if q["category"] == "hardware" else "conceptual",
             "skills": [{"skill": primary, "weight": 1, "primary": True}],
             "rubric": [{"key": k, "weight": w, "description": {"en": en, "he": he}} for k, w, en, he in criteria],
             "translations": texts, "reuse_status": "pending_review", "exposure_risk": "high",
             "source_name": "Founder-supplied interview preparation archive", "reviewed_by": None,
-            "review_notes": "Imported for founder pilot. Difficulty, technical review, rubric and reuse review pending. No mastery evidence or competitive XP.",
+            "review_notes": "Imported for founder pilot. Technical review, rubric and reuse review pending. No mastery evidence or competitive XP.",
             "assets": {
                 "titles": {lang: texts[lang]["title"] for lang in texts},
                 "preparation_id": ident, "collection": "interview_preparation", "assessment_ready": False,
-                "difficulty_status": "unrated", "source_difficulty": q["difficulty"],
+                "source_difficulty": q["difficulty"],
                 "category": "logic" if q["category"] == "logical_reasoning" else q["category"],
                 "topics": q["topics"], "reported_companies": q["reported_companies"],
                 "company_attribution_status": q["company_attribution_status"],
@@ -297,6 +297,7 @@ def load():
                 "source_sha256": hashlib.sha256(json.dumps(original, ensure_ascii=False, sort_keys=True).encode()).hexdigest(),
             },
         })
+    apply_question_difficulty(result)
     registry = json.loads((SEEDS / "solution_review_attestations.json").read_text(encoding="utf-8"))
     attach_registered_reviews(result, registry)
     return result, uploads

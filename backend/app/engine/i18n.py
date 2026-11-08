@@ -17,7 +17,8 @@ PROMPT_DIR = Path(__file__).parent / "prompts"
 # without them; v1 kept.
 # report v2 (2026-11-02, Shaked: "fitted to the person, never feel bad, try more"): what held up first, gaps as the
 # next thing to learn, the next interview proposed, the change since last time; v1 kept.
-PROMPT_VERSIONS = {"evaluator": "v2", "generator": "v3", "feedback": "v1", "tip": "v1", "report": "v2"}
+# report v3: keep question ratings private in candidate-facing narratives.
+PROMPT_VERSIONS = {"evaluator": "v2", "generator": "v3", "feedback": "v1", "tip": "v1", "report": "v3"}
 LANGUAGE_NAMES = {"en": "English", "he": "Hebrew"}
 
 

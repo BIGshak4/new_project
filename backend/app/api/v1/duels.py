@@ -37,7 +37,6 @@ class DuelQuestionView(BaseModel):
     title: str
     prompt: str                                 # the question with its shared code block, in the duel's language
     format: str
-    difficulty: int
 
 
 class DuelSideView(BaseModel):
@@ -204,7 +203,7 @@ def _view(svc, duel: Duel, user_id: uuid.UUID) -> DuelView:
     q = svc.catalog.questions.get(duel.question_key) if duel.mode == "judged" and duel.status == "active" else None
     if q is not None:
         question = DuelQuestionView(key=q.key, title=q.text(duel.language).title, prompt=q.prompt_with_code(duel.language),
-                                    format=q.format, difficulty=q.difficulty)
+                                    format=q.format)
     seconds_left = None
     if duel.status == "active" and duel.deadline is not None:
         seconds_left = max(0, int((duel.deadline - svc.clock()).total_seconds()))

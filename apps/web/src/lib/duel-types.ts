@@ -9,7 +9,7 @@ export type Duel = {
   status: "open" | "active" | "settled" | "cancelled"; mode: "quiz" | "judged";
   role: "challenger" | "opponent"; stake: number; pot: number; language: DuelLanguage;
   me: DuelSide; opponent: DuelSide | null;
-  question: { key: string; title: string; prompt: string; format: string; difficulty: number } | null;
+  question: { key: string; title: string; prompt: string; format: string } | null;
   quiz: { total: number; seconds_per_question: number; index: number; current: QuizItem | null; seconds_left: number | null; answers: { index: number; choice: number | null; correct: boolean; seconds: number }[]; score: number; finished: boolean; review: QuizReview[] } | null;
   deadline: string | null; seconds_left: number | null; started_at: string | null;
   server_now: string; lobby_expires_at: string | null; created_at: string; accepted_at: string | null; settled_at: string | null;

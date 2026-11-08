@@ -93,7 +93,7 @@ def test_bilingual_hints_material_and_protected_media_stay_gated():
             assert solution_review(q).status=='pending_review'
             assert q.status=='trial' and not q.assets['assessment_ready']
         if ident in NEW:
-            assert q.assets['difficulty_status']=='unrated'
+            assert q.assets['difficulty_status']=='rated'
         if ident=='PREP-255':
             for lang in ('he','en'):
                 media=question_resources.learner_media(q.assets['bank_media'],lang)

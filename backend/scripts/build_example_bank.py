@@ -25,6 +25,7 @@ from pathlib import Path
 BACKEND = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BACKEND))
 
+from app.engine.question_difficulty import apply_question_difficulty  # noqa: E402
 from app.engine.solution_review import attach_registered_reviews  # noqa: E402
 
 REPO = BACKEND.parent
@@ -104,7 +105,7 @@ def build(source: dict, enrichment: dict[str, dict]) -> list[dict]:
         questions.append({
             "key": key, "version": q.get("version", 1), "status": "in_review", "origin": "original",
             "format": q["format"], "practice_modes": q["practice_modes"], "subject": subject_for(q),
-            "difficulty": q["difficulty"], "estimated_minutes": q["estimated_minutes"],
+            "estimated_minutes": q["estimated_minutes"],
             "archetype": extra["archetype"], "skills": extra["skills"],
             "rubric": [{"key": c["key"], "weight": c["weight"], "description": {"en": c["en"], "he": c["he"]}}
                        for c in extra["rubric"]],
@@ -119,6 +120,7 @@ def build(source: dict, enrichment: dict[str, dict]) -> list[dict]:
             "review_notes": REVIEW_NOTE, "exposure_risk": extra.get("exposure_risk", "low"),
             "translations": translations,
         })
+    apply_question_difficulty(questions)
     registry = json.loads((BACKEND / "seeds/solution_review_attestations.json").read_text(encoding="utf-8"))
     attach_registered_reviews(questions, registry)
     return questions

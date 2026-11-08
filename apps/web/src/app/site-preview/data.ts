@@ -74,7 +74,6 @@ export type Sample = {
   company: string;
   aliases: string;
   minutes: number;
-  difficulty: Pair;
   prompt: Pair;
   hints: Pair[];
   solution: Pair;
@@ -90,7 +89,6 @@ export const questions: Sample[] = [
     company: "Intel",
     aliases: "אינטל",
     minutes: 15,
-    difficulty: ["יסודות", "Foundations"],
     prompt: [
       "תכננו מעגל שמקבל שני ביטים A ו־B ומחזיר 1 רק כאשר הם שונים. כתבו טבלת אמת, ממשו באמצעות AND, OR ו־NOT והסבירו איך הייתם בודקים את המימוש.",
       "Design a circuit with two input bits, A and B, that outputs 1 only when they differ. Write a truth table, implement it with AND, OR and NOT, and explain how you would test it.",
@@ -124,7 +122,6 @@ export const questions: Sample[] = [
     company: "Intel",
     aliases: "אינטל",
     minutes: 12,
-    difficulty: ["יסודות", "Foundations"],
     prompt: [
       "הפונקציה שלפניכם אמורה לסכום n איברים. מצאו ותקנו את השגיאה, התייחסו ל־n=0 ול־n=1, וציינו את סיבוכיות הזמן והזיכרון. הניחו שאין גלישה של הסכום ושעבור n>0 המערך מכיל n איברים תקינים.",
       "This function should sum n elements. Find and fix the bug, address n=0 and n=1, and state time and space complexity. Assume sums do not overflow and, for n>0, the array contains n valid elements.",
@@ -158,7 +155,6 @@ export const questions: Sample[] = [
     company: "NVIDIA",
     aliases: "אנבידיה נווידיה נבידיה",
     minutes: 20,
-    difficulty: ["ביניים", "Intermediate"],
     prompt: [
       "תכננו מכונת Mealy שמזהה רצף סיביות 101 בזרם כניסה. אפשרו רצפים חופפים. תארו את המצבים והמעברים, הגדירו reset ובדקו את הזרם 10101.",
       "Design a Mealy machine that detects 101 in a bit stream. Allow overlapping matches. Describe states and transitions, define reset and test the stream 10101.",
@@ -192,7 +188,6 @@ export const questions: Sample[] = [
     company: "Microsoft",
     aliases: "מיקרוסופט",
     minutes: 15,
-    difficulty: ["יסודות", "Foundations"],
     prompt: [
       "מערך מכיל את כל המספרים מ־0 עד n, פרט למספר אחד, ללא כפילויות. מצאו את החסר בזמן ליניארי ובזיכרון נוסף קבוע.",
       "An array contains every integer from 0 to n except one, with no duplicates. Find the missing value in linear time and constant extra space.",
@@ -226,7 +221,6 @@ export const questions: Sample[] = [
     company: "Google",
     aliases: "גוגל",
     minutes: 8,
-    difficulty: ["חימום", "Warm-up"],
     prompt: [
       "מהי הזווית הקטנה בין מחוגי השעון בשעה 6:30? הסבירו את דרך החישוב ואת ההנחות.",
       "What is the smaller angle between the hands of a clock at 6:30? Explain your calculation and assumptions.",
@@ -260,7 +254,6 @@ export const questions: Sample[] = [
     company: "Apple",
     aliases: "אפל",
     minutes: 18,
-    difficulty: ["ביניים", "Intermediate"],
     prompt: [
       "תכננו מעגל שמקבל שמונה ביטים ומחזיר את מספר האחדות. מהו רוחב המוצא המזערי? הציעו מבנה של עץ מחברים.",
       "Design a circuit that counts the ones in eight input bits. What is the minimum output width? Propose an adder tree.",

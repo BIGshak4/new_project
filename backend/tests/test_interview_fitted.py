@@ -129,7 +129,8 @@ class TestEndOnAWin:
         strong_keys = {t["skill_key"] for t in turns[:2]}
         assert closing.skill in strong_keys and snapshot["skill"] == closing.skill
         strong_difficulty = max(t["difficulty"] for t in turns[:2] if t["skill_key"] == closing.skill)
-        assert closing.difficulty == strong_difficulty
+        assert turns[3]["difficulty"] == strong_difficulty
+        assert "difficulty" not in closing.model_dump()
         assert len({t["question_key"] for t in turns}) == 4                  # never the same question twice
 
         # the closing answer is judged like any other, the interview ends whatever the band, and the skill keeps
@@ -145,6 +146,7 @@ class TestEndOnAWin:
         assert len(state["skill_state"][closing.skill]["history"]) >= 2      # the evidence stayed
         report = await svc.report(user, sid, narrative=False)
         assert report.turns[-1].closing is True and report.turn_count == 4
+        assert all("difficulty" not in entry for entry in report.timeline)
         assert len([m for m in store.metrics if m.get("session_id")]) == 4  # the closing turn has its metrics row
 
     async def test_a_strong_last_answer_ends_without_a_closing_question(self, catalog):
@@ -168,7 +170,8 @@ class TestEndOnAWin:
         closing = view.current_turn
         plan_skill = next(p for p in view.plan if p.skill == closing.skill)
         assert closing.closing and closing.skill == view.turns[0].skill
-        assert closing.difficulty <= view.turns[0].difficulty and plan_skill is not None
+        turns = store.sessions[sid]["turns"]
+        assert turns[closing.index]["difficulty"] <= turns[0]["difficulty"] and plan_skill is not None
         svc.clock.advance()
         _, view = await svc.answer(user, sid, closing.index, "still not sure", idempotency_key="k1")
         assert view.status == "completed"
@@ -239,12 +242,17 @@ class TestTheReportInvitesTheNextInterview:
                 return "## What held up\nfine"
             return GOOD
         from app.engine.providers import ScriptedProvider
-        svc, _ = service(catalog, ScriptedProvider(respond), step_min=25)
+        svc, store = service(catalog, ScriptedProvider(respond), step_min=25)
         user = uuid.uuid4()
         view = await svc.start(user, duration_min=20, language="en")
         view, _ = await run_to_the_end(svc, user, view)
-        report = await svc.report(user, uuid.UUID(view.id))
-        assert report.narrative_source == "generated" and seen["version"] == "report.v2"
+        sid = uuid.UUID(view.id)
+        store.sessions[sid]["row"]["state"]["narrative"] = "Question difficulty 2"
+        plain = await svc.report(user, sid, narrative=False)
+        assert plain.narrative_source == "fallback" and "Question difficulty" not in plain.narrative_md
+        report = await svc.report(user, sid)
+        assert report.narrative_source == "generated" and seen["version"] == "report.v3"
+        assert "difficulty" not in seen["user"] and "demonstrated_ceiling" not in seen["user"]
         assert '"held_up"' in seen["user"] and '"next_step"' in seen["user"] and '"since_last_time"' in seen["user"]
 
 

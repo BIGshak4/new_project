@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 
 from app.engine.solution_review import solution_content_hash
+from tests.difficulty_history import before_difficulty_review
 from tests.preparation_november7_history import baseline, before_batch1107_compiled, digest
 
 BACKEND = Path(__file__).resolve().parents[1]
@@ -72,7 +73,7 @@ def expected_reviewed_keys():
     prepared = json.loads((BACKEND / "seeds/questions/preparation_bank.json").read_bytes())
     previous = [before_batch1107_compiled(q) for q in prepared if q["key"] in baseline()["compiled_sha256"]]
     assert len(previous) == len(baseline()["compiled_sha256"]) == 255
-    examples = json.loads((BACKEND / "seeds/questions/example_bank.json").read_bytes())
+    examples = [before_difficulty_review(q) for q in json.loads((BACKEND / "seeds/questions/example_bank.json").read_bytes())]
     assert digest(examples) == "8f3193a297f22cae4257033712858b86ed4e171235b98a628e5ab69cc86cc1ab"
     matched = {q["key"] for q in previous + examples
                if q["key"] in registry["questions"]

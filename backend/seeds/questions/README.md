@@ -1,7 +1,7 @@
 # Question bank
 
-The bank is Harel's 30 example questions, enriched with what the engine needs to
-evaluate an answer. Three files matter:
+The interview bank has 30 examples and 301 preparation questions. The examples
+are enriched with what the engine needs to evaluate an answer:
 
 | File | What it is | Who edits it |
 |---|---|---|
@@ -21,9 +21,38 @@ The loader upserts by key, so Harel's existing rows are enriched in place. His a
 keeps working: it reads the prompt, the hints and the reference, and `assets`
 keeps every field it and his access policy rely on.
 
+## Internal question difficulty
+
+[`../question_difficulty.json`](../question_difficulty.json) is the source of the
+integer difficulty and a short rationale per stable question key. Both builders
+use it. It is an editorial estimate of a first unaided solve by an interview
+candidate, based on the required prompt and reference answer. Optional variants,
+answer length and source/company labels do not set the score. The bank column is
+used by the backend; the score and rationale are not part of the learner API.
+Review and assessment eligibility are separate decisions.
+
+| Score | Expected work |
+|---:|---|
+| 1 | Recall a definition or read its truth table. |
+| 2 | Recognize a direct transformation or trace a simple operation. |
+| 3 | Apply a familiar technique, including basic boundaries. |
+| 4 | Complete a standard multistep trace, construction or implementation. |
+| 5 | Combine concepts or justify a useful invariant. |
+| 6 | Derive a less obvious construction or meet interacting constraints. |
+| 7 | Synthesize an advanced solution with tricky cases or tradeoffs. |
+| 8 | Resolve demanding reasoning, design or verification across several constraints. |
+| 9 | Prove a tightly constrained expert construction or optimality result. |
+| 10 | Exceptional synthesis beyond the preceding anchors; no quota. |
+
+For a new or revised question, review the required solve, set the score and reason,
+and store `difficulty_fingerprint(q)` for the compiled input. Both builders reject
+missing or stale ratings. The raw preparation archive stays unchanged. The guarded
+`scripts/sync_question_difficulty.py` updates ratings on an existing database;
+do not use the general content importer to apply a rating-only change.
+
 ## Manually collected preparation questions
 
-The 37 `prep-*` questions are compiled separately by `scripts/build_preparation_bank.py`.
+The `prep-*` questions are compiled separately by `scripts/build_preparation_bank.py`.
 Their original preparation archive stays under `interview_preparation/`.
 Website wording can be edited in `../preparation_editorial.json`, under each PREP's
 `learner_text.he` and `learner_text.en`. Both languages must edit the same fields;

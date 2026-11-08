@@ -128,7 +128,7 @@ def test_bilingual_hints_material_and_protected_media_stay_gated():
             assert solution_review(q).status=='pending_review'
             assert q.status=='trial' and not q.assets['assessment_ready']
         if ident in NEW:
-            assert q.assets['difficulty_status']=='unrated'
+            assert q.assets['difficulty_status']=='rated'
 
 
 def test_short_cards_quizzes_and_human_review_registry_are_unchanged():

@@ -30,6 +30,7 @@ from app.engine import (
     checks,
     evaluator,
     generator,
+    i18n,
     reporter,
     scores,
     subject_router,
@@ -387,13 +388,14 @@ class InterviewService:
             data = self._report_data(state, plan, row)
             since = await self._since_last_time(user_id, row, data)
             wrapper = row["state"]
-            if wrapper.get("narrative") is None and self.config.narrative:
+            if self._current_narrative(wrapper) is None and self.config.narrative:
                 labels = self.catalog.skill_labels()
                 text, source = await reporter.narrative(self.provider, data, language=language, labels=labels,
                                                         glossary=self.catalog.glossary,
                                                         since_last_time=(since or {}).get("skills"))
                 if source == "generated":                  # a model hiccup must not freeze the plain report forever
                     wrapper["narrative"], wrapper["narrative_source"] = text, source
+                    wrapper["narrative_prompt_version"] = i18n.prompt_version("report")
                     await self._persist(user_id, row, [])
             return self._report_view(stored, data, since=since)
 
@@ -782,8 +784,16 @@ class InterviewService:
                                      tips_library=list(self.catalog.tips.values()),
                                      duration_min=row["config"].get("duration_min"))
 
+    @staticmethod
+    def _current_narrative(state: dict) -> str | None:
+        # Older reports were generated with per-turn ratings and could repeat them verbatim.
+        if state.get("narrative_prompt_version") == i18n.prompt_version("report"):
+            return state.get("narrative")
+        return None
+
     def _report_view(self, stored: StoredSession, data: ReportData, *, since: dict | None = None) -> InterviewReportView:
         row, language = stored.row, stored.row["config"]["language"]
+        narrative = self._current_narrative(row["state"])
         labels = self.catalog.skill_labels()
         since = since or {}
 
@@ -815,9 +825,8 @@ class InterviewService:
             completion_coins=(int(row["state"].get("finish_coins") or 0)
                               if self.coins is not None and self.coins.known_enabled else None),
             top_tips=tips_text,
-            narrative_md=row["state"].get("narrative") or reporter.fallback_narrative(data, labels, language,
-                                                                                      since.get("skills")),
-            narrative_source=row["state"].get("narrative_source") or "fallback",
+            narrative_md=narrative or reporter.fallback_narrative(data, labels, language, since.get("skills")),
+            narrative_source="generated" if narrative else "fallback",
             turns=[self._turn_view(t, language, revealed=True) for t in stored.turns
                    if t["question_generation_meta"].get("status") in ("done", "failed", "skipped")])
 
@@ -830,7 +839,7 @@ class InterviewService:
         check = turn.get("check_result")
         return InterviewTurnView(
             index=turn["turn_index"], skill=skill, skill_label=catalog_skill.label if catalog_skill else skill,
-            subject=(catalog_skill.subject if catalog_skill else None) or "", difficulty=turn["difficulty"],
+            subject=(catalog_skill.subject if catalog_skill else None) or "",
             archetype=turn["question_archetype"], question=turn["question_text"], question_key=turn.get("question_key"),
             trial=bool(meta.get("trial", False)),
             status=self._effective_status(meta), hints=[HintView(**h) for h in meta.get("hints", [])],

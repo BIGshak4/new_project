@@ -29,7 +29,6 @@ export type QuestionSummary = {
   title: string;
   subject: string;
   format: string;
-  difficulty: number | null;
   estimated_minutes: number | null;
   practice_modes: string[];
   language: ApiLang;
@@ -188,7 +187,6 @@ export type NextQuestion = {
   title: string;
   subject: string;
   skill: string;
-  difficulty: number;
   why: "reinforce" | "consolidate" | "advance" | "explore" | "map" | "same_skill";
   reason: string;
   /** what was hard in this attempt, in the practice language, when a known mistake was recognised */
@@ -361,7 +359,6 @@ export type ReadinessQuestion = {
   title: string;
   skill: string;
   skill_label: string;
-  difficulty: number;
   why: string;
   reason: string;
 };
@@ -434,7 +431,6 @@ export type InterviewTurn = {
   skill: string;
   skill_label: string;
   subject: string;
-  difficulty: number;
   archetype: string;
   question: string;
   question_key: string | null;

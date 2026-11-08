@@ -11,6 +11,8 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
+from tests.difficulty_history import before_difficulty_review
+
 
 def digest(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -42,6 +44,7 @@ def compiled_projections():
 
 
 def before_batch1107n30_compiled(question):
+    question = before_difficulty_review(question)
     ident = question["assets"]["preparation_id"]
     if ident not in baseline()["records"]:
         return copy.deepcopy(question)

@@ -184,7 +184,7 @@ def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
                 assert digest(restored_hints) == hint_prefix['sha256'], (ident, language, 'hints')
 
 
-def test_all_nineteen_questions_are_bilingual_and_eleven_new_records_are_unrated_pending(catalog, archive):
+def test_all_nineteen_questions_are_bilingual_and_eleven_new_records_are_rated_pending(catalog, archive):
     questions = selected(catalog)
     raw = {q['id']: q for q in archive['questions']}
     assert len(catalog.questions) == 331 and set(questions) == AFFECTED_IDS
@@ -197,7 +197,7 @@ def test_all_nineteen_questions_are_bilingual_and_eleven_new_records_are_unrated
             assert set(pair) == {'he', 'en'} and all(pair[lang] not in (None, '', [], {}) for lang in ('he', 'en'))
             assert no_hebrew(pair['en']), (ident, field)
         assert question.status == 'trial' and not question.assets['assessment_ready']
-        assert question.assets['difficulty_status'] == 'unrated'
+        assert question.assets['difficulty_status'] == 'rated'
         if ident in NEW_IDS | VARIANT_IDS:
             assert source['status'] == 'in_review' and source['solution_status'] == 'proposed'
             assert source['ai_assisted'] and source['reviewed_by'] is None
@@ -215,7 +215,7 @@ def test_all_nineteen_questions_are_bilingual_and_eleven_new_records_are_unrated
                 assert no_hebrew([text.title, text.prompt, text.reference_solution, text.hints]), ident
             public = summary(LoadedQuestion(uuid.uuid4(), question, question.version), language)
             dumped = public.model_dump_json()
-            assert public.difficulty is None and not public.assessment_ready
+            assert "difficulty" not in public.model_dump() and not public.assessment_ready
             assert text.reference_solution not in dumped
             assert all(item['path'] not in dumped for item in question.assets['bank_media'])
             assert not bank._servable(question, mode='deep', language=language, allow_in_review=True, require_parity=False)

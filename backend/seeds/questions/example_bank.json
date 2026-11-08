@@ -9,7 +9,6 @@
    "quick"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 2,
   "estimated_minutes": 5,
   "archetype": "conceptual",
   "skills": [
@@ -119,6 +118,7 @@
     }
    ],
    "source_id": "HW-001",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -178,7 +178,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-nand-only-enable",
@@ -191,7 +192,6 @@
    "simulation"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 3,
   "estimated_minutes": 8,
   "archetype": "design",
   "skills": [
@@ -280,6 +280,7 @@
     }
    ],
    "source_id": "HW-002",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -337,7 +338,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-masked-equality",
@@ -350,7 +352,6 @@
    "simulation"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 3,
   "estimated_minutes": 7,
   "archetype": "design",
   "skills": [
@@ -439,6 +440,7 @@
     }
    ],
    "source_id": "HW-003",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -496,7 +498,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-mux-tree-eight-inputs",
@@ -509,7 +512,6 @@
    "simulation"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 3,
   "estimated_minutes": 8,
   "archetype": "design",
   "skills": [
@@ -594,6 +596,7 @@
     }
    ],
    "source_id": "HW-004",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -651,7 +654,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-interrupt-priority",
@@ -664,7 +668,6 @@
    "simulation"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 3,
   "estimated_minutes": 8,
   "archetype": "design",
   "skills": [
@@ -753,7 +756,8 @@
      "url": "https://hdlbits.01xz.net/wiki/Always_case2"
     }
    ],
-   "source_id": "HW-005"
+   "source_id": "HW-005",
+   "difficulty_status": "rated"
   },
   "source_name": "HDLBits: priority encoder background",
   "source_url": "https://hdlbits.01xz.net/wiki/Always_case2",
@@ -804,7 +808,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-enabled-decoder",
@@ -816,7 +821,6 @@
    "quick"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 2,
   "estimated_minutes": 5,
   "archetype": "conceptual",
   "skills": [
@@ -917,7 +921,8 @@
      "url": "https://hdlbits.01xz.net/wiki/Problem_sets"
     }
    ],
-   "source_id": "HW-006"
+   "source_id": "HW-006",
+   "difficulty_status": "rated"
   },
   "source_name": "HDLBits: digital logic topic catalog",
   "source_url": "https://hdlbits.01xz.net/wiki/Problem_sets",
@@ -968,7 +973,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 2
  },
  {
   "key": "example-rotate-versus-shift",
@@ -981,7 +987,6 @@
    "simulation"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 3,
   "estimated_minutes": 7,
   "archetype": "design",
   "skills": [
@@ -1062,6 +1067,7 @@
     }
    ],
    "source_id": "HW-007",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -1119,7 +1125,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 4
  },
  {
   "key": "example-full-adder-composition",
@@ -1132,7 +1139,6 @@
    "simulation"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 3,
   "estimated_minutes": 8,
   "archetype": "design",
   "skills": [
@@ -1213,6 +1219,7 @@
     }
    ],
    "source_id": "HW-008",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -1270,7 +1277,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-signed-overflow",
@@ -1282,7 +1290,6 @@
    "quick"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 3,
   "estimated_minutes": 5,
   "archetype": "conceptual",
   "skills": [
@@ -1363,6 +1370,7 @@
     }
    ],
    "source_id": "HW-009",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -1418,7 +1426,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-unsigned-saturating-adder",
@@ -1431,7 +1440,6 @@
    "simulation"
   ],
   "subject": "digital_fundamentals",
-  "difficulty": 4,
   "estimated_minutes": 8,
   "archetype": "design",
   "skills": [
@@ -1523,6 +1531,7 @@
     }
    ],
    "source_id": "HW-010",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -1580,7 +1589,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-mod-six-counter",
@@ -1593,7 +1603,6 @@
    "simulation"
   ],
   "subject": "sequential_logic",
-  "difficulty": 4,
   "estimated_minutes": 10,
   "archetype": "design",
   "skills": [
@@ -1697,6 +1706,7 @@
     }
    ],
    "source_id": "HW-011",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -1758,7 +1768,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-load-and-serial-shift",
@@ -1771,7 +1782,6 @@
    "simulation"
   ],
   "subject": "sequential_logic",
-  "difficulty": 3,
   "estimated_minutes": 8,
   "archetype": "design",
   "skills": [
@@ -1861,6 +1871,7 @@
     }
    ],
    "source_id": "HW-012",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -1918,7 +1929,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-sampled-rising-edge",
@@ -1931,7 +1943,6 @@
    "simulation"
   ],
   "subject": "sequential_logic",
-  "difficulty": 3,
   "estimated_minutes": 8,
   "archetype": "design",
   "skills": [
@@ -2013,6 +2024,7 @@
     }
    ],
    "source_id": "HW-013",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -2070,7 +2082,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-overlapping-sequence-1011",
@@ -2083,7 +2096,6 @@
    "simulation"
   ],
   "subject": "fsms",
-  "difficulty": 5,
   "estimated_minutes": 15,
   "archetype": "design",
   "skills": [
@@ -2187,6 +2199,7 @@
     }
    ],
    "source_id": "HW-014",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -2248,7 +2261,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 5
  },
  {
   "key": "example-credit-dispenser",
@@ -2261,7 +2275,6 @@
    "simulation"
   ],
   "subject": "fsms",
-  "difficulty": 4,
   "estimated_minutes": 12,
   "archetype": "design",
   "skills": [
@@ -2350,6 +2363,7 @@
     }
    ],
    "source_id": "HW-015",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -2407,7 +2421,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 4
  },
  {
   "key": "example-request-acknowledge",
@@ -2420,7 +2435,6 @@
    "simulation"
   ],
   "subject": "fsms",
-  "difficulty": 4,
   "estimated_minutes": 12,
   "archetype": "design",
   "skills": [
@@ -2509,6 +2523,7 @@
     }
    ],
    "source_id": "HW-016",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -2566,7 +2581,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-setup-hold-calculation",
@@ -2579,7 +2595,6 @@
    "simulation"
   ],
   "subject": "sequential_logic",
-  "difficulty": 5,
   "estimated_minutes": 10,
   "archetype": "conceptual",
   "skills": [
@@ -2681,6 +2696,7 @@
     }
    ],
    "source_id": "HW-017",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -2738,7 +2754,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 4
  },
  {
   "key": "example-asynchronous-pulse-transfer",
@@ -2751,7 +2768,6 @@
    "simulation"
   ],
   "subject": "sequential_logic",
-  "difficulty": 5,
   "estimated_minutes": 10,
   "archetype": "design",
   "skills": [
@@ -2828,6 +2844,7 @@
     }
    ],
    "source_id": "HW-018",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -2885,7 +2902,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 6
  },
  {
   "key": "example-nonblocking-pipeline-trace",
@@ -2898,7 +2916,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 3,
   "estimated_minutes": 7,
   "archetype": "debugging",
   "skills": [
@@ -2975,6 +2992,7 @@
     }
    ],
    "source_id": "HW-019",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -3032,7 +3050,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 4
  },
  {
   "key": "example-incomplete-combinational-assignment",
@@ -3045,7 +3064,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 3,
   "estimated_minutes": 7,
   "archetype": "debugging",
   "skills": [
@@ -3126,6 +3144,7 @@
     }
    ],
    "source_id": "HW-020",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -3183,7 +3202,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-count-set-bits",
@@ -3196,7 +3216,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 3,
   "estimated_minutes": 8,
   "archetype": "coding",
   "skills": [
@@ -3344,6 +3363,7 @@
     }
    ],
    "source_id": "SW-001",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -3403,7 +3423,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-power-of-two-check",
@@ -3415,7 +3436,6 @@
    "quick"
   ],
   "subject": "relevant_programming",
-  "difficulty": 2,
   "estimated_minutes": 5,
   "archetype": "coding",
   "skills": [
@@ -3560,6 +3580,7 @@
     }
    ],
    "source_id": "SW-002",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -3617,7 +3638,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-extract-register-field",
@@ -3630,7 +3652,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 4,
   "estimated_minutes": 8,
   "archetype": "coding",
   "skills": [
@@ -3791,6 +3812,7 @@
     }
    ],
    "source_id": "SW-003",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -3848,7 +3870,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-first-greater-or-equal",
@@ -3861,7 +3884,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 4,
   "estimated_minutes": 12,
   "archetype": "coding",
   "skills": [
@@ -4049,6 +4071,7 @@
     }
    ],
    "source_id": "SW-004",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -4106,7 +4129,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 4
  },
  {
   "key": "example-merge-measurement-streams",
@@ -4119,7 +4143,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 3,
   "estimated_minutes": 10,
   "archetype": "coding",
   "skills": [
@@ -4319,6 +4342,7 @@
     }
    ],
    "source_id": "SW-005",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -4376,7 +4400,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-pair-sum-indices",
@@ -4389,7 +4414,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 4,
   "estimated_minutes": 12,
   "archetype": "coding",
   "skills": [
@@ -4605,6 +4629,7 @@
     }
    ],
    "source_id": "SW-006",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -4660,7 +4685,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-bounded-circular-queue",
@@ -4673,7 +4699,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 4,
   "estimated_minutes": 12,
   "archetype": "coding",
   "skills": [
@@ -4758,6 +4783,7 @@
     }
    ],
    "source_id": "SW-007",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -4815,7 +4841,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 4
  },
  {
   "key": "example-balanced-brackets",
@@ -4828,7 +4855,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 3,
   "estimated_minutes": 10,
   "archetype": "coding",
   "skills": [
@@ -4981,6 +5007,7 @@
     }
    ],
    "source_id": "SW-008",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -5038,7 +5065,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 3
  },
  {
   "key": "example-reverse-singly-linked-list",
@@ -5051,7 +5079,6 @@
    "simulation"
   ],
   "subject": "relevant_programming",
-  "difficulty": 4,
   "estimated_minutes": 12,
   "archetype": "coding",
   "skills": [
@@ -5137,6 +5164,7 @@
     }
    ],
    "source_id": "SW-009",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -5194,7 +5222,8 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 4
  },
  {
   "key": "example-array-bound-off-by-one",
@@ -5206,7 +5235,6 @@
    "quick"
   ],
   "subject": "relevant_programming",
-  "difficulty": 2,
   "estimated_minutes": 5,
   "archetype": "debugging",
   "skills": [
@@ -5296,6 +5324,7 @@
     }
    ],
    "source_id": "SW-010",
+   "difficulty_status": "rated",
    "solution_review": {
     "schema_version": 1,
     "status": "human_reviewed",
@@ -5353,6 +5382,7 @@
     ],
     "parity_checked": false
    }
-  }
+  },
+  "difficulty": 2
  }
 ]

@@ -145,9 +145,10 @@ class TestTheContract:
         _, h = user
         listing = (await client.get("/v1/questions", params={"language": "he"}, headers=h)).json()
         assert len(listing) == len(catalog.questions) and all(q["language"] == "he" for q in listing)
-        assert "reference_solution" not in listing[0] and "hints" not in listing[0]
+        assert not {"reference_solution", "hints", "difficulty"} & listing[0].keys()
 
         detail = (await client.get(f"/v1/questions/{Q}", headers=h)).json()
+        assert "difficulty" not in detail
         assert "alarm" in detail["prompt"].lower() and detail["hint_count"] == 3
         by_id = (await client.get(f"/v1/questions/{detail['id']}", headers=h)).json()
         assert by_id["key"] == Q
@@ -543,6 +544,9 @@ class TestOpenApi:
         assert {"200", "409", "503", "422"} <= set(submit["responses"])
         schemas = spec["components"]["schemas"]
         assert "AttemptView" in schemas and "SubmissionView" in schemas and "ProgressView" in schemas
+        for model in ("QuestionSummary", "QuestionDetail", "NextQuestionView", "ReadinessQuestionView",
+                      "InterviewTurnView", "DuelQuestionView"):
+            assert "difficulty" not in schemas[model]["properties"]
         assert "evaluation" not in schemas["SubmissionView"]["properties"]
 
 

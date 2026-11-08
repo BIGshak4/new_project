@@ -7,7 +7,7 @@ the engine needs; this module reads them back into the engine's `BankQuestion`.
 Two shapes leave this module:
 
     QuestionSummary / QuestionDetail   safe by construction: prompt, code, choices,
-                                       difficulty, minutes. Never the reference solution,
+                                       estimated minutes. Never the reference solution,
                                        the hint texts, the correct choice or the rubric.
     BankQuestion                       the full engine object, used server-side only.
 """
@@ -46,7 +46,6 @@ class QuestionSummary(BaseModel):
     title: str
     subject: str
     format: str
-    difficulty: int | None
     estimated_minutes: int | None
     practice_modes: list[str]
     language: str                              # the language the text is actually in
@@ -198,7 +197,6 @@ def summary(loaded: LoadedQuestion, language: str) -> QuestionSummary:
     return QuestionSummary(
         id=str(loaded.id), key=q.key, title=text.title or (q.assets.get("titles") or {}).get("en", q.key),
         subject=q.subject, format=q.format,
-        difficulty=None if q.assets.get("difficulty_status") == "unrated" else q.difficulty,
         estimated_minutes=q.estimated_minutes,
         practice_modes=list(q.practice_modes), language=text_language, languages=q.languages_ready(), status=q.status,
         hint_count=len(text.hints), has_check=q.deterministic_check is not None,

@@ -1,0 +1,1657 @@
+{
+  "example-array-bound-off-by-one": {
+    "difficulty": 2,
+    "reason": "Fix the loop bound using valid indices and trace empty and singleton inputs.",
+    "content_sha256": "fbe8316a205a09563c348f5ed9b71f997a56c7a4859e16587b382d250a616d45"
+  },
+  "example-asynchronous-pulse-transfer": {
+    "difficulty": 6,
+    "reason": "A two-flop synchronizer can miss a short pulse; design a complete synchronized request/acknowledge cycle.",
+    "content_sha256": "7c52ada0688a2b4821d11fc713f7cb04e3117119455ac5fe09921828a474e79e"
+  },
+  "example-balanced-brackets": {
+    "difficulty": 3,
+    "reason": "Match closers against a stack and handle underflow, wrong nesting and unfinished opens.",
+    "content_sha256": "abef750d528164e7ef0f7cbb307c3bda8ea860038ec997761b38508187aa86bb"
+  },
+  "example-bounded-circular-queue": {
+    "difficulty": 4,
+    "reason": "Maintain head and size across wraparound and trace the logical versus physical queue.",
+    "content_sha256": "ea853850317a74e71112882dc1c6f3949dea918478d20148a7878ac1a7e0ec8d"
+  },
+  "example-count-set-bits": {
+    "difficulty": 3,
+    "reason": "Scan the unsigned word or clear set bits, and justify loop termination and boundary counts.",
+    "content_sha256": "8162b723449152bdb0107bb47665a9f362706dcd47e4b3b44723cd3d94f0e556"
+  },
+  "example-credit-dispenser": {
+    "difficulty": 4,
+    "reason": "Populate a Mealy table with credit, dispensing and change, then trace coin events.",
+    "content_sha256": "bfbbdc77f1d6cd2c568a7dd35ee6ac39eaa23468fb372d351b9fedf4b47b2796"
+  },
+  "example-enabled-decoder": {
+    "difficulty": 2,
+    "reason": "Enumerate the four enabled minterms and use their mutual exclusivity for stable inputs.",
+    "content_sha256": "a85bd1f9cae214815ff56b7bfd0aae38ca50ce9423ced012474bea99a5b5f2df"
+  },
+  "example-extract-register-field": {
+    "difficulty": 3,
+    "reason": "Shift and mask a field while guarding the full-width case against undefined shifts.",
+    "content_sha256": "827ffe7689f8a938a8b3945f1e093c6d26e862414e3dd7519cc9590ac6d77acf"
+  },
+  "example-first-greater-or-equal": {
+    "difficulty": 4,
+    "reason": "Maintain a half-open binary search interval that returns the first match even with duplicates.",
+    "content_sha256": "e8f55b79f8210d2123bd0f8f5e24ad2fe1561c1584b39f2f8e970851fbfc0e4a"
+  },
+  "example-full-adder-composition": {
+    "difficulty": 3,
+    "reason": "Compose two half adders and explain why the intermediate carries exclude each other.",
+    "content_sha256": "3ddaafe6d6366d57dd501f59c3c9ef54910275db80ab6c7b8bed73d395c237d9"
+  },
+  "example-incomplete-combinational-assignment": {
+    "difficulty": 3,
+    "reason": "Diagnose latch inference from the missing assignment and correct the combinational block.",
+    "content_sha256": "9d6f2c5475d9844b8655985d1e7c64a7d3511a40426fcee987d9ed46a9dd08dc"
+  },
+  "example-interrupt-priority": {
+    "difficulty": 3,
+    "reason": "Encode requests in priority order and use valid to distinguish request zero from an idle input.",
+    "content_sha256": "3d4801d40b6d61cc4a3e5cd485bb263a16a15030b413a2832c8970e2d62ef11f"
+  },
+  "example-load-and-serial-shift": {
+    "difficulty": 3,
+    "reason": "Apply the specified priority chain and trace insertion of the serial bit.",
+    "content_sha256": "528651f735d430c7254c9b9a4d546135a9af957f3270f09024add724d64e5deb"
+  },
+  "example-masked-equality": {
+    "difficulty": 3,
+    "reason": "Combine XOR, masking and reduction to a scalar and interpret the empty mask.",
+    "content_sha256": "b737a65cf3216fb7cdd4eee58eb3c02763489c023a2640afaf0f5daf69416f00"
+  },
+  "example-merge-measurement-streams": {
+    "difficulty": 3,
+    "reason": "Merge with two cursors, retaining duplicates and appending the unconsumed tail.",
+    "content_sha256": "e4561c79069411df74417ca3d3a1d18eeeded376908755c84c720459b31b3592"
+  },
+  "example-mod-six-counter": {
+    "difficulty": 3,
+    "reason": "Prioritize illegal-state recovery above enable, then trace wrapping and holding.",
+    "content_sha256": "ca05f734866b3981dc8b05bed27ef09177e9720abbb3dc4c2df1c0c60b89963f"
+  },
+  "example-mux-tree-eight-inputs": {
+    "difficulty": 3,
+    "reason": "Build the three mux levels and infer the cell count and depth.",
+    "content_sha256": "edabcbad8db37a335fb0e271218cfdc061f9b6a5fefd45f3aa49d08964fb92b4"
+  },
+  "example-nand-only-enable": {
+    "difficulty": 3,
+    "reason": "Use De Morgan and tied NAND inputs to realize the provided expression without free inversions.",
+    "content_sha256": "118cdaae2a6dba6b0495b5efe9d65c16ff9d74eeb35df0145610059b213e7b5b"
+  },
+  "example-nonblocking-pipeline-trace": {
+    "difficulty": 4,
+    "reason": "Trace two versions of a pipeline using distinct blocking and nonblocking update semantics.",
+    "content_sha256": "6d079c4e78c497aae6382ea825b1ebe2bec79a6e4868d8fae99d595132213cb5"
+  },
+  "example-overlapping-sequence-1011": {
+    "difficulty": 5,
+    "reason": "Derive the longest retained prefix on each mismatch or overlapping detection, then trace both hits.",
+    "content_sha256": "6caf7c50f0ab3a32b8967bd0b368775bfe8adba5498be160ece8eedb110652cc"
+  },
+  "example-pair-sum-indices": {
+    "difficulty": 3,
+    "reason": "Use the indicated hash map and look up the complement before inserting a duplicate.",
+    "content_sha256": "1eae849884b5ae08ad1f5244f1f682aa2f5a69bcbd29aad768c23ae69e073f20"
+  },
+  "example-power-of-two-check": {
+    "difficulty": 3,
+    "reason": "Relate the lowest set bit to subtraction by one and explicitly exclude zero.",
+    "content_sha256": "d1b805657fb19632f075de428b5c87b5932ef4ba63d04697ade99b0cb5ab5b7b"
+  },
+  "example-request-acknowledge": {
+    "difficulty": 3,
+    "reason": "Translate the supplied Moore states into outputs and trace a start level held through completion.",
+    "content_sha256": "8f1f1f4193979a28f60bcfb08f0f4a82a5e6ab0e9107a4fa25cc7863fb5efff0"
+  },
+  "example-reverse-singly-linked-list": {
+    "difficulty": 4,
+    "reason": "Reverse pointers while preserving the unvisited suffix without allocating nodes.",
+    "content_sha256": "172f478e8f4eb00b6779bd9e8f25848eb6bf07b494e41905308deba384a39714"
+  },
+  "example-rotate-versus-shift": {
+    "difficulty": 4,
+    "reason": "Trace wrapped and zero-filled bits and design conditional barrel stages for variable distance.",
+    "content_sha256": "5f293e7614b01e03a778c6afc6f20887f746c149c6920fa07554108b5f14fcd5"
+  },
+  "example-sampled-rising-edge": {
+    "difficulty": 3,
+    "reason": "Track the previous sample, trace registered pulses, and show why a steady high cannot retrigger.",
+    "content_sha256": "713a6a09e2e4f1ba1dc3b5c74e94bf800049373864e3f9850dff87ec8ac0f889"
+  },
+  "example-sensor-majority": {
+    "difficulty": 3,
+    "reason": "Derive the pairwise majority expression from the truth table and distinguish it from parity.",
+    "content_sha256": "c41b7273118057f7dd5960139620542021746573cf2e4eb05af849e3461f1450"
+  },
+  "example-setup-hold-calculation": {
+    "difficulty": 4,
+    "reason": "Use maximum delays for setup and minimum delays for hold, and explain the same-edge timing check.",
+    "content_sha256": "d4b0c46a462cb3a98d5899e86d79a676f93f122c64449d64f080b275e71be586"
+  },
+  "example-signed-overflow": {
+    "difficulty": 3,
+    "reason": "Trace two fixed-width sums and distinguish signed overflow from unsigned carry.",
+    "content_sha256": "ecf7a60b3ac424aa4caeb2244fdb695e72f82869ef736b2c36d572a55d8314a4"
+  },
+  "example-unsigned-saturating-adder": {
+    "difficulty": 3,
+    "reason": "Widen the operands, use the extra carry bit to saturate, and check the boundary examples.",
+    "content_sha256": "497beb889063517522d004fc3f17e542a6d6a7c0950f960dbeefdeea9d341900"
+  },
+  "prep-0101-overlap-and-storage-contract": {
+    "difficulty": 6,
+    "reason": "Derive overlapping Moore transitions and prove why serial memoryless gates cannot distinguish histories; a FIFO needs explicit window semantics.",
+    "content_sha256": "ac186f897ceb5544d8b143474a3a37b9d80262f9852fbd3399160404d748141e"
+  },
+  "prep-a4-paper-pack-test-design": {
+    "difficulty": 5,
+    "reason": "Turn missing product limits into conditional acceptance criteria and prioritize sampling, destructive checks and measurement evidence.",
+    "content_sha256": "07c9ff11a30d6d12ea5578aa006dfc1aa9fe73bd23219256a10b6036e1afe0bd"
+  },
+  "prep-abstract-64-bit-word-matching-and-streak": {
+    "difficulty": 5,
+    "reason": "Track occupied and previous accepted matches across invalid cycles and compare parallel and reused comparators.",
+    "content_sha256": "c628ffe7e078bb94102b54302df4be64902857f5c8c0b8c6d3f53791ecc82d71"
+  },
+  "prep-abstract-classes-virtual-and-pure-virtual": {
+    "difficulty": 3,
+    "reason": "Explain instantiation and overriding across C++ and C#, then give a concrete derived implementation.",
+    "content_sha256": "d8860811e1a07435cefc6acccf5f86cacdbe16ac5e61c0373e1604a388d36202"
+  },
+  "prep-abstract-list-head-tail-concat-reversal": {
+    "difficulty": 6,
+    "reason": "Prove the primitive list interface insufficient, then reverse by prepending and account for representation-specific costs.",
+    "content_sha256": "e2031d3efef0322450b4a16b5d323ce6bc28f72dbe128287d9606969b6eb4b57"
+  },
+  "prep-active-high-two-sensor-fault-alert": {
+    "difficulty": 1,
+    "reason": "Recognize an inclusive OR directly from the active-high fault signals and enumerate its four inputs.",
+    "content_sha256": "a3e0993d82ca32c185b930e3bf0e6fc5ba3d8a1f715d28de1d00201afb0236f8"
+  },
+  "prep-address-plus-size-single-eight-bit-incrementer": {
+    "difficulty": 6,
+    "reason": "Decompose the address to share an incrementer across offsets while routing residual bits and recovering overflow.",
+    "content_sha256": "80e2f90d2326a44d67194a0695abfc1a55a23bab5df8f0306c546820b87ff654"
+  },
+  "prep-all-distinct-string-permutations": {
+    "difficulty": 5,
+    "reason": "Generate permutations with multiplicity counts and restored state; relate work and space to distinct outputs.",
+    "content_sha256": "56f5ff8864a9f232cf20397ddb384690830d024eb6c243b20ab9661a86827bc7"
+  },
+  "prep-all-unique-value-triples-target-sum": {
+    "difficulty": 6,
+    "reason": "Prove two-pointer eliminations and duplicate handling, and use index multiplicity to give a cubic output lower bound.",
+    "content_sha256": "29cbd2fd6c3ea1eca1d36abdbc065f26586413ef8c856a33e621f2c0c8396a17"
+  },
+  "prep-alu-swap-complementary-register-loads": {
+    "difficulty": 5,
+    "reason": "Trace three complementary writes and use bitwise cancellation to justify the swap and its observation point.",
+    "content_sha256": "1e83ee94e47e7a02b5d7635e2db836f3e3351743fc9362b473b81e561b5d783c"
+  },
+  "prep-analog-voltage-threshold-comparator": {
+    "difficulty": 5,
+    "reason": "Choose a comparator, specify reference and I/O compatibility, and explain noisy decisions near the threshold.",
+    "content_sha256": "5443ad551a556f6853bfea29ae679869de5ebd9b9754788b15cd4c27446d7c0d"
+  },
+  "prep-and-from-inverted-input-and-or-gates": {
+    "difficulty": 6,
+    "reason": "Use the asymmetrically bubbled pins and reason which constructions remain possible when constants or extra gates are forbidden.",
+    "content_sha256": "1c6ffa492cbe81a06951c3feaa6893d4f016bb8594af04fe33c28f5b07d2c809"
+  },
+  "prep-and-from-nand-and-nor": {
+    "difficulty": 5,
+    "reason": "Construct NAND-only, NOR-only and mixed circuits and justify the gate-count lower bound in each library.",
+    "content_sha256": "c51464a582dd213ca41796a7e797ca3e01315c0635c14330a1cfbdb0c9358b31"
+  },
+  "prep-and-gate-with-one-two-to-one-mux": {
+    "difficulty": 2,
+    "reason": "Set the select line to A and choose data inputs zero and B using the two select cases.",
+    "content_sha256": "293fdfbadd7c4f4f31479deffe2d28b9c4348ef5958beac2cc6b7483a037613f"
+  },
+  "prep-anonymous-circular-rooms-lamp-count": {
+    "difficulty": 6,
+    "reason": "Distinguish an initially lit decoy from the anchor by retracing steps, then prove finite termination.",
+    "content_sha256": "0d9523dc4dbfce023fadaccb47945b2bf7bce0220e2aac07ab05b72b99ccfbb6"
+  },
+  "prep-arithmetic-only-boolean-gates": {
+    "difficulty": 3,
+    "reason": "Correct ordinary addition on the double-one row to derive arithmetic OR and XOR formulas.",
+    "content_sha256": "1c43bb209f2e2480acd3cbd9b5b7463fa5aaac5d53d2c81f91489a82ca6e45e1"
+  },
+  "prep-ascii-letter-palindrome-two-pointers": {
+    "difficulty": 3,
+    "reason": "Compare opposing indices up to the midpoint and handle empty or odd-length strings.",
+    "content_sha256": "1bad0972f978706a2ca7fc3e5d3adb30ab1a456dc5abde186523b75a1d894e18"
+  },
+  "prep-ascii-word-anagrams": {
+    "difficulty": 3,
+    "reason": "Compare case-sensitive multiplicities with a fixed alphabet counter rather than just matching distinct letters.",
+    "content_sha256": "25c9cab1297253d921e1a8e3c1941045855e666b749d323dba46a9db1ce885bc"
+  },
+  "prep-async-input-change-until-next-clock": {
+    "difficulty": 5,
+    "reason": "Infer the stored sample and live XOR path from timing, including why a synchronous pulse has different timing.",
+    "content_sha256": "a4ee1860bd04b22b7d25db5b768c91adf621381d8a8017b78c38cb98ad3ddece"
+  },
+  "prep-asynchronous-gray-pointer-fifo-empty-visibility": {
+    "difficulty": 8,
+    "reason": "Combine Gray pointer wrap logic, separate clock-domain synchronizers, local flags and edge-by-edge registered read timing.",
+    "content_sha256": "bc752d46924fd9e5c0153acca642ac7b888f1dbe86a21c51974282931e3f8023"
+  },
+  "prep-average-difference-two-logic-gates": {
+    "difficulty": 6,
+    "reason": "Exploit equal parity and the supplied upper operand to route mean bits using gates without a carry adder.",
+    "content_sha256": "9f4fef30a1773cf3ea3dfdc717e665b07307d30d2cbdf3b7b2a87a0e41ee4841"
+  },
+  "prep-balanced-brackets-mixed-text": {
+    "difficulty": 3,
+    "reason": "Use a stack of unmatched openers, ignore ordinary text, and reject mismatched closers.",
+    "content_sha256": "54c1eecb5bf18e7cb1fdd692b4acf1ade24bca0064726a00ab6f20060e22f280"
+  },
+  "prep-bidirectional-client-server-test-design": {
+    "difficulty": 6,
+    "reason": "Design observable tests for acknowledgment loss, idempotent retries, ordered delivery and reconnection under retention limits.",
+    "content_sha256": "208fd7cdbe97e042228c33f157e7c88d4d905499e9dd9e8712bb9c16f170fb6c"
+  },
+  "prep-binary-divisibility-by-two-four-eight": {
+    "difficulty": 2,
+    "reason": "Identify and justify the all-zero low-bit suffix for powers of two, including zero and short words.",
+    "content_sha256": "4fe954db16d5870cc31f1c272a12965e6b6ccc64d90f7906253f5d98b37408e2"
+  },
+  "prep-binary-tree-vs-bst-maximum": {
+    "difficulty": 3,
+    "reason": "Traverse the general tree rather than following BST order, with an empty-case result and stack cost.",
+    "content_sha256": "660f7205d0a8eb2de66020b8f7f56475be8a7573009a95829b7039545f18f25a"
+  },
+  "prep-birthday-public-announcement-reasoning": {
+    "difficulty": 6,
+    "reason": "Update private month and day possibilities in statement order, including what every day in a month implies.",
+    "content_sha256": "192bcc6b2745ac8ad55fdd5ba7cf89b269d04b9e0c6996b0a5c614437c98b899"
+  },
+  "prep-black-box-focus-maximum-search-assumptions": {
+    "difficulty": 6,
+    "reason": "Prove the arbitrary black-box lower bound, then derive the leftmost-maximum search under stronger shape assumptions.",
+    "content_sha256": "4d327db675a7e99bdb884d33c31171cefef18c24a296095b27bbda272861319f"
+  },
+  "prep-black-component-bounding-boxes": {
+    "difficulty": 4,
+    "reason": "Traverse each four-neighbor component exactly once, accumulating inclusive bounds without modifying the image.",
+    "content_sha256": "89434a552d76d401673f4da5a567738f92c6095966aac7de04965650e168f77a"
+  },
+  "prep-boat-object-water-level-density": {
+    "difficulty": 5,
+    "reason": "Compare mass-based boat displacement to object displacement for three post-release buoyancy cases.",
+    "content_sha256": "d7b0af76f31c7faf111233cceadc9fdf6c6a84eeaadeb97c95c35b78cd7614fb"
+  },
+  "prep-boolean-function-two-muxes": {
+    "difficulty": 5,
+    "reason": "Decompose the complemented product by select cases to meet a strict two-mux budget with only raw inputs.",
+    "content_sha256": "1eb3d67da01ddabd765567296bea463839f5a2beacf734ef58fe24e030c816ca"
+  },
+  "prep-boolean-implication-gate": {
+    "difficulty": 3,
+    "reason": "Identify the single false input pair, then translate it into mux and NAND realizations.",
+    "content_sha256": "83cf20000e4dbba1e98b977f1ab7ad92a2b89a04022153a53c1354c10ce72d82"
+  },
+  "prep-branch-free-saturating-speed-controls": {
+    "difficulty": 2,
+    "reason": "Encode the two fixed, saturated unit-step maps in small lookup tables with known valid indices.",
+    "content_sha256": "c66f5da51c4d05f2f7e25bdb5ade08c7c85e02912cdd9e309dc192c21df066b3"
+  },
+  "prep-bridge-torch-twelve-hours": {
+    "difficulty": 6,
+    "reason": "Sequence the fast returners and slow pair within the deadline and prove no cheaper schedule exists.",
+    "content_sha256": "18ca8365f84a1afb272336dab596791e6c589f34f01a61685cf46803f231218f"
+  },
+  "prep-buffer-purpose-load-isolation": {
+    "difficulty": 5,
+    "reason": "Compare the direct and buffered RC paths, accounting for source isolation and intrinsic buffer delay.",
+    "content_sha256": "7033bed40238a0f191f1f6dd3358c756b3b9edc6313a37bd89c3c7c78dde703d"
+  },
+  "prep-byte-popcount-parallel-and-lookup": {
+    "difficulty": 4,
+    "reason": "Implement a direct count and a loop-free alternative, explaining setup costs and fixed versus variable word width.",
+    "content_sha256": "0d533ea538392f2debbfaff2ad2fe786bb51a81c7de7d55013a045a909e7a2c0"
+  },
+  "prep-c-fifo-write-then-read-requests": {
+    "difficulty": 5,
+    "reason": "Track wraparound and equal-head flags under simultaneous write-then-read requests at both occupancy limits.",
+    "content_sha256": "9387dd1a56667edbf96c3f1c193a564b376141b96598bbe1b82811e12ccc3824"
+  },
+  "prep-c-linked-list-dictionary-ownership": {
+    "difficulty": 7,
+    "reason": "Manage copied strings, borrowed lifetimes, aliasing, unlinking and allocation failure without changing the previous map.",
+    "content_sha256": "decb21a9e0136818338e498aba616ac5ee14f4bf8e0507a6466fc6e3e65b6ab8"
+  },
+  "prep-calendar-age-two-days-ago-next-year": {
+    "difficulty": 4,
+    "reason": "Place a birthday at a calendar-year boundary and trace the three changes in completed age.",
+    "content_sha256": "07e8ef99debcde41e0a35802e92005092705c3e2e4809510c9f25ae12f527b48"
+  },
+  "prep-camel-banana-transport-with-caches": {
+    "difficulty": 8,
+    "reason": "Prove a transport upper bound across arbitrary caches and construct attainable plans for both fractional and integer stations.",
+    "content_sha256": "ae2efe532faf9355aad1a18d9a690cb669ac0049428782b09928ec3bc365c997"
+  },
+  "prep-capacitive-crosstalk-delay": {
+    "difficulty": 6,
+    "reason": "Derive victim charge for correlated and opposing transitions, separate delay from noise and justify remedies.",
+    "content_sha256": "20a6c3d45e15e39705ba80994dad853557a7264383bce84aabdef595e64dbbdc"
+  },
+  "prep-charged-capacitor-switched-to-ideal-inductor": {
+    "difficulty": 5,
+    "reason": "Apply LC initial conditions and energy conservation to derive a signed, parameterized oscillatory voltage.",
+    "content_sha256": "cb124d1df40d4b404a6e7d250f0d256b7b751794af9a31c6ef683216cb523971"
+  },
+  "prep-circuit-from-clock-input-output-waveforms": {
+    "difficulty": 4,
+    "reason": "Infer consecutive-sample disagreement from the waveform and realize it with clocked storage and XOR.",
+    "content_sha256": "7cc7411d4ad01c5954fc5f7c9b38eca12c57d4a4b9341d22a3bec65c0e2a4586"
+  },
+  "prep-circular-packed-bit-array-move": {
+    "difficulty": 6,
+    "reason": "Move packed bits across byte and ring boundaries in place while proving surviving reads cannot be overwritten.",
+    "content_sha256": "8d49f1e914cc876e6623733bc4412ba1942042d8572e6bed0cf7a24152631e2b"
+  },
+  "prep-circular-table-coin-placement-strategy": {
+    "difficulty": 6,
+    "reason": "Choose the center first and prove the mirrored response avoids old coins and the newly placed coin.",
+    "content_sha256": "7db83eca1231820188acedcc24a75b5bbc14c7bc25f043f2d81658ce602a4aa0"
+  },
+  "prep-clock-hands-angle-six-thirty": {
+    "difficulty": 2,
+    "reason": "Account for continuous hour-hand motion over the half hour to obtain the smaller angle.",
+    "content_sha256": "e78dd9301865f17b85686eaddbc9dc656aad3e69375fb8df74a211d1b143ccf5"
+  },
+  "prep-clock-three-equal-number-sum-regions": {
+    "difficulty": 4,
+    "reason": "Compute the target sum, find two contiguous cap groups and realize them with straight cuts.",
+    "content_sha256": "403d3342710bf0187e31c9d56b55b2348a48153259de7cdbebbcc1f003650076"
+  },
+  "prep-closest-planar-pair-c": {
+    "difficulty": 4,
+    "reason": "Check all pairs exactly using bounded squared differences and original indices; the prompt also permits the faster geometric alternative.",
+    "content_sha256": "8d7f43d01100c187d15ba7d710dbb79f43e63a260bb84b7538e936553674504a"
+  },
+  "prep-cmos-inverter-operation": {
+    "difficulty": 4,
+    "reason": "Connect devices and body rails, then trace load charge, discharge and transient conduction.",
+    "content_sha256": "11d112a11f41b315068d714168513c19e06d55c776e73de2b025b005c0cf6016"
+  },
+  "prep-completed-binary-run-parity-error-fsm": {
+    "difficulty": 6,
+    "reason": "Track bit value and run parity, emitting only on closure while correctly initializing an empty history.",
+    "content_sha256": "34d802b9dbc04b4f7e38a4ef803847b414e1c769987aa5b09d823136cd1e4f00"
+  },
+  "prep-concurrent-read-write-from-single-port-memories": {
+    "difficulty": 7,
+    "reason": "Separate bank conflicts indefinitely and synchronize new-data bypass with a registered read response.",
+    "content_sha256": "b4f7f2d5e10b4a7c88a3913bde6286617a6a456e6833c684a5ad933f9a4aeeaa"
+  },
+  "prep-constant-multiplication-by-thirteen": {
+    "difficulty": 4,
+    "reason": "Decompose thirteen into shifted terms, size operands for exact addition and justify boundary behavior.",
+    "content_sha256": "8c887f06f30391f73930254db2a8f79cb73fbf9dff5699c807c455cd070416c2"
+  },
+  "prep-constant-time-set-get-setall-array": {
+    "difficulty": 6,
+    "reason": "Use per-element generation tags and a global value to make both single writes and SetAll constant time.",
+    "content_sha256": "7f8826771c7debef8218bda9af8e48b0c9733a2536cfe8881468e433fa69970f"
+  },
+  "prep-convexity-ordered-simple-polygon": {
+    "difficulty": 6,
+    "reason": "Prove signed turns characterize a simple ordered polygon, handle collinearity and explain self-intersection counterexamples.",
+    "content_sha256": "3bbf1b79a72f8c38a7489e56f366cc5ec3b0e9d66c3db10ae713e84e3399b678"
+  },
+  "prep-costume-ranked-maximum-assignment": {
+    "difficulty": 5,
+    "reason": "Search feasible assignments with backtracking or matching and optimize the two-part score in order.",
+    "content_sha256": "43e7cf5b42b2b999896710f680ca3da48765b7f513ade625e83a9a28ce1c38bb"
+  },
+  "prep-count-negatives-row-column-sorted-matrix": {
+    "difficulty": 5,
+    "reason": "Use both monotonicity directions to count whole row or column segments while proving each elimination.",
+    "content_sha256": "a93a040079215d1e83555e60fc6edc1c7c921207888a607f97f6bf0c1698b6f0"
+  },
+  "prep-count-primes-sieve": {
+    "difficulty": 4,
+    "reason": "Implement a sieve, prove why smaller multiples were already marked and derive work and space.",
+    "content_sha256": "ca7a3d24b979aac0990093326ff63845ac223427d7938d46787b7c01c04346cc"
+  },
+  "prep-count-unordered-index-pairs-target-sum": {
+    "difficulty": 4,
+    "reason": "Accumulate frequency-weighted complements from earlier indices and prove duplicates count exactly once.",
+    "content_sha256": "67d971f9af9d1b8d69d6762a1ceca7d09af772ada1024feda2277aa00d1913ba"
+  },
+  "prep-cpp-atoi-style-parser": {
+    "difficulty": 5,
+    "reason": "Separate ASCII prefix parsing from unsigned magnitude accumulation and guard the asymmetric signed boundary before overflow.",
+    "content_sha256": "7a99dc9939d6d4f3830a2d1347aefa1f91835867c26acbe0bed43f921d4eab98"
+  },
+  "prep-cpp-constructor-initialization-and-invariants": {
+    "difficulty": 3,
+    "reason": "Use member initialization and constructor validation to establish a concrete interval invariant.",
+    "content_sha256": "a9e9348423645c316623c80d08437fb75bfe31858fb892eb241692987b40ac72"
+  },
+  "prep-cpp-copy-constructor-and-ownership": {
+    "difficulty": 5,
+    "reason": "Connect copy construction, assignment, resource ownership, implicit operations and copy-elision semantics.",
+    "content_sha256": "186866b3554280a8c48d6d3484bf595b97804aa9c48f315987a9fde50ff6063f"
+  },
+  "prep-cpp-destructor-default-virtual-raii": {
+    "difficulty": 4,
+    "reason": "Distinguish member-managed cleanup from owned raw resources and explain dynamic destruction through a base pointer.",
+    "content_sha256": "726f1267fc0f03907e67236420d51ddd7bff1f9fce4db5542bd8c317bacfaee4"
+  },
+  "prep-cpu-thousand-sorter-two-thousand-memory-models": {
+    "difficulty": 8,
+    "reason": "Sort under three access models, construct a block compare-exchange schedule and describe a padded sorting network.",
+    "content_sha256": "a9699a47f1abac7c0136cfea6b827e19ab594f6b28689108ab520a25e126f81d"
+  },
+  "prep-critical-path-mux-multiplier": {
+    "difficulty": 6,
+    "reason": "Compare structural data and select delays, eliminate an inverter by rewiring and justify equivalence of timing changes.",
+    "content_sha256": "258c28b843f2d054af152755608a30fba88495dfd246682f731df2b75cd1c652"
+  },
+  "prep-cube-opposite-vertices-surface-shortest-path": {
+    "difficulty": 6,
+    "reason": "Unfold adjacent faces and justify why paths across other faces cannot shorten the diagonal route.",
+    "content_sha256": "7018892f51be1708e6c65d691617a43d0cbeaa65737e92fddb297da527050f14"
+  },
+  "prep-cube-twelve-resistors-opposite-corners": {
+    "difficulty": 6,
+    "reason": "Use network symmetry and unique potentials to group nodes before reducing series and parallel layers.",
+    "content_sha256": "7175b728eb0bef08c0beab3db3a8dd96a2b0ec994bfb109363b9099dc91e231f"
+  },
+  "prep-cyclic-counter-zero-one-two-one": {
+    "difficulty": 5,
+    "reason": "Separate the two phases displaying one by future behavior, encode the four states and justify minimal storage.",
+    "content_sha256": "395d7427f56c03ea3dd72324f83edef9bd719d19fe19a54d152cbe1503f19dbd"
+  },
+  "prep-cyclic-three-player-probability-game": {
+    "difficulty": 8,
+    "reason": "Solve repeated-turn duel probabilities and verify the proposed actions of every remaining player against alternatives.",
+    "content_sha256": "2b4b9c6c7e5eeee7760917e0395cbbeb83ddc7baf3cf9447fec1626355183c0e"
+  },
+  "prep-d-flip-flop-from-t-flip-flop": {
+    "difficulty": 3,
+    "reason": "Translate desired next state into a toggle decision and verify the XOR feedback table.",
+    "content_sha256": "d20309cdd8992b87808ffbc48aa76a90168de98d2dbe982a9f12d4a17387e282"
+  },
+  "prep-damaged-triple-groups": {
+    "difficulty": 5,
+    "reason": "Use maximal run lengths modulo three to identify a damaged group despite recurring values, and justify constant storage.",
+    "content_sha256": "b70b3fc638c88c19fdc24d5dc9fd2eeef092c5d3a5c3c33ef88472ea77c84d84"
+  },
+  "prep-dark-room-ten-tails-equal-groups": {
+    "difficulty": 5,
+    "reason": "Choose a group sized to the known tails count and prove flipping it equalizes tails for any hidden distribution.",
+    "content_sha256": "ba6e0f27c0e373a1003f83999652d79b249c461814e803f2a4cd64e335c39edc"
+  },
+  "prep-decibel-ratios-and-references": {
+    "difficulty": 4,
+    "reason": "Derive power and amplitude log factors and identify when impedance or loading prevents summing quoted gains.",
+    "content_sha256": "bedf43199fae11cfc9f9b6478882ab94a17e8a9eb75b071746ed051b74d7885a"
+  },
+  "prep-decoder-based-two-power-n-mux": {
+    "difficulty": 3,
+    "reason": "Gate each data input with its one-hot decoded select and reason about OR reduction depth.",
+    "content_sha256": "bfe09620b7f4b0f58f2d52ef1ce7b3bd7d00a94bfd19db5284c8591cd1d52cba"
+  },
+  "prep-delete-array-values-below-nineteen": {
+    "difficulty": 4,
+    "reason": "Prevent skipped elements after deletion, analyze shifting costs and derive stable compaction with a write cursor.",
+    "content_sha256": "071b16f2259db54943b63a3465e868d4f6c7a6db7f95d86e5c0e371df52b3815"
+  },
+  "prep-detect-overlapping-1011-stream": {
+    "difficulty": 5,
+    "reason": "Build prefix states, retain overlapping suffixes and distinguish immediate Mealy events from registered timing.",
+    "content_sha256": "0a274c7a0988f06a320ad3bbe8f50a233528965fe43492a28590e0caf043d3ee"
+  },
+  "prep-dff-enable-feedback-mux": {
+    "difficulty": 2,
+    "reason": "Select new data or feedback Q at the D input with one mux on the original clock.",
+    "content_sha256": "6e67e6b63ca2f1a05cfae4b9bed78d2a7e4ed6e95286d5a33095b44c1f2bda6c"
+  },
+  "prep-dff-from-edge-triggered-srff": {
+    "difficulty": 3,
+    "reason": "Drive set and reset from complementary data, avoiding the forbidden pair, and distinguish edge capture from a latch.",
+    "content_sha256": "cef15142c425ae7784c8184fe07e9b2432cb984a31043cf4fad5db92a1b4e6da"
+  },
+  "prep-digit-seven-boom-and-incremental-decimal-state": {
+    "difficulty": 5,
+    "reason": "Maintain a decimal seven-count across carry propagation, checking it against the straightforward digit scan.",
+    "content_sha256": "ab77fc34f54bf859b28fe507b83be22319e1ada7d46d990f482052a19a74bc19"
+  },
+  "prep-distributed-hats-guaranteed-one-guess": {
+    "difficulty": 7,
+    "reason": "Construct a simultaneous modular guessing strategy for ten players and prove its universal guarantee and binary tightness.",
+    "content_sha256": "4229daffdbf0a37db7ed903b9fc5d95e0c43a8851200f46594869af5448b968b"
+  },
+  "prep-divide-by-three-fifty-percent-duty": {
+    "difficulty": 6,
+    "reason": "Use both input clock edges to obtain a one-and-a-half-period high time and trace the divider from initialization.",
+    "content_sha256": "fddca7f45da69e97785b32951a8e28ee1c293e57940fa9ba92ff792dcc55d317"
+  },
+  "prep-doorway-occupancy-two-sensors": {
+    "difficulty": 7,
+    "reason": "Track direction and reversible passage progress, reject invalid transitions, and count only completed crossings at safe bounds.",
+    "content_sha256": "c8a3f31e6dc8b3a11e57cf113cfbada6c58efd7ff90243f988d3829ea5c9ad29"
+  },
+  "prep-duck-fox-circular-pond-escape": {
+    "difficulty": 7,
+    "reason": "The orbit must beat the fox in angular speed while leaving a short enough sprint, with strict bounds against arbitrary pursuit.",
+    "content_sha256": "c5c23b0936a6ef9a5d2295885cb99900d8d117c5b9f8f0cb5ed1dccba777ec51"
+  },
+  "prep-earth-rope-uniform-clearance": {
+    "difficulty": 2,
+    "reason": "Subtracting the two circumferences cancels the Earth's radius and gives a single height comparison.",
+    "content_sha256": "f9075341b84e201fe99173c0b04a14a31f78d7145fd03c531a27090de2319a8f"
+  },
+  "prep-eight-bit-popcount-adders": {
+    "difficulty": 5,
+    "reason": "The adder network must preserve the distinct weights of sums and carries through several compression stages.",
+    "content_sha256": "b296ed7860033e34a0251c11b5a95cb850e955dfe052279504e57bfcdc0ed900"
+  },
+  "prep-eight-bit-times-six-full-adders": {
+    "difficulty": 4,
+    "reason": "Writing six as two plus four reduces the task to shifted columns, ripple carry and an exact eleven-bit result.",
+    "content_sha256": "592d50c4935ccde59b4d871cf2decd76ab980b9e590aedc50f7b55dc864ba289"
+  },
+  "prep-eight-bit-unsigned-lower-clamp-sixty-four": {
+    "difficulty": 2,
+    "reason": "A comparison against 64 and a selector implement the full specification including equality.",
+    "content_sha256": "5a7a389684a99c646be665d3f26749c9e1293d131c2adfedad5261767dfaee2c"
+  },
+  "prep-eight-cell-synchronous-hardware-fifo": {
+    "difficulty": 6,
+    "reason": "Read and write enables must preserve occupancy and FIFO order during simultaneous transfers, even at a full same-address exchange.",
+    "content_sha256": "1e441209767ed36bc8b02f422b4da92a451e8ec275726237c19001ca5f0dac7f"
+  },
+  "prep-eight-floor-elevator-isr-request-scheduler": {
+    "difficulty": 7,
+    "reason": "A bounded interrupt handler must hand off concurrent requests atomically to a sweep scheduler that operates only at landings.",
+    "content_sha256": "b0947515d0c6e7fd7deb8cad5868056e9d59b4d38e1d1bac1d60ffa23fdcfeb0"
+  },
+  "prep-eight-to-one-mux-late-data-input": {
+    "difficulty": 6,
+    "reason": "Giving late D0 a final-stage shortcut requires an equivalent selection tree and an accounting for early control and other paths.",
+    "content_sha256": "f46e6615a6a4edaf13c4fbb1350bff338c22327b3b7df65adfba06dfafc3a657"
+  },
+  "prep-empty-conductor-cavity-capacitance": {
+    "difficulty": 7,
+    "reason": "The answer combines uniqueness inside the empty cavity, exterior reference geometry and a Gauss-law capacitance derivation.",
+    "content_sha256": "7da6940e2d2006d6ee506186d43453a56f0d6de7b9a893d0b37493a53cd3ce8a"
+  },
+  "prep-enabled-mod-six-counter": {
+    "difficulty": 3,
+    "reason": "A three-bit counter needs an enable, an inclusive terminal count and explicit recovery for two unused encodings.",
+    "content_sha256": "cfecfae0ab45547dd703b358a6b1de6d9ca3a611968e89efe6e853491bf37051"
+  },
+  "prep-equal-distance-average-speed-limit": {
+    "difficulty": 3,
+    "reason": "The outbound leg alone exhausts the available round-trip time, so the target is a limit for finite return speeds.",
+    "content_sha256": "fc8af668face956df93c35db65704d604a0b9807fc05a44e679c1783ba567639"
+  },
+  "prep-error-bit-window-monitor": {
+    "difficulty": 3,
+    "reason": "Two block counters suffice once the final sample and strict error threshold are evaluated in the right order.",
+    "content_sha256": "1a0194131b0d45202bc44c1261cdcd3d6589830de8b53774934c3491168ac95d"
+  },
+  "prep-every-fifth-input-rising-edge-counter": {
+    "difficulty": 4,
+    "reason": "A sample register distinguishes rising edges from high levels before the modulo-five counter emits its registered pulse.",
+    "content_sha256": "666418db6825399159fa6b84723b3bc653a77269790cbf3f27c7926417dc596a"
+  },
+  "prep-every-third-clock-pulse": {
+    "difficulty": 3,
+    "reason": "A three-state count and terminal transition place the pulse after the third edge rather than the second.",
+    "content_sha256": "5353336f260b0e2398e3ec1b291871e542b4de4c5301a3b09e1460e84c893bb0"
+  },
+  "prep-extend-mod16-black-box-to-mod32-counter": {
+    "difficulty": 4,
+    "reason": "The extra flip-flop toggles only on pre-edge rollover of the black-box low nibble.",
+    "content_sha256": "a7c5cbdbfeb87e1d0ad3103732341cf8f5b10ca3ec9a3d90dfc8c2e52686aa55"
+  },
+  "prep-external-packet-residence-time-monitor": {
+    "difficulty": 8,
+    "reason": "The monitor needs an observability counterexample, distinguishable packet lifetimes and an occupancy-area identity separate from Little's law.",
+    "content_sha256": "2c4b6f1f7d31c01722fcfb6ad8c59dc8e7e4005bb41fa4328a4fa6117cc6118f"
+  },
+  "prep-fenced-island-initial-region-with-coast-anchor": {
+    "difficulty": 5,
+    "reason": "Crossing parity recovers the initial side only after establishing a known outside anchor and a reachable route to it.",
+    "content_sha256": "b1735b421c5e4b0419a44b0d2306a86648207c92d1e8d73809172b842683fd86"
+  },
+  "prep-finite-cycle-index-and-square-recurrence": {
+    "difficulty": 5,
+    "reason": "The consecutive-squares identity must become simultaneous bounded register updates with correct intermediate and output widths.",
+    "content_sha256": "772fbd092353ff79242e2a89a520ff3c301021d64bc36a7dadaaa1abd0475d06"
+  },
+  "prep-first-equal-in-sorted-array": {
+    "difficulty": 4,
+    "reason": "Lower-bound binary search must retain the first duplicate and handle both an end boundary and an absent target.",
+    "content_sha256": "712abbae8b88b4ae7a38caa6bccca9494d20dc70685e395035292804cc266966"
+  },
+  "prep-first-finisher-latched-winner": {
+    "difficulty": 4,
+    "reason": "A priority encoder resolves a sampled tie while a register locks out all later arrivals until reset.",
+    "content_sha256": "06de5b8a0e65900b7048c2a24d192d8734695b4136e9a6c59eb9bb4a6f06271f"
+  },
+  "prep-first-missing-positive-in-place": {
+    "difficulty": 6,
+    "reason": "In-place value placement needs a duplicate guard and a monotone homes-filled argument to prove linear runtime.",
+    "content_sha256": "6f215ecd0bc828bf16d7714635d2eb24a3d2ad4cda354bda90ed1f9b53a30e7b"
+  },
+  "prep-first-order-low-pass-and-unity-gain-follower": {
+    "difficulty": 5,
+    "reason": "The candidate must derive the RC cutoff and use negative feedback to explain buffering and loading.",
+    "content_sha256": "e09d2155ca9faa33b4b301d45c96d848b85549be7a1988f9a7ef546b1f42ec61"
+  },
+  "prep-five-stones-clock-balance": {
+    "difficulty": 4,
+    "reason": "Combining a balanced equilateral triple with an opposite pair solves the odd count on twelve marks.",
+    "content_sha256": "ae99978de2c06f4c72f5a8354f111f6d7f477c7d14e9ed8e2f368aff880fc3d3"
+  },
+  "prep-floor-log2-counter-register": {
+    "difficulty": 4,
+    "reason": "Counting shifts to the highest set bit requires a timed capture and distinct zero, busy and completion behavior.",
+    "content_sha256": "95d73cbb6bbb36dcb28dd1b27e19715e0296026c280eec7657e5ba3f703a9d05"
+  },
+  "prep-four-bit-addition-half-adders-only": {
+    "difficulty": 6,
+    "reason": "Under the HA-only constraint a third HA merges mutually exclusive carry signals without an external OR gate.",
+    "content_sha256": "47ce4b9d9f7e68bcced2fda269b22add5fc130b9706a353d312f8ef202054621"
+  },
+  "prep-four-bit-binary-times-five-two-decimal-digits": {
+    "difficulty": 4,
+    "reason": "The exact-width binary product must be recoded into two decimal digits, including inputs above nine.",
+    "content_sha256": "e6abc5e37c7df2e6150589856d5dcd98f2fb6f260e01c01f73b92641a9854ded"
+  },
+  "prep-four-bit-controlled-predicates": {
+    "difficulty": 4,
+    "reason": "Three-of-four majority, odd parity and their complements must be mapped to the correct selector modes.",
+    "content_sha256": "c376f62014b5913887210fc1c21a25c05bb03fce9b86842d59263b81078e3b34"
+  },
+  "prep-four-data-wires-symbol-alphabet": {
+    "difficulty": 3,
+    "reason": "Counting binary patterns rules out one transfer and two framed samples supply a decodable code.",
+    "content_sha256": "b37ae8fe12fac624f63ad1d28e29253c0419e25b925382c7b10bdcc576073ce4"
+  },
+  "prep-four-hidden-switches-rotating-table": {
+    "difficulty": 9,
+    "reason": "An optimal strategy must track indistinguishable switch configurations after rotations and prove a seven-attempt lower bound.",
+    "content_sha256": "106bf5630fdf798e1e9f4c53869208276c2ccd444aff16af1213fea0c8c7e018"
+  },
+  "prep-four-input-or-from-threshold-boxes": {
+    "difficulty": 4,
+    "reason": "Tying one input high lowers the threshold to OR; a second threshold cell incorporates the fourth data bit.",
+    "content_sha256": "ded52b3046778dd188fc5039f8a7fa5c9f5dee759a9e8a8a0ea32cd7f291d281"
+  },
+  "prep-four-input-sorter-single-crossing-fault": {
+    "difficulty": 8,
+    "reason": "Beyond sorting, tests must propagate and distinguish each unconditional-swap fault using only final outputs.",
+    "content_sha256": "f14a7ef5581e32b3bd4afcc8c25a9a77c32d766d5318c4d57b61f051db7ab941"
+  },
+  "prep-four-to-one-mux-from-two-to-one": {
+    "difficulty": 3,
+    "reason": "Tracing two selector levels gives the drawn reversed input order and the conventional rewiring.",
+    "content_sha256": "f611204a7d8ac489d074c8b231f70cbbfb03575f3a1fdf8d344af8534d3cb9ee"
+  },
+  "prep-four-transistor-rail-xor-analysis": {
+    "difficulty": 6,
+    "reason": "Treating data-driven diffusions as pass devices gives XOR, then each path needs a strong or degraded logic-level analysis.",
+    "content_sha256": "2ac34cf03931197b054a4b89862219d4e54df8f6ff04d84bdfccb7e7cd23b286"
+  },
+  "prep-four-word-synchronous-one-read-one-write-memory": {
+    "difficulty": 5,
+    "reason": "The decoder and registered read data must agree on valid timing and old-data semantics during a simultaneous write.",
+    "content_sha256": "43f21d12ae3d85b8169d9990a1a9180cab143ba34ec8e0348c39682243236584"
+  },
+  "prep-full-adder-32-bit-area-delay-recursive-carry-select": {
+    "difficulty": 9,
+    "reason": "The candidate must derive area and delay across recursive speculative carry partitions and optimize depth for unspecified mux costs.",
+    "content_sha256": "28b80c7af164976e2b77a89be0a996cbf79d84ed69ce17f44fe5d387c6b1adec"
+  },
+  "prep-full-adder-from-two-to-one-muxes": {
+    "difficulty": 6,
+    "reason": "MUX-only parity and carry require counted inversions, with a different construction when constant one is unavailable.",
+    "content_sha256": "c15c4156606145f449cffe3fba7ee642270f4668db79b5def2e4819b30cf14d8"
+  },
+  "prep-game-twenty-one-complement-strategy": {
+    "difficulty": 4,
+    "reason": "Backward play reveals targets four apart, with a legal complement to every opponent move.",
+    "content_sha256": "5877f4e070a0420fd99c716a3c8b96c66036510ea93b15f5fa0d23afddf6ec4b"
+  },
+  "prep-general-in-place-integer-array-sort": {
+    "difficulty": 6,
+    "reason": "Worst-case time and constant space jointly require iterative heap construction, sifting and an extraction invariant.",
+    "content_sha256": "6d6d305028b12ee00b05c9a4ed0a72a51759e36664dda1289ce3171413f2bbcd"
+  },
+  "prep-gold-bar-seven-day-payments-two-cuts": {
+    "difficulty": 5,
+    "reason": "Binary-valued pieces give the daily payment schedule, and an ownership-subsets bound proves the cuts minimal.",
+    "content_sha256": "1d1be80dc9c2d4e154ffb5daf7b7398c474842fbdff99ec298a8e9099bd3a771"
+  },
+  "prep-grasshopper-ladder-one-two-steps": {
+    "difficulty": 3,
+    "reason": "Partition ordered paths by their last jump and supply the empty-path and one-rung base cases.",
+    "content_sha256": "7b049733156efdfa39db46f997d243ad9d3d9547a70606c5ff4349d7947650bd"
+  },
+  "prep-hardware-fibonacci-register-adder": {
+    "difficulty": 3,
+    "reason": "The supplied recurrence translates to two registers updated from old state, with finite-width wraparound.",
+    "content_sha256": "376eda6ab6f83f0ef9ee825abd4490fa3a1370e474c203299b3e0b3befd81236"
+  },
+  "prep-hidden-seven-resistor-central-branch": {
+    "difficulty": 7,
+    "reason": "The measurement plan must eliminate unknown branch resistances and prove why cross-side measurements alone cannot identify Rc.",
+    "content_sha256": "9d725c1c13c7a09f2e90ee93fd4b0b526f77b23d5c40b0495d1fa93f6464466c"
+  },
+  "prep-highest-onehot-base-cell-tree": {
+    "difficulty": 6,
+    "reason": "A simple priority cascade must be redesigned with group summaries to compute all higher-priority prefixes at logarithmic depth.",
+    "content_sha256": "bb6ede6c6c177ee942a2e113b1f3f8b0bcf596c3c58b8fd75956984aef2966eb"
+  },
+  "prep-horizontal-line-packed-byte-bitmap": {
+    "difficulty": 5,
+    "reason": "Packed addressing and endpoint masks must preserve padding and handle a line whose endpoints share one byte.",
+    "content_sha256": "18bcf431d53d336dfe932ba26870ef3793798e27ac411c6849f760268687b4b5"
+  },
+  "prep-hundred-boxes-one-helper-swap-fifty-queries": {
+    "difficulty": 7,
+    "reason": "Cycle-following finds the target only if the helper splits the sole oversized permutation cycle into two suitable lengths.",
+    "content_sha256": "0392f0d51a18365a09aa2430d5bc16c0d5ab78fb90c4e1a4ed3f3cf6d02061e3"
+  },
+  "prep-hundred-frogs-lamps": {
+    "difficulty": 4,
+    "reason": "Mapping toggles to divisors and pairing complementary factors explains why exactly the perfect squares stay lit.",
+    "content_sha256": "654c60d55e75f87785451613e277f153bc19157984a41c8ca54e10084e44ad57"
+  },
+  "prep-hundred-motorcycles-transferable-fuel": {
+    "difficulty": 9,
+    "reason": "A harmonic convoy construction must meet an upper bound valid even for asynchronous travel and return trips.",
+    "content_sha256": "9c902f51a1733fe8c999c7d450e7dcc1943d95f765b0805af76ab60e3fd958e0"
+  },
+  "prep-hundred-switches-one-observer-question": {
+    "difficulty": 5,
+    "reason": "Repeated switch operations encode the switch identity in an observed count, whereas one binary reply has insufficient outcomes.",
+    "content_sha256": "53a11a3102220c0a7ec95791de1cf22608987c12a70980b52b4cd784dde525c3"
+  },
+  "prep-identical-robots-trains-static-marker-rendezvous": {
+    "difficulty": 7,
+    "reason": "Identical programs must break symmetry through a stationary marker and prove actual catch-up under the instruction timing.",
+    "content_sha256": "a59a566287ef60b5e14cb36ce1f4e194dab3ed7960b581d0569654c8dffb9e9f"
+  },
+  "prep-inheritance-operation-costs": {
+    "difficulty": 5,
+    "reason": "The answer separates virtual dispatch, hiding, slicing and object lifetime from the complexity of each implementation.",
+    "content_sha256": "2f4af70b03b50c27fc6b0555fc4c4a246037dfb9233685ffc8ae778f3423ce60"
+  },
+  "prep-insert-digit-operators-to-one-hundred": {
+    "difficulty": 2,
+    "reason": "A valid witness follows from adding the first seven digits and using multiplication precedence for the last two.",
+    "content_sha256": "899ce44619fc9e92cb34032c0fdcfc7fb44aefe61712c4490954daff58fa91e4"
+  },
+  "prep-integer-midpoint-pigeonhole": {
+    "difficulty": 5,
+    "reason": "Matching coordinate-parity vectors gives the guarantee, and one point per signature proves its sharpness.",
+    "content_sha256": "50b9580dbd2b5cb704d3bd1b84bd4166fe566bd0e56534ee02e49a7bdb923711"
+  },
+  "prep-inverting-op-amp-capacitive-feedback-integrator": {
+    "difficulty": 6,
+    "reason": "KCL and capacitor current yield an integrator whose DC and sinusoidal responses depend on initial voltage and linear limits.",
+    "content_sha256": "726c17739be91d803c5319f46443ecb0b996c4114c7f517295f20ed0e8068f1d"
+  },
+  "prep-ir-drop-power-grid": {
+    "difficulty": 5,
+    "reason": "Supply and return losses enter one DC budget, while decoupling and sensing solve different transient or steady-state problems.",
+    "content_sha256": "01cfdfc2b5aff16968c1305028d36397c62330e9171828000aeb4414b859f8e2"
+  },
+  "prep-isolate-highest-one-eight-bits": {
+    "difficulty": 4,
+    "reason": "Each bit combines its own value with a mask indicating whether any higher bit has already won.",
+    "content_sha256": "c96e194486b4a80147c5985f98e20b1b86e590b9654aadc02d43bc312b5f0fb2"
+  },
+  "prep-isolate-lowest-set-bit-basic-gates": {
+    "difficulty": 4,
+    "reason": "An OR prefix from the LSB blocks higher bits and provides a scalable gate count and correctness argument.",
+    "content_sha256": "75ddad29f31d5085e864def67823a8d9d7f93a011a8f03c12af4aced71c88865"
+  },
+  "prep-josephus-forty-three": {
+    "difficulty": 5,
+    "reason": "Relabeling after eliminations links the survivor to a power-of-two subproblem and fixes the one-based phase.",
+    "content_sha256": "4ef6e716baa8f1097189ca789550449e84b5190c529aec65a8ac44eb7a1c0d5f"
+  },
+  "prep-kmeans-explain-and-lloyd-iterations": {
+    "difficulty": 6,
+    "reason": "Lloyd updates need consistent ties and empty clusters, plus a justification of nonincreasing squared error without global optimality.",
+    "content_sha256": "86e752bf10991c4950b266903240908aae950c44098ef4cfeca1e0d4246ea66b"
+  },
+  "prep-liars-first-signals-common-knowledge": {
+    "difficulty": 7,
+    "reason": "The count follows from inductive rounds of compulsory signaling, after showing how looser timing invalidates the inference.",
+    "content_sha256": "fab2ea76ac07183e232b24ae71e1ec6bb0348e7ad50e01b564aaadc85eaaae37"
+  },
+  "prep-line-hats-parity-guarantee": {
+    "difficulty": 6,
+    "reason": "A parity announcement plus previously decoded hats lets each successive speaker deduce their color and proves the guarantee.",
+    "content_sha256": "ddb3e5c0c1eed4bd3c621da4d629b23fd741fe7da84c209db5d4ea3ec8eb3309"
+  },
+  "prep-linear-coffee-milk-timing": {
+    "difficulty": 5,
+    "reason": "The candidate must derive both cooling schedules with heat-capacity weighting and identify when the preferred schedule changes.",
+    "content_sha256": "e8c77805ebc2b2a532b0284a006f5fccd6b605c2ea5707e64d2deb8178cc5a4a"
+  },
+  "prep-linked-lists-first-shared-node": {
+    "difficulty": 5,
+    "reason": "Length alignment or switched-head walks compare node identity despite unequal private prefixes, including disjoint lists.",
+    "content_sha256": "ddacf57241c9d5fe5fcc0e5c3d653f2f5b017d144156514a26f2c17119aa7d8d"
+  },
+  "prep-longest-contiguous-sum-divisible-by-three": {
+    "difficulty": 5,
+    "reason": "Equal prefix residues characterize divisible intervals; saving only the earliest occurrence maximizes length with the specified tie rule.",
+    "content_sha256": "990dd5550693674826a29acec5b29856689726c4628a48ea2785a9967a5bdeb5"
+  },
+  "prep-longest-ones-interval": {
+    "difficulty": 3,
+    "reason": "A running streak and best endpoints handle a terminal run, ties and empty input in one pass.",
+    "content_sha256": "2327a5fe2096a71f5e313faf469e6101fc4b0f9222bab164d3a149becf959dfa"
+  },
+  "prep-lossless-transmission-line-capacitor-sampling": {
+    "difficulty": 8,
+    "reason": "The response must connect wave propagation, reflection and capacitor dynamics to sampling, while identifying missing boundary conditions.",
+    "content_sha256": "c8f20c098ccb164812048f1a3756d4605584855d3bb47c1da03e9941ea42be9a"
+  },
+  "prep-lsb-first-divisibility-by-five-fsm": {
+    "difficulty": 6,
+    "reason": "LSB-first input requires tracking the changing positional weight as well as residue to build and prove the FSM.",
+    "content_sha256": "d5be0b73e5103d897f569ac18a6cb8f9d53d947611490b9e836a0b5aa912caa6"
+  },
+  "prep-maximum-of-two-numbers-circuit": {
+    "difficulty": 3,
+    "reason": "An unsigned comparison selects the larger input combinationally, with equal inputs yielding the same output.",
+    "content_sha256": "8ba2ef20602074eb6338ad35bffe4509a2ecde60dde652eff3a11ac2a73d1448"
+  },
+  "prep-maximum-sum-contiguous-subarray": {
+    "difficulty": 5,
+    "reason": "The best interval ending here and the global best need separate invariants to handle negative inputs and earliest ties.",
+    "content_sha256": "c1d6e13c7a9dc5af36dd0ca925101bbd4352a870715983bff28d02346e39a66d"
+  },
+  "prep-maximum-two-integers-without-comparisons": {
+    "difficulty": 7,
+    "reason": "The fixed-width solution separates opposite-sign operands before masked selection to avoid overflowing their difference.",
+    "content_sha256": "e5757b195aeda4dfb762e681dec9bdacd56ceff00e4357e1c03925ad1b41f96b"
+  },
+  "prep-mean-of-two-arbitrary-n-bit-words": {
+    "difficulty": 4,
+    "reason": "An extra sum bit prevents overflow before the shift, and the discarded bit encodes an exact half.",
+    "content_sha256": "777f5a31906c520a651b64f661ca9bd88dc84591106269a9ba968efcff14ac8f"
+  },
+  "prep-measure-capacitance-rc-step-response": {
+    "difficulty": 4,
+    "reason": "A measured resistor and the RC step threshold turn an observed charging time into capacitance.",
+    "content_sha256": "1fdfc0bbd7f09c91711f0d645ab1a2b346d41c359a37ddea23a4606a96c9e660"
+  },
+  "prep-memory-address-alias-detection": {
+    "difficulty": 7,
+    "reason": "An address-bit test must work with narrow words and distinguish true aliasing from an unobservable bijective remapping.",
+    "content_sha256": "ee459c7796123243d17d73d01b062bda505e9e4bec57ca34243030579541b4cd"
+  },
+  "prep-merge-k-sorted-linked-lists": {
+    "difficulty": 5,
+    "reason": "A heap of current list heads preserves sorted order, stable source ties and reused next links.",
+    "content_sha256": "2a6a9445af6421474db58a8c69b1ab44b494d42f7b6838a4e14cfb23ab3c9fe9"
+  },
+  "prep-merge-two-sorted-arrays": {
+    "difficulty": 3,
+    "reason": "Advancing two sorted heads and copying the remaining suffix solves the merge with duplicates intact.",
+    "content_sha256": "e6acedafd20c6f53cac63def8f03da0d25774877adac98086ac22b25e224ad25"
+  },
+  "prep-minimum-additive-weights-one-to-forty": {
+    "difficulty": 4,
+    "reason": "Binary weights cover the required masses and counting subsets proves five weights cannot suffice.",
+    "content_sha256": "c6d499cb279082cd7ff970ad6fb10d33e845de0350619214d8c4a8de3d594487"
+  },
+  "prep-minimum-workers-weighted-interval-demand": {
+    "difficulty": 5,
+    "reason": "Peak simultaneous demand is both necessary and sufficient, with event releases depending on endpoint conventions.",
+    "content_sha256": "f55164ee3be636c1efe70e0b17d6a834da14cf13a1ee53ed0fa5e02aba5314a0"
+  },
+  "prep-mirrored-hill-dip-arrival-time": {
+    "difficulty": 5,
+    "reason": "Conservation of energy and mirrored equal arc lengths decide arrival order despite equal final speeds.",
+    "content_sha256": "b9cb0bd75d6b8ad5a34a4cc7c59d3e0378dcf1e8fe6a897b7d587d851b363425"
+  },
+  "prep-monostable-trigger-history-waveforms": {
+    "difficulty": 4,
+    "reason": "A time trace must distinguish past triggers and whether a retrigger extends an active pulse.",
+    "content_sha256": "a097dbf88f6a9f5c57123d3ef677e58f857c3ba8ae3557abe4baa5a7c6670949"
+  },
+  "prep-monotone-grid-paths-dp": {
+    "difficulty": 4,
+    "reason": "The recurrence partitions by final move, with one-row updates retaining the correct previous-row counts.",
+    "content_sha256": "b4a753ec7b0d92542319d36257bd1e329a3ba29bf8baa74c50bc8256abac34a7"
+  },
+  "prep-more-than-two-active-inputs-saturating-threshold": {
+    "difficulty": 4,
+    "reason": "A scalable count or saturating reduction must distinguish two active inputs from three without needing the exact total.",
+    "content_sha256": "2447459434cb90e03ce48867b6fc69215bf64f262286bd6e1bed934c3fbb5eb8"
+  },
+  "prep-mosfet-structure-current-bias-model": {
+    "difficulty": 6,
+    "reason": "Device structure and bias regions must be connected to consistent drain and transfer curves in the declared model.",
+    "content_sha256": "93bbfc2d0d5c40c59b359434ea22d844af97360fcfed63f2b03123d7e71f8fd4"
+  },
+  "prep-most-frequent-word-list": {
+    "difficulty": 3,
+    "reason": "Final frequency counts plus an original-order scan resolve earliest-word ties and handle empty input.",
+    "content_sha256": "dae2ff7f41016436d07e4af9d2f6b71a6b0f21daa68046469c88cce550a1e9ab"
+  },
+  "prep-moving-rabbit-ten-bushes": {
+    "difficulty": 7,
+    "reason": "The rabbit's forced parity flip allows two sweeps, but the repeated turning bush and no-crossing argument are essential.",
+    "content_sha256": "b561eace08826f3a41fa10d7b55957068f3b7d58c4936849bb48a56ec1f6f377"
+  },
+  "prep-multiply-four-registers-unit-instructions": {
+    "difficulty": 6,
+    "reason": "The instruction budget requires consuming and restoring the multiplicand through a scratch register on every outer iteration.",
+    "content_sha256": "66f9fd02dc6b7bc36f24c6a55d13f528a012d02ceb3cdb9e3368e00d7babc24c"
+  },
+  "prep-mux-gates-transmission-pass-transistors": {
+    "difficulty": 6,
+    "reason": "The design spans gates, transmission gates and pass devices, including select inversion and degraded voltage levels.",
+    "content_sha256": "0cf541aaa8779f6267aa52392b8dad6d660da6185e87b9c4f54e11383817e2ad"
+  },
+  "prep-mux-latch-edge-register": {
+    "difficulty": 5,
+    "reason": "MUX feedback makes a transparent latch; opposite clock phases must isolate master and slave at the sampling edge.",
+    "content_sha256": "28c38320e291efe36f5e5d6004580cf2125025248712cf36d0f522590f77dbb7"
+  },
+  "prep-mux-only-cyclic-right-rotation": {
+    "difficulty": 5,
+    "reason": "Controlled rotations decompose into modulo-indexed power-of-two stages, unlike a fixed wire permutation.",
+    "content_sha256": "1bac96a7dce2f81bbc481e10eee291bf9ddddaf5de0326a993f5843987af6ef4"
+  },
+  "prep-nand-and-nor-from-two-to-one-muxes": {
+    "difficulty": 5,
+    "reason": "Factoring both truth tables shares an inverted input, and the zero-only library needs a separate feasibility argument.",
+    "content_sha256": "b57e0c4706177bab4e5bd1ec544de1af10e7cbea1d3008b359620fe12a64e76e"
+  },
+  "prep-nested-inclusive-uniform-integer-distribution": {
+    "difficulty": 5,
+    "reason": "Marginalizing over the first draw requires a suffix sum with a different conditional denominator at each value.",
+    "content_sha256": "e8766ea0fa0433b17fc4d55f4c093f5a306d8216de3fae21b5d089194627e289"
+  },
+  "prep-netlist-long-buffer-chain-and-reset-classification": {
+    "difficulty": 8,
+    "reason": "The netlist analysis must handle reconvergence and cycles, recover long-chain witnesses and classify reset uses from downstream pin roles.",
+    "content_sha256": "c12cff8988263074cde2e0f8630cd37bd018540805ce90ee05c93e52cb996a74"
+  },
+  "prep-networking-basics-and-interview-answer-prompts": {
+    "difficulty": 2,
+    "reason": "The task recalls protocol roles, network scope and cleartext FTP risk, then applies simple interview-answer structures.",
+    "content_sha256": "afaf8e60716a4b698146ac321f1d97ec3d8f79c3c30796f7565192705e50c862"
+  },
+  "prep-nine-coins-known-lighter-two-weighings": {
+    "difficulty": 4,
+    "reason": "Two nested three-way balance partitions locate the lighter coin and the outcome count proves one weighing insufficient.",
+    "content_sha256": "58cd7f00fc4fa088fa64d40c332327f79696c52619959a5c0ea7c82a093d34a8"
+  },
+  "prep-nmos-only-load-inverter": {
+    "difficulty": 6,
+    "reason": "Explaining the enhancement load and pull-down requires tracing both charging paths, threshold loss, ratio and static current.",
+    "content_sha256": "c0c5ca84ba2fecb60c8ba5b0e418c6e0c8a1667412fadbc79d678193d80c8137"
+  },
+  "prep-noisy-baseband-sampling-antialias": {
+    "difficulty": 5,
+    "reason": "Ideal band limits, a point-sampling counterexample at twice the bandwidth and analog filtering answer different parts of the specification.",
+    "content_sha256": "e8cdc0beba9b0d5727b371f6085a6c0172b645ca5112c9250a313dc6219121d1"
+  },
+  "prep-noninverting-opamp-three-equal-resistors": {
+    "difficulty": 4,
+    "reason": "The ideal input draws no current, leaving the feedback divider to set gain; finite gain and saturation bound that result.",
+    "content_sha256": "b45f713aa22d3838dff852325b01906f9dc6d0ad74db3ac66d87354a186267f0"
+  },
+  "prep-nor-branch-stuck-at-fault-observability": {
+    "difficulty": 5,
+    "reason": "The test must separately excite the faulty fanout branch and propagate its value through the healthy inverted branch.",
+    "content_sha256": "0fed94f8e62dd5d1b9f93f7e05639d576b4baed8549e68fb6b89f4fad881d7c0"
+  },
+  "prep-one-active-bit-signed-int32-pattern": {
+    "difficulty": 4,
+    "reason": "Clearing the low set bit solves the test only after treating signed input as a full unsigned pattern and excluding zero.",
+    "content_sha256": "54bfe8b263ef2dded6f127146ac803b2485efdf4c643a1c15fac5e33ee6682f6"
+  },
+  "prep-one-bit-and-four-bit-unsigned-comparator": {
+    "difficulty": 4,
+    "reason": "One-bit comparison cells combine only when all more significant bits are equal.",
+    "content_sha256": "d6ea9c06f26ca755a26ed30e474703dd7ef95eb4070d4d0aaaf98c40a42c63cd"
+  },
+  "prep-one-two-missing-values": {
+    "difficulty": 3,
+    "reason": "With inspectable values and auxiliary memory allowed, membership flags recover both omissions in linear time.",
+    "content_sha256": "df17c6794187525cb73b0f4c88b28f7856be58a5e2e90fe1d40df221f787c517"
+  },
+  "prep-online-two-color-hat-partition": {
+    "difficulty": 5,
+    "reason": "Standing at the boundary preserves the red-left/blue-right invariant for either possible color of the newcomer.",
+    "content_sha256": "1416d2848025476ae8c57246edf1f42f1b05152e7337128735683c3cc6ae1b9c"
+  },
+  "prep-opaque-c-linked-list-adt": {
+    "difficulty": 6,
+    "reason": "Opaque C nodes must transfer ownership only on success while every insertion preserves list length, reachability and acyclicity.",
+    "content_sha256": "21f34b6c9f5160c7a12e2e6e2b7911a5059608f79df2884c93306c3568fd0cda"
+  },
+  "prep-overlapping-0010-sequence-detector": {
+    "difficulty": 5,
+    "reason": "Matched-prefix transitions preserve overlaps, with valid-cycle stalls and a pulse registered on the last bit.",
+    "content_sha256": "f82f19396d69ad0ab1e3a67fef3193f45ced968fe4d9d2e614e5d01197f4f176"
+  },
+  "prep-overlapping-101101-sequence-detector": {
+    "difficulty": 6,
+    "reason": "The prefix FSM must retain the correct fallback after a match and be compared to a shift-register design across timing and power.",
+    "content_sha256": "69f66e3bb2cf5059cbc74a1f936e5ebe324ee96daeea1354143d1fc8b8f29f66"
+  },
+  "prep-painter-sequence-specification": {
+    "difficulty": 5,
+    "reason": "Incomplete sequences allow multiple continuations; under a specified rule, discrete painting and continuous crossing need separate calculations.",
+    "content_sha256": "0a5b3fe77397193dc06a45b0d12ab63325e3779089e8a264a28fd9300f5326de"
+  },
+  "prep-pair-sum-existence-and-optimization": {
+    "difficulty": 4,
+    "reason": "Checking each complement against previously seen values gives expected linear time without reusing one array position.",
+    "content_sha256": "98a2cb31f086d27d7dd65c40dcdca73087451248510d916d9ddb7e1e60bf9ba3"
+  },
+  "prep-pairwise-minimum-maximum-comparisons": {
+    "difficulty": 7,
+    "reason": "Three comparisons per pair give the upper bound, while matching optimality requires a consistent win/loss adversary.",
+    "content_sha256": "694f505bb5a24eda180dfb70de2143f27b749d97a3d71552bf2d1aeb9d761032"
+  },
+  "prep-parent-links-disconnected-from-root": {
+    "difficulty": 6,
+    "reason": "Reachability must be cached across parent chains while distinguishing identity, cycles, null termination and the marked root.",
+    "content_sha256": "6c29f471c6984b631f57e3b1c94a91f6af52663dc039c6ccc5756fc754d4614c"
+  },
+  "prep-planned-spike-load-readiness": {
+    "difficulty": 8,
+    "reason": "Capacity sizing must fit measured dependencies, overload admission, consistency, retries and operational tradeoffs under burst traffic.",
+    "content_sha256": "ff697c27c1c561ee7720989dc9699ad4662be8b2728da08757e40083ff6813d7"
+  },
+  "prep-plate-balance-hook-geometry": {
+    "difficulty": 5,
+    "reason": "Fixed hooks require a zero vector sum; freely positioned hooks admit a symmetric polygon for each count.",
+    "content_sha256": "feb49370e263086d5d6935558b0c11de9f947c8e217d268be93f416ed4f31f43"
+  },
+  "prep-pn-junction-depletion-and-bias": {
+    "difficulty": 5,
+    "reason": "The explanation connects diffusion and drift at equilibrium to depletion width, bias and the limits of a diode model.",
+    "content_sha256": "cd7370b187d567ff01e837b4ce44d288ce2ceeef0ac186a9f9dc5bed6b722b84"
+  },
+  "prep-point-in-simple-polygon-ray-crossing": {
+    "difficulty": 7,
+    "reason": "Parity alone is insufficient: avoid double counting vertex hits, handle boundary points and distinguish fill rules.",
+    "content_sha256": "85e0efb6cb57dcd143160174e85a7e626b74f564ab3b7544d4031864bf411878"
+  },
+  "prep-postfix-expression-stack-evaluation": {
+    "difficulty": 3,
+    "reason": "The stack is specified; the main traps are operand order, underflow and a leftover operand.",
+    "content_sha256": "54e03e46a01b4818e911b2aa060809b6a2221978e5e9e67d58352f9c30d4e1d4"
+  },
+  "prep-power-of-two-check": {
+    "difficulty": 3,
+    "reason": "Use the one-set-bit identity, guard nonpositives and explain why the word width matters.",
+    "content_sha256": "418db04c1012549baf2d18fa71f3e1685823c949047bf3a8e68bb8128b0fd4d3"
+  },
+  "prep-primality-predicate-finite-input-domain": {
+    "difficulty": 6,
+    "reason": "Translate the divisor bound into a clocked tester with captured input, finite arithmetic and a valid handshake.",
+    "content_sha256": "f377d1ef753453916020874b1886ca3ffb30e4e818c79c2ba0311ab358cc5767"
+  },
+  "prep-primitive-register-multiply-and-absolute-difference": {
+    "difficulty": 8,
+    "reason": "Synthesize zero-safe tests and branches from INC/DEC/JNZ, then build two terminating arithmetic programs.",
+    "content_sha256": "4ae97647c9e158f43e1d33d20c3dccfc97a8f2250505cb7ce39d547e2ce18eca"
+  },
+  "prep-prince-princess-handshake-counts": {
+    "difficulty": 6,
+    "reason": "Pair the extreme degrees as partners and show the reduced party preserves the induction hypothesis.",
+    "content_sha256": "0a0e8c663ca312dcde2f46636276094c2f1ca7d44298f242fb3ef35b3552f71f"
+  },
+  "prep-processor-pipeline-latency-throughput": {
+    "difficulty": 3,
+    "reason": "Trace fill and steady state in a supplied five-stage model and distinguish latency from throughput.",
+    "content_sha256": "d10e3a4d377b911843800946a464468c25c0bf922d98e9426cb8ad6a78b81b27"
+  },
+  "prep-python-oop-language-comparison": {
+    "difficulty": 5,
+    "reason": "Use counterexamples across languages to separate dynamic dispatch, typing tools, access conventions and overloads.",
+    "content_sha256": "5f5e52db2a91ca68a42358cb27f6e0377c38bc0de22ee4a38e2c799e4ab6b0d4"
+  },
+  "prep-python-script-exit-status-and-output-contract": {
+    "difficulty": 4,
+    "reason": "Separate launch, timeout, exit status and semantic success while preserving two independent output streams.",
+    "content_sha256": "b48ee31f9bfd47e33f07dbfa49b215be3e5aec4e733b6cd0e4258d926090f187"
+  },
+  "prep-random-joke-http-api-field-extraction": {
+    "difficulty": 4,
+    "reason": "Extracting the field is easy; satisfying the bounded I/O, error-channel and offline-test contracts adds steps.",
+    "content_sha256": "ed1c617e331b1f4ff4115827cd365352881bb896030a118ce22b003ed39078dd"
+  },
+  "prep-random-permutation-fisher-yates": {
+    "difficulty": 5,
+    "reason": "Shrinking the pool gives linear swaps; uniformity needs a probability argument over conditional choices.",
+    "content_sha256": "12540ac638301143a32ae4d6a7a719be4d7cecc54ed2a86134f650c24b64755c"
+  },
+  "prep-rational-lions-cow-survival-parity": {
+    "difficulty": 5,
+    "reason": "Small cases motivate parity; backward induction must respect the eater's changed role and survival preference.",
+    "content_sha256": "9a7c0fb4c240760928e4c41e5a0eac20e530b16c394ac9676ab4f4358c7e7944"
+  },
+  "prep-rc-coupled-inverter-waveforms": {
+    "difficulty": 7,
+    "reason": "Track the capacitor's edge jump, exponential recovery and threshold crossings from one edge to the next.",
+    "content_sha256": "0a414c504361ab7681674a872d8b4df29670d781926d60fd41e88a7bc2efcad4"
+  },
+  "prep-read-only-256-byte-ramp-word-test": {
+    "difficulty": 4,
+    "reason": "Build independent endian-specific expected words and choose read offsets that cover the bounded memory.",
+    "content_sha256": "b4dfd77fb59a29273862a5c85ab03731315fd888a39a306ea45048ed72193af0"
+  },
+  "prep-real-bandpass-sampling-rate-intervals": {
+    "difficulty": 8,
+    "reason": "Derive admissible sampling windows from both spectral images and distinguish limiting endpoints from usable rates.",
+    "content_sha256": "528b8a227e93fa80b6255351acc45d1e152257f6fd319712b20148c1e97b9dd3"
+  },
+  "prep-recursion-benefits-cost-and-termination": {
+    "difficulty": 3,
+    "reason": "A decreasing argument and a loop comparison explain why summation has linear work and uneven stack costs.",
+    "content_sha256": "c34887ba57453f5c71b569897f07386fc4964132dccbee4aac740b585aeb591f"
+  },
+  "prep-red-white-two-urn-probability": {
+    "difficulty": 6,
+    "reason": "Prove the singleton-red allocation is globally best by optimizing color mix and then the smaller urn size.",
+    "content_sha256": "dc6bcb9ad62ec4b6e7241edb001998497334bb286426978c576413266055cfdc"
+  },
+  "prep-relative-sort-by-second-array": {
+    "difficulty": 3,
+    "reason": "The supplied counting strategy reduces the work to consuming priority counts and sorting the remaining keys.",
+    "content_sha256": "a29a4179cf0ac245ff720f7b15cce5f8e400a30b1c587444b854d0b605d61b4a"
+  },
+  "prep-reverse-exactly-eight-bits-without-array": {
+    "difficulty": 4,
+    "reason": "Keep all eight positions including leading zeros, then implement reversal stages with unsigned masks.",
+    "content_sha256": "023c9299ec7c3687454139224f215555fedeb62c2a92cda438e0aa72abe517ea"
+  },
+  "prep-reverse-signed-decimal-integer": {
+    "difficulty": 5,
+    "reason": "Digit extraction is routine; safely widen INT32_MIN and guard each decimal append against signed limits.",
+    "content_sha256": "0a60ffcd05095b0f59a31ea06da2b4f34f467658396601357323b092bf05f5a4"
+  },
+  "prep-reverse-singly-linked-list-in-place": {
+    "difficulty": 4,
+    "reason": "Save the successor before rewiring and maintain the disjoint reversed prefix and unprocessed suffix.",
+    "content_sha256": "c30803e96bc5093a11cff43dd15b577dddd19c5cdfbd9c8991f4affabeb18082"
+  },
+  "prep-reverse-words-using-character-reversal": {
+    "difficulty": 4,
+    "reason": "Reuse one interval reversal twice and preserve the specified order of space runs.",
+    "content_sha256": "ccbccc88cf59286edf3e570e78a9279e1cd875582d4aada830d3ad6709087685"
+  },
+  "prep-rising-edge-single-clock-pulse": {
+    "difficulty": 3,
+    "reason": "One delayed sample detects the rise; reset and the registered output determine the trace.",
+    "content_sha256": "415d7bddaf969fb57a2b20af4519805e5236966eb5bd20a78acf7a8b983611d5"
+  },
+  "prep-room-occupancy-balance-lights": {
+    "difficulty": 6,
+    "reason": "Reduce two populations to a bounded signed difference and prove why no fixed finite state suffices unboundedly.",
+    "content_sha256": "d44cde3308c8fe1caf36e124feaa4cf321de8c8d5d6c8ef945081b4e9a7804f5"
+  },
+  "prep-router-sixteen-port-random-traffic": {
+    "difficulty": 7,
+    "reason": "Choose feasible port budgets without retries and split packets without leaving an illegal one-byte remainder.",
+    "content_sha256": "6382cd7f05ea255b0a9a024d7a705c3013b8b4e02b67cbb5d049c4daa32be7e8"
+  },
+  "prep-serial-1101-state-storage-count": {
+    "difficulty": 5,
+    "reason": "Compute overlapping suffix transitions and distinguish Moore/Mealy output timing from storage encoding.",
+    "content_sha256": "1812557649a0f0de1c22f610a15bd8f2930afc245b115868ee43d221957023ca"
+  },
+  "prep-serial-binary-divisibility-by-three-fsm": {
+    "difficulty": 5,
+    "reason": "Use remainder transitions while retaining enough history to distinguish zero from a positive multiple.",
+    "content_sha256": "de0b85ae452a68fba1750e7d7eae59b4c2bae657cf7079d3ce3cee698a3a2b93"
+  },
+  "prep-serial-binary-quotient-by-five": {
+    "difficulty": 6,
+    "reason": "Derive a quotient-bit recurrence from the remainder invariant and distinguish serial from growing parallel storage.",
+    "content_sha256": "041d4db0c02c33b99e0c3663a1a3347a9b663fa0756189a62b7c2f6cfcae5d40"
+  },
+  "prep-serial-safe-abcd-sequence-detector": {
+    "difficulty": 4,
+    "reason": "Track the matched prefix, restart on a fresh A and separate a detection pulse from a latched open state.",
+    "content_sha256": "652154641c362b2609f67277b8be72d22040c17090c90b55efa852458ace93d5"
+  },
+  "prep-serial-sequence-01011-fsm": {
+    "difficulty": 5,
+    "reason": "Construct complete suffix fallback transitions for overlapping 01011 matches under precise Moore timing.",
+    "content_sha256": "2a399bf4f6d602d61c09e4738d4427ec4d098cc6f8bd69a8adbed139ccd49072"
+  },
+  "prep-setup-hold-definitions-and-setup-fixes": {
+    "difficulty": 6,
+    "reason": "Derive both slack equations with signed skew and evaluate repair tradeoffs that can hurt the opposite check.",
+    "content_sha256": "bb69682ae001bafc2048d10634c35287130b7a0fad6b2a124e8acddb9f468c47"
+  },
+  "prep-seventeen-prisoners-two-mandatory-switches": {
+    "difficulty": 8,
+    "reason": "A spare switch absorbs mandatory toggles; two reports per prisoner address unknown initialization and require a liveness proof.",
+    "content_sha256": "48886e5aea5b7ce8dae838d0a2c23162a0b04df0ff00a283bb69edcf0308311b"
+  },
+  "prep-sine-rom-ten-phase-symmetry-memory": {
+    "difficulty": 5,
+    "reason": "Map ten phases using sign and reflection while accounting for a nonintegral quarter-period and discrete zero.",
+    "content_sha256": "1bffe002edae6ffe8df9afc78665c09b3fda3657cf6a70fc1331b7f98a723e2a"
+  },
+  "prep-single-bcd-digit-times-three": {
+    "difficulty": 4,
+    "reason": "Separate invalid BCD inputs and convert the six-bit binary product into two legal decimal digits.",
+    "content_sha256": "b09a5c0b7d3583d4ea815629e2c0d2d29581248eaeae49074f64d438ed2a982a"
+  },
+  "prep-single-bit-memory-hamming-code": {
+    "difficulty": 7,
+    "reason": "Assign check positions, derive the syndrome, correct check-bit flips and justify the exact fault guarantee.",
+    "content_sha256": "71684b204a9b2cbe109901420984e75881c70b54d540f7da18f9f5865d534bd5"
+  },
+  "prep-single-use-coin-payment-missing-denominations": {
+    "difficulty": 6,
+    "reason": "Use the previous inventory prefix in the minimum-coin recurrence and reconstruct a valid single-use subset.",
+    "content_sha256": "ec1842397d1979d5c975276e1219e6f28343dbc8d5041f2df480fbe31c5c1d79"
+  },
+  "prep-singly-linked-list-floyd-cycle": {
+    "difficulty": 5,
+    "reason": "Prove two unequal-speed pointers meet modulo cycle length and terminate safely on an acyclic list.",
+    "content_sha256": "08f8a012e39934c48ed44d2a0998a0b83340ee6d9badf637828ea277587b3eb9"
+  },
+  "prep-six-bit-binary-to-two-decimal-display-digits": {
+    "difficulty": 4,
+    "reason": "Decode decimal thresholds and reject inputs above 32 rather than sending hexadecimal nibbles to the display.",
+    "content_sha256": "352e88ce7f120bec4edbcb13471ce68ea389d7b5a2af26feed4b5a1761fce3f2"
+  },
+  "prep-six-person-bench-right-neighbor-probability": {
+    "difficulty": 3,
+    "reason": "Count one ordered adjacent block and use label-swap symmetry for the distinct somewhere-right event.",
+    "content_sha256": "38664acf8f3fe3f8ed147ccb5980744a1615b1ddf125d0ad949414ddf7ac524e"
+  },
+  "prep-sixteen-input-interrupt-controller": {
+    "difficulty": 5,
+    "reason": "Cascade group priority and local indices; any minimality claim depends on what extra gates are permitted.",
+    "content_sha256": "46dec04090f0a2f5364ae5ee3c89c0064507ea84f99f64fa3bd2b39f339773e7"
+  },
+  "prep-sixty-four-slot-inband-free-list": {
+    "difficulty": 6,
+    "reason": "Reuse only free-slot payload as links, maintain the free-set invariant and state when 32 external bits cannot suffice.",
+    "content_sha256": "ddcd437995ce5a2ceaa2ef9e2c9d78c0723f5377c75c096c668d86d0bcf9ef49"
+  },
+  "prep-snail-alternating-minutes-first-contact": {
+    "difficulty": 2,
+    "reason": "Count completed climb/rest pairs and stop at first contact before the last slide.",
+    "content_sha256": "0d401480a8721f1cf2a38ea643abc2719a75cd7d9b43eb34ccddfe341f83b3fb"
+  },
+  "prep-snapshot-task-completion-barrier": {
+    "difficulty": 7,
+    "reason": "Freeze the accepted prefix atomically and track out-of-order holes without counting later completions.",
+    "content_sha256": "0a3998e3ece52d786bdd5cb1b70ca108cc44afdd1bbb1246fe14069caf2f9e7e"
+  },
+  "prep-software-fibonacci-recursion-improvement": {
+    "difficulty": 5,
+    "reason": "Compare overlapping recursive calls, memoization and iteration while distinguishing arithmetic count from growing integer cost.",
+    "content_sha256": "53d7b4b2bb0c68b0247b51db32401c83cd82c7d599021e4c97439a4b303aa5d5"
+  },
+  "prep-solar-tracker-physical-control-and-independent-validation": {
+    "difficulty": 8,
+    "reason": "Combine optical feedback, physical actuation, limits and faults with a genuinely independent angle measurement.",
+    "content_sha256": "2b797c44a5d28c947c1f3f17852f2174814a2a4fe1205cf4637a023ff1fbb9a9"
+  },
+  "prep-sort-three-latest-two-bit-samples": {
+    "difficulty": 5,
+    "reason": "Distinguish a sliding three-sample history from the historical top three; compose valid tracking with compare/exchanges.",
+    "content_sha256": "c551d2770685792f09dee9f7e5e565bae6f46c739cc78ec21198dd9c23dfc5ea"
+  },
+  "prep-sorting-networks-four-and-six-inputs": {
+    "difficulty": 8,
+    "reason": "Construct and justify optimal block counts for two network sizes, then remove redundant comparisons without losing order.",
+    "content_sha256": "d737af876dd2208db8c47fa799e037854c4cca21ec135b9648d925066207b29b"
+  },
+  "prep-sr-storage-from-logic-gates": {
+    "difficulty": 5,
+    "reason": "Connect cross-coupled feedback, reason about the forbidden release and distinguish transparency from edge capture.",
+    "content_sha256": "ba89a7029bea29a848ad0525ab06f50c97700e8ece9f5e3f0b709003238b1c90"
+  },
+  "prep-stable-move-zeroes-to-end": {
+    "difficulty": 3,
+    "reason": "Compact nonzero entries without overwriting unread values, then fill the tail while preserving order.",
+    "content_sha256": "a8401eace594705df1e9c4ef6bdf020a876ee0ef4e9e4a3a6f0b7baad9d5b44c"
+  },
+  "prep-stack-adt-and-call-stack-uses": {
+    "difficulty": 2,
+    "reason": "Trace LIFO operations and connect them to familiar nested calls and undo without assuming an ABI.",
+    "content_sha256": "7c62a9484e43a08bc6eb972547196f178a046dae0547f4a1f6a23db9f1b22d38"
+  },
+  "prep-stack-with-prefix-minimum": {
+    "difficulty": 4,
+    "reason": "Store the minimum per depth so constant-time pops recover the previous minimum even with ties.",
+    "content_sha256": "f632403f9c24c4378d7dd399728e9ca294e8bf2c24199ac2bf6846bd55db74e3"
+  },
+  "prep-static-cmos-two-input-nand": {
+    "difficulty": 4,
+    "reason": "Construct complementary transistor networks, check all static cases and separate switching behavior from logic.",
+    "content_sha256": "83e8bd2e7cd3c9b3527027dea23cacb2f2b91ada4dd3f65d5d8f5b063e516105"
+  },
+  "prep-static-duration-linkage-class-members-c-cpp": {
+    "difficulty": 5,
+    "reason": "Separate lifetime, scope and linkage across languages, then distinguish class sharing from thread safety.",
+    "content_sha256": "0245017d90b20d141279f1bafb66f6a70b0acf1418a77affa5caec37d1a8e524"
+  },
+  "prep-stock-one-transaction-best-days": {
+    "difficulty": 5,
+    "reason": "Maintain the earliest earlier minimum and tie-breaking invariant without reversing buy/sell time order.",
+    "content_sha256": "48dff8a43b1733bb4545c2e91bcb1613f83d22b4d15fa401b99c04a3e2a158be"
+  },
+  "prep-streaming-csv-parser-without-library": {
+    "difficulty": 7,
+    "reason": "Carry quote, escape and CRLF state across arbitrary chunks, and resolve malformed or incomplete records at EOF.",
+    "content_sha256": "3ed32b7cdb675d8f1f9684f7de4c59cd3c26df64f061eb6a8d6b3229630327c9"
+  },
+  "prep-streaming-infix-plus-times-evaluator": {
+    "difficulty": 6,
+    "reason": "Combine a running sum and a current product with token-phase control, fixed-width arithmetic and result timing.",
+    "content_sha256": "a075a46ef6ed06fb3d0c3994338a1c229e93e5cbd8b8c99a37f9be915d095e14"
+  },
+  "prep-street-network-meeting-median": {
+    "difficulty": 7,
+    "reason": "Combine shortest paths with an argument that interior edge positions cannot beat both endpoints.",
+    "content_sha256": "4c442b3cbb618d96c05c561878da1cb6558a2444d08baa0dbe58688f25b43152"
+  },
+  "prep-sudoku-backtracking-solver": {
+    "difficulty": 6,
+    "reason": "Backtrack with three simultaneous constraints and undo precisely while separating malformed givens from dead ends.",
+    "content_sha256": "278425f0419b9bf31c29dd48ffcbb647c0a2866c2e1d6a43fbf4bd6620590b76"
+  },
+  "prep-swap-five-seven-preserving-other-inputs": {
+    "difficulty": 3,
+    "reason": "Decode the two fixed outer bits and toggle only the middle bit, preserving the other six inputs.",
+    "content_sha256": "fd9a491d5c0121a4533e5333c79d708e7d7abd790ff23b623615c73128ece814"
+  },
+  "prep-swap-without-temp-fixed-width": {
+    "difficulty": 5,
+    "reason": "Explain XOR and modular arithmetic under finite width, including aliasing and the difference from signed overflow.",
+    "content_sha256": "1882578c5d0eda6e9a6142d91d270c621c97d6ec1d69c4d416b4d58e5fcc0c73"
+  },
+  "prep-synchronous-clock-divider-two-and-four": {
+    "difficulty": 3,
+    "reason": "Derive the two same-clock toggle equations and trace the four repeating states.",
+    "content_sha256": "fae6b259efc7ed40cf678e067331577352c9ef0121f05d53e474f66ebee038ea"
+  },
+  "prep-synchronous-opposing-array-pointers": {
+    "difficulty": 3,
+    "reason": "Set the two position formulas equal and distinguish an integer tick from continuous crossing.",
+    "content_sha256": "c51dc17565992cdd541d27ed9a14f5adb64e68a0e2cbd1c8add4b6077c1313b8"
+  },
+  "prep-systemverilog-sudoku-constraints-generator": {
+    "difficulty": 6,
+    "reason": "Express all peer inequalities declaratively without self-pairs and independently check the randomized grid.",
+    "content_sha256": "15e2e6008d67f1db9b68f04d4be531419556591ea05ec7d672446f39fe3bc2f5"
+  },
+  "prep-ten-bit-times-forty-nine-shift-add": {
+    "difficulty": 4,
+    "reason": "Factor 49 into two shift/add stages and widen operands before shifts to preserve the largest product.",
+    "content_sha256": "a553ebda29512e93dae154c746a95114a71219ea6c5dad9622af58d1ec5b9179"
+  },
+  "prep-test-and-set-spinlock": {
+    "difficulty": 6,
+    "reason": "Tie the atomic old flag to mutual exclusion and acquire/release visibility, then separate progress from fairness.",
+    "content_sha256": "6c59874795314ddbd19a78dcf5230bbbc89c06e3ba70b6ce6b091249dab8d9a9"
+  },
+  "prep-third-cycle-input-gated-pulse": {
+    "difficulty": 6,
+    "reason": "Derive falling-edge state from a timing trace, storing enough history to suppress repeat pulses and rearm.",
+    "content_sha256": "1ea3cac72fec170fa037b78f239f1d41df8eebc737231604c92dafe2277062d6"
+  },
+  "prep-thirty-two-slot-bitmap-allocator": {
+    "difficulty": 4,
+    "reason": "Use one occupancy bit per slot, locate the lowest free bit and reject invalid or duplicate releases.",
+    "content_sha256": "833334f87b35db6e5043814d3aac906bfecdaa82ea8d5563c11ac9f9a19ccb01"
+  },
+  "prep-thousand-bottles-ten-tasters": {
+    "difficulty": 5,
+    "reason": "Turn the information bound into an explicit one-round binary pooling code that identifies every bottle.",
+    "content_sha256": "f2b37c7eb39ac32ad0757c9801d95470fb474b650119d80c9f0bd1816f6f236a"
+  },
+  "prep-three-bit-up-down-counter-gates": {
+    "difficulty": 5,
+    "reason": "Derive gate-only toggling conditions from the old lower bits for both count directions and wraparound.",
+    "content_sha256": "6b8fa34624faa2d1b79987d5b7cc003b4eebf9e736e0de77810a562491225cbe"
+  },
+  "prep-three-color-in-place-partition": {
+    "difficulty": 5,
+    "reason": "Maintain four partition regions and justify rechecking a replacement value after swapping with the high end.",
+    "content_sha256": "97fd9b9243a64f47b47ff9fbe45e365de8e57fedfc132443c11172e9fbcb5687"
+  },
+  "prep-three-input-xor-mux-zero-only": {
+    "difficulty": 6,
+    "reason": "Implement conditional inversion without a constant one or complements, then compose and verify two parity stages.",
+    "content_sha256": "3f97d82483bfbc649ba638595bbf0cab6d850831838e1566d863660ab523fcb6"
+  },
+  "prep-three-mislabeled-marble-bowls": {
+    "difficulty": 3,
+    "reason": "One draw identifies the mislabeled mixed bowl, then exclusion forces the other two labels.",
+    "content_sha256": "938687959c5ee808a4db204104dc10941dccc1fe907f10253574746c079801db"
+  },
+  "prep-three-of-four-from-two-of-four-boxes": {
+    "difficulty": 9,
+    "reason": "Realize the threshold using only weaker threshold boxes and rule out every smaller legal circuit despite fanout and repeated pins.",
+    "content_sha256": "29c4a60c626330fc43bbc1a0a4352312e3f5e58c598a1e12bed9fee266d62224"
+  },
+  "prep-three-ones-ten-sample-sliding-window-checker": {
+    "difficulty": 5,
+    "reason": "Build an independent ten-sample oracle with zero padding, expiry and race-free observation on the correct edge.",
+    "content_sha256": "21f1f7966947169aa3b8a8f038ffad821c034b3e10389c76ebd7d775ba5ef764"
+  },
+  "prep-three-people-five-hats-public-reasoning": {
+    "difficulty": 6,
+    "reason": "Update possible assignments after each truthful public reply and cover every branch, including an early yes.",
+    "content_sha256": "2eedc93b3a0e279bd4c0a2a4a620260961283b43ed822504c6c5b614c832183e"
+  },
+  "prep-three-person-room-lamp-four-state-fsm": {
+    "difficulty": 5,
+    "reason": "Design a bounded occupancy Moore machine, then distinguish the four states to prove the bound is necessary.",
+    "content_sha256": "ff055f5001626e7d11ae77786d87a99471d621ecaaa725d99bb1f8795af19ad9"
+  },
+  "prep-three-stage-pipeline-early-late-timing-diagnosis": {
+    "difficulty": 7,
+    "reason": "Connect early and late pipeline traces to min/max path timing without mistaking an observation for a diagnosis.",
+    "content_sha256": "58a0d48bd8b42904754713781e6c4750024e1948671b3d0adc193ac79100bd2e"
+  },
+  "prep-three-wolves-sheep-exact-forward-return-impossible": {
+    "difficulty": 7,
+    "reason": "Prove impossibility by exhausting reachable states under the exact asymmetric crossing rules and both safety interpretations.",
+    "content_sha256": "aca5069e045f71c0d78cf1584f595209ccc83e55164f674de0c4dd618aae2c60"
+  },
+  "prep-tied-election-pairwise-agenda-bye": {
+    "difficulty": 7,
+    "reason": "Construct rankings that satisfy both ties and derive what the tallies force about pairwise agendas.",
+    "content_sha256": "6dfec62f158a133cc6f46e2f1354f92c46aa0205894cae594558246cb12c3778"
+  },
+  "prep-toggle-nine-thirteen-without-conditionals": {
+    "difficulty": 2,
+    "reason": "The two promised values differ in one bit; one XOR mask swaps them.",
+    "content_sha256": "eca85f7f9d64f37029239cbf1f928d46f59e1e225821cca4f36f061c10593a27"
+  },
+  "prep-top-two-distinct-and-mode": {
+    "difficulty": 5,
+    "reason": "Maintain counts when top ranks shift and use separate frequency state with explicit tie rules for the mode.",
+    "content_sha256": "2950736ba72193119091d2f741e2138692d316c738f1bd1c590f051c11b64863"
+  },
+  "prep-truth-table-minimum-nand-nor": {
+    "difficulty": 8,
+    "reason": "Boolean minimization is only the start: prove gate-count lower bounds in distinct libraries that allow sharing.",
+    "content_sha256": "6d57814fd6c830827866ae73edec26396cfdae6defaccc193e484dd78f41afdd"
+  },
+  "prep-turtle-single-sequence-return-position": {
+    "difficulty": 3,
+    "reason": "Track quarter-turn heading and coordinates, then test position without requiring the initial heading.",
+    "content_sha256": "7b603a01dc5f6bed0db9bc1a659a1e2f710d76568e390477b4d45aba938e431a"
+  },
+  "prep-twelve-coins-three-weighings": {
+    "difficulty": 8,
+    "reason": "Construct a full adaptive three-weighing tree for 24 hypotheses, not just an information-count lower bound.",
+    "content_sha256": "90c8941d7fa9da43390d8819470a20afb5ce59b264f0c93a49a6e48df4cde24c"
+  },
+  "prep-twenty-five-horses": {
+    "difficulty": 7,
+    "reason": "Eliminate slower horses by partial orders, specify the final contenders and justify the worst-case race count.",
+    "content_sha256": "a6ffcab9757ddb7deb5905b327218515e4b7efd7d9f0eb7c7cdd9fb2b8433944"
+  },
+  "prep-twenty-one-prisoners-one-light": {
+    "difficulty": 7,
+    "reason": "A second report per contributor offsets an unknown initial signal; prove both safety and eventual progress.",
+    "content_sha256": "e83d4ea589fd2db19c5d8d1a35b5f26b6e6a68a3426cd1fbf64d8c265f2ad506"
+  },
+  "prep-two-bit-plus-four-bit-adder-timing": {
+    "difficulty": 6,
+    "reason": "Propagate full-adder carry delays and identify why unrestricted zero-delay multiplexers alter the minimum.",
+    "content_sha256": "84519eaeec58f3f67f4d586ab8023a4d6acd1a3c0fa9f4bad6ac5473d9ab84fe"
+  },
+  "prep-two-crystal-balls-hundred-floors": {
+    "difficulty": 6,
+    "reason": "Derive decreasing gaps from a shared worst-case budget and prove fewer drops cannot cover the threshold range.",
+    "content_sha256": "7b594c193b3d0fe621ecdf472381576e326dc1e5e6f5fc52c0fb092ffd257e4a"
+  },
+  "prep-two-cup-liquid-conservation": {
+    "difficulty": 4,
+    "reason": "Conserve exchanged volumes but compare foreign fractions separately when original cup sizes differ.",
+    "content_sha256": "aedc621f082bc7e45d9a35405c419e941b68a41b89ba8ad3df33a119a9b49ec2"
+  },
+  "prep-two-independent-switches-one-led": {
+    "difficulty": 4,
+    "reason": "Map the toggle requirement to parity and implement it with defined electrical levels or traveler wiring.",
+    "content_sha256": "7a784c1ea28fbafc575486bd752fb745e4d5c385baf2d1a1155bb2a35babbf0a"
+  },
+  "prep-two-input-mux-symbol-and-truth-table": {
+    "difficulty": 1,
+    "reason": "The truth table follows directly from the defining select rule for a two-input multiplexer.",
+    "content_sha256": "8cecb00c9a6e517db4068f8e04456a2ab9d8ebbd124654ae81f08e49c9dfc815"
+  },
+  "prep-two-missing-zero-through-n-plus-one-no-aux-array": {
+    "difficulty": 6,
+    "reason": "After XOR cancellation, isolate a differing bit and use it to separate the two missing values in constant space.",
+    "content_sha256": "b715a52e032daa2a77b6caba1d95b1d88bb30e7ab708bca083da76e2f0e46f3a"
+  },
+  "prep-two-nonuniform-ropes-forty-five-minutes": {
+    "difficulty": 4,
+    "reason": "Reason in burn-time rather than length, timing a second two-ended burn from the first burnout.",
+    "content_sha256": "006cb0c4341dd1afe39c93b4f07a2a8f4e3786a4c37fec2db244a997492002e4"
+  },
+  "prep-two-register-copy-parallel-and-recirculating-serial": {
+    "difficulty": 2,
+    "reason": "The specified parallel interface needs only direct wiring and one capture edge; the serial version is an extension.",
+    "content_sha256": "b3d4834a1cadc586700ce488ef25c2d586c77ffe6f8ed2bc6b448ff32df86a36"
+  },
+  "prep-two-sensor-disk-rotation-direction-fsm": {
+    "difficulty": 5,
+    "reason": "Infer direction from neighboring ordered sensor states, including initialization, unchanged pairs and invalid jumps.",
+    "content_sha256": "67567cf469101d4a4d46a9e0dad392344ad84d70cc5b81ad102d8b69910d0e2f"
+  },
+  "prep-two-thousand-digits-adjacent-multiples": {
+    "difficulty": 6,
+    "reason": "Turn the overlapping multiples into a digit graph and count paths that can still reach the final position.",
+    "content_sha256": "8eb59d72cd97255c668f3edab74549643794dc8071bcba56653ce4460f4ca542"
+  },
+  "prep-uniform-random7-from-random5-rejection": {
+    "difficulty": 5,
+    "reason": "Reject a suffix of the 25 equally likely outcomes, then justify uniformity and expected calls.",
+    "content_sha256": "db28e6272f93aa7486f16f0c5cf8a6146ac8f541c6ea0b3c4cd4a17d0f9b7ee0"
+  },
+  "prep-unique-odd-frequency-digit": {
+    "difficulty": 5,
+    "reason": "Pair cancellation gives a linear scan; the nontrivial requirement is a lower bound without a precomputed summary.",
+    "content_sha256": "cf46d173b6544856edfef7061d2e3345b9dc22eb6979a79aeaa129b1a28a0a29"
+  },
+  "prep-unknown-circular-bit-memory-length": {
+    "difficulty": 5,
+    "reason": "Construct a controlled marker and prove that only the first alias at exactly N can overwrite it.",
+    "content_sha256": "0ecab090723a8cbbf74b452408be78164a51f763b5bc95b4fd1687552c897152"
+  },
+  "prep-unsigned-integer-binary-text-c": {
+    "difficulty": 4,
+    "reason": "Determine required buffer size before any write, handling zero, unsigned width and the NUL terminator.",
+    "content_sha256": "8e39be4f7105de33cddbede5e5d2bc01b76e8810ee58988265d1a1a5d6298a69"
+  },
+  "prep-unsigned-two-bit-combinational-square": {
+    "difficulty": 2,
+    "reason": "Enumerate four squares and read off the output width and simple bit equations.",
+    "content_sha256": "097f7e4b29b13e0fe7e21cc9b6b2e42c31b408ad2989f0bda9940450400237f0"
+  },
+  "prep-variable-latency-memory-hazard-controller": {
+    "difficulty": 7,
+    "reason": "Serialize dual requests with fair arbitration and preserve ownership across stalls and same-edge responses.",
+    "content_sha256": "abf9ee52c572a7b426ccd01a707c4a5507fad48a848b1a1a86348952c1143075"
+  },
+  "prep-voltmeter-timer-building-height": {
+    "difficulty": 4,
+    "reason": "Define what time is measured and distinguish free fall from travel plus delayed sound.",
+    "content_sha256": "fad064925f3ecafa317cdd0d18a3dc4247642750f6dfdd3caacd2e2ad9de84c3"
+  },
+  "prep-wheatstone-bridge-zero-middle-current": {
+    "difficulty": 4,
+    "reason": "Equate divider voltages, prove both directions and treat the zero-source exception.",
+    "content_sha256": "cf1f028080bca04721be1de2c166cf76fec59106c322764d94b8403ab8ff4d7c"
+  },
+  "prep-white-regions-equal-partitions": {
+    "difficulty": 5,
+    "reason": "Combine symmetry and dissection of a small L-shaped region with an area proof for each separate partition.",
+    "content_sha256": "c5de3d698d8e3c966eb3b29d8c0f6c503bd6bc5babeaeb25c561fe5a5c6fb921"
+  },
+  "prep-wire-wrapped-around-cylinder": {
+    "difficulty": 3,
+    "reason": "Unroll the uniform helix and use the total circumferential and vertical distances in a right triangle.",
+    "content_sha256": "ca4d6eef7eb5922f3ae65318249d57d0440b260338506b8623ee127103917f3e"
+  },
+  "prep-xor-feedback-dff-hold-toggle-timing": {
+    "difficulty": 5,
+    "reason": "Relate XOR recurrence to registered waveforms and distinguish feedback delay from external observation delay.",
+    "content_sha256": "fadcc625094736d437fc77d537ecdb87f5fbcea8a236bf9262b53d8ff3ffd605"
+  },
+  "prep-xor-from-four-two-input-nand-gates": {
+    "difficulty": 4,
+    "reason": "Synthesize a shared NAND intermediate and verify that the remaining gates cover exactly the unequal cases.",
+    "content_sha256": "7ec619405e686c7eacc5080f70d7f1f3f0b3b0bfa3a4d596ebd447c7e7161bf3"
+  },
+  "prep-xor-from-high-impedance-components": {
+    "difficulty": 7,
+    "reason": "Construct defined intermediate nets from tri-state cells and prove no input floats or has conflicting drivers.",
+    "content_sha256": "edd3ab19dc732d806f95d062e623851ee23676ac24d2179df3204ac324719b25"
+  },
+  "prep-xor-mux-zero-only": {
+    "difficulty": 5,
+    "reason": "Use the select condition as an implicit high input only in its active branch, avoiding a forbidden complement.",
+    "content_sha256": "45f7612030fa727057d3584fe267e642845fd0dd43b188a8462d536ae94a4709"
+  },
+  "prep-zero-matrix-original-rows-columns": {
+    "difficulty": 4,
+    "reason": "Separate original-zero discovery from mutation so newly written zeros cannot cascade.",
+    "content_sha256": "a0a9df4c0898910d800d73630dda93ccd7ad5599e550b72a2ce147504e316231"
+  }
+}

@@ -246,7 +246,15 @@ class TestAccessBoundaries:
             level = (await conn.execute(text("select proficiency_level, trend from public.user_skill_profile where user_id = :u"),
                                         {"u": user})).all()
             assert level
-            for forbidden in ("select evaluation from public.attempt_submission",
+            for forbidden in ("select difficulty from public.session_turn",
+                              "select difficulty_asked from public.evaluation_metrics",
+                              "select difficulty_next from public.evaluation_metrics",
+                              "select entry_difficulty_reason from public.evaluation_metrics",
+                              "select difficulty_timeline from public.session_report",
+                              "select generation_meta from public.session_report",
+                              "select narrative_md from public.session_report",
+                              "select demonstrated_ceiling from public.user_skill_assessment",
+                              "select evaluation from public.attempt_submission",
                               "select evidence_weight from public.attempt_submission",
                               "select knowledge_score from public.user_skill_profile",
                               "select engine_state from public.user_skill_profile",

@@ -93,7 +93,7 @@ def test_bilingual_material_and_three_hints_stay_gated_with_clean_media():
             assert solution_review(q).status=='pending_review'
             assert q.status=='trial'and not q.assets['assessment_ready']
         if ident in NEW:
-            assert q.assets['difficulty_status']=='unrated'
+            assert q.assets['difficulty_status']=='rated'
 
 
 def test_old_short_cards_quizzes_and_review_registry_remain_exact():

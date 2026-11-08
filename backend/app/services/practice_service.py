@@ -215,7 +215,8 @@ class PracticeService:
                 continue
             out.append(row.model_copy(update=update))
         if job is not None:
-            out.sort(key=lambda r: (-(r.relevance or 0.0), r.difficulty or 0, r.key))
+            # Rows already arrive ordered by the engine's difficulty, then key. Preserve this for equal relevance.
+            out.sort(key=lambda r: -(r.relevance or 0.0))
         return out
 
     def job_types(self, *, language: str) -> list[JobTypeView]:
@@ -292,10 +293,12 @@ class PracticeService:
         assets = question.assets
         media = [m for m in learner_media(assets.get("bank_media", []), language)
                  if m.get("role") == "prompt" or revealed]
+        material = assets.get("preparation_resource") if revealed else None
         settings = get_settings()
         return QuestionResources(
             media=await sign_media(media, settings.supabase_url, settings.supabase_service_role_key),
-            technical_material=assets.get("preparation_resource") if revealed else None,
+            technical_material={k: v for k, v in material.items() if not k.startswith("difficulty")}
+            if material is not None else None,
             solution_revealed=revealed,
             solution_review=solution_review(question),
             reference=question.text(language).reference_solution if revealed else None,
@@ -723,7 +726,7 @@ class PracticeService:
             return
         picked = next(s for s in servable if s.key == suggestion.key)
         attempt.next_question = {"key": suggestion.key, "title": picked.title, "subject": picked.subject,
-                                 "skill": suggestion.skill, "difficulty": suggestion.difficulty, "why": suggestion.why,
+                                 "skill": suggestion.skill, "why": suggestion.why,
                                  "reason": suggestion.reason, "focus": suggestion.focus}
 
     def _rescore(self, attempt: PracticeAttempt, outcome: PracticeOutcome, fresh: LoadedProfile) -> None:
@@ -972,7 +975,7 @@ class PracticeService:
                 reason = (f"השאלה הבאה נבחרה כדי לתרגל ולחזק את {r.label}." if language == "he"
                           else f"This next question helps you practise and strengthen {r.label}.")
             picked.append(ReadinessQuestionView(key=question.key, title=question.text(language).title, skill=r.key,
-                                                skill_label=r.label, difficulty=question.difficulty, why=why,
+                                                skill_label=r.label, why=why,
                                                 reason=reason))
         message = (texts["judged"].format(word=word, job=job_label, meets=meets, total=len(rows), gaps=gaps, unknown=unknown)
                    if ready else texts["not_yet"].format(job=job_label))

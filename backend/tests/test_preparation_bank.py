@@ -69,9 +69,9 @@ def test_compilation_preserves_every_question_and_all_original_images(catalog):
             assert q.text(lang).reference_solution
             assert len(q.text(lang).hints) == 3
         s = summary(LoadedQuestion(uuid.uuid4(), q, q.version), "he")
-        assert s.difficulty is None and not s.assessment_ready and not s.reviewed
+        assert not s.assessment_ready and not s.reviewed
         assert s.companies == []
-        assert not ({"reference_solution", "preparation_resource", "bank_media"} & s.model_dump().keys())
+        assert not ({"difficulty", "reference_solution", "preparation_resource", "bank_media"} & s.model_dump().keys())
         assert not bank._servable(q, mode="deep", language="he", allow_in_review=True, require_parity=False)
 
 
@@ -99,11 +99,12 @@ async def test_resource_exposure_requires_own_matching_revealed_attempt(catalog,
     await svc.reveal_reference(user, aid)
     shown = await svc.question_resources(user, q.key, attempt_id=aid)
     assert shown.solution_revealed and shown.technical_material["id"] == "PREP-001"
+    assert not any(key.startswith("difficulty") for key in shown.technical_material)
     assert signed[-1] == question_resources.learner_media(q.assets["bank_media"], language="he")
     assert all(not m.get("source_path", "").startswith("sources/") for m in signed[-1])
 
 
-async def test_unrated_feedback_keeps_profile_metrics_and_xp_unchanged(catalog):
+async def test_study_only_feedback_keeps_profile_metrics_and_xp_unchanged(catalog):
     q = next(q for q in catalog.questions.values() if q.assets.get("preparation_id") == "PREP-001")
     user = uuid.uuid4()
     store = InMemoryStore(catalog)
@@ -185,7 +186,7 @@ def test_third_intake_is_bilingual_study_only_and_preserves_frozen_solution_revi
     for ident, question in additions.items():
         assert question.status == "trial" and question.reuse_status == "pending_review", ident
         assert not question.reviewed_by and not question.assets["assessment_ready"], ident
-        assert question.assets["difficulty_status"] == "unrated", ident
+        assert question.assets["difficulty_status"] == "rated", ident
         assert solution_review(question).model_dump() == {"status": "pending_review", "reviewed_on": None}
         resource = question.assets["preparation_resource"]
         assert resource["solution_status"] == "proposed" and resource["ai_assisted"], ident
@@ -207,7 +208,7 @@ def test_third_intake_is_bilingual_study_only_and_preserves_frozen_solution_revi
             assert not text.parity_checked, "Bilingual preparation does not grant human parity approval"
             safe = summary(LoadedQuestion(uuid.uuid4(), question, question.version), language)
             assert safe.preparation_id == ident and not safe.assessment_ready
-            assert not safe.reviewed and safe.difficulty is None
+            assert not safe.reviewed and "difficulty" not in safe.model_dump()
             assert text.reference_solution not in safe.model_dump_json(), ident
 
     # The new batch cannot inherit an attestation. The separately rewritten
@@ -303,7 +304,7 @@ async def test_new_intakes_are_bilingual_pending_and_gate_all_solutions(catalog,
         ident = question.assets["preparation_id"]
         assert question.status == "trial" and question.reuse_status == "pending_review", ident
         assert not question.reviewed_by and not question.assets["assessment_ready"], ident
-        assert question.assets["difficulty_status"] == "unrated", ident
+        assert question.assets["difficulty_status"] == "rated", ident
         assert solution_review(question).status == "pending_review", ident
         resource = question.assets["preparation_resource"]
         assert resource["solution_status"] == "proposed" and resource["ai_assisted"], ident

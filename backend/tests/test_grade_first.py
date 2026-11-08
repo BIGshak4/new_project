@@ -31,6 +31,7 @@ from app.engine.providers import LLMRequest, ScriptedProvider
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
 from tests.conftest import make_evaluation
+from tests.difficulty_history import historical_scores
 
 GOLDEN = Path(__file__).resolve().parent / "golden" / "grade_first_equivalence.json"
 SEEDS = Path(__file__).resolve().parent.parent / "seeds"
@@ -219,7 +220,12 @@ def catalog():
 
 @pytest.mark.parametrize("background", [False, True], ids=["prose-inline", "prose-in-background"])
 async def test_the_scenario_reproduces_the_record_written_before_the_split(catalog, background):
-    got = await scenario(catalog, background)
+    # The golden pins grading and follow-up behavior for the original bank difficulties.
+    _, example_scores = historical_scores()
+    original_catalog = dataclasses.replace(catalog, questions={
+        key: q.model_copy(update={"difficulty": example_scores.get(key, 5)}) for key, q in catalog.questions.items()
+    })
+    got = await scenario(original_catalog, background)
     if os.environ.get("GOLDEN") == "write":
         GOLDEN.parent.mkdir(exist_ok=True)
         GOLDEN.write_text(json.dumps(got, indent=1, ensure_ascii=False, sort_keys=True), encoding="utf-8")
