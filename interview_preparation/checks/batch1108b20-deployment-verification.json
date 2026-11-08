@@ -1,0 +1,133 @@
+{
+  "recorded_at": "2026-11-08T10:29:06.783634+00:00",
+  "result": "verified",
+  "content_commit": "0a78195f6562ba46f9024ceaf3210a54a94ba690",
+  "integrated_base_commit": "49a8703a46d1aa66f0ea5a76427b0a0008681464",
+  "verification_type": "Read-only deployed health, catalog, database readback and unauthenticated public browser observation",
+  "urls": {
+    "web_health": "https://jobrun-practice.netlify.app/api/health?expected=0a78195f6562ba46f9024ceaf3210a54a94ba690",
+    "backend_health": "https://jobrun-api.onrender.com/health?db_check=true",
+    "catalog": "https://jobrun-api.onrender.com/catalog/summary",
+    "browser": "https://jobrun-practice.netlify.app/"
+  },
+  "health": {
+    "expected_revisions": {
+      "web": "0a78195f6562ba46f9024ceaf3210a54a94ba690",
+      "backend": "0a78195f6562ba46f9024ceaf3210a54a94ba690"
+    },
+    "verified_at": "2026-11-08T10:25:18.619444+00:00",
+    "web": {
+      "service": "jobruner-web",
+      "status": "ok",
+      "revision": "0a78195f6562ba46f9024ceaf3210a54a94ba690",
+      "checks": {
+        "application": "ok"
+      }
+    },
+    "backend": {
+      "status": "ok",
+      "engine_version": "0.1.0",
+      "source_revision": "0a78195f6562ba46f9024ceaf3210a54a94ba690",
+      "env": "production",
+      "llm_provider": "openai",
+      "database_configured": true,
+      "database_host": "pooler",
+      "database_pooler": "transaction",
+      "auth_configured": true,
+      "allowed_origins": 3,
+      "store": "database",
+      "models": {
+        "evaluator": "gpt-6.1-terra",
+        "feedback": "gpt-6.1-terra",
+        "tip": "gpt-6.1-terra",
+        "generator": "gpt-6.1-terra",
+        "report": "gpt-6.1-sol"
+      },
+      "speed": {
+        "effort": {
+          "evaluator": "low",
+          "generator": "medium",
+          "tip": "none",
+          "report": "medium",
+          "feedback": "none"
+        },
+        "service_tier": "default",
+        "role_service_tier": {
+          "feedback": "flex",
+          "tip": "flex",
+          "generator": "flex"
+        },
+        "fallbacks": {
+          "flex_to_default": 0,
+          "effort_none_to_low": 0
+        }
+      },
+      "judge_warm": {
+        "enabled": true,
+        "active": true,
+        "sent": 0,
+        "failed": 0,
+        "skipped_recent": 0,
+        "images_unavailable": 0,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "cost_usd": 0.0,
+        "last_latency_ms": null
+      },
+      "answer_images": "assessed",
+      "code_execution": {
+        "enabled": true,
+        "wired": true,
+        "last_probe": null
+      },
+      "assess_unreviewed_questions": true,
+      "database": {
+        "round_trip_ms": 2.36,
+        "pool_size": 5,
+        "pool_checked_out": 0,
+        "pool_overflow": -4
+      }
+    }
+  },
+  "catalog": {
+    "valid": true,
+    "subjects": [
+      "digital_fundamentals",
+      "fsms",
+      "projects_behavioral",
+      "reasoning",
+      "relevant_programming",
+      "sequential_logic"
+    ],
+    "skills": 35,
+    "roles": [
+      "digital-hardware-engineer"
+    ],
+    "companies": [
+      "generic"
+    ],
+    "questions": 340,
+    "tips": 10,
+    "glossary_terms": 32,
+    "quiz_source_count": 500,
+    "quiz_variant_count": 2500
+  },
+  "browser": {
+    "public_landing_hebrew_observed": true,
+    "sign_in_controls_observed": true,
+    "screenshot": "docs/assets/intake1108b20-live-landing.jpg",
+    "screenshot_sha256": "935c8f9bb8c22304823abbc08bea4137cf1675b25eb2283b1ad1dc68f15112be",
+    "accessibility_snapshot_sha256": "ba27e241256c385684573927f61d20d8a2607360b356933eac1d7ad4a4b7dffe",
+    "authenticated_question_page_or_run_button_tested": false
+  },
+  "separate_local_content_views": 80,
+  "new_private_objects_uploaded_and_sha_read_back": 75,
+  "incoming_difficulty_ratings_read_back": 20,
+  "learner_writes": 0,
+  "limits": [
+    "Public landing observation is separate from the80 local material-renderer fixtures.",
+    "Health and catalog checks verify the exact deployed content commit; the following commit only records this evidence.",
+    "Authenticated learner UI and AI feedback were not exercised; signed broker execution is separately documented.",
+    "Technical validation does not constitute human review, physical hardware testing or signoff."
+  ]
+}
