@@ -39,9 +39,9 @@ test("flip-flops, registers and counters expose the clock session; merely openin
 });
 
 test("both guided circuits teach live input changes without requiring a clock", () => {
-  for (const kind of ["preview", "member"] as const) {
-    const circuit = tourSteps(kind).find(step => step.id === "circuit")!;
-    assert.ok(stationReady(circuit, ["input-toggled"]));
+  for (const [kind, id, action] of [["preview", "guest-hardware", "drawing-tried"], ["member", "circuit", "input-toggled"]] as const) {
+    const circuit = tourSteps(kind).find(step => step.id === id)!;
+    assert.ok(stationReady(circuit, [action]));
     assert.equal(stationReady(circuit, ["circuit-simulated"]), false);
   }
 });

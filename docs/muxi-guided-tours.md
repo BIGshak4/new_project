@@ -2,7 +2,7 @@
 
 The public route `/tour` lets visitors try JobRun before signup. The signed-in **Tour with Muxi** launcher opens a single account walkthrough. Both work in Hebrew and English, including on phones. The tour stays optional on account entry.
 
-The visitor opens a sample question, toggles inputs in a live XOR circuit, edits a loop boundary, explores example feedback and a follow-up, draws ten short questions on selected topics, and tries a written mock interview. The last screen links to signup and sign-in. Visitors can choose a station, skip it, or pause and return. No practice account, real interview, evaluation or upload is needed.
+The visitor explores an interview question and a short fundamentals question, completes a three-sensor alarm in the circuit editor, and generates its truth table. Two consecutive software stops use the same array maximum question. The visitor submits a written explanation, reads feedback prepared for the sample, then checks a repair in the code editor. A one-question written interview ends with an explicitly prewritten report. The personal helper appears only after sign-in. Visitors can skip stations, pause and return, or follow the link to signup.
 
 The member tour starts with the account’s existing goal. Members can keep a complete goal, edit it, or configure a new one with the same form the personal area uses. Opening the tour does not write to the account. Saving the goal explicitly updates the personal plan. The remaining exercises use sample data, including demonstrations of friends, the avatar shop and the personal helper. Existing drafts and the underlying workspace stay mounted while the tour is open. Ordinary practice, scores, XP and purchases are separate from these demonstrations.
 

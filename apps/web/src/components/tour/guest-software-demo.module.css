@@ -1,0 +1,27 @@
+.root { display: grid; gap: 18px; align-content: start; min-width: 0; container-type: inline-size; color: var(--ink); line-height: 1.6; overflow-wrap: anywhere; }
+.root :is(p,h2,h3,h4,blockquote) { margin: 0; }
+.root h2 { font-size: clamp(1.25rem, 2.5vw, 1.65rem); line-height: 1.25; }
+.prompt, .field, .review, .editor, .compare { min-width: 0; display: grid; gap: 12px; }
+.field { font-weight: 650; }
+.field textarea { min-height: 8rem; padding: 12px; resize: vertical; width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 7px; color: var(--ink); font: inherit; font-weight: 400; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.actions button, .root > button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; font: inherit; padding: 8px 14px; }
+.root > button { justify-self: start; }
+.root :is(button,textarea,summary):focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+.review { border-block-start: 1px solid var(--line); padding-block-start: 18px; }
+.review h3 { scroll-margin-block: 95px; font-size: 1.16rem; }
+.note { color: var(--muted); font-size: .88rem; }
+.prior { padding-block: 8px; border-block: 1px solid var(--line); }
+.prior summary { color: var(--link); font-weight: 650; cursor: pointer; }
+.prior blockquote { padding-block: 10px 2px; }
+.root blockquote { white-space: pre-wrap; }
+.compare { padding: 12px 15px; background: var(--surface-2); border-radius: 7px; gap: 6px; }
+.compare h4:not(:first-child) { margin-block-start: 8px; }
+.editor > div:first-child { min-width: 0; max-width: 100%; overflow: auto; }
+.cases { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.cases caption { text-align: start; font-weight: 650; padding-block-end: 6px; }
+.cases :is(th,td) { padding: 8px 4px; border-block-end: 1px solid var(--line); text-align: start; }
+.cases code { display: inline-block; }
+.cases td[data-pass="false"] { color: var(--danger); }
+@container (max-width: 420px) { .review :global(.feedback-grid) { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 620px) { .root { gap: 14px; } }

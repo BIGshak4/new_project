@@ -5,7 +5,7 @@ import { useId, useState, type ReactNode } from "react";
 import { BookOpen, Check, Play } from "lucide-react";
 import { type Circuit, signalKey, simulate } from "../../lib/circuit";
 import { formatTechnicalAnswer, parseTechnicalAnswer } from "../../lib/technical-answer";
-import type { TourExercise } from "../../lib/muxi-tour";
+import type { MemberExercise } from "../../lib/muxi-tour";
 import { helperTopics, type HelperTopicId } from "../../lib/personal-helper";
 import avatarCatalog from "../../lib/avatar-catalog.json";
 import { AnswerEditor } from "../answer-editor";
@@ -211,14 +211,14 @@ function HelperDemo({ lang, onAction }: DemoProps) {
   </>;
 }
 
-const labels: Record<Exclude<TourExercise, "goal">, Localized> = {
+const labels: Record<Exclude<MemberExercise, "goal">, Localized> = {
   library: bi("שאלות לדוגמה", "Sample library"), code: bi("שאלה בתוכנה", "Software question"),
   circuit: bi("מעגל XOR", "XOR circuit"), feedback: bi("משוב על תשובה לדוגמה", "Sample answer feedback"),
   quiz: bi("בוחן לפי נושאים", "Topic quiz"), interview: bi("ראיון בכתב", "Written interview"),
   community: bi("חברות לפי קוד אישי", "Friends by personal code"), helper: bi("צריכים עזרה?", "Need a hand?"),
 };
 export function TourExercises({ exercise, lang, onAction, stationId, guide }: DemoProps & {
-  exercise: TourExercise; stationId?: string; guide?: ReactNode;
+  exercise: MemberExercise; stationId?: string; guide?: ReactNode;
 }) {
   const id = useId();
   if (exercise === "goal") return null; // The tour host renders the account's real goal.

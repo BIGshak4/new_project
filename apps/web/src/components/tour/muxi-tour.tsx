@@ -11,7 +11,7 @@ import { MuxiGuidance } from "./muxi-guidance";
 import { lockBodyScroll } from "../../lib/body-scroll-lock";
 import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
 import { UserInboxButton } from "../user-inbox";
-import { checkpoint, initialTourProgress, parseTourProgress, stationReady, tourKey, tourSteps, type TourKind, type TourProgress } from "../../lib/muxi-tour";
+import { checkpoint, initialTourProgress, isGuestExercise, parseTourProgress, stationReady, tourKey, tourSteps, type TourKind, type TourProgress } from "../../lib/muxi-tour";
 import styles from "./muxi-tour.module.css";
 
 const TourExercises = dynamic(() => import("./tour-exercises").then((m) => m.TourExercises), {
@@ -19,6 +19,7 @@ const TourExercises = dynamic(() => import("./tour-exercises").then((m) => m.Tou
   loading: () => <p role="status">טוענים את כלי ההיכרות… / Loading introduction tools…</p>,
 });
 const TourAccountGoal = dynamic(() => import("./tour-account-goal").then(module => module.TourAccountGoal));
+const GuestTourExercises = dynamic(() => import("./guest-tour-exercises").then(module => module.GuestTourExercises));
 type Lang = "he" | "en";
 const read = (key: string, kind: TourKind) => { try { return parseTourProgress(localStorage.getItem(key), kind); } catch { return initialTourProgress(kind); } };
 const write = (key: string, value: TourProgress) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* Tours still work when storage is disabled. */ } };
@@ -201,7 +202,7 @@ function TourSession({ lang, userId, controls, onClose, standalone = false, kind
         <div className={styles.welcomeCopy}>
           <h2 ref={heading} tabIndex={-1}>{preview ? t("בואו ננסה שאלת ראיון.", "Let’s try an interview question.") : t("בואו נכין את התרגול שלכם.", "Let’s set up your practice.")}</h2>
           <p>{preview
-            ? t("אני מוקסי. ב־JobRun מתכוננים לראיונות חומרה ותוכנה. נשנה כניסה במעגל, נתקן שורה בקוד ונראה איך הסבר של מועמד מוביל למשוב ולשאלת המשך.", "I’m Muxi. JobRun helps you prepare for hardware and software interviews. Flip a circuit input, fix a line of code and see how a candidate’s reasoning leads to feedback and a follow-up question.")
+            ? t("אני מוקסי. בואו ננסה שאלה מתוך ההכנה לראיונות חומרה ותוכנה. נחבר מעגל, נסביר פתרון במילים ונראה איך הערה אחת במשוב עוזרת לתקן אותו בקוד.", "I’m Muxi. Let’s try a question from JobRun’s hardware and software interview practice. Wire a circuit, explain a solution in words, then use feedback to fix it in code.")
             : t("אני מוקסי. נבחר יעד וזמן יומי שמתאים לכם. אחר כך ננסה את כלי התרגול ונראה איך תשובה מובילה למשוב ולשאלת המשך.", "I’m Muxi. We’ll start with your goal and the time you have each day. Then we’ll try the practice tools and follow an answer through feedback and a follow-up question.")}</p>
           <div className={styles.welcomeActions}>
             <button type="button" className="primary" data-muxi-start={canResume ? undefined : true} data-muxi-resume={canResume || undefined} disabled={!storageReady} onClick={() => start(canResume)}>
@@ -219,9 +220,9 @@ function TourSession({ lang, userId, controls, onClose, standalone = false, kind
       <section className={styles.routePreview} aria-label={t("מה נעשה בסיור", "What you’ll try")}>
         <h3>{t("הדרך שלנו", "Our route")}</h3>
         <ol>{(preview ? [
-          t("לנסות שאלה במעבדה", "Try a question in the lab"),
-          t("לגלות מה המשוב מוסיף", "Explore the feedback"),
-          t("להתנסות בבוחן ובראיון", "Try a quiz and interview"),
+          t("להכיר את המאגר ולשרטט מעגל", "Explore the library and draw a circuit"),
+          t("לשפר פתרון בעזרת משוב", "Refine an answer with feedback"),
+          t("לנסות ראיון בכתב", "Try a written interview"),
         ] : [
           t("לבחור יעד אישי", "Choose a personal goal"),
           t("לפתור ולקבל משוב", "Solve and get feedback"),
@@ -252,13 +253,16 @@ function TourSession({ lang, userId, controls, onClose, standalone = false, kind
       <main className={styles.tourGrid}>
         {renderGuide()}
         <div className={styles.stage} data-muxi-stage data-muxi-exercise={step.exercise}>
-          {step.id === "goal" && !preview && userId ? <TourAccountGoal userId={userId} lang={lang} onSaved={() => onAction("goal-saved")} />
+          {isGuestExercise(step.exercise) ? <GuestTourExercises exercise={step.exercise} lang={lang} onAction={onAction} />
+            : step.id === "goal" && !preview && userId ? <TourAccountGoal userId={userId} lang={lang} onSaved={() => onAction("goal-saved")} />
             : <TourExercises key={step.id} exercise={step.exercise} stationId={step.id} lang={lang} onAction={onAction} guide={<ExpandedCoach lang={lang} onExit={close}>{renderGuide(true)}</ExpandedCoach>} />}
         </div>
       </main>
-      <MuxiGuidance root={root} station={step.id} lang={lang} ready={ready} />
+      {!preview && <MuxiGuidance root={root} station={step.id} lang={lang} ready={ready} />}
       <div className={styles.mobileNav} data-muxi-mobile-nav>
-        <button type="button" className={styles.mobileBack} onClick={() => heading.current?.scrollIntoView({ block: "center" })}>{t("בחזרה להדרכה", "Back to guidance")}<span><BidiText>{step.title[lang]}</BidiText></span></button>
+        {preview ? <button type="button" className={styles.mobileBack} onClick={() => jump(steps[index - 1].id)} disabled={!index}>
+          <BackArrow size={16} />{t("הקודמת", "Previous")}
+        </button> : <button type="button" className={styles.mobileBack} onClick={() => heading.current?.scrollIntoView({ block: "center" })}>{t("בחזרה להדרכה", "Back to guidance")}<span><BidiText>{step.title[lang]}</BidiText></span></button>}
         <button type="button" className="primary" data-muxi-next disabled={!ready} onClick={() => advance()}>{index === steps.length - 1 ? t("סיום הסיור", "Finish tour") : t("הבא בסיור", "Next in tour")}<NextArrow size={16} /></button>
         <button type="button" className={styles.quiet} onClick={() => advance(true)}>{t("דלגו", "Skip")}</button>
       </div>

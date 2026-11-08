@@ -253,6 +253,7 @@ export default function CircuitEditor({
   question,
   onActivity,
   guide,
+  instructions,
 }: {
   value: Circuit;
   onChange?: (c: Circuit) => void;
@@ -263,6 +264,13 @@ export default function CircuitEditor({
   onActivity?: (activity: CircuitActivity) => void;
   /** Keeps an introduction coach in the browser's top layer when expanded. */
   guide?: ReactNode;
+  /** Optional in-flow content for a guided drawing session. */
+  instructions?: {
+    drawing?: ReactNode;
+    wiring?: (source: string, target: string, at: "open" | "source" | "target" | "connect") => ReactNode;
+    input?: (selectedId: string | null, at: "select" | "toggle") => ReactNode;
+    truthTable?: ReactNode;
+  };
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const [selected, setSelected] = useState<string | null>(null),
@@ -777,6 +785,8 @@ export default function CircuitEditor({
           </div>
         )}
       </div>
+      {instructions?.drawing}
+      {instructions?.input?.(selected, "select")}
       {!readOnly && !!value.parts.length && (
         <label className="component-picker">
           {t("בחירת רכיב להגדרה", "Select component to configure")}
@@ -848,7 +858,8 @@ export default function CircuitEditor({
               </select>
             </label>
           )}
-          {["input", "constant"].includes(part.kind) && (
+          {["input", "constant"].includes(part.kind) && <>
+            {instructions?.input?.(selected, "toggle")}
             <label>
               {t("ערך כניסה", "Input value")}
               <input
@@ -879,7 +890,7 @@ export default function CircuitEditor({
                 </button>
               )}
             </label>
-          )}
+          </>}
           <p className="small muted">
             {ports(part).inputs.length} {t("כניסות", "inputs")} ·{" "}
             {ports(part).outputs.length} {t("יציאות", "outputs")}
@@ -896,6 +907,7 @@ export default function CircuitEditor({
           </p>
         </div>
       )}
+      {instructions?.wiring?.(sourcePin, targetPin, "open")}
       {!readOnly && value.parts.length > 1 && (
         <details className="circuit-connect" data-muxi-control="circuit-wire-details">
           <summary data-muxi-control="circuit-wire-open">
@@ -906,6 +918,7 @@ export default function CircuitEditor({
           </summary>
           <p className="small muted">{t("בחרו יציאה וכניסה ולחצו על „חיבור”.", "Select an output and an input, then choose Connect.")}</p>
           <div className="row">
+            {instructions?.wiring?.(sourcePin, targetPin, "source")}
             <label>
               {t("יציאה", "Output")}
               <select
@@ -924,6 +937,7 @@ export default function CircuitEditor({
                 ))}
               </select>
             </label>
+            {instructions?.wiring?.(sourcePin, targetPin, "target")}
             <label>
               {t("כניסה", "Input")}
               <select
@@ -942,6 +956,7 @@ export default function CircuitEditor({
                 ))}
               </select>
             </label>
+            {instructions?.wiring?.(sourcePin, targetPin, "connect")}
             <button
               type="button"
               data-muxi-control="circuit-wire-connect"
@@ -1029,6 +1044,7 @@ export default function CircuitEditor({
           )}
         </p>
       )}
+      {instructions?.truthTable}
       <CircuitTruthTable circuit={value} lang={lang} onGenerate={() => onActivity?.("truth-table-generated")} />
       {notice && (
         <p className="circuit-notice" role="status">

@@ -21,6 +21,9 @@ import { QuestionTitle } from "./question-title";
 import { proseDirection } from "../lib/bidi-segments";
 import { ExecutionResultView } from "./code-execution-result";
 
+type EvaluationContent = Pick<Submission, "status" | "band" | "summary" | "key_points_hit" | "key_points_missed" | "card" | "tip" | "check" | "flags">
+  & Partial<Pick<Submission, "revision" | "evidence" | "assessed_by" | "model" | "xp_earned" | "feedback_pending">>;
+
 /**
  * The evaluation a candidate sees after a real assessment: band ring, summary, automatic
  * check with the differing rows, the four-part feedback card, what went well / what to work
@@ -30,11 +33,10 @@ export function EvaluationPanel({
   submission: s,
   lang,
   focusTarget = false,
-}: {
-  submission: Submission;
-  lang: Lang;
-  focusTarget?: boolean;
-}) {
+  example = false,
+}: { lang: Lang; focusTarget?: boolean } & (
+  { submission: Submission; example?: false } | { submission: EvaluationContent; example: true }
+)) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const reduced = useReducedMotion();
   if (s.status === "evaluating") {
@@ -134,7 +136,7 @@ export function EvaluationPanel({
             <Pop delay={G.band}>
               <span className={`badge band-${tone}`}>{bandLabel(band, lang)}</span>
             </Pop>
-            {(s.xp_earned ?? 0) > 0 && (
+            {!example && (s.xp_earned ?? 0) > 0 && (
               <Pop delay={G.xp}>
                 <span className="xp-pill" role="status" aria-label={`${s.xp_earned} ${t("נקודות ניסיון", "experience points")}`}>
                   <Sparkles size={14} aria-hidden="true" /> <bdi dir="ltr">+{s.xp_earned} XP</bdi>
@@ -203,7 +205,7 @@ export function EvaluationPanel({
 
       <details className="evaluation-more">
         <summary>{t("עוד פירוט על ההערכה", "More about this assessment")}</summary>
-        <div className="evaluation-chips" aria-label={t("פרטי ההערכה", "Assessment details")}>
+        {!example && <div className="evaluation-chips" aria-label={t("פרטי ההערכה", "Assessment details")}>
           {s.check && (
             <span className={`chip check-${s.check.passed === null ? "none" : s.check.passed}`}>
               {s.check.passed === true
@@ -240,7 +242,7 @@ export function EvaluationPanel({
               {t("נבדק על ידי", "Judged by")} <bdi dir="ltr">{modelName(s.model)}</bdi>
             </span>
           )}
-        </div>
+        </div>}
         {s.check && <CheckBlock check={s.check} lang={lang} />}
         {card.length > 0 && (
           <div className="evaluation-card-grid">
@@ -254,7 +256,7 @@ export function EvaluationPanel({
               ))}
           </div>
         )}
-        <p className="small muted">{evidenceText}</p>
+        {!example && <p className="small muted">{evidenceText}</p>}
       </details>
     </div>
   );

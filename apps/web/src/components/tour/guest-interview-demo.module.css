@@ -1,0 +1,34 @@
+.demo {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.demo h3, .demo h4, .demo p, .demo dl, .demo dd { margin: 0; }
+.demo h3 { font-size: clamp(1.15rem, 2.5vw, 1.5rem); line-height: 1.35; }
+.demo h4, .demo dt, .demo label { font-size: 1rem; font-weight: 700; }
+.demo .note { color: var(--muted); }
+.demo textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 6rem;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  resize: vertical;
+}
+.demo > button { justify-self: start; }
+.demo button { min-height: 44px; max-width: 100%; white-space: normal; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.sample { display: grid; gap: 5px; padding-block: 12px; border-block: 1px solid var(--line); }
+.demo dt + dd { margin-block-start: 2px; }
+.demo dd + dt { margin-block-start: 10px; }
+.demo :is(button, textarea):focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+.demo h3:focus { outline: none; }

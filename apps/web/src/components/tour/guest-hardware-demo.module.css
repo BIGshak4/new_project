@@ -1,0 +1,40 @@
+.demo { display: grid; gap: 16px; min-width: 0; }
+.entry { display: grid; justify-items: start; gap: 5px; }
+.entry p { display: inline-flex; align-items: center; gap: 8px; margin: 0; color: var(--link); }
+.entry button, .canvasCue button { display: inline-flex; align-items: center; gap: 6px; }
+.question h3 { margin: 0 0 8px; font-size: clamp(19px, 2vw, 24px); }
+.question p, .lead { margin: 0; max-width: 70ch; line-height: 1.65; }
+.lead { color: var(--ink-2); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.tools button { display: inline-flex; align-items: center; gap: 6px; }
+.canvasCue { padding: 10px 12px; background: var(--soft); line-height: 1.55; }
+.canvasCue p { margin: 0 0 6px; }
+.more summary { color: var(--link); cursor: pointer; font-weight: 600; padding-block: 8px; }
+.more ul { margin: 6px 0; padding-inline-start: 22px; line-height: 1.65; }
+.more li + li { margin-block-start: 5px; }
+.cue {
+  display: flex;
+  align-items: start;
+  flex: 1 0 100%;
+  gap: 8px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  width: 100%;
+  color: var(--ink);
+  background: var(--soft);
+  border-radius: 7px;
+  line-height: 1.55;
+  font-size: 14px;
+  scroll-margin-block: 115px;
+  text-align: start;
+}
+.cue svg { color: var(--link); margin-top: 2px; flex-shrink: 0; }
+.demo:has([data-guest-hardware-cue="wire-open"]) [data-muxi-control="circuit-wire-open"],
+.demo:has([data-guest-hardware-cue="wire-source"]) [data-muxi-control="circuit-wire-source"],
+.demo:has([data-guest-hardware-cue="wire-target"]) [data-muxi-control="circuit-wire-target"],
+.demo:has([data-guest-hardware-cue="wire-connect"]) [data-muxi-control="circuit-wire-connect"],
+.demo:has([data-guest-hardware-cue="component"]) [data-muxi-control="circuit-component"],
+.demo:has([data-guest-hardware-cue="input-toggle"]) [data-muxi-control="circuit-input-toggle"],
+.demo:has([data-guest-hardware-cue="truth-table"]) [data-muxi-control="circuit-truth-table"] { outline: 2px solid var(--link); outline-offset: 2px; }
+.result { margin: 0; line-height: 1.6; }
+.result bdi { color: var(--link); font-family: var(--mono), monospace; font-weight: 700; }

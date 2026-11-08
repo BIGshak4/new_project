@@ -9,19 +9,18 @@ import { DEFAULT_AVATAR, type AvatarConfig } from "../../lib/avatar-types";
 export type HelperAvatarState = { avatar: AvatarConfig; status: "loading" | "ready" | "fallback" };
 type OwnedAvatarState = HelperAvatarState & { owner: string };
 
-export function useHelperAvatar(userId: string | undefined, demo: boolean): HelperAvatarState {
-  const owner = demo ? "preview" : userId ? `user:${userId}` : "guest";
+export function useHelperAvatar(userId: string, demo: boolean): HelperAvatarState {
+  const owner = demo ? "preview" : `user:${userId}`;
   const [state, setState] = useState<OwnedAvatarState>({ owner: "", avatar: DEFAULT_AVATAR, status: "fallback" });
 
   useEffect(() => {
     const guard = new AvatarRefreshGuard();
-    setState({ owner, avatar: DEFAULT_AVATAR, status: demo || userId ? "loading" : "fallback" });
-    if (!demo && !userId) return;
+    setState({ owner, avatar: DEFAULT_AVATAR, status: "loading" });
 
     async function refresh() {
       const current = guard.start();
       try {
-        const avatar = demo ? getDemoAvatar() : (await avatarApi(userId!).get()).avatar;
+        const avatar = demo ? getDemoAvatar() : (await avatarApi(userId).get()).avatar;
         if (!isAvatarConfig(avatar)) throw new Error("Invalid avatar");
         if (current()) setState({ owner, avatar: { ...avatar }, status: "ready" });
       } catch {
@@ -50,5 +49,5 @@ export function useHelperAvatar(userId: string | undefined, demo: boolean): Help
 
   // Do not briefly render the previous account's outfit before the new owner's effect runs.
   return state.owner === owner ? { avatar: state.avatar, status: state.status }
-    : { avatar: DEFAULT_AVATAR, status: demo || userId ? "loading" : "fallback" };
+    : { avatar: DEFAULT_AVATAR, status: "loading" };
 }

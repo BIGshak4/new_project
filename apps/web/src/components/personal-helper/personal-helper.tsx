@@ -27,6 +27,12 @@ type Turn = { topic: HelperTopicId; selected?: HelperText };
 /** A separate surface: it never modifies the workspace header or unmounts an answer. */
 export function PersonalHelper() {
   const pathname = usePathname();
+  const demo = pathname.startsWith("/games/preview");
+  if (!(pathname === "/" || pathname === "/games" || pathname === "/games/shop" || demo || pathname.startsWith("/duel/"))) return null;
+  return <AccountHelper demo={demo} />;
+}
+
+function AccountHelper({ demo }: { demo: boolean }) {
   const [userId, setUserId] = useState<string>();
   const [lang, setLang] = useState<Lang>("he");
   useEffect(() => observeAuthUser(supabase.auth, user => setUserId(user?.id)), []);
@@ -37,13 +43,11 @@ export function PersonalHelper() {
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
     return () => observer.disconnect();
   }, []);
-  const demo = pathname.startsWith("/games/preview");
-  const visible = pathname === "/" || pathname === "/games" || pathname === "/games/shop" || demo || pathname.startsWith("/duel/");
-  if (!visible) return null;
-  return <HelperConversation key={`${userId ?? "visitor"}:${demo}`} userId={userId} demo={demo} lang={lang} />;
+  if (!userId) return null;
+  return <HelperConversation key={`${userId}:${demo}`} userId={userId} demo={demo} lang={lang} />;
 }
 
-function HelperConversation({ userId, demo, lang }: { userId?: string; demo: boolean; lang: Lang }) {
+function HelperConversation({ userId, demo, lang }: { userId: string; demo: boolean; lang: Lang }) {
   // Every fresh visit starts minimized; opening the helper is always an explicit choice.
   const [open, setOpen] = useState(false);
   const [turns, setTurns] = useState<Turn[]>([{ topic: "root" }]);
@@ -159,7 +163,7 @@ function HelperConversation({ userId, demo, lang }: { userId?: string; demo: boo
           </div>
           {notice && <div className={styles.notice} role="status"><p dir={proseDirection(notice[lang], he ? "rtl" : "ltr")}><BidiText>{notice[lang]}</BidiText></p><button type="button" onClick={() => act({ type: "tour" })}>{t("להתנסות בסיור", "Try the tour")}</button></div>}
           {turns.length === 1 && <p className={styles.caption}>{t("בוחרים נושא, ואני אכוון אתכם לכלים המתאימים.", "Choose a topic and I’ll help you find the right tools.")}</p>}
-          {status === "fallback" && userId && <p className={styles.caption}>{t("הדמות האישית לא זמינה כרגע. העזרה עדיין כאן.", "Your avatar is unavailable right now. You can still use the helper.")}</p>}
+          {status === "fallback" && <p className={styles.caption}>{t("הדמות האישית לא זמינה כרגע. העזרה עדיין כאן.", "Your avatar is unavailable right now. You can still use the helper.")}</p>}
         </div>
         <footer className={styles.footer}>
           <button type="button" disabled={turns.length === 1} onClick={() => { setNotice(null); setTurns(previous => previous.slice(0, -1)); }}>
@@ -169,9 +173,7 @@ function HelperConversation({ userId, demo, lang }: { userId?: string; demo: boo
         </footer>
       </section>}
     </div>
-    {tourOpen && createPortal(<div role={!userId ? "dialog" : undefined} aria-modal={!userId ? true : undefined} aria-label={!userId ? t("סיור עם מוקסי", "Tour with Muxi") : undefined}>
-      <MuxiTour lang={lang} userId={userId} standalone={!userId} controls={<ThemeToggle lang={lang} />}
-        onClose={() => { setTourOpen(false); requestAnimationFrame(() => launcher.current?.focus({ preventScroll: true })); }} />
-    </div>, document.body)}
+    {tourOpen && createPortal(<MuxiTour lang={lang} userId={userId} controls={<ThemeToggle lang={lang} />}
+      onClose={() => { setTourOpen(false); requestAnimationFrame(() => launcher.current?.focus({ preventScroll: true })); }} />, document.body)}
   </>;
 }

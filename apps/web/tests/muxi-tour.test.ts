@@ -19,8 +19,8 @@ test("every stop in both experiences teaches through a distinct user action", ()
   }
 });
 
-test("a visitor can try the current library, hardware, software, evaluation, quiz and interview without a goal", () => {
-  assert.deepEqual(tourSteps("preview").map(step => step.exercise), ["library", "circuit", "code", "feedback", "quiz", "interview"]);
+test("the visitor tries the library, drawing, explanation and code for the same question, then an interview", () => {
+  assert.deepEqual(tourSteps("preview").map(step => step.exercise), ["guest-library", "guest-hardware", "guest-explain", "guest-code", "guest-interview"]);
   assert.deepEqual(tourSteps("member").map(step => step.exercise), ["goal", "library", "circuit", "code", "feedback", "quiz", "interview", "community", "helper"]);
   assert.deepEqual(tourSteps("member")[0].actions, ["goal-saved"]);
 });

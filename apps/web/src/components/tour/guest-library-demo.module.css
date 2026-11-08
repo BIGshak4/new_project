@@ -1,0 +1,17 @@
+.library { display: grid; gap: 18px; }
+.library h2, .library h3, .library p { margin: 0; }
+.category { border-block-start: 1px solid var(--line); }
+.category:last-child { border-block-end: 1px solid var(--line); }
+.category > button {
+  width: 100%; min-height: 68px; display: flex; align-items: center; gap: 14px;
+  padding: 14px 8px; background: transparent; color: var(--ink); text-align: start; border: 0;
+}
+.category > button > span { display: grid; gap: 2px; }
+.category > button small { font-size: .94rem; line-height: 1.55; color: var(--ink-2); }
+.category > button > svg { flex-shrink: 0; color: var(--link); }
+.category > button > svg:last-child { margin-inline-start: auto; }
+.category > button[aria-expanded=true] > svg:last-child { transform: rotate(180deg); }
+.example:not([hidden]) { display: grid; justify-items: start; gap: 10px; padding: 16px 20px 20px; background: var(--paper); border-inline-start: 3px solid var(--link); }
+.example p { max-width: 68ch; line-height: 1.7; }
+.reveal { color: var(--link); background: var(--surface); padding-inline: 13px; }
+.answer { color: var(--ink); }

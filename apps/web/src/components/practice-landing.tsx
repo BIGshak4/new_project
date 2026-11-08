@@ -173,7 +173,7 @@ export function PracticeLanding({
               <MuxiMascot className={styles.tourMascot} />
               <div>
                 <h3>{t("רוצים להכיר לפני שנרשמים?", "Want to explore before signing up?")}</h3>
-                <p>{t("מוקסי ילווה אתכם משאלת תרגול ועד למשוב ולשאלת המשך. תוכלו גם לנסות בוחן לפי נושא וראיון לדוגמה.", "Follow a practice question through feedback and a follow-up with Muxi. You can also try a topic quiz and sample interview.")}</p>
+                <p>{t("מוקסי יראה לכם את שאלות הראיון והתרגול הקצר, ילווה אתכם בעורך המעגלים וידגים איך עוברים מהסבר חופשי למשוב ולפתרון בקוד.", "Explore interview questions and short practice with Muxi, try the circuit editor, and follow a written explanation through feedback to a working code solution.")}</p>
                 <a className={styles.tourButton} href="/tour">
                   {t("לסיור ללא הרשמה", "Try the tour without signing up")}
                   <Arrow size={18} aria-hidden="true" />

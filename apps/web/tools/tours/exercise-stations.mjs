@@ -1,8 +1,8 @@
 // Browser actions shared by the visitor preview and authenticated walkthrough checks.
 import assert from "node:assert/strict";
 
-export const previewStations = ["library", "circuit", "code", "feedback", "quiz", "interview"];
-export const memberStations = ["goal", ...previewStations, "community", "helper"];
+export const previewStations = ["guest-library", "guest-hardware", "guest-explain", "guest-code", "guest-interview"];
+export const memberStations = ["goal", "library", "circuit", "code", "feedback", "quiz", "interview", "community", "helper"];
 
 export function tourControl(page, name) {
   return page.locator(`[data-muxi-stage] [data-muxi-control="${name}"]`).first();
@@ -11,6 +11,52 @@ export function tourControl(page, name) {
 export async function exerciseStation(page, id) {
   const click = name => tourControl(page, name).click();
   switch (id) {
+    case "guest-library": {
+      await click("guest-library-interview");
+      const reveal = page.locator('[data-muxi-control="guest-library-reveal"]').filter({ visible: true });
+      await reveal.click();
+      await click("guest-library-short");
+      await reveal.click();
+      assert.equal(await page.locator('[data-muxi-stage] p:visible').filter({ hasText: /12/ }).count(), 1);
+      break;
+    }
+    case "guest-hardware":
+      await click("guest-hardware-open");
+      await click("circuit-wire-open");
+      await tourControl(page, "circuit-wire-source").selectOption("ab:Y");
+      await tourControl(page, "circuit-wire-target").selectOption("vote:A0");
+      await click("circuit-wire-connect");
+      await tourControl(page, "circuit-component").selectOption("b");
+      await click("circuit-input-toggle");
+      await click("circuit-truth-table");
+      await page.locator("[data-guest-hardware]").getByText(/כל שמונת הצירופים|All eight combinations/).waitFor();
+      break;
+    case "guest-explain": {
+      await click("guest-explain-fill");
+      assert.ok((await tourControl(page, "guest-explain-input").inputValue()).includes("O(n)"));
+      await click("guest-explain-submit");
+      await tourControl(page, "guest-software-feedback").locator(".evaluation.tone-partial").waitFor();
+      break;
+    }
+    case "guest-code": {
+      await page.locator("[data-muxi-stage] details summary").click();
+      assert.ok((await page.locator("[data-muxi-stage] blockquote").innerText()).includes("O(n)"));
+      await click("guest-code-open");
+      await page.locator("[data-muxi-stage] .cm-content").waitFor();
+      await click("guest-code-submit");
+      const next = page.locator("[data-muxi-next]").filter({ visible: true }).first();
+      assert.equal(await next.isDisabled(), true, "The starter code fails for negative arrays");
+      await click("guest-code-fix");
+      await click("guest-code-submit");
+      await tourControl(page, "guest-software-feedback").locator(".evaluation.tone-strong").waitFor();
+      break;
+    }
+    case "guest-interview":
+      await click("guest-interview-start");
+      await click("guest-interview-example");
+      await click("guest-interview-finish");
+      await page.locator("[data-muxi-stage]").getByText(/התשובה שלכם לא נבדקה|wasn’t graded/).waitFor();
+      break;
     case "library":
       await click("library-question");
       break;

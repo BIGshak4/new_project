@@ -19,6 +19,7 @@ async function verifyPreview({ width, height, lang, mobile }) {
   await context.addInitScript(language => {
     localStorage.setItem("jobrun-language", language);
     localStorage.setItem("jobrun-muxi-tour-v1-visitor", JSON.stringify({ version: 1, kind: "full", stepId: "goal", status: "paused" }));
+    localStorage.setItem("jobrun-muxi-tour-v2-preview", JSON.stringify({ version: 2, kind: "preview", offered: true, stepId: "quiz", status: "paused" }));
   }, lang);
   const page = await context.newPage();
   page.setDefaultTimeout(15000);
@@ -28,7 +29,11 @@ async function verifyPreview({ width, height, lang, mobile }) {
   });
   const area = station => page.locator(`[data-muxi-kind="preview"][data-muxi-station="${station}"]`);
   try {
-    await page.goto(new URL("/tour", base).href, { waitUntil: "domcontentloaded" });
+    await page.goto(new URL("/", base).href, { waitUntil: "domcontentloaded" });
+    const launcher = page.locator('a[aria-describedby="landing-tour-description"]');
+    await launcher.waitFor();
+    check(!await page.locator("[data-personal-helper]").count(), "A visitor sees the tour entry without the account helper");
+    await launcher.click();
     await area("welcome").waitFor();
     await page.waitForFunction(lang => document.documentElement.lang === lang, lang);
     check(!await page.locator("[data-muxi-resume]").count(), "Old tour progress cannot resume an obsolete tour");
@@ -40,14 +45,15 @@ async function verifyPreview({ width, height, lang, mobile }) {
       const next = page.locator("[data-muxi-next]").filter({ visible: true }).first();
       check(await next.isDisabled(), `${lang}: ${id} opens with a task to try`);
       await exerciseStation(page, id);
-      if (id === "circuit") await page.screenshot({ path: path.join(out, `preview-${lang}-circuit.png`) });
+      check(!await page.locator("[data-muxi-pointer],[data-personal-helper]").count(), `${lang}: ${id} leaves the exercise unobstructed`);
+      await page.screenshot({ path: path.join(out, `preview-${lang}-${id}.png`) });
       await nextStation(page);
-      if (id === "library") {
-        await area("circuit").waitFor();
+      if (id === "guest-library") {
+        await area("guest-hardware").waitFor();
         await page.reload();
         await area("welcome").waitFor();
         await page.locator("[data-muxi-resume]").click();
-        await area("circuit").waitFor();
+        await area("guest-hardware").waitFor();
       }
     }
     await area("finish").waitFor();

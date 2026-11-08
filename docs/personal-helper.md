@@ -6,7 +6,7 @@ Recorded 2026-11-04 after finish-review disposition: ship, no fixes. This is an 
 
 `apps/web/src/app/layout.tsx` mounts `PersonalHelper`. Its implementation is in `apps/web/src/components/personal-helper/`; authored bilingual content, destinations and focus targets live in `apps/web/src/lib/personal-helper.ts`.
 
-The helper appears on `/`, `/games`, `/games/shop`, paths beginning `/games/preview`, and `/duel/`. It is absent elsewhere. The inline-end avatar launcher opens a nonmodal conversation panel; Escape or minimize closes it and restores launcher focus. Back removes the last turn; All topics resets the conversation. Minimize retains the history. History is component memory in the current tab, not saved conversation storage; reload, leaving the mounted route scope, or changing account/demo context can reset it.
+The helper appears once a signed-in account is available on `/`, `/games`, `/games/shop`, paths beginning `/games/preview`, and `/duel/`. Signing out removes it. Visitors can meet Muxi through the public tour. The inline-end avatar launcher opens a nonmodal conversation panel; Escape or minimize closes it and restores launcher focus. Back removes the last turn; All topics resets the conversation. Minimize retains the history. History is component memory in the current tab, not saved conversation storage; reload, leaving the mounted route scope, or changing account/demo context can reset it.
 
 The helper starts minimized on every fresh visit or reload and opens only when its launcher is pressed. It never restores an open state from browser storage.
 

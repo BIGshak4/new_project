@@ -130,3 +130,16 @@
   .launcher { padding-inline: 5px; font-size: 11px; } .launcherMascot { width: 25px; }
 }
 @media (prefers-reduced-motion: reduce) { .root *, .root *::before, .root *::after { scroll-behavior: auto; } }
+@media (max-width: 760px) {
+  .root[data-muxi-kind="preview"] { scroll-padding-block: 82px 76px; }
+  .root[data-muxi-kind="preview"] .coach { display: flow-root; }
+  .root[data-muxi-kind="preview"] .coachIdentity { float: inline-end; margin-inline-start: 12px; }
+  .root[data-muxi-kind="preview"] .coachIdentity > div { display: none; }
+  .root[data-muxi-kind="preview"] .coachTitle { margin-block: 8px; }
+  .root[data-muxi-kind="preview"] .progress { width: min(60%, 200px); }
+  .root[data-muxi-kind="preview"] .coach > p { margin-block: 4px; }
+  .root[data-muxi-kind="preview"] .stepActions,
+  .root[data-muxi-kind="preview"] .coach > .quiet,
+  .root[data-muxi-kind="preview"] .coachFooter { display: none; }
+  .root[data-muxi-kind="preview"] .mobileBack { flex-direction: row; align-items: center; }
+}

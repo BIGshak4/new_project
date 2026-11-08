@@ -1,6 +1,11 @@
 export type TourKind = "preview" | "member";
 export type TourText = { he: string; en: string };
-export type TourExercise = "goal" | "library" | "circuit" | "code" | "feedback" | "quiz" | "interview" | "community" | "helper";
+export type MemberExercise = "goal" | "library" | "circuit" | "code" | "feedback" | "quiz" | "interview" | "community" | "helper";
+export type GuestExercise = "guest-library" | "guest-hardware" | "guest-explain" | "guest-code" | "guest-interview";
+export type TourExercise = MemberExercise | GuestExercise;
+export function isGuestExercise(exercise: TourExercise): exercise is GuestExercise {
+  return exercise.startsWith("guest-");
+}
 export type TourStep = { id: string; chapter: TourText; exercise: TourExercise; title: TourText; body: TourText; task: TourText; actions: string[] };
 const bi = (he: string, en: string): TourText => ({ he, en });
 
@@ -59,17 +64,47 @@ const helper: TourStep = {
   task: bi("בחרו במה העוזר יעזור לכם ונסו את השלב הראשון.", "Pick something to ask the helper and try its first step."), actions: ["helper-used"],
 };
 
-const previewSteps = [library, circuit, code, feedback, quiz, interview];
-const memberSteps = [goal, ...previewSteps, community, helper];
+const previewSteps: TourStep[] = [
+  {
+    id: "guest-library", exercise: "guest-library", chapter: bi("מאגר השאלות", "Question library"),
+    title: bi("מה תרצו לתרגל?", "What would you like to practice?"),
+    body: bi("שאלות ראיון נותנות מקום לשרטט, לכתוב קוד ולהסביר את הדרך. כשיש רק כמה דקות, שאלה קצרה עוזרת לחזק עיקרון אחד.", "Interview questions give you room to draw, write code and explain your reasoning. When you only have a few minutes, a short question helps you revisit one principle."),
+    task: bi("בחרו שאלה ופתחו אותה כדי לראות איך מתרגלים.", "Open a question to see how you can practice."), actions: ["library-explored"],
+  },
+  {
+    id: "guest-hardware", exercise: "guest-hardware", chapter: bi("מעבדת חומרה", "Hardware lab"),
+    title: bi("איך בודקים את השרטוט?", "How do you test a circuit?"),
+    body: bi("בעורך המעגלים אפשר לחבר רכיבים ולראות איך האות עובר מכניסה ליציאה. נבנה חלק מהמעגל ונבדוק את ההתנהגות שלו.", "Connect components in the circuit editor and follow the signal from input to output. Build part of a circuit and check its behavior."),
+    task: bi("פתחו את עורך המעגלים ופעלו לפי החיצים ליד הכלים.", "Open the circuit editor and follow the arrows beside its tools."), actions: ["drawing-tried"],
+  },
+  {
+    id: "guest-explain", exercise: "guest-explain", chapter: bi("שאלת תוכנה", "Software question"),
+    title: bi("איך הייתם מסבירים את הפתרון?", "How would you explain your solution?"),
+    body: bi("בתרגול, המשוב מבוסס הבינה המלאכותית מתייחס גם לדרך החשיבה. ננסה תשובה כמעט מלאה לשאלת המקסימום במערך ונראה איזה מקרה היא מפספסת.", "In practice, AI feedback looks at your reasoning. Try a nearly complete answer to the array maximum question and see which case it misses."),
+    task: bi("הכניסו הסבר במילים שלכם או השתמשו בדוגמה, ואז פתחו את המשוב לדוגמה.", "Write an explanation or use the example, then open the sample feedback."), actions: ["explanation-reviewed"],
+  },
+  {
+    id: "guest-code", exercise: "guest-code", chapter: bi("אותה שאלה, עם קוד", "The same question, with code"),
+    title: bi("מה נשנה אחרי המשוב?", "What would you change after feedback?"),
+    body: bi("נחזור לאותה שאלה. כשהערך הגדול ביותר במערך שלילי, הערך שבו מתחילים את החיפוש קובע אם נקבל תשובה נכונה.", "Stay with the same question. When the largest value in an array is negative, the starting value determines whether the answer is correct."),
+    task: bi("פתחו את עורך הקוד, תקנו את האתחול ובדקו את הפתרון.", "Open the code editor, fix the starting value and check the solution."), actions: ["code-reviewed"],
+  },
+  {
+    id: "guest-interview", exercise: "guest-interview", chapter: bi("ראיון מדומה", "Mock interview"),
+    title: bi("איך נראה ראיון בכתב?", "What does a written interview feel like?"),
+    body: bi("בראיון עונים על שאלה אחת בכל פעם ומקבלים דוח בסיום. כאן תראו שאלה אחת ודוח שהוכן מראש להדגמה.", "In an interview you answer one question at a time and receive a report at the end. Here you can try one question and read a report written for the tour."),
+    task: bi("ענו על השאלה ופתחו את דוח הדוגמה.", "Answer the question and open the example report."), actions: ["interview-tried"],
+  },
+];
+const memberSteps = [goal, library, circuit, code, feedback, quiz, interview, community, helper];
 export function tourSteps(kind: TourKind): readonly TourStep[] {
   return kind === "preview" ? previewSteps : memberSteps;
 }
 
-/** A v1 example goal must never count as setting a member’s real goal. */
-export const tourKey = (userId?: string) => userId ? `jobrun-muxi-tour-v2-member-${userId}` : "jobrun-muxi-tour-v2-preview";
-export type TourProgress = { version: 2; offered: boolean; kind: TourKind; stepId: string; completed: string[]; skipped: string[]; status: "paused" | "completed" | "dismissed"; updatedAt: number };
+export const tourKey = (userId?: string) => userId ? `jobrun-muxi-tour-v2-member-${userId}` : "jobrun-muxi-tour-v3-preview";
+export type TourProgress = { version: 2 | 3; offered: boolean; kind: TourKind; stepId: string; completed: string[]; skipped: string[]; status: "paused" | "completed" | "dismissed"; updatedAt: number };
 export function initialTourProgress(kind: TourKind): TourProgress {
-  return { version: 2, kind, offered: false, stepId: tourSteps(kind)[0].id, completed: [], skipped: [], status: "paused", updatedAt: 0 };
+  return { version: kind === "preview" ? 3 : 2, kind, offered: false, stepId: tourSteps(kind)[0].id, completed: [], skipped: [], status: "paused", updatedAt: 0 };
 }
 
 export function parseTourProgress(value: string | null, kind: TourKind): TourProgress {
@@ -77,7 +112,7 @@ export function parseTourProgress(value: string | null, kind: TourKind): TourPro
   if (!value || value.length > 20_000) return empty;
   try {
     const p = JSON.parse(value);
-    if (p?.version !== 2 || p.kind !== kind || !["paused", "completed", "dismissed"].includes(p.status)) return empty;
+    if (p?.version !== empty.version || p.kind !== kind || !["paused", "completed", "dismissed"].includes(p.status)) return empty;
     const steps = tourSteps(kind);
     const valid = new Set(steps.map(s => s.id));
     const sanitize = (ids: unknown): string[] => Array.isArray(ids) ? [...new Set(ids.filter((id): id is string => typeof id === "string" && valid.has(id)))] : [];

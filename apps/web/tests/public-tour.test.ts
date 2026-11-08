@@ -10,6 +10,7 @@ test("stored account or old public checkpoints cannot unlock an account action i
 });
 
 test("a public resume keeps its last real stop, without permitting foreign station IDs", () => {
-  const saved = { ...initialTourProgress("preview"), stepId: "feedback", completed: ["circuit", "goal"], skipped: ["community", "code"] };
-  assert.deepEqual(parseTourProgress(JSON.stringify(saved), "preview"), { ...saved, completed: ["circuit"], skipped: ["code"] });
+  const saved = { ...initialTourProgress("preview"), stepId: "guest-explain", completed: ["guest-hardware", "goal"], skipped: ["community", "guest-code"] };
+  assert.deepEqual(parseTourProgress(JSON.stringify(saved), "preview"), { ...saved, completed: ["guest-hardware"], skipped: ["guest-code"] });
+  assert.deepEqual(parseTourProgress(JSON.stringify({ ...saved, version: 2, stepId: "quiz" }), "preview"), initialTourProgress("preview"));
 });
