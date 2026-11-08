@@ -1,272 +1,237 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { Bookmark, Check, Download, FileImage, Search, X } from "lucide-react";
+import { useId, useState, type ReactNode } from "react";
+import { BookOpen, Check, Play } from "lucide-react";
+import { type Circuit, signalKey, simulate } from "../../lib/circuit";
+import { formatTechnicalAnswer, parseTechnicalAnswer } from "../../lib/technical-answer";
+import type { TourExercise } from "../../lib/muxi-tour";
+import { helperTopics, type HelperTopicId } from "../../lib/personal-helper";
+import avatarCatalog from "../../lib/avatar-catalog.json";
 import { AnswerEditor } from "../answer-editor";
 import { BidiText } from "../bidi-text";
-import { proseDirection } from "../../lib/bidi-segments";
-import { prepareAnswerImage } from "../visual-answer";
-import { parseTechnicalAnswer } from "../../lib/technical-answer";
-import { type Circuit, type Kind, type Part } from "../../lib/circuit";
+import { LogicAvatar } from "../wardrobe/logic-avatar";
+import { TourXorTrace } from "./tour-xor-trace";
 import styles from "./tour-exercises.module.css";
 
 const CircuitEditor = dynamic(() => import("../circuit-editor"), { ssr: false });
-
-export type TourExerciseId = "goal" | "library" | "topics" | "reasoning" | "code" | "hints" | "circuit" | "sequential" | "photos" | "feedback" | "followup" | "history" | "interview" | "settings" | "materials" | "mux" | "reports";
+const QuizDemo = dynamic(() => import("./tour-quiz-demo").then(module => module.TourQuizDemo));
 type Lang = "he" | "en";
-type Bilingual = { he: string; en: string };
-const bi = (he: string, en: string): Bilingual => ({ he, en });
+type Localized = { he: string; en: string };
+type DemoProps = { lang: Lang; onAction: (action: string) => void };
+const bi = (he: string, en: string): Localized => ({ he, en });
 
-const titles: Record<TourExerciseId, Bilingual> = {
-  goal: bi("מסלול שמתחיל במטרה שלכם", "Start with your goal"),
-  library: bi("מוצאים את השאלה הנכונה", "Find your next question"),
-  topics: bi("מכירים את הכיוונים, בלי לפתוח כל שאלה", "Explore the subjects at a glance"),
-  reasoning: bi("מראים גם את דרך החשיבה", "Make your reasoning visible"),
-  code: bi("נותנים לרעיון צורה בקוד", "Put your idea into code"),
-  hints: bi("קצת כיוון, בזמן הנכון", "A little direction, when you need it"),
-  circuit: bi("בונים מעגל ורואים אותו עובד", "Build a circuit and see it work"),
-  sequential: bi("כשגם למצב הקודם יש משמעות", "When the previous state matters"),
-  photos: bi("גם פתרון על דף נכנס לתמונה", "Your handwritten work belongs here too"),
-  feedback: bi("מבינים מה משוב יכול להראות", "Explore a feedback example"),
-  followup: bi("מעמיקים עם שאלת המשך", "Go deeper with a follow-up"),
-  history: bi("חוזרים בדיוק למקום שרוצים", "Return to the work that matters"),
-  interview: bi("מתנסים בקצב של ראיון", "Try an interview rhythm"),
-  settings: bi("האתר, בדרך שנוחה לכם", "Make the site comfortable for you"),
-  materials: bi("פותחים שרטוטים וחומרי פתרון", "Explore diagrams and solution resources"),
-  mux: bi("מוקסי מדגים איך מוקס בוחר", "Muxi shows how a multiplexer selects"),
-  reports: bi("עוזרים לנו לשפר את השאלות", "Help us improve questions"),
+const examples = [
+  { title: bi("חיישן לדלת ולחלון", "Door and window sensors"), topic: bi("חומרה", "Hardware"),
+    prompt: bi("הנורה נדלקת כשבדיוק אחד משני החיישנים פעיל. איזה שער מתאים?", "A light turns on when exactly one of two sensors is active. Which gate fits?"),
+    hint: bi("מה צריכה הנורה להציג כששני החיישנים פעילים?", "Should the light be on when both sensors are active?") },
+  { title: bi("האיבר האחרון במערך", "The last array element"), topic: bi("תוכנה", "Software"),
+    prompt: bi("במערך יש ארבעה איברים. באיזה אינדקס צריך לעצור כדי לא לקרוא מחוץ למערך?", "An array contains four elements. Where should a loop stop to stay in bounds?"),
+    hint: bi("בדקו מהו האינדקס הראשון ומהו האחרון.", "Compare the first and last valid indexes.") },
+  { title: bi("מזהים את המטבע הכבד", "Find the heavy coin"), topic: bi("חשיבה והיגיון", "Reasoning"),
+    prompt: bi("אחד משלושה מטבעות כבד יותר. איך מזהים אותו בשקילה אחת במאזניים?", "One of three coins is heavier. How can one weighing on a balance identify it?"),
+    hint: bi("גם כשהמאזניים מאוזנים, למדתם משהו על המטבע שנשאר בחוץ.", "A balance still gives information about the coin you left out.") },
+];
+
+function LibraryDemo({ lang, onAction }: DemoProps) {
+  const [query, setQuery] = useState("");
+  const [selected, select] = useState<number | null>(null);
+  const [hint, setHint] = useState(false);
+  const ids = examples.map((_, index) => index).filter(index =>
+    Object.values(examples[index].title).concat(Object.values(examples[index].topic)).join(" ").toLowerCase().includes(query.trim().toLowerCase()));
+  const example = selected === null ? null : examples[selected];
+  return <>
+    <label className={styles.search}>{lang === "he" ? "חיפוש במאגר לדוגמה" : "Search the sample library"}
+      <input type="search" value={query} placeholder={lang === "he" ? "שם שאלה או נושא" : "Question title or topic"} onChange={e => { setQuery(e.target.value); select(null); setHint(false); }} /></label>
+    <div className={styles.list}>{ids.map(index => <button type="button" key={index} data-muxi-control="library-question" aria-pressed={selected === index} onClick={() => { select(index); setHint(false); onAction("question-open"); }}>
+      <BookOpen size={18} aria-hidden="true" /><strong>{examples[index].title[lang]}</strong><small>{examples[index].topic[lang]}</small>
+    </button>)}</div>
+    {!ids.length && <p role="status">{lang === "he" ? "לא נמצאה שאלה. נסו שם נושא כמו חומרה." : "No match. Try a topic such as Hardware."}</p>}
+    {example && <div className={styles.result} aria-live="polite"><h3>{example.title[lang]}</h3><p>{example.prompt[lang]}</p>
+      <button type="button" aria-expanded={hint} onClick={() => setHint(!hint)}>{lang === "he" ? (hint ? "סגירת הרמז" : "פתיחת רמז") : (hint ? "Close hint" : "Open hint")}</button>{hint && <p>{example.hint[lang]}</p>}</div>}
+    </>;
+}
+
+function xorCircuit(): Circuit {
+  return { version: 1, parts: [
+    { id: "a", kind: "input", label: "A", x: 0, y: 0, count: 2, bits: 1, value: 0 },
+    { id: "b", kind: "input", label: "B", x: 0, y: 190, count: 2, bits: 1, value: 1 },
+    { id: "xor", kind: "xor", label: "XOR", x: 250, y: 80, count: 2, bits: 1, value: 0 },
+    { id: "y", kind: "output", label: "Y", x: 485, y: 80, count: 2, bits: 1, value: 0 },
+  ], wires: [
+    { id: "wa", source: "a", sourcePort: "Q", target: "xor", targetPort: "A0" },
+    { id: "wb", source: "b", sourcePort: "Q", target: "xor", targetPort: "A1" },
+    { id: "wy", source: "xor", sourcePort: "Y", target: "y", targetPort: "D" },
+  ] };
+}
+
+function CircuitDemo({ lang, onAction, guide }: DemoProps & { guide?: ReactNode }) {
+  const [circuit, setCircuit] = useState(xorCircuit);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [originalWiring, setOriginalWiring] = useState(true);
+  const output = simulate(circuit).signals[signalKey("y", "display")];
+  const inputs = circuit.parts.filter(part => (part.id === "a" || part.id === "b") && part.kind === "input");
+  function toggle(id: string) {
+    setCircuit(current => ({ ...current, parts: current.parts.map(part => part.id === id ? { ...part, value: part.value ? 0 : 1 } : part) }));
+    onAction("input-toggled");
+  }
+  return <>
+    <p className={styles.prompt}>{examples[0].prompt[lang]}</p>
+    {!editorOpen && originalWiring && inputs.length === 2 && typeof output === "number" &&
+      <TourXorTrace a={inputs[0].value} b={inputs[1].value} output={output} />}
+    <div className={styles.io} dir="ltr">{inputs.map(part => <button key={part.id} type="button" data-muxi-control={`xor-input-${part.id}`} aria-pressed={Boolean(part.value)} onClick={() => toggle(part.id)}>{part.label} = {part.value}</button>)}
+      <span aria-hidden="true">→</span><output data-muxi-control="xor-output" aria-live="polite">Y = {output ?? "?"}</output>
+    </div>
+    <details onToggle={e => setEditorOpen(e.currentTarget.open)}><summary data-muxi-control="circuit-editor-details">{lang === "he" ? "פתיחת עורך המעגלים" : "Open the circuit editor"}</summary>
+      {editorOpen && <CircuitEditor value={circuit} onChange={updated => { setOriginalWiring(false); setCircuit(updated); }} lang={lang} guide={guide} onActivity={onAction}
+        question={{ title: examples[0].title[lang], content: <p>{examples[0].prompt[lang]}</p> }} />}
+    </details>
+    {editorOpen && <button type="button" onClick={() => { setCircuit(xorCircuit()); setOriginalWiring(true); }}>{lang === "he" ? "איפוס מעגל הדוגמה" : "Reset the sample circuit"}</button>}
+  </>;
+}
+
+const buggyCode = "int sum(const int a[], int n) {\n    int total = 0;\n    for (int i = 0; i <= n; ++i) {\n        total += a[i];\n    }\n    return total;\n}";
+const fixedCode = buggyCode.replace("i <= n", "i < n");
+function stopsBeforeEnd(code: string) {
+  const condition = /\bfor\s*\([^;{}]*;([^;{}]*);/.exec(code)?.[1].replace(/[\s()]/g, "");
+  return !!condition && ["i<n", "i<=n-1", "i!=n", "n>i", "n-1>=i", "n!=i"].includes(condition);
+}
+function CodeDemo({ lang, onAction }: DemoProps) {
+  const [answer, setAnswer] = useState("");
+  const currentCode = parseTechnicalAnswer(answer).code;
+  const corrected = stopsBeforeEnd(currentCode);
+  return <>
+    <p className={styles.prompt}>{examples[1].prompt[lang]}</p>
+    <pre className={styles.code} dir="ltr"><code>{currentCode || buggyCode}</code></pre>
+    <button type="button" data-muxi-control="code-fix" onClick={() => {
+      setAnswer(formatTechnicalAnswer(parseTechnicalAnswer(answer).explanation, fixedCode, "c")); onAction("code-edited");
+    }}>{lang === "he" ? "ניסוי התיקון של מוקסי" : "Try Muxi’s correction"}</button>
+    {corrected && <p className={styles.result} role="status"><BidiText>{lang === "he" ? "כעת תנאי העצירה הוא לפני i = n. במערך של ארבעה איברים האינדקס האחרון הוא 3." : "This condition stops before i = n. For four items, the last valid index is 3."}</BidiText></p>}
+    <AnswerEditor value={answer} onChange={value => {
+      setAnswer(value);
+      if (stopsBeforeEnd(parseTechnicalAnswer(value).code)) onAction("code-edited");
+    }} lang={lang} disabled={false} codeLanguage="c" starterCode={buggyCode} />
+  </>;
+}
+
+const responses = [
+  { answer: bi("אדליק את הנורה אם לפחות חיישן אחד פעיל.", "Turn the light on when at least one sensor is active."),
+    good: bi("זיהית שצריך להתייחס לשתי הכניסות.", "You identified that both inputs matter."),
+    missing: bi("גם כששניהם פעילים, התנאי שלך מדליק את הנורה. הדרישה היא שרק אחד מהם יהיה פעיל.", "When both sensors are active your condition lights the lamp. The requirement is exactly one active sensor."),
+    next: bi("איזה צירוף כניסות מבדיל בין OR לבין XOR?", "Which input combination distinguishes OR from XOR?"),
+    reply: bi("כאשר שני הקלטים הם 1, שער OR מחזיר 1 ושער XOR מחזיר 0.", "With both inputs at 1, OR outputs 1 and XOR outputs 0.") },
+  { answer: bi("אשתמש ב־XOR. שני קלטים שווים מכבים את הנורה ושני קלטים שונים מדליקים אותה.", "Use XOR. Equal inputs turn the light off and different inputs turn it on."),
+    good: bi("חיברת בין תנאי השאלה להתנהגות המדויקת של השער.", "You connected the requirement to the gate’s exact behavior."),
+    missing: bi("אפשר להציג את ארבעת צירופי הכניסות כדי להראות שכיסית כל מקרה.", "List the four input combinations to demonstrate full coverage."),
+    next: bi("מה תראה טבלת האמת של הנורה?", "What would the lamp’s truth table show?"),
+    reply: bi("בצירופים 00 ו־11 הנורה כבויה. בצירופים 01 ו־10 היא דולקת.", "The lamp is off for 00 and 11, and on for 01 and 10.") },
+];
+
+function FeedbackDemo({ lang, onAction }: DemoProps) {
+  const [choice, setChoice] = useState<number | null>(null);
+  const [shown, setShown] = useState(false);
+  const [followup, setFollowup] = useState("");
+  const [reference, setReference] = useState(false);
+  const sample = choice === null ? null : responses[choice];
+  return <>
+    <p className={styles.prompt}>{examples[0].prompt[lang]}</p>
+    <div className={styles.list}>{responses.map((response, index) => <button key={index} type="button" data-muxi-control="feedback-answer" aria-pressed={choice === index}
+      onClick={() => { setChoice(index); setShown(false); setReference(false); setFollowup(""); }}><BidiText>{response.answer[lang]}</BidiText></button>)}</div>
+    <button type="button" className={styles.primary} data-muxi-control="feedback-review" disabled={!sample} onClick={() => { setShown(true); onAction("feedback-reviewed"); }}>{lang === "he" ? "הצגת משוב לדוגמה" : "Show sample feedback"}</button>
+    {sample && shown && <div className={styles.result} aria-live="polite"><h3>{lang === "he" ? "מה היה טוב" : "What worked"}</h3><p>{sample.good[lang]}</p>
+      <h3>{lang === "he" ? "מה אפשר לשפר" : "What to improve"}</h3><p>{sample.missing[lang]}</p>
+      <label><strong>{lang === "he" ? "שאלת המשך" : "Follow-up question"}</strong><BidiText>{sample.next[lang]}</BidiText><textarea value={followup} onChange={e => { setFollowup(e.target.value); setReference(false); }} maxLength={2000}/></label>
+      <button type="button" onClick={() => setReference(true)}>{lang === "he" ? "השוואה לתשובה לדוגמה" : "Compare with a sample answer"}</button>{reference && <p><BidiText>{sample.reply[lang]}</BidiText></p>}</div>}
+  </>;
+}
+
+function InterviewDemo({ lang, onAction }: DemoProps) {
+  const [stage, setStage] = useState<"setup" | "question" | "report">("setup");
+  const [minutes, setMinutes] = useState(20);
+  const [answer, setAnswer] = useState("");
+  const he = lang === "he";
+  const prompt = he ? "איך תבדקו שמערכת שסופרת לחיצות על כפתור סופרת כל לחיצה פעם אחת?" : "How would you check that a button counter counts each press exactly once?";
+  const sample = he ? "אבדוק לחיצה קצרה, לחיצה ממושכת ושתי לחיצות קרובות. אשווה את הספירה לתוצאה הצפויה בכל מקרה." : "I would test a quick press, a held press and two presses close together, then compare each count with the expected result.";
+  if (stage === "setup") return <>
+    <fieldset className={styles.duration}><legend>{he ? "כמה זמן מקצים לראיון?" : "How long would you set aside?"}</legend>
+      {[20, 30, 45].map(n => <button key={n} type="button" aria-pressed={minutes === n} onClick={() => setMinutes(n)}>{n} {he ? "דקות" : "minutes"}</button>)}</fieldset>
+    <p>{he ? "בסבב הזה מוקסי ישאל שאלה אחת, בקצב שלכם." : "In this sample Muxi asks one question, at your pace."}</p>
+    <button type="button" className={styles.primary} data-muxi-control="interview-start" onClick={() => setStage("question")}><Play size={16} />{he ? "התחלת ראיון לדוגמה" : "Start sample interview"}</button>
+  </>;
+  if (stage === "report") return <div className={styles.result} role="status">
+    <h3>{he ? "דוח ראיון לדוגמה" : "Sample interview report"}</h3>
+    <p>{he ? "שאלה אחת נענתה. הנה התשובה שכתבתם:" : "One question answered. Here is your response:"}</p>
+    <blockquote><BidiText>{answer}</BidiText></blockquote>
+    <p>{he ? "נקודה להשוואה: האם התייחסתם ללחיצה אחת ממושכת ולשתי לחיצות ברצף? בראיון אמיתי הדוח מתייחס לתשובות שנתתם." : "A point to compare: did you cover one long press and two consecutive presses? A real report gives feedback on the answers you gave."}</p></div>;
+  return <>
+    <label>{prompt}<textarea data-muxi-control="interview-answer" value={answer} maxLength={2000} onChange={e => setAnswer(e.target.value)} /></label>
+    <div className={styles.actions}><button type="button" data-muxi-control="interview-example" onClick={() => setAnswer(sample)}>{he ? "שימוש בתשובה לדוגמה" : "Use a sample answer"}</button>
+      <button type="button" className={styles.primary} data-muxi-control="interview-finish" disabled={!answer.trim()} onClick={() => { setStage("report"); onAction("interview-finished"); }}>{he ? "סיום והצגת הדוח" : "Finish and view report"}</button></div>
+  </>;
+}
+
+const sampleFriendCode = "A4B03F9C";
+const sampleShirts = avatarCatalog.skins.filter(skin => ["classic", "circuit", "cosmic"].includes(skin.key));
+function CommunityDemo({ lang, onAction }: DemoProps) {
+  const he = lang === "he";
+  const [code, setCode] = useState("");
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
+  const [skin, setSkin] = useState("classic");
+  return <>
+    <div className={styles.friend}><LogicAvatar size={112} config={{ component: "xor", color: "mint", skin }} label={he ? "דמות הדוגמה של נועה" : "Noa’s sample character"} />
+      <div><h3>{he ? "נועה" : "Noa"}</h3><p>{he ? "קוד חברות לדוגמה" : "Sample friend code"} · <bdi>{sampleFriendCode}</bdi></p></div></div>
+    {sent ? <p className={styles.result} role="status"><Check size={18} /> {he ? "בקשת ההדגמה הושלמה כאן בסיור. במשחקים חברים מופיעים ברשימה אחרי שמאשרים את הבקשה." : "You completed a sample request inside the tour. In Games, friends appear on your list once they accept."}</p> :
+      <form className={styles.form} onSubmit={e => { e.preventDefault(); if (code.toUpperCase() !== sampleFriendCode) { setError(true); return; } setSent(true); onAction("friend-previewed"); }}>
+        <label>{he ? "קוד אישי של חבר או חברה" : "Friend’s personal code"}<input maxLength={8} dir="ltr" value={code} autoComplete="off" onChange={e => { setCode(e.target.value.toUpperCase()); setError(false); }} /></label>
+        <div className={styles.actions}><button type="button" data-muxi-control="friend-preview" onClick={() => { setCode(sampleFriendCode); setError(false); }}>{he ? "מילוי הקוד של נועה" : "Use Noa’s code"}</button>
+          <button className={styles.primary} data-muxi-control="friend-add" disabled={!code.trim()}>{he ? "שליחת בקשה לדוגמה" : "Try a friend request"}</button></div>
+        {error && <p role="alert">{he ? "נסו את הקוד שמופיע ליד נועה." : "Use the code shown beside Noa."}</p>}
+      </form>}
+    <details><summary>{he ? "מדידת חולצה מהחנות של מוקסי" : "Try on a shirt from Muxi’s shop"}</summary>
+      <p>{he ? "בחרו חולצה ותראו אותה על נועה. המדידה בסיור חופשית." : "Choose a shirt to see it on Noa. Try-ons in the tour are free."}</p>
+      <div className={styles.actions}>{sampleShirts.map(shirt => <button key={shirt.key} type="button" aria-pressed={skin === shirt.key}
+        data-muxi-control={`shirt-${shirt.key}`} onClick={() => setSkin(shirt.key)}>{shirt.label[lang]}</button>)}</div>
+    </details>
+  </>;
+}
+
+const helpChoices = [
+  { id: "explanation", label: bi("איך כותבים הסבר לפתרון?", "How do I explain a solution?") },
+  { id: "circuit-check", label: bi("איך בודקים מעגל?", "How do I test a circuit?") },
+  { id: "support-question", label: bi("מה עושים אם השאלה לא ברורה?", "What if a question is unclear?") },
+] as const;
+function HelperDemo({ lang, onAction }: DemoProps) {
+  const [topic, setTopic] = useState<HelperTopicId | null>(null);
+  return <>
+    <p>{lang === "he" ? "במה תרצו עזרה?" : "What would you like a hand with?"}</p>
+    <div className={styles.list}>{helpChoices.map(choice => <button key={choice.id} type="button" data-muxi-control="helper-question" aria-pressed={choice.id === topic}
+      onClick={() => { setTopic(choice.id); onAction("helper-used"); }}>{choice.label[lang]}</button>)}</div>
+    {topic && <div className={styles.result} role="status"><h3>{helperTopics[topic].title[lang]}</h3><p><BidiText>{helperTopics[topic].messages[0][lang]}</BidiText></p></div>}
+  </>;
+}
+
+const labels: Record<Exclude<TourExercise, "goal">, Localized> = {
+  library: bi("שאלות לדוגמה", "Sample library"), code: bi("שאלה בתוכנה", "Software question"),
+  circuit: bi("מעגל XOR", "XOR circuit"), feedback: bi("משוב על תשובה לדוגמה", "Sample answer feedback"),
+  quiz: bi("בוחן לפי נושאים", "Topic quiz"), interview: bi("ראיון בכתב", "Written interview"),
+  community: bi("חברות לפי קוד אישי", "Friends by personal code"), helper: bi("צריכים עזרה?", "Need a hand?"),
 };
-
-type ExampleQuestion = {
-  id: string; domain: Bilingual; topic: Bilingual; title: Bilingual;
-  prompt: Bilingual; solution: Bilingual; company: "Intel" | "NVIDIA" | "Apple";
-  future?: boolean;
-};
-// Original teaching examples. Company names only demonstrate filtering and are
-// never interview provenance. No account, assessment or progress is written.
-const questions: ExampleQuestion[] = [
-  { id: "digital", domain: bi("חומרה", "Hardware"), topic: bi("יסודות דיגיטליים", "Digital fundamentals"), title: bi("החלטת רוב משלושה חיישנים", "Three-sensor majority"), company: "Intel", prompt: bi("שלושה חיישנים A, B, C מחזירים 0 או 1. תכננו פלט Y ששווה 1 כאשר לפחות שני חיישנים מחזירים 1. כתבו ביטוי בוליאני ובדקו מקרי קצה.", "Sensors A, B and C each return 0 or 1. Design Y so it is 1 when at least two sensors return 1. Give a Boolean expression and check edge cases."), solution: bi("Y = AB + AC + BC. אף זוג אינו מתקיים ב־000 או בקלט עם 1 יחיד; לפחות זוג אחד מתקיים בכל קלט עם שני 1 או שלושה.", "Y = AB + AC + BC. No pair is true for 000 or a single 1. At least one pair is true with two or three 1s.") },
-  { id: "c", domain: bi("תוכנה", "Software"), topic: bi("תכנות C", "C programming"), title: bi("איפה נגמר המערך?", "Where does the array end?"), company: "Intel", prompt: bi("פונקציה סוכמת n איברים במערך, אבל הלולאה שלה משתמשת ב־i <= n. מצאו את השגיאה, תקנו אותה והסבירו מה קורה כש־n = 0. הניחו שסכום הביניים נכנס ב־int.", "A function sums n array elements using i <= n. Identify and fix the bug, then explain n = 0. Assume each intermediate sum fits in int."), solution: bi("משתמשים ב־i < n כדי לא לגשת ל־a[n]. עבור n = 0 לא קוראים מהמערך ומחזירים 0. זמן O(n), זיכרון נוסף O(1).", "Use i < n to avoid accessing a[n]. At n = 0, read no elements and return 0. Time O(n), extra space O(1).") },
-  { id: "algorithms", domain: bi("תוכנה", "Software"), topic: bi("מבני נתונים ואלגוריתמים", "Data structures & algorithms"), title: bi("שתי רשימות ממוינות", "Two sorted lists"), company: "NVIDIA", prompt: bi("שני מערכים ממוינים מכילים ציוני תרגול. איך תמזגו אותם למערך ממוין אחד בלי למיין מחדש? הסבירו כיצד מטפלים בערכים שווים.", "Two sorted arrays contain practice scores. Merge them into one sorted array without sorting again. Explain how equal values are handled."), solution: bi("שני מצביעים: מעתיקים את הקטן ומקדמים את המצביע שלו. בשוויון אפשר לבחור תמיד משמאל כדי לשמור על יציבות. מעתיקים את השארית. זמן O(n+m).", "Use two pointers, copying the smaller item and advancing its pointer. On ties, taking from the left preserves stability. Append the remainder. Time O(n+m).") },
-  { id: "reasoning", domain: bi("חשיבה", "Reasoning"), topic: bi("שאלות היגיון", "Logic puzzles"), title: bi("הקופסה עם התווית הלא נכונה", "The mislabeled box"), company: "Apple", prompt: bi("שלוש קופסאות מכילות רק עפרונות, רק עטים, או את שניהם. על כל קופסה תווית שגויה. מאיזו קופסה כדאי לשלוף פריט אחד כדי לזהות את כולן?", "Three boxes contain only pencils, only pens, or a mix. Every label is wrong. Which box should you sample once to identify all three?"), solution: bi("שולפים מהקופסה שמסומנת ׳מעורב׳. היא אינה מעורבת ולכן הפריט מזהה את כל תכולתה. משלימים את שתי הקופסאות האחרות לפי האילוץ שכל התוויות שגויות.", "Sample the box labeled mixed. It cannot be mixed, so the item identifies its entire contents. Assign the other boxes using the constraint that every label is wrong.") },
-  { id: "sequential", domain: bi("חומרה", "Hardware"), topic: bi("לוגיקה סדרתית ומכונות מצבים", "Sequential logic & FSMs"), title: bi("גילוי הרצף 101", "Detect the sequence 101"), company: "Intel", prompt: bi("תכננו מכונת מצבים שמעלה פלט במחזור שבו התקבל סוף הרצף 101. מותרת חפיפה: ב־10101 יש שתי התאמות. אילו מצבים צריך לזכור?", "Design an FSM that signals on the final bit of 101. Overlap is allowed: 10101 contains two matches. Which partial matches must the states remember?"), solution: bi("זוכרים: ללא התאמה, התקבל 1, התקבל 10. ממצב 10, קלט 1 מזהה רצף וחוזר למצב ׳התקבל 1׳ כדי לאפשר חפיפה. הגדירו גם איפוס ופלט לפי מודל Moore או Mealy.", "Remember no match, seen 1, and seen 10. From seen 10, an input 1 detects a match and returns to seen 1 to preserve overlap. Specify reset and Moore or Mealy output timing.") },
-  { id: "design", domain: bi("חומרה", "Hardware"), topic: bi("תכנון דיגיטלי ו־HDL", "Digital design & HDL"), title: bi("בחירה בין שני מקורות", "Select between two sources"), company: "NVIDIA", prompt: bi("כתבו תיאור צירופי ל־MUX של 2 כניסות נתונים וביט בחירה S. אילו ערכים צריך להגדיר כדי להימנע מ־latch?", "Describe a combinational 2:1 MUX with select bit S. Which assignments prevent unintended latch inference?"), solution: bi("Y = S ? D1 : D0. מגדירים פלט בכל מסלול של בלוק צירופי; ב־SystemVerilog אפשר להשתמש ב־assign או ב־always_comb עם if/else מלא.", "Y = S ? D1 : D0. Assign the output on every combinational path; use assign or a complete if/else in always_comb in SystemVerilog.") },
-  { id: "projects", domain: bi("ראיון אישי", "Personal interview"), topic: bi("פרויקטים ושאלות התנהגותיות", "Projects & behavioral questions"), title: bi("החלטה ששיניתם בפרויקט", "A project decision you changed"), company: "Apple", prompt: bi("ספרו על החלטה טכנית ששיניתם אחרי מדידה או משוב. מה ניסיתם, מה גיליתם, ומה היה החלק שלכם בהחלטה?", "Describe a technical decision you changed after measurement or feedback. What did you try, what did you learn, and what was your own contribution?"), solution: bi("אין תשובה יחידה. בנו סיפור עם הקשר, אחריות אישית, חלופות, ראיה שהובילה לשינוי ותוצאה. אל תמציאו נתוני שיפור; הסבירו מה עדיין לא נמדד.", "There is no single answer. Cover context, ownership, alternatives, the evidence behind the change, and the outcome. Do not invent improvement metrics; say what remains unmeasured.") },
-  { id: "communication", domain: bi("חומרה", "Hardware"), topic: bi("תקשורת וממשקים", "Communication & interfaces"), title: bi("שולח מהיר ומקבל עסוק", "A fast sender and a busy receiver"), company: "Intel", prompt: bi("בלוק שולח דגימות ובלוק מקבל לא תמיד פנוי. הציעו פרוטוקול valid/ready והסבירו מתי מותר לשנות נתונים ומתי מתבצעת העברה.", "A sender produces samples, but its receiver is not always ready. Propose a valid/ready handshake and explain when data can change and when a transfer happens."), solution: bi("העברה מתבצעת בקצה שעון שבו valid וגם ready גבוהים. כאשר valid=1 ו־ready=0 השולח שומר את הנתון ואת valid עד לקבלה. צריך להגדיר איפוס והאם יש buffer.", "Transfer occurs on a clock edge when both valid and ready are high. With valid=1 and ready=0, the sender holds data and valid until acceptance. Specify reset and buffering.") },
-  { id: "analog", domain: bi("חומרה", "Hardware"), topic: bi("יסודות אנלוגיים — בהמשך", "Analog fundamentals — future topic"), title: bi("מחלק מתח עם עומס", "A loaded voltage divider"), company: "Apple", future: true, prompt: bi("R1 ו־R2 מחלקים מתח Vin. מה משתנה במתח המוצא כאשר מחברים נגד עומס RL במקביל ל־R2? ציינו את ההנחות.", "R1 and R2 form a divider from Vin. What changes when a load RL is connected in parallel with R2? State your assumptions."), solution: bi("מחליפים את הנגד התחתון ב־R2||RL. אז Vout = Vin·(R2||RL)/(R1+R2||RL). עומס סופי מקטין את המוצא ביחס למחלק ללא עומס, בהנחת מקור אידיאלי ונגדים חיוביים.", "Replace the lower resistor by R2||RL. Then Vout = Vin·(R2||RL)/(R1+R2||RL). A finite load lowers the output compared with no load, assuming an ideal source and positive resistances.") },
-];
-const topicActions: Record<string, string> = { digital: "digital", sequential: "fsm", c: "programming", algorithms: "algorithms", reasoning: "reasoning", projects: "behavioral", design: "design", communication: "communication", analog: "analog" };
-const topicGroups = [
-  { id: "hardware", title: bi("חומרה ותכנון דיגיטלי", "Hardware & digital design"), subjects: bi("לוגיקה צירופית, מכונות מצבים, HDL ותקשורת בין בלוקים", "Combinational logic, state machines, HDL and block interfaces"), tools: bi("משרטטים מעגלים, משנים כניסות, מריצים סימולציה, יוצרים טבלאות אמת ובודקים גם שעון ואיפוס.", "Draw circuits, change inputs, run simulations, generate truth tables, and test clock and reset behavior."), focus: bi("דרישות, רוחבי אותות, מקרי קצה והסבר של החלטות התכנון.", "Requirements, signal widths, corner cases and explaining design decisions.") },
-  { id: "software", title: bi("תוכנה ואלגוריתמים", "Software & algorithms"), subjects: bi("תכנות C, מבני נתונים ואלגוריתמים", "C programming, data structures and algorithms"), tools: bi("כותבים בעורך קוד עם צביעת תחביר והשלמות, מוסיפים הסבר ומשווים לפתרון ייחוס. הקוד אינו מורץ כאן.", "Use syntax highlighting and code completion, add reasoning and compare with a reference solution. Code is not executed here."), focus: bi("נכונות, קלט ריק, גבולות, סיבוכיות זמן וזיכרון.", "Correctness, empty input, boundaries, and time and space complexity.") },
-  { id: "reasoning", title: bi("היגיון ופתרון בעיות", "Reasoning & problem solving"), subjects: bi("חידות, הנחות והסקת מסקנות", "Puzzles, assumptions and deduction"), tools: bi("מסבירים את דרך החשיבה, מוסיפים טבלה או נוסחה ומשתמשים ברמזים מדורגים רק כשצריך.", "Explain your reasoning, add a table or formula, and use graduated hints when needed."), focus: bi("איך מצמצמים אפשרויות, בודקים הנחה ומצדיקים כל צעד.", "Narrowing possibilities, testing assumptions and justifying each step.") },
-  { id: "interview", title: bi("פרויקטים וראיון אישי", "Projects & personal interviews"), subjects: bi("ניסיון אישי, החלטות טכניות ושאלות התנהגותיות", "Personal experience, technical decisions and behavioral questions"), tools: bi("מתרגלים ניסוח תשובה ושאלות המשך. בראיון מדומה אפשר לתרגל מבנה וקצב ולעבור על דוח בסיום.", "Practice answers and follow-ups. Mock interviews help you rehearse structure and pacing, then review a report."), focus: bi("אחריות אישית, חלופות, ראיות, תוצאה והצגה ברורה של מה שעשיתם.", "Ownership, alternatives, evidence, results and clearly presenting your contribution.") },
-  { id: "future", title: bi("בהמשך: יסודות אנלוגיים", "Future: analog fundamentals"), subjects: bi("מעגלים בסיסיים ומחלקי מתח — כיוון להרחבה", "Basic circuits and voltage dividers — a possible expansion"), tools: bi("אפשר לראות דוגמה מקורית בספריית ההיכרות. זהו כיוון עתידי, ולא הבטחה למסלול אנלוגי פעיל באתר.", "An original example is available in the introduction library. This is a future direction, not a promise of an active analog track."), focus: bi("הנחות על הרכיבים והמקור, השפעת עומס ובדיקת יחידות.", "Component and source assumptions, load effects and unit checks.") },
-];
-const authoredFeedbackAnswer = bi(
-  "אשתמש בביטוי Y = AB + AC + BC. כל זוג חיישנים שמחזיר 1 מפעיל את המוצא, ולכן יש הכרעת רוב. בדקתי: עבור 000 מתקבל 0, ועבור 110 מתקבל 1.",
-  "I would use Y = AB + AC + BC. Any pair of sensors returning 1 activates the output, giving a majority. I checked 000 gives 0, and 110 gives 1.",
-);
-const feedbackRubric = [
-  { criterion: bi("נכונות הביטוי", "Expression correctness"), points: "40 / 40", reason: bi("הביטוי מכסה בדיוק את שלושת זוגות החיישנים.", "The expression covers all three sensor pairs correctly.") },
-  { criterion: bi("הנמקה", "Reasoning"), points: "20 / 25", reason: bi("הקשר בין זוג פעיל להכרעת רוב מוסבר, אבל ההצדקה לכל סוג קלט קצרה.", "The pair-to-majority link is explained, but the argument across input cases is brief.") },
-  { criterion: bi("בדיקה ומקרי קצה", "Validation & edge cases"), points: "10 / 20", reason: bi("נבדקו שני צירופים בלבד; כדאי להציג גם 111, קלט עם 1 יחיד ואת יתר הצירופים.", "Only two combinations were checked; include 111, a single 1, and the remaining cases.") },
-  { criterion: bi("בהירות ההצגה", "Clarity"), points: "15 / 15", reason: bi("הביטוי, הרעיון ושתי הבדיקות כתובים באופן ברור.", "The expression, approach and two checks are presented clearly.") },
-];
-
-const starterCode = "#include <stddef.h>\n\nint sum_samples(const int *a, size_t n) {\n    int total = 0;\n    for (size_t i = 0; i <= n; ++i) {\n        total += a[i];\n    }\n    return total;\n}";
-const part = (id: string, kind: Kind, label: string, x: number, y: number, value = 0): Part => ({ id, kind, label, x, y, value, count: 2, bits: 1 });
-const wire = (id: string, source: string, sourcePort: string, target: string, targetPort: string) => ({ id, source, sourcePort, target, targetPort });
-function andCircuit(complete = false): Circuit {
-  return { version: 1, parts: [part("a", "input", "A", 0, 0, 1), part("b", "input", "B", 0, 200, 1), part("and", "and", "AND", 260, 90), part("y", "output", "Y", 520, 90)], wires: [wire("a-and", "a", "Q", "and", "A0"), wire("and-y", "and", "Y", "y", "D"), ...(complete ? [wire("b-and", "b", "Q", "and", "A1")] : [])] };
-}
-function sequentialCircuit(): Circuit {
-  return { version: 1, parts: [part("d", "input", "D", 0, 0, 1), part("clk", "clock", "CLK", 0, 170), part("rst", "input", "RST", 0, 340), part("ff", "dff", "DFF", 270, 110), part("q", "output", "Q", 540, 110)], wires: [wire("d-ff", "d", "Q", "ff", "D"), wire("clk-ff", "clk", "Q", "ff", "CLK"), wire("rst-ff", "rst", "Q", "ff", "RST"), wire("ff-q", "ff", "Q", "q", "D")] };
-}
-function muxCircuit(): Circuit {
-  return { version: 1, parts: [part("d0", "input", "D0", 0, 0), part("d1", "input", "D1", 0, 180, 1), part("s", "input", "S", 0, 360), part("mux", "mux", "MUX 2:1", 280, 150), part("y", "output", "Y", 560, 150)], wires: [wire("d0-m", "d0", "Q", "mux", "D0"), wire("d1-m", "d1", "Q", "mux", "D1"), wire("s-m", "s", "Q", "mux", "S"), wire("m-y", "mux", "Y", "y", "D")] };
-}
-function normalized(value: string) {
-  return value.toLocaleLowerCase().replace(/אינטל/g, "intel").replace(/אנבידיה|אנוידיה|נבידיה/g, "nvidia").replace(/אפל/g, "apple").normalize("NFKC").trim();
-}
-
-/** Action contract: goal-saved; library-search/filter, question-open, bookmark;
- * explanation-written, code-copied/edited/language-changed; hint-opened,
- * solution-revealed; circuit-edited/sequential-edited plus CircuitEditor activity;
- * photo-added/removed; feedback-requested/reviewed, followup-answered;
- * history-opened; interview-started/answered/finished;
- * resource-opened/downloaded, mux-selected, self-assessed,
- * report-sent. onAction is only called after the corresponding real interaction.
- */
-export function TourExercises({ exercise, stationId, lang, onAction, guide }: {
-  exercise: TourExerciseId; stationId?: string; lang: Lang; onAction: (action: string) => void; guide?: ReactNode;
+export function TourExercises({ exercise, lang, onAction, stationId, guide }: DemoProps & {
+  exercise: TourExercise; stationId?: string; guide?: ReactNode;
 }) {
-  const t = (he: string, en: string) => lang === "he" ? he : en;
   const id = useId();
-  const [job, setJob] = useState("hardware"), [date, setDate] = useState(""), [minutes, setMinutes] = useState("25"), [goalSaved, setGoalSaved] = useState(false);
-  const [search, setSearch] = useState(""), [topic, setTopic] = useState("all"), [selected, setSelected] = useState(questions[0].id), [bookmarks, setBookmarks] = useState<string[]>([]);
-  const [reasoning, setReasoning] = useState(""), [code, setCode] = useState("");
-  const [hints, setHints] = useState(0), [confirmSolution, setConfirmSolution] = useState(false), [solutionVisible, setSolutionVisible] = useState(false);
-  const [circuit, setCircuit] = useState<Circuit>(() => andCircuit()), [sequential, setSequential] = useState<Circuit>(sequentialCircuit), [mux, setMux] = useState<Circuit>(muxCircuit);
-  const [photo, setPhoto] = useState<{ url: string; name: string } | null>(null), [photoError, setPhotoError] = useState(false), [photoBusy, setPhotoBusy] = useState(false);
-  const photoUrl = useRef<string | null>(null), photoGeneration = useRef(0), mounted = useRef(true);
-  const [topicOverview, setTopicOverview] = useState<string | null>(null);
-  const [feedbackAnswer, setFeedbackAnswer] = useState(""), [feedbackSubmitted, setFeedbackSubmitted] = useState(""), [feedbackVisible, setFeedbackVisible] = useState(false);
-  const [followup, setFollowup] = useState(""), [followupSaved, setFollowupSaved] = useState(false), [followupSubmitted, setFollowupSubmitted] = useState(""), [followupReference, setFollowupReference] = useState(false);
-  const [historyOpen, setHistoryOpen] = useState(false);
-  const [duration, setDuration] = useState("20"), [interviewState, setInterviewState] = useState<"setup" | "active" | "report">("setup"), [interviewAnswer, setInterviewAnswer] = useState(""), [interviewSaved, setInterviewSaved] = useState(false);
-  const [resource, setResource] = useState(false), [confidence, setConfidence] = useState("3"), [selfAssessed, setSelfAssessed] = useState(false), [report, setReport] = useState(""), [reportSent, setReportSent] = useState(false);
-  useEffect(() => { mounted.current = true; return () => { mounted.current = false; photoGeneration.current++; if (photoUrl.current) URL.revokeObjectURL(photoUrl.current); }; }, []);
-  const activeQuestion = questions.find(q => q.id === selected)!;
-  const overview = topicGroups.find(group => group.id === topicOverview);
-  const filtered = questions.filter(q => (topic === "all" || q.id === topic) && normalized([q.title.he, q.title.en, q.topic.he, q.topic.en, q.domain.he, q.domain.en, q.company].join(" ")).includes(normalized(search)));
-  const savePhoto = (blob: Blob, name: string, generation: number) => {
-    if (!mounted.current || generation !== photoGeneration.current) return;
-    if (photoUrl.current) URL.revokeObjectURL(photoUrl.current);
-    const url = URL.createObjectURL(blob); photoUrl.current = url;
-    setPhoto({ url, name }); onAction("photo-added");
-  };
-  async function uploadLocal(file?: File) {
-    if (!file || !mounted.current) return;
-    const generation = ++photoGeneration.current;
-    setPhotoError(false); setPhotoBusy(true);
-    try { savePhoto(await prepareAnswerImage(file), file.name, generation); }
-    catch { if (generation === photoGeneration.current) setPhotoError(true); }
-    finally { if (generation === photoGeneration.current) setPhotoBusy(false); }
-  }
-  async function samplePhoto() {
-    const canvas = document.createElement("canvas"); canvas.width = 1000; canvas.height = 600;
-    const ctx = canvas.getContext("2d"); if (!ctx) { setPhotoError(true); return; }
-    ctx.fillStyle = "#fffdf5"; ctx.fillRect(0, 0, 1000, 600);
-    ctx.strokeStyle = "#d5d7ea"; ctx.lineWidth = 1;
-    for (let y = 70; y < 600; y += 42) { ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(970, y); ctx.stroke(); }
-    ctx.fillStyle = "#35204f"; ctx.font = "italic 34px Georgia, serif";
-    ctx.fillText("Muxi's original practice notes", 60, 65); ctx.fillText("Y = A.B + A.C + B.C", 65, 145);
-    ctx.font = "italic 28px Georgia, serif"; ctx.fillText("000 -> 0     110 -> 1     111 -> 1", 70, 225);
-    ctx.fillText("At least two sensors must be high.", 70, 310); ctx.fillText("Check each of the 8 input combinations.", 70, 395);
-    const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, "image/png"));
-    if (blob) await uploadLocal(new File([blob], "muxi-original-answer.png", { type: "image/png" }));
-    else setPhotoError(true);
-  }
-  function toggleBookmark(questionId: string) {
-    setBookmarks(old => old.includes(questionId) ? old.filter(x => x !== questionId) : [...old, questionId]); onAction("bookmark");
-  }
-  function downloadResource() {
-    const blob = new Blob([`# ${questions[0].title[lang]}\n\n${questions[0].prompt[lang]}\n\n## ${t("פתרון לדוגמה", "Example solution")}\n\n${questions[0].solution[lang]}\n\n${t("דוגמה מקורית לסיור היכרות. אינה נתון התקדמות או דיווח על ראיון בחברה.", "Original introduction example; not account progress or company interview provenance.")}`], { type: "text/markdown;charset=utf-8" });
-    const url = URL.createObjectURL(blob), anchor = document.createElement("a");
-    anchor.href = url; anchor.download = `muxi-example-${lang}.md`; anchor.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000); onAction("resource-downloaded");
-  }
-  const editableCircuit = exercise === "sequential" ? sequential : exercise === "mux" ? mux : circuit;
-  return <section className={styles.root} data-muxi-target={exercise} data-muxi-exercise-station={stationId} dir={lang === "he" ? "rtl" : "ltr"} aria-labelledby={`${id}-heading`}>
-    <header className={styles.header}>
-      <h2 id={`${id}-heading`}>{titles[exercise][lang]}</h2>
-      <p>{t("תרגול היכרות · אפשר להתנסות בחופשיות. הדוגמאות אינן נשמרות בחשבון ואינן משפיעות על ההתקדמות שלכם.", "Introduction practice · Explore freely. These examples are not saved to your account and do not affect your progress.")}</p>
-    </header>
-
-    {exercise === "goal" && <form className={styles.form} onSubmit={e => { e.preventDefault(); setGoalSaved(true); onAction("goal-saved"); }}>
-      <label>{t("לאיזה כיוון מתכוננים?", "What are you preparing for?")}<select data-muxi-control="goal-role" value={job} onChange={e => { setJob(e.target.value); setGoalSaved(false); }}><option value="hardware">{t("חומרה ותכנון דיגיטלי", "Hardware & digital design")}</option><option value="software">{t("תוכנה ותכנות", "Software & programming")}</option></select></label>
-      <div className={styles.twoColumns}><label>{t("מועד ראיון משוער (לא חובה)", "Estimated interview date (optional)")}<input data-muxi-control="goal-date" type="date" value={date} onChange={e => { setDate(e.target.value); setGoalSaved(false); }} /></label><label>{t("כמה דקות ביום?", "Minutes per day")}<select data-muxi-control="goal-minutes" value={minutes} onChange={e => { setMinutes(e.target.value); setGoalSaved(false); }}>{[10, 15, 25, 45, 60].map(n => <option key={n}>{n}</option>)}</select></label></div>
-      <button data-muxi-control="goal-save" className={styles.primary} type="submit">{t("שמירת יעד לדוגמה", "Save example goal")}</button>
-      {goalSaved && <p className={styles.success} role="status"><Check size={18} />{t(`יעד ההיכרות מוכן: ${minutes} דקות ביום.`, `Your introduction goal is ready: ${minutes} minutes a day.`)}</p>}
-    </form>}
-
-    {exercise === "topics" && <div className={styles.stack}>
-      <p className={styles.prompt}>{t("האתר מחבר בין שאלות, כלי פתרון והסבר מקצועי. בחרו כיוון אחד כדי לראות מה מתרגלים ואילו כלים עומדים לרשותכם — אין צורך לפתוח שאלה מכל נושא.", "The site connects questions, solution tools and technical reasoning. Choose one direction to see its subjects and tools — there is no need to open a question in every topic.")}</p>
-      <div className={styles.topicChoices} data-muxi-control="topics-select" role="group" aria-label={t("בחירת כיוון להיכרות", "Choose a subject overview")}>
-        {topicGroups.map(group => <button type="button" key={group.id} data-muxi-control={`topics-${group.id}`} aria-pressed={topicOverview === group.id} onClick={() => { setTopicOverview(group.id); onAction("topics-explored"); }}><strong>{group.title[lang]}</strong><span>{group.subjects[lang]}</span></button>)}
-      </div>
-      {overview ? <section className={styles.topicDetail} aria-live="polite" data-muxi-control="topics-detail"><h3>{overview.title[lang]}</h3><dl><div><dt>{t("איך מתרגלים", "How you practice")}</dt><dd>{overview.tools[lang]}</dd></div><div><dt>{t("על מה שמים דגש", "What to focus on")}</dt><dd>{overview.focus[lang]}</dd></div></dl><p className={styles.note}>{t("אפשר להמשיך עכשיו. מי שרוצה יכול לבחור גם כיוון אחר כאן, ובתרגול האמיתי לבחור שאלות לפי הצורך.", "You can continue now. Explore another direction here if you like, then choose real practice questions when you need them.")}</p></section> : <p className={styles.note}>{t("בחרו את אחד הכיוונים כדי לפתוח את הסקירה שלו.", "Choose a direction to open its overview.")}</p>}
-    </div>}
-
-    {exercise === "library" && <div>
-      <div className={styles.twoColumns}><label className={styles.label}><span><Search size={17} />{t("חיפוש שאלה או חברת דוגמה", "Search questions or example companies")}</span><input data-muxi-control="library-search" type="search" value={search} placeholder={t("נסו Intel, INTEL או אינטל", "Try Intel, INTEL or אינטל")} onChange={e => { setSearch(e.target.value); if (e.target.value.trim()) onAction("library-search"); }} /></label><label className={styles.label}>{t("סינון לפי נושא", "Filter by topic")}<select data-muxi-control="library-filter" value={topic} onChange={e => { setTopic(e.target.value); onAction("library-filter"); }}><option value="all">{t("כל הנושאים", "All topics")}</option>{questions.map(q => <option key={q.id} value={q.id}>{q.topic[lang]}</option>)}</select></label></div>
-      <p className={styles.note}>{t("שמות החברות כאן הם דוגמת סינון בלבד. השאלות מקוריות לסיור, ולא נטען שנשאלו בחברות האלה. במאגר האמיתי מופיעים דיווחי המקור הזמינים.", "Company names here are filtering examples only. These questions are original tour examples, not claims about company interviews. The real library shows available source reports.")}</p>
-      <div className={styles.questionList} aria-label={t("שאלות לדוגמה לפי נושאים", "Example questions by topic")}>
-        {filtered.map(q => <div key={q.id} className={styles.questionRow} data-muxi-question={q.id} data-selected={selected === q.id}>
-          <button data-muxi-control={`question-open-${q.id}`} className={styles.questionButton} onClick={() => { setSelected(q.id); onAction("question-open"); onAction(`topic-${topicActions[q.id]}`); }}><strong dir={proseDirection(q.title[lang])}><BidiText>{q.title[lang]}</BidiText></strong><span>{q.domain[lang]} · {q.topic[lang]} · {q.company} ({t("דוגמת סינון", "filter example")})</span></button>
-          <button data-muxi-control={`question-bookmark-${q.id}`} aria-label={`${t("שמירת שאלה", "Bookmark question")}: ${q.title[lang]}`} aria-pressed={bookmarks.includes(q.id)} onClick={() => toggleBookmark(q.id)}><Bookmark size={18} fill={bookmarks.includes(q.id) ? "currentColor" : "none"} /></button>
-        </div>)}
-        {!filtered.length && <p role="status">{t("לא נמצאה דוגמה מתאימה. נסו לנקות את החיפוש או לבחור בכל הנושאים.", "No matching examples. Clear the search or choose all topics.")}</p>}
-      </div>
-      <article className={styles.detail} aria-live="polite"><h3 dir={proseDirection(activeQuestion.title[lang])}><BidiText>{activeQuestion.title[lang]}</BidiText></h3><p dir={proseDirection(activeQuestion.prompt[lang])}><BidiText>{activeQuestion.prompt[lang]}</BidiText></p>{activeQuestion.future && <p className={styles.note}>{t("נושא עתידי: הדוגמה מציגה את כיוון ההרחבה; אין כאן הבטחה למסלול פעיל במאגר.", "Future topic: this example illustrates a possible expansion, not an active learning track.")}</p>}<details onToggle={e => { if (e.currentTarget.open) onAction("example-solution-opened"); }}><summary data-muxi-control="library-reference">{t("פתרון ההיכרות של השאלה הזאת", "This question's example solution")}</summary><p dir={proseDirection(activeQuestion.solution[lang])}><BidiText>{activeQuestion.solution[lang]}</BidiText></p></details></article>
-    </div>}
-
-    {exercise === "reasoning" && <div className={styles.stack}><p className={styles.prompt} dir={proseDirection(questions[3].prompt[lang])}><BidiText>{questions[3].prompt[lang]}</BidiText></p><p className={styles.note}>{t("כתבו לא רק מאיזו קופסה בוחרים, אלא למה הבחירה מצמצמת את האפשרויות. אפשר להוסיף נוסחה, טבלה או קוד. הכתבה קולית היא בחירה שלכם ותבקש הרשאת מיקרופון רק אם תפעילו אותה.", "Explain why your choice narrows the possibilities. You can add a formula, table or code. Dictation is optional and requests microphone access only when you start it.")}</p><AnswerEditor value={reasoning} onChange={value => { setReasoning(value); if (parseTechnicalAnswer(value).explanation.trim()) onAction("explanation-written"); }} lang={lang} disabled={false} codeLanguage={null} starterCode={null} /><details onToggle={event => { if (event.currentTarget.open) onAction("dictation-explained"); }}><summary data-muxi-control="dictation-help">{t("איך פועלת הכתבה קולית?", "How does voice dictation work?")}</summary><p>{t("הדפדפן ממיר דיבור לטקסט ועשוי להעביר אודיו לשירות ההכתבה שלו. מפעילים במפורש, בוחרים שפה ועוצרים כשמסיימים. הטקסט ניתן לעריכה ואינו נשלח אוטומטית. אין צורך להפעיל מיקרופון כדי להשלים את הסיור.", "Your browser converts speech to text and may send audio to its dictation provider. Start it explicitly, choose a language and stop when finished. You can edit the text; it is never submitted automatically. Microphone access is not needed to complete this tour.")}</p></details></div>}
-
-    {exercise === "code" && <div className={styles.stack} onChangeCapture={event => { const target = event.target; if (target instanceof HTMLSelectElement && ["שפת הקוד", "Code language"].includes(target.getAttribute("aria-label") ?? "")) onAction("code-language-changed"); }}>
-      <p className={styles.prompt} dir={proseDirection(questions[1].prompt[lang])}><BidiText>{questions[1].prompt[lang]}</BidiText></p><pre className={styles.code} dir="ltr"><code>{starterCode}</code></pre>
-      <p className={styles.note} dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("העתיקו את קוד השאלה לעורך, תקנו את תנאי הלולאה והוסיפו הסבר. נסו Ctrl+Space להשלמות ובחרו שפה אחרת כדי לראות את התמיכה בשפות. הקוד אינו מורץ בסיור.", "Copy the question code into the editor, fix the loop condition and explain the change. Try Ctrl+Space for completion and choose another language to explore language support. Code is not executed in this tour.")}</BidiText></p>
-      <AnswerEditor value={code} onChange={value => { const before = parseTechnicalAnswer(code), after = parseTechnicalAnswer(value); setCode(value); if (!before.code && after.code === starterCode) onAction("code-copied"); if (before.language !== after.language && after.language) onAction("code-language-changed"); if (after.code.trim() && after.code !== starterCode) onAction("code-edited"); }} lang={lang} disabled={false} codeLanguage="c" starterCode={starterCode} initiallyShowCode={false} />
-    </div>}
-
-    {exercise === "hints" && <div className={styles.stack}>
-      <p className={styles.prompt} dir={proseDirection(questions[0].prompt[lang])}><BidiText>{questions[0].prompt[lang]}</BidiText></p>
-      <p className={styles.note}>{t("הרמזים מתקדמים מכיוון כללי לביטוי כמעט מלא. שימוש בעזרה נשמר בנפרד מהתשובה, כדי להבחין בין פתרון עצמאי לפתרון בסיוע.", "Hints progress from a general direction to an almost complete expression. Assistance is recorded separately from your answer to distinguish independent work from supported work.")}</p>
-      <ol className={styles.hints}>{[bi("אילו זוגות של חיישנים יכולים להספיק כדי לקבל החלטת רוב?", "Which pairs of sensors are enough to establish a majority?"), bi("כתבו תנאי AND לכל זוג אפשרי. החלטת הרוב מתקיימת כשאחד התנאים נכון.", "Write an AND condition for each possible pair. A majority exists when any one condition is true."), bi("שלושת הזוגות הם AB, AC, BC. חברו את תוצאותיהם בעזרת OR ובדקו גם 111.", "The three pairs are AB, AC and BC. OR their results and also check 111.")].slice(0, hints).map((hint, i) => <li key={i} dir={proseDirection(hint[lang])}><BidiText>{hint[lang]}</BidiText></li>)}</ol>
-      <div className={styles.actions}><button data-muxi-control="hint-next" disabled={hints >= 3} onClick={() => { setHints(n => Math.min(n + 1, 3)); onAction("hint-opened"); }}>{hints >= 3 ? t("כל הרמזים פתוחים", "All hints are open") : t(`פתיחת רמז ${hints + 1} מתוך 3`, `Open hint ${hints + 1} of 3`)}</button><button data-muxi-control="solution-open" onClick={() => setConfirmSolution(true)} disabled={solutionVisible}>{t("צפייה בפתרון", "View solution")}</button></div>
-      <p className={styles.assistance} role="status" dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t(`רמזים שנפתחו: ${hints}/3 · פתרון: ${solutionVisible ? "נחשף" : "טרם נחשף"}`, `Hints opened: ${hints}/3 · solution: ${solutionVisible ? "revealed" : "not revealed"}`)}</BidiText></p>
-      {confirmSolution && !solutionVisible && <div className={styles.confirm}><strong>{t("לפתוח את הפתרון המלא?", "Reveal the full solution?")}</strong><p>{t("אפשר להמשיך לתרגל, אבל הניסיון הזה יהיה מסומן כניסיון אחרי חשיפה לפתרון. בסיור מדובר בדוגמה מקומית בלבד.", "You can keep practicing, but this attempt will be marked as occurring after solution exposure. Here it remains a local tour example.")}</p><div className={styles.actions}><button data-muxi-control="solution-confirm" className={styles.primary} onClick={() => { setSolutionVisible(true); setConfirmSolution(false); onAction("solution-revealed"); }}>{t("כן, הציגו את הפתרון", "Yes, reveal the solution")}</button><button data-muxi-control="solution-cancel" onClick={() => setConfirmSolution(false)}>{t("אמשיך לנסות", "Keep trying")}</button></div></div>}
-      {solutionVisible && <div className={styles.detail}><h3>{t("פתרון לדוגמה", "Example solution")}</h3><p dir={proseDirection(questions[0].solution[lang])}><BidiText>{questions[0].solution[lang]}</BidiText></p></div>}
-    </div>}
-
-    {["circuit", "sequential", "mux"].includes(exercise) && <div className={styles.stack}>
-      <p className={styles.prompt} dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{exercise === "circuit" ? t("חברו את B לכניסה A1 של שער AND. שנו קלט ובדקו את הפלט שמתקבל מיד. אפשר ליצור טבלת אמת לכל הצירופים.", "Connect B to the AND gate's A1 input. Toggle an input and read the live output. Generate a truth table to check every combination.") : exercise === "mux" ? t("D0=0 ו־D1=1. בחרו ברכיב S והחליפו בין 0 ל־1. בדקו מאיזו כניסה Y מקבל את הערך.", "D0=0 and D1=1. Select S and toggle it between 0 and 1. See which input supplies Y.") : t("הפעילו סימולציה. D מתחיל ב־1 ו־Q ב־0. צעד שעון לעלייה דוגם את D. שנו D, בצעו עוד צעדים ובדקו איפוס.", "Run the simulation. D starts at 1 and Q at 0. A rising clock step samples D. Change D, step again, then test reset.")}</BidiText></p>
-      <p className={styles.note}>{t("זה עורך המעגלים האמיתי: הוספת רכיבים, הגדרת מספר כניסות ורוחב ביטים, חיווט, מחיקה, ביטול פעולה, הרחבת הלוח וייצוא. לחיווט נוח בנייד או במקלדת פתחו ׳חיבור חוט בלי גרירה׳ מתחת ללוח. בחרו רכיב ברשימה כדי לערוך את ההגדרות והקלט שלו.", "This is the real circuit editor: add components, set input counts and bus widths, wire, delete, undo, expand and export. On mobile or with a keyboard, use 'Connect pins without dragging' below the canvas. Select a component in the list to edit its settings and input value.")}</p>
-      {exercise === "circuit" && <button data-muxi-control="circuit-prewired" onClick={() => { setCircuit(andCircuit(true)); onAction("circuit-edited"); onAction("circuit-sample-loaded"); }}>{t("טעינת דוגמת AND מחוברת", "Load the wired AND example")}</button>}
-      <div data-muxi-target="circuit-workspace" className={styles.circuit}>
-        <CircuitEditor key={exercise} value={editableCircuit} lang={lang} guide={guide} onActivity={onAction} onChange={next => { if (exercise === "sequential") { setSequential(next); onAction("sequential-edited"); } else if (exercise === "mux") { if (next.parts.find(p => p.id === "s")?.value !== mux.parts.find(p => p.id === "s")?.value) onAction("mux-selected"); setMux(next); } else setCircuit(next); onAction("circuit-edited"); }} question={{ title: titles[exercise][lang], content: <p dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{exercise === "circuit" ? t("AND: חברו B.Q אל AND.A1. Y צריך להיות 1 רק כאשר A וגם B הם 1.", "AND: connect B.Q to AND.A1. Y should be 1 only when both A and B are 1.") : exercise === "mux" ? "Y = S ? D1 : D0" : t("DFF דוגם את D בעליית שעון. RST פעיל ב־1.", "The DFF samples D on a rising edge. RST is active-high.")}</BidiText></p> }} />
-      </div>
-      <p className={styles.note}>{exercise === "sequential" ? t("טבלת אמת צירופית אינה מתאימה למעגל עם זיכרון: הפלט תלוי גם במצב הקודם. הסימולציה כאן לוגית וללא זמני השהיה.", "A combinational truth table cannot describe a memory circuit: its output also depends on prior state. This is zero-delay logic simulation.") : t("טבלת האמת והסימולציה בודקות את ההתנהגות של מה שבניתם; הן אינן מוכיחות שהמעגל עונה לדרישות שאלה כלשהי.", "The truth table and simulation check what you built; they do not prove that it satisfies any particular question's requirements.")}</p>
-    </div>}
-
-    {exercise === "photos" && <div className={styles.stack}>
-      <p>{t("אפשר לצרף צילום קריא של כתב יד או שרטוט. בסיור העיבוד והתצוגה מקומיים בלבד. בתרגול אמיתי התמונה נשמרת באופן פרטי עם התשובה שנשלחת.", "Attach a clear photo of handwritten work or a drawing. Tour processing and previews stay local. In real practice, the image is privately stored with the submitted answer.")}</p>
-      <label className={styles.fileLabel}><FileImage size={20} />{t("בחירת תמונת תשובה מהמכשיר", "Choose an answer image from your device")}<input data-muxi-control="photo-file" type="file" accept="image/png,image/jpeg,image/webp" disabled={photoBusy} onChange={e => { const file = e.target.files?.[0]; e.target.value = ""; void uploadLocal(file); }} /></label>
-      <button data-muxi-control="photo-sample" disabled={photoBusy} onClick={() => void samplePhoto()}>{t("התנסות עם תמונת פתרון מקורית של מוקסי", "Try Muxi's original sample answer image")}</button>
-      <p className={styles.note} dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("JPEG, PNG או WebP עד 10MB. הכינו צילום חד ומואר; העיבוד מסיר מטא־דאטה ומקטין תמונות גדולות.", "JPEG, PNG or WebP up to 10MB. Use a sharp, well-lit photo; processing strips metadata and resizes large images.")}</BidiText></p>
-      {photoBusy && <p role="status">{t("מכינים תצוגה מקדימה…", "Preparing preview…")}</p>}{photoError && <p className={styles.error} role="alert" dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("לא ניתן לפתוח את התמונה. בחרו JPEG, PNG או WebP תקין עד 10MB ונסו שוב.", "Could not open this image. Choose a valid JPEG, PNG or WebP up to 10MB and try again.")}</BidiText></p>}
-      {photo && <figure className={styles.photo}><img src={photo.url} alt={t("תצוגה מקדימה מקומית של תמונת התשובה", "Local preview of your answer image")} /><figcaption><span>{photo.name}</span><button data-muxi-control="photo-remove" onClick={() => { photoGeneration.current++; if (photoUrl.current) URL.revokeObjectURL(photoUrl.current); photoUrl.current = null; setPhoto(null); setPhotoBusy(false); onAction("photo-removed"); }}><X size={17} />{t("הסרת התמונה", "Remove image")}</button></figcaption></figure>}
-    </div>}
-
-    {exercise === "feedback" && <div className={styles.stack}>
-      <p className={styles.prompt} dir={proseDirection(questions[0].prompt[lang])}><BidiText>{questions[0].prompt[lang]}</BidiText></p>
-      <label className={styles.label}>{t("הסבירו את הגישה שלכם", "Explain your approach")}<textarea data-muxi-control="feedback-answer" value={feedbackAnswer} maxLength={4000} onChange={e => { setFeedbackAnswer(e.target.value); setFeedbackVisible(false); }} placeholder={t("למשל: אבדוק אילו זוגות חיישנים פעילים…", "For example: I would check which sensor pairs are active…")} /></label>
-      <button data-muxi-control="feedback-request" className={styles.primary} disabled={!feedbackAnswer.trim()} onClick={() => { setFeedbackSubmitted(feedbackAnswer); setFeedbackVisible(true); onAction("feedback-requested"); }}>{t("קבלת משוב לדוגמה", "Get example feedback")}</button>
-      <p className={styles.note} dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("המשוב והציון בסיור נכתבו מראש עבור תשובת הדגמה קבועה. הם לא נוצרו ב־AI ואינם בודקים את הטקסט שהקלדתם. בתרגול אמיתי ההערכה תלויה בתשובה, בדרישות השאלה ובעזרה שקיבלתם.", "Tour feedback and scoring are authored in advance for a fixed sample answer. They are not AI-generated and do not assess the text you typed. Real assessment considers your answer, question requirements and assistance used.")}</BidiText></p>
-      {feedbackVisible && <>
-        <section className={styles.receipt} data-muxi-control="feedback-receipt" aria-live="polite"><h3>{t("הטיוטה שלכם נשמרה בסיור — ללא בדיקה", "Your tour draft is saved — ungraded")}</h3><blockquote dir={proseDirection(feedbackSubmitted)}><BidiText>{feedbackSubmitted}</BidiText></blockquote><p>{t("לא נבדקה נכונות הטיוטה ולא ניתן לה ציון. הציון בהמשך שייך רק לתשובת ההדגמה המסומנת.", "This draft has not been checked or scored. The score below belongs only to the labeled sample answer.")}</p></section>
-        <article className={styles.detail}><h3>{t("תשובת ההדגמה שעליה ניתן הציון", "The fixed sample answer being scored")}</h3><blockquote className={styles.authoredAnswer} dir={proseDirection(authoredFeedbackAnswer[lang])}><BidiText>{authoredFeedbackAnswer[lang]}</BidiText></blockquote>
-          <section className={styles.sampleGrade} data-muxi-control="feedback-grade" aria-label={t("ציון לדוגמה עבור תשובת ההדגמה בלבד", "Example score for the fixed sample answer only")}><strong><bdi>85 <span>/ 100</span></bdi></strong><div><h4>{t("ציון המחשה לתשובת ההדגמה בלבד", "Illustrative score for the sample answer only")}</h4><p dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("הפתרון נכון, אבל הבדיקה חלקית. זהו הסבר שנכתב מראש, לא הערכת AI של התשובה שלכם.", "The solution is correct, but validation is incomplete. This is an authored explanation, not an AI assessment of your answer.")}</BidiText></p></div></section>
-          <details onToggle={e => { if (e.currentTarget.open) onAction("feedback-reviewed"); }}><summary data-muxi-control="feedback-details">{t("פתיחת פירוט הציון והצעד הבא לדוגמה", "Open the example score breakdown and next step")}</summary><table className={styles.rubric}><caption>{t("איך מורכב ציון ההמחשה: 40 + 20 + 10 + 15 = 85", "How the illustrative score adds up: 40 + 20 + 10 + 15 = 85")}</caption><thead><tr><th scope="col">{t("מדד והסבר", "Criterion and explanation")}</th><th scope="col">{t("נקודות", "Points")}</th></tr></thead><tbody>{feedbackRubric.map(item => <tr key={item.criterion.en}><td><strong dir={proseDirection(item.criterion[lang])}><BidiText>{item.criterion[lang]}</BidiText></strong><p dir={proseDirection(item.reason[lang])}><BidiText>{item.reason[lang]}</BidiText></p></td><td><bdi>{item.points}</bdi></td></tr>)}</tbody></table><p dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("הצעד הבא לתשובת ההדגמה: השלימו טבלת אמת לכל שמונת הצירופים והסבירו מדוע XOR של שלוש כניסות אינו שקול להכרעת רוב.", "Next step for the sample answer: complete all eight truth-table rows and explain why three-input XOR is not equivalent to majority voting.")}</BidiText></p></details>
-        </article>
-      </>}
-    </div>}
-
-    {exercise === "followup" && <form className={styles.form} onSubmit={e => { e.preventDefault(); if (followup.trim()) { setFollowupSubmitted(followup); setFollowupSaved(true); onAction("followup-answered"); } }}>
-      <p className={styles.prompt} dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("אותו מעגל החלטת רוב, אבל עכשיו חיישן C תקוע תמיד על 1. לאיזה ביטוי מצטמצם Y? מה ההשלכה על אמינות ההחלטה?", "In the majority circuit, C is now permanently stuck at 1. What does Y simplify to, and how does this affect reliability?")}</BidiText></p>
-      <label>{t("תשובה לשאלת ההמשך", "Follow-up answer")}<textarea data-muxi-control="followup-answer" maxLength={4000} value={followup} onChange={e => { setFollowup(e.target.value); setFollowupSaved(false); }} /></label>
-      <button data-muxi-control="followup-save" className={styles.primary} disabled={!followup.trim()}>{t("שמירת תשובת היכרות", "Save introduction answer")}</button>
-      {followupSaved && <section className={styles.receipt} data-muxi-control="followup-receipt" aria-live="polite"><h3>{t("התשובה נשמרה בסיור — ללא בדיקה", "Your tour answer is saved — ungraded")}</h3><blockquote dir={proseDirection(followupSubmitted)}><BidiText>{followupSubmitted}</BidiText></blockquote><p>{t("לא נבדקה נכונות התשובה ולא ניתן לה ציון. אפשר לפתוח בנפרד את פתרון הייחוס כדי להשוות בעצמכם.", "Your answer has not been checked or scored. You can open the separate reference solution and compare it yourself.")}</p></section>}
-      <button data-muxi-control="followup-reference" type="button" aria-expanded={followupReference} onClick={() => { setFollowupReference(!followupReference); if (!followupReference) onAction("followup-reference-opened"); }}>{followupReference ? t("הסתרת פתרון הייחוס", "Hide reference solution") : t("פתיחת פתרון ייחוס לדוגמה", "Open example reference solution")}</button>
-      {followupReference && <section className={styles.detail} data-muxi-control="followup-reference-content"><h3>{t("פתרון ייחוס לדוגמה — בנפרד מהתשובה שלכם", "Example reference — separate from your answer")}</h3><p dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("כאשר C=1, מציבים בביטוי המקורי: Y = AB + A + B = A + B. מספיק שחיישן נוסף יחיד יחזיר 1. לכן חיישן שנתקע על 1 עלול לגרום להכרעת רוב שאינה משקפת שני חיישנים תקינים המסכימים ביניהם.", "With C=1, substitute into the original expression: Y = AB + A + B = A + B. One other sensor returning 1 is enough. A stuck-high sensor can therefore produce a majority that does not represent agreement between two healthy sensors.")}</BidiText></p><p className={styles.note}>{t("זהו פתרון שנכתב מראש לשאלת ההדגמה. הוא אינו משוב או אישור נכונות לטקסט שהקלדתם.", "This is an authored reference for the example question. It is not feedback or confirmation that your text is correct.")}</p></section>}
-    </form>}
-
-    {exercise === "history" && <div className={styles.stack}><p>{t("תרגול שמור כולל את התשובה, הרמזים והמשוב. כאן נפתח ניסיון מקומי לדוגמה.", "A saved attempt includes the answer, hints and feedback. Here you can open a local sample attempt.")}</p><div className={styles.historyRow}><div><strong dir={proseDirection(questions[0].title[lang])}><BidiText>{questions[0].title[lang]}</BidiText></strong><p>{t("ניסיון היכרות · רמז אחד · תשובה ופתרון", "Introduction attempt · one hint · answer and solution")}</p></div><button data-muxi-control="history-open" onClick={() => { setHistoryOpen(!historyOpen); onAction("history-opened"); }}>{historyOpen ? t("סגירת הניסיון", "Close attempt") : t("פתיחת הניסיון", "Open attempt")}</button><button data-muxi-control="history-bookmark" aria-pressed={bookmarks.includes("history")} onClick={() => toggleBookmark("history")}><Bookmark size={17} />{t("שמירה לחזרה", "Bookmark for later")}</button></div>{historyOpen && <article className={styles.detail}><h3>{t("התשובה לדוגמה", "Sample answer")}</h3><p dir={proseDirection(questions[0].solution[lang])}><BidiText>{questions[0].solution[lang]}</BidiText></p><p className={styles.assistance}>{t("עזרה שנחשפה: רמז אחד. זהו ניסיון היכרות, לא תיעוד אישי שלכם.", "Assistance: one hint. This is a sample attempt, not your personal record.")}</p></article>}</div>}
-
-
-    {exercise === "interview" && <div className={styles.stack}>
-      {interviewState === "setup" && <><p dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("מתנסים במבנה של ראיון: בחירת משך, קריאת שאלה, כתיבה וסיום עם דוח. בסיור לא ממתינים לשעון ואין הערכת AI או שינוי של ההיסטוריה האישית.", "Try the interview structure: choose a duration, read a question, answer, and finish with a report. The tour needs no timer wait, makes no AI assessment and does not change personal history.")}</BidiText></p><label className={styles.label}>{t("משך הראיון לדוגמה", "Example interview duration")}<select data-muxi-control="interview-duration" value={duration} onChange={e => setDuration(e.target.value)}>{[20, 30, 45].map(n => <option key={n} value={n}>{n} {t("דקות", "minutes")}</option>)}</select></label><button data-muxi-control="interview-start" className={styles.primary} onClick={() => { setInterviewState("active"); onAction("interview-started"); }}>{t("התחלת ראיון היכרות", "Start introduction interview")}</button></>}
-      {interviewState === "active" && <><p className={styles.assistance} dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t(`ראיון היכרות · ${duration} דקות נבחרו · אפשר לסיים בכל רגע`, `Introduction interview · ${duration} minutes selected · finish at any time`)}</BidiText></p><h3 dir={proseDirection(questions[7].title[lang])}><BidiText>{questions[7].title[lang]}</BidiText></h3><p className={styles.prompt} dir={proseDirection(questions[7].prompt[lang])}><BidiText>{questions[7].prompt[lang]}</BidiText></p><label className={styles.label}>{t("תשובת הראיון", "Interview answer")}<textarea data-muxi-control="interview-answer" maxLength={5000} value={interviewAnswer} onChange={e => { setInterviewAnswer(e.target.value); setInterviewSaved(false); }} /></label><div className={styles.actions}><button data-muxi-control="interview-submit" className={styles.primary} disabled={!interviewAnswer.trim()} onClick={() => { setInterviewSaved(true); onAction("interview-answered"); }}>{t("שליחת התשובה לדוגמה", "Submit example answer")}</button><button data-muxi-control="interview-finish" onClick={() => { setInterviewState("report"); onAction("interview-finished"); }}>{t("סיום ופתיחת דוח היכרות", "Finish and open introduction report")}</button></div>{interviewSaved && <p className={styles.success} role="status">{t("התשובה נשמרה בתוך סיור ההיכרות.", "Your answer is saved within this introduction.")}</p>}</>}
-      {interviewState === "report" && <article className={styles.detail}><h3>{t("דוח ראיון היכרות", "Introduction interview report")}</h3><p>{interviewSaved ? t("נענתה שאלה אחת. אין ציון מקצועי: הסיור שומר טקסט בלבד ולא בודק נכונות.", "One question was answered. No technical score is assigned: the tour stores text without assessing correctness.") : t("הראיון הסתיים בלי שליחת תשובה. אפשר להתחיל שוב ולהתנסות; אין כאן הערכת מיומנות.", "The interview ended without a submitted answer. Restart to try it; no skill assessment has been made.")}</p>{interviewSaved && <blockquote dir={proseDirection(interviewAnswer)}><BidiText>{interviewAnswer}</BidiText></blockquote>}<button data-muxi-control="interview-restart" onClick={() => { setInterviewState("setup"); setInterviewSaved(false); }}>{t("התנסות בראיון נוסף", "Try another introduction interview")}</button></article>}
-    </div>}
-
-    {exercise === "materials" && <div className={styles.stack}><p>{t("שאלה יכולה לכלול שרטוטים, קוד וחומרי עזר, ולא רק טקסט. פתחו את שרטוט הדוגמה ושמרו עותק של השאלה והפתרון.", "Questions can include diagrams, code and reference material. Open this example diagram, then save a copy of the question and solution.")}</p><button data-muxi-control="materials-open" aria-expanded={resource} onClick={() => { setResource(!resource); onAction("resource-opened"); }}>{resource ? t("סגירת השרטוט", "Close diagram") : t("פתיחת שרטוט השאלה", "Open question diagram")}</button>{resource && <figure className={styles.diagram}><svg viewBox="0 0 600 240" role="img" aria-label={t("שלושה חיישנים נכנסים למעגל החלטת רוב עם פלט Y", "Three sensors feed a majority block with output Y")}><g fill="none" stroke="currentColor" strokeWidth="2"><rect x="190" y="50" width="220" height="145" rx="8" /><path d="M55 75H190M55 120H190M55 165H190M410 120H545" /></g><g fill="currentColor" fontFamily="sans-serif" fontSize="22" textAnchor="middle"><text x="35" y="83">A</text><text x="35" y="128">B</text><text x="35" y="173">C</text><text x="565" y="128">Y</text><text x="300" y="112">MAJORITY</text><text x="300" y="148">AB + AC + BC</text></g></svg><figcaption>{t("שרטוט מקורי לסיור. בתרגול האמיתי חומרי המקור הזמינים מוצגים לצד השאלה והפתרון.", "Original tour diagram. In real practice, available source resources appear with the question and solution.")}</figcaption></figure>}<button data-muxi-control="materials-download" onClick={downloadResource}><Download size={17} />{t("הורדת השאלה והפתרון לדוגמה", "Download example question and solution")}</button></div>}
-
-
-    {exercise === "reports" && <div className={styles.stack}><p>{t("דיווח על טעות והערכה עצמית מוסיפים הקשר, אך לא מחליפים הערכה מקצועית. כאן אפשר להתנסות בלי לשלוח דיווח אמיתי.", "Problem reports and self-assessment add context without replacing technical evaluation. Try them here without sending a real report.")}</p><label className={styles.label}>{t("כמה בטוחים בפתרון?", "How confident are you in your solution?")}<select data-muxi-control="confidence-select" value={confidence} onChange={e => { setConfidence(e.target.value); setSelfAssessed(false); }}>{[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n} / 5</option>)}</select></label><button data-muxi-control="confidence-save" onClick={() => { setSelfAssessed(true); onAction("self-assessed"); }}>{t("שמירת הערכה עצמית לדוגמה", "Save example self-assessment")}</button>{selfAssessed && <p className={styles.success} role="status" dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t(`הביטחון העצמי בדוגמה: ${confidence}/5. זה אינו ציון נכונות.`, `Example confidence: ${confidence}/5. This is not a correctness score.`)}</BidiText></p>}<label className={styles.label}>{t("מה כדאי לתקן בשאלה?", "What should be corrected in the question?")}<textarea data-muxi-control="report-answer" value={report} maxLength={1000} onChange={e => { setReport(e.target.value); setReportSent(false); }} placeholder={t("למשל: חסר תנאי לגבי איפוס…", "For example: the reset condition is missing…")} /></label><button data-muxi-control="report-submit" disabled={!report.trim()} onClick={() => { setReportSent(true); onAction("report-sent"); }}>{t("שמירת דיווח מקומי לדוגמה", "Save a local example report")}</button>{reportSent && <p className={styles.success} role="status">{t("הדיווח הודגם בסיור. שום הודעה לא נשלחה לצוות.", "Report demonstrated. No message has been sent to the team.")}</p>}</div>}
-
-    {exercise === "settings" && <div className={styles.stack}><p>{t("נסו את כפתורי השפה והבהירות בכותרת הסיור. הם משנים את האתר עצמו; בחירת הבהירות נשמרת במכשיר. התוכן שכתבתם בסיור נשאר זמין בזמן המעבר.", "Try the language and theme controls in the tour header. They change the site itself; theme preference is saved on this device. Your tour drafts stay available as you switch.")}</p><ul className={styles.instructions}><li dir={lang === "he" ? "rtl" : "ltr"}><BidiText>{t("במקלדת: Tab עובר בין פקדים ו־Enter מפעיל אותם. בתוך עורך קוד: Esc ואז Tab יוצאים ממנו.", "Keyboard: Tab moves between controls and Enter activates them. Inside the code editor, Esc then Tab leaves the editor.")}</BidiText></li><li>{t("בנייד: אפשר לחווט בעזרת רשימות במקום לגרור. הרחבת הלוח מפנה יותר מקום למעגל.", "Mobile: wire using lists instead of dragging. Expanding the canvas gives your circuit more room.")}</li><li>{t("אפשר לצאת מהסיור בכל רגע, לחזור לבחירת המסלול או לפתוח אותו שוב מכפתור ׳סיור באתר׳.", "Leave at any time, return to tour selection or reopen it from the 'Site tour' button.")}</li><li>{t("בסיום תחזרו לעבודה האמיתית שלכם. דוגמאות הסיור אינן נשלחות לבדיקה ולא מתווספות למכסה או להיסטוריה.", "At the end, return to your real work. Tour examples do not submit assessments or add to quota or history.")}</li></ul></div>}
+  if (exercise === "goal") return null; // The tour host renders the account's real goal.
+  const props = { lang, onAction };
+  return <section className={styles.root} dir={lang === "he" ? "rtl" : "ltr"} data-muxi-target={exercise} data-muxi-exercise-station={stationId} aria-labelledby={id}>
+    <h2 id={id}><BidiText>{labels[exercise][lang]}</BidiText></h2>
+    {exercise === "library" && <LibraryDemo {...props} />}
+    {exercise === "circuit" && <CircuitDemo {...props} guide={guide} />}
+    {exercise === "code" && <CodeDemo {...props} />}
+    {exercise === "feedback" && <FeedbackDemo {...props} />}
+    {exercise === "quiz" && <QuizDemo {...props} />}
+    {exercise === "interview" && <InterviewDemo {...props} />}
+    {exercise === "community" && <CommunityDemo {...props} />}
+    {exercise === "helper" && <HelperDemo {...props} />}
   </section>;
 }

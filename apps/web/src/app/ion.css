@@ -1008,7 +1008,6 @@ button.primary:active {
   button:hover:not(:active):not(.primary):not(.active) { background-color: var(--surface); }
 }
 /* Explicit destinations stay clear of the fixed header when opened by mouse or keyboard. */
-#goal-title,
 #reference-solution {
   scroll-margin-block-start: 110px;
 }

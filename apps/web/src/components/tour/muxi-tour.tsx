@@ -5,22 +5,22 @@ import { BidiText } from "../bidi-text";
 import { proseDirection } from "../../lib/bidi-segments";
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { ArrowLeft, ArrowRight, ChevronDown, CircleHelp, Compass, Pause, Play, RotateCcw, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, CircleHelp, List, Pause, RotateCcw, X } from "lucide-react";
 import { MuxiMascot } from "./muxi-mascot";
 import { MuxiGuidance } from "./muxi-guidance";
 import { lockBodyScroll } from "../../lib/body-scroll-lock";
 import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
 import { UserInboxButton } from "../user-inbox";
 import { checkpoint, initialTourProgress, parseTourProgress, stationReady, tourKey, tourSteps, type TourKind, type TourProgress } from "../../lib/muxi-tour";
-import { tourKindForSurface, tourProgressForSurface, tourStepsForSurface } from "../../app/tour/policy";
 import styles from "./muxi-tour.module.css";
 
 const TourExercises = dynamic(() => import("./tour-exercises").then((m) => m.TourExercises), {
   ssr: false,
   loading: () => <p role="status">טוענים את כלי ההיכרות… / Loading introduction tools…</p>,
 });
+const TourAccountGoal = dynamic(() => import("./tour-account-goal").then(module => module.TourAccountGoal));
 type Lang = "he" | "en";
-const read = (key: string) => { try { return parseTourProgress(localStorage.getItem(key)); } catch { return initialTourProgress(); } };
+const read = (key: string, kind: TourKind) => { try { return parseTourProgress(localStorage.getItem(key), kind); } catch { return initialTourProgress(kind); } };
 const write = (key: string, value: TourProgress) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* Tours still work when storage is disabled. */ } };
 
 function ExpandedCoach({ children, lang, onExit }: { children: ReactNode; lang: Lang; onExit: () => void }) {
@@ -35,6 +35,19 @@ function ExpandedCoach({ children, lang, onExit }: { children: ReactNode; lang: 
   </section>;
 }
 
+function MuxiScene({ finished = false }: { finished?: boolean }) {
+  return <div className={styles.scene} aria-hidden="true">
+    <svg className={styles.traces} viewBox="0 0 400 200" fill="none">
+      <g>
+        <path d="M4 32h69l29 29h65M4 88h163M4 127h73l14-14h76M4 172h65l43-43h55M230 96h49l24-24h93" />
+      </g>
+      <path className={styles.pulse} pathLength="1" d="M4 127h73l14-14h76" />
+      <path className={styles.outputPulse} pathLength="1" d="M230 96h49l24-24h93" />
+    </svg>
+    <MuxiMascot pose={finished ? "celebrate" : "wave"} className={styles.welcomeMascot} />
+  </div>;
+}
+
 /** The production workspace remains mounted while this locally scoped tour is open. */
 export function MuxiTourLauncher({ userId, lang, controls }: { userId: string; lang: Lang; controls: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -47,10 +60,18 @@ export function MuxiTourLauncher({ userId, lang, controls }: { userId: string; l
   </>;
 }
 
-export function MuxiTour({ lang, userId, controls, onClose, standalone = false }: { lang: Lang; userId?: string; controls: ReactNode; onClose: () => void; standalone?: boolean }) {
+type TourProps = { lang: Lang; userId?: string; controls: ReactNode; onClose: () => void; standalone?: boolean };
+
+export function MuxiTour(props: TourProps) {
+  const kind: TourKind = props.standalone || !props.userId ? "preview" : "member";
+  return <TourSession key={kind === "member" ? props.userId : "preview"} {...props} kind={kind} />;
+}
+
+function TourSession({ lang, userId, controls, onClose, standalone = false, kind }: TourProps & { kind: TourKind }) {
   const t = (he: string, en: string) => lang === "he" ? he : en;
-  const [progress, setProgress] = useState<TourProgress>(() => tourProgressForSurface(initialTourProgress(), standalone));
-  const [screen, setScreen] = useState<"choose" | "tour" | "finish">("choose");
+  const preview = kind === "preview";
+  const [progress, setProgress] = useState<TourProgress>(() => initialTourProgress(kind));
+  const [screen, setScreen] = useState<"welcome" | "tour" | "finish">("welcome");
   const [stationActions, setStationActions] = useState<Record<string, string[]>>({});
   const [storageReady, setStorageReady] = useState(false);
   const [outline, setOutline] = useState(false);
@@ -59,13 +80,12 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
   const closeRef = useRef(onClose); closeRef.current = onClose;
   const previousFocus = useRef<HTMLElement | null>(null);
   const progressRef = useRef(progress); progressRef.current = progress;
-  const key = tourKey(userId), titleId = useId();
-  const steps = tourStepsForSurface(progress.kind, standalone);
+  const key = tourKey(preview ? undefined : userId), titleId = useId(), outlineId = useId();
+  const steps = tourSteps(kind);
   const index = Math.max(0, steps.findIndex((s) => s.id === progress.stepId));
   const step = steps[index];
   const actions = stationActions[step.id] ?? [];
   const ready = progress.completed.includes(step.id) || stationReady(step, actions);
-  const latestLang = useRef(lang);
   useEffect(() => {
     const media = window.matchMedia("(max-width: 760px)");
     const update = () => setMobile(media.matches);
@@ -74,8 +94,8 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
   }, []);
 
   useEffect(() => {
-    setProgress(tourProgressForSurface(read(key), standalone)); setStorageReady(true);
-  }, [key, standalone]);
+    setProgress(read(key, kind)); setStorageReady(true);
+  }, [key, kind]);
   useEffect(() => {
     if (storageReady) write(key, progress);
   }, [key, progress, storageReady]);
@@ -106,21 +126,13 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
   }, [step.id]);
   useEffect(() => {
     if (screen !== "tour" || !stationReady(step, actions) || progress.completed.includes(step.id)) return;
-    setProgress((old) => checkpoint(old, step, "completed", step));
+    setProgress((old) => old.stepId === step.id ? checkpoint(old, step, "completed", step) : old);
   }, [actions, step, screen, progress.completed]);
-  useEffect(() => {
-    const observer = new MutationObserver(() => onAction("theme-changed"));
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-    return () => observer.disconnect();
-  }, [onAction]);
-  useEffect(() => {
-    if (latestLang.current !== lang) { latestLang.current = lang; onAction("language-changed"); }
-  }, [lang, onAction]);
   const close = useCallback(() => {
     const current = progressRef.current;
-    write(key, { ...current, offered: true, status: current.status === "completed" ? "completed" : screen === "choose" && !current.completed.length ? "dismissed" : "paused", updatedAt: Date.now() });
+    if (storageReady && screen === "tour") write(key, { ...current, status: "paused", updatedAt: Date.now() });
     closeRef.current();
-  }, [key, screen]);
+  }, [key, screen, storageReady]);
   useEffect(() => {
     const escape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && !event.defaultPrevented && !document.querySelector("dialog:modal") && !(event.target instanceof Element && event.target.closest(".cm-editor"))) { event.preventDefault(); close(); }
@@ -128,9 +140,8 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
     document.addEventListener("keydown", escape);
     return () => document.removeEventListener("keydown", escape);
   }, [close]);
-  function start(kind: TourKind, resume = false) {
-    const allowedKind = tourKindForSurface(kind, standalone);
-    setProgress((old) => resume ? { ...tourProgressForSurface(old, standalone), offered: true, status: "paused" } : { ...initialTourProgress(), offered: true, kind: allowedKind, stepId: tourStepsForSurface(allowedKind, standalone)[0].id });
+  function start(resume = false) {
+    setProgress((old) => ({ ...(resume ? old : initialTourProgress(kind)), offered: true, status: "paused", updatedAt: Date.now() }));
     if (!resume) setStationActions({});
     setScreen("tour"); setOutline(false);
   }
@@ -140,32 +151,31 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
     if (index === steps.length - 1) setScreen("finish");
   }
   function jump(stepId: string) {
-    setProgress((old) => ({ ...old, stepId, status: "paused" }));
+    setProgress((old) => ({ ...old, stepId, status: "paused", updatedAt: Date.now() }));
     setOutline(false);
   }
-  const chapters = steps.filter((s, i) => i === 0 || s.chapter.he !== steps[i - 1].chapter.he);
+  const canResume = progress.offered && progress.status === "paused";
   const BackArrow = lang === "he" ? ArrowRight : ArrowLeft;
   const NextArrow = lang === "he" ? ArrowLeft : ArrowRight;
-  const guide = <aside className={styles.coach} aria-label={t("ההדרכה של מוקסי", "Muxi's guidance")} data-muxi-coach>
+  const renderGuide = (inDialog = false) => <aside className={styles.coach} aria-label={t("ההדרכה של מוקסי", "Muxi's guidance")} data-muxi-coach>
     <div className={styles.coachIdentity}>
-      <MuxiMascot pose={ready ? "celebrate" : "point"} pointDirection={mobile ? "down" : lang === "he" ? "left" : "right"} label={t("מוקסי, מוקס קטן שמלווה אתכם", "Muxi, your little multiplexer guide")} className={styles.mascot} />
-      <div><strong>{t("מוקסי כאן איתכם", "Muxi is here with you")}</strong><span><BidiText>{step.chapter[lang]}</BidiText></span></div>
+      <MuxiMascot key={step.id} pose={ready ? "celebrate" : "point"} pointDirection={mobile ? "down" : lang === "he" ? "left" : "right"} className={styles.mascot} />
+      <div><strong>{t("מוקסי", "Muxi")}</strong><span><BidiText>{step.chapter[lang]}</BidiText></span></div>
     </div>
     <p className={styles.stationCount}>{t("תחנה", "Station")} <bdi dir="ltr">{index + 1} / {steps.length}</bdi></p>
     <progress className={styles.progress} max={steps.length} value={index + 1} aria-label={t("מיקום בסיור", "Tour position")} />
-    <h2 ref={heading} tabIndex={-1} className={styles.coachTitle} dir={proseDirection(step.title[lang], lang === "he" ? "rtl" : "ltr")}><BidiText>{step.title[lang]}</BidiText></h2>
+    <h2 ref={inDialog ? undefined : heading} tabIndex={-1} className={styles.coachTitle} dir={proseDirection(step.title[lang], lang === "he" ? "rtl" : "ltr")}><BidiText>{step.title[lang]}</BidiText></h2>
     <p dir={proseDirection(step.body[lang], lang === "he" ? "rtl" : "ltr")}><BidiText>{step.body[lang]}</BidiText></p>
     <div className={styles.task} role="status" aria-live="polite">
-      <div><strong>{ready ? t("הפעולה הושלמה", "Action completed") : t("עכשיו תורכם", "Your turn")}</strong><p><BidiText>{ready ? ["explanation", "code", "feedback", "feedback-details", "followup", "interview-answer"].includes(step.id) ? t("השלמתם את פעולת ההיכרות. זה אינו אישור לנכונות התשובה.", "You completed the introduction action. This does not confirm that an answer is correct.") : t("סיימתם את הפעולה. אפשר להמשיך לתחנה הבאה או להתנסות עוד.", "The action is complete. Continue to the next station or explore a little more.") : step.task[lang]}</BidiText></p></div>
+      {ready && <Check size={18} aria-hidden="true" />}
+      <div><strong>{ready ? t("התחנה הושלמה", "Stop complete") : t("עכשיו תורכם", "Your turn")}</strong><p><BidiText>{ready ? step.id === "goal" ? t("היעד שלכם מוכן באזור האישי.", "Your goal is ready in your personal area.") : t("אפשר להתנסות עוד או להמשיך.", "Keep experimenting, or continue when you’re ready.") : step.task[lang]}</BidiText></p></div>
     </div>
     <div className={styles.stepActions}>
       <button type="button" onClick={() => index > 0 && jump(steps[index - 1].id)} disabled={index === 0} aria-label={t("התחנה הקודמת", "Previous station")}><BackArrow size={18} /></button>
-      <button type="button" className="primary" onClick={() => advance()} disabled={!ready}>{index === steps.length - 1 ? t("סיום הסיור", "Finish tour") : t("ממשיכים", "Continue")}<NextArrow size={17} /></button>
+      <button type="button" className="primary" data-muxi-next onClick={() => advance()} disabled={!ready}>{index === steps.length - 1 ? t("סיום הסיור", "Finish tour") : t("ממשיכים", "Continue")}<NextArrow size={17} /></button>
     </div>
-    {!ready && <p className={styles.hint}>{t("בצעו את הפעולה המסומנת כדי להמשיך, או דלגו על התחנה.", "Try the highlighted action to continue, or skip this station.")}</p>}
     <button type="button" className={styles.quiet} onClick={() => advance(true)}>{t("דלגו על התחנה הזאת", "Skip this station")}</button>
     <div className={styles.coachFooter}>
-      <button type="button" onClick={() => setScreen("choose")}><Compass size={15} />{standalone ? t("בחזרה לפתיחת הסיור", "Back to the tour introduction") : t("בחירת סיור אחר", "Choose another tour")}</button>
       <button type="button" onClick={close}><Pause size={15} />{t("יציאה ושמירת המקום", "Exit and save my place")}</button>
     </div>
   </aside>;
@@ -177,47 +187,79 @@ export function MuxiTour({ lang, userId, controls, onClose, standalone = false }
       else if (!event.shiftKey && document.activeElement === items.at(-1)) { event.preventDefault(); items[0]?.focus(); }
     }}>
     <header className={styles.header}>
-      <div className={styles.brand}><span dir="ltr">jobrun</span><span className={styles.brandDivider} /><h1 id={titleId}>{standalone ? t("סיור קצר עם מוקסי", "Short tour with Muxi") : t("הסיורים של מוקסי", "Muxi's guided tours")}</h1></div>
-      <div className={styles.headerActions}><UserInboxButton lang={lang} />{controls}<button type="button" className={styles.reportHelp} aria-label={t("נתקלתם בבעיה?", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={17} aria-hidden="true" />{t("דיווח", "Report")}</button><button type="button" className={styles.exit} onClick={close}><X size={17} />{t("דילוג ויציאה מהסיור", "Skip and exit tour")}</button></div>
-    </header>
-    {screen === "choose" ? <main className={styles.welcome}>
-      <div className={styles.welcomeIntro}><MuxiMascot pose="wave" label={t("מוקסי מנופף לשלום", "Muxi waves hello")} className={styles.welcomeMascot} /><div><h2 ref={heading} tabIndex={-1}>{t("נעים להכיר, אני מוקסי.", "Hi, I'm Muxi.")}</h2><p>{t("אני מוקס קטן עם משימה גדולה: לעזור לכם להפוך את כל הכלים כאן ללמידה שעובדת בשבילכם.", "A little multiplexer with a big job: helping you make these tools work for your learning.")}</p></div></div>
-      <p className={styles.welcomeLead}>{standalone
-        ? t("מכירים את JobRun בסיור קצר לפני שנרשמים. מוקסי מדגים את הכלים ואתם מתנסים בעצמכם, ללא הרשמה. בכל רגע אפשר לדלג או לעצור.", "Explore JobRun with a short tour before signing up. Muxi demonstrates the tools and you try them yourself, with no account needed. Skip or pause at any time.")
-        : t("איך תרצו להכיר את JobRun? בשני המסלולים מתנסים בידיים, ובכל רגע אפשר לדלג או לעצור.", "How would you like to explore JobRun? Both tours are hands-on, and you can skip or pause at any time.")}</p>
-      <div className={styles.choices} style={standalone ? { gridTemplateColumns: "minmax(0, 1fr)" } : undefined}>
-        {!standalone && <section className={styles.fullChoice}>
-          <div className={styles.choiceTitle}><h3>{t("נכנסים לעומק", "The full experience")}</h3><span>{t("מומלץ", "Recommended")}</span></div>
-          <p>{t("סיור מעמיק שמראה כמה אפשר לעשות כאן: סקירת הנושאים, כתיבה וקוד, מעגלים וסימולציה, טבלאות אמת, רמזים, צילומים, משוב וראיון מדומה.", "Explore what makes practice different here: a subject overview, reasoning and code, circuits, simulation, truth tables, hints, images, feedback and mock interviews.")}</p>
-          <p className={styles.choiceMeta}>{tourSteps("full").length} {t("תחנות · פרקים שאפשר לחזור אליהם · בקצב שלכם", "stations · replayable chapters · at your own pace")}</p>
-          <button type="button" className="primary" onClick={() => start("full")}><Play size={17} />{t("מתחילים בסיור המעמיק", "Start the full tour")}</button>
-        </section>}
-        <section className={styles.shortChoice}>
-          <h3>{t("סיבוב קצר, ויוצאים לדרך", "A quick look around")}</h3>
-          <p>{t("מכירים את שלושת אזורי האתר: אזור אישי, מאגר וראיון מדומה. מתנסים ביעד, חיפוש ונושאים, עורך קוד, סימולציה, רמז ומשוב.", "Meet the three areas: Personal area, Library and Mock interview. Try a goal, search and subjects, code editor, simulation, a hint and feedback.")}</p>
-          <p className={styles.choiceMeta}>{tourSteps("short").length} {t("תחנות · היכרות מעשית וקצרה", "stations · a short hands-on introduction")}</p>
-          <button type="button" className="primary" onClick={() => start("short")}>{t("מתחילים בסיור הקצר", "Start the short tour")}<NextArrow size={17} /></button>
-        </section>
+      <div className={styles.brand}><span dir="ltr">jobrun</span><span className={styles.brandDivider} /><h1 id={titleId}>{t("סיור עם מוקסי", "Tour with Muxi")}</h1></div>
+      <div className={styles.headerActions}>
+        {!preview && <UserInboxButton lang={lang} />}
+        {controls}
+        {!preview && <button type="button" className={styles.reportHelp} aria-label={t("נתקלתם בבעיה?", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={17} />{t("דיווח", "Report")}</button>}
+        <button type="button" className={styles.exit} onClick={close}><X size={17} aria-hidden="true" />{t("יציאה מהסיור", "Exit tour")}</button>
       </div>
-      {progress.status === "paused" && (progress.completed.length > 0 || progress.skipped.length > 0) && <div className={styles.resume}><div><strong>{t("כבר הכרנו קצת?", "Already started?")}</strong><p>{t("המקום שלכם נשמר במכשיר הזה.", "Your place is saved on this device.")}</p></div><button type="button" onClick={() => start(progress.kind, true)}><Play size={16} />{t("ממשיכים מהמקום שעצרנו", "Resume where I stopped")}</button></div>}
-      <div className={styles.welcomeFoot}><p>{t("תרגול ההיכרות משתמש בכלים האמיתיים ובנתוני דוגמה. הוא אינו משנה את הציונים, התוכנית או התשובות בחשבון.", "Introduction practice uses the real tools with sample data. It does not change your account's grades, plan or answers.")}</p><button type="button" className={styles.quiet} onClick={close}>{t("אדלג בינתיים — אכיר את האתר לבד", "Skip for now — I'll explore on my own")}</button></div>
+    </header>
+    {screen === "welcome" ? <main className={styles.welcome}>
+      <div className={styles.welcomeHero}>
+        <MuxiScene />
+        <div className={styles.welcomeCopy}>
+          <h2 ref={heading} tabIndex={-1}>{preview ? t("בואו ננסה שאלת ראיון.", "Let’s try an interview question.") : t("בואו נכין את התרגול שלכם.", "Let’s set up your practice.")}</h2>
+          <p>{preview
+            ? t("אני מוקסי. ב־JobRun מתכוננים לראיונות חומרה ותוכנה. נשנה כניסה במעגל, נתקן שורה בקוד ונראה איך הסבר של מועמד מוביל למשוב ולשאלת המשך.", "I’m Muxi. JobRun helps you prepare for hardware and software interviews. Flip a circuit input, fix a line of code and see how a candidate’s reasoning leads to feedback and a follow-up question.")
+            : t("אני מוקסי. נבחר יעד וזמן יומי שמתאים לכם. אחר כך ננסה את כלי התרגול ונראה איך תשובה מובילה למשוב ולשאלת המשך.", "I’m Muxi. We’ll start with your goal and the time you have each day. Then we’ll try the practice tools and follow an answer through feedback and a follow-up question.")}</p>
+          <div className={styles.welcomeActions}>
+            <button type="button" className="primary" data-muxi-start={canResume ? undefined : true} data-muxi-resume={canResume || undefined} disabled={!storageReady} onClick={() => start(canResume)}>
+              {canResume ? t("להמשיך מהתחנה שלי", "Resume my tour") : preview ? t("להתנסות עם מוקסי", "Try it with Muxi") : t("להתחיל עם מוקסי", "Start with Muxi")}<NextArrow size={18} aria-hidden="true" />
+            </button>
+            {canResume && <button type="button" className={styles.quiet} data-muxi-start onClick={() => start()}>{t("מההתחלה", "Start over")}</button>}
+            {preview && <a href="/#signin">{t("להרשמה או לכניסה", "Sign up or sign in")}</a>}
+          </div>
+          <p className={styles.scopeNote}>{canResume
+            ? <><span>{t("המקום ששמרנו לכם", "Your saved stop")}</span> · <BidiText>{step.title[lang]}</BidiText></>
+            : preview ? t("ההתנסות פתוחה לכולם ומשתמשת בנתוני דוגמה.", "Open to everyone, with sample data and no sign-up.")
+            : t("היעד שתאשרו נשמר בחשבון. שאר התחנות הן תרגילי הדגמה.", "The goal you confirm is saved to your account. The other stops use practice examples.")}</p>
+        </div>
+      </div>
+      <section className={styles.routePreview} aria-label={t("מה נעשה בסיור", "What you’ll try")}>
+        <h3>{t("הדרך שלנו", "Our route")}</h3>
+        <ol>{(preview ? [
+          t("לנסות שאלה במעבדה", "Try a question in the lab"),
+          t("לגלות מה המשוב מוסיף", "Explore the feedback"),
+          t("להתנסות בבוחן ובראיון", "Try a quiz and interview"),
+        ] : [
+          t("לבחור יעד אישי", "Choose a personal goal"),
+          t("לפתור ולקבל משוב", "Solve and get feedback"),
+          t("להכיר את כלי האתר", "Explore the workspace"),
+        ]).map((label, i) => <li key={i}><span className={styles.routeDot} aria-hidden="true" />{label}</li>)}</ol>
+      </section>
     </main> : screen === "finish" ? <main className={styles.finish}>
-      <MuxiMascot pose="celebrate" label={t("מוקסי שמח שסיימתם", "Muxi celebrates your tour")} className={styles.welcomeMascot} />
-      <h2 ref={heading} tabIndex={-1}>{t("עכשיו הכלים בידיים שלכם.", "The tools are yours to use.")}</h2>
-      <p>{t("ביצעתם", "You tried")} <bdi>{progress.completed.length}</bdi> {t("תחנות", "stations")}{progress.skipped.length ? ` · ${t("דילגתם על", "Skipped")} ${progress.skipped.length}` : ""}.</p>
-      <p>{t("את ההיכרות הזאת אפשר לפתוח שוב דרך סיור עם מוקסי. בתחנות שדילגתם עליהן תמיד אפשר להתנסות אחר כך.", "Reopen Tour with Muxi any time. You can return to skipped stations whenever you like.")}</p>
-      <div className={styles.finishActions}><button type="button" className="primary" onClick={close}>{standalone ? t("להרשמה או לכניסה", "Sign up or sign in") : t("יוצאים לתרגול", "Start practicing")}<NextArrow size={18} /></button>{!standalone && progress.kind === "short" && <button type="button" onClick={() => start("full")}>{t("ממשיכים לסיור המעמיק", "Explore the full tour")}</button>}<button type="button" onClick={() => setScreen("choose")}><RotateCcw size={16} />{standalone ? t("פתיחת הסיור מחדש", "Restart the tour") : t("בחירת סיור מחדש", "Choose a tour again")}</button></div>
+      <MuxiScene finished />
+      <h2 ref={heading} tabIndex={-1}>{preview ? t("מוכנים לשאלה משלכם?", "Ready for a question of your own?") : t("נמשיך לתרגול?", "Ready to practice?")}</h2>
+      <p>{preview ? t("בחשבון משלכם תוכלו לשמור תשובות, לקרוא את המשוב שקיבלתם ולחזור לשאלה שהתחלתם.", "With an account, you can save your answers, read your feedback and return to a question you started.")
+        : progress.completed.includes("goal") ? t("היעד שלכם זמין באזור האישי. שם אפשר לפתוח את התוכנית ולהמשיך לשאלה הבאה.", "Your goal is in your personal area. Open your plan there and continue with your next question.")
+        : t("אפשר לבחור יעד באזור האישי או לגשת ישירות לשאלה במאגר.", "Set a goal in your personal area, or go straight to a question in the library.")}</p>
+      <div className={styles.finishActions}>
+        {preview ? <a className="primary" href="/#signin">{t("להרשמה או לכניסה", "Sign up or sign in")}<NextArrow size={17} /></a> : <button type="button" className="primary" onClick={close}>{t("חזרה לאתר", "Back to JobRun")}<NextArrow size={17} /></button>}
+        <button type="button" className={styles.quiet} onClick={() => start()}><RotateCcw size={15} />{t("להתחיל את הסיור מחדש", "Replay the tour")}</button>
+      </div>
+      {steps.some(s => !progress.completed.includes(s.id)) && <details className={styles.unfinished}>
+        <summary>{t("תחנות שעוד אפשר לנסות", "Stops you can still try")}</summary>
+        <ul>{steps.filter(s => !progress.completed.includes(s.id)).map(s => <li key={s.id}><button onClick={() => { jump(s.id); setScreen("tour"); }}><BidiText>{s.title[lang]}</BidiText><NextArrow size={15} /></button></li>)}</ul>
+      </details>}
     </main> : <>
-      <div className={styles.tourBar}><span>{progress.kind === "full" ? t("הסיור המעמיק", "The full tour") : t("הסיור הקצר", "The short tour")}</span><button type="button" onClick={() => setOutline(!outline)} aria-expanded={outline}>{t("כל הפרקים", "All chapters")}<ChevronDown size={16} /></button><span className={styles.localNote}>{t("נתוני דוגמה · בלי שינוי בחשבון", "Sample data · no account changes")}</span></div>
-      {outline && <nav className={styles.outline} aria-label={t("פרקי הסיור", "Tour chapters")}>{chapters.map((s) => <button type="button" key={s.id} onClick={() => jump(s.id)} aria-current={s.chapter.he === step.chapter.he ? "step" : undefined}>{s.chapter[lang]}</button>)}</nav>}
+      <div className={styles.tourBar}>
+        <span><BidiText>{step.chapter[lang]}</BidiText></span>
+        <button type="button" aria-expanded={outline} aria-controls={outlineId} onClick={() => setOutline(!outline)}><List size={16} />{t("כל התחנות", "All stops")}<ChevronDown size={14} /></button>
+        <span className={styles.localNote}>{step.id === "goal" && !preview ? t("היעד האישי שלכם", "Your account goal") : t("התנסות לדוגמה", "Sample workspace")}</span>
+      </div>
+      {outline && <nav id={outlineId} className={styles.outline} aria-label={t("תחנות הסיור", "Tour stops")}>{steps.map((s, i) => <button type="button" key={s.id} data-muxi-stop={s.id} onClick={() => jump(s.id)} aria-current={s.id === step.id ? "step" : undefined}><bdi>{i + 1}</bdi> <BidiText>{s.title[lang]}</BidiText>{progress.completed.includes(s.id) && <Check size={15} aria-label={t("התחנה הושלמה", "Completed")} />}</button>)}</nav>}
       <main className={styles.tourGrid}>
-        {guide}
-        <div className={styles.stage} data-muxi-stage data-muxi-exercise={step.exercise}><TourExercises exercise={step.exercise} stationId={step.id} lang={lang} onAction={onAction} guide={<ExpandedCoach lang={lang} onExit={close}>{guide}</ExpandedCoach>} /></div>
+        {renderGuide()}
+        <div className={styles.stage} data-muxi-stage data-muxi-exercise={step.exercise}>
+          {step.id === "goal" && !preview && userId ? <TourAccountGoal userId={userId} lang={lang} onSaved={() => onAction("goal-saved")} />
+            : <TourExercises key={step.id} exercise={step.exercise} stationId={step.id} lang={lang} onAction={onAction} guide={<ExpandedCoach lang={lang} onExit={close}>{renderGuide(true)}</ExpandedCoach>} />}
+        </div>
       </main>
-      <MuxiGuidance root={root} station={step.id} lang={lang} actions={actions} ready={ready} onAction={onAction} />
+      <MuxiGuidance root={root} station={step.id} lang={lang} ready={ready} />
       <div className={styles.mobileNav} data-muxi-mobile-nav>
         <button type="button" className={styles.mobileBack} onClick={() => heading.current?.scrollIntoView({ block: "center" })}>{t("בחזרה להדרכה", "Back to guidance")}<span><BidiText>{step.title[lang]}</BidiText></span></button>
-        <button type="button" className="primary" disabled={!ready} onClick={() => advance()}>{t("הבא בסיור", "Next in tour")}<NextArrow size={16} /></button>
+        <button type="button" className="primary" data-muxi-next disabled={!ready} onClick={() => advance()}>{index === steps.length - 1 ? t("סיום הסיור", "Finish tour") : t("הבא בסיור", "Next in tour")}<NextArrow size={16} /></button>
         <button type="button" className={styles.quiet} onClick={() => advance(true)}>{t("דלגו", "Skip")}</button>
       </div>
     </>}

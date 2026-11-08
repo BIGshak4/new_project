@@ -75,7 +75,7 @@ export const helperTopics: Readonly<Record<HelperTopicId, HelperTopic>> = {
   },
   tour: {
     title: text("ללמוד תוך כדי התנסות", "Learn by trying"),
-    messages: [text("בסיור עם מוקסי אפשר לנסות כתיבה וקוד, מעגלים, רמזים ועוד. דוגמאות הסיור נפרדות מהתרגול האישי, ואפשר לצאת בכל רגע.", "Tour with Muxi to try writing, code, circuits, hints and more. Tour examples are separate from your personal practice, and you can leave at any time.")],
+    messages: [text("מוקסי ילווה אתכם משאלה במאגר דרך קוד ומעגל ועד למשוב. לפני ההרשמה מתנסים בדוגמאות. בתוך החשבון אפשר גם להגדיר יעד לתוכנית האישית שלכם.", "Muxi will guide you from a library question through code, circuits and feedback. Before signup, you can try the examples. Once signed in, you can also set a goal for your own practice plan.")],
     choices: [action("פתיחת סיור עם מוקסי", "Open Tour with Muxi", { type: "tour" }), topic("עדיף הסבר על כלי מסוים", "Explain a specific tool instead", "practice")],
   },
   practice: {

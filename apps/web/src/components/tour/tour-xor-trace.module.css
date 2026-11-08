@@ -1,0 +1,26 @@
+.trace {
+  display: block;
+  width: min(100%, 430px);
+  height: auto;
+  margin: 6px auto;
+  overflow: visible;
+  font-family: var(--mono), monospace;
+}
+.signal {
+  color: var(--muted);
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.signal[data-high="true"] { color: var(--ok); }
+.signal path { fill: none; stroke-width: 2; }
+.signal circle { fill: var(--surface); stroke-width: 2; }
+.signal[data-high="true"] circle { fill: currentColor; }
+.trace text { stroke: none; font-size: 16px; font-weight: 650; }
+.gate { fill: var(--soft); stroke: var(--link); stroke-width: 2; stroke-linejoin: round; }
+.gate text { fill: var(--ink); font-size: 14px; letter-spacing: .04em; }
+.xorArc { fill: none; stroke-linecap: round; }
+@media (prefers-reduced-motion: no-preference) {
+  .signal { transition: color 160ms ease-out; }
+}

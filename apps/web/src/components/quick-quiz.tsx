@@ -103,7 +103,7 @@ export function QuickQuizDialog({ open, lang, initialTopics, onClose, onStart, r
   </dialog>;
 }
 
-export function QuickQuiz({ run, lang, onBack, onNew }: { run: QuickQuizRun; lang: "he" | "en"; onBack: () => void; onNew: () => void }) {
+export function QuickQuiz({ run, lang, onBack, onNew, preview = false }: { run: QuickQuizRun; lang: "he" | "en"; onBack: () => void; onNew: () => void; preview?: boolean }) {
   const t = (he: string, en: string) => lang === "he" ? he : en;
   const [revealed, setRevealed] = useState<Set<string>>(() => new Set());
   const heading = useRef<HTMLHeadingElement>(null);
@@ -127,7 +127,7 @@ export function QuickQuiz({ run, lang, onBack, onNew }: { run: QuickQuizRun; lan
       return <article className="quick-sheet" key={questionId} data-quiz-question={questionId}>
         <h2><span className={styles.number}>{index + 1}.</span> <BidiText>{question.title[lang]}</BidiText></h2>
         <StudyText text={question.prompt[lang]} lang={lang} />
-        <QuestionActions lang={lang} questionKey={question.id} questionTitle={question.title[lang]} context="quick" />
+        {!preview && <QuestionActions lang={lang} questionKey={question.id} questionTitle={question.title[lang]} context="quick" />}
         <button className={open ? "text-button quick-reveal" : "primary quick-reveal"} type="button" aria-expanded={open} aria-controls={answerId}
           onClick={() => setRevealed(previous => { const next = new Set(previous); if (next.has(questionId)) next.delete(questionId); else next.add(questionId); return next; })}>
           {open ? t("הסתרת הפתרון", "Hide solution") : t("הצגת פתרון קצר", "Show short solution")}</button>

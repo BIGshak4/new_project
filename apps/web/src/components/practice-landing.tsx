@@ -47,7 +47,7 @@ export function PracticeLanding({
           <a href="#signin">{t("הרשמה וכניסה", "Sign up / Sign in")}</a>
           <a className={styles.navTour} href="/tour">
             <Compass size={17} aria-hidden="true" />
-            <span>{t("סיור קצר עם מוקסי", "Short tour with Muxi")}</span>
+            <span>{t("סיור עם מוקסי", "Tour with Muxi")}</span>
           </a>
         </nav>
         <div className="topnav-actions">{controls}</div>
@@ -73,13 +73,13 @@ export function PracticeLanding({
               </a>
               <a className={styles.tourButton} href="/tour" aria-describedby="landing-tour-description">
                 <Compass size={20} aria-hidden="true" />
-                {t("סיור קצר עם מוקסי", "Short tour with Muxi")}
+                {t("להתנסות עם מוקסי", "Try it with Muxi")}
               </a>
             </div>
             <p id="landing-tour-description" className={styles.tourDescription}>
               {t(
-                "מכירים את האתר בסיור קצר לפני שנרשמים: מוקסי מדגים את הכלים ואתם מתנסים. ללא הרשמה.",
-                "Explore with a short tour before signing up: Muxi demonstrates the tools and you try them. No account needed.",
+                "לפני שנרשמים, אפשר לשנות מעגל, לערוך קוד ולראות איך נראה משוב על תשובה לדוגמה.",
+                "Before signing up, try changing a circuit, editing code and reading feedback on a sample answer.",
               )}
             </p>
             <div className="ion-hero-topics">
@@ -173,9 +173,9 @@ export function PracticeLanding({
               <MuxiMascot className={styles.tourMascot} />
               <div>
                 <h3>{t("רוצים להכיר לפני שנרשמים?", "Want to explore before signing up?")}</h3>
-                <p>{t("מוקסי ילווה אתכם בהדגמות של התרגול, כתיבת קוד, בניית מעגלים ומשוב. אפשר להתנסות בלי חשבון ולבחור סיור קצר או מעמיק.", "Let Muxi show you practice, coding, circuit building and feedback. Try the tools without an account, with a short or in-depth tour.")}</p>
+                <p>{t("מוקסי ילווה אתכם משאלת תרגול ועד למשוב ולשאלת המשך. תוכלו גם לנסות בוחן לפי נושא וראיון לדוגמה.", "Follow a practice question through feedback and a follow-up with Muxi. You can also try a topic quiz and sample interview.")}</p>
                 <a className={styles.tourButton} href="/tour">
-                  {t("לסיור עם מוקסי — ללא הרשמה", "Tour with Muxi — no account needed")}
+                  {t("לסיור ללא הרשמה", "Try the tour without signing up")}
                   <Arrow size={18} aria-hidden="true" />
                 </a>
               </div>

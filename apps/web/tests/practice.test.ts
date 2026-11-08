@@ -243,6 +243,18 @@ test("readiness sends the requested language and preserves its display gate", as
   assert.equal(result.readiness_word, null);
 });
 
+test("a tour opened by one member cannot read or save a goal after switching accounts", async () => {
+  mock.method(supabase.auth, "getSession", async () => ({
+    data: { session: { access_token: "bob-token", user: { id: "bob" } } }, error: null,
+  }));
+  const calls = capture(Response.json({}));
+  const api = client.practiceApi("https://api.example");
+  const accountChanged = (error: unknown) => error instanceof client.PracticeApiError && error.code === "unauthenticated";
+  await assert.rejects(api.getGoal("he", "alice"), accountChanged);
+  await assert.rejects(api.saveGoal({ learning_mode: "explore", minutes_per_day: 30 }, "alice"), accountChanged);
+  assert.equal(calls.length, 0);
+});
+
 test("starting a recommendation sends its source without altering question or language", async () => {
   signedIn();
   const calls = capture(Response.json({}));

@@ -1,99 +1,101 @@
-/** Tour progress contains station IDs only. Answers, images and real practice records stay separate. */
-export type TourKind = "short" | "full";
+export type TourKind = "preview" | "member";
 export type TourText = { he: string; en: string };
-export type TourExercise = "goal" | "library" | "topics" | "reasoning" | "code" | "hints" | "circuit" | "sequential" | "photos" | "feedback" | "followup" | "history" | "interview" | "settings" | "materials" | "mux" | "reports";
+export type TourExercise = "goal" | "library" | "circuit" | "code" | "feedback" | "quiz" | "interview" | "community" | "helper";
 export type TourStep = { id: string; chapter: TourText; exercise: TourExercise; title: TourText; body: TourText; task: TourText; actions: string[] };
-const text = (he: string, en: string): TourText => ({ he, en });
-const chapters = {
-  start: text("מוצאים את הכיוון", "Find your direction"),
-  discover: text("מכירים את המאגר", "Explore the library"),
-  solve: text("חושבים וכותבים", "Think and write"),
-  hardware: text("בונים ובודקים מעגל", "Build and test a circuit"),
-  advanced: text("ניתוב, זיכרון ותזמון", "Routing, memory and timing"),
-  assist: text("רמזים, מקורות וצילומים", "Hints, resources and images"),
-  feedback: text("לומדים מהמשוב", "Learn from feedback"),
-  interview: text("מתכוננים לראיון", "Prepare for an interview"),
-  continue: text("ממשיכים ומשתפרים", "Continue and improve"),
-  settings: text("מרגישים בבית", "Make yourself at home"),
+const bi = (he: string, en: string): TourText => ({ he, en });
+
+const goal: TourStep = {
+  id: "goal", exercise: "goal", chapter: bi("היעד שלי", "My goal"),
+  title: bi("נתחיל ביעד שלך", "Start with your goal"),
+  body: bi("היעד מכוון את תוכנית התרגול באזור האישי. אפשר להתמקד בתפקיד או ללמוד בקצב שלכם. אם כבר הגדרתם יעד, אפשר להמשיך איתו.", "Your goal shapes the practice plan in your personal area. Prepare for a role or explore at your own pace. If you already have a goal, you can keep it."),
+  task: bi("אשרו את היעד הקיים או בחרו יעד ושמרו אותו בחשבון.", "Keep your current goal or choose a goal and save it to your account."), actions: ["goal-saved"],
 };
-function step(id: string, chapter: keyof typeof chapters, exercise: TourExercise, he: string, en: string, bodyHe: string, bodyEn: string, taskHe: string, taskEn: string, ...actions: string[]): TourStep {
-  return { id, chapter: chapters[chapter], exercise, title: text(he, en), body: text(bodyHe, bodyEn), task: text(taskHe, taskEn), actions };
+const library: TourStep = {
+  id: "library", exercise: "library", chapter: bi("מאגר השאלות", "Question library"),
+  title: bi("איזו שאלה מסקרנת אותך?", "Which question catches your eye?"),
+  body: bi("במאגר אפשר לחפש לפי נושא, תפקיד ושמות חברות שדווחו. שאלה ארוכה נותנת מקום להסביר איך הגעתם לפתרון. אם עצרתם באמצע, האזור האישי מחזיר אתכם לשאלה.", "Search the library by topic, role or a reported company. A long question gives you room to explain how you reached a solution. The personal area can take you back to an unfinished question."),
+  task: bi("פתחו שאלה לדוגמה. אפשר לנסות גם חיפוש ורמז.", "Open a sample question. You can also try the search and a hint."), actions: ["question-open"],
+};
+const circuit: TourStep = {
+  id: "circuit", exercise: "circuit", chapter: bi("מעבדת חומרה", "Hardware lab"),
+  title: bi("מה יקרה ליציאה?", "What will the output be?"),
+  body: bi("בשאלת חומרה אפשר לצרף שרטוט ולבדוק אותו. במעגל הזה שער XOR מחזיר 1 כששתי הכניסות שונות. במעגל עם פליפ־פלופ אפשר לבדוק גם פעימות שעון.", "Attach a circuit to a hardware answer and test it. This XOR gate gives 1 when its inputs differ. Circuits with flip-flops also let you test clock steps."),
+  task: bi("שנו אחת מהכניסות וראו מה קורה ליציאה.", "Toggle an input and watch the output."), actions: ["input-toggled"],
+};
+const code: TourStep = {
+  id: "code", exercise: "code", chapter: bi("סדנת תוכנה", "Software workspace"),
+  title: bi("איפה הלולאה צריכה לעצור?", "Where should the loop stop?"),
+  body: bi("בשאלת תוכנה אפשר לכתוב קוד ולצדו הסבר חופשי. בראיון חשוב להסביר גם איזה מקרה חשף את הטעות. כאן הלולאה מנסה לקרוא איבר אחרי סוף המערך.", "In a software question you can write code alongside your reasoning. Interviewers also want to understand which case exposed a bug. This loop tries to read past the end of the array."),
+  task: bi("תקנו את תנאי העצירה בעורך, או נסו את התיקון של מוקסי.", "Edit the loop condition yourself or try Muxi’s fix."), actions: ["code-edited"],
+};
+const feedback: TourStep = {
+  id: "feedback", exercise: "feedback", chapter: bi("משוב והמשך", "Feedback and follow-up"),
+  title: bi("מה חסר בתשובה?", "What would make the answer stronger?"),
+  body: bi("אחרי ששולחים תשובה בתרגול, המשוב מצביע על מה שעבד ועל מה שכדאי לבדוק. שאלת המשך נותנת הזדמנות להשלים את ההסבר. כאן אפשר להשוות שתי תשובות עם משוב שהוכן מראש לכל אחת.", "After a practice submission, feedback identifies strengths and things to check. A follow-up question invites you to fill a gap in your reasoning. Compare two sample answers with feedback written for each."),
+  task: bi("בחרו תשובה ופתחו את המשוב שלה. אפשר גם להתנסות בשאלת ההמשך.", "Choose an answer and open its feedback. You can also try the follow-up."), actions: ["feedback-reviewed"],
+};
+const quiz: TourStep = {
+  id: "quiz", exercise: "quiz", chapter: bi("תרגול קצר", "Quick practice"),
+  title: bi("יש כמה דקות לחזרה?", "Have a few minutes to practice?"),
+  body: bi("ב״יסודות בקטנה״ אפשר לתרגל שאלה קצרה או להרכיב בוחן של עשר שאלות מהנושאים שתבחרו. פותחים את הפתרונות בקצב שלכם.", "In Fundamentals you can practice one short question or build a ten-question quiz from topics you pick. Reveal the solutions at your own pace."),
+  task: bi("פתחו את בורר הנושאים והרכיבו בוחן לדוגמה.", "Open the topic picker and create a sample quiz."), actions: ["quiz-started"],
+};
+const interview: TourStep = {
+  id: "interview", exercise: "interview", chapter: bi("ראיון מדומה", "Mock interview"),
+  title: bi("עכשיו תורך לענות", "Your turn in the interview"),
+  body: bi("בראיון המדומה בוחרים זמן, מקבלים שאלה אחת בכל פעם ועונים בכתב. הדוח בסיום מרכז מה כדאי לתרגל בהמשך. כאן נתנסה בשאלה אחת ובדוח לדוגמה.", "In a mock interview, choose a duration and answer one question at a time in writing. The final report helps you decide what to practice next. Try one question and see an example report."),
+  task: bi("התחילו ראיון לדוגמה, ענו בקצרה ופתחו את הדוח.", "Start a sample interview, give a short answer and open the report."), actions: ["interview-finished"],
+};
+const community: TourStep = {
+  id: "community", exercise: "community", chapter: bi("משחקים וחברים", "Games and friends"),
+  title: bi("עם מי מתרגלים היום?", "Who are you practicing with?"),
+  body: bi("במשחקים מוסיפים חברים בעזרת קוד אישי. אפשר גם להזמין חבר לדו־קרב של חמש שאלות. בחנות של מוקסי משתמשים במטבעות כדי לעצב את הדמות.", "In Games, add friends using their personal code. You can also invite a friend to a five-question duel. In Muxi’s shop, coins let you customize your character."),
+  task: bi("נסו להוסיף את חברת הדוגמה באמצעות הקוד שלה.", "Try adding the sample friend using her code."), actions: ["friend-previewed"],
+};
+const helper: TourStep = {
+  id: "helper", exercise: "helper", chapter: bi("העוזר האישי", "Personal helper"),
+  title: bi("ואם נתקעים באמצע?", "What if you get stuck?"),
+  body: bi("בכפתור ״צריכים עזרה?״ תמצאו את הדמות שלכם. אפשר לבקש הדרכה בכלי פתרון או לפתוח פנייה. ליד כל שאלה יש גם דיווח בעיה, שאלה לא ברורה ודיווח שראיתם אותה בחברה.", "Your character is behind the “Need a hand?” button. Ask for help with an answer tool or open a support request. Each question also has actions to report a problem, flag unclear wording or record a company sighting."),
+  task: bi("בחרו במה העוזר יעזור לכם ונסו את השלב הראשון.", "Pick something to ask the helper and try its first step."), actions: ["helper-used"],
+};
+
+const previewSteps = [library, circuit, code, feedback, quiz, interview];
+const memberSteps = [goal, ...previewSteps, community, helper];
+export function tourSteps(kind: TourKind): readonly TourStep[] {
+  return kind === "preview" ? previewSteps : memberSteps;
 }
-export const FULL_TOUR: readonly TourStep[] = [
-  step("goal", "start", "goal", "מה היעד שלכם?", "What are you working toward?", "באתר יש שלושה אזורים: אזור אישי, המאגר וראיון מדומה. מתחילים ביעד שמכוון את התוכנית. כאן נתנסה בדוגמה מקומית.", "The site has three areas: Personal area, Library and Mock interview. A goal guides your plan. Here we will use a local example.", "בחרו תפקיד, תאריך וזמן יומי ושמרו את יעד ההיכרות.", "Choose a role, date and daily time, then save the example goal.", "goal-saved"),
-  step("search", "discover", "library", "מוצאים שאלה גם בעברית", "Find questions in either language", "אפשר לחפש לפי נושא, מונח מקצועי וחברה. שמות כמו אינטל, Intel ו־INTEL מובילים לאותו סינון. החברות בסיור הן דוגמת סינון בלבד.", "Search by topic, technical term or company. Intel, INTEL and אינטל use the same filter. Companies here are filter examples only.", "הקלידו אינטל או Intel בשדה החיפוש.", "Type Intel or אינטל in the search field.", "library-search"),
-  step("filter", "discover", "library", "מסננים לפי הנושא", "Filter by topic", "לכל שאלה תחום, נושא ומטא־נתונים. המאגר האמיתי כולל גם תפקידים וחברות שדווחו על ידי מתרגלים.", "Questions have a discipline, topic and metadata. The real library also has role filters and user-reported company sightings.", "נקו את החיפוש ובחרו נושא במסנן.", "Clear the search and choose a topic filter.", "library-filter"),
-  step("topics", "discover", "topics", "כל הנושאים, במבט אחד", "All subjects at a glance", "מכירים את תחומי המאגר בלי לפתוח שאלה מכל נושא: חומרה, תוכנה, היגיון והכנה אישית לראיון. כל תחום מרכז את הנושאים והכלים המתאימים לו.", "Explore hardware, software, reasoning and personal interview preparation without opening an example question for every topic. Each area groups its subjects and useful tools.", "בחרו תחום אחד כדי לראות מה אפשר לתרגל בו.", "Choose one area to see what you can practice.", "topics-explored"),
-  step("explanation", "solve", "reasoning", "נותנים למחשבה מקום", "Give your reasoning room", "עורך ההסבר תומך בעברית ובאנגלית. אפשר להוסיף נוסחאות, טבלאות וקוד בנפרד. ההכתבה הקולית היא אפשרות לבחירה ורק אם הדפדפן תומך בה.", "Write in Hebrew or English. Add formulas, tables and code separately. Dictation is optional and depends on browser support.", "כתבו משפט שמסביר את דרך הפתרון שלכם.", "Write a sentence explaining your approach.", "explanation-written"),
-  step("code", "solve", "code", "מתקנים את הקוד בידיים", "Edit the code yourself", "זה עורך הקוד האמיתי של האתר: צביעת תחביר, הזחה והשלמות. בקוד הדוגמה יש שגיאת גבול בלולאה.", "This is the real code editor: highlighting, indentation and completion. The example has a loop-boundary bug.", "העתיקו את קוד השאלה לעורך ושנו את תנאי הלולאה.", "Copy the question code into the editor and change the loop condition.", "code-edited"),
-  step("languages", "solve", "code", "בוחרים שפת קוד", "Choose a code language", "זמינות C, C++, Python, JavaScript, שפות HDL ומצב טקסט לנוסחאות ולטבלאות. הקוד הוא חלק מהתשובה. בתרגול אמיתי אפשר להריץ אותו בכפתור הרצה; דוגמת ההיכרות הזאת אינה מריצה קוד.", "Choose C, C++, Python, JavaScript, HDL or plain technical text. Code is part of your answer. Live practice offers a run button; this introductory example does not execute code.", "פתחו את העורך אם הוא סגור, ושנו את שפת הקוד בכפתור המסומן. נסו גם Ctrl+Space בעורך.", "Open the editor if needed, then change the highlighted code-language selector. Also try Ctrl+Space inside the editor.", "code-language-changed"),
-  step("wire", "hardware", "circuit", "מחברים מעגל ראשון", "Connect your first circuit", "לפניכם AND עם שתי כניסות ופלט. חוט אחד חסר. אפשר לחבר בגרירה או באמצעות רשימות החיבור שמתחת ללוח.", "Here is an AND with two inputs and one output. One wire is missing. Drag between pins or use the connection lists below the canvas.", "חברו את החוט החסר, או טענו את הדוגמה המחוברת כדי להמשיך.", "Connect the missing wire, or load the connected example to continue.", "circuit-edited"),
-  step("simulate", "hardware", "circuit", "רואים מה המעגל עושה", "Read the circuit output", "במעגל צירופי הערכים מופיעים על הרכיבים והחוטים מיד אחרי חיבורם. סימן שאלה מציין ערך לא ידוע.", "A combinational circuit shows its values as soon as you wire it. A question mark means the value is unknown.", "טענו את דוגמת ה־AND המחוברת ובדקו את הערך ביציאה Y.", "Load the wired AND example and read the value at output Y.", "circuit-sample-loaded"),
-  step("inputs", "hardware", "circuit", "משנים כניסה ובודקים פלט", "Change an input and check the output", "לא מספיק לראות שהמעגל עובד עבור דוגמה אחת. בוחרים INPUT ומשנים את ערכו כדי לבדוק צירוף נוסף.", "One working input is not enough. Select an INPUT and change its value to test another combination.", "בחרו INPUT ושנו את ערך הכניסה.", "Select an INPUT and change its value.", "input-toggled"),
-  step("truth", "hardware", "circuit", "כל הצירופים בטבלת אמת", "Every combination in a truth table", "הטבלה משתמשת במנוע הסימולציה ובודקת את כל הצירופים. היא זמינה למעגל צירופי תקין, עד שישה ביטים משתנים.", "The table uses the simulation engine to test every combination. It supports valid combinational circuits with up to six variable bits.", "צרו טבלת אמת. אם המעגל אינו מחובר, טענו קודם את הדוגמה המחוברת.", "Generate the truth table. Load the connected example first if the circuit is incomplete.", "truth-table-generated"),
-  step("palette", "hardware", "circuit", "מכירים את ארגז הרכיבים", "Explore the component toolbox", "יש שערים, MUX ו־DEMUX, אנקודרים ודקודרים, חיבורי קלט ופלט, מחברים, משווים, אוגרים, מונים ומפצלים.", "Explore gates, MUX/DEMUX, encoders/decoders, I/O, adders, comparators, registers, counters and splitters.", "בחרו קבוצה והוסיפו רכיב ללוח.", "Choose a component group and add a part to the canvas.", "component-added"),
-  step("configure", "hardware", "circuit", "מתאימים כניסות ורוחב נתונים", "Configure ports and data width", "לחיצה על רכיב פותחת את השם, רוחב הנתונים ומספר הכניסות או היציאות המתאים לו. שינוי רוחב עשוי להסיר חוטים שאינם מתאימים.", "Selecting a component exposes its label, width and supported port count. Width changes can remove incompatible wires.", "בחרו רכיב ושנו שם, רוחב או מספר כניסות.", "Select a component and change its label, width or port count.", "circuit-settings"),
-  step("undo", "hardware", "circuit", "מנסים בלי לפחד מטעות", "Experiment and undo", "אפשר לבטל ולבצע שינוי מחדש. למחיקה מסמנים רכיב או חוט ואז משתמשים בכפתור המחיקה או במקש Delete.", "Undo and redo are available. To delete, select a part or wire and use Delete or the toolbar button.", "בטלו שינוי אחד במעגל.", "Undo one circuit change.", "circuit-undo"),
-  step("expand", "hardware", "circuit", "מפנים מקום לשרטוט", "Make room for the circuit", "בחלון המורחב אפשר לראות גם את השאלה. מוקסי נשאר זמין גם כשהעורך ממלא את המסך.", "The expanded workspace can show the question beside the canvas. Muxi stays available when the editor fills the screen.", "פתחו את הלוח המורחב וחזרו באמצעות חזרה לתשובה.", "Expand the drawing and return using Back to answer.", "circuit-expanded"),
-  step("export-circuit", "hardware", "circuit", "שומרים עותק של השרטוט", "Keep a circuit copy", "הורדת השרטוט יוצרת קובץ מקומי עם הרכיבים והחיבורים. זה שימושי לגיבוי ולתיעוד הדרך שלכם.", "Download a local file containing components and wires. It is useful for a backup and recording your approach.", "לחצו על הורדת השרטוט.", "Click Download circuit.", "circuit-downloaded"),
-  step("mux", "advanced", "mux", "בדיוק כמוני: MUX", "Just like me: a MUX", "MUX בוחר בין כניסות לפי אות בחירה. שנו את SELECT וראו איזה קלט מגיע לפלט; אפשר לבדוק גם את טבלת האמת.", "A MUX selects an input using its select signal. Change SELECT and see which input reaches the output; inspect its truth table too.", "בחרו את כניסת S ושנו את ערכה. בדקו מה מופיע ביציאה Y.", "Select input S and toggle its value. Read the result at output Y.", "mux-selected"),
-  step("clock-start", "advanced", "sequential", "מוסיפים את ממד הזמן", "Add the dimension of time", "רכיב זיכרון תלוי גם במצב קודם. כאן הדוגמה כבר מחוברת; נריץ אותה לפני שנקדם את השעון.", "Memory depends on previous state. This example is already wired; start simulation before advancing its clock.", "הריצו את הסימולציה של המעגל הסדרתי.", "Run the sequential circuit simulation.", "circuit-simulated"),
-  step("clock", "advanced", "sequential", "מקדמים שעון צעד אחד", "Advance the clock", "הסימולציה היא לוגית וללא השהיות. רכיבים סדרתיים דוגמים בעליית שעון; היא אינה בודקת תזמון פיזי של חומרה.", "This is zero-delay logic simulation. Sequential parts sample on rising edges; it does not assess physical timing.", "אם צריך, הריצו את הסימולציה. לחצו על צעד שעון ובדקו את הפלט.", "Start simulation if needed, then click Clock step and inspect the output.", "clock-stepped"),
-  step("reset", "advanced", "sequential", "בודקים גם איפוס", "Check reset too", "מצב התחלתי ואיפוס הם חלק מהדרישות. איפוס הסימולציה מחזיר את מצב הדוגמה להתחלה.", "Initial state and reset are requirements too. Reset simulation returns the example state to its start.", "אפסו את הסימולציה.", "Reset the simulation.", "simulation-reset"),
-  step("hint", "assist", "hints", "רמז קטן לפני פתרון מלא", "A hint before the full solution", "רמזים נפתחים בהדרגה, מכיוון כללי ועד צעד ממוקד. השימוש בהם נשמר בנפרד מתשובה עצמאית.", "Hints progress from a general direction to a concrete step. Assistance is recorded separately from independent work.", "פתחו רמז אחד והסתכלו על מונה הרמזים.", "Open a hint and inspect the hint counter.", "hint-opened"),
-  step("solution", "assist", "hints", "משווים לפתרון", "Compare with the reference", "אפשר לבקש את הפתרון כשרוצים ללמוד ממנו. חשיפה לפתרון מקבלת סימון ברור; היא אינה שוות ערך לפתרון עצמאי.", "Reveal a reference when it helps you learn. Solution exposure is marked explicitly and differs from independent solving.", "חשפו את הפתרון לאחר קריאת ההסבר.", "Reveal the reference after reading the explanation.", "solution-revealed"),
-  step("materials", "assist", "materials", "שרטוטים וחומרי עזר", "Diagrams and reference material", "שאלות יכולות להכיל כמה שרטוטים, חלופות פתרון והסברים. פותחים אותם בגודל קריא ומשווים בין הדרכים.", "Questions can include diagrams, alternative solutions and explanations. Open readable views and compare approaches.", "פתחו שרטוט והורידו את חומר העזר לדוגמה.", "Open the diagram and download the example reference.", "resource-opened", "resource-downloaded"),
-  step("photo", "assist", "photos", "גם פתרון בכתב יד", "Handwritten answers belong here too", "אפשר לצרף צילום כשנוח יותר לשרטט ביד. בסיור התמונה נשארת מקומית; בתרגול אמיתי היא נשמרת באופן פרטי עם התשובה.", "Attach an image when handwriting is easier. Tour images stay local; real submissions store them privately with your answer.", "צרפו תמונה משלכם או השתמשו בתמונת הדוגמה.", "Choose an image or use the sample image.", "photo-added"),
-  step("remove-photo", "assist", "photos", "בודקים מה עומדים לשלוח", "Check the attachment before sending", "חשוב לבדוק שהתמונה חדה ושאין בה מידע שלא התכוונתם לשתף. אפשר להסיר תמונה לפני ההגשה.", "Check image clarity and avoid including information you did not intend to share. Remove unwanted images before submitting.", "הסירו את התמונה המצורפת.", "Remove the attached image.", "photo-removed"),
-  step("feedback", "feedback", "feedback", "מגישים ולומדים מהמשוב", "Submit and learn from feedback", "בתרגול אמיתי הבקאנד מעריך את התשובה. כאן המשוב כתוב מראש ומסומן כדוגמה, כדי ללמוד את מבנהו.", "In real practice the backend assesses your answer. Here feedback is prewritten and labelled as a sample so you can learn its structure.", "כתבו תשובה ובקשו משוב לדוגמה.", "Write an answer and request sample feedback.", "feedback-requested"),
-  step("feedback-details", "feedback", "feedback", "מעבר לציון", "Look beyond the score", "בודקים מה עבד, מה חסר, אילו הנחות לא נבדקו ומה כדאי לעשות הלאה. משוב אוטומטי דורש שיקול דעת ויכול לטעות.", "Look at strengths, gaps, unchecked assumptions and the next step. Automated feedback needs judgment and can be wrong.", "הסתכלו על ציון הדוגמה ופירוט המדדים, ואז פתחו את הדגשים.", "Inspect the example score and rubric, then open the feedback details.", "feedback-reviewed"),
-  step("followup", "feedback", "followup", "השאלה משתנה, החשיבה ממשיכה", "The question changes; keep reasoning", "שאלת המשך בוחנת אם הבנתם את העיקרון גם כשדרישה משתנה. דוגמה: מה אם אחד החיישנים תקוע על 1?","A follow-up tests whether the principle still makes sense when a requirement changes. What if one sensor is stuck at 1?", "כתבו ושמרו תשובת התנסות. היא לא תיבדק בסיור; את הפתרון לדוגמה אפשר לפתוח בנפרד.", "Write and save a practice response. It is not graded in the tour; reveal the reference separately if you want.", "followup-answered"),
-  step("reports", "feedback", "reports", "משקפים ביטחון ומדווחים על בעיה", "Reflect on confidence and report an issue", "דירוג עצמי, דיווח על שאלה ודיווח על חברה מסייעים לשפר את התוכן. אלה נפרדים מההערכה המקצועית של התשובה.", "Self-assessment, question reports and company sightings improve content. They are separate from the professional assessment of your answer.", "בחרו דירוג עצמי ושלחו דיווח דוגמה מקומי.", "Choose a confidence rating and send a local example report.", "self-assessed", "report-sent"),
-  step("interview", "interview", "interview", "מתרגלים ראיון שלם", "Practice a full interview", "בוחרים 20, 30 או 45 דקות. בסיור מתחילים ראיון מקומי קצר, בלי צורך להמתין לזמן האמיתי.", "Choose 20, 30 or 45 minutes. Here we start a local example without waiting for the real duration.", "בחרו משך והתחילו את ראיון ההיכרות.", "Choose a duration and start the example interview.", "interview-started"),
-  step("interview-answer", "interview", "interview", "עונים בזמן ראיון", "Answer during the interview", "מסבירים את הדרך, בודקים דרישות ומנהלים את הזמן. אפשר לסיים מוקדם; בדוח נשמר מה שנענה ומה שעדיין חסר.", "Explain the approach, check requirements and manage time. Early finishing is allowed; the report distinguishes answered and missing work.", "כתבו תשובה ושלחו אותה בראיון לדוגמה.", "Write and submit an example interview answer.", "interview-answered"),
-  step("interview-report", "interview", "interview", "חוזרים לדוח הראיון", "Review the interview report", "הדוח מרכז נקודות לחיזוק ואת התשובות. אין להסיק רמה מקצועית משאלה אחת או ממשוב הדוגמה שבסיור.", "The report gathers next steps and responses. One answer or sample feedback cannot establish professional readiness.", "סיימו את ראיון הדוגמה ופתחו את הדוח.", "Finish the example interview and open its report.", "interview-finished"),
-  step("saved", "continue", "history", "שומרים שאלות לחזרה", "Save questions for later", "במאגר אפשר לשמור שאלות לחזרה ולסנן לפי סטטוס שאלה, כולל שאלות שכבר בוצעו.", "Bookmark questions for later and use question status filters in the library, including completed questions.", "סמנו שאלת דוגמה לשמירה.", "Bookmark an example question.", "bookmark"),
-  step("history", "continue", "history", "ממשיכים מאיפה שעצרנו", "Resume where you left off", "כל תרגול שומר הקשר: תשובות, רמזים שנפתחו וחשיפה לפתרון. פתיחת סיור אינה מוחקת טיוטת תרגול.", "Each attempt keeps context: answers, hints and reference exposure. Opening the tour does not discard an active practice draft.", "פתחו את התרגול השמור שבדוגמה.", "Open the saved sample attempt.", "history-opened"),
-  step("theme", "settings", "settings", "בוחרים את התאורה שנוחה לכם", "Choose a comfortable appearance", "מצב בהיר הוא ברירת המחדל. לחיצה על השמש או הירח מחליפה מצב ושומרת את הבחירה.", "Light is the default. The sun/moon control switches appearance and remembers your choice.", "שנו מצב באמצעות כפתור השמש או הירח בראש הסיור.", "Change appearance using the sun/moon control in the tour header.", "theme-changed"),
-  step("language", "settings", "settings", "אותו אתר, שתי שפות", "One site, two languages", "אפשר להחליף בין עברית לאנגלית. קוד ונוסחאות נשארים משמאל לימין; הסיור והעבודה שלכם נשמרים.", "Switch Hebrew and English. Code and formulas remain left-to-right; tour progress and work are preserved.", "החליפו שפה דרך הכפתור בראש הסיור.", "Switch language using the control in the tour header.", "language-changed"),
-];
-const byId = (id: string) => FULL_TOUR.find((s) => s.id === id)!;
-export const SHORT_TOUR: readonly TourStep[] = [
-  byId("goal"),
-  { ...byId("search"), body: text("במאגר מחפשים שאלות ומסננים לפי תחום, חברה וסטטוס שאלה. אפשר גם לחזור לשאלות ששמרתם. נתחיל בחיפוש אחד.", "Search and filter the library by subject, company and question status, or return to Saved questions. Try one search.") },
-  byId("topics"),
-  byId("code"),
-  byId("simulate"),
-  byId("hint"),
-  byId("feedback"),
-  byId("interview"),
-  { ...byId("theme"), body: text("כאן משנים שפה ומצב בהיר או כהה. את שני הסיורים אפשר לפתוח שוב בכל רגע באמצעות סיור עם מוקסי. נסיים בהחלפת מצב אחת.", "Change language and appearance here. Reopen either tour any time through Tour with Muxi. Finish by changing the theme once.") },
-];
-export const tourSteps = (kind: TourKind) => kind === "short" ? SHORT_TOUR : FULL_TOUR;
-export const tourKey = (userId = "visitor") => `jobrun-muxi-tour-v1-${userId}`;
-export type TourProgress = { version: 1; offered: boolean; kind: TourKind; stepId: string; completed: string[]; skipped: string[]; status: "paused" | "completed" | "dismissed"; updatedAt: number };
-export function initialTourProgress(): TourProgress {
-  return { version: 1, offered: false, kind: "full", stepId: FULL_TOUR[0].id, completed: [], skipped: [], status: "paused", updatedAt: 0 };
+
+/** A v1 example goal must never count as setting a member’s real goal. */
+export const tourKey = (userId?: string) => userId ? `jobrun-muxi-tour-v2-member-${userId}` : "jobrun-muxi-tour-v2-preview";
+export type TourProgress = { version: 2; offered: boolean; kind: TourKind; stepId: string; completed: string[]; skipped: string[]; status: "paused" | "completed" | "dismissed"; updatedAt: number };
+export function initialTourProgress(kind: TourKind): TourProgress {
+  return { version: 2, kind, offered: false, stepId: tourSteps(kind)[0].id, completed: [], skipped: [], status: "paused", updatedAt: 0 };
 }
-export function parseTourProgress(value: string | null): TourProgress {
-  if (!value || value.length > 20000) return initialTourProgress();
+
+export function parseTourProgress(value: string | null, kind: TourKind): TourProgress {
+  const empty = initialTourProgress(kind);
+  if (!value || value.length > 20_000) return empty;
   try {
     const p = JSON.parse(value);
-    if (!p || p.version !== 1 || !["short", "full"].includes(p.kind) || !["paused", "completed", "dismissed"].includes(p.status)) return initialTourProgress();
-    const valid = new Set(tourSteps(p.kind).map((s) => s.id));
-    const ids = (input: unknown) => Array.isArray(input) ? [...new Set(input.filter((id): id is string => typeof id === "string" && valid.has(id)))].slice(0, FULL_TOUR.length) : [];
-    const oldTopics = new Set(["digital", "fsm", "programming", "algorithms", "reasoning-topic", "behavioral", "design-topic", "communication"]);
-    const removedProgressStations = new Set(["progress", "readiness", "plan"]);
-    const completed = ids(p.completed);
-    return { version: 1, offered: p.offered === true, kind: p.kind, stepId: valid.has(p.stepId) ? p.stepId : oldTopics.has(p.stepId) ? "topics" : removedProgressStations.has(p.stepId) ? "theme" : tourSteps(p.kind)[0].id, completed, skipped: ids(p.skipped).filter((id) => !completed.includes(id)), status: p.status, updatedAt: Number.isFinite(p.updatedAt) ? p.updatedAt : 0 };
-  } catch { return initialTourProgress(); }
+    if (p?.version !== 2 || p.kind !== kind || !["paused", "completed", "dismissed"].includes(p.status)) return empty;
+    const steps = tourSteps(kind);
+    const valid = new Set(steps.map(s => s.id));
+    const sanitize = (ids: unknown): string[] => Array.isArray(ids) ? [...new Set(ids.filter((id): id is string => typeof id === "string" && valid.has(id)))] : [];
+    const completed = sanitize(p.completed);
+    const skipped = sanitize(p.skipped).filter(id => !completed.includes(id));
+    const firstPending = steps.find(step => !completed.includes(step.id) && !skipped.includes(step.id));
+    return { ...empty, offered: p.offered === true, completed, skipped,
+      stepId: valid.has(p.stepId) ? p.stepId : firstPending?.id ?? steps[0].id, status: p.status,
+      updatedAt: Number.isFinite(p.updatedAt) && p.updatedAt > 0 ? p.updatedAt : 0 };
+  } catch { return empty; }
 }
+
 export function stationReady(step: TourStep, actions: readonly string[]): boolean {
-  return step.actions.every((action) => actions.includes(action));
+  return step.actions.every(action => actions.includes(action));
 }
 export function checkpoint(progress: TourProgress, step: TourStep, outcome: "completed" | "skipped", next?: TourStep): TourProgress {
-  const done = new Set(progress.completed), skipped = new Set(progress.skipped);
-  if (outcome === "completed") { done.add(step.id); skipped.delete(step.id); }
-  else if (!done.has(step.id)) skipped.add(step.id);
-  return { ...progress, offered: true, completed: [...done], skipped: [...skipped], stepId: next?.id ?? step.id, status: next ? "paused" : "completed", updatedAt: Date.now() };
+  const completed = new Set(progress.completed), skipped = new Set(progress.skipped);
+  if (outcome === "completed") { completed.add(step.id); skipped.delete(step.id); }
+  else if (!completed.has(step.id)) skipped.add(step.id);
+  return { ...progress, offered: true, completed: [...completed], skipped: [...skipped], stepId: next?.id ?? step.id, status: next ? "paused" : "completed", updatedAt: Date.now() };
 }

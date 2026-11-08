@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { emptyCircuit, makePart, type Kind } from "../src/lib/circuit";
-import { FULL_TOUR, SHORT_TOUR, stationReady } from "../src/lib/muxi-tour";
+import { tourSteps, stationReady } from "../src/lib/muxi-tour";
 
 const require = createRequire(import.meta.url);
 require.extensions[".css"] = module => { module.exports = {}; };
@@ -38,11 +38,10 @@ test("flip-flops, registers and counters expose the clock session; merely openin
   }
 });
 
-test("wired example completes the live-output station in both tours; sequential playback remains separate", () => {
-  for (const tour of [SHORT_TOUR, FULL_TOUR]) {
-    const live = tour.find(step => step.id === "simulate")!;
-    assert.ok(stationReady(live, ["circuit-sample-loaded"]));
-    assert.equal(stationReady(live, ["circuit-simulated"]), false);
+test("both guided circuits teach live input changes without requiring a clock", () => {
+  for (const kind of ["preview", "member"] as const) {
+    const circuit = tourSteps(kind).find(step => step.id === "circuit")!;
+    assert.ok(stationReady(circuit, ["input-toggled"]));
+    assert.equal(stationReady(circuit, ["circuit-simulated"]), false);
   }
-  assert.ok(stationReady(FULL_TOUR.find(step => step.id === "clock-start")!, ["circuit-simulated"]));
 });

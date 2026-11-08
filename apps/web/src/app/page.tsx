@@ -27,7 +27,7 @@ import { BidiText } from "../components/bidi-text";
 import { QuestionTitle } from "../components/question-title";
 import { relatedQuestionKeys, uniqueLibraryQuestions } from "../lib/question-families";
 import { shuffleQuestions, useQuestionOrderSeed } from "../lib/question-order";
-import { goalProgramKey } from "../lib/goal-selection";
+import { ACCOUNT_GOAL_SAVED, goalProgramKey, type AccountGoalSaved } from "../lib/goal-selection";
 import { DEFAULT_WORKSPACE_VIEW, readWorkspaceRoute, type WorkspaceRoute } from "../lib/workspace-route";
 import { Auth, type Lang } from "../components/auth";
 import { usePracticeEntryReady } from "../components/practice-entry-splash";
@@ -156,6 +156,7 @@ function Workspace({
   const [cachedQuestions, setCachedQuestions] = useState(false);
   // Goals guide the personal plan; the library starts with all questions and no filters.
   const [goal, setGoal] = useState<Goal | null>(null);
+  const goalRevision = useRef(0);
   const [goalSkipped, setGoalSkipped] = useState(true);
   const [editingGoal, setEditingGoal] = useState(false);
   const [goalFocusRequest, setGoalFocusRequest] = useState(0);
@@ -198,6 +199,7 @@ function Workspace({
 
   const load = useCallback(async () => {
     const version = ++generation.current;
+    const initialGoalRevision = goalRevision.current;
     const current = () => version === generation.current;
     const cached = readQuestionCache(user.id, lang);
     setQuestions(cached ?? []);
@@ -242,9 +244,9 @@ function Workspace({
           if (current()) setProgressLoading(false);
         }),
       api
-        .getGoal(lang)
+        .getGoal(lang, user.id)
         .then((g) => {
-          if (!current()) return;
+          if (!current() || initialGoalRevision !== goalRevision.current) return;
           setGoal(g);
         })
         .catch(() => {}),
@@ -296,10 +298,22 @@ function Workspace({
       .then(value => { setProgress(value); setProgressRevision(revision => revision + 1); })
       .catch(() => {});
   }, [api, lang]);
-  const onGoalSaved = (g: Goal) => {
+  const applySavedGoal = useCallback((g: Goal) => {
+    goalRevision.current++;
     setGoal(g);
     setEditingGoal(false);
     refreshProgress();
+  }, [refreshProgress]);
+  useEffect(() => {
+    function receiveTourGoal(event: Event) {
+      const detail = (event as CustomEvent<AccountGoalSaved>).detail;
+      if (detail?.userId === user.id) applySavedGoal(detail.goal);
+    }
+    window.addEventListener(ACCOUNT_GOAL_SAVED, receiveTourGoal);
+    return () => window.removeEventListener(ACCOUNT_GOAL_SAVED, receiveTourGoal);
+  }, [user.id, applySavedGoal]);
+  const onGoalSaved = (g: Goal) => {
+    applySavedGoal(g);
     requestAnimationFrame(() => {
       document.querySelector<HTMLElement>("[data-goal-summary]")?.focus({ preventScroll: true });
       window.scrollTo({ top: 0, behavior: "instant" });
@@ -508,6 +522,7 @@ function Workspace({
                 showGoalSetup ? (
                   <GoalSetup
                     api={api}
+                    userId={user.id}
                     lang={lang}
                     goal={goal}
                     compact={!!goal?.complete}

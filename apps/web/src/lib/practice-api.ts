@@ -696,9 +696,9 @@ export function practiceApi(baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL) {
       call<Progress>("GET", `/v1/me/progress${q({ language })}`),
     readiness: (language?: ApiLang) =>
       call<Readiness>("GET", `/v1/me/readiness${q({ language })}`),
-    getGoal: (language?: ApiLang) =>
-      call<Goal>("GET", `/v1/me/goal${q({ language })}`),
-    saveGoal: (body: GoalRequest) => call<Goal>("POST", "/v1/me/goal", body),
+    getGoal: (language?: ApiLang, userId?: string) =>
+      call<Goal>("GET", `/v1/me/goal${q({ language })}`, undefined, {}, userId),
+    saveGoal: (body: GoalRequest, userId?: string) => call<Goal>("POST", "/v1/me/goal", body, {}, userId),
     program: (language?: ApiLang) =>
       call<Program>("GET", `/v1/me/program${q({ language })}`),
     /** Start the next due item (or a given one): an attempt is opened, or the interview lobby is pointed to. */

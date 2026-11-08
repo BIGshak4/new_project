@@ -21,8 +21,9 @@ const selectedKeys = goalJobTypes;
 const signature = (goal: Goal | null) => JSON.stringify([selectedKeys(goal), goal?.learning_mode ?? "targeted", goal?.minutes_per_day, goal?.seniority, goal?.interview_date]);
 
 /** Goal choices stay compact; the account stores the complete set of selected roles. */
-export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, focusRequest = 0 }: {
+export function GoalSetup({ api, userId, lang, goal, onSaved, onSkip, compact = false, focusRequest = 0 }: {
   api: PracticeApi;
+  userId: string;
   lang: Lang;
   goal: Goal | null;
   onSaved: (goal: Goal) => void;
@@ -150,30 +151,32 @@ export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, f
         minutes_per_day: minuteCount,
         seniority,
         language: lang,
-      });
+      }, userId);
       dirty.current = false;
       onSaved(saved);
       toast.success(t("ההעדפות נשמרו. תוכנית הלמידה מתעדכנת.", "Preferences saved. Your learning plan is updating."));
     } catch (reason) {
-      setError(apiMessage(reason, lang));
+      setError((reason as { code?: string }).code === "network"
+        ? t("לא הצלחנו לאשר את השמירה. הבחירות עדיין בטופס, ואפשר לנסות שוב.", "We couldn’t confirm the save. Your choices are still in the form. Please try again.")
+        : apiMessage(reason, lang));
     } finally {
       setBusy(false);
     }
   }
 
-  function bar(label: string, value: string, icon: ReactNode, labelId: string) {
-    return <summary className={styles.bar} aria-disabled={busy || undefined} onClick={event => { if (busy) event.preventDefault(); }}>
+  function bar(label: string, value: string, icon: ReactNode, labelId: string, tourControl?: string) {
+    return <summary className={styles.bar} data-muxi-control={tourControl} aria-disabled={busy || undefined} onClick={event => { if (busy) event.preventDefault(); }}>
       <span className={styles.barIcon}>{icon}</span>
       <span className={styles.barText}><span id={labelId} className={styles.barLabel}>{label}</span><span className={styles.barValue} dir={proseDirection(value, lang === "he" ? "rtl" : "ltr")}><BidiText>{value}</BidiText></span></span>
       <ChevronDown className={styles.chevron} size={18} aria-hidden="true" />
     </summary>;
   }
 
-  return <section className={`goal-setup ${compact ? "compact" : ""} ${styles.setup}`} aria-labelledby="goal-title">
+  return <section className={`goal-setup ${compact ? "compact" : ""} ${styles.setup}`} aria-labelledby={`${id}-title`}>
     <header className="goal-head">
       <Target size={22} aria-hidden="true" />
       <div>
-        <h2 id="goal-title" className={styles.heading} ref={heading} tabIndex={-1}>{goal?.complete ? t("עדכון תוכנית הלמידה", "Update your learning plan") : t("איך תרצו ללמוד?", "How would you like to learn?")}</h2>
+        <h2 id={`${id}-title`} className={styles.heading} ref={heading} tabIndex={-1}>{goal?.complete ? t("עדכון תוכנית הלמידה", "Update your learning plan") : t("איך תרצו ללמוד?", "How would you like to learn?")}</h2>
         <p className={styles.intro}>{t("בחרו כיוון וקצב שנוח לכם. אפשר לשנות הכול בהמשך.", "Choose a direction and a pace that work for you. You can change them later.")}</p>
       </div>
     </header>
@@ -186,7 +189,7 @@ export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, f
           <span>{t("אני מתכונן לתפקיד", "I’m preparing for a role")}</span>
         </label>
         <label className={`${styles.modeChoice} ${mode === "explore" ? styles.chosen : ""}`}>
-          <input type="radio" name={`${id}-mode`} value="explore" checked={mode === "explore"} onChange={() => { edited(); setMode("explore"); }} />
+          <input data-muxi-control="goal-mode-explore" type="radio" name={`${id}-mode`} value="explore" checked={mode === "explore"} onChange={() => { edited(); setMode("explore"); }} />
           <span>{t("אין לי יעד מוגדר, למד אותי", "I don’t have a defined goal. Teach me")}</span>
         </label>
       </fieldset>
@@ -195,7 +198,7 @@ export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, f
         <div>
           {mode === "targeted" ? <>
             <details className={styles.section} ref={rolesSection} data-goal-section="roles">
-              {bar(t("תפקיד", "Role"), jobTypes.length === 1 ? t("תפקיד אחד נבחר", "One role selected") : jobTypes.length > 1 ? t(`${jobTypes.length} תפקידים נבחרו`, `${jobTypes.length} roles selected`) : t("בחרו תפקיד אחד או יותר", "Choose one or more roles"), <BriefcaseBusiness size={19} aria-hidden="true" />, `${id}-roles-label`)}
+              {bar(t("תפקיד", "Role"), jobTypes.length === 1 ? t("תפקיד אחד נבחר", "One role selected") : jobTypes.length > 1 ? t(`${jobTypes.length} תפקידים נבחרו`, `${jobTypes.length} roles selected`) : t("בחרו תפקיד אחד או יותר", "Choose one or more roles"), <BriefcaseBusiness size={19} aria-hidden="true" />, `${id}-roles-label`, "goal-roles")}
               <fieldset className={styles.options} disabled={busy || jobsLoading || !!jobsError} aria-labelledby={`${id}-roles-label`}>
                 <legend className={styles.visuallyHidden}>{t("בחירת תפקידים", "Choose roles")}</legend>
                 <p className={styles.help}>{t("אפשר לבחור כמה תפקידים. התוכנית תשלב ביניהם.", "Choose as many roles as you like. Your plan will combine them.")}</p>
@@ -259,7 +262,7 @@ export function GoalSetup({ api, lang, goal, onSaved, onSkip, compact = false, f
 
       {error && <p className="notice error" role="alert" dir={proseDirection(error)}><BidiText>{error}</BidiText></p>}
       <div className="goal-actions">
-        <button className="primary" type="submit" disabled={busy || jobsLoading || !!jobsError || (mode === "targeted" && !jobTypes.length)}><Sparkles size={16} aria-hidden="true" />{busy ? t("שומרים…", "Saving…") : mode === "explore" ? t("מתחילים ללמוד", "Start learning") : goal?.complete ? t("שמירת התוכנית", "Save plan") : t("בונים לי תוכנית", "Build my plan")}</button>
+        <button className="primary" type="submit" data-muxi-control="goal-save" disabled={busy || jobsLoading || !!jobsError || (mode === "targeted" && !jobTypes.length)}><Sparkles size={16} aria-hidden="true" />{busy ? t("שומרים…", "Saving…") : mode === "explore" ? t("מתחילים ללמוד", "Start learning") : goal?.complete ? t("שמירת התוכנית", "Save plan") : t("בונים לי תוכנית", "Build my plan")}</button>
         {onSkip && <button className="text-button" type="button" disabled={busy} onClick={onSkip}>{t("אחר כך", "Later")}</button>}
       </div>
     </form>

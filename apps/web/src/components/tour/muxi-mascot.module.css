@@ -100,12 +100,33 @@
   transform-origin: 153px 108px;
 }
 
-.mascot[data-pose="wave"] .wavingHand {
-  animation: sayHello 900ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+@media (prefers-reduced-motion: no-preference) {
+  .mascot[data-pose="wave"] .wavingHand {
+    animation: sayHello 900ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+  }
+  .mascot[data-pose="point"] .character {
+    --lean: 2deg;
+    animation: point 480ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+  }
+  .mascot[data-pose="point"][data-point-direction="left"] .character { --lean: -2deg; }
+  .mascot[data-pose="celebrate"] .character {
+    animation: celebrate 650ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+  }
+  .mascot[data-pose="celebrate"] .sparks {
+    transform-origin: 110px 48px;
+    animation: sparkle 520ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+  }
 }
 
-.mascot[data-pose="celebrate"] .character {
-  animation: celebrate 650ms cubic-bezier(0.16, 1, 0.3, 1) 1;
+@keyframes point {
+  0%, 100% { transform: rotate(0); }
+  45% { transform: rotate(var(--lean)); }
+}
+
+@keyframes sparkle {
+  from { transform: scale(.9); opacity: 0; }
+  60% { opacity: 1; }
+  to { transform: scale(1); }
 }
 
 @keyframes sayHello {
@@ -125,8 +146,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mascot[data-pose] .wavingHand,
-  .mascot[data-pose] .character {
-    animation: none;
-  }
+  .mascot[data-pose="celebrate"] .sparks { animation: appear 160ms ease-out; }
 }
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }

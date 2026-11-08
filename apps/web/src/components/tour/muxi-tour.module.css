@@ -10,26 +10,30 @@
 .headerActions { display: flex; align-items: center; gap: 8px; }
 .reportHelp { font-size: 12px; padding-inline: 9px; }
 .exit { display: flex; align-items: center; gap: 7px; background: transparent; border-color: var(--line); padding-inline: 12px; font-size: 13px; }
-.welcome { max-width: 1060px; margin-inline: auto; padding: 46px 28px 60px; }
-.welcomeIntro { display: flex; align-items: center; gap: 30px; }
-.welcomeIntro h2, .finish h2 { font-size: clamp(29px, 3vw, 43px); line-height: 1.25; margin: 0 0 16px; }
-.welcomeIntro p { max-width: 56ch; font-size: 18px; color: var(--muted); margin: 0; }
-.welcomeMascot { width: 156px; flex-shrink: 0; }
-.welcomeLead { margin: 28px 0; font-size: 18px; }
-.choices { display: grid; grid-template-columns: 1.15fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.choices section { padding: 28px; display: flex; flex-direction: column; align-items: flex-start; }
-.choices h3 { font-size: 24px; line-height: 1.3; margin: 0; }
-.choices p { color: var(--muted); margin: 18px 0; }
-.choices button { margin-top: auto; }
-.fullChoice, .shortChoice { background: var(--surface); }
-.shortChoice { border-inline-start: 1px solid var(--line); }
-.choiceTitle { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-.choiceTitle span { background: var(--soft); color: var(--link); font-size: 12px; font-weight: 700; border-radius: 5px; padding: 4px 9px; }
-.choices .choiceMeta { font-size: 13px; margin-top: auto; margin-bottom: 20px; padding-top: 16px; }
-.resume { margin-top: 24px; padding-block: 18px; border-block: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-.resume p { margin: 3px 0 0; color: var(--muted); }
-.welcomeFoot { margin-top: 24px; text-align: center; }
-.welcomeFoot p { max-width: 76ch; margin-inline: auto; font-size: 13px; color: var(--muted); }
+.welcome { max-width: 1120px; margin-inline: auto; padding: clamp(35px, 8vh, 96px) clamp(20px, 4vw, 52px) 56px; }
+.welcomeHero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(240px, .9fr); grid-template-areas: "copy scene"; align-items: center; gap: clamp(28px, 6vw, 90px); min-height: 285px; }
+.welcomeCopy { grid-area: copy; min-width: 0; }
+.welcomeCopy h2, .finish h2 { font-size: clamp(32px, 4.2vw, 56px); line-height: 1.14; letter-spacing: -.025em; margin: 0; text-wrap: balance; }
+.welcomeCopy > p { max-width: 49ch; margin: 18px 0 0; line-height: 1.7; font-size: clamp(16px, 1.55vw, 20px); color: var(--ink-2); }
+.welcomeActions, .finishActions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; margin-block-start: 24px; }
+.welcomeActions button, .finishActions button, .finishActions a { display: inline-flex; align-items: center; justify-content: center; gap: 9px; }
+.welcomeActions a { color: var(--link); text-underline-offset: 4px; padding-block: 10px; }
+.welcomeCopy .scopeNote { font-size: 13px; color: var(--muted); margin-block-start: 12px; }
+.scene { position: relative; grid-area: scene; width: 100%; aspect-ratio: 2 / 1; min-width: 0; direction: ltr; isolation: isolate; }
+.traces { position: absolute; inset: 0; width: 100%; height: 100%; stroke: var(--line); stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; }
+.pulse, .outputPulse { stroke: var(--signal); stroke-width: 2.3px; stroke-dasharray: 1; }
+.outputPulse { stroke: var(--link); }
+.welcomeMascot { position: absolute; top: -1%; left: 27%; width: 47%; height: auto; }
+.routePreview { margin-block-start: clamp(28px, 6vh, 72px); padding-block: 22px; border-block-start: 1px solid var(--line); display: flex; align-items: baseline; gap: 18px 28px; }
+.routePreview h3 { margin: 0; font-size: 15px; flex-shrink: 0; }
+.routePreview ol { display: flex; align-items: baseline; flex-wrap: wrap; column-gap: 26px; row-gap: 8px; margin: 0; padding: 0; list-style: none; }
+.routePreview li { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; color: var(--ink-2); }
+.routeDot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--link); background: var(--paper); }
+@media (prefers-reduced-motion: no-preference) {
+  .pulse, .outputPulse { animation: traceSignal 650ms cubic-bezier(.16, 1, .3, 1) both; }
+  .outputPulse { animation-delay: 400ms; }
+}
+@keyframes traceSignal { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 .quiet { color: var(--link); background: transparent; border-color: transparent; text-decoration: underline; text-underline-offset: 4px; font-size: 14px; }
 .tourBar { display: flex; align-items: center; gap: 18px; max-width: 1580px; margin-inline: auto; padding: 10px 24px; border-bottom: 1px solid var(--line); font-size: 14px; }
 .tourBar > span:first-child { font-weight: 700; }
@@ -64,18 +68,21 @@
 .task strong { font-size: 14px; }
 .task p { margin: 6px 0 0; line-height: 1.7; }
 .stepActions { display: flex; gap: 8px; }
-.stepActions .primary { flex: 1; justify-content: center; }
-.hint { color: var(--muted); font-size: 12px; margin: 10px 0 0; }
+.stepActions :global(.primary) { flex: 1; justify-content: center; }
 .coach > .quiet { display: block; margin-inline: auto; margin-block: 5px; }
 .coachFooter { display: flex; flex-wrap: wrap; gap: 4px 12px; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px; }
 .coachFooter button { border: 0; background: transparent; padding: 5px 0; min-height: 44px; color: var(--muted); font-size: 12px; gap: 5px; }
 .stage { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: clamp(18px, 2vw, 30px); }
 .stage [data-muxi-target] { scroll-margin-block: 140px; }
 .stage :global(.code-answer-editor) { min-width: 0; }
-.finish { max-width: 740px; margin-inline: auto; padding: 56px 24px; text-align: center; }
-.finish > svg { display: block; margin: 0 auto 26px; }
-.finish > p { color: var(--muted); line-height: 1.8; }
-.finishActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.finish { max-width: 740px; margin-inline: auto; padding: clamp(30px, 6vh, 72px) 24px; text-align: center; }
+.finish .scene { width: min(86%, 300px); margin: 0 auto 25px; }
+.finish > p { max-width: 50ch; margin: 16px auto 0; color: var(--ink-2); line-height: 1.7; }
+.finishActions { justify-content: center; }
+.unfinished { max-width: 440px; margin: 28px auto 0; border-block-start: 1px solid var(--line); padding-block-start: 15px; text-align: start; }
+.unfinished summary { color: var(--link); cursor: pointer; padding-block: 8px; }
+.unfinished ul { list-style: none; padding: 0; margin: 8px 0; }
+.unfinished button { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: start; border: 0; background: transparent; color: var(--link); }
 .launcher { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 3px 9px; font-size: 12px; white-space: nowrap; background: var(--surface); color: var(--ink); }
 .launcherMascot { width: 32px; height: 34px; }
 .expandedCoach { position: fixed; inset-block-end: 16px; inset-inline-end: 16px; width: min(340px, calc(100vw - 32px)); max-height: calc(100dvh - 24px); overflow: hidden; z-index: 5; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); box-shadow: 0 8px 32px #0003; }
@@ -96,15 +103,19 @@
   .brand { gap: 9px; } .brand > span:first-child { font-size: 21px; } .brand h1 { font-size: 13px; } .brandDivider { height: 20px; }
   .headerActions { gap: 5px; } .headerActions :global(.icon-button), .headerActions :global(.language-menu-trigger) { width: 38px; min-width: 38px; }
   .exit { font-size: 11px; padding-inline: 7px; gap: 4px; }
-  .welcome { padding: 28px 18px 40px; } .welcomeIntro { gap: 16px; align-items: flex-start; } .welcomeMascot { width: 94px; }
-  .welcomeIntro h2 { font-size: 27px; } .welcomeIntro p { font-size: 15px; } .welcomeLead { font-size: 16px; }
-  .choices { grid-template-columns: 1fr; } .choices section { padding: 22px; } .shortChoice { border-inline-start: 0; border-top: 1px solid var(--line); }
-  .choices h3 { font-size: 22px; } .choices .choiceMeta { margin-top: 0; padding-top: 0; } .choices p { margin-block: 14px; }
-  .resume { align-items: flex-start; flex-direction: column; }
+  .welcome { padding: 24px 20px 40px; }
+  .welcomeHero { grid-template-areas: "scene" "copy"; grid-template-columns: minmax(0, 1fr); gap: 12px; min-height: 0; }
+  .welcomeHero .scene { width: min(60%, 220px); margin-inline: auto; }
+  .welcomeCopy h2 { font-size: clamp(30px, 7vw, 42px); }
+  .welcomeCopy > p { margin-block-start: 12px; }
+  .welcomeActions { margin-block-start: 18px; }
+  .routePreview { display: grid; gap: 12px; margin-block-start: 26px; padding-block-start: 16px; }
+  .routePreview ol { column-gap: 16px; row-gap: 7px; }
+  .routePreview li { font-size: 13px; }
   .tourBar { gap: 8px; flex-wrap: wrap; padding: 8px 14px; } .localNote { width: 100%; margin: 0; }
   .tourGrid { display: flex; flex-direction: column; gap: 18px; padding: 18px 14px 40px; }
   .root:has([data-muxi-stage]) { padding-bottom: 86px; }
-  .root:has(dialog[open]) .mobileNav { display: none; }
+  .root:has(dialog:modal) .mobileNav { display: none; }
   .mobileNav { position: fixed; z-index: 10; inset-inline: 0; bottom: 0; display: flex; align-items: center; gap: 8px; padding: 8px 12px max(8px, env(safe-area-inset-bottom)); background: var(--paper); border-top: 1px solid var(--line); }
   .mobileNav button { font-size: 12px; padding-inline: 8px; }
   .mobileBack { display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: flex-start; background: transparent; border: 0; color: var(--link); gap: 3px; }
