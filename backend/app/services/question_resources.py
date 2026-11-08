@@ -134,7 +134,9 @@ async def fetch_question_images(question) -> list[tuple[str, bytes]] | None:
     images = await _download(settings, media)
     if not all(image is not None for image in images):
         return None
-    shrunk = [shrink_image(mime, data) for mime, data in images]
+    shrunk = [await asyncio.to_thread(shrink_image, mime, data) for mime, data in images]
+    if any(image is None for image in shrunk):                 # a figure above the pixel cap: do not guess (SEC-017)
+        return None
     if len(_image_cache) >= IMAGE_CACHE_MAX:
         for old in sorted(_image_cache, key=lambda k: _image_cache[k][0])[: IMAGE_CACHE_MAX // 4]:
             del _image_cache[old]

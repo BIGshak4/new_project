@@ -30,6 +30,20 @@ The register contains 13 engineering records, including an installed-advisory bu
 | [SEC-012](findings/SEC-012-dependency-advisories.md) | Vulnerable locked npm/Python dependencies | Critical maximum advisory | All three apps deployed; dated npm/OSV scans clear |
 | [SEC-013](findings/SEC-013-leaked-password-protection.md) | Hosted breached-password rejection disabled | Medium configuration gap | Open; project-owner action required |
 
+## Finding register — 2026-11-08 full review
+
+[The full review](runs/2026-11-08-full-review.md): backend, database rules, code execution, web app, deployment, repository and dependencies. Seven records; six fixed in one backend commit with regression tests, one an operator action.
+
+| ID | Finding | Severity | Current verification/status |
+|---|---|---|---|
+| [SEC-015](findings/SEC-015-webhook-without-payment-keys.md) | Payment webhook accepted events signed with a built-in test secret | High | Fixed; 404 without payment keys; tests pass |
+| [SEC-016](findings/SEC-016-padded-answer-numeric-checker.md) | Padded answer pinned a CPU in the numeric checker | High on the free host | Fixed; whitespace runs collapsed; timed test |
+| [SEC-017](findings/SEC-017-image-pixel-cap.md) | Pictures decoded with no pixel cap | Medium | Fixed; header read first, 60 Mpx cap, decode off the loop |
+| [SEC-018](findings/SEC-018-public-repository-tester-emails.md) | Repository public with tester e-mails and the solution bank | High (privacy) | Addresses scrubbed; operator action: make the repository private |
+| [SEC-019](findings/SEC-019-production-guard-inactive.md) | Live server ran as staging; start guard only logged | Medium | Fixed; `ENV=production`, warnings separated from refusals |
+| [SEC-020](findings/SEC-020-certifi-compromised-root.md) | Certificate bundle trusted a compromised authority | Medium (advisory Critical) | Fixed; certifi 2026.10.23 |
+| [SEC-021](findings/SEC-021-code-runner-slots-shared.md) | One member could hold everyone's code-runner slots | Low | Fixed; slots counted per member |
+
 Every record separates observed evidence, the exact change, verification and residual work. Final integrated test counts and deployment revisions are recorded once in the run report to avoid adding overlapping focused-suite counts.
 
 ## Rules for every review

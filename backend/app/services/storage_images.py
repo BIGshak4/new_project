@@ -9,6 +9,7 @@ real PNG, JPEG or WebP goes to the model.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 
 import httpx
@@ -56,7 +57,10 @@ class StorageImageFetcher:
         if mime is None:
             log.warning("image rejected path=%s reason=not an image", path)
             return None
-        return shrink_image(mime, data)              # bounded size for the model (2026-11-02)
+        shrunk = await asyncio.to_thread(shrink_image, mime, data)     # bounded size for the model (2026-11-02)
+        if shrunk is None:
+            log.warning("image rejected path=%s reason=too many pixels", path)
+        return shrunk
 
     async def aclose(self) -> None:
         await self.client.aclose()
@@ -67,9 +71,13 @@ class StorageImageFetcher:
 # question figures and to answer photos (phone photos are usually 3,000-4,000 px wide).
 MAX_IMAGE_SIDE = 1024
 JPEG_QUALITY = 85
+# A 5 MB flat PNG can declare 13,000 x 13,000 pixels and decode to 700 MB; Pillow only refuses above twice its own
+# default (~179 Mpx). The header is read before any decode and a picture above this is dropped, never sent as is
+# (security review SEC-017, 2026-11-08). Phone photos are 12-50 Mpx.
+MAX_IMAGE_PIXELS = 60_000_000
 
 
-def shrink_image(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> tuple[str, bytes]:
+def shrink_image(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> tuple[str, bytes] | None:
     """The same picture bounded to `max_side` pixels on its long side; unchanged when already small enough or when
     it cannot be decoded (the original bytes then go to the model as before). Never raises."""
     try:
@@ -77,7 +85,13 @@ def shrink_image(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> t
 
         from PIL import Image, ImageOps
 
+        Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS                 # Pillow refuses above twice this at open()
         with Image.open(io.BytesIO(data)) as image:
+            declared_w, declared_h = image.size                # the header only; nothing is decoded yet
+            if declared_w * declared_h > MAX_IMAGE_PIXELS:
+                log.warning("image dropped: %dx%d px declared, above %d (%s, %d bytes)",
+                            declared_w, declared_h, MAX_IMAGE_PIXELS, mime, len(data))
+                return None
             image = ImageOps.exif_transpose(image)            # phone photos carry their rotation in EXIF
             width, height = image.size
             longest = max(width, height)
@@ -101,6 +115,9 @@ def shrink_image(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> t
             resized = resized.convert("RGB").quantize(colors=256, dither=Image.Dither.NONE)
             resized.save(out, format="PNG", optimize=True)
             return "image/png", out.getvalue()
-    except Exception:                                          # noqa: BLE001 - a picture must never cost an answer
+    except Exception as exc:                                   # noqa: BLE001 - a picture must never cost an answer
+        if type(exc).__name__ == "DecompressionBombError":     # Pillow's own refusal, raised inside open()
+            log.warning("image dropped: %s (%s, %d bytes)", exc, mime, len(data))
+            return None
         log.warning("image could not be shrunk; sent as is (%s, %d bytes)", mime, len(data))
         return mime, data

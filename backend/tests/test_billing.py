@@ -38,7 +38,7 @@ def plans(configured=True):
 
 def service(catalog, *, configured=True, require_payment=False):
     store = InMemoryStore(catalog)
-    gateway = FakeStripe()
+    gateway = FakeStripe(secret="whsec_test")
     svc = BillingService(store, gateway, BillingConfig(plans=plans(configured), require_payment=require_payment,
                                                        configured=configured, site_url="https://site.test"))
     return svc, store, gateway
@@ -147,7 +147,7 @@ class TestCheckoutAndPortal:
 
 class TestTheWebhook:
     def test_signatures_are_checked_and_stale_ones_refused(self):
-        gateway = FakeStripe()
+        gateway = FakeStripe(secret="whsec_test")
         payload = event("invoice.paid", {"id": "in_1"})
         assert verify_signature(payload, gateway.sign(payload), gateway.secret)["type"] == "invoice.paid"
         for bad in (None, "t=abc,v1=00", gateway.sign(payload).replace("v1=", "v1=0")):
@@ -234,12 +234,19 @@ class TestOverHttp:
         assert refused.status_code == 503 and refused.json()["error"]["code"] == "evaluation_unavailable"
         assert (await client.post("/v1/me/billing/checkout", json={"plan": "x" * 41}, headers=headers)).status_code == 422
         assert (await client.post("/v1/me/billing/portal", headers=headers)).status_code == 404
-        # the webhook needs a valid signature and no user token
+        # without payment keys the webhook does not exist, whatever the signature (SEC-015, 2026-11-08)
         gateway = app.state.runtime.billing.gateway
         payload = event("charge.refunded", {"id": "ch"})
+        assert gateway.secret is None
+        forged = FakeStripe(secret="whsec_test").sign(payload)
+        assert (await client.post("/v1/billing/webhook", content=payload)).status_code == 404
+        assert (await client.post("/v1/billing/webhook", content=payload, headers={"Stripe-Signature": forged})).status_code == 404
+        # with a secret the webhook needs a valid signature and no user token
+        gateway.secret = "whsec_test"
         assert (await client.post("/v1/billing/webhook", content=payload)).status_code == 422
         ok = await client.post("/v1/billing/webhook", content=payload, headers={"Stripe-Signature": gateway.sign(payload)})
         assert ok.status_code == 200 and ok.json()["received"] is True
+        gateway.secret = None
         # practice still works for a free user while payment is optional
         started = await client.post("/v1/practice/attempts", json={"question_key": "example-sensor-majority"}, headers=headers)
         assert started.status_code == 201, started.text

@@ -14,7 +14,7 @@ services:
     autoDeploy: true
     envVars:
       - key: ENV
-        value: staging                 # production refuses to start with a scripted model; switch when the key is in
+        value: production              # refuses to start on a dangerous setting (scripted model, open pilot gate, * origins; app/config.py production_problems); Render keeps the previous deploy if the new one refuses (2026-11-08)
       - key: LLM_PROVIDER
         sync: false                    # openai (fallback: anthropic); scripted/manual never in production
       - key: SUPABASE_URL

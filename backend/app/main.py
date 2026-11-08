@@ -67,6 +67,8 @@ async def lifespan(app: FastAPI):
         raise RuntimeError("refusing to start in production: " + "; ".join(problems))
     for problem in problems:
         log.warning("configuration: %s", problem)
+    for warning in settings.production_warnings():
+        log.warning("configuration: %s", warning)
     if not hasattr(app.state, "verifier"):
         app.state.verifier = TokenVerifier(supabase_url=settings.supabase_url, jwt_secret=settings.supabase_jwt_secret)
     if not hasattr(app.state, "runtime"):
@@ -238,6 +240,21 @@ class StreamLimits:
 
 
 app.add_middleware(StreamLimits)
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    """Browsers never render this API, but the headers cost nothing and close the odd corner: a JSON body sniffed
+    as HTML, the docs page framed, a token-bearing response cached by a proxy (security review, 2026-11-08)."""
+    response = await call_next(request)
+    headers = response.headers
+    headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+    headers.setdefault("X-Content-Type-Options", "nosniff")
+    headers.setdefault("X-Frame-Options", "DENY")
+    headers.setdefault("Referrer-Policy", "no-referrer")
+    if request.url.path.startswith("/v1/"):
+        headers.setdefault("Cache-Control", "no-store")
+    return response
 
 
 @app.middleware("http")

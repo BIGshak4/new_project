@@ -154,7 +154,7 @@ class Settings(BaseSettings):
     @field_validator("database_url", "supabase_url", "supabase_jwt_secret", "supabase_service_role_key", "anthropic_api_key",
                      "stripe_secret_key", "stripe_webhook_secret", "stripe_price_regular", "stripe_price_premium",
                      "anthropic_model", "anthropic_role_models", "openai_api_key", "openai_model", "openai_role_models", "openai_role_effort", "openai_service_tier", "llm_provider",
-                     "env", "default_language", mode="before")
+                     "env", "default_language", "health_key", "code_execution_signing_seed", mode="before")
     @classmethod
     def _strip(cls, value):
         """Values pasted into a dashboard often carry a trailing newline or spaces; the database then
@@ -272,11 +272,27 @@ class Settings(BaseSettings):
             problems.append("LLM_PROVIDER=manual waits for a person to answer each model call")
         if self.llm_provider == "scripted":
             problems.append("LLM_PROVIDER=scripted returns fake evaluations")
-        if self.allow_in_review_content:
-            problems.append("ALLOW_IN_REVIEW_CONTENT=true would serve unreviewed questions")
         if not self.require_pilot_membership:
             problems.append("REQUIRE_PILOT_MEMBERSHIP=false would let any signed-in account practise")
+        if "*" in self.allowed_origins:
+            problems.append("ALLOWED_ORIGINS contains * (any site could call the API with a stolen token)")
+        if self.require_payment and not self.stripe_secret_key:
+            problems.append("REQUIRE_PAYMENT=true but no payment keys are set (nobody could pay)")
         return problems
+
+    def production_warnings(self) -> list[str]:
+        """Logged at start in every environment; never a refusal. Deliberate pilot choices and open operator items
+        (security review of 2026-11-08)."""
+        warnings = []
+        if self.allow_in_review_content:
+            warnings.append("ALLOW_IN_REVIEW_CONTENT=true serves in-review questions (the pilot's choice, 2026-11-02)")
+        if not self.health_key:
+            warnings.append("HEALTH_KEY is not set: /health describes the deployment to anyone")
+        if not self.supabase_service_role_key:
+            warnings.append("SUPABASE_SERVICE_ROLE_KEY is not set: answer photos are stored but never judged")
+        if self.code_execution_enabled and not self.code_execution_signing_seed:
+            warnings.append("CODE_EXECUTION_SIGNING_SEED is not set: the runner's tickets are signed with a derived key")
+        return warnings
 
 
 @lru_cache

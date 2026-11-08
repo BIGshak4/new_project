@@ -594,7 +594,7 @@ touch the backend as well as the web app:
 
 ## 5y. Pilot opened (2026-10-02)
 
-- Testers on the pilot list (`jr_members`): raztassa2000@gmail.com ("Raz"), oreyosef9@gmail.com ("Or"); they create their
+- Testers on the pilot list (`jr_members`): (e-mail withheld) ("Raz"), (e-mail withheld) ("Or"); they create their
   own account at https://jobrun-practice.netlify.app with any password of 8+ characters.
 - Shaked rotated the database password and moved Render to the Transaction pooler and the judge to Opus 5.5. **A password
   with `@` or `!` must be percent-encoded in `DATABASE_URL`** (`%40`, `%21`): raw, the URL parser takes the text after the
@@ -1682,7 +1682,7 @@ Render: clean on build `96aeb55` (the speed knobs; `/health.speed` shows the def
 5. The owner items still open: `HEALTH_KEY`, DB password rotation (set `CODE_EXECUTION_SIGNING_SEED` first), Supabase
    2FA and leaked-password protection.
 
-## 5zx. Follow-ups on every question, and Tomer on the pilot list (2026-11-02, Shaked: "why i cant see follow up questions"; "change all the questions to on the fly so they act like normal questions and just need the last stamp"; "tomerfahn@gmail.com add him too")
+## 5zx. Follow-ups on every question, and Tomer on the pilot list (2026-11-02, Shaked: "why i cant see follow up questions"; "change all the questions to on the fly so they act like normal questions and just need the last stamp"; "(e-mail withheld) add him too")
 
 **Why there were no follow-ups.** The three answers Shaked gave on the morning of 2 November were judged, carded and
 tipped, but no follow-up was ever written: the generator was not called once. Every question he opened carries
@@ -1695,7 +1695,7 @@ no skill progress, and the follow-up controller only opens a follow-up when the 
 **Decision and data change (approved by Shaked in chat, dry run then applied, 2026-11-02 ≈ 09:40 UTC).**
 `update public.question set assets = assets || '{"assessment_ready": true}' where assets->>'assessment_ready' = 'false'`
 → 243 rows; the review stamp (`status`, still `trial`; the `content_review_pending` flag on answers) is untouched. Same
-transaction: `insert into public.jr_members (email, display_name) values ('tomerfahn@gmail.com', 'Tomer')` → 12 members.
+transaction: `insert into public.jr_members (email, display_name) values ('(e-mail withheld)', 'Tomer')` → 12 members.
 The question cache lives sixty seconds, so no restart was needed.
 
 **Durable rule in code: `ASSESS_UNREVIEWED_QUESTIONS`.** Harel's intake and about twenty of his tests pin
@@ -1832,7 +1832,7 @@ practice, provider, interview and visual-answer suites pass unchanged (134 tests
 **3,979 passed / 12 skipped** (a first run took 21 hours and failed ten date-based tests because the laptop slept
 across midnight; rerun awake, all green).
 
-**Pilot list.** joni25022001@gmail.com joined `jr_members` as 'Joni' on 2026-11-03 (Shaked: "add him"; dry run,
+**Pilot list.** (e-mail withheld) joined `jr_members` as 'Joni' on 2026-11-03 (Shaked: "add him"; dry run,
 then applied): thirteen members.
 
 **Not deployed as of 2026-11-06.** The commit above was never pushed (the session's permission checker refused the
@@ -1951,8 +1951,8 @@ protection tests (§5zza) and two were this change's: the who-am-I test's exact 
 `/v1/me.coins` in the header on every screen; show `coins_earned` next to the verdict, including 0 when the question
 was already paid; `completion_coins` on the report is the finishing bonus actually paid.
 
-**Pilot list.** talbaumgarten@gmail.com joined `jr_members` as 'Tal' on 2026-11-07 (Shaked: "add"; dry run, then
-applied): fourteen members. yaron3500@gmail.com joined as 'Yaron' later the same day (Shaked: "add him"; dry run,
+**Pilot list.** (e-mail withheld) joined `jr_members` as 'Tal' on 2026-11-07 (Shaked: "add"; dry run, then
+applied): fourteen members. (e-mail withheld) joined as 'Yaron' later the same day (Shaked: "add him"; dry run,
 then applied): fifteen members.
 
 ## 5zzc. Cutting expenses: the background prose on flex with no reasoning (2026-11-07, Shaked: "lets check how can we cut expenses even more"; "run 1 and 2")
@@ -2026,6 +2026,49 @@ price) keeps 35 % profit well past the cap.
 **Not changed.** The report model, the review set itself (rerun it with `scripts/judge_speed_matrix.py` if a band
 drifts in production), the Anthropic fallback provider. `/health.models.evaluator` shows which model judges.
 
+## 5zze. Full security review and its fixes (2026-11-08, Shaked: "can you do a full security check, i dont want our system to be hacked"; "do what you want to do")
+
+**How.** Four independent read-only reviews (auth and authorization; the data layer and all 44 migrations; code
+execution, input and denial of service; the web app, deployment, repository and dependencies), automated scans
+(`npm audit`, `pip-audit`, a key-shaped sweep of every commit, live headers and health page, the Next.js advisories
+from GitHub's API), every finding re-verified by hand. Full record: `security/runs/2026-11-08-full-review.md` and
+findings SEC-015 to SEC-021. **What held up** is long and reassuring: token verification, ownership in SQL, the money
+paths under locks, row-level security on every table, definer functions, storage policies, no injection, no SSRF, no
+secrets in history, learner code on a separate micro-VM, the web app's rendering and headers.
+
+**Fixed in this commit (regression tests in `tests/test_security_review_2026_11_08.py`).**
+- SEC-015 (high): the fake payment gateway signed and verified webhooks with a public constant, and production runs
+  it because no payment keys exist. `FakeStripe(secret=None)`; the webhook is a 404 until a secret is injected;
+  `REQUIRE_PAYMENT=true` without keys refuses to start.
+- SEC-016 (high on the free host): a padded answer against the numeric checker. `_CLAUSE_END`'s connective
+  alternation is quadratic over blanks (8,000 spaces: 2.6 s per scan, repeated per name; a 20,000-character answer
+  over a minute of CPU before any model call). `_collapse_whitespace` first; 19,000 blanks now take under a
+  millisecond and the located values are unchanged.
+- SEC-017 (medium): pictures had a byte cap, no pixel cap; a 5 MB flat PNG declaring 13,000² px decodes to 700 MB.
+  `MAX_IMAGE_PIXELS` 60 M read from the header before any decode; above it the picture is dropped (an answer photo
+  skipped, a question figure means "no assessment"); Pillow's own refusal mapped the same way; the shrink runs in a
+  thread.
+- SEC-019 (medium): the live server ran `ENV=staging`, so `production_problems()` only logged. `render.yaml` now says
+  `production`; the in-review check (which contradicted the 2026-11-02 decision) moved to a new
+  `production_warnings()` list with the open operator items (`HEALTH_KEY`, service-role key, signing seed); two
+  refusals added (`*` origins, payment required without keys); `health_key` and the seed are stripped like the other
+  pasted values. Render keeps the old deploy if a new one refuses.
+- SEC-020 (medium): `certifi` 2026.7.22 trusted a compromised authority (GHSA-6q48-6c7w-9gw2) → 2026.10.23.
+- SEC-021 (low): the code runner's two running slots were counted globally; one member could hold everyone's.
+  Per member now, in both ledgers.
+- API security headers on every response (HSTS, nosniff, DENY framing, no referrer, `no-store` under `/v1`).
+- SEC-018 (high, privacy): the GitHub repository is PUBLIC, and this file carried five pilot testers' addresses.
+  Scrubbed here (first names only from now on); making the repository private is Shaked's.
+
+**Shaked's list.** (1) Make the repository private. (2) Supabase Auth: confirm "Confirm email" is on; turn on
+leaked-password protection (SEC-013, still open). (3) Render: set `HEALTH_KEY`; the Starter plan, which is what
+turns the two CPU findings from a slowdown into an outage. **Harel's list**: rows 25 (Next.js past 16.4.0, a
+`script-src` CSP, explicit HSTS) and 26 (a column list on the browser's `jr_practice_entries` UPDATE grant,
+`deleted_at` for the browser's interview reads).
+
+**Verified.** New regression file 12 passed; billing, checks, isolated execution, auth, provider, warm-up and the
+2026-11-01 review suites green; full offline suite **4,365 passed / 13 skipped** (28 min); ruff clean but for Harel's four known findings; `pip-audit` clean after the bump.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -2066,13 +2109,14 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-08 | Full security review (§5zze; `security/runs/2026-11-08-full-review.md`, SEC-015..021): the key-less payment webhook closed, the padded-answer CPU sink in the numeric checker fixed, a pixel cap on pictures, `ENV=production` with warnings separated from refusals, certifi bumped, code-runner slots per member, API security headers, tester e-mails scrubbed; operator items for Shaked (repository private, Auth settings, HEALTH_KEY, Starter) and rows 25-26 for Harel. |
 | 2026-11-08 | The judge moves to gpt-6.1-terra (§5zzd): same six bands as Sol on the real flow at −46 % on the judge, a scored answer about half a cent all-in; the report stays on Sol (`report=gpt-6.1-sol` in the role models); `render.yaml`, `.env.example`, settings test. Yaron on the pilot list (fifteen members); `pricing.py` capacity line honours `--cost`. |
 | 2026-11-07 | Expense cuts (§5zzc): the background prose (feedback, tip, follow-up) runs on OpenAI's flex tier at half price with a once-only fallback to standard, and the card and tip run with no reasoning (fallback to low); `OPENAI_ROLE_SERVICE_TIER` per role, `/health.speed.role_service_tier` and `fallbacks`; `e2e_real_flow.py` prints cost per role. Finishing bonus rule (§5zzb) and Tal on the pilot list the same day. |
 | 2026-11-06 | XP retired, coins once per question (§5zzb): strong practice answer 5 flat, strong interview turn 10, a question pays once per user across attempts and interviews (ledger reference `question:<id>`, the answer and the turn record what they earned); `GET /v1/me` carries the coin balance for every screen's header; XP fields always None/0 until the screens drop them, the streak stays. Harel's row 24. |
 | 2026-11-06 | Full check and verification (§5zza): rebased the unpushed warm-up onto Harel's seventeen commits; production health, smoke (61 routes), web, broker and signing key all good; offline 4,128 passed with 18 of Harel's own tests failing on a clean `origin/master` too (content attestations, a missing protection test, two needing `tzdata`, now a dependency); live database 3, live service 18 (in pieces), live interview 1, coins/duels scenario 33 checks; three real-model flows. Found and fixed: `PracticeService.start` opened a second transaction inside its own for the day's cap (a deadlock on a single-connection store, a pool-exhaustion hazard under load in production); the live HTTP test's fixture picks a pilot member again. Harel's to-do row 23. |
 | 2026-11-02 | The judge's prompt cache is warmed when a question opens, and pictures are bounded (§5zz): `JudgeWarmer` sends the judge's exact prefix with an empty answer in the background on practice start / hint / reveal and on every interview turn, once per question per four minutes (`JUDGE_WARM`, counters on `/health.judge_warm`); question figures and answer photos go to the model at 1024 px (Pillow), a question's figures are cached ten minutes. Measured on the real model: judge 10.0 s / $0.0116 cold, 5.4 s / $0.0024 after the warm-up, same verdict. 12 new tests; `scripts/judge_warm_check.py`. |
 | 2026-11-02 | The interview, fitted to the person (§5zy; usage before: five interviews ever, one answered question): the controller's hint after a weak answer is now delivered with the next question (it was decided and never shown); an interview that would end on a weak answer asks one closing question on a strength and ends after it; the report opens with what held up, proposes the next interview (harder / same / easier) and compares with the previous one; finishing earns 15 coins after three answers. Report prompt v2. `InterviewTurnView.closing`, `InterviewReportView.held_up / next_step / since_last_time / fit_change / completion_coins`. 15 new tests; real-model dry runs on the mock interview script (now `--pattern`, `--minutes-per-answer`, `--twice`). Screen side: Harel's row 22. |
-| 2026-11-02 | Follow-ups on every question (§5zx): 243 generated questions were study-only (weight 0 → no follow-up, XP or coins); with Shaked's approval their `assessment_ready` flag was set true in production and tomerfahn@gmail.com joined `jr_members`; `ASSESS_UNREVIEWED_QUESTIONS` (true on Render) makes the rule survive seed reloads without touching Harel's intake or tests; 3 new tests. |
+| 2026-11-02 | Follow-ups on every question (§5zx): 243 generated questions were study-only (weight 0 → no follow-up, XP or coins); with Shaked's approval their `assessment_ready` flag was set true in production and (e-mail withheld) joined `jr_members`; `ASSESS_UNREVIEWED_QUESTIONS` (true on Render) makes the rule survive seed reloads without touching Harel's intake or tests; 3 new tests. |
 | 2026-11-01 | The judge's speed, measured and made tunable, and the review of Harel's code-execution feature (§5zw): `OPENAI_ROLE_EFFORT` / `OPENAI_SERVICE_TIER` settings, priority pricing on the usage record, `/health.speed` and `/health.code_execution`, `scripts/judge_speed_matrix.py` (production judge 3.5 s median warm, $0.0027/answer, 13/13 bands; Terra identical at $0.0012; priority −1 s at 2×); OpenAI vs Anthropic: ≈5× cheaper, judge ≈2× faster, same bands on the review set and the real flow. Merged Harel's 42 commits; found code execution live in production; nine review fixes with tests (unguarded checker that could stick an answer, 25 s submit budget, trimmed stored run facts, streamed bounded bodies, timeout reuse, aliases, avatar price/ownership, quiz loader validation). Offline 3,888 passed / 11 skipped; live db 3 passed; coins/duels scenario 33 checks on production, rolled back. Decisions left to Shaked and Harel listed in §5zw. |
 | 2026-10-29 | OpenAI as a second real provider (§5zv): `OpenAIProvider` on the Responses API behind the same interface (instructions prefix cache, structured parse with JSON-in-text fallback, effort per role, images, incomplete/refusal handling, cached tokens split out, OpenAI price table); `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL=gpt-6.1-sol`, `OPENAI_ROLE_MODELS` (Terra for prose); the two real-model scripts follow the settings. 19 new tests; offline 1,468 passed / 9 skipped (one duel test was pinned to 22 October and failed on the real calendar day; its clock now starts on today's date). Calibration on the review set waits for the key. |
 | 2026-10-22 | Full verification of coins and duels (§5zu): independent review + quiz fact-check + a real-database scenario in a rolled-back transaction (`scripts/verify_coins_duels_db.py`, 32 checks) + race and deadline tests. Fixed: the ledger insert could not match the partial unique index on Postgres (every coin write would have been a 500), `table.c.items` was the collection's method, a ledger error could roll back a saved answer (now a savepoint), a judged answer still with the judge at the deadline was forfeited (two-minute grace), promises before the ledger was looked at, seed defaults, removed-question 500s; forty quiz answers verified right, Hebrew formulas given left-to-right marks. Offline 1,446 passed / 9 skipped; live suites did not complete (pooler timeout in the seeding fixture, as on 21 Oct). Build `6562694` live, smoke clean. |

@@ -125,8 +125,10 @@ async def test_ledger_idempotency_limits_and_concurrent_reservations():
         await ledger.reserve(user, "A", "one", "changed")
     two, _ = await ledger.reserve(user, "B", "two", "digest")
     with pytest.raises(ApiError) as busy:
-        await ledger.reserve(str(uuid.uuid4()), "C", "three", "digest")
+        await ledger.reserve(user, "C", "three", "digest")              # the member's own two slots are taken
     assert busy.value.status == 429
+    stranger, _ = await ledger.reserve(str(uuid.uuid4()), "C", "three", "digest")   # another member is not blocked (SEC-021)
+    assert stranger
     await ledger.finish(one, {"status": "completed"})
     _, replay = await ledger.reserve(user, "A", "one", "digest")
     assert replay == {"status": "completed"}

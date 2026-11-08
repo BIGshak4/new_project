@@ -362,6 +362,14 @@ def parse_quantity(text: str | float | int, base_units: set[str]) -> tuple[float
 _CLAUSE_END = re.compile(r"[;\n]|\.(?=\s|$)|\s+(?:so|therefore|hence|thus|then|which|giving|and)\s+"
                          r"|,\s*(?=[A-Za-z_][\w ]*?\s*(?:=|:|≈|\bis\b))", re.IGNORECASE)
 _QUANTITY_RE = re.compile(rf"({_NUMBER_RE.pattern})\s*([A-Za-zµμΩ]+)?")
+_WHITESPACE_RUN = re.compile(r"\s{2,}")
+
+
+def _collapse_whitespace(text: str) -> str:
+    """One space, or one newline when the run had one. `_CLAUSE_END`'s connective alternation (blanks, a word, blanks) is quadratic over
+    a long run of blanks (8,000 spaces: 2.6 s per scan, repeated per name), so a padded answer could pin a CPU for a
+    minute before any model call (security review SEC-016, 2026-11-08). Collapsing the runs first is linear."""
+    return _WHITESPACE_RUN.sub(lambda m: "\n" if "\n" in m.group() else " ", text)
 
 
 def locate_named_value(text: str, names: list[str], *, expected_base: str | None = None,
@@ -373,6 +381,7 @@ def locate_named_value(text: str, names: list[str], *, expected_base: str | None
     carries a compatible unit (here ns), not the first number after the name; without any unit
     in the clause, the last number. The last occurrence of a name wins.
     """
+    text = _collapse_whitespace(text)
     found = None
     for name in names:
         for match in re.finditer(rf"{re.escape(name)}\s*(?:is|=|:|≈|~|of)?\s*(?:about|approximately|approx\.?)?", text,

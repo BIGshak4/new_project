@@ -68,7 +68,7 @@ def _limits(rows, user, now, daily, per_minute, concurrent):
     mine = [r for r in rows if r["user"] == user]
     _count_limits(sum(r["created"] > now - 86400 for r in mine),
                   sum(r["created"] > now - 60 for r in mine),
-                  sum(r["result"] is None and r["created"] > now - 120 for r in rows),
+                  sum(r["result"] is None and r["created"] > now - 120 for r in mine),    # own slots only (SEC-021)
                   daily, per_minute, concurrent)
 
 
@@ -103,14 +103,15 @@ class DbExecutionLedger:
             old = existing.mappings().one_or_none()
             if old:
                 return _existing(dict(old), digest)
-            # Quotas require three counts, never other learners' result payloads.
+            # Quotas require three counts, never other learners' result payloads. The running-slot count is the
+            # caller's own since 2026-11-08: a shared count let one member hold everyone's runner (SEC-021).
             result = await conn.execute(text("""select
                 (select count(*) from public.code_execution_runs where user_id=cast(:user as uuid)
                  and created_at > now() - interval '24 hours') as day_used,
                 (select count(*) from public.code_execution_runs where user_id=cast(:user as uuid)
                  and created_at > now() - interval '1 minute') as minute_used,
-                (select count(*) from public.code_execution_runs where result is null
-                 and created_at > now() - interval '2 minutes') as active"""), dict(user=user))
+                (select count(*) from public.code_execution_runs where user_id=cast(:user as uuid)
+                 and result is null and created_at > now() - interval '2 minutes') as active"""), dict(user=user))
             counts = result.mappings().one()
             _count_limits(counts["day_used"], counts["minute_used"], counts["active"],
                           self.daily, self.per_minute, self.concurrent)

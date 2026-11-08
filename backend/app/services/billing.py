@@ -128,12 +128,13 @@ class HttpStripe:
 
 
 class FakeStripe:
-    """No keys: checkout and portal return a page that explains payment is not configured; the webhook verifies
-    against a fixed test secret. Tests drive it directly."""
+    """No keys: checkout and portal return a page that explains payment is not configured, and the webhook does not
+    exist (404) unless a signing secret is injected, which only tests do. Until 2026-11-08 the class carried a fixed
+    public test secret, so anyone could sign an event for the live server while the real keys were absent
+    (security review SEC-015)."""
 
-    secret = "whsec_test"
-
-    def __init__(self):
+    def __init__(self, secret: str | None = None):
+        self.secret = secret
         self.sessions: list[dict] = []
 
     async def create_checkout_session(self, *, mode, price, user_id, email, customer_id, plan, success_url, cancel_url):
@@ -146,9 +147,13 @@ class FakeStripe:
         return {"url": f"https://billing.stripe.test/portal/{customer_id}"}
 
     def verify(self, payload, signature_header):
+        if not self.secret:
+            raise ApiError("not_found", "payment is not set up on this server")
         return verify_signature(payload, signature_header, self.secret)
 
     def sign(self, payload: bytes, *, now: float | None = None) -> str:
+        if not self.secret:
+            raise RuntimeError("FakeStripe has no signing secret; construct it with secret=... in tests")
         stamp = int(now or time.time())
         digest = hmac.new(self.secret.encode(), f"{stamp}.".encode() + payload, hashlib.sha256).hexdigest()
         return f"t={stamp},v1={digest}"
