@@ -69,11 +69,13 @@ class Settings(BaseSettings):
     # openai    = the real provider: the OpenAI API; needs OPENAI_API_KEY (Shaked, 2026-10-29).
     # anthropic = the fallback real provider: the Claude API; needs ANTHROPIC_API_KEY.
     llm_provider: str = "scripted"
-    # The real provider (openai). The judge model, and cheaper models for the prose roles (the card and the tip only
-    # reword a judgement already made).
+    # The real provider (openai). The judge model, and the models for the other roles. Since 2026-11-08 the judge is
+    # gpt-6.1-terra (Shaked: "change it to terra"): on the review set it gave the same thirteen bands and the same
+    # misconception keys as gpt-6.1-sol for less than half the price, a little faster (scripts/judge_speed_matrix.py).
+    # The interview report stays on sol until its prose is checked on terra.
     openai_api_key: str | None = None
-    openai_model: str = "gpt-6.1-sol"                      # the judge (evaluator), and any role not overridden
-    openai_role_models: str = "feedback=gpt-6.1-terra,tip=gpt-6.1-terra,generator=gpt-6.1-terra"
+    openai_model: str = "gpt-6.1-terra"                    # the judge (evaluator), and any role not overridden
+    openai_role_models: str = "feedback=gpt-6.1-terra,tip=gpt-6.1-terra,generator=gpt-6.1-terra,report=gpt-6.1-sol"
     # Speed knobs (Shaked, 2026-11-01: "lower the times"), both Render variables, no deploy. Per-role reasoning effort
     # overrides, e.g. "evaluator=minimal" (empty = the code's ROLE_EFFORT; the words are OpenAI's: none, minimal, low,
     # medium, high). OPENAI_SERVICE_TIER=priority buys faster processing at a higher price, flex is slower and cheaper;

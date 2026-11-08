@@ -185,10 +185,11 @@ class TestThroughTheEvaluator:
 class TestSettings:
     def test_openai_settings_pick_the_judge_and_the_prose_models(self):
         s = Settings(_env_file=None, llm_provider="openai", openai_api_key="k")
-        assert s.judge_model == "gpt-6.1-sol" and s.role_models == {"feedback": "gpt-6.1-terra", "tip": "gpt-6.1-terra",
-                                                                     "generator": "gpt-6.1-terra"}
+        assert s.judge_model == "gpt-6.1-terra" and s.role_models == {"feedback": "gpt-6.1-terra", "tip": "gpt-6.1-terra",
+                                                                       "generator": "gpt-6.1-terra", "report": "gpt-6.1-sol"}
         p = make_provider(s)
-        assert isinstance(p, OpenAIProvider) and p.model_for("tip") == "gpt-6.1-terra" and p.model_for("evaluator") == "gpt-6.1-sol"
+        assert isinstance(p, OpenAIProvider) and p.model_for("tip") == "gpt-6.1-terra"
+        assert p.model_for("evaluator") == "gpt-6.1-terra" and p.model_for("report") == "gpt-6.1-sol"     # Shaked, 2026-11-08
         a = Settings(_env_file=None, llm_provider="anthropic", anthropic_api_key="k")
         assert a.judge_model == "claude-opus-5-5" and a.role_models["feedback"] == "claude-sonnet-5"
 

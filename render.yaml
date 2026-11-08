@@ -34,7 +34,7 @@ services:
       - key: OPENAI_API_KEY
         sync: false                    # required for the real provider (LLM_PROVIDER=openai, 2026-10-29)
       - key: OPENAI_MODEL
-        value: gpt-6.1-sol             # the judge; OPENAI_ROLE_MODELS (default in app/config.py) picks the prose models
+        value: gpt-6.1-terra           # the judge (Shaked, 2026-11-08: same bands as sol at less than half the price); OPENAI_ROLE_MODELS (default in app/config.py) picks the other roles, the report stays on sol
       # Speed knobs (2026-11-01), set in the dashboard when Shaked picks a row of scripts/judge_speed_matrix.py:
       #   OPENAI_ROLE_EFFORT=evaluator=minimal   (reasoning depth per role; changes how answers are judged)
       #   OPENAI_ROLE_SERVICE_TIER=feedback=default (per role; the code puts feedback, tip and generator on flex, half price, 2026-11-07)

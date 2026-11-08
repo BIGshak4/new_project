@@ -1998,8 +1998,33 @@ failed, of which 16 are Harel's known content and protection tests (§5zza) and 
 fallback provider received the prose roles' "none", which it does not take; it now maps "none" and "minimal" to its
 lowest effort and the top words to its highest (`anthropic_effort`), and its test is green again.
 
-**Not done, by Shaked's choice for now.** Terra as the judge (his call), the tip skipped after a strong answer,
-card and tip in one call, figures in words.
+**Not done, by Shaked's choice for now.** The tip skipped after a strong answer, card and tip in one call, figures
+in words. Terra as the judge followed the next day (§5zzd).
+
+## 5zzd. The judge moves to gpt-6.1-terra (2026-11-08, Shaked: "i want to change it to terra")
+
+**Why.** After §5zz and §5zzc the judge was 70 % of the cost of a practice answer (0.7 of about 1 cent) and all of
+its waiting time. The speed matrix of 1 Nov (§5zw) had shown Terra at low effort giving the same thirteen bands and
+the same misconception keys as Sol for less than half the price, a little faster. Shaked took that row (without
+priority processing; that stays his switch, `OPENAI_SERVICE_TIER=priority`, −1 s at twice the judge's price).
+
+**What changed.** `Settings.openai_model` defaults to `gpt-6.1-terra`; `openai_role_models` gains `report=gpt-6.1-sol`
+so the interview report keeps Sol until its prose is checked on Terra; `render.yaml` sets `OPENAI_MODEL=gpt-6.1-terra`
+(the blueprint value, synced on deploy); `.env.example` follows; the settings test pins judge Terra, report Sol.
+Nothing else: the same prompt, the same low effort, the same warm-up (the cache key is per model, so the first
+verdict after the deploy is a cold one per question).
+
+**Measured before the switch (real model, in-memory store, 2026-11-08).** The three-attempt practice flow
+(`scripts/e2e_real_flow.py`, six judged answers): Terra gave the **same six bands and evidence levels** as Sol
+(WEAK/STRONG, PARTIAL/STRONG, PARTIAL/STRONG), judge $0.0038 each vs $0.0071 (−46 %), 4.6 s mean vs 4.9 s; the whole
+flow $0.03 vs $0.05, so a scored answer all-in (judge, card, tip, follow-up) is now **about half a cent**. The warm-up
+check on the eleven-figure popcount question: same level, cold $0.0069 vs $0.0133, warmed $0.0011 vs $0.0023.
+Pricing at this cost (`scripts/pricing.py --cost 0.0055`): a member at the Regular cap every day costs about ₪18 a
+month in model calls, so Shaked's intended ₪39 price (not yet changed in the seed; he has still to say which premium
+price) keeps 35 % profit well past the cap.
+
+**Not changed.** The report model, the review set itself (rerun it with `scripts/judge_speed_matrix.py` if a band
+drifts in production), the Anthropic fallback provider. `/health.models.evaluator` shows which model judges.
 
 ## 6. Known gaps and open items
 
@@ -2041,6 +2066,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-08 | The judge moves to gpt-6.1-terra (§5zzd): same six bands as Sol on the real flow at −46 % on the judge, a scored answer about half a cent all-in; the report stays on Sol (`report=gpt-6.1-sol` in the role models); `render.yaml`, `.env.example`, settings test. Yaron on the pilot list (fifteen members); `pricing.py` capacity line honours `--cost`. |
 | 2026-11-07 | Expense cuts (§5zzc): the background prose (feedback, tip, follow-up) runs on OpenAI's flex tier at half price with a once-only fallback to standard, and the card and tip run with no reasoning (fallback to low); `OPENAI_ROLE_SERVICE_TIER` per role, `/health.speed.role_service_tier` and `fallbacks`; `e2e_real_flow.py` prints cost per role. Finishing bonus rule (§5zzb) and Tal on the pilot list the same day. |
 | 2026-11-06 | XP retired, coins once per question (§5zzb): strong practice answer 5 flat, strong interview turn 10, a question pays once per user across attempts and interviews (ledger reference `question:<id>`, the answer and the turn record what they earned); `GET /v1/me` carries the coin balance for every screen's header; XP fields always None/0 until the screens drop them, the streak stays. Harel's row 24. |
 | 2026-11-06 | Full check and verification (§5zza): rebased the unpushed warm-up onto Harel's seventeen commits; production health, smoke (61 routes), web, broker and signing key all good; offline 4,128 passed with 18 of Harel's own tests failing on a clean `origin/master` too (content attestations, a missing protection test, two needing `tzdata`, now a dependency); live database 3, live service 18 (in pieces), live interview 1, coins/duels scenario 33 checks; three real-model flows. Found and fixed: `PracticeService.start` opened a second transaction inside its own for the day's cap (a deadlock on a single-connection store, a pool-exhaustion hazard under load in production); the live HTTP test's fixture picks a pilot member again. Harel's to-do row 23. |
