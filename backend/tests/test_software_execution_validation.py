@@ -21,6 +21,7 @@ from scripts.validate_software_execution import (
     is_software,
     output_dir,
 )
+from tests.difficulty_history import before_difficulty_review
 from tests.preparation_compiled_history import before_batch22_compiled
 from tests.preparation_history import (
     BATCH22_BASELINE,
@@ -30,6 +31,7 @@ from tests.preparation_history import (
     BATCH1107B10_BASELINE,
     BATCH1107B20_BASELINE,
     BATCH1107N30_BASELINE,
+    BATCH1108B20_BASELINE,
 )
 
 
@@ -58,7 +60,7 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
         allocate(questions, positives, maximum=1)
 
 
-def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_102_membership():
+def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_107_membership():
     scope = json.loads((BACKEND / 'tests/fixtures/software_question_scope.json').read_bytes())
     seeds = {q['key']: q for name in ('example_bank.json', 'preparation_bank.json')
              for q in json.loads((BACKEND / 'seeds/questions' / name).read_bytes())}
@@ -89,7 +91,10 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_102
     november7_third_endpoint = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
                                or seeds[key]['assets']['preparation_id'] in BATCH1107N30_BASELINE['records']}
     assert len(november7_third_endpoint) == 98
-    assert len(expected) == 102
+    november7_night_endpoint = {key for key in expected if not seeds[key].get('assets', {}).get('preparation_id')
+                               or seeds[key]['assets']['preparation_id'] in BATCH1108B20_BASELINE['records']}
+    assert len(november7_night_endpoint) == 102
+    assert len(expected) == 107
     assert november1_endpoint - october_endpoint == {
         'prep-c-linked-list-dictionary-ownership', 'prep-reverse-singly-linked-list-in-place',
         'prep-streaming-csv-parser-without-library', 'prep-networking-basics-and-interview-answer-prompts',
@@ -118,10 +123,11 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_102
         'prep-parent-links-disconnected-from-root', 'prep-reverse-signed-decimal-integer',
         'prep-relative-sort-by-second-array',
     }
-    assert expected - november7_third_endpoint == {
+    assert november7_night_endpoint - november7_third_endpoint == {
         'prep-longest-ones-interval', 'prep-cpp-atoi-style-parser',
         'prep-black-component-bounding-boxes', 'prep-monotone-grid-paths-dp',
     }
+    assert expected - november7_night_endpoint == {'prep-remove-all-ascii-spaces', 'prep-java-fixed-capacity-integer-stack', 'prep-fifo-queue-using-two-stacks', 'prep-cursor-list-using-two-stacks', 'prep-exact-integer-division-unit-instructions'}
     assert october_endpoint - rows.keys() == {
         'prep-merge-k-sorted-linked-lists', 'prep-most-frequent-word-list',
         'prep-ascii-word-anagrams', 'prep-stack-adt-and-call-stack-uses',
@@ -131,6 +137,8 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_102
         question = seeds[key]
         if question.get('assets', {}).get('preparation_id'):
             question = before_batch22_compiled(question)
+        else:
+            question = before_difficulty_review(question)
         payload = json.dumps(question, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
         assert hashlib.sha256(payload).hexdigest() == row['seed_question_sha256'], key
     assert set(scope['current_seed_additions']) == {

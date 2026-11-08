@@ -1,0 +1,89 @@
+{
+  "summary": {
+    "live": true,
+    "kind": "three-new-positive-profile-execution",
+    "executor": "https://jobrun-executor-job-runer.vercel.app",
+    "started_at": "2026-11-08T10:01:27.109Z",
+    "finished_at": "2026-11-08T10:01:48.525Z",
+    "concurrency": 1,
+    "checked": 3,
+    "passed": 3,
+    "failed": 0,
+    "question_count": 3,
+    "languages": [
+      "python"
+    ]
+  },
+  "rows": [
+    {
+      "question": "prep-remove-all-ascii-spaces",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 12,
+      "passed_count": 12,
+      "runtime_ms": 5794
+    },
+    {
+      "question": "prep-cursor-list-using-two-stacks",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 12,
+      "passed_count": 12,
+      "runtime_ms": 5523
+    },
+    {
+      "question": "prep-fifo-queue-using-two-stacks",
+      "language": "python",
+      "status": "passed",
+      "http_status": 200,
+      "ok": true,
+      "test_count": 12,
+      "passed_count": 12,
+      "runtime_ms": 4670
+    }
+  ],
+  "preflight": {
+    "api_http_status": 200,
+    "broker_http_status": 200,
+    "public_key_fingerprint": "480aec11a342cbc3d01585d3dcfd2b983d45a4ca70093eb55373c31ead20bdad",
+    "fingerprints_match": true,
+    "available": true,
+    "isolation": "fresh-microvm",
+    "network": "deny-all",
+    "persistence": false,
+    "max_runtime_ms": 45000,
+    "broker_revision": ""
+  },
+  "scope": {
+    "question_ids": [
+      "PREP-303",
+      "PREP-304",
+      "PREP-305"
+    ],
+    "question_keys": [
+      "prep-remove-all-ascii-spaces",
+      "prep-cursor-list-using-two-stacks",
+      "prep-fifo-queue-using-two-stacks"
+    ],
+    "positive_cases": 36,
+    "learner_db_or_progress_writes": false,
+    "path": "operator-signed job -> deployed broker -> fresh isolated microVM -> result",
+    "not_exercised": [
+      "browser Run button",
+      "authenticated learner API submission",
+      "arbitrary submission complexity/stack-use guarantees; native Java and educational assembly"
+    ],
+    "credential_handling": "Signing material remained in launcher and Node child environment; never placed in VM or logs."
+  },
+  "artifact_sha256": {
+    "backend/seeds/execution_cases.json": "bb7bc93560ac9d71f80e5989a90a393cc8884e3dffbac991161a642bfa1f5993",
+    "backend/tests/fixtures/execution_positive.json": "f5ae8adb524f50446d3e20c43afdd4b150a0e7ce4147bc454cf4157ff35785fe",
+    "interview_preparation/solutions/prep_303_remove_spaces_1108b20.py": "defda5d5bf0fefae463d04ff8d5f12d47ab18ec33885702138c0d4df7f7a38cf",
+    "interview_preparation/solutions/prep_304_cursor_stacks_1108b20.py": "b595aaeb2391959bfb40ff213d9e3b58bdb154e47b179aebebaa33f265a58450",
+    "interview_preparation/solutions/prep_305_queue_stacks_1108b20.py": "a45f20bebe75cd9a4951598b3815e2591b8e17885dde0b4d0220de6afe715252"
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "status": "passed",
+  "recorded_at": "2026-11-08T09:57:55.503866+00:00",
+  "new_ids": [
+    "PREP-306",
+    "PREP-307",
+    "PREP-310"
+  ],
+  "updated_ids": [
+    "PREP-132",
+    "PREP-053",
+    "PREP-018",
+    "PREP-299"
+  ],
+  "difficulty_proposals": {
+    "PREP-306": {
+      "difficulty": 6,
+      "reason": "Relate process/voltage/temperature corners to latest and earliest arrival budgets while explaining characterized exceptions and clock-path effects."
+    },
+    "PREP-307": {
+      "difficulty": 4,
+      "reason": "Choose a two-thirds divider and comparator polarity, solve RC charging time and separate the literal single threshold from hysteresis."
+    },
+    "PREP-310": {
+      "difficulty": 6,
+      "reason": "Budget four per-channel sampling rates and shared conversion slots, settling, anti-alias filtering, timestamps and simultaneous-hold alternatives."
+    },
+    "PREP-132": {
+      "difficulty": 7,
+      "reason": "Trace both preserved VDD-biased periodic coupling and new ground-biased single-inverter steps, preserving capacitor voltage and explaining overshoot/clamps."
+    },
+    "PREP-053": {
+      "difficulty": 7,
+      "reason": "Track overlapping and blind-gap sensor histories, define complete traversal events and prove why short-object reversal is unobservable without additional assumptions."
+    },
+    "PREP-018": {
+      "difficulty": 3,
+      "reason": "Compare unsigned words and route them through complementary multiplexers; the added eight-bit min/max shares one order decision while earlier restricted two-bit variants remain."
+    },
+    "PREP-299": {
+      "difficulty": 5,
+      "reason": "Interpret discrete phase units, explain the literal zero sequence and generate/fold ten- and thirty-two-phase tables with signed quantization and endpoint accounting."
+    },
+    "PREP-036": {
+      "difficulty": 5,
+      "reason": "Derive constant-state modulo-three transitions for both bit orders and distinguish numeric invariants, zero validity and the preserved delayed-output variant."
+    }
+  },
+  "new_png_count": 22,
+  "new_prompt_png_count": 6,
+  "visual_review": {
+    "languages": [
+      "he",
+      "en"
+    ],
+    "all22_original_diagrams_inspected": true,
+    "adc_channels": "Four distinct nonjoining filter output routes into separate MUX inputs; reviewed corrected HE/EN renders.",
+    "reference_crossing": "Explicit nonjunction wire bridge across the capacitor-ground wire.",
+    "given_topologies": "132 ground-biased inverter,053 sensor geometry and307 given RC circuit appear as prompt media; derivations are separate solution media.",
+    "source_screenshots": "Preserved private source material, not substituted for learner figures."
+  },
+  "pngs": {
+    "diagrams/prep-018-eight-bit-minmax-1108b20-en.png": {
+      "sha256": "c07db0d18a8679225be69a6950c1de8248d1641d5e121bf778e384e52e3499d4",
+      "width": 2800,
+      "height": 1800
+    },
+    "diagrams/prep-018-eight-bit-minmax-1108b20-he.png": {
+      "sha256": "2e29785b3f755514c46a4cc39f2aacc51877e1a654354db1a349c38871b825db",
+      "width": 2800,
+      "height": 1800
+    },
+    "diagrams/prep-053-wood-given-1108b20-en.png": {
+      "sha256": "77910ea3e5d46f96aa0202ae8c44c4c1e6042fcce269bf187fe661ccb9bf0953",
+      "width": 2800,
+      "height": 1850
+    },
+    "diagrams/prep-053-wood-given-1108b20-he.png": {
+      "sha256": "537576bb26b43b668dd2952f93f5ea2b2924bfd61d4e228e6f2b09543483210b",
+      "width": 2800,
+      "height": 1850
+    },
+    "diagrams/prep-053-wood-progress-fsm-1108b20-en.png": {
+      "sha256": "9fe9cb9e5e8f93832d0929048d4b5d5471db7d840290801b78ece465fb3bac16",
+      "width": 2800,
+      "height": 2350
+    },
+    "diagrams/prep-053-wood-progress-fsm-1108b20-he.png": {
+      "sha256": "0f42e042146409ef27cb3ce108b456f1d614bbe86104ae3347c489ba0f8985a7",
+      "width": 2800,
+      "height": 2350
+    },
+    "diagrams/prep-132-ground-given-1108b20-en.png": {
+      "sha256": "aa3d846c05cf4ca1b1bef803c211278b2db8abf6f60f82890d635de02cfca35b",
+      "width": 2800,
+      "height": 1850
+    },
+    "diagrams/prep-132-ground-given-1108b20-he.png": {
+      "sha256": "03cd0db267e33c24c1886ed04d524066342a90fa962281fffd9a15332f4032b0",
+      "width": 2800,
+      "height": 1850
+    },
+    "diagrams/prep-132-ground-waveforms-1108b20-en.png": {
+      "sha256": "fa3a1e6298af6b8012581813781a39b18ee97c6b666c9793e0447d52a84f2f64",
+      "width": 2800,
+      "height": 2150
+    },
+    "diagrams/prep-132-ground-waveforms-1108b20-he.png": {
+      "sha256": "ef8aacafca8d42658e977ececbdad9445210b7ed147d8e20b3164fa9fa93792b",
+      "width": 2800,
+      "height": 2150
+    },
+    "diagrams/prep-299-sine32-fold-1108b20-en.png": {
+      "sha256": "0c9ffcd545c283c4915148a53089f114d3009cf06945d53c636fa9576158ffb8",
+      "width": 2800,
+      "height": 1900
+    },
+    "diagrams/prep-299-sine32-fold-1108b20-he.png": {
+      "sha256": "3bbbd35aab5bf5124ee7a9dd7d5d8a73ea5da989b9159dc6ecbbc5de453a084d",
+      "width": 2800,
+      "height": 1900
+    },
+    "diagrams/prep-306-pvt-corners-1108b20-en.png": {
+      "sha256": "12ca9796ed3f43668011c4cf16c56b14ca98b47e3bfb44eaad8398037618e182",
+      "width": 2800,
+      "height": 1950
+    },
+    "diagrams/prep-306-pvt-corners-1108b20-he.png": {
+      "sha256": "ff73e8e55efd206afa1a2afade2ed4f7f7eb947a529dcf9ca2b191624a4c07d2",
+      "width": 2800,
+      "height": 1950
+    },
+    "diagrams/prep-307-charge-threshold-1108b20-en.png": {
+      "sha256": "852f95adc2fde3f746887cb32fe37ab0c00801662cdd12a99465d7f6934da0ba",
+      "width": 2800,
+      "height": 1800
+    },
+    "diagrams/prep-307-charge-threshold-1108b20-he.png": {
+      "sha256": "5c18691a76e449f13f87cf371c410f97793517c5fe4f7d851034a0079a2d0d35",
+      "width": 2800,
+      "height": 1800
+    },
+    "diagrams/prep-307-rc-given-1108b20-en.png": {
+      "sha256": "d87f9be7c4b94bd2bc5833f898a5542ffcaf4e9949eb963686fcf4d754a0421a",
+      "width": 2800,
+      "height": 1950
+    },
+    "diagrams/prep-307-rc-given-1108b20-he.png": {
+      "sha256": "fc56207a5a5d3a5b42d63828400ef4671e95e637c20aa1cd45653e0048dfa1fb",
+      "width": 2800,
+      "height": 1950
+    },
+    "diagrams/prep-307-threshold-divider-1108b20-en.png": {
+      "sha256": "8d73496d884112e1fd7866aa7ac1ec08f33888ca7bfe4f194f05ee6db1ab80ac",
+      "width": 2800,
+      "height": 1950
+    },
+    "diagrams/prep-307-threshold-divider-1108b20-he.png": {
+      "sha256": "a9280f00bbf21cefde3864686b65a54778b8af4a4c8cddd2988c07c36387a4b6",
+      "width": 2800,
+      "height": 1950
+    },
+    "diagrams/prep-310-adc-round-robin-1108b20-en.png": {
+      "sha256": "2e50ef8e04bc789fa95cb517699177b595798795ea089b283989097cb5e3de23",
+      "width": 2800,
+      "height": 2050
+    },
+    "diagrams/prep-310-adc-round-robin-1108b20-he.png": {
+      "sha256": "875f7484b66bc745ffc17e13b1686cf3bcde915536b5d4147c3e2102d10346c1",
+      "width": 2800,
+      "height": 2050
+    }
+  },
+  "preservation": "Old titles, prepared/editorial hints and raw/compiled learner text prefixes asserted by author helper; all four versions increment exactly once.",
+  "model_counts": {
+    "pvt_arrival_budget_cases": 81,
+    "single_threshold_rc_cases": 27,
+    "ground_coupled_edge_cases": 27,
+    "adc_schedule_slots": 100,
+    "adc_alias_samples": 32,
+    "wood_geometric_observations": 23254,
+    "short_reversal_indistinguishable_pair": 1,
+    "sine32_phases": 32,
+    "minmax8_pairs": 65536
+  },
+  "native_evidence": "checks/batch1108b20-native-verification.json",
+  "native_comparisons": 66134,
+  "native_source_sha256": {
+    "solutions/prep_018_minmax8_1108b20.sv": "ba8df4961ee80ab87964ff7870c82270adf4cf4995e9e22d1208769429e8f22a",
+    "solutions/prep_053_wood_direction_1108b20.sv": "125e352e83ab9748595dda7fda880c200ff7238b28e558c979dec73a58f678f4",
+    "solutions/prep_299_sine32_1108b20.sv": "f5ed8902f913fd190264c399dc95ff7bb5411418bd7ecd13286e4000da605d99",
+    "checks/tb_hardware_1108b20.sv": "070cc8cf33986fe7bc4d069c5b9fe36c7f420400b59b8be1d6e4c2a00ddf6465"
+  },
+  "ruff": "All checks passed for owned Python artifacts.",
+  "shard_sha256": "c4ca1e405d26aaf1f9033cfd885700fd681e026dc39066e2b27837da88fa6592",
+  "limits": [
+    "Finite digital simulation under explicitly documented sensor/sine contracts; short-object arbitrary reversals are unobservable in the blind gap.",
+    "Python RC/PVT/ADC models do not constitute SPICE, PDK characterization, static timing signoff or physical measurements.",
+    "Internal difficulty scores are editorial estimates and must remain hidden in learner UI."
+  ]
+}

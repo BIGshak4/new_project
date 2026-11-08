@@ -172,8 +172,11 @@ async def test_clean_doorway_geometry_is_visible_before_solution_but_fsm_is_gate
     for language in ("he", "en"):
         hidden = await service.question_resources(user, key, language=language)
         assert not hidden.solution_revealed and hidden.reference is None and hidden.technical_material is None
-        assert [m["filename"] for m in signed[-1]] == [f"prep-053-doorway-prompt-{language}.png"]
-        assert signed[-1][0]["role"] == "prompt"
+        assert {m["filename"] for m in signed[-1]} == {
+            f"prep-053-doorway-prompt-{language}.png",
+            f"prep-053-wood-given-1108b20-{language}.png",
+        }
+        assert all(m["role"] == "prompt" for m in signed[-1])
     assert not store.attempts
     attempt = await service.start(user, question_key=key, language="he")
     attempt_id = uuid.UUID(attempt.id)
@@ -186,6 +189,8 @@ async def test_clean_doorway_geometry_is_visible_before_solution_but_fsm_is_gate
         assert {m["filename"] for m in images} == {
             *(f"prep-053-doorway-{kind}-{language}.png" for kind in ("prompt", "fsm", "circuit")),
             f"prep-053-single-sensor-observability-{language}.png",
+            f"prep-053-wood-given-1108b20-{language}.png",
+            f"prep-053-wood-progress-fsm-1108b20-{language}.png",
         }
         assert next(m for m in images if "single-sensor-observability" in m["filename"])["role"] == "solution"
         assert all(not m["source_path"].startswith("sources/") for m in signed[-1])

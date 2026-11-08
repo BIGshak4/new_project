@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "scope": "Three deterministic string/list/queue Python profiles appended. Local validation executes trusted repository reference code; live signedbroker evidence is separate.",
+  "profiles": 52,
+  "positive_sources": 91,
+  "smoke_sources": 32,
+  "new_question_ids": [
+    "PREP-303",
+    "PREP-304",
+    "PREP-305"
+  ],
+  "new_case_count": 36,
+  "cases_per_profile": 12,
+  "pytest": {
+    "passed": 419,
+    "exit_code": 0,
+    "elapsed_seconds": 7.89615,
+    "command": [
+      "C:\\Projects\\Job_Run\\new_project\\backend\\.venv\\Scripts\\python.exe",
+      "-X",
+      "utf8",
+      "-m",
+      "pytest",
+      "tests/test_execution_catalog.py",
+      "tests/test_execution_20261107_profiles.py",
+      "tests/test_execution_20261107_batch10_profiles.py",
+      "tests/test_execution_20261107_batch20_profiles.py",
+      "tests/test_execution_20261107_night30_profiles.py",
+      "tests/test_execution_20261108_batch20_profiles.py",
+      "-q"
+    ],
+    "started_at": "2026-11-08T10:00:38.581830+00:00",
+    "finished_at": "2026-11-08T10:00:46.477980+00:00",
+    "decomposition": {
+      "tests/test_execution_catalog.py": 260,
+      "tests/test_execution_20261107_profiles.py": 4,
+      "tests/test_execution_20261107_batch10_profiles.py": 18,
+      "tests/test_execution_20261107_batch20_profiles.py": 45,
+      "tests/test_execution_20261107_night30_profiles.py": 48,
+      "tests/test_execution_20261108_batch20_profiles.py": 44
+    },
+    "disjoint_catalog_addend_to_full_backend": 260,
+    "overlapping_profile_tests_in_full_backend": 159,
+    "database_environment_explicitly_empty": true,
+    "ignored_log": ".impeccable/intake-20261108-batch20/runtime-validation-combined.log"
+  },
+  "preservation": {
+    "status": "passed",
+    "old_profile_objects_exact": 49,
+    "profile_total": 52,
+    "execution_positive": {
+      "old_exact_prefix": 88,
+      "new_total": 91
+    },
+    "execution_smoke": {
+      "old_exact_prefix": 29,
+      "new_total": 32
+    },
+    "new_profiles": 3,
+    "new_cases": 36,
+    "Java_or_ASM_engine_added": false
+  },
+  "boundaries": {
+    "input_only_fixtures_separate_from_independent_oracles": true,
+    "Java_website_execution_engine_added": false,
+    "native_Java_C_proof": "checks/batch1108b20-native-verification.json",
+    "unit_instruction_listings_checked_in_educational_interpreter_not_CPU_assembler": true,
+    "no_learner_state_or_progress_writes": true,
+    "no_execution_app_or_isolation_changes": true,
+    "limitations": [
+      "Finite transcript outputs verify abstract behavior, not arbitrary learner implementation complexity or actual use of two stacks.",
+      "The trusted cursor reference was also checked for bounded primitive count; the queue reference has an aggregate successfulpush/pop bound.",
+      "Native Java compilation is separate from supported website Run languages; no Javaengine feature was introduced.",
+      "The authenticated browser Run button and learner API flow are separate root validation work."
+    ]
+  },
+  "artifact_sha256": {
+    "backend/seeds/execution_cases.json": "bb7bc93560ac9d71f80e5989a90a393cc8884e3dffbac991161a642bfa1f5993",
+    "backend/tests/fixtures/execution_positive.json": "f5ae8adb524f50446d3e20c43afdd4b150a0e7ce4147bc454cf4157ff35785fe",
+    "backend/tests/fixtures/execution_smoke.json": "5cc5bfbbefeaaf902f0ff2570398108a0d6e1dd4387f549b8105125ee316e82f",
+    "backend/tests/fixtures/execution_catalog_authoring.py": "489d984035322e8ab11b3cbe0012c5cef9858a3041fe94ef45490bc5d44df1b7",
+    "backend/tests/fixtures/execution_batch1108b20_inputs.json": "c4d7e2b77c98bd179790de606d1005b4c33131cfbf985a434b08012e6c58e6a0",
+    "backend/tests/fixtures/execution_batch1108b20_oracles.py": "92a48fcd26f47f2ef17cb3bdacfe36eecc646b27291e6acb29b3539d8377104c",
+    "backend/tests/test_execution_20261108_batch20_profiles.py": "83d34286282dfa0764da6c4fbe436999cb7a2294c77119079af801aa08535f6b",
+    "backend/tests/test_execution_catalog.py": "ed82ea26d4960d00803301672d61757234dd2f4db6a09d8633e94747762e7cda"
+  }
+}

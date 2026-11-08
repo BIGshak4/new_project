@@ -1,0 +1,45 @@
+{
+  "result": "passed",
+  "new_ids": [
+    "PREP-308"
+  ],
+  "media_only_ids": [
+    "PREP-096"
+  ],
+  "model_evidence": "checks/1108b20-reasoning-verification.json",
+  "exact_checks": 11061,
+  "visual_qa": {
+    "original_bilingual_pngs": 4,
+    "passed": true,
+    "details": "Inspected HE/EN conditional-factory tree and100-hat parity flow; labels, arrows and technical LTR expressions remain clear. Bayes labels moved off branch lines."
+  },
+  "preservation": {
+    "PREP-096_all_other_raw_fields_identical": true,
+    "PREP-096_version_unchanged": true,
+    "PREP-096_editorial_localization_unchanged": true,
+    "added_solution_pngs_only": 2
+  },
+  "difficulty_proposal": {
+    "PREP-308": {
+      "difficulty": 5,
+      "reason": "Update a latent shared-factory posterior after one good result, distinguish conditional from marginal independence, and normalize an exact predictive probability."
+    }
+  },
+  "difficulty_registry_updated_by_shard": false,
+  "difficulty_ui_policy": "Keep hidden in learner UI; internal editorial score is not professional calibration.",
+  "source_sha256": {
+    "solutions/prep_308_factory_posterior_1108b20.py": "41a2bc07a857ad4fe326ce287758fea59f0cedc2aabc00c22743925b2a55b682",
+    "solutions/draw_reasoning_1108b20.py": "8d8c99e26a0c85b09c091fc8eaa150792861d09c0326c34a45c908a721a31bbd",
+    "checks/check_reasoning_1108b20.py": "8fe930ad2351d98c5fdec3925df70727168d157e7318fb7b7036f682e77b5cc4",
+    "questions/prep-308-factory-box-conditional-quality.md": "1f881a8c96da21f264c6ff97e76fe3ab2df7a0bb0386f78b3d47ec476a27c620",
+    "diagrams/prep-096-hundred-parity-1108b20-en.png": "ab6fd2d358a04d6dc77858935977d67ef2dbd162c7d4027d990f7b08c6e4d82b",
+    "diagrams/prep-096-hundred-parity-1108b20-he.png": "d8e932916dfa947f4c93984bee2eab5d3600bdef8421c15105e346522c914aa5",
+    "diagrams/prep-308-bayes-factory-1108b20-en.png": "9a83f229a2da893e7f8b84a26b55fb86b9b6ca498afa4a1ebe10b63ce4f8195d",
+    "diagrams/prep-308-bayes-factory-1108b20-he.png": "e9b44ff69138689ddcd2bc0945bdd754e177c8bd10fe81dc3b5a21b29ec34449"
+  },
+  "limitations": [
+    "Exact finite probability grids supplement the algebraic derivation; not exhaustive over real probabilities.",
+    "No empirical chip manufacturing test, new native compilation, publication or browser validation is claimed here.",
+    "Professional human approval remains pending."
+  ]
+}

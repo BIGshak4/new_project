@@ -135,7 +135,8 @@
         "די במוצא קומבינטורי; היתר להשתמש בזיכרון אינו מחייב שימוש בו.",
         "המוצא הוא המספר המקורי הגדול יותר; בשוויון בוחרים A.",
         "אפשר לממש את פעולת ה־MUX מהשערים המותרים.",
-        "שני קלטי unsigned בתחום0..3, יציאת שתי סיביות, לוגיקה צירופית."
+        "שני קלטי unsigned בתחום0..3, יציאת שתי סיביות, לוגיקה צירופית.",
+        "שני קלטי unsigned8 במקביל, קומפרטור ובוררים מותרים, ללא אוגרים."
       ],
       "en": [
         "Two equal-width N-bit integers, N>=1; width and numeric format are unspecified in the source.",
@@ -143,7 +144,8 @@
         "Combinational output is sufficient; permission to use memory does not require it.",
         "Output is the larger original number; equality selects A.",
         "MUX behavior can be implemented from permitted gates.",
-        "Unsigned inputs0..3, two-bit output, combinational logic."
+        "Unsigned inputs0..3, two-bit output, combinational logic.",
+        "Two simultaneous unsigned-eight-bit inputs; comparator/MUXes allowed; no registers."
       ]
     },
     "optimality": {
@@ -151,13 +153,15 @@
         "criterion": "מימוש קומבינטורי פשוט ונכון של השוואה ובחירה",
         "result": "מחסר מורחב להשוואה ומבחר ברוחב N ביטים; ללא מצב.",
         "scope": "אי אפשר לקבוע מינימום מדויק של תאים/שטח/עומק ללא ספריית שערים ויעד מיטוב. מתועדים שיקולי הפשרה בין השוואה בשרשור לבין השוואה מאוזנת.",
-        "batch1107b10_two-bit-max-or-not-mux": "שני OR ושלושה MUX; עד שלוש רמות רכיבים ל־y0, ללא FF. אין הוכחת מינימום גלובלי."
+        "batch1107b10_two-bit-max-or-not-mux": "שני OR ושלושה MUX; עד שלוש רמות רכיבים ל־y0, ללא FF. אין הוכחת מינימום גלובלי.",
+        "1108b20_eight_bit_minmax": "קומפרטור אחד ושני בוררים בני8 סיביות, ללא טענת מינימום."
       },
       "en": {
         "criterion": "Simple correct combinational compare-and-select construction",
         "result": "Extended subtractor for comparison plus N-bit selector; no state.",
         "scope": "No exact cell/area/depth minimum without a gate library and objective. Ripple and balanced comparison tradeoffs documented.",
-        "batch1107b10_two-bit-max-or-not-mux": "Two OR and three MUX primitives; up to three primitive levels for y0, no flip-flops; no global minimum proof."
+        "batch1107b10_two-bit-max-or-not-mux": "Two OR and three MUX primitives; up to three primitive levels for y0, no flip-flops; no global minimum proof.",
+        "1108b20_eight_bit_minmax": "One comparator and two eight-bit MUXes; no minimum claim."
       }
     },
     "edge_cases": {
@@ -169,7 +173,10 @@
         "סימנים מנוגדים בייצוג עם סימן",
         "הערך המינימלי עם סימן לעומת הערך המקסימלי עם סימן",
         "ביט הסימן של הפרש שנחתך אינו בדרך כלל דגל השוואה תקף",
-        "כל16 זוגות, לרבות0/3,1/2 ושוויון."
+        "כל16 זוגות, לרבות0/3,1/2 ושוויון.",
+        "0 מול255",
+        "128 מול127",
+        "a=b"
       ],
       "en": [
         "A=B",
@@ -179,7 +186,10 @@
         "Opposite signed signs",
         "Minimum signed value versus maximum signed value",
         "Truncated subtractor sign is not generally a valid comparison flag",
-        "All16 pairs including0/3,1/2 and ties."
+        "All16 pairs including0/3,1/2 and ties.",
+        "0 versus255",
+        "128 versus127",
+        "a=b"
       ]
     },
     "verification": {
@@ -189,7 +199,8 @@
         "script_path": "checks/check_prep_018.py",
         "method": "174,760 זוגות: מיצוי עבור רוחבים 1..8 עם סימן/ללא סימן; נבדקו ההפרש המורחב המדויק, דגל ההשוואה והתוצאה.",
         "scope": "חשבון וקטורי ביטים ברוחב קבוע ב־Python; ללא סימולציית HDL, סינתזה או תזמון פיזי.",
-        "batch1107b10_two-bit-max-or-not-mux": "אימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון."
+        "batch1107b10_two-bit-max-or-not-mux": "אימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון.",
+        "1108b20_eight_bit_minmax": "בדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית."
       },
       "en": {
         "status": "passed",
@@ -197,12 +208,13 @@
         "script_path": "checks/check_prep_018.py",
         "method": "174,760 pairs: exhaustive widths 1..8, signed/unsigned; exact extended difference, comparison flag and result checked.",
         "scope": "Python fixed-width bit-vector arithmetic; no HDL simulation, synthesis or physical timing.",
-        "batch1107b10_two-bit-max-or-not-mux": "Executed RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
+        "batch1107b10_two-bit-max-or-not-mux": "Executed RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis.",
+        "1108b20_eight_bit_minmax": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
       }
     },
     "interview_answer": {
-      "he": "ארחיב את שני הקלטים בביט אחד ואחשב A−B. ביט הסימן של ההפרש יבחר ב־MUX את B אם ההפרש שלילי ואת A אחרת. ללא סימן מרחיבים באפס, ובמשלים ל־2 מרחיבים בסימן. ההרחבה מונעת גלישה; אין צורך בזיכרון.\n\nאבדיל בין ארבעת מצבי הסיביות הגבוהות. הגבוהה ביציאה היא OR; הנמוכה היא OR כשיש שוויון גבוה, וביתר המקרים הביט של הקלט הזוכה.",
-      "en": "I extend both inputs by one bit and compute A−B. The difference sign bit controls a MUX, selecting B if the difference is negative and A otherwise. For unsigned inputs use zero extension; for two’s-complement inputs use sign extension. Extension prevents overflow; no memory is needed.\n\nSplit the four high-bit cases. Output high is OR; output low is OR on high-bit equality, otherwise the winning input low bit."
+      "he": "ארחיב את שני הקלטים בביט אחד ואחשב A−B. ביט הסימן של ההפרש יבחר ב־MUX את B אם ההפרש שלילי ואת A אחרת. ללא סימן מרחיבים באפס, ובמשלים ל־2 מרחיבים בסימן. ההרחבה מונעת גלישה; אין צורך בזיכרון.\n\nאבדיל בין ארבעת מצבי הסיביות הגבוהות. הגבוהה ביציאה היא OR; הנמוכה היא OR כשיש שוויון גבוה, וביתר המקרים הביט של הקלט הזוכה.\n\nמשווה פעם אחת ומעביר את הזוג לשני בוררים הפוכים; תמיד נשמרים שני הערכים.",
+      "en": "I extend both inputs by one bit and compute A−B. The difference sign bit controls a MUX, selecting B if the difference is negative and A otherwise. For unsigned inputs use zero extension; for two’s-complement inputs use sign extension. Extension prevents overflow; no memory is needed.\n\nSplit the four high-bit cases. Output high is OR; output low is OR on high-bit equality, otherwise the winning input low bit.\n\nCompare once and drive oppositely wired MUXes, preserving both values."
     },
     "common_mistakes": {
       "he": [
@@ -212,7 +224,9 @@
         "בחירת הקלט הקטן עקב היפוך חיבורי הנתונים של ה־MUX",
         "החזרת דגל ההשוואה במקום המספר",
         "הוספת מצב בלי דרישה לכך",
-        "התייחסות לקלט כמסומן; מימוש OR לכל הווקטור בלבד; שימוש במחסר שאינו מותר."
+        "התייחסות לקלט כמסומן; מימוש OR לכל הווקטור בלבד; שימוש במחסר שאינו מותר.",
+        "שימוש בהשוואה מסומנת.",
+        "חיבור אותם סדרי נתונים לשני הבוררים."
       ],
       "en": [
         "Using the sign of a truncated unsigned difference",
@@ -221,7 +235,9 @@
         "Selecting the smaller input by reversing mux data wiring",
         "Returning the comparison flag instead of the number",
         "Adding state without a requirement",
-        "Treating inputs as signed; ORing the whole vectors; using a forbidden subtractor."
+        "Treating inputs as signed; ORing the whole vectors; using a forbidden subtractor.",
+        "Using signed comparison.",
+        "Wiring both MUXes in the same data order."
       ]
     },
     "recursive_two_bit_alternative": {
@@ -257,8 +273,8 @@
       }
     },
     "source_ambiguities": {
-      "he": "תחום unsigned ועלות הבוחרים הם הבהרות שהוספנו. המקור אינו מגדיר בעיית מינימום רכיבים.",
-      "en": "Unsigned interpretation and MUX convention are added clarifications; the source does not define a minimum-component optimization."
+      "he": "תחום unsigned ועלות הבוחרים הם הבהרות שהוספנו. המקור אינו מגדיר בעיית מינימום רכיבים.\n\nהמקור אינו קובע סימן או ספריית רכיבים; הוגדר unsigned וסעיף צירופי כללי.",
+      "en": "Unsigned interpretation and MUX convention are added clarifications; the source does not define a minimum-component optimization.\n\nThe source omits signedness/library; unsigned general combinational operation is chosen."
     },
     "solution_extensions": {
       "he": {
@@ -267,6 +283,13 @@
         "tests": [
           "10 לעומת01",
           "11 לעומת10"
+        ],
+        "1108b20_eight_bit_minmax": [
+          {
+            "question": "איך משווים שני מספרים מסומנים?",
+            "direction": "בודקים סימנים תחילה או משתמשים בקומפרטור signed תחת חוזה two’s complement.",
+            "tests": "‎−128 מול127, ‏‎−1 מול0 ושוויון."
+          }
         ]
       },
       "en": {
@@ -275,6 +298,13 @@
         "tests": [
           "10 versus01",
           "11 versus10"
+        ],
+        "1108b20_eight_bit_minmax": [
+          {
+            "question": "How would signed inputs change comparison?",
+            "direction": "Check signs first or use a signed comparator under a two’s-complement contract.",
+            "tests": "Test−128 versus127,−1 versus0, and equality."
+          }
         ]
       }
     },
@@ -287,6 +317,14 @@
             "אם הסיביות הגבוהות שונות, הסיבית הגבוהה קובעת; אם הן זהות, מהו המקסימום של שני ביטים?",
             "הסיבית הגבוהה ביציאה היא OR. הסיבית הנמוכה נבחרת בין a0,b0 ו־a0 OR b0 לפי ארבעת מצבי a1,b1."
           ]
+        },
+        "1108b20_eight_bit_minmax": {
+          "prompt": "### וריאציה: מינימום ומקסימום של שני קלטים בני שמונה סיביות\nקבלו a,b במקביל והפיקו בשתי יציאות את הגבוה והנמוך. השלמה: שני הקלטים unsigned בתחום0..255; מימוש צירופי עם קומפרטור ושערים/בוררים מותרים. אין שעון או קלט טורי. בשוויון שתי היציאות מחזירות אותו ערך. הציגו שיתוף תוצאת השוואה ובדקו את כל הזוגות; זו הרחבה נפרדת מהספרייה המוגבלת של שני הביטים בחלק הקודם.",
+          "hints": [
+            "שני המוצאים הם אותם שני מספרים בסדר אחר. צריך רק לדעת אם להחליף.",
+            "אות swap=(a<b) מספיק לשלוט בשני בוררים בעלי סדר נתונים הפוך.",
+            "maximum=swap?b:a, minimum=swap?a:b. השוויון אינו דורש טיפול מיוחד."
+          ]
         }
       },
       "en": {
@@ -296,6 +334,14 @@
             "Split the decision by the two high bits.",
             "Different high bits decide the winner; equal high bits reduce to the maximum of two single bits.",
             "The output high bit is OR. Select the low bit from a0, b0 and a0 OR b0 according to the four high-bit cases."
+          ]
+        },
+        "1108b20_eight_bit_minmax": {
+          "prompt": "### Variant: minimum and maximum of two eight-bit inputs\nAccept simultaneous a,b and produce their maximum and minimum on separate outputs. Completion: unsigned inputs0..255; combinational operation allowing a comparator, gates and multiplexers. There is no clock or serial input. Equal values produce that value at both outputs. Share the comparison and verify all pairs; this is separate from the earlier restricted two-bit primitive library.",
+          "hints": [
+            "The outputs are the same two values, perhaps swapped.",
+            "One swap=(a<b) signal drives two multiplexers with opposite data ordering.",
+            "maximum=swap?b:a and minimum=swap?a:b. Equality needs no special branch."
           ]
         }
       }

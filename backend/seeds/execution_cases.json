@@ -11727,6 +11727,1340 @@
           "starter": "def grid_paths(n):\n    raise NotImplementedError\n"
         }
       }
+    },
+    "prep-remove-all-ascii-spaces": {
+      "contract": {
+        "he": "ממשו remove_spaces(text). מחקו רק U+0020 מכל המחרוזת, ושמרו שאר תווים וסדרם. טאב, שורה חדשה ורווח בלתי שביר נשמרים; ריק מחזיר ריק.",
+        "en": "Implement remove_spaces(text): remove only U+0020 everywhere, retaining all other characters and order. Preserve tabs, newlines and nonbreaking spaces. Empty returns empty."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "remove_spaces",
+          "starter": "def remove_spaces(text):\n    raise NotImplementedError\n",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": ""
+            },
+            {
+              "args": [
+                " "
+              ],
+              "expected": ""
+            },
+            {
+              "args": [
+                "abc"
+              ],
+              "expected": "abc"
+            },
+            {
+              "args": [
+                " a b "
+              ],
+              "expected": "ab"
+            },
+            {
+              "args": [
+                "  a   "
+              ],
+              "expected": "a"
+            },
+            {
+              "args": [
+                "\t \n"
+              ],
+              "expected": "\t\n"
+            },
+            {
+              "args": [
+                "שלום עולם"
+              ],
+              "expected": "שלוםעולם"
+            },
+            {
+              "args": [
+                "a  b"
+              ],
+              "expected": "a b"
+            },
+            {
+              "args": [
+                "\n a \t b\n"
+              ],
+              "expected": "\na\tb\n"
+            },
+            {
+              "args": [
+                "    "
+              ],
+              "expected": ""
+            },
+            {
+              "args": [
+                "  a! b?  "
+              ],
+              "expected": "a!b?"
+            },
+            {
+              "args": [
+                " a b c d e "
+              ],
+              "expected": "abcde"
+            }
+          ]
+        }
+      }
+    },
+    "prep-cursor-list-using-two-stacks": {
+      "contract": {
+        "he": "ממשו cursor_trace(operations), מתאם לתרגיל הסמן עם שתי מחסניות. הפעולות הן get,prev,next,move_prev,move_next,insert_before(value),insert_after(value),delete כפי שהוגדר בשאלה. קלט כל פעולה הוא רשימה [name] או [name,value]. החזירו רשומת תוצאה לכל פעולה: {ok:true,value:result}, או {ok:false,error:'empty_or_boundary'} בקריאה/מחיקה חסרה. הכנסה מחזירה null; תנועה bool; מחיקה את הערך. מתחילים ריקים ואין לשנות קלט.",
+        "en": "Implement cursor_trace(operations), a transcript adapter for the two-stack cursor contract. Operations: get,prev,next,move_prev,move_next,insert_before(value),insert_after(value),delete as specified in the question. Each input is [name] or [name,value]. Return one result object per operation: {ok:true,value:result}, or {ok:false,error:'empty_or_boundary'} for an absent read/delete. Insertion returns null, movement bool, deletion its value. Start empty and preserve input."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "cursor_trace",
+          "starter": "def cursor_trace(operations):\n    raise NotImplementedError\n",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  [
+                    "get"
+                  ],
+                  [
+                    "prev"
+                  ],
+                  [
+                    "next"
+                  ],
+                  [
+                    "delete"
+                  ],
+                  [
+                    "move_prev"
+                  ],
+                  [
+                    "move_next"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": false,
+                  "error": "empty_or_boundary"
+                },
+                {
+                  "ok": false,
+                  "error": "empty_or_boundary"
+                },
+                {
+                  "ok": false,
+                  "error": "empty_or_boundary"
+                },
+                {
+                  "ok": false,
+                  "error": "empty_or_boundary"
+                },
+                {
+                  "ok": true,
+                  "value": false
+                },
+                {
+                  "ok": true,
+                  "value": false
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    1
+                  ],
+                  [
+                    "get"
+                  ],
+                  [
+                    "prev"
+                  ],
+                  [
+                    "next"
+                  ],
+                  [
+                    "get"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": false,
+                  "error": "empty_or_boundary"
+                },
+                {
+                  "ok": false,
+                  "error": "empty_or_boundary"
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_before",
+                    1
+                  ],
+                  [
+                    "insert_after",
+                    2
+                  ],
+                  [
+                    "next"
+                  ],
+                  [
+                    "move_next"
+                  ],
+                  [
+                    "get"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": true
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    10
+                  ],
+                  [
+                    "insert_before",
+                    5
+                  ],
+                  [
+                    "prev"
+                  ],
+                  [
+                    "get"
+                  ],
+                  [
+                    "move_prev"
+                  ],
+                  [
+                    "get"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 5
+                },
+                {
+                  "ok": true,
+                  "value": 10
+                },
+                {
+                  "ok": true,
+                  "value": true
+                },
+                {
+                  "ok": true,
+                  "value": 5
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    10
+                  ],
+                  [
+                    "insert_after",
+                    20
+                  ],
+                  [
+                    "insert_after",
+                    30
+                  ],
+                  [
+                    "next"
+                  ],
+                  [
+                    "move_next"
+                  ],
+                  [
+                    "get"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 30
+                },
+                {
+                  "ok": true,
+                  "value": true
+                },
+                {
+                  "ok": true,
+                  "value": 30
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    1
+                  ],
+                  [
+                    "insert_after",
+                    2
+                  ],
+                  [
+                    "delete"
+                  ],
+                  [
+                    "get"
+                  ],
+                  [
+                    "delete"
+                  ],
+                  [
+                    "get"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": false,
+                  "error": "empty_or_boundary"
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    1
+                  ],
+                  [
+                    "insert_before",
+                    0
+                  ],
+                  [
+                    "delete"
+                  ],
+                  [
+                    "get"
+                  ],
+                  [
+                    "delete"
+                  ],
+                  [
+                    "get"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": 0
+                },
+                {
+                  "ok": true,
+                  "value": 0
+                },
+                {
+                  "ok": false,
+                  "error": "empty_or_boundary"
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    7
+                  ],
+                  [
+                    "insert_before",
+                    7
+                  ],
+                  [
+                    "insert_after",
+                    7
+                  ],
+                  [
+                    "delete"
+                  ],
+                  [
+                    "get"
+                  ],
+                  [
+                    "prev"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 7
+                },
+                {
+                  "ok": true,
+                  "value": 7
+                },
+                {
+                  "ok": true,
+                  "value": 7
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    -3
+                  ],
+                  [
+                    "insert_after",
+                    0
+                  ],
+                  [
+                    "move_next"
+                  ],
+                  [
+                    "move_next"
+                  ],
+                  [
+                    "get"
+                  ],
+                  [
+                    "move_prev"
+                  ],
+                  [
+                    "get"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": true
+                },
+                {
+                  "ok": true,
+                  "value": false
+                },
+                {
+                  "ok": true,
+                  "value": 0
+                },
+                {
+                  "ok": true,
+                  "value": true
+                },
+                {
+                  "ok": true,
+                  "value": -3
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    1
+                  ],
+                  [
+                    "insert_after",
+                    2
+                  ],
+                  [
+                    "move_next"
+                  ],
+                  [
+                    "insert_before",
+                    9
+                  ],
+                  [
+                    "prev"
+                  ],
+                  [
+                    "delete"
+                  ],
+                  [
+                    "get"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": true
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 9
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": 9
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "insert_after",
+                    1
+                  ],
+                  [
+                    "delete"
+                  ],
+                  [
+                    "insert_before",
+                    2
+                  ],
+                  [
+                    "get"
+                  ],
+                  [
+                    "move_prev"
+                  ],
+                  [
+                    "move_next"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": false
+                },
+                {
+                  "ok": true,
+                  "value": false
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "prep-fifo-queue-using-two-stacks": {
+      "contract": {
+        "he": "ממשו queue_trace(operations), מתאם לתור עם שתי מחסניות. קלט הפעולות [enqueue,value], [dequeue], [peek], [is_empty]. החזירו לכל פעולה {ok:true,value:result}, או {ok:false,error:'empty'} בהוצאה/קריאה מריק. הכנסה מחזירה null, is_empty מחזירה bool. מתחילים בתור ריק ואין לשנות קלט. הבדיקות מאמתות התנהגות, לא סיבוכיות או שימוש בפועל בשתי מחסניות.",
+        "en": "Implement queue_trace(operations), a two-stack FIFO transcript adapter. Commands are [enqueue,value], [dequeue], [peek], [is_empty]. Return {ok:true,value:result} per command, or {ok:false,error:'empty'} for empty dequeue/peek. Enqueue returns null and is_empty returns bool. Start empty and preserve input. Finite tests check behavior, not complexity or actual use of two stacks."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "queue_trace",
+          "starter": "def queue_trace(operations):\n    raise NotImplementedError\n",
+          "cases": [
+            {
+              "args": [
+                []
+              ],
+              "expected": []
+            },
+            {
+              "args": [
+                [
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "is_empty"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": false,
+                  "error": "empty"
+                },
+                {
+                  "ok": false,
+                  "error": "empty"
+                },
+                {
+                  "ok": true,
+                  "value": true
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    1
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "is_empty"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": true
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    1
+                  ],
+                  [
+                    "enqueue",
+                    2
+                  ],
+                  [
+                    "enqueue",
+                    3
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    1
+                  ],
+                  [
+                    "enqueue",
+                    2
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "enqueue",
+                    3
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    7
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "peek"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 7
+                },
+                {
+                  "ok": true,
+                  "value": 7
+                },
+                {
+                  "ok": true,
+                  "value": 7
+                },
+                {
+                  "ok": false,
+                  "error": "empty"
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    4
+                  ],
+                  [
+                    "enqueue",
+                    4
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 4
+                },
+                {
+                  "ok": true,
+                  "value": 4
+                },
+                {
+                  "ok": false,
+                  "error": "empty"
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    -5
+                  ],
+                  [
+                    "enqueue",
+                    0
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "is_empty"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": -5
+                },
+                {
+                  "ok": true,
+                  "value": -5
+                },
+                {
+                  "ok": true,
+                  "value": 0
+                },
+                {
+                  "ok": true,
+                  "value": false
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    0
+                  ],
+                  [
+                    "enqueue",
+                    1
+                  ],
+                  [
+                    "enqueue",
+                    2
+                  ],
+                  [
+                    "enqueue",
+                    3
+                  ],
+                  [
+                    "enqueue",
+                    4
+                  ],
+                  [
+                    "enqueue",
+                    5
+                  ],
+                  [
+                    "enqueue",
+                    6
+                  ],
+                  [
+                    "enqueue",
+                    7
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "is_empty"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 0
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": 3
+                },
+                {
+                  "ok": true,
+                  "value": 4
+                },
+                {
+                  "ok": true,
+                  "value": 5
+                },
+                {
+                  "ok": true,
+                  "value": 6
+                },
+                {
+                  "ok": true,
+                  "value": 7
+                },
+                {
+                  "ok": true,
+                  "value": true
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    1
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "enqueue",
+                    2
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "enqueue",
+                    3
+                  ],
+                  [
+                    "peek"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "is_empty"
+                  ],
+                  [
+                    "enqueue",
+                    10
+                  ],
+                  [
+                    "is_empty"
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "is_empty"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "is_empty"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": true
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": false
+                },
+                {
+                  "ok": true,
+                  "value": 10
+                },
+                {
+                  "ok": true,
+                  "value": false
+                },
+                {
+                  "ok": true,
+                  "value": 10
+                },
+                {
+                  "ok": true,
+                  "value": true
+                }
+              ]
+            },
+            {
+              "args": [
+                [
+                  [
+                    "enqueue",
+                    3
+                  ],
+                  [
+                    "enqueue",
+                    2
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "enqueue",
+                    1
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "peek"
+                  ],
+                  [
+                    "dequeue"
+                  ],
+                  [
+                    "peek"
+                  ]
+                ]
+              ],
+              "expected": [
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 3
+                },
+                {
+                  "ok": true,
+                  "value": null
+                },
+                {
+                  "ok": true,
+                  "value": 3
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": 2
+                },
+                {
+                  "ok": true,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
     }
   }
 }

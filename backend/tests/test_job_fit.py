@@ -110,14 +110,14 @@ class TestTheLibrary:
     async def test_counts_the_filtered_library_is_everything_minus_the_excluded_primary_skills(self, catalog):
         svc, _ = practice(catalog)
         everything = await svc.list_questions(language="en")
-        expected_hidden = {'digital_design': 75, 'verification': 0, 'fpga': 75, 'embedded_firmware': 16, 'software': 76, 'student_general': 0}                                 # November intake: 331 raw questions; primary-skill filtering is unchanged.
+        expected_hidden = {'digital_design': 78, 'verification': 0, 'fpga': 78, 'embedded_firmware': 17, 'software': 77, 'student_general': 0}                                 # November intake: 340 raw questions; primary-skill filtering is unchanged.
         for key, job in catalog.job_types.items():
             hidden = {r.key for r in everything if job.excludes(catalog.questions[r.key].primary_skill)}
             rows = await svc.list_questions(language="en", job=key)
             assert len(rows) == len(everything) - len(hidden), key
             assert not ({r.key for r in rows} & hidden), key
             assert all(key in r.job_types and r.relevance is not None for r in rows), key
-            assert len(everything) == 331
+            assert len(everything) == 340
             assert len(hidden) == expected_hidden[key], key
 
     async def test_the_job_tags_on_a_question_use_the_same_rule(self, catalog):

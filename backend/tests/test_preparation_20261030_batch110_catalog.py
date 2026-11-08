@@ -30,6 +30,7 @@ from tests.preparation_history import (
     assert_pre_batch21_assets,
     assert_pre_batch110_archive,
     assert_pre_batch110_assets,
+    before_batch1108b20_record,
     digest,
 )
 from tests.test_practice_hardening import scripted
@@ -91,7 +92,7 @@ def test_twenty_sources_keep_the_exact_original_bytes_and_identity_mapping():
 
 def test_authorized_extensions_preserve_all_186_original_records_and_999_assets(catalog):
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == 301 and len(catalog.questions) == 331
+    assert len(archive["questions"]) == 310 and len(catalog.questions) == 340
     previous_ids = {question["id"] for question in archive["questions"] if int(question["id"].split("-")[1]) <= 198}
     assert previous_ids - set(BATCH110_BASELINE["records"]) == NEW_IDS
     assert_pre_batch110_archive(archive)
@@ -108,7 +109,7 @@ def test_authorized_extensions_preserve_all_186_original_records_and_999_assets(
         "example-reverse-singly-linked-list": "prep-reverse-singly-linked-list-in-place",
     }
     assert set(aliases) | set(aliases.values()) <= catalog.questions.keys()
-    assert len({aliases.get(key, key) for key in catalog.questions}) == 326
+    assert len({aliases.get(key, key) for key in catalog.questions}) == 335
 
 
 def test_all_new_questions_and_extensions_remain_bilingual_proposed_rated_and_gated(catalog):
@@ -149,7 +150,8 @@ def test_all_new_questions_and_extensions_remain_bilingual_proposed_rated_and_ga
             if ident in VARIANT_IDS:
                 previous = BATCH110_BASELINE["records"][ident]["projection"]["append_shapes"]["translations"]["items"][language]["items"]
                 for field in ("prompt", "reference_solution"):
-                    addition = original["translations"][language][field][previous[field]["length"]:]
+                    historical_original = before_batch1108b20_record(original)
+                    addition = historical_original["translations"][language][field][previous[field]["length"]:]
                     historical_text = before_learner_copy_text(question.key, language, field, getattr(text, field))
                     assert addition.strip() and addition.strip() in historical_text, (ident, language, field)
                     compiled_prefix = BATCH110_BASELINE["compiled_variant_prefixes"][ident][language][field]
@@ -188,7 +190,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             if item["language"] == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in item["caption"])
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 505 and len(set(sources)) == 503
+    assert len(sources) == 525 and len(set(sources)) == 523
     names = read(ROOT / "apps/web/src/lib/source-screenshots.json")
     assert set(names) == {Path(path).name for path in sources}
     assert all(f"2026-10-30-batch110-{number:02d}.png" in names for number in range(1, 21))

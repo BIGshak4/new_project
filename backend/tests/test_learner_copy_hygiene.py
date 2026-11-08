@@ -62,7 +62,7 @@ def code_blocks(question):
 def test_all_long_question_identities_grading_and_code_are_unchanged():
     expected = read(FIXTURE)
     questions = sorted(long_questions(), key=lambda q: q["key"])
-    assert len(questions) == 331
+    assert len(questions) == 340
     previous = [before_batch1107_compiled(q) if q.get("assets", {}).get("preparation_id") else before_difficulty_review(q)
                 for q in questions if not q.get("assets", {}).get("preparation_id")
                 or q["assets"]["preparation_id"] in baseline()["records"]]

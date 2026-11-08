@@ -521,6 +521,31 @@ def night1107n30_source(key):
     return (ROOT / "interview_preparation/solutions" / NIGHT1107N30_SOURCES[key]).read_text(encoding="utf-8")
 
 
+# November 8: pure string and operation-transcript adapters. Native Java/C
+# and educational unit-instruction listings are verified separately.
+BATCH1108B20_SOURCES = {
+    "prep-remove-all-ascii-spaces": "prep_303_remove_spaces_1108b20.py",
+    "prep-cursor-list-using-two-stacks": "prep_304_cursor_stacks_1108b20.py",
+    "prep-fifo-queue-using-two-stacks": "prep_305_queue_stacks_1108b20.py",
+}
+BATCH1108B20_ORACLES = runpy.run_path(
+    str(BACKEND / "tests/fixtures/execution_batch1108b20_oracles.py")
+)["ORACLES"]
+ORACLES.update(BATCH1108B20_ORACLES)
+
+
+def build_batch1108b20_contracts():
+    inputs = json.loads((BACKEND / "tests/fixtures/execution_batch1108b20_inputs.json").read_text(encoding="utf-8"))
+    for key, question in inputs.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = BATCH1108B20_ORACLES[key](*case["args"])
+    return inputs
+
+
+def batch1108b20_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1108B20_SOURCES[key]).read_text(encoding="utf-8")
+
+
 COUNTER_STIMULUS = [(1, 1), (0, 0)] + [(int(i in (15, 29)), int(i % 5 not in (0, 1))) for i in range(45)]
 SEQUENCE_STIMULUS = [(1, 1)] + [(0, int(c)) for c in "1101110111010011011010110110"] + [(1, 1)] + [(0, int(c)) for c in "1011101101"]
 
@@ -817,6 +842,7 @@ endmodule
     questions.update(build_batch1107b10_contracts())
     questions.update(build_batch1107b20_contracts())
     questions.update(build_night1107n30_contracts())
+    questions.update(build_batch1108b20_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -914,6 +940,11 @@ def build_smoke():
                 syntax = "this is not valid C++ source\n"
             cases.append({"question_key": key, "language": language, "correct": night1107n30_source(key),
                           "wrong": wrong, "syntax_error": syntax})
+    for key, question in build_batch1108b20_contracts().items():
+        entry = question["languages"]["python"]["entry"]
+        cases.append({"question_key": key, "language": "python", "correct": batch1108b20_source(key),
+                      "wrong": f"def {entry}(*args):\n    return None\n",
+                      "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
 
@@ -1450,6 +1481,8 @@ end architecture;
         python[key] = batch1107b20_source(key)
     for key, filename in NIGHT1107N30_SOURCES.items():
         (c if filename.endswith(".cpp") else python)[key] = night1107n30_source(key)
+    for key in BATCH1108B20_SOURCES:
+        python[key] = batch1108b20_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

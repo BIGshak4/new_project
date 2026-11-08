@@ -1,0 +1,169 @@
+{
+  "recorded_at": "2026-11-08T10:20:33.778584+00:00",
+  "scale": "internal editorial integer1..10; not empirically calibrated",
+  "registry_total": 340,
+  "reviewed": [
+    {
+      "preparation_id": "PREP-018",
+      "question_key": "prep-maximum-of-two-numbers-circuit",
+      "difficulty": 3,
+      "reason": "Compare unsigned words and route them through complementary multiplexers; the added eight-bit min/max shares one order decision while earlier restricted two-bit variants remain.",
+      "content_sha256": "438d823f73f189c5373c4dc08ab7bb01a3afef4d99613a9fb3566960972606a7",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-022",
+      "question_key": "prep-random-permutation-fisher-yates",
+      "difficulty": 6,
+      "reason": "State persists across calls; range conversion needs rejection sampling and a conditional-uniformity argument.",
+      "content_sha256": "e3e42d37fd77b3a1629c88f768ab74f8d7aeb09121ee7d09045c274897f84e25",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-035",
+      "question_key": "prep-multiply-four-registers-unit-instructions",
+      "difficulty": 7,
+      "reason": "Clear dirty registers using only legal unit instructions, then preserve the multiplicand with direct register branches.",
+      "content_sha256": "4020c5ad926b46838b36f86d658404c2cf0394c49e6591825f547013f58fa4aa",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-036",
+      "question_key": "prep-serial-binary-divisibility-by-three-fsm",
+      "difficulty": 5,
+      "reason": "Use remainder transitions while retaining enough history to distinguish zero from a positive multiple.",
+      "content_sha256": "296fef724364f6b884328ad8fb7f40bba59b9ddbb9ea3a842a32ef2dd746c194",
+      "action": "unchanged_duplicate_rechecked"
+    },
+    {
+      "preparation_id": "PREP-037",
+      "question_key": "prep-balanced-brackets-mixed-text",
+      "difficulty": 3,
+      "reason": "Use a stack of unmatched openers, ignore ordinary text, and reject mismatched closers.",
+      "content_sha256": "7c8397244c01096cd276595aa10883d84a395249c0ee7e614d262ff4b5aaad65",
+      "action": "unchanged_duplicate_rechecked"
+    },
+    {
+      "preparation_id": "PREP-053",
+      "question_key": "prep-doorway-occupancy-two-sensors",
+      "difficulty": 7,
+      "reason": "Track overlapping and blind-gap sensor histories, define complete traversal events and prove why short-object reversal is unobservable without additional assumptions.",
+      "content_sha256": "692857fd5866ba8d7fb762348e213e8719c57cbfeb460bc804a784f705f28787",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-058",
+      "question_key": "prep-average-difference-two-logic-gates",
+      "difficulty": 6,
+      "reason": "Exploit equal parity and the supplied upper operand to route mean bits using gates without a carry adder.",
+      "content_sha256": "eb4283da27279af305bd5a9cafdd095dbc2880a9181e7dd479e1f2126dd08e55",
+      "action": "unchanged_duplicate_rechecked"
+    },
+    {
+      "preparation_id": "PREP-085",
+      "question_key": "prep-five-stones-clock-balance",
+      "difficulty": 4,
+      "reason": "Combining a balanced equilateral triple with an opposite pair solves the odd count on twelve marks.",
+      "content_sha256": "12c137ee8b7ca868f342d949177440e9ea7baf5d355b96f1171a6cb44d5875a8",
+      "action": "unchanged_duplicate_rechecked"
+    },
+    {
+      "preparation_id": "PREP-096",
+      "question_key": "prep-line-hats-parity-guarantee",
+      "difficulty": 6,
+      "reason": "A parity announcement plus previously decoded hats lets each successive speaker deduce their color and proves the guarantee.",
+      "content_sha256": "ca9360caadd2f11dd435a3da41c19d2fd15f4c61dba25c7e93172c2b7b894032",
+      "action": "unchanged_duplicate_rechecked"
+    },
+    {
+      "preparation_id": "PREP-132",
+      "question_key": "prep-rc-coupled-inverter-waveforms",
+      "difficulty": 7,
+      "reason": "Trace both preserved VDD-biased periodic coupling and new ground-biased single-inverter steps, preserving capacitor voltage and explaining overshoot/clamps.",
+      "content_sha256": "2bd7571314705378d14c2c16f7ea3b8ea976c179d4463f4c8b3cc64ab94f0d81",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-299",
+      "question_key": "prep-sine-rom-ten-phase-symmetry-memory",
+      "difficulty": 5,
+      "reason": "Interpret discrete phase units, explain the literal zero sequence and generate/fold ten- and thirty-two-phase tables with signed quantization and endpoint accounting.",
+      "content_sha256": "b5aeb59b98ce12ddaf9cace78ac159e7adc94e158c1aca59a36e94415ca9ee7b",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-303",
+      "question_key": "prep-remove-all-ascii-spaces",
+      "difficulty": 2,
+      "reason": "Filter one explicitly defined character, preserve order and handle empty/all-space inputs.",
+      "content_sha256": "afb4cb6e15ae610d92c4afda0c5c0d2b8404d28fb74f69eaeba0359793033705",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-304",
+      "question_key": "prep-cursor-list-using-two-stacks",
+      "difficulty": 6,
+      "reason": "Choose a cursor-centered two-stack representation and preserve all neighbor/update boundaries with constant primitive work.",
+      "content_sha256": "dd1750217b04f2679397730eed3c09d7fcb2cb6347bbc9b399115d38cee27e50",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-305",
+      "question_key": "prep-fifo-queue-using-two-stacks",
+      "difficulty": 5,
+      "reason": "Derive the lazy-transfer FIFO invariant and distinguish amortized cost from a linear worst-case dequeue.",
+      "content_sha256": "04bb6af7d3f1d5517b96de6cffec60276ca8f4d01857ba1845ba72606220c894",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-306",
+      "question_key": "prep-pvt-corners-setup-hold-characterized-timing",
+      "difficulty": 6,
+      "reason": "Relate process/voltage/temperature corners to latest and earliest arrival budgets while explaining characterized exceptions and clock-path effects.",
+      "content_sha256": "97aef2c60cea6359c536f2811e2eca942d5cc381073636875ddd7b2c69b05414",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-307",
+      "question_key": "prep-rc-capacitor-two-thirds-comparator-threshold",
+      "difficulty": 4,
+      "reason": "Choose a two-thirds divider and comparator polarity, solve RC charging time and separate the literal single threshold from hysteresis.",
+      "content_sha256": "947b609c1b5c7817c3df40827ab61207294ae42f5f783c8562169f33ba94046d",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-308",
+      "question_key": "prep-factory-box-conditional-quality",
+      "difficulty": 5,
+      "reason": "Update a latent shared-factory posterior after one good result, distinguish conditional from marginal independence, and normalize an exact predictive probability.",
+      "content_sha256": "a20a0f8568328ca63723d414327b13e61471f05680a013d62aaed709e4592870",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-309",
+      "question_key": "prep-java-fixed-capacity-integer-stack",
+      "difficulty": 3,
+      "reason": "Maintain a fixed-array live-prefix invariant and explicit full/empty failures; membership is a linear scan.",
+      "content_sha256": "f656d93e14ce1dd925e027523e4eb7c077179f9a9502dff1e353a7bda13b00e4",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-310",
+      "question_key": "prep-four-channel-shared-adc-sampling-budget",
+      "difficulty": 6,
+      "reason": "Budget four per-channel sampling rates and shared conversion slots, settling, anti-alias filtering, timestamps and simultaneous-hold alternatives.",
+      "content_sha256": "6e5e4c678608b42dc6d9ba56a06c7805067db44fef4df60664387a55c845a82c",
+      "action": "reevaluated_revision"
+    },
+    {
+      "preparation_id": "PREP-311",
+      "question_key": "prep-exact-integer-division-unit-instructions",
+      "difficulty": 8,
+      "reason": "Synthesize zero-safe flag control and preserve/restore the divisor under a three-opcode exact-division contract.",
+      "content_sha256": "26c807f4cd1ee6325d184d51d7b40ae333d6a8952380098812c326365b0efabf",
+      "action": "reevaluated_revision"
+    }
+  ],
+  "backend_readback_rows_verified": 20,
+  "learner_api_score_visible": false
+}

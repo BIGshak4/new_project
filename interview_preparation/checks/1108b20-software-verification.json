@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "scope": "Trusted Python models and educational unit-opcode interpreter, not native assembly.",
+  "PREP-303": {
+    "string_cases": 1366,
+    "oracle": "replace used only in the independent checker"
+  },
+  "PREP-304": {
+    "operations": 5000,
+    "oracle": "ordinary list and cursor index",
+    "max_stack_primitives_per_operation": 8
+  },
+  "PREP-305": {
+    "operations": 5000,
+    "oracle": "collections.deque",
+    "push_pop_total_at_most_four_per_enqueued_value": true
+  },
+  "PREP-035": {
+    "listing_cases": 2704,
+    "dirty_result_and_temp": true,
+    "named_register_branches": true,
+    "CLEAR_not_permitted": true
+  },
+  "PREP-311": {
+    "listing_cases": 420,
+    "exact_positive_divisor_domain": true,
+    "previous_result_flag_branches": true,
+    "quotient_and_preserved_divisor": true
+  },
+  "invalid_opcode_or_branch_cases": 4,
+  "PREP-022": {
+    "equal_bucket_model_domains": 372,
+    "native_C_and_PRNG_scope": "Separate native report; no statistical proof about C rand."
+  },
+  "PREP-309": {
+    "native_Java": "Separate actual javac/java report, not a Python replacement."
+  }
+}

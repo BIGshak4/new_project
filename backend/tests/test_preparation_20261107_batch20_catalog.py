@@ -78,7 +78,7 @@ def test_every_old_record_asset_localization_and_compiled_prefix_stays_hash_boun
 
 def test_new_bilingual_tasks_and_variants_remain_proposed_and_media_gated():
     catalog = load_catalog(SEEDS)
-    assert len(catalog.questions) == 331
+    assert len(catalog.questions) == 340
     selected = {q.assets.get('preparation_id'): q for q in catalog.questions.values()
                 if q.assets.get('preparation_id') in NEW | VARIANTS}
     assert set(selected) == NEW | VARIANTS

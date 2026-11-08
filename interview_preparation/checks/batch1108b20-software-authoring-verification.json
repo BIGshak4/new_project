@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "scope": "Isolated software authoring and independent models; root owns bank compilation, difficulty fingerprint binding, database publication and browser validation.",
+  "new_ids": [
+    "PREP-303",
+    "PREP-304",
+    "PREP-305",
+    "PREP-309",
+    "PREP-311"
+  ],
+  "append_variants": [
+    "PREP-022",
+    "PREP-035"
+  ],
+  "difficulty_proposals": {
+    "PREP-303": {
+      "score": 2,
+      "reason": "Filter one explicitly defined character, preserve order and handle empty/all-space inputs."
+    },
+    "PREP-304": {
+      "score": 6,
+      "reason": "Choose a cursor-centered two-stack representation and preserve all neighbor/update boundaries with constant primitive work."
+    },
+    "PREP-305": {
+      "score": 5,
+      "reason": "Derive the lazy-transfer FIFO invariant and distinguish amortized cost from a linear worst-case dequeue."
+    },
+    "PREP-037": {
+      "score": 3,
+      "reason": "The existing stack-matching contract already covers mathematical text and three bracket types."
+    },
+    "PREP-022": {
+      "score": 6,
+      "reason": "State persists across calls; range conversion needs rejection sampling and a conditional-uniformity argument."
+    },
+    "PREP-309": {
+      "score": 3,
+      "reason": "Maintain a fixed-array live-prefix invariant and explicit full/empty failures; membership is a linear scan."
+    },
+    "PREP-035": {
+      "score": 7,
+      "reason": "Clear dirty registers using only legal unit instructions, then preserve the multiplicand with direct register branches."
+    },
+    "PREP-311": {
+      "score": 8,
+      "reason": "Synthesize zero-safe flag control and preserve/restore the divisor under a three-opcode exact-division contract."
+    }
+  },
+  "append_preservation": {
+    "old_titles_hints_prepared_hints": true,
+    "raw_and_compiled_prompt_solution_prefixes": true
+  },
+  "model_report": "checks/1108b20-software-verification.json",
+  "native_report": "checks/batch1108b20-native-verification.json",
+  "native_C_checks": 6665,
+  "native_Java_checks": 12003,
+  "visual_review": {
+    "original_bilingual_diagrams": 14,
+    "status": "All14 HE/EN diagrams inspected; no cropped labels, overlaps or reversed mixed-language technical text observed."
+  },
+  "execution_proposals": {
+    "profiles": 3,
+    "cases": 36,
+    "input_only": true,
+    "independent_candidate_oracle_comparison": "36 cases passed",
+    "Java_website_engine_added": false,
+    "unit_ASM_is_educational_interpretation": true
+  },
+  "source_sha256": {
+    "solutions/prep_303_remove_spaces_1108b20.py": "defda5d5bf0fefae463d04ff8d5f12d47ab18ec33885702138c0d4df7f7a38cf",
+    "solutions/prep_304_cursor_stacks_1108b20.py": "b595aaeb2391959bfb40ff213d9e3b58bdb154e47b179aebebaa33f265a58450",
+    "solutions/prep_305_queue_stacks_1108b20.py": "a45f20bebe75cd9a4951598b3815e2591b8e17885dde0b4d0220de6afe715252",
+    "solutions/prep_035_311_vm_1108b20.py": "9bb70d047e513c676db31598cfe27e8bbed768c06028fdc575236f2ae0dcdcee",
+    "solutions/draw_software_1108b20.py": "35179cfbddabe2d86e61c6b4a34d8386a51986a1c6be136a36b15583033ddc36",
+    "solutions/prep_035_register_unit_1108b20.txt": "3c42ba3ec20eadab8afebb1f5931c8633a5f602cdd8c18099c914985ef39e681",
+    "solutions/prep_311_exact_division_1108b20.txt": "7593f62a0f19fdcd783c274400fb52ea0636eb857035917e2d36ca054dc3b32a",
+    "solutions/prep_022_c_shuffle_1108b20.c": "743acd70b48a77ad8f38dcb7ed6c1a706ea2384393c5a4c2ec6ce60b9bafd1ed",
+    "solutions/Prep309FixedIntStack1108b20.java": "1745b9984c4b6128cddcb6af09404a03488b88819278bb7352b8cc97c23d7533",
+    "checks/check_software_1108b20.py": "bb3fede0cb8a2492dc36d2d02246123a6b0244dafd14e7f90652be479e2fc905",
+    "diagrams/prep-022-software-1108b20-en.png": "d0d73dbf026dee564c97692b03d6d7efd15183f218fffaa2948b56a126a89cdb",
+    "diagrams/prep-022-software-1108b20-he.png": "4de8ab80369e90daa222caba5a7963c0ed78209dfd9244bae58e2829197d0677",
+    "diagrams/prep-035-software-1108b20-en.png": "b6d7e30b6949f6303330329bb0bbf6d49dadcc6af87b80ce6e911d6c8efed623",
+    "diagrams/prep-035-software-1108b20-he.png": "51030536deb038377b7605b72194d720d80098e3818ec8bfb13166fd15f163c3",
+    "diagrams/prep-303-software-1108b20-en.png": "256f5305ef4eecc3f1569b5473a24814e2775d25d7eff0326d937077a3f335d2",
+    "diagrams/prep-303-software-1108b20-he.png": "1d6ffd2ce17477a80e69e81b888f0895dd8363dded3f9f7d99a53add47d546e6",
+    "diagrams/prep-304-software-1108b20-en.png": "86ed89fa49e496f174b01e3eaeefc14af19f4922bf8e0d2c94d38b038f81f0e5",
+    "diagrams/prep-304-software-1108b20-he.png": "f7ec1b745fa36088bffdce514ccad365a6e358634ca97071c1d8cffccb2bb588",
+    "diagrams/prep-305-software-1108b20-en.png": "ac8138d4a9b45eaf79e44dbb1f66601ce43ef347ed84e42314a12b569180676f",
+    "diagrams/prep-305-software-1108b20-he.png": "3a49c7524cefee89213e25ebe3ba7084efb4a509758b6ffd8d9c9d550e18329d",
+    "diagrams/prep-309-software-1108b20-en.png": "f0e8651c959bfafa2f8abc5497d842cd546b73a3c3f5cf02cdafea92cb2c6555",
+    "diagrams/prep-309-software-1108b20-he.png": "6c74240fd9ef05036e2c3cb75dd90b8eaebadf33196000e1d150d0318f4b39e3",
+    "diagrams/prep-311-software-1108b20-en.png": "28eadec88cb6de8033724e699c2a0e0147b512d0e537047629ddf172fced51e5",
+    "diagrams/prep-311-software-1108b20-he.png": "2a0f57bbcecbb386d367ac012d571d40d7fe9f973b6e0db7444b172bb60830ee"
+  }
+}

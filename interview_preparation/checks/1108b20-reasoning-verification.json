@@ -1,0 +1,21 @@
+{
+  "result": "passed",
+  "counts": {
+    "primary_equal_prior_grid": 168,
+    "general_prior_grid": 1152,
+    "zero_evidence_rejections": 31,
+    "seeded_exact_rationals": 1000,
+    "invalid_probability_rejections": 8,
+    "hat_small_worlds": 8190,
+    "hat_hundred_person_worlds": 512
+  },
+  "exact_case_total": 11061,
+  "bayes_oracle": "Explicit eight-world factory/first/second outcome enumeration with exact Fraction weights.",
+  "hat_scope": "Independent finite protocol checks support the new096 diagram; the old implementation is not replaced.",
+  "source_sha256": "41a2bc07a857ad4fe326ce287758fea59f0cedc2aabc00c22743925b2a55b682",
+  "limitations": [
+    "Finite grids do not constitute enumeration of all real-valued probabilities; algebra proves the general identity.",
+    "No MonteCarlo or chip manufacturing experiment is claimed.",
+    "Internal difficulty is an editorial estimate; no professional human approval is claimed."
+  ]
+}

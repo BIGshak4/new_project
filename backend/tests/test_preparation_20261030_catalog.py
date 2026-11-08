@@ -73,8 +73,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_eleven_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 301
-    assert len(catalog.questions) == 331
+    assert len(archive()["questions"]) == 310
+    assert len(catalog.questions) == 340
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()

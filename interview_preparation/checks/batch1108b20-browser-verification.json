@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-11-08T10:20:33.762870+00:00",
+  "result": "passed",
+  "scope": "Production material renderers in a synthetic local fixture; no authenticated production account or learner writes.",
+  "views": 80,
+  "identities": 20,
+  "languages": [
+    "he",
+    "en"
+  ],
+  "content_widths": [
+    382,
+    1272
+  ],
+  "prompt_and_revealed_solution_checked": true,
+  "horizontal_page_overflow": 0,
+  "source_screenshot_leaks": 0,
+  "completed_image_load_errors": 0,
+  "lazy_images": "Off-screen lazy images may remain unrequested. Presence/layout checks do not claim every thumbnail was physically loaded; all75 private object bytes were independently SHA-read-back.",
+  "expanded_material_sections": {
+    "question": "PREP-304",
+    "language": "he",
+    "width": 382,
+    "sections": [
+      "assumptions",
+      "optimality",
+      "verification"
+    ],
+    "code_direction": "ltr",
+    "code_overflow": "auto"
+  },
+  "screenshots": [
+    "docs/assets/intake1108b20-rc-given-desktop.jpg",
+    "docs/assets/intake1108b20-cursor-mobile.jpg"
+  ],
+  "input_sha256": {
+    "backend/seeds/questions/preparation_bank.json": "2c7c15cd24573bb7b02c47b5a29b4abd87a916f154f234434fdae8e37ea87df7",
+    "apps/web/src/lib/source-screenshots.json": "c08e73944c4ca01ccaa68a6871e6d264f7934fbf797738b0fc77807336bca6a5",
+    "apps/web/src/components/question-materials.tsx": "713ccf1bba466344169a060247439a078e613d55c4cfd9b256a600b4afb659a1"
+  }
+}

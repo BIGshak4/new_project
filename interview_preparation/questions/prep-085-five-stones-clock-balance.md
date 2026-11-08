@@ -253,3 +253,14 @@ Split five into a balanced triple and pair. Put three stones at 12,4,8, forming 
 ### verification
 
 Passed all 4,368 unordered five-stone placements including stacks; exact arithmetic found 24 balanced placements. An independent oracle reduces polynomials modulo Phi_12(z)=z^4-z^2+1. Also checked twelve rotations of the construction, twelve hour coordinates, no one-stone solution and six balanced pairs; rejected three invalid inputs. No physical experiment or stability test.
+
+
+## הרחבה ושמירת מקור — 08.11.2026, מקבץ 20
+
+[צילום מקור פרטי 5](../sources/2026-11-08-batch20-05.png)
+
+יש להניח 5 אבנים על המספרים בשעון שמונח במאוזן על עמוד כך שיישאר מאוזן עדיין.
+
+שיוכי מקור מדווחים: Amazon.
+
+מקור נוסף בלבד; הגרסה, הנוסח, הרמזים והפתרון נשמרו.

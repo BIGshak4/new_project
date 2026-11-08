@@ -56,7 +56,7 @@ def test_all21_images_and_first_pair_are_preserved_with_exact_mappings():
 
 def test_231_old_records_media_and_localizations_remain_hash_bound():
     archive=read(BANK/'questions.json')
-    assert len(archive['questions'])==archive['question_count']== 301
+    assert len(archive['questions'])==archive['question_count']== 310
     assert {q['id']for q in archive['questions']if int(q['id'][5:])<245}-BATCH1101_BASELINE['records'].keys()==NEW
     assert set(BATCH1101_BASELINE['variant_ids'])==VARIANTS
     assert set(BATCH1101_BASELINE['source_only_ids'])==SOURCE_ONLY
@@ -76,7 +76,7 @@ def test_231_old_records_media_and_localizations_remain_hash_bound():
 
 def test_bilingual_material_and_three_hints_stay_gated_with_clean_media():
     catalog=load_catalog(SEEDS)
-    assert len(catalog.questions)== 331
+    assert len(catalog.questions)== 340
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS|SOURCE_ONLY}
     assert set(selected)==NEW|VARIANTS|SOURCE_ONLY

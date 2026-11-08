@@ -4,32 +4,40 @@
       "he": [
         "מהפכים אידאליים ללא השהיה, סף VM מוגדר וכניסה בעלת עכבה אינסופית.",
         "נגד וקבל לינאריים; ללא דיודות הגבלה במודל הראשי.",
-        "לפני החזית הראשונה A נמוכה זמן רב ו־B=C=VDD."
+        "לפני החזית הראשונה A נמוכה זמן רב ו־B=C=VDD.",
+        "נגד B לאדמה, מהפך יחיד, התחלה לא טעונה וללא clamp; Cout הוא C שבצילום."
       ],
       "en": [
         "Ideal zero-delay inverters, specified VM and infinite second-input impedance.",
         "Linear R and capacitance; no clamps in the main model.",
-        "A is low long enough initially that B=C=VDD."
+        "A is low long enough initially that B=C=VDD.",
+        "B is ground-biased before one inverter; initially uncharged and unclamped; Cout is source label C."
       ]
     },
     "optimality": {
-      "he": "ניתוח פרמטרי עקבי; אין טענת מינימום רכיבים או מדידת תזמון. קוד ההמחשה מחשב כל דגימה מהאירועים, ואינו מממש חומרה.",
-      "en": "Consistent parametric analysis; no component-minimum or measured-timing claim. The illustration code recomputes samples from events and is not a hardware implementation."
+      "he": "ניתוח פרמטרי עקבי; אין טענת מינימום רכיבים או מדידת תזמון. קוד ההמחשה מחשב כל דגימה מהאירועים, ואינו מממש חומרה.\n\nτ=RCcap, רוחב הפולסτ ln(VDD/VM); אין קביעה מספרית ללא רכיבים וסף.",
+      "en": "Consistent parametric analysis; no component-minimum or measured-timing claim. The illustration code recomputes samples from events and is not a hardware implementation.\n\nτ=RCcap and pulse widthτ ln(VDD/VM); no absolute time without values and threshold."
     },
     "verification": {
-      "he": "60 השוואות למודל RK4 עצמאי עם1,000 צעדים,60 בדיקות רציפות ושש דגימות גבול. אין SPICE, סינתזה או בדיקה פיזית.",
-      "en": "60 comparisons to an independent1,000-step RK4 model,60 continuity checks and six edge samples. No SPICE, synthesis or physical verification."
+      "he": "60 השוואות למודל RK4 עצמאי עם1,000 צעדים,60 בדיקות רציפות ושש דגימות גבול. אין SPICE, סינתזה או בדיקה פיזית.\n\nבדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית.",
+      "en": "60 comparisons to an independent1,000-step RK4 model,60 continuity checks and six edge samples. No SPICE, synthesis or physical verification.\n\nIndependent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
     },
     "edge_cases": {
       "he": [
         "קלט קבוע והתייצבות ארוכה.",
         "חזית הבאה לפני חציית הסף, תדר גבוה או מתח התחלתי שונה.",
-        "התחלה מעל הסף; חריגה מעל האספקה; שינוי במודל ההגבלה."
+        "התחלה מעל הסף; חריגה מעל האספקה; שינוי במודל ההגבלה.",
+        "החזקה גבוהה ארוכה מחזירה B לאפס.",
+        "ירידת A יכולה ליצור B שלילי.",
+        "VM חייב להיות בין המסילות."
       ],
       "en": [
         "Constant input and long settling.",
         "A new edge before crossing, high input frequency or different initial state.",
-        "Starting above threshold, supply overshoot and a changed clamp model."
+        "Starting above threshold, supply overshoot and a changed clamp model.",
+        "A long high input restores B to zero.",
+        "A falling A can produce negative B.",
+        "VM must lie between rails."
       ]
     },
     "common_mistakes": {
@@ -37,33 +45,53 @@
         "קביעה ש־C היא פשוט ההיפוך של B.",
         "איפוס המתח על הקבל בכל מחזור בלי סיבה.",
         "מתן רוחב פולס מספרי ללא RC וסף.",
-        "העתקת הגל הלא מוגבל לרכיב עם דיודות הגנה."
+        "העתקת הגל הלא מוגבל לרכיב עם דיודות הגנה.",
+        "החלפת הנגד לאדמה בנגד ל־VDD.",
+        "קריאת B כמתח הקבל.",
+        "הוספת clamp חינם."
       ],
       "en": [
         "Treating C as simply the inverse of B.",
         "Resetting capacitor state every cycle without justification.",
         "Giving a numeric pulse width without RC and threshold.",
-        "Applying the unclamped waveform unchanged to a protected input."
+        "Applying the unclamped waveform unchanged to a protected input.",
+        "Replacing ground bias with VDD bias.",
+        "Calling B the capacitor voltage.",
+        "Adding an unstated clamp."
       ]
     },
     "interview_answer": {
-      "he": "B היא ההיפוך של A. בכל חזית C קופצת בדיוק בהפרש של B, כי מתח הקבל רציף; בין החזיתות הנגד מחזיר אותה לאספקה באופן מעריכי. הופכים את D לפי חציית הסף. ההיסטוריה והגבלת המתח קובעות את פרטי הגל.",
-      "en": "B inverts A. Each edge moves C by B’s change because capacitor voltage is continuous; between edges the resistor restores C exponentially toward supply. Determine D from threshold crossings. History and clamps govern the detailed waveform."
+      "he": "B היא ההיפוך של A. בכל חזית C קופצת בדיוק בהפרש של B, כי מתח הקבל רציף; בין החזיתות הנגד מחזיר אותה לאספקה באופן מעריכי. הופכים את D לפי חציית הסף. ההיסטוריה והגבלת המתח קובעות את פרטי הגל.\n\nהמדרגה מקפיצה את B; הוא דועך לאדמה, המהפך יוצר פולס נמוך, והקבל A−B נטען.",
+      "en": "B inverts A. Each edge moves C by B’s change because capacitor voltage is continuous; between edges the resistor restores C exponentially toward supply. Determine D from threshold crossings. History and clamps govern the detailed waveform.\n\nThe step jumps B, which decays to ground; the inverter gives a negative pulse while A−B charges."
     },
     "source_ambiguities": {
-      "he": "R, הקיבול, הסף, ההשהיות, המצב ההתחלתי ומודל ההגנה לא סופקו. הדוגמה המנורמלת מסומנת כהנחה ולא כנתון מקור.",
-      "en": "Resistance, capacitance, threshold, delays, initial state and protection model were not supplied. The normalized illustration is explicitly assumed, not source data."
+      "he": "R, הקיבול, הסף, ההשהיות, המצב ההתחלתי ומודל ההגנה לא סופקו. הדוגמה המנורמלת מסומנת כהנחה ולא כנתון מקור.\n\nהתרגיל החדש שומר את המקור הישן בנפרד; ההנחות האידאליות והתחלת הגל הוגדרו במפורש.",
+      "en": "Resistance, capacitance, threshold, delays, initial state and protection model were not supplied. The normalized illustration is explicitly assumed, not source data.\n\nThe new topology is separate from the preserved older source; ideal and initial conditions are explicit."
     },
     "solution_extensions": {
       "he": {
         "question": "כיצד דיודת הגבלה לאספקה תשנה את המחזור הבא?",
         "direction": "יש לעדכן את מצב הקבל בזמן ההגבלה ואז להמשיך מהערך הזה; אי אפשר לקצץ רק את ציור הגל.",
-        "status": "מוכן בחומר המשלים, ללא תור המשך אוטומטי."
+        "status": "מוכן בחומר המשלים, ללא תור המשך אוטומטי.",
+        "1108b20_ground_bias": [
+          {
+            "question": "מה קורה אם מוסיפים דיודת clamp?",
+            "direction": "מגבילים חריגה ומחשבים מחדש זרם וקצב הרפיה לפי מודל הדיודה.",
+            "tests": "ירידה אחרי זמן קצר ואחרי זמן ארוך."
+          }
+        ]
       },
       "en": {
         "question": "How does a supply clamp affect the following cycle?",
         "direction": "Update capacitor state during clamp conduction and continue from that state; merely clipping the drawing is insufficient.",
-        "status": "Prepared in supplemental material, not an automatic follow-up queue."
+        "status": "Prepared in supplemental material, not an automatic follow-up queue.",
+        "1108b20_ground_bias": [
+          {
+            "question": "What if a clamp diode is added?",
+            "direction": "Limit excursions and recompute current/relaxation under a diode model.",
+            "tests": "Compare falling edges after short and long high intervals."
+          }
+        ]
       }
     },
     "technical_references": {
@@ -81,6 +109,28 @@
           "scope": "Background for distinguishing an unclamped capacitor model from a real input device, not validation of the supplied circuit."
         }
       ]
+    },
+    "prompt_variants": {
+      "he": {
+        "1108b20_ground_bias": {
+          "prompt": "### וריאציה: קבל טורי ונגד לאדמה לפני מהפך יחיד\nהאות A מגיע דרך קבל אל הצומת B. נגד R מחבר את B לאדמה, ו־B מזין מהפך יחיד שמוצאו C, המסומן כאן Cout כדי להבדילו מהקיבול Ccap. שרטטו A,B,Cout ואת מתח הקבל בזמן מדרגת A עולה ונשארת גבוהה.\n\nהשלמה: A היה אפס זמן רב; B=0 והקבל לא טעון בתחילה. ברגע0 A עולה ל־VDD>0. המהפך אידאלי, סף VM בין המסילות ועומס כניסתו אינסופי. אין clamp. קבוע הזמן τ=R·Ccap. זו טופולוגיה שונה מהסעיף הישן עם שני מהפכים ונגד ל־VDD; אין לשנות את חיבורי המקור הישן.",
+          "hints": [
+            "מתח קבל אינו קופץ באפס זמן. אם צד A קופץ, מה קורה לצדו השני B?",
+            "לאחר המדרגה A קבוע, ולכן הנגד מחזיר את B לאדמה באופן מעריכי.",
+            "B(t)=VDD·exp(−t/τ), ולכן Cout מפיק פולס נמוך עדτ ln(VDD/VM). מתח הקבל הוא A−B ולא B."
+          ]
+        }
+      },
+      "en": {
+        "1108b20_ground_bias": {
+          "prompt": "### Variant: series capacitor with ground bias before one inverter\nA reaches node B through a capacitor. Resistor R pulls B to ground, and B drives one inverter with output C, called Cout here to distinguish it from capacitance Ccap. Sketch A,B,Cout and the capacitor voltage when A steps high and stays high.\n\nCompletion: A was zero long enough for B=0 and an uncharged capacitor. At time zero A rises to positive VDD. The inverter is ideal, its threshold VM lies between rails and its input impedance is infinite. There is no clamp. The time constant is τ=R·Ccap. This differs from the preserved two-inverter, VDD-biased topology; do not change the earlier source connections.",
+          "hints": [
+            "A capacitor voltage cannot jump instantaneously. If A jumps, what happens to B?",
+            "After the step A is constant; the resistor exponentially restores B to ground.",
+            "B(t)=VDD·exp(−t/τ), so Cout is low untilτ ln(VDD/VM). Capacitor voltage is A−B, not B."
+          ]
+        }
+      }
     }
   },
   "PREP-133": {

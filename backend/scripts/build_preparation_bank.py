@@ -78,6 +78,7 @@ PRIMARY = [
     "testbench_basics", "arrays_and_search", "basic_data_structures", "debugging_methodology",
     "basic_data_structures", "basic_data_structures", "bit_manipulation", "registers_shifters", "setup_hold_timing", "code_debugging", "truth_tables", "boolean_algebra", "basic_data_structures", "bit_manipulation", "universal_gates", "basic_data_structures", "fsm_sequence_detectors",
     "bit_manipulation", "tradeoff_reasoning", "testbench_basics", "counters", "binary_arithmetic", "tradeoff_reasoning", "code_debugging", "basic_data_structures", "tradeoff_reasoning", "estimation_sanity_checks", "number_representation", "basic_data_structures", "fsm_controllers", "universal_gates",
+    "code_debugging", "basic_data_structures", "basic_data_structures", "setup_hold_timing", "tradeoff_reasoning", "estimation_sanity_checks", "basic_data_structures", "tradeoff_reasoning", "code_debugging",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

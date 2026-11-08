@@ -1,0 +1,552 @@
+{
+  "PREP-306": {
+    "assumptions": {
+      "he": "מודל מונוטוני מוצהר וטבלת השהיות מומצאת לצורכי לימוד, עם מוסכמת skew מפורשת.",
+      "en": "Explicit monotonic model and illustrative delay table with a fixed skew convention."
+    },
+    "optimality": {
+      "he": "אין מסקנת מינימום או fmax ללא ספרייה; מחשבים max/min slack בכל פינה רלוונטית.",
+      "en": "No minimum or fmax claim without a library; compute max/min slack at every relevant corner."
+    },
+    "verification": {
+      "he": "בדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית.",
+      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
+    },
+    "edge_cases": {
+      "he": [
+        "סקיו חיובי מקשה על hold.",
+        "פינות FS/SF עשויות להגביל מעברים שונים.",
+        "טמפרטורה אינה תמיד מונוטונית."
+      ],
+      "en": [
+        "Positive skew hurts hold.",
+        "FS/SF can limit different transitions.",
+        "Temperature dependence is not always monotonic."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "החלפת process ב־processor.",
+        "הכרזה על SS חם כפינה הגרועה בכל תהליך.",
+        "ניסיון לתקן hold רק בהורדת תדר."
+      ],
+      "en": [
+        "Reading process as processor.",
+        "Claiming hot SS is worst in every technology.",
+        "Trying to repair hold only by reducing frequency."
+      ]
+    },
+    "interview_answer": {
+      "he": "Setup בודק זמנים מרביים ו־hold מזעריים; טבלת SS/FF היא קירוב מונוטוני שיש לאמת מול פינות מאופיינות ומסלולי שעון.",
+      "en": "Setup uses maximum delays and hold minimum delays; the SS/FF heuristic must be checked against characterized corners and clock paths."
+    },
+    "source_ambiguities": {
+      "he": "המקור משתמש ב־processor עבור process; הוגדרה מוסכמת האותיות והופרדו כלל הוראה ותהליך אמיתי.",
+      "en": "The source uses processor for process; letter order and the distinction between teaching heuristics and actual characterization are explicit."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה קורה אם SS בקור איטי יותר?",
+          "direction": "מחשבים מחדש slack מהנתונים ולא משנים את הפינה כדי להתאים לכלל זיכרון.",
+          "tests": "טבלת נתונים עם Dmax גדול יותר בקור."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if cold SS is slower?",
+          "direction": "Recompute slack from data rather than forcing the corner to match a mnemonic.",
+          "tests": "Use a table with greater cold Dmax."
+        }
+      ]
+    }
+  },
+  "PREP-307": {
+    "assumptions": {
+      "he": "Vs>0, קבל לא טעון ומקור מדרגה, כניסות קומפרטור ללא זרם. סף יחיד2Vs/3.",
+      "en": "Positive source step, uncharged capacitor, zero comparator input current; one threshold2Vs/3."
+    },
+    "optimality": {
+      "he": "שני נגדי ייחוס וקומפרטור אחד; אין צורך בתאי זיכרון. עלות הספק/דיוק תלויה בערכים אמיתיים.",
+      "en": "Two reference resistors and one comparator; no memory required. Real power/accuracy depend on actual values."
+    },
+    "verification": {
+      "he": "בדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית.",
+      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
+    },
+    "edge_cases": {
+      "he": [
+        "בדיוק בסף0 במודל.",
+        "קבל טעון עשוי להתחיל מעל הסף.",
+        "Vs=0 מחוץ לחוזה הראשי."
+      ],
+      "en": [
+        "Ideal equality returns zero.",
+        "A charged capacitor can start above threshold.",
+        "Vs=0 lies outside the primary contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "החלפת אחד משני הספים הכתובים ב־Vs/3.",
+        "חיבור הפוך של הקומפרטור.",
+        "העמסת הקבל במחלק מיותר."
+      ],
+      "en": [
+        "Changing one written threshold to Vs/3.",
+        "Reversing comparator polarity.",
+        "Loading the capacitor with an unnecessary divider."
+      ]
+    },
+    "interview_answer": {
+      "he": "מחלק R מעל2R יוצר שני שלישים; משווה Vc לייחוס, ובטעינה מאפס המעבר ב־RC ln3.",
+      "en": "A top-R/bottom-2R divider creates two thirds; compare Vc to it, crossing at RC ln3 when charging from zero."
+    },
+    "source_ambiguities": {
+      "he": "צילום המקור נשמר: שני הספים הכתובים הם שני שלישים. סכמת ה־RC ותנאי ההתחלה הוגדרו כהשלמה.",
+      "en": "The preserved source spells two thirds twice. RC topology and initial state are explicit completions."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מוסיפים היסטרזיס אם זה נדרש?",
+          "direction": "מגדירים סף עולה ויורד שונים ומשוב חיובי או זיכרון; מנתחים חוזה חדש.",
+          "tests": "רמפה עולה ויורדת ורעש בין הספים."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would you add hysteresis if required?",
+          "direction": "Define distinct rising/falling thresholds and positive feedback or memory under a new contract.",
+          "tests": "Rising/falling ramps and noise between thresholds."
+        }
+      ]
+    }
+  },
+  "PREP-310": {
+    "assumptions": {
+      "he": "ארבעה ערוצי בסיס ממשיים עד100kHz, סריקה אחידה ו־ADC משותף; דוגמת1MSPS נבחרה במפורש.",
+      "en": "Four real baseband channels through100kHz, uniform shared-ADC scanning;1MSPS is an explicit example."
+    },
+    "optimality": {
+      "he": "קצב כולל גבוה מ־800kS/s; בדוגמה250kS/s לכל ערוץ. זיכרון4FsBH ביט לפני overhead.",
+      "en": "Aggregate rate above800kS/s; example250kS/s per channel. Storage4FsBH bits before overhead."
+    },
+    "verification": {
+      "he": "בדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית.",
+      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
+    },
+    "edge_cases": {
+      "he": [
+        "200kS/s בדיוק עלול לפספס סינוס בקצה.",
+        "ערוצים במתחים שונים יוצרים מדרגת התייצבות.",
+        "הקלטה לא חסומה אינה מתאימה לזיכרון קבוע."
+      ],
+      "en": [
+        "Exactly200kS/s can miss a boundary sine.",
+        "Different channel voltages create settling steps.",
+        "Unbounded capture cannot fit fixed storage."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חלוקת קצב הערוצים בלי לבדוק רכישה.",
+        "מסנן יחיד אחרי MUX במקום מניעת alias לכל ערוץ.",
+        "בלבול בין שמירת רוחב פס לשגיאה אפסית בכימות."
+      ],
+      "en": [
+        "Dividing rates without checking acquisition.",
+        "Replacing per-channel alias prevention with one post-MUX filter.",
+        "Confusing bandwidth preservation with zero quantization error."
+      ]
+    },
+    "interview_answer": {
+      "he": "בוחר יותר מ־200kS/s לערוץ ומכפיל בארבעה, מסנן כל כניסה, בודק התייצבות ומחזיק בו־זמנית רק אם זו הדרישה.",
+      "en": "Choose above200kS/s per channel, multiply by four, filter inputs, check settling and add simultaneous holds only when required."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר רזולוציה, משך או סימולטניות; נשמרה הפרדה בין דרישות חסרות לבין דוגמת קצב שהוספנו.",
+      "en": "Resolution, duration and simultaneity are absent; missing requirements are separated from the chosen rate example."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתנה התקציב לשמונה ערוצים?",
+          "direction": "שמרו קצב לכל ערוץ והכפילו את מספר ההמרות; בדקו מחדש התייצבות וזיכרון.",
+          "tests": "סבב תגים באורך8 ומגבלת זמן לחלון."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does the budget change for eight channels?",
+          "direction": "Preserve per-channel rate and double conversions; recheck settling and storage.",
+          "tests": "Check an eight-tag scan and slot budget."
+        }
+      ]
+    }
+  },
+  "PREP-303": {
+    "assumptions": {
+      "he": [
+        "מסירים רק U+0020; שאר התווים נשמרים, כולל טאב ושורה חדשה."
+      ],
+      "en": [
+        "Only U+0020 is removed; all other characters remain."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(n) זמן ו־ O(n) מקום במקרה הגרוע, כולל הפלט; חסם קריאה ליניארי במודל תווים.",
+      "en": "Θ(n) time and O(n) worst-case storage including output; linear character-read lower bound."
+    },
+    "verification": {
+      "he": "1,366 מחרוזות ובדיקות גבול הושוו לאורקל replace נפרד.",
+      "en": "1,366 strings and boundary checks compared with a separate replace oracle."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, רק רווחים, רווחים רצופים, טאב, שורה חדשה וטקסט עברי."
+      ],
+      "en": [
+        "Empty, all spaces, repeated spaces, tabs, newlines and Hebrew text."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "strip מסיר קצוות בלבד; split/join עשוי למחוק גם טאב; += חוזר עלול להעתיק קידומות."
+      ],
+      "en": [
+        "strip only trims ends; split/join can also remove tabs; repeated += may recopy prefixes."
+      ]
+    },
+    "interview_answer": {
+      "he": "מסננים כל רווח מוגדר ושומרים את שאר התווים באותו סדר.",
+      "en": "Filter every specified space and preserve the remaining order."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר מהו רווח או מקום עזר; נבחרו U+0020 ופלט חדש במפורש.",
+      "en": "The source does not define whitespace or auxiliary storage; U+0020 and a new output are explicit choices."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתנה הפתרון עבור מערך תווים שניתן לערוך במקום?",
+          "answer_direction": "משתמשים באינדקס קריאה ובאינדקס כתיבה שמתקדם רק על תו שנשמר, ומקצרים בסוף.",
+          "principle": "הרחבת חוזה באופן מפורש"
+        }
+      ],
+      "en": [
+        {
+          "question": "How does a mutable in-place character array change the solution?",
+          "answer_direction": "Use read/write indices; advance the writer only for retained characters, then truncate.",
+          "principle": "Make an extension explicit"
+        }
+      ]
+    }
+  },
+  "PREP-304": {
+    "assumptions": {
+      "he": [
+        "סמן נוכחי יחיד; אין גישה ישירה לצומת רחוק. שתי מחסניות מקושרות ופעולות יסוד בזמן קבוע."
+      ],
+      "en": [
+        "One current cursor; no off-cursor node access. Two linked stacks with constant-time primitives."
+      ]
+    },
+    "optimality": {
+      "he": "O(1) פעולות מחסנית לכל פעולה, O(n) אחסון; אין טענה למינימום זיכרון או להשהיה קשיחה.",
+      "en": "O(1) stack primitives per operation and O(n) storage; no minimum-space or hard real-time claim."
+    },
+    "verification": {
+      "he": "5,000 פעולות הושוו לרשימה רגילה וסמן אינדקס. מונה פרימיטיבים וידא לכל היותר שמונה לפעולה.",
+      "en": "5,000 operations compared with an ordinary list/index oracle; an instrumented counter bounded each operation by eight primitives."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, איבר יחיד, קצוות, קריאת שכן חסר, מחיקה בקצה וכפילויות."
+      ],
+      "en": [
+        "Empty, singleton, boundaries, absent neighbors, tail deletion and duplicates."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לא להפוך את שתי המחסניות בכל תנועה; לא לאבד נוכחי בקריאת next שנכשלה; לא להבטיח חיפוש שרירותי O(1)."
+      ],
+      "en": [
+        "Do not reverse all stacks on movement, lose current on failed next, or promise arbitrary O(1) search."
+      ]
+    },
+    "interview_answer": {
+      "he": "שתי המחסניות שומרות את הצדדים סביב הנוכחי, ולכן כל פעולה נוגעת רק בראשיהן.",
+      "en": "Two stacks store the sides around current, so every operation touches only their tops."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר סמן, מדיניות קצוות או סוג רשימה. נבחר חוזה של סמן יחיד כדי לממש את האילוץ באופן תקף.",
+      "en": "The source omits cursor and boundary policies; a single-cursor contract makes the requirement precise."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה קורה אם דורשים גישה לאינדקס i בזמן קבוע?",
+          "answer_direction": "שתי מחסניות אינן מספיקות לחוזה זה; צריך אינדוקס נוסף או לשנות את גבולות הזמן.",
+          "principle": "הרחבת חוזה באופן מפורש"
+        }
+      ],
+      "en": [
+        {
+          "question": "What if constant-time access to arbitrary index i is also required?",
+          "answer_direction": "Two stacks alone do not provide that contract; add indexing or change the time bounds.",
+          "principle": "Make an extension explicit"
+        }
+      ]
+    }
+  },
+  "PREP-305": {
+    "assumptions": {
+      "he": [
+        "שתי מחסניות בלבד, תור ריק בתחילה, ערכי int, שימוש חד־תהליכי."
+      ],
+      "en": [
+        "Exactly two stacks, initially empty, integer values, single-threaded use."
+      ]
+    },
+    "optimality": {
+      "he": "enqueue O(1); dequeue/peek O(n) במקרה הגרוע ו־ O(1) אמורטי. O(n) מקום.",
+      "en": "enqueue O(1); dequeue/peek O(n) worst-case and O(1) amortized. O(n) storage."
+    },
+    "verification": {
+      "he": "5,000 פעולות הושוו ל־ deque עצמאי; מספר העברות push/pop לא עלה על ארבע לכל הכנסה.",
+      "en": "5,000 operations compared with an independent deque; successful push/pop count stayed at most four per enqueue."
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, peek חוזר, הכנסה כשהפלט עדיין מלא, כפילויות וערכים שליליים."
+      ],
+      "en": [
+        "Empty, repeated peek, enqueue while output remains, duplicates and negatives."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לא להעביר כש־ outgoing אינה ריקה; לא לטעון ש־ dequeue היא O(1) במקרה הגרוע."
+      ],
+      "en": [
+        "Do not transfer into nonempty outgoing or call dequeue worst-case O(1)."
+      ]
+    },
+    "interview_answer": {
+      "he": "מכניסים למחסנית אחת, מוציאים מהשנייה ומעבירים רק כשמחסנית הפלט ריקה.",
+      "en": "Push one stack, pop the other, and transfer only when output empties."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו קובע זמני פעולה, שגיאות או קיבולת; נבחרו תור בלתי חסום ואמורטיזציה מפורשת.",
+      "en": "The source omits costs/errors/capacity; the unbounded amortized contract is explicit."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה לעשות אם חייבים זמן גרוע קבוע לכל dequeue?",
+          "answer_direction": "העברה עצלה זו אינה מספיקה; נדרש אלגוריתם פירוק עבודה מדורג או מבנה אחר כגון תור מעגלי.",
+          "principle": "הרחבת חוזה באופן מפורש"
+        }
+      ],
+      "en": [
+        {
+          "question": "What if every dequeue requires a constant worst-case bound?",
+          "answer_direction": "This lazy transfer is insufficient; use scheduled incremental work or another structure such as a circular queue.",
+          "principle": "Make an extension explicit"
+        }
+      ]
+    }
+  },
+  "PREP-309": {
+    "assumptions": {
+      "he": [
+        "Java17, קיבולת קבועה לא שלילית, int, גישה סדרתית."
+      ],
+      "en": [
+        "Java17, fixed nonnegative capacity, int values, serialized access."
+      ]
+    },
+    "optimality": {
+      "he": "בנאי O(capacity), רוב הפעולות O(1), exists O(size), מקום O(capacity).",
+      "en": "Constructor O(capacity), most operations O(1), exists O(size), storage O(capacity)."
+    },
+    "verification": {
+      "he": "קומפילציה והרצה ילידיות ב־ javac/java עברו 12,003 בדיקות מול ArrayDeque, כולל שגיאות וכפילויות. הראיות וטביעות הקוד בדוח הילידי הנפרד.",
+      "en": "Actual javac/java compilation and execution passed 12,003 checks against an independent ArrayDeque, including errors and duplicates; source hashes and evidence are in the separate native report."
+    },
+    "edge_cases": {
+      "he": [
+        "קיבולת 0 ו־ 1, מילוי מלא, ריק, כפילויות וערך שהוצא אך נשאר בתא."
+      ],
+      "en": [
+        "Capacity0/1, full, empty, duplicates and stale popped cells."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לא לשנות size לפני בדיקת גבול; לא לסרוק את הקיבולת כולה ב־ exists; לא לקרוא ל־ exists זמן קבוע."
+      ],
+      "en": [
+        "Do not change size before bounds checks, search the entire capacity, or call exists constant-time."
+      ]
+    },
+    "interview_answer": {
+      "he": "הקידומת עד size היא המחסנית הפעילה; push/pop נוגעות רק בקצה הקידומת.",
+      "en": "The prefix ending at size is live; push/pop touch only its boundary."
+    },
+    "source_ambiguities": {
+      "he": "המקור מזכיר בנאי שהוצג אך לא מצרף את הקוד שלו; בחרנו בנאי וקיבולת מפורשים, ולא שחזרנו קוד שלא סופק.",
+      "en": "The source mentions a shown constructor but supplies no code; capacity and constructor behavior are explicit editorial choices."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה במחסנית גנרית של הפניות?",
+          "answer_direction": "צריך להגדיר מדיניות null ושוויון, ולאפס תא שהוצא כדי למנוע החזקת הפניה מיותרת.",
+          "principle": "הרחבת חוזה באופן מפורש"
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes for a generic reference stack?",
+          "answer_direction": "Define null/equality policies and clear a popped reference to avoid retention.",
+          "principle": "Make an extension explicit"
+        }
+      ]
+    }
+  },
+  "PREP-311": {
+    "assumptions": {
+      "he": [
+        "A≥0, B>0, חלוקה מדויקת, עזר אפס, אוגרים טבעיים וקפיצה לפי הדגל האחרון."
+      ],
+      "en": [
+        "A≥0, B>0, exact divisibility, zero scratch, natural registers and previous-result branches."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(A₀+1) פקודות יחידה ושישה אוגרים; אין טענה למינימום פקודות מדויק.",
+      "en": "Θ(A₀+1) unit instructions and six registers; no exact instruction-minimum claim."
+    },
+    "verification": {
+      "he": "420 זוגות מונה/מחלק נבדקו ברשימה המדויקת מול מנה חשבונית עצמאית, כולל אפס ושימור המחלק.",
+      "en": "420 exact numerator/divisor pairs checked through the listing against arithmetic expectations, including zero and preserved divisor."
+    },
+    "edge_cases": {
+      "he": [
+        "מונה אפס, מחלק 1, מנה 1; מחלק אפס, שליליים ושארית אינם קלט חוקי."
+      ],
+      "en": [
+        "Zero numerator, divisor1, quotient1; zero divisor, negatives and nonzero remainder are outside contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לא לבדוק את דגל INC C במקום את A; לא להפוך JNZ לפקודת קפיצה לפי אוגר; לא לחסר באפס."
+      ],
+      "en": [
+        "Do not branch on INC C instead of A, turn JNZ into named-register branching, or decrement zero."
+      ]
+    },
+    "interview_answer": {
+      "he": "סופרים כמה פעמים אפשר להסיר מחלק שלם, ומשחזרים את המחלק בעזרת מוני עזר.",
+      "en": "Count complete divisor removals and restore the divisor through scratch counters."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מגדיר סימן, אפסים, אתחול עזר או סוג JNZ; נבחר מודל מלא ומפורש שאינו חוזה הקפיצה של PREP-035.",
+      "en": "The source omits signs, zero behavior, scratch initialization and JNZ semantics; this explicit model differs from PREP-035’s named-register branch."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך תומכים גם בשארית שאינה אפס?",
+          "answer_direction": "נדרש מבחן או חיסור ניסיון שניתן לשחזר; צריך למנוע DEC באפס ולשמור את השארית, בלי להוסיף פקודות בשקט.",
+          "principle": "הרחבת חוזה באופן מפורש"
+        }
+      ],
+      "en": [
+        {
+          "question": "How would nonzero remainders be supported?",
+          "answer_direction": "Use a safe comparison or reversible trial subtraction; avoid DEC at zero and preserve remainder without silently adding opcodes.",
+          "principle": "Make an extension explicit"
+        }
+      ]
+    }
+  },
+  "PREP-308": {
+    "assumptions": {
+      "he": [
+        "שני הצ׳יפים באותו ארגז מאותו מפעל; בחירת המפעל בהסתברות חצי; אי־תלות מותנית במפעל ובדיקה מהימנה.",
+        "PA ו־PB בתחום 0 עד 1, וסכומם חיובי."
+      ],
+      "en": [
+        "Both chips share a factory, selected with prior one half; independence is conditional on factory and the test is accurate.",
+        "PA and PB lie in 0..1 and have a positive sum."
+      ]
+    },
+    "optimality": {
+      "he": "נוסחת הסתברות מותנית מדויקת במספר קבוע של פעולות חשבון; בחשבון שברים עלות הפעולות תלויה באורך המספרים.",
+      "en": "Exact conditional probability with a constant arithmetic-operation count; rational-operation cost depends on numeric bit lengths."
+    },
+    "verification": {
+      "he": [
+        "אורקל שמונה שמונה עולמות לפי מפעל ושני מצבי תקינות, עם משקלי Fraction מדויקים; השוואה לנוסחה ברשת הסתברויות ובקדימויות שונות.",
+        "נבדקים אפס ראיות, סימטריה, שיעורי תקינות זהים, תחום התשובה והפער מן הממוצע."
+      ],
+      "en": [
+        "An independent eight-world factory/quality enumerator with exact Fraction weights checks the formula on a rational grid and multiple priors.",
+        "Checks include impossible evidence, symmetry, equal rates, output bounds and the increase over the prior mean."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "PA=PB>0 מחזיר את אותו שיעור; PA=1,PB=0 מחזיר 1; PA=PB=0 אינו אירוע תנאי אפשרי."
+      ],
+      "en": [
+        "Equal positive rates return that rate; PA=1,PB=0 returns one; PA=PB=0 makes the conditioning event impossible."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להשתמש בממוצע הקודם בלי לעדכן את המפעל; לחשב PA·PB כאילו צ׳יפ אחד מכל חברה; להניח אי־תלות שולית אחרי ערבוב המפעלים.",
+        "להחזיר 0 בחלוקה באפס במקום לציין שהראיה בלתי אפשרית."
+      ],
+      "en": [
+        "Keeping the prior mean instead of updating factory probabilities; using PA·PB as if chips came from different factories; assuming marginal independence after mixing.",
+        "Returning zero for zero evidence rather than rejecting an undefined conditional probability."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני מתנה קודם על המפעל. צ׳יפ ראשון תקין נותן משקלים PA/(PA+PB) ו־PB/(PA+PB); ממוצע משוקלל של PA ו־PB במשקלים האלה נותן (PA²+PB²)/(PA+PB).",
+      "en": "Condition on the factory. A good first chip gives posterior weights PA/(PA+PB) and PB/(PA+PB); weighting the two quality rates gives (PA²+PB²)/(PA+PB)."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אומר שאין תלות בין הצ׳יפים, אך לשני צ׳יפים בארגז יש מפעל משותף סמוי. נבחרה במפורש אי־תלות כאשר המפעל ידוע; אי־תלות שולית אינה נובעת מכך.",
+        "לא צוין הטיפול באירוע בעל הסתברות אפס; הנוסח מגדיר תחום וראיה חיובית."
+      ],
+      "en": [
+        "The source says chips are independent, but a box shares a latent factory. The exercise explicitly chooses independence conditional on that factory, not marginal independence of the mixture.",
+        "Zero-probability conditioning was unspecified; the edited contract defines the domain and requires positive evidence."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה ישתנה אם ארגז מגיע מ־A בהסתברות q?",
+          "answer_direction": "עדכנו לפי P(A|G1)=qPA/(qPA+(1−q)PB). ההסתברות לשני תקינים חלקי הראשון היא [qPA²+(1−q)PB²]/[qPA+(1−q)PB], אם המכנה חיובי.",
+          "principle": "עדכון בייס וחוק ההסתברות השלמה עם קדימות שאינה אחידה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if an A box has prior probability q?",
+          "answer_direction": "Use P(A|G1)=qPA/(qPA+(1−q)PB). The predictive result is [qPA²+(1−q)PB²]/[qPA+(1−q)PB] when the denominator is positive.",
+          "principle": "Bayesian updating and total probability with a nonuniform prior."
+        }
+      ]
+    }
+  }
+}

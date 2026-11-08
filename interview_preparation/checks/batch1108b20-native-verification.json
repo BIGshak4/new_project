@@ -1,0 +1,75 @@
+{
+  "recorded_at": "2026-11-08T09:51:09.876595+00:00",
+  "result": "passed",
+  "command_exit_code": 0,
+  "command_duration_ms": 821,
+  "command_id": "cmd_5e812623f7d34e56a40b300f04d1",
+  "source_sha256": {
+    "solutions/prep_022_c_shuffle_1108b20.c": "743acd70b48a77ad8f38dcb7ed6c1a706ea2384393c5a4c2ec6ce60b9bafd1ed",
+    "checks/check_prep022_c_1108b20.c": "b3c7bf09540a77b8f8006555a2db6c277a72d468eb2ab89ad93f0355cb66c24e",
+    "solutions/Prep309FixedIntStack1108b20.java": "1745b9984c4b6128cddcb6af09404a03488b88819278bb7352b8cc97c23d7533",
+    "checks/CheckPrep309Stack1108b20.java": "66574720baefccf6b572e57ee7b70668b508d0bc831acf17b212bdc079b0ba4c",
+    "solutions/prep_018_minmax8_1108b20.sv": "ba8df4961ee80ab87964ff7870c82270adf4cf4995e9e22d1208769429e8f22a",
+    "solutions/prep_053_wood_direction_1108b20.sv": "125e352e83ab9748595dda7fda880c200ff7238b28e558c979dec73a58f678f4",
+    "solutions/prep_299_sine32_1108b20.sv": "f5ed8902f913fd190264c399dc95ff7bb5411418bd7ecd13286e4000da605d99",
+    "checks/tb_hardware_1108b20.sv": "070cc8cf33986fe7bc4d069c5b9fe36c7f420400b59b8be1d6e4c2a00ddf6465"
+  },
+  "source_hashes_verified_inside_vm_and_after_run": true,
+  "environment": {
+    "os": "Ubuntu26.04.1LTS",
+    "gcc": "15.2.0",
+    "c_standard": "C11",
+    "c_flags": [
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic"
+    ],
+    "iverilog": "12.0",
+    "sv_flag": "-g2012",
+    "jdk": "25.0.4.1",
+    "java_target_release": 17,
+    "java_flags": [
+      "-Xlint:all",
+      "-Werror"
+    ],
+    "sandbox_id": "sbx_pnirIQ7cU49JMR280wkfNJCrtkBk",
+    "persistent": false,
+    "session_stopped": true,
+    "test_network_policy": "deny-all"
+  },
+  "c_shuffle": {
+    "checks": 6665,
+    "oracle": "Mocked bounded draws plus permutation/cycle invariants; not a proof of rand() randomness."
+  },
+  "java_stack": {
+    "checks": 12003,
+    "scope": "Bounded stack semantics and randomized operations compiled targeting Java17."
+  },
+  "rtl_check_total": 66134,
+  "hardware_checks": {
+    "minmax_pairs": 65536,
+    "wood_samples": 404,
+    "sine_schedule": 194
+  },
+  "limits": [
+    "No SPICE, static timing, ADC hardware or physical sensor validation.",
+    "Wood-direction contract is one isolated monotone short traversal; arbitrary reversals are not observable in the blind gap.",
+    "Java native validation is separate from supported website Run languages."
+  ],
+  "bootstrap": {
+    "package_sources": [
+      "https://archive.ubuntu.com",
+      "https://security.ubuntu.com"
+    ],
+    "allowlist_only_during_setup": true,
+    "unrelated_blocked_repository_warning": "Existing cli.github.com apt source was blocked; official Ubuntu packages installed successfully."
+  },
+  "running_session_policy_verified": {
+    "mode": "deny-all",
+    "session_id": "sbx_pnirIQ7cU49JMR280wkfNJCrtkBk",
+    "confirmed_again_after_stop": true
+  },
+  "recovery_note": "An initial successful run used the Ubuntu package-host allowlist because changing the named sandbox configuration did not change its active session. No deny-all claim is made for that first run. Repeated the identical eight SHA-bound files in a fresh VM after updating and verifying the running-session deny-all policy; all checks passed again, and the stopped session also confirms deny-all. An earlier nonexistent upload directory was created before the first compilation."
+}

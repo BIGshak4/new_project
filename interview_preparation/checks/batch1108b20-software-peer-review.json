@@ -1,0 +1,51 @@
+{
+  "result": "passed",
+  "read_only": true,
+  "ids": [
+    "PREP-303",
+    "PREP-304",
+    "PREP-305",
+    "PREP-309",
+    "PREP-311",
+    "PREP-022",
+    "PREP-035"
+  ],
+  "independent_case_counts": {
+    "space_filter_builtin_oracle": 3284,
+    "cursor_plain_list_oracle_traces": 4809,
+    "queue_deque_oracle_traces": 4034,
+    "named_register_dirty_scratch_multiply": 2708,
+    "flag_branch_exact_division": 420,
+    "rejection_sampler_finite_bucket_models": 2001
+  },
+  "independent_cases_total": 17256,
+  "largest_interpreted_instruction_count": 4083,
+  "source_sha256": {
+    "solutions/prep_303_remove_spaces_1108b20.py": "defda5d5bf0fefae463d04ff8d5f12d47ab18ec33885702138c0d4df7f7a38cf",
+    "solutions/prep_304_cursor_stacks_1108b20.py": "b595aaeb2391959bfb40ff213d9e3b58bdb154e47b179aebebaa33f265a58450",
+    "solutions/prep_305_queue_stacks_1108b20.py": "a45f20bebe75cd9a4951598b3815e2591b8e17885dde0b4d0220de6afe715252",
+    "solutions/prep_035_register_unit_1108b20.txt": "3c42ba3ec20eadab8afebb1f5931c8633a5f602cdd8c18099c914985ef39e681",
+    "solutions/prep_311_exact_division_1108b20.txt": "7593f62a0f19fdcd783c274400fb52ea0636eb857035917e2d36ca054dc3b32a",
+    "solutions/prep_022_c_shuffle_1108b20.c": "743acd70b48a77ad8f38dcb7ed6c1a706ea2384393c5a4c2ec6ce60b9bafd1ed",
+    "solutions/Prep309FixedIntStack1108b20.java": "1745b9984c4b6128cddcb6af09404a03488b88819278bb7352b8cc97c23d7533"
+  },
+  "native_report": "checks/batch1108b20-native-verification.json",
+  "native_source_bindings_still_match": 8,
+  "native_c_shuffle_checks": 6665,
+  "native_java_stack_checks": 12003,
+  "copy_findings_resolved": [
+    "022 heading now describes100 generator outputs, rather than exactly100 raw rand calls.",
+    "022 generalized-N expected-cost statement now requires N<=RAND_MAX; larger domains need multiple raw draws."
+  ],
+  "diagram_review": {
+    "inspected": 14,
+    "status": "passed",
+    "scope": "Bilingual software contact sheet: cursor transfer, FIFO reversal, active stack prefix, swap-removal pool, multiplication and division tables agree with contracts."
+  },
+  "limitations": [
+    "Native C/Java execution is separate root evidence, not a new peer native run.",
+    "Assembly is checked in the explicitly chosen educational machine, not a physical CPU ISA.",
+    "Finite bucket counts do not prove library rand statistical quality or security.",
+    "No professional human approval or production publication is claimed."
+  ]
+}

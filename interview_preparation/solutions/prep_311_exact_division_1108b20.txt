@@ -1,0 +1,27 @@
+; A>=0, B>0 and A is divisible by B. C,T,S,U start at zero.
+; INC/DEC R and flag-based JNZ label only. DEC zero is forbidden.
+; JNZ immediately follows arithmetic; END is fall-through completion.
+INC A
+DEC A
+JNZ OUTER
+INC U
+JNZ END
+OUTER:
+COPY_B:
+INC T
+INC S
+DEC B
+JNZ COPY_B
+RESTORE_B:
+INC B
+DEC S
+JNZ RESTORE_B
+SUBTRACT:
+DEC A
+DEC T
+JNZ SUBTRACT
+INC C
+INC A
+DEC A
+JNZ OUTER
+END:

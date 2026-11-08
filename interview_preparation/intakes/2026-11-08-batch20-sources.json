@@ -1,0 +1,398 @@
+{
+  "received_on": "2026-11-08",
+  "source_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-01.png"
+      ],
+      "sha256": "ae3cf27c6c9147dad1d668787391157dfe3cc190c708204c0bb8e4bfb61ee4d6",
+      "original_prompt": "מכונה מקבלת רצף סיביות. בכל פעם שמתווספת סיבית יש לקבוע האם המספר מתחלק ב־3 ללא שארית. א: כל סיבית חדשה מהווה את ה־LSB. ממש מכונת מצבים ומצא כמה FF נדרשים. דוגמאות: 0 מתחלק;01 לא;011 כן;0110 כן. ב: כמו סעיף א, אך כל סיבית חדשה מהווה את ה־MSB. דוגמאות:0 מתחלק;10 לא;110 מתחלק;0110 מתחלק.",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel",
+        "marvell"
+      ],
+      "question_ids": [
+        "PREP-036"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-02.png"
+      ],
+      "sha256": "68d54633adb4e665412cad43f0c973fa682cda2582c79dfba067c91a74d8a502",
+      "original_prompt": "מקבלים מחרוזת של משפט עם רווחים וצריכים להחזיר אותה בלי רווחים בכלל.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-303"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-03.png"
+      ],
+      "sha256": "fb9dfa9b2349034ad913836705b6a941d4c04d955ea4d5ac3f6094c2a1ac8b8f",
+      "original_prompt": "כיצד ניתן לבנות רשימה מקושרת רק על ידי מחסניות, כאשר כל פעולה של הוצאה, הוספה של איבר לפני או אחרי האיבר הנוכחי, מציאת העוקב או הבא, ומחיקה נעשים ב־O(1)?",
+      "reported_companies": [
+        "Mobileye"
+      ],
+      "source_tags": [
+        "software",
+        "mobileye"
+      ],
+      "question_ids": [
+        "PREP-304"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-04.png"
+      ],
+      "sha256": "36533e382fb94e3fadb26ae94c7b293989e8fdd760b828ad90eb832c1b37b1c5",
+      "original_prompt": "ממש תור באמצעות שתי מחסניות.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-305"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-05.png"
+      ],
+      "sha256": "ba43a645eaa599350be8766ad32861472fc885bb1a3e1428753d32d3536e784f",
+      "original_prompt": "יש להניח 5 אבנים על המספרים בשעון שמונח במאוזן על עמוד כך שיישאר מאוזן עדיין.",
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "question_ids": [
+        "PREP-085"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-06.png"
+      ],
+      "sha256": "d5de2e3254b8954fc52a7a297308bfd2b5e5fe4f5975dadc0cdbf144248f273d",
+      "original_prompt": "לצייר את הגלים של היציאות B ו־C ואת צורת הגלים כאשר הקבל נטען ומתי הוא פורק. מצורף מעגל: A מחובר דרך קבל לצומת B; B מחובר דרך נגד לאדמה ולמבוא מהפך שמוצאו C. A עולה מדרגה ונשאר גבוה.",
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "question_ids": [
+        "PREP-132"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-07.png"
+      ],
+      "sha256": "adc21b7d8a70c94b3f4e62094ad7d09311820ed193363b6fb6330016fccc60ee",
+      "original_prompt": "ניתן ביטוי מתמטי עם סוגריים משלושה סוגים ()[]{} ונדרש לבדוק רק את חוקיות הסוגריים; ניתן להניח ששאר הפעולות חוקיות.",
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_tags": [
+        "software",
+        "amazon",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-037"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-08.png"
+      ],
+      "sha256": "bc63c003125e530a60a690005ad10d44d90fb78faec7da12d85642365306a26a",
+      "original_prompt": "שאלת backend בהכנת צ׳יפ: process variation גורם לשונות בין צ׳יפים באותו wafer ולפינות FF,SS,FS,SF;F מהיר ו־S איטי עבור NMOS ו־PMOS. למלא טבלת PVT: process, voltage, temp ואיזו בעיית setup או hold; בשורות FF ו־SS לציין האם המתח והטמפרטורה גבוהים או נמוכים.",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-306"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-09.png"
+      ],
+      "sha256": "6d14ad083b6c860a367789a3ae269cb14cc0f520df7bd0f712d8be8b622522a6",
+      "original_prompt": "נתון קומפרטור עם כניסות A,B שמוציא1 אם A>B ואחרת0. במעגל RC טורי עם מקור Vs יש לחברו כך שכאשר מתח הקבל קטן מ־Vs כפול שני שלישים הפלט0 וכאשר הוא גדול מ־Vs כפול שני שלישים הפלט1. ניתן להשתמש בנגדים, קבלים וסלילים ללא הגבלה ובגדלים לבחירה. שני תנאי המקור מתייחסים לאותו סף של שני שלישים.",
+      "reported_companies": [
+        "Elbit"
+      ],
+      "source_tags": [
+        "hardware",
+        "elbit"
+      ],
+      "question_ids": [
+        "PREP-307"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-10.png"
+      ],
+      "sha256": "67faa9f697068c821d32147767e900853591d4030b88a9eff096d93a76e10129",
+      "original_prompt": "לבנות מערכת: קלט שני מספרים בהפרש2 בתצוגה בינארית בעלי6 ביטים; פלט המספר שביניהם.",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "logic",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-058"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-11.png"
+      ],
+      "sha256": "5190bd43d8cd79db839ffa29e65672f25b895f2f14eabeedb135636788b9cfb9",
+      "original_prompt": "בעזרת הפונקציה rand ממש פונקציה ב־C המוציאה מספר אקראי בתחום1–100 כך שבמשך100 קריאות התוצאה אינה חוזרת על עצמה; מתקבלים כל100 המספרים ללא כפילויות.",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "software",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-022"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-12.png"
+      ],
+      "sha256": "70d679937c42fe7149e846d54bf8566c9e103547e2fdf5da021f0423849084e9",
+      "original_prompt": "חברות A ו־B מייצרות צ׳יפים ואורזות כל2 צ׳יפים בארגז לחברה C. הסתברות לצ׳יפ תקין:A היא PA ו־B היא PB. אין תלות בין הצ׳יפים. בוחרים באקראי ארגז מ־A או מ־B בהסתברות חצי, בודקים את הצ׳יפ הראשון ומוצאים שהוא תקין. מה ההסתברות שגם השני בארגז תקין?",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-308"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-13.png"
+      ],
+      "sha256": "9bcef0785e7a6fee0252f98cc747c2a76799200125b96c2d665608ae4597f217",
+      "original_prompt": "לממש מחסנית בשפת Java: constructor, pop, push, isEmpty, exists, isFull.",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "logic",
+        "java",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-309"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-14.png"
+      ],
+      "sha256": "97bdb134f4b41d7a9d35096d8f3830d319fb0fd81da804f680b38ebede6cf4cf",
+      "original_prompt": "שני חיישנים A ו־B ובול עץ שנע שמאלה וימינה. יש לתת את כיוון התנועה עבור בול עץ קצר מהמרחק בין A ל־B ועבור בול עץ ארוך מהמרחק. האם ניתן לצמצם מצבים? בחלק השני לכתוב את אותה שאלה בפסאודו־קוד.",
+      "reported_companies": [
+        "Elbit"
+      ],
+      "source_tags": [
+        "logic",
+        "elbit"
+      ],
+      "question_ids": [
+        "PREP-053"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-15.png"
+      ],
+      "sha256": "39d30aa159ff9156032e229752dc1a81bf449bb87b2916a8d527b3f80e5ec77d",
+      "original_prompt": "תכנן מערכת המקבלת a,b כל אחד8 סיביות ומוציאה את הגבוה ואת הנמוך ביניהם.",
+      "reported_companies": [
+        "Samsung"
+      ],
+      "source_tags": [
+        "hardware",
+        "samsung"
+      ],
+      "question_ids": [
+        "PREP-018"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-16.png"
+      ],
+      "sha256": "88a9f2345c859df5f3bb99da07e2a41bffdd07d2545ff93807932c69cb960039",
+      "original_prompt": "ממש R2=A*B באמצעות ADD המוסיפה1 לערך ברגיסטרSUM ופעולה המחסירה1 מערך ברגיסטר, ו־JNZ הקופצת לשורה אחרת אם הערך ברגיסטר שלה אינו0.",
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "question_ids": [
+        "PREP-035"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-17.png"
+      ],
+      "sha256": "49e14e1487983286f67ca06621357eacb5dd42da1497868193f219be9aac5cb9",
+      "original_prompt": "איך ניתן בממיר אנלוגי לדיגיטלי לשמור4 אותות בתחום0–100kHz כך שלא נאבד מידע מהאותות?",
+      "reported_companies": [
+        "SolarEdge"
+      ],
+      "source_tags": [
+        "hardware",
+        "solaredge"
+      ],
+      "question_ids": [
+        "PREP-310"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-18.png"
+      ],
+      "sha256": "8ac0956cedef6d619584d5aea3c4e9e687ae5ced95832592dc69cd8ff0841b5d",
+      "original_prompt": "ממשו מכונה המממשת sin: Sin(2pi*n*T), כאשרT=32. כמה דגימותn נצטרך? האם ניתן לשפר?",
+      "reported_companies": [
+        "Elbit"
+      ],
+      "source_tags": [
+        "logic",
+        "hardware",
+        "elbit"
+      ],
+      "question_ids": [
+        "PREP-299"
+      ],
+      "decision": "existing_question_source_and_variant"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-19.png"
+      ],
+      "sha256": "bdee758252ae9442a16d7ab9184e8d7cd3ba8c2ebe44c488f59d73da5f91e6ee",
+      "original_prompt": "ממש חלוקה של שני מספרים שלמים (ניתן להניח שהתוצאה שלמה) באסמבלי עם הפקודות inc,dec,jnz בלבד.",
+      "reported_companies": [
+        "CEVA"
+      ],
+      "source_tags": [
+        "software",
+        "hardware",
+        "ceva"
+      ],
+      "question_ids": [
+        "PREP-311"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-11-08-batch20-20.png"
+      ],
+      "sha256": "d0531af6146770d3fb91941462adaa28ba21c10d4866aa6cc7d67d47e5659bac",
+      "original_prompt": "100 גמדים עומדים בטור וכל אחד רואה רק את שלפניו. כובעים לבנים ואדומים באקראי. גרגמל שואל כל אחד מצבע כובעו החל מהאחרון שרואה את כולם והורג מי שטועה. אפשר לתכנן מראש. איזו אסטרטגיה מצילה מספר מקסימלי של גמדים?",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "logic",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-096"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ],
+  "status": "mapped",
+  "new_question_count": 9,
+  "technical_extension_count": 6,
+  "provenance_only_count": 5,
+  "affected_question_count": 20,
+  "screenshot_count": 20,
+  "question_source_count": 20
+}

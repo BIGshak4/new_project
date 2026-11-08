@@ -98,8 +98,8 @@ def test_source_only_questions_preserve_versions_translations_and_three_hint_set
 
 
 def test_eleven_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 301
-    assert len(catalog.questions) == 331
+    assert len(archive()["questions"]) == 310
+    assert len(catalog.questions) == 340
     additions = {
         q.assets.get("preparation_id"): q
         for q in catalog.questions.values()
@@ -211,7 +211,10 @@ async def test_new_resources_require_owned_reveal_and_never_sign_archived_source
                 for item in signed[-1]
             )
             if ident == "PREP-132":
-                assert len(signed[-1]) == 1 and "rc-question-circuit" in signed[-1][0]["filename"]
+                assert {m["filename"] for m in signed[-1]} == {
+                    f"prep-132-rc-question-circuit-{language}.png",
+                    f"prep-132-ground-given-1108b20-{language}.png",
+                }
             else:
                 assert signed[-1] == [], "solution diagrams must stay hidden before reveal"
         with pytest.raises(ApiError) as denied:
@@ -427,5 +430,8 @@ def test_rc_question_has_a_clean_prompt_circuit_and_gates_the_solved_waveforms(c
     for language in ("he", "en"):
         media = question_resources.learner_media(q.assets["bank_media"], language)
         prompt = [m for m in media if m["role"] == "prompt"]
-        assert len(prompt) == 1 and "rc-question-circuit" in prompt[0]["filename"]
+        assert {m["filename"] for m in prompt} == {
+            f"prep-132-rc-question-circuit-{language}.png",
+            f"prep-132-ground-given-1108b20-{language}.png",
+        }
         assert any("rc-ideal-waveforms" in m["filename"] and m["role"] == "solution" for m in media)

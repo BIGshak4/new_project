@@ -1,4 +1,5 @@
 """Validate current ratings before projecting the bank onto pre-rating content hashes."""
+import hashlib
 import json
 from functools import lru_cache
 from pathlib import Path
@@ -17,7 +18,13 @@ def historical_scores():
 def before_difficulty_review(question):
     ratings, examples = historical_scores()
     key = question["key"]
-    assert type(question["difficulty"]) is int and question["difficulty"] == ratings[key]["difficulty"], key
+    assert type(question["difficulty"]) is int, key
+    if question["difficulty"] != ratings[key]["difficulty"]:
+        frozen = json.loads((ROOT / "backend/tests/fixtures/preparation_before_20261108_batch20.json").read_bytes())
+        historical = frozen["difficulty_ratings"][key]
+        digest = hashlib.sha256(json.dumps(question, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        assert question["difficulty"] == historical["difficulty"], key
+        assert digest == frozen["compiled_sha256"][key], key
     assets = question["assets"].copy()
     assert assets.pop("difficulty_status") == "rated", key
     previous = {**question, "assets": assets}

@@ -1,0 +1,31 @@
+; Natural unbounded registers A,B,R2,T; R2,T may be dirty.
+; ADD R = increment1; SUM R = decrement1, forbidden at zero.
+; JNZ R,label directly tests the named register, not flags.
+ADD R2
+CLEAR_RESULT:
+SUM R2
+JNZ R2,CLEAR_RESULT
+ADD T
+CLEAR_TEMP:
+SUM T
+JNZ T,CLEAR_TEMP
+JNZ A,CHECK_B
+ADD T
+JNZ T,END
+CHECK_B:
+JNZ B,OUTER
+ADD T
+JNZ T,END
+OUTER:
+SUM B
+TRANSFER:
+SUM A
+ADD T
+ADD R2
+JNZ A,TRANSFER
+RESTORE:
+SUM T
+ADD A
+JNZ T,RESTORE
+JNZ B,OUTER
+END:
