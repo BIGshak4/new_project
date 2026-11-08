@@ -6,8 +6,9 @@
   color: var(--ink);
   font-family: var(--font);
 }
+/* The inline circuit editor is an open, non-modal dialog. Help stays available there. */
 :global(body):has(:global([data-muxi-station])) .dock,
-:global(body):has(:global(dialog[open])) .dock { visibility: hidden; }
+:global(body):has(:global(dialog:modal)) .dock { visibility: hidden; }
 .launcher {
   display: flex;
   align-items: center;

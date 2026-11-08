@@ -35,17 +35,31 @@ try {
   }, { session: fixture.session, supa: supaUrl });
   const page = await context.newPage();
   page.on("pageerror", error => report.errors.push(error.message));
+  const helper = page.locator("[data-personal-helper] > button");
+  async function checkHelperAvailable(description) {
+    await helper.click({ trial: true });
+    check(await helper.isVisible(), description);
+  }
   await page.goto(base, { waitUntil: "domcontentloaded" });
   const home = page.locator(".learn-head").getByRole("heading", { level: 1 });
   try { await home.waitFor({ timeout: 20000 }); }
   catch (error) { console.error((await page.locator("body").innerText()).slice(0, 1500)); throw error; }
   check(await page.locator("[data-muxi-station]").count() === 0, "A first authenticated visit shows the personal dashboard with the tour closed");
+  await checkHelperAvailable("The personal helper is reachable on the dashboard after the entry splash");
+  await page.locator("[data-jobrun-inbox-trigger]").filter({ visible: true }).first().click();
+  const inbox = page.locator("dialog[data-jobrun-inbox-dialog]:modal");
+  await inbox.waitFor();
+  check(await helper.isHidden(), "An open updates dialog hides the underlying helper");
+  await inbox.getByRole("button", { name: "סגירת עדכונים ופניות", exact: true }).click();
+  await checkHelperAvailable("Closing the updates dialog automatically restores the helper");
   const library = page.getByRole("link", { name: "מאגר", exact: true }).filter({ visible: true }).first();
   await library.click();
   await page.getByRole("textbox", { name: "חיפוש שאלות", exact: true }).fill("Intel");
   await page.getByRole("button", { name: "סיור עם מוקסי", exact: true }).click();
   check(await page.locator(".app-shell").evaluate(el => el.closest("[inert]") !== null), "Covered workspace is inert while its state stays mounted");
+  check(await helper.isHidden(), "The helper is hidden during the tour");
   await page.getByRole("button", { name: "דילוג ויציאה מהסיור", exact: true }).click();
+  await checkHelperAvailable("Exiting the tour restores the helper in the library");
   check(await page.getByRole("textbox", { name: "חיפוש שאלות", exact: true }).inputValue() === "Intel", "Closing a replayed tour preserves the real library search");
   check(await page.evaluate(() => document.body.style.overflow) !== "hidden", "Closing restores document scrolling");
   await page.reload({ waitUntil: "domcontentloaded" });
@@ -79,11 +93,29 @@ try {
   await page.getByRole("button", { name: "כתיבת הסבר לפתרון", exact: true }).click();
   const explanation = page.getByRole("textbox", { name: "הסבר הפתרון", exact: true });
   await explanation.fill("טיוטה שצריכה להישמר בזמן הסיור");
+  await page.locator('[data-muxi-control="circuit-open"]').click();
+  const inlineCircuit = page.locator('dialog[open][data-layout="inline"]');
+  await inlineCircuit.waitFor();
+  for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
+    await page.setViewportSize(viewport);
+    await checkHelperAvailable(`An inline circuit keeps the helper reachable at ${viewport.width}px`);
+    await helper.click();
+    const minimize = page.getByRole("button", { name: "מזעור העוזר", exact: true });
+    await minimize.click();
+    await inlineCircuit.locator('[data-muxi-control="circuit-fullscreen"]').click();
+    const fullCircuit = page.locator('dialog:modal[data-layout="fullscreen"]');
+    await fullCircuit.waitFor();
+    check(await helper.isHidden(), `The full-screen circuit hides the underlying helper at ${viewport.width}px`);
+    await fullCircuit.locator('[data-muxi-control="circuit-expand"]').click();
+    await inlineCircuit.waitFor();
+    await checkHelperAvailable(`Returning to the inline circuit automatically restores the helper at ${viewport.width}px`);
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.getByRole("button", { name: "סיור עם מוקסי", exact: true }).click();
   await page.getByRole("button", { name: "מתחילים בסיור המעמיק", exact: true }).click();
   await page.getByRole("button", { name: "כל הפרקים", exact: true }).click();
   await page.getByRole("button", { name: "בונים ובודקים מעגל", exact: true }).click();
-  await page.getByRole("button", { name: "הרחבת הלוח", exact: true }).click();
+  await page.locator("[data-muxi-station]").getByRole("button", { name: "הרחבת הלוח", exact: true }).click();
   await page.locator("dialog:modal [data-muxi-coach]").getByRole("button", { name: "יציאה ושמירת המקום", exact: true }).click();
   check(await explanation.inputValue() === "טיוטה שצריכה להישמר בזמן הסיור", "Exiting an expanded circuit tour preserves the unsent practice answer");
   check(await page.evaluate(() => document.body.style.overflow) !== "hidden", "Nested circuit and tour scroll locks release in either cleanup order");
