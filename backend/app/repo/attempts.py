@@ -75,6 +75,17 @@ def _submission_dict(row) -> dict:
     }
 
 
+async def mark_question_completed(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: uuid.UUID) -> None:
+    """Patch only the completion flag on the owner's library entry."""
+    entries = await db.table("jr_practice_entries")
+    statement = insert(entries).values(user_id=user_id, question_id=question_id, completed=True)
+    await connection.execute(statement.on_conflict_do_update(
+        index_elements=[entries.c.user_id, entries.c.question_id],
+        set_={"completed": True},
+        where=entries.c.completed.is_(False),
+    ))
+
+
 async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: uuid.UUID, row: dict,
                revisions: set[int] | None = None, known_revisions: int = 0) -> None:
     """Upsert the attempt and its revisions.

@@ -487,6 +487,8 @@ class PracticeService:
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                           revisions={submission.revision, *self._superseded_by(attempt, submission)},
                                           known_revisions=known)
+                    if submission.turn == 0:
+                        await tx.mark_question_completed(user_id=user_id, question_id=stored.question_id)
             except DuplicateSubmissionKey:
                 # another process accepted a revision first: answer with what it stored, or say so
                 attempt, stored, loaded, profile = await self._load(user_id, attempt_id)

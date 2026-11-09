@@ -69,6 +69,7 @@ type Props = {
   user: User;
   entries: Entry[];
   onSaved: (entry: Entry) => void;
+  onRefreshEntry: (questionId: string) => void;
   onStarted: (id: string) => void;
   onNew: (key: string, source?: "retry" | "suggestion") => void;
   onBack: () => void;
@@ -89,6 +90,7 @@ export function PracticeSession({
   user,
   entries,
   onSaved,
+  onRefreshEntry,
   onStarted,
   onNew,
   onBack,
@@ -121,6 +123,11 @@ export function PracticeSession({
   const visitKey = question?.key;
   const visitAttempt = attempt?.id ?? null;
   const answered = !!attempt?.submission;
+  const submittedRevision = attempt?.submission?.revision;
+  const attemptQuestionId = attempt?.question.id;
+  useEffect(() => {
+    if (attemptQuestionId && submittedRevision !== undefined) onRefreshEntry(attemptQuestionId);
+  }, [attemptQuestionId, submittedRevision, onRefreshEntry]);
   const lastVisitEvent = useRef("");
   useEffect(() => {
     if (loading || !visitKey || (attemptId && visitAttempt !== attemptId)) return;
@@ -431,7 +438,10 @@ export function PracticeSession({
               attempt.id,
               { text: p.text, visual: p.visual },
               p.key,
-            )
+            ).finally(() => {
+              // The bank may have reopened before the server accepted this answer.
+              if (!live.current) onRefreshEntry(attempt.question.id);
+            })
           : await api.submitFollowUp(
               attempt.id,
               p.turn,

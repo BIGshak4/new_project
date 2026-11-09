@@ -211,6 +211,21 @@ function Workspace({
       if (revision === goalRevision.current) setGoalLoadFailed(true);
     }
   }, [api, lang, user.id]);
+  const readEntries = useCallback(async (questionId?: string) => {
+    const version = generation.current;
+    let query = supabase.from("jr_practice_entries")
+      .select("id,user_id,question_id,answer,self_rating,bookmarked,completed,hidden,version")
+      .eq("user_id", user.id);
+    if (questionId) query = query.eq("question_id", questionId);
+    const { data, error } = await query;
+    if (version !== generation.current) return;
+    if (error) throw error;
+    setEntries(previous => mergeEntries(previous, data ?? []));
+    if (!questionId) setEntriesReady(true);
+  }, [user.id]);
+  const refreshEntries = useCallback((questionId?: string) => {
+    void readEntries(questionId).catch(() => { /* Retain the last known versions until the next read. */ });
+  }, [readEntries]);
   const load = useCallback(async () => {
     const version = ++generation.current;
     const current = () => version === generation.current;
@@ -265,20 +280,7 @@ function Workspace({
         .companies()
         .then((list) => current() && setCompanies(list))
         .catch(() => {}),
-      Promise.resolve(
-        supabase
-          .from("jr_practice_entries")
-          .select(
-            "id,user_id,question_id,answer,self_rating,bookmarked,completed,hidden,version",
-          )
-          .eq("user_id", user.id),
-      )
-        .then((saved) => {
-          if (!current()) return;
-          if (saved.error) throw saved.error;
-          setEntries((old) => mergeEntries(old, saved.data ?? []));
-          setEntriesReady(true);
-        })
+      readEntries()
         .catch(report)
         .finally(() => {
           if (current()) setEntriesLoading(false);
@@ -292,7 +294,7 @@ function Workspace({
         })
         .catch(report),
     ]);
-  }, [api, lang, user.id, loadGoal]);
+  }, [api, lang, user.id, loadGoal, readEntries]);
   useEffect(() => {
     void load();
     return () => {
@@ -350,6 +352,18 @@ function Workspace({
   const onSaved = (entry: Entry) =>
     setEntries((old) => mergeEntries(old, [entry]));
   const active = !!(route.question || route.attempt);
+  const viewingQuestionList = !active && (route.view === "library" || route.view === "bookmarks");
+  useEffect(() => {
+    if (!viewingQuestionList) return;
+    const sync = () => refreshEntries();
+    sync();
+    window.addEventListener("focus", sync);
+    window.addEventListener("online", sync);
+    return () => {
+      window.removeEventListener("focus", sync);
+      window.removeEventListener("online", sync);
+    };
+  }, [viewingQuestionList, refreshEntries]);
   const topics = [...new Set(questions.map((q) => q.subject))];
   const questionsByKey = new Map(questions.map(q => [q.key, q]));
   const questionStates = buildQuestionStates(questions, entries);
@@ -509,6 +523,7 @@ function Workspace({
             user={user}
             entries={entries}
             onSaved={onSaved}
+            onRefreshEntry={refreshEntries}
             onStarted={(id) =>
               navigate({ view: route.view, attempt: id }, true)
             }

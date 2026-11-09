@@ -32,6 +32,7 @@ class InMemoryStore:
         self.catalog = catalog
         self.allow_in_review = allow_in_review
         self.attempts: dict[uuid.UUID, dict] = {}                 # attempt id -> {user_id, question_id, row, started_at}
+        self.practice_entries: dict[tuple[uuid.UUID, uuid.UUID], dict] = {}  # (user, question) -> personal library entry
         self.profiles: dict[tuple[uuid.UUID, str], dict] = {}     # (user, skill) -> {state, version, history, ...}
         self.metrics: list[dict] = []
         self.usage: list[dict] = []
@@ -73,7 +74,7 @@ class InMemoryStore:
         snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
                     dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links),
                     list(self.reports), list(self.coin_ledger), dict(self.duels), dict(self.avatars),
-                    dict(self.identities), dict(self.friendships))
+                    dict(self.identities), dict(self.friendships), dict(self.practice_entries))
         commits_before = self._commits
         tx = _MemoryTx(self)
         try:
@@ -82,7 +83,7 @@ class InMemoryStore:
             if self._commits == commits_before:
                 (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
                  self.sightings, self.plans, self.plan_links, self.reports, self.coin_ledger, self.duels, self.avatars,
-                 self.identities, self.friendships) = snapshot
+                 self.identities, self.friendships, self.practice_entries) = snapshot
             raise
         else:
             self._commits += 1
@@ -585,6 +586,17 @@ class _MemoryTx:
         return StoredAttempt(id=attempt_id, user_id=user_id, question_id=stored["question_id"],
                              question_key=stored["row"]["question_key"], started_at=stored["started_at"],
                              row=copy.deepcopy(stored["row"]))
+
+    async def mark_question_completed(self, *, user_id, question_id):
+        key = (user_id, question_id)
+        entry = self.s.practice_entries.get(key)
+        if entry and entry["completed"]:
+            return
+        if entry is None:
+            entry = {"id": uuid.uuid4(), "user_id": user_id, "question_id": question_id, "answer": "",
+                     "self_rating": None, "bookmarked": False, "hidden": False, "version": 0}
+        self.s.practice_entries[key] = {**entry, "completed": True, "version": entry["version"] + 1,
+                                        "updated_at": datetime.now(UTC)}
 
     async def save_attempt(self, *, user_id, question_id, row, revisions=None, known_revisions=0):
         if "save_attempt" in self.s.failures:

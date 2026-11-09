@@ -568,7 +568,7 @@ class TestSlowEvaluations:
             "feedback": {"what_happened": "w", "why_it_matters": "y", "next_step": "n", "your_reasoning_vs_reference": "c"},
             "tip": "t"}[r.role]))
         monkeypatch.setattr(practice_routes, "RESPONSE_BUDGET_SECONDS", 0.2)
-        _, h = user
+        user_id, h = user
         aid = (await start(client, h))["id"]
         response = await client.post(f"{BASE}/{aid}/submissions", json={"answer": "alarm = (A&B)|(A&C)|(B&C)"},
                                      headers={**h, "Idempotency-Key": "slow-1"})
@@ -576,6 +576,8 @@ class TestSlowEvaluations:
         body = response.json()
         assert body["submission"]["status"] == "evaluating" and body["attempt"]["status"] == "evaluating"
         assert not body["attempt"]["can_retry"] and not body["attempt"]["can_submit"]
+        store = app.state.runtime.store
+        assert store.practice_entries[user_id, store.question_id(Q)]["completed"]
 
         retry = await client.post(f"{BASE}/{aid}/submissions/1/retry", headers=h)
         assert retry.status_code == 409                                  # nothing to retry while it runs

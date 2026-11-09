@@ -256,6 +256,26 @@ try {
   await page.locator(".quick-home-link").first().click();
   await page.getByRole("heading", { name: "יסודות בקטנה", exact: true }).waitFor();
   check(new URL(page.url()).searchParams.get("view") === "fundamentals", "The first shortcut opens the short-question bank");
+  await library.click();
+  const unanswered = page.locator('.library-question-row:has(input[type="checkbox"]:enabled:not(:checked))')
+    .filter({ hasNotText: "הכרעת רוב בין שלושה חיישנים" }).first();
+  const questionId = await unanswered.getAttribute("data-question-id");
+  const done = page.locator(`.library-question-row[data-question-id="${questionId}"] input[type="checkbox"]:checked`);
+  await unanswered.locator(".library-question-open").click();
+  await page.getByRole("button", { name: "כתיבת פתרון", exact: true }).click();
+  await page.getByRole("button", { name: "כתיבת הסבר לפתרון", exact: true }).click();
+  await page.getByRole("textbox", { name: "הסבר הפתרון", exact: true }).fill("A partial answer for the feedback demonstration.");
+  const accepted = page.waitForResponse(response => response.request().method() === "POST" && response.url().endsWith("/submissions") && response.ok());
+  await page.getByRole("button", { name: "שליחה וקבלת משוב", exact: true }).click();
+  await accepted;
+  await library.click();
+  await done.waitFor();
+  check(true, "The submitted question is marked done when returning to the library without a page reload");
+  await page.reload();
+  await home.waitFor();
+  await library.click();
+  await done.waitFor();
+  check(true, "The same question remains done after reloading the account");
   check(report.unexpectedRequests.length === 0, "All authenticated data requests stayed in the local fixture");
   check(report.errors.length === 0, "Authenticated tour integration has no uncaught browser errors");
   report.passed = true;

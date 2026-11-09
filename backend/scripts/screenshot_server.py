@@ -130,7 +130,7 @@ def build_api(user_id: uuid.UUID, email: str):
     return app
 
 
-def build_stub(user_id: uuid.UUID, email: str, session: dict):
+def build_stub(user_id: uuid.UUID, email: str, session: dict, store):
     """The Supabase endpoints the browser calls, answered the way supabase-js expects."""
     stub = FastAPI()
     stub.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], expose_headers=["*"])
@@ -155,7 +155,15 @@ def build_stub(user_id: uuid.UUID, email: str, session: dict):
     @stub.api_route("/rest/v1/jr_practice_entries", methods=["GET", "POST", "PATCH", "DELETE"])
     async def entries(request: Request):
         if request.method == "GET":
-            return []
+            # Practice submissions and the library read the same personal entries.
+            rows = [row for (owner, _), row in store.practice_entries.items() if owner == user_id]
+            for field in ("user_id", "question_id", "id"):
+                setting = request.query_params.get(field, "")
+                if setting.startswith("eq."):
+                    rows = [row for row in rows if str(row[field]) == setting[3:]]
+            if "application/vnd.pgrst.object+json" in request.headers.get("accept", ""):
+                return rows[0] if len(rows) == 1 else Response(status_code=406)
+            return rows
         body = await request.json() if request.method in ("POST", "PATCH") else {}
         row = {"id": str(uuid.uuid4()), "user_id": str(user_id), "version": 1, **(body if isinstance(body, dict) else {})}
         return [row] if request.headers.get("prefer", "").startswith("return") else Response(status_code=201)
@@ -197,9 +205,11 @@ async def main() -> None:
     args.session_file.write_text(json.dumps({"session": session, "api": f"http://127.0.0.1:{args.api_port}",
                                              "stub": f"http://127.0.0.1:{args.stub_port}"}), encoding="utf-8")
 
-    api = uvicorn.Server(uvicorn.Config(build_api(user_id, args.email), host="127.0.0.1", port=args.api_port,
+    api_app = build_api(user_id, args.email)
+    stub_app = build_stub(user_id, args.email, session, api_app.state.runtime.store)
+    api = uvicorn.Server(uvicorn.Config(api_app, host="127.0.0.1", port=args.api_port,
                                         log_level="warning", access_log=False))
-    stub = uvicorn.Server(uvicorn.Config(build_stub(user_id, args.email, session), host="127.0.0.1", port=args.stub_port,
+    stub = uvicorn.Server(uvicorn.Config(stub_app, host="127.0.0.1", port=args.stub_port,
                                          log_level="warning", access_log=False))
     print(f"screenshot backend: api http://127.0.0.1:{args.api_port}  stub http://127.0.0.1:{args.stub_port}", flush=True)
     await asyncio.gather(api.serve(), stub.serve())

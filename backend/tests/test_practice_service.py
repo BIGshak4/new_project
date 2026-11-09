@@ -156,6 +156,56 @@ class TestBoundaries:
         assert text.reference_solution not in dumped and all(h not in dumped for h in text.hints)
 
 
+class TestLibraryCompletion:
+    async def test_only_a_new_main_answer_marks_the_owners_question(self, catalog):
+        svc, store = service(catalog, scripted([WEAK, GOOD]))
+        question_id = store.question_id(Q)
+        key = (USER, question_id)
+        before = {"id": uuid.uuid4(), "user_id": USER, "question_id": question_id, "answer": "private note",
+                  "self_rating": 2, "bookmarked": True, "hidden": True, "completed": False, "version": 4}
+        store.practice_entries[key] = before
+        other_key = (OTHER, question_id)
+        store.practice_entries[other_key] = {**before, "id": uuid.uuid4(), "user_id": OTHER}
+
+        a = await svc.start(USER, question_key=Q)
+        aid = uuid.UUID(a.id)
+        assert store.practice_entries[key] == before
+        with pytest.raises(ApiError):
+            await svc.submit(USER, aid, "", idempotency_key="invalid")
+        assert store.practice_entries[key] == before
+
+        _, view = await svc.submit(USER, aid, "alarm = A ^ B ^ C", idempotency_key="first")
+        entry = store.practice_entries[key]
+        assert entry == {**before, "completed": True, "version": 5, "updated_at": entry["updated_at"]}
+        assert store.practice_entries[other_key]["completed"] is False
+
+        reset = {**entry, "completed": False, "version": 6}
+        store.practice_entries[key] = reset
+        await svc.submit(USER, aid, "alarm = A ^ B ^ C", idempotency_key="first")
+        await svc.submit(USER, aid, "two or more", idempotency_key="follow", follow_up_turn=view.pending_follow_up.turn)
+        assert store.practice_entries[key] == reset
+
+    async def test_failure_to_save_completion_rolls_back_acceptance_and_allows_retry(self, catalog, monkeypatch):
+        svc, store = service(catalog, scripted([GOOD]))
+        aid = uuid.UUID((await svc.start(USER, question_key=Q)).id)
+        original = memory_store._MemoryTx.mark_question_completed
+
+        async def fail_after_mark(tx, **kwargs):
+            await original(tx, **kwargs)
+            raise RuntimeError("completion transaction interrupted")
+
+        with monkeypatch.context() as patch:
+            patch.setattr(memory_store._MemoryTx, "mark_question_completed", fail_after_mark)
+            with pytest.raises(RuntimeError, match="completion transaction interrupted"):
+                await svc.submit(USER, aid, "majority of three", idempotency_key="retryable")
+        assert not store.practice_entries
+        assert not store.attempts[aid]["row"]["submissions"]
+
+        await svc.submit(USER, aid, "majority of three", idempotency_key="retryable")
+        entry = store.practice_entries[USER, store.question_id(Q)]
+        assert entry["completed"] and entry["version"] == 1 and not entry["hidden"]
+
+
 class TestFailuresAndRaces:
     async def test_model_down_keeps_the_answer_and_retry_scores_once(self, catalog):
         svc, store = service(catalog, scripted([LLMError("down", retryable=False)]))
