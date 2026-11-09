@@ -39,6 +39,25 @@ async function checkDashboard(page, viewport) {
   check(positions.every((item, index) => !index || (item.y > positions[index - 1].y &&
     item.readingOrder > positions[index - 1].readingOrder)),
     `At ${viewport.width}px the recommendations, week, unfinished question, daily task, goal and profile follow the same visual and reading order`);
+  const cards = page.locator(".quick-home-link");
+  const profile = page.locator(".dashboard-settings [data-account-identity]");
+  check(await cards.count() === 3 &&
+    await cards.nth(0).getByText(/יסודות בקטנה/).isVisible() &&
+    await cards.nth(1).getByText("דו־קרב עם חבר", { exact: true }).isVisible() &&
+    await cards.nth(1).getAttribute("href") === "/games" &&
+    await cards.nth(2).getByText("הדמות שלכם, החנות של מוקסי", { exact: true }).isVisible() &&
+    await cards.nth(2).getAttribute("href") === "/games/shop",
+    "The dashboard has exactly one shortcut each for fundamentals, duels and the avatar shop in that order");
+  check(await profile.evaluate(el => Array.from(document.querySelectorAll(".quick-home-link")).every(card =>
+    card.getBoundingClientRect().top >= el.getBoundingClientRect().bottom &&
+    (el.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0)),
+    `All shortcuts follow the profile visually and in reading order at ${viewport.width}px`);
+  check(await cards.last().evaluate(shop => {
+    const tail = document.createRange();
+    tail.selectNodeContents(shop.closest(".view"));
+    tail.setStartAfter(shop);
+    return !tail.toString().trim();
+  }), "The shop shortcut is the final item on the dashboard");
   const week = page.locator(".later");
   await week.locator("summary").click();
   await week.locator("li").first().waitFor();
@@ -234,6 +253,9 @@ try {
   check(await page.getByRole("button", { name: "סיור עם מוקסי", exact: true }).isVisible(), "Existing-user tour launcher remains available on mobile");
   check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "Authenticated mobile header has no horizontal document overflow");
   await page.screenshot({ path: path.join(out, "host-mobile-launcher.png") });
+  await page.locator(".quick-home-link").first().click();
+  await page.getByRole("heading", { name: "יסודות בקטנה", exact: true }).waitFor();
+  check(new URL(page.url()).searchParams.get("view") === "fundamentals", "The first shortcut opens the short-question bank");
   check(report.unexpectedRequests.length === 0, "All authenticated data requests stayed in the local fixture");
   check(report.errors.length === 0, "Authenticated tour integration has no uncaught browser errors");
   report.passed = true;

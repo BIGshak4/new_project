@@ -554,6 +554,14 @@ function Workspace({
               onOpenGoal={openGoal}
               onOpenLibrary={() => goTab("library")}
             />
+            <div className="dashboard-settings" ref={dashboardSettings}>
+              <DashboardAvatarSetup userId={user.id} lang={lang} />
+              {goal && (goal.complete || goal.learning_mode === "explore" || goal.job_type) && (
+                <GoalSummary goal={goal} lang={lang} onEdit={openGoal} />
+              )}
+              {goal?.complete && goalEditor}
+              <AccountIdentity userId={user.id} lang={lang} />
+            </div>
             <button className="quick-home-link" onClick={() => navigate({ view: "fundamentals" })}>
               <Zap size={20} aria-hidden="true" /><span><strong>{t("יש לכם רגע? יסודות בקטנה", "Have a moment? A little practice")}</strong>
               <span>{t("שאלות קצרות לחיזוק הבסיס, גם מהטלפון.", "Short questions to strengthen the basics, from your phone too.")}</span></span>
@@ -566,14 +574,6 @@ function Workspace({
               <Shirt size={20} aria-hidden="true" /><span><strong>{t("הדמות שלכם, החנות של מוקסי", "Your avatar, Muxi's shop")}</strong>
               <span>{t("בחרו רכיב וצבע, וגלו סקינים למטבעות שהרווחתם.", "Choose a component and color, and discover skins for the coins you earn.")}</span></span>
             </a>
-            <div className="dashboard-settings" ref={dashboardSettings}>
-              <DashboardAvatarSetup userId={user.id} lang={lang} />
-              {goal && (goal.complete || goal.learning_mode === "explore" || goal.job_type) && (
-                <GoalSummary goal={goal} lang={lang} onEdit={openGoal} />
-              )}
-              {goal?.complete && goalEditor}
-              <AccountIdentity userId={user.id} lang={lang} />
-            </div>
           </>
         ) : (
           <>
