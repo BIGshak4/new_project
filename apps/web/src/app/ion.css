@@ -457,6 +457,25 @@ button.primary:active {
   font-size: 13px;
   margin-bottom: 14px;
 }
+.dashboard-welcome { align-items: center; padding-block-end: 0; }
+.dashboard-welcome h1 { margin: 0; overflow-wrap: anywhere; }
+.dashboard-welcome .learn-context { margin: 6px 0 0; color: var(--muted); }
+.dashboard-edit-goal {
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+  min-height: 44px; padding-inline: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--link);
+}
+.dashboard-week { padding: 0; border-block: 1px solid var(--line); }
+.dashboard-week summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-height: 44px; padding: 8px 4px; cursor: pointer; font-weight: 650; color: var(--ink-2); list-style: none;
+}
+.dashboard-week summary::-webkit-details-marker { display: none; }
+.dashboard-week[open] summary svg { transform: rotate(180deg); }
+.dashboard-day-heading { padding-block-end: 14px; margin-block-end: 18px; border-block-end: 1px solid var(--line); }
+.dashboard-day-heading h2 { margin: 0; font-size: 1.4rem; }
+.dashboard-day-heading p { margin-block: 6px 0; font-size: .95rem; line-height: 1.55; color: var(--muted); }
+.dashboard-settings { margin-block-start: 30px; }
+.dashboard-settings > details { margin-block-end: 24px; }
 .mark {
   color: var(--link);
 }

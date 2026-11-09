@@ -1,4 +1,4 @@
-.section { min-width: 0; border-block-start: 1px solid var(--line); margin-block: 30px 22px; padding-block-start: 24px; }
+.section { min-width: 0; border-block-start: 1px solid var(--line); padding-block-start: 20px; }
 .heading { display: flex; align-items: start; justify-content: space-between; gap: 18px; }
 .heading h2 { margin: 0; color: var(--ink); font-size: 23px; line-height: 1.35; }
 .heading p, .status, .empty p { margin: 8px 0 0; color: var(--muted); font-size: 14px; font-weight: 400; line-height: 1.65; max-width: 65ch; }
@@ -25,7 +25,7 @@
 .empty button { margin-top: 14px; }
 .visuallyHidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 @media (max-width: 650px) {
-  .section { margin-block: 24px 18px; padding-top: 20px; }
+  .section { padding-block-start: 16px; }
   .heading { gap: 10px; }
   .heading h2 { font-size: 21px; }
   .desktopWave { display: none; }

@@ -1,10 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, MessageSquareText, Play, RefreshCw, Target } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, MessageSquareText, PencilLine, Play, RefreshCw, Target } from "lucide-react";
 import type { Lang } from "./auth";
 import { StreakCard } from "./skill-strength";
-import { SubjectSketch, sketchCaption } from "./sketches";
 import type { Goal, PlanItem, PracticeApi, Program, Progress, ReadinessQuestion } from "../lib/practice-api";
 import { apiMessage } from "../lib/practice-ui";
 import { dayLabel, modeLabel } from "../lib/timeline";
@@ -16,8 +15,6 @@ import { proseDirection } from "../lib/bidi-segments";
 import { goalRoleLabel } from "../lib/goal-selection";
 import { RecommendationWaves } from "./recommendation-waves";
 import type { AccountActivity } from "../lib/account-stats-api";
-import { GoalSummary } from "./goal-summary";
-import { DashboardAvatarSetup } from "./wardrobe/avatar-onboarding";
 
 /** The real adaptive program, displayed in the approved Ion shell. */
 export function LearnHome({
@@ -27,7 +24,6 @@ export function LearnHome({
   progress,
   refreshKey,
   goalSlot,
-  accountSlot,
   resumeSlot,
   userName,
   userId,
@@ -43,12 +39,10 @@ export function LearnHome({
   progress: Progress;
   /** changes when something may have ticked or rebuilt the program */
   refreshKey: string;
-  /** the goal card when the goal is incomplete (or being edited) */
+  /** Goal setup when the learner has not set a goal yet. */
   goalSlot?: React.ReactNode;
-  /** Account identity remains available independently of the learning goal. */
-  accountSlot?: React.ReactNode;
   resumeSlot?: React.ReactNode;
-  /** the user's first name, for the kicker */
+  /** First name when supplied in the account. */
   userName?: string;
   /** Bind recommended question starts to the account which owns this workspace. */
   userId: string;
@@ -125,7 +119,7 @@ export function LearnHome({
   }
 
   async function startRecommendation(question: ReadinessQuestion) {
-    if (!mounted.current || starting.current || loading || loadError) return;
+    if (!mounted.current || starting.current) return;
     starting.current = true;
     setBusy(`recommendation:${question.key}`);
     setRecommendationError("");
@@ -154,17 +148,12 @@ export function LearnHome({
   const overview = progress.overview ?? null;
   const firstPractice = !overview || overview.answered === 0;
   const daysLabel = daysToGoLabel(goal?.days_to_interview ?? program?.plan.days_to_interview, lang);
-  const minutes = goal?.minutes_per_day ?? program?.plan.minutes_per_day ?? null;
   const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
-  const interviewDate = goal?.interview_date
-    ? new Date(`${goal.interview_date}T12:00:00`).toLocaleDateString(lang === "he" ? "he-IL" : "en-GB", { day: "numeric", month: "long" })
-    : null;
   const remainingMinutes = program?.minutes_due_today ?? 0;
-  const subjectOf = (skillKey: string | undefined) => progress.skills?.find((s) => s.key === skillKey)?.subject ?? null;
 
   const currentSkills = current?.item.skills.map((s) => s.label).join(", ") ?? "";
 
-  // the corner stamp: yesterday's band from the timeline, today's items and minutes
+  // The side panel summarizes yesterday in the learner's local time.
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   const yKey = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;   // the local day, as the user counts days
@@ -177,17 +166,7 @@ export function LearnHome({
         ? t("חלקית", "partial")
         : t("לחיזוק", "needs work");
 
-  // The title is grounded in the current program item.
-  const topic = goalComplete && current ? current.item.skills[0]?.label ?? "" : "";
-  const title = !goalComplete
-    ? t("האזור האישי שלכם", "Your personal area")
-    : current
-      ? current.kind === "interview"
-        ? t("היום ראיון מדומה.", "Today, a mock interview.")
-        : t("היום עובדים על ", "Today’s work: ")
-      : today.total > 0 && today.done >= today.total
-        ? t("להיום סיימתם.", "Done for today.")
-        : t("הדרך שלכם.", "Your path.");
+  const greeting = firstPractice ? t("טוב לראות אותך", "Welcome") : t("טוב שחזרת", "Welcome back");
 
   // one sentence of attitude per mode
   const modeLine =
@@ -198,7 +177,7 @@ export function LearnHome({
         : t("תרגול מעמיק: התשובה, שאלת המשך, ואז השאלה הבאה שנבחרת לפי מה שכתבתם.", "Deep practice: your answer, one follow-up, then the next question chosen by what you wrote.");
 
   const tomorrow = laterNodes.find((n) => n.state !== "done" && n.state !== "skipped") ?? null;
-  const contextText = [userName, goalRoleLabel(goal, lang), interviewDate ? `${t("ראיון ב", "interview on")}${lang === "he" ? "־" : " "}${interviewDate}` : null].filter(Boolean).join(" · ");
+  const contextText = [goalRoleLabel(goal, lang), daysLabel].filter(Boolean).join(" · ");
   const currentTitle = !current ? "" : current.kind === "interview"
     ? t(`ראיון מדומה, ${current.item.minutes} דקות, על ${currentSkills}.`, `A ${current.item.minutes}-minute mock interview on ${currentSkills}.`)
     : `${modeLabel(current.item.mode, lang)} ${t("על", "on")} ${currentSkills}.`;
@@ -206,33 +185,26 @@ export function LearnHome({
   return (
     <div className="learn">
       <div className="learn-main">
-        {goal && (goal.complete || goal.learning_mode === "explore" || goal.job_type) && <GoalSummary goal={goal} lang={lang} onEdit={onOpenGoal} />}
-        {goalSlot}
-        {accountSlot}
-        <header className="learn-head">
+        <header className="learn-head dashboard-welcome">
           <div>
-            <h1 dir={lang === "he" ? "rtl" : "ltr"}>
-              {daysLabel && goalComplete ? `${daysLabel}. ` : ""}
-              {title}
-              {topic && current?.kind !== "interview" && <span className="mark"><bdi dir={proseDirection(topic)}><BidiText>{topic}</BidiText></bdi>.</span>}
+            <h1 tabIndex={-1} dir={lang === "he" ? "rtl" : "ltr"}>
+              {goalComplete ? <>{greeting}{userName && <>, <bdi>{userName}</bdi></>}.</> : t("האזור האישי שלכם", "Your personal area")}
             </h1>
-            <div className="learn-context" dir={proseDirection(contextText, lang === "he" ? "rtl" : "ltr")}>
+            {goalComplete && contextText && <div className="learn-context" dir={proseDirection(contextText, lang === "he" ? "rtl" : "ltr")}>
               <BidiText>{contextText}</BidiText>
-            </div>
+            </div>}
           </div>
           {goalComplete && (
-            <p className="stamp" role="note" aria-label={t("סיכום היום", "Today in numbers")} dir={lang === "he" ? "rtl" : "ltr"}>
-              {today.total} {today.total === 1 ? t("פריט", "item") : t("פריטים", "items")} · {remainingMinutes || minutes || 0} {t("דק׳", "min")}
-              <br />
-              {t("אתמול", "yesterday")}: {yesterdayWord}
-              <br />
-              {t("רצף", "streak")}: {activity?.streak_days ?? "—"}
-            </p>
+            <button type="button" className="dashboard-edit-goal" onClick={onOpenGoal}>
+              <PencilLine size={16} aria-hidden="true" />{t("עריכת היעד", "Edit goal")}
+            </button>
           )}
         </header>
-
+        {goalSlot}
+        {goalComplete && <RecommendationWaves api={api} lang={lang} refreshKey={refreshKey} enabled busyKey={busy}
+          actionError={recommendationError} onStart={question => void startRecommendation(question)} onOpenGoal={onOpenGoal} onOpenLibrary={onOpenLibrary} />}
+        {goalComplete && !loading && !loadError && laterNodes.length > 0 && <UpcomingSchedule nodes={laterNodes} lang={lang} />}
         {resumeSlot}
-        <DashboardAvatarSetup userId={userId} lang={lang} />
 
         {loading ? (
           <p className="loading loading-sheet" role="status">
@@ -267,13 +239,16 @@ export function LearnHome({
             </button>
           </section>
         ) : (
-          <>
-            <section className="sheet today-sheet" aria-label={t("הפריט של עכשיו", "The item to do now")}>
+            <section className="sheet today-sheet" aria-labelledby="daily-program-title">
+              <header className="dashboard-day-heading">
+                <h2 id="daily-program-title">{t("התוכנית להיום", "Today’s practice plan")}</h2>
+                <p>{t("אלה שלבי התרגול שנקבעו לפי היעד והזמן שהקצבתם להיום.", "These activities follow your goal and the time you set aside for today.")}</p>
+              </header>
               {current ? (
                 <>
-                  <h2 className="sheet-title" dir={proseDirection(currentTitle, lang === "he" ? "rtl" : "ltr")}>
+                  <h3 className="sheet-title" dir={proseDirection(currentTitle, lang === "he" ? "rtl" : "ltr")}>
                     <BidiText>{currentTitle}</BidiText>
-                  </h2>
+                  </h3>
                   <div className="sheet-row">
                     <span className="tag">
                       {t("עכשיו", "Now")} · {today.done + 1}/{today.total} · {current.item.minutes} {t("דק׳", "min")}
@@ -305,7 +280,7 @@ export function LearnHome({
                 </>
               ) : (
                 <>
-                  <h2 className="sheet-title">{today.total > 0 ? t("להיום סיימתם. כל הכבוד.", "Done for today. Well done.") : t("אין פריט מתוכנן להיום.", "Nothing planned for today.")}</h2>
+                  <h3 className="sheet-title">{today.total > 0 ? t("להיום סיימתם. כל הכבוד.", "Done for today. Well done.") : t("אין פריט מתוכנן להיום.", "Nothing planned for today.")}</h3>
                   <p className="sheet-why">
                     {ahead
                       ? t("אפשר לעצור כאן, או לבחור להתחיל את הפריט הבא מראש. היעד היומי שלכם לא משתנה.", "You can stop here, or choose to start the next item early. Your daily target stays the same.")
@@ -376,31 +351,6 @@ export function LearnHome({
               )}
             </section>
 
-            <RecommendationWaves api={api} lang={lang} refreshKey={refreshKey} enabled={goalComplete} busyKey={busy}
-              disabled={loading || !!loadError} actionError={recommendationError} onStart={question => void startRecommendation(question)} onOpenGoal={onOpenGoal} onOpenLibrary={onOpenLibrary} />
-
-            {laterNodes.length > 0 && (
-              <section className="later" aria-label={t("בהמשך השבוע", "Later this week")}>
-                <h3>{t("בהמשך השבוע", "Later this week")}</h3>
-                <ol>
-                  {laterNodes.slice(0, 8).map((node, i) => {
-                    const previousDay = i > 0 ? laterNodes[i - 1].dayIndex : null;
-                    return (
-                      <li key={node.key} className={node.dayIndex !== previousDay ? "first" : ""}>
-                        <span className="later-day">{node.dayIndex !== previousDay ? dayLabel(node.item.date, node.dayIndex, lang) : ""}</span>
-                        <span className="later-what" dir={proseDirection(node.item.skills.map((s) => s.label).join(", "), lang === "he" ? "rtl" : "ltr")}>
-                          <BidiText>{node.kind === "interview" ? t("ראיון מדומה", "Mock interview") : node.item.skills.map((s) => s.label).join(", ")}</BidiText>
-                        </span>
-                        <span className="later-mode">
-                          {modeLabel(node.item.mode, lang)} · {node.item.minutes} {t("דק׳", "min")}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ol>
-              </section>
-            )}
-          </>
         )}
         {message && (
           <p className="notice path-message" role="status" dir={proseDirection(message)}>
@@ -448,6 +398,7 @@ export function LearnHome({
               </>
             ) : null}
           </p>
+          {yPoint && <p className="small muted">{t("ההערכה הנפוצה אתמול", "Yesterday’s most frequent grade")} · {yesterdayWord}</p>}
         </section>
         {activity && <StreakCard days={activity.streak_days} todayDone={activity.today_count > 0} lang={lang} />}
         {tomorrow && (
@@ -462,6 +413,24 @@ export function LearnHome({
       </aside>
     </div>
   );
+}
+
+function UpcomingSchedule({ nodes, lang }: { nodes: PathNode[]; lang: Lang }) {
+  const he = lang === "he";
+  return <details className="later dashboard-week">
+    <summary>{he ? "בהמשך השבוע" : "Later this week"}<ChevronDown size={17} aria-hidden="true" /></summary>
+    <ol>
+      {nodes.slice(0, 8).map((node, index) => {
+        const firstOfDay = nodes[index - 1]?.dayIndex !== node.dayIndex;
+        const subject = node.kind === "interview" ? (he ? "ראיון מדומה" : "Mock interview") : node.item.skills.map(skill => skill.label).join(", ");
+        return <li key={node.key} className={firstOfDay ? "first" : ""}>
+          <span className="later-day">{firstOfDay && dayLabel(node.item.date, node.dayIndex, lang)}</span>
+          <span className="later-what" dir={proseDirection(subject, he ? "rtl" : "ltr")}><BidiText>{subject}</BidiText></span>
+          <span className="later-mode">{modeLabel(node.item.mode, lang)} · {node.item.minutes} {he ? "דק׳" : "min"}</span>
+        </li>;
+      })}
+    </ol>
+  </details>;
 }
 
 /** Future work is offered separately, without adding it to today's minutes or completed count. */

@@ -35,6 +35,7 @@ import { FeatureNav } from "../components/wardrobe/feature-nav";
 import headerStyles from "../components/wardrobe/workspace-header.module.css";
 import { PracticeSession } from "../components/practice-session";
 import { GoalSetup } from "../components/goal-setup";
+import { GoalSummary } from "../components/goal-summary";
 import { LanguageMenu } from "../components/ui/language-menu";
 import { ThemeToggle } from "../components/ui/theme-toggle";
 import { MuxiTourLauncher } from "../components/tour/muxi-tour";
@@ -46,6 +47,7 @@ import { AnimatePresence, motion, useReducedMotion } from "../components/ui/moti
 import { LearnHome } from "../components/learn-home";
 import { ResumeQuestion } from "../components/resume-question";
 import { AccountIdentity } from "../components/account-identity";
+import { DashboardAvatarSetup } from "../components/wardrobe/avatar-onboarding";
 import { InterviewSession } from "../components/interview-session";
 import { supabase } from "../lib/supabase";
 import {
@@ -156,10 +158,12 @@ function Workspace({
   const [cachedQuestions, setCachedQuestions] = useState(false);
   // Goals guide the personal plan; the library starts with all questions and no filters.
   const [goal, setGoal] = useState<Goal | null>(null);
+  const [goalLoadFailed, setGoalLoadFailed] = useState(false);
   const goalRevision = useRef(0);
   const [goalSkipped, setGoalSkipped] = useState(true);
   const [editingGoal, setEditingGoal] = useState(false);
   const [goalFocusRequest, setGoalFocusRequest] = useState(0);
+  const dashboardSettings = useRef<HTMLDivElement>(null);
   const [jobs, setJobs] = useState<JobType[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [jobFilters, setJobFilters] = useState<string[]>([]);
@@ -197,9 +201,18 @@ function Workspace({
     window.scrollTo({ top: 0 });
   }, []);
 
+  const loadGoal = useCallback(async () => {
+    const revision = ++goalRevision.current;
+    setGoalLoadFailed(false);
+    try {
+      const saved = await api.getGoal(lang, user.id);
+      if (revision === goalRevision.current) setGoal(saved);
+    } catch {
+      if (revision === goalRevision.current) setGoalLoadFailed(true);
+    }
+  }, [api, lang, user.id]);
   const load = useCallback(async () => {
     const version = ++generation.current;
-    const initialGoalRevision = goalRevision.current;
     const current = () => version === generation.current;
     const cached = readQuestionCache(user.id, lang);
     setQuestions(cached ?? []);
@@ -243,13 +256,7 @@ function Workspace({
         .finally(() => {
           if (current()) setProgressLoading(false);
         }),
-      api
-        .getGoal(lang, user.id)
-        .then((g) => {
-          if (!current() || initialGoalRevision !== goalRevision.current) return;
-          setGoal(g);
-        })
-        .catch(() => {}),
+      loadGoal(),
       api
         .jobTypes(lang)
         .then((list) => current() && setJobs(list))
@@ -285,11 +292,12 @@ function Workspace({
         })
         .catch(report),
     ]);
-  }, [api, lang, user.id]);
+  }, [api, lang, user.id, loadGoal]);
   useEffect(() => {
     void load();
     return () => {
       generation.current++;
+      goalRevision.current++;
     };
   }, [load]);
   const refreshProgress = useCallback(() => {
@@ -300,6 +308,7 @@ function Workspace({
   }, [api, lang]);
   const applySavedGoal = useCallback((g: Goal) => {
     goalRevision.current++;
+    setGoalLoadFailed(false);
     setGoal(g);
     setEditingGoal(false);
     refreshProgress();
@@ -315,8 +324,11 @@ function Workspace({
   const onGoalSaved = (g: Goal) => {
     applySavedGoal(g);
     requestAnimationFrame(() => {
-      document.querySelector<HTMLElement>("[data-goal-summary]")?.focus({ preventScroll: true });
-      window.scrollTo({ top: 0, behavior: "instant" });
+      const destination = goal?.complete
+        ? dashboardSettings.current?.querySelector<HTMLElement>("[data-goal-summary]")
+        : dashboardSettings.current?.closest("main")?.querySelector<HTMLElement>(".learn-head h1");
+      destination?.focus({ preventScroll: true });
+      destination?.scrollIntoView({ block: "nearest", behavior: "instant" });
     });
   };
   const skipGoal = () => {
@@ -355,6 +367,22 @@ function Workspace({
   const libraryTotal = uniqueLibraryQuestions(questions).length;
   const goalIncomplete = goal !== null && !goal.complete;
   const showGoalSetup = route.view === "learn" && ((goalIncomplete && !goalSkipped) || editingGoal);
+  const goalEditor = showGoalSetup && goal ? <GoalSetup
+    api={api}
+    userId={user.id}
+    lang={lang}
+    goal={goal}
+    compact={!!goal?.complete}
+    focusRequest={goalFocusRequest}
+    onSaved={onGoalSaved}
+    onSkip={skipGoal}
+  /> : undefined;
+  const pendingGoal = editingGoal && !goal && (goalLoadFailed
+    ? <div className="notice error" role="alert">
+        {t("לא הצלחנו לטעון את היעד שלכם.", "We couldn’t load your learning goal.")}
+        <button type="button" onClick={() => void loadGoal()}>{t("ניסיון נוסף", "Try again")}</button>
+      </div>
+    : <p className="loading" role="status">{t("טוענים את היעד שלכם…", "Loading your learning goal…")}</p>);
   const openQuestion = (q: QuestionSummary) =>
     navigate({ view: route.view, question: q.key });
   const onQuestionStatusSaved = (q: QuestionSummary, saved: Entry[]) => {
@@ -513,25 +541,11 @@ function Workspace({
               lang={lang}
               userName={firstName(user)}
               goal={goal}
-              accountSlot={<AccountIdentity key={user.id} userId={user.id} lang={lang} />}
               resumeSlot={<ResumeQuestion api={api} userId={user.id} lang={lang} questions={questions} recent={progress.recent} entries={entries}
                 ready={progressReady && entriesReady && !loading && !refreshing} navigate={navigate} />}
               progress={demo ? { ...progress, overview: null, skills: [] } : progress}
               refreshKey={refreshKey}
-              goalSlot={
-                showGoalSetup ? (
-                  <GoalSetup
-                    api={api}
-                    userId={user.id}
-                    lang={lang}
-                    goal={goal}
-                    compact={!!goal?.complete}
-                    focusRequest={goalFocusRequest}
-                    onSaved={onGoalSaved}
-                    onSkip={skipGoal}
-                  />
-                ) : undefined
-              }
+              goalSlot={!goal?.complete ? goalEditor ?? pendingGoal : undefined}
               onStartAttempt={(id) => {
                 navigate({ view: "learn", attempt: id });
                 refreshProgress();
@@ -552,6 +566,14 @@ function Workspace({
               <Shirt size={20} aria-hidden="true" /><span><strong>{t("הדמות שלכם, החנות של מוקסי", "Your avatar, Muxi's shop")}</strong>
               <span>{t("בחרו רכיב וצבע, וגלו סקינים למטבעות שהרווחתם.", "Choose a component and color, and discover skins for the coins you earn.")}</span></span>
             </a>
+            <div className="dashboard-settings" ref={dashboardSettings}>
+              <DashboardAvatarSetup userId={user.id} lang={lang} />
+              {goal && (goal.complete || goal.learning_mode === "explore" || goal.job_type) && (
+                <GoalSummary goal={goal} lang={lang} onEdit={openGoal} />
+              )}
+              {goal?.complete && goalEditor}
+              <AccountIdentity userId={user.id} lang={lang} />
+            </div>
           </>
         ) : (
           <>

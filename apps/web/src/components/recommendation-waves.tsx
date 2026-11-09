@@ -56,8 +56,8 @@ export function RecommendationWaves({ api, lang, refreshKey, enabled, busyKey, d
 
   return <section className={styles.section} aria-labelledby={`${id}-title`} aria-busy={loading} data-recommendation-waves>
     <header className={styles.heading}>
-      <div><h2 id={`${id}-title`}>{t("השאלות הבאות בשבילכם", "Your next questions")}</h2>
-        <p>{t("כל גל הוא שאלה מומלצת. בחרו אחת כדי להתחיל לתרגל.", "Each wave is a recommended question. Choose one to start practicing.")}</p></div>
+      <div><h2 id={`${id}-title`}>{t("השאלות המומלצות עבורך", "Recommended questions for you")}</h2>
+        <p>{t("כל גל מציג שאלה חדשה שנבחרה לפי היעד שלך והנושאים שכדאי לחזק. אפשר להתחיל מכל אחת מהן.", "Each wave is a new question picked for your goal and the skills you can strengthen. Start with any one you like.")}</p></div>
       {enabled && <button type="button" className={styles.refresh} disabled={blocked} onClick={load} aria-label={t("רענון השאלות המומלצות", "Refresh recommended questions")}><RotateCcw size={17} aria-hidden="true" /></button>}
     </header>
     <span className={styles.visuallyHidden} role="status">{busyKey?.startsWith("recommendation:") ? t("פותחים את השאלה שבחרתם…", "Opening your chosen question…") : ""}</span>
