@@ -79,6 +79,8 @@
 .finish .scene { width: min(86%, 300px); margin: 0 auto 25px; }
 .finish > p { max-width: 50ch; margin: 16px auto 0; color: var(--ink-2); line-height: 1.7; }
 .finishActions { justify-content: center; }
+.root[data-muxi-kind="preview"] .finishActions { flex-direction: column; gap: 8px; }
+.finishActions a:global(.primary) { min-inline-size: 12rem; padding-inline: 24px; text-decoration: none; }
 .unfinished { max-width: 440px; margin: 28px auto 0; border-block-start: 1px solid var(--line); padding-block-start: 15px; text-align: start; }
 .unfinished summary { color: var(--link); cursor: pointer; padding-block: 8px; }
 .unfinished ul { list-style: none; padding: 0; margin: 8px 0; }

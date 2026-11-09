@@ -55,7 +55,7 @@ export async function exerciseStation(page, id) {
       await click("guest-interview-start");
       await click("guest-interview-example");
       await click("guest-interview-finish");
-      await page.locator("[data-muxi-stage]").getByText(/התשובה שלכם לא נבדקה|wasn’t graded/).waitFor();
+      await page.locator("[data-muxi-stage]").getByText(/הדוח הוכן מראש על התשובה של מוקסי|This report was prepared in advance for Muxi’s answer/).waitFor();
       break;
     case "library":
       await click("library-question");

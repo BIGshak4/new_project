@@ -91,9 +91,9 @@ const previewSteps: TourStep[] = [
   },
   {
     id: "guest-interview", exercise: "guest-interview", chapter: bi("ראיון מדומה", "Mock interview"),
-    title: bi("איך נראה ראיון בכתב?", "What does a written interview feel like?"),
-    body: bi("בראיון עונים על שאלה אחת בכל פעם ומקבלים דוח בסיום. כאן תראו שאלה אחת ודוח שהוכן מראש להדגמה.", "In an interview you answer one question at a time and receive a report at the end. Here you can try one question and read a report written for the tour."),
-    task: bi("ענו על השאלה ופתחו את דוח הדוגמה.", "Answer the question and open the example report."), actions: ["interview-tried"],
+    title: bi("איך מתנהל ראיון מדומה?", "How does a mock interview work?"),
+    body: bi("הראיון המלא יכול להימשך 20, 30 או 45 דקות, לבחירתכם. בכל פעם תראו שאלה אחת ותקלידו תשובה. המראיין יבחר את השאלה הבאה לפי מה שכתבתם. בסוף תקבלו דוח עם המלצות להמשך התרגול.", "Choose a 20-, 30- or 45-minute mock interview. You’ll see one question at a time and type your answer. The interviewer uses what you write to choose the next question. At the end, you’ll get a report with suggestions for what to practice."),
+    task: bi("כשתענו, נסו לתאר גם את הבדיקה שתעשו וגם את התוצאה שאתם מצפים לראות.", "As you answer, describe both the test you would run and the result you expect."), actions: ["interview-tried"],
   },
 ];
 const memberSteps = [goal, library, circuit, code, feedback, quiz, interview, community, helper];

@@ -33,6 +33,7 @@ export function Auth({
   const authRevision = useRef(0);
   const submitRevision = useRef(0);
   const accessCheck = useRef(new AccessCheck());
+  const formRef = useRef<HTMLFormElement>(null);
   const { checking, allowed: member, failed } = accessForUser(user?.id, access);
   const accessError = failed
     ? he ? "לא הצלחנו לבדוק הרשאות. נסו שוב." : "Unable to check access. Try again."
@@ -82,6 +83,20 @@ export function Auth({
     });
     return () => { authRevision.current++; submitRevision.current++; stop(); };
   }, []);
+  useEffect(() => {
+    if (kind !== "practice" || !ready || user) return;
+    function openSignup() {
+      if (window.location.hash !== "#signup") return;
+      setMode("signup");
+      setError("");
+      setMessage("");
+      formRef.current?.scrollIntoView({ block: "start" });
+    }
+    openSignup();
+    window.addEventListener("hashchange", openSignup);
+    return () => window.removeEventListener("hashchange", openSignup);
+  }, [kind, ready, user]);
+
   async function checkAccess() {
     if (!user) return;
     await accessCheck.current.run(
@@ -214,7 +229,7 @@ export function Auth({
     </div>
   );
   const form = (
-    <form className="auth-form" onSubmit={submit}>
+    <form id={kind === "practice" ? "signup" : undefined} ref={formRef} className="auth-form" onSubmit={submit}>
       <h2>
         {kind === "practice"
           ? he

@@ -57,9 +57,13 @@ async function verifyPreview({ width, height, lang, mobile }) {
       }
     }
     await area("finish").waitFor();
-    await area("finish").locator('a[href="/#signin"]').click();
-    await page.waitForURL(url => url.pathname === "/" && url.hash === "#signin");
-    check(true, `${lang}: every preview activity completes and ends at signup`);
+    await page.screenshot({ path: path.join(out, `preview-${lang}-finish.png`) });
+    await area("finish").getByRole("link", { name: lang === "he" ? "הירשמו עכשיו" : "Sign up now" }).click();
+    await page.waitForURL(url => url.pathname === "/" && url.hash === "#signup");
+    const registration = page.locator("form#signup");
+    await registration.locator('input[name="username"]').waitFor();
+    check(await registration.getByRole("button", { name: lang === "he" ? "יצירת חשבון" : "Create account", exact: true }).first().getAttribute("aria-pressed") === "true",
+      `${lang}: every preview activity completes and the invitation opens the registration form`);
   } catch (error) {
     await page.screenshot({ path: path.join(out, `failure-${lang}.png`) }).catch(() => {});
     console.error((await page.locator("body").innerText()).slice(-2500));

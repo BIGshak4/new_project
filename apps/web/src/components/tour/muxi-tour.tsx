@@ -231,12 +231,12 @@ function TourSession({ lang, userId, controls, onClose, standalone = false, kind
       </section>
     </main> : screen === "finish" ? <main className={styles.finish}>
       <MuxiScene finished />
-      <h2 ref={heading} tabIndex={-1}>{preview ? t("מוכנים לשאלה משלכם?", "Ready for a question of your own?") : t("נמשיך לתרגול?", "Ready to practice?")}</h2>
-      <p>{preview ? t("בחשבון משלכם תוכלו לשמור תשובות, לקרוא את המשוב שקיבלתם ולחזור לשאלה שהתחלתם.", "With an account, you can save your answers, read your feedback and return to a question you started.")
+      <h2 ref={heading} tabIndex={-1}>{preview ? t("בואו נתכונן לראיון הבא שלכם.", "Get ready for your next interview.") : t("נמשיך לתרגול?", "Ready to practice?")}</h2>
+      <p>{preview ? t("פתחו חשבון ובנו תוכנית תרגול שמתאימה לתפקיד ולקצב שלכם. תוכלו לגלות נושאים נוספים במאגר, לקבל משוב אישי על הפתרונות שלכם ולתרגל בראיונות מדומים.", "Create an account to build a practice plan around your target role and the time you have. Explore more topics in the question library, get feedback on your solutions and practice in mock interviews.")
         : progress.completed.includes("goal") ? t("היעד שלכם זמין באזור האישי. שם אפשר לפתוח את התוכנית ולהמשיך לשאלה הבאה.", "Your goal is in your personal area. Open your plan there and continue with your next question.")
         : t("אפשר לבחור יעד באזור האישי או לגשת ישירות לשאלה במאגר.", "Set a goal in your personal area, or go straight to a question in the library.")}</p>
       <div className={styles.finishActions}>
-        {preview ? <a className="primary" href="/#signin">{t("להרשמה או לכניסה", "Sign up or sign in")}<NextArrow size={17} /></a> : <button type="button" className="primary" onClick={close}>{t("חזרה לאתר", "Back to JobRun")}<NextArrow size={17} /></button>}
+        {preview ? <a className="primary" href="/#signup">{t("הירשמו עכשיו", "Sign up now")}<NextArrow size={17} aria-hidden="true" /></a> : <button type="button" className="primary" onClick={close}>{t("חזרה לאתר", "Back to JobRun")}<NextArrow size={17} /></button>}
         <button type="button" className={styles.quiet} onClick={() => start()}><RotateCcw size={15} />{t("להתחיל את הסיור מחדש", "Replay the tour")}</button>
       </div>
       {steps.some(s => !progress.completed.includes(s.id)) && <details className={styles.unfinished}>
