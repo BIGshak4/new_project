@@ -1,28 +1,23 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { BidiText } from "../bidi-text";
 import { proseDirection } from "../../lib/bidi-segments";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, ExternalLink, House, MessageCircle, X } from "lucide-react";
 import { observeAuthUser } from "../../lib/auth-access";
 import { supabase } from "../../lib/supabase";
 import { helperDestinations, helperTargets, helperTopics, type HelperAction, type HelperChoice, type HelperText, type HelperTopicId } from "../../lib/personal-helper";
+import { emitMemberTourAction, MEMBER_TOUR_START_EVENT } from "../../lib/member-tour";
 import { openSupportReport } from "../../lib/support-report";
 import { openUserInbox } from "../../lib/user-inbox";
 import { LogicAvatar } from "../wardrobe/logic-avatar";
-import { ThemeToggle } from "../ui/theme-toggle";
 import { useHelperAvatar } from "./use-helper-avatar";
 import styles from "./personal-helper.module.css";
 
-const MuxiTour = dynamic(() => import("../tour/muxi-tour").then(module => module.MuxiTour), {
-  ssr: false,
-  loading: () => <p className={styles.tourLoading} role="status">טוענים את הסיור… / Loading the tour…</p>,
-});
 type Lang = "he" | "en";
 type Turn = { topic: HelperTopicId; selected?: HelperText };
+type Notice = HelperText & { destination?: keyof typeof helperDestinations };
 
 /** A separate surface: it never modifies the workspace header or unmounts an answer. */
 export function PersonalHelper() {
@@ -51,8 +46,7 @@ function HelperConversation({ userId, demo, lang }: { userId: string; demo: bool
   // Every fresh visit starts minimized; opening the helper is always an explicit choice.
   const [open, setOpen] = useState(false);
   const [turns, setTurns] = useState<Turn[]>([{ topic: "root" }]);
-  const [notice, setNotice] = useState<HelperText | null>(null);
-  const [tourOpen, setTourOpen] = useState(false);
+  const [notice, setNotice] = useState<Notice | null>(null);
   const { avatar, status } = useHelperAvatar(userId, demo);
   const launcher = useRef<HTMLButtonElement>(null);
   const currentHeading = useRef<HTMLHeadingElement>(null);
@@ -76,7 +70,10 @@ function HelperConversation({ userId, demo, lang }: { userId: string; demo: bool
 
   function goTo(choice: HelperChoice) {
     setNotice(null);
-    if (choice.topic) setTurns(previous => [...previous, { topic: choice.topic!, selected: choice.label }]);
+    if (choice.topic) {
+      setTurns(previous => [...previous, { topic: choice.topic!, selected: choice.label }]);
+      if (!demo) emitMemberTourAction(userId, "helper-used");
+    }
     else if (choice.action) act(choice.action);
   }
 
@@ -91,8 +88,16 @@ function HelperConversation({ userId, demo, lang }: { userId: string; demo: bool
       return;
     }
     if (action.type === "tour") {
+      if (demo) {
+        setNotice({
+          he: "הסיור האישי עובד בכלים ובשאלות של החשבון שלכם. עברו לאזור האישי ובחרו ״סיור עם מוקסי״ כדי להתחיל.",
+          en: "Your personal tour uses your account's tools and questions. Open your personal area and choose “Tour with Muxi” to begin.",
+          destination: "learn",
+        });
+        return;
+      }
       minimize();
-      requestAnimationFrame(() => setTourOpen(true));
+      requestAnimationFrame(() => window.dispatchEvent(new CustomEvent(MEMBER_TOUR_START_EVENT, { detail: { userId } })));
       return;
     }
     if (action.type === "focus") {
@@ -100,7 +105,11 @@ function HelperConversation({ userId, demo, lang }: { userId: string; demo: bool
         .flatMap(selector => [...document.querySelectorAll<HTMLElement>(selector.trim())])
         .find(element => !element.closest("[inert], [hidden], [data-muxi-station]") && !element.matches(":disabled") && element.getClientRects().length > 0);
       if (!target) {
-        setNotice({
+        setNotice(action.target === "goal" ? {
+          he: "עריכת היעד נמצאת באזור האישי. פתחו אותו ולחצו על ״עריכת היעד״ למעלה, או על ״להגדיר את היעד״ אם עדיין לא שמרתם יעד.",
+          en: "Goal editing is in your personal area. Open it and choose “Edit goal” at the top, or “Set my goal” if you have not saved one yet.",
+          destination: "learn",
+        } : {
           he: "הכלי הזה לא פתוח בעמוד הנוכחי. פתחו שאלה מתאימה במאגר והתחילו תרגול, או בחרו בסיור כדי להתנסות בו. אפשר לחזור אליי גם מתוך השאלה.",
           en: "This tool isn’t open on the current page. Open a suitable library question and start practicing, or try it in the tour. I’ll be here inside the question, too.",
         });
@@ -126,13 +135,13 @@ function HelperConversation({ userId, demo, lang }: { userId: string; demo: bool
     return helperDestinations[action.destination];
   }
 
-  return <>
-    <div className={styles.dock} dir={he ? "rtl" : "ltr"} lang={lang} data-personal-helper>
+  return <div className={styles.dock} dir={he ? "rtl" : "ltr"} lang={lang} data-personal-helper>
       {!open ? <button ref={launcher} type="button" className={styles.launcher} onClick={() => setOpen(true)}
+        data-member-tour="helper-launcher"
         aria-label={t("פתיחת העוזר האישי", "Open personal helper")} aria-haspopup="dialog" aria-expanded={false} aria-controls={`${id}-panel`}>
         <LogicAvatar config={avatar} size={70} />
         <span><MessageCircle size={17} aria-hidden="true" />{t("צריכים עזרה?", "Need a hand?")}</span>
-      </button> : <section role="dialog" aria-modal={false} id={`${id}-panel`} aria-labelledby={`${id}-title`} className={styles.panel}
+      </button> : <section role="dialog" aria-modal={false} id={`${id}-panel`} aria-labelledby={`${id}-title`} className={styles.panel} data-member-tour="helper-panel"
         onKeyDown={event => { if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); minimize(); } }}>
         <header className={styles.header}>
           <LogicAvatar config={avatar} size={60} />
@@ -157,11 +166,13 @@ function HelperConversation({ userId, demo, lang }: { userId: string; demo: bool
               ? <a key={index} className={styles.choice} href={href(choice.action)} target="_blank" rel="noopener" referrerPolicy="same-origin">
                   <span><BidiText>{choice.label[lang]}</BidiText><small>{t("פתיחה בלשונית חדשה", "Opens in a new tab")}</small></span><ExternalLink size={16} aria-hidden="true" />
                 </a>
-              : <button key={index} type="button" className={styles.choice} onClick={() => goTo(choice)}>
+              : <button key={index} type="button" className={styles.choice} onClick={() => goTo(choice)} data-member-tour="helper-topic">
                   <span><BidiText>{choice.label[lang]}</BidiText></span>{he ? <ChevronLeft size={18} aria-hidden="true" /> : <ChevronRight size={18} aria-hidden="true" />}
                 </button>)}
           </div>
-          {notice && <div className={styles.notice} role="status"><p dir={proseDirection(notice[lang], he ? "rtl" : "ltr")}><BidiText>{notice[lang]}</BidiText></p><button type="button" onClick={() => act({ type: "tour" })}>{t("להתנסות בסיור", "Try the tour")}</button></div>}
+          {notice && <div className={styles.notice} role="status"><p dir={proseDirection(notice[lang], he ? "rtl" : "ltr")}><BidiText>{notice[lang]}</BidiText></p>{notice.destination
+            ? <a href={helperDestinations[notice.destination]} target="_blank" rel="noopener" referrerPolicy="same-origin">{t("לאזור האישי בלשונית חדשה", "Open personal area in a new tab")}</a>
+            : <button type="button" onClick={() => act({ type: "tour" })}>{t("להתנסות בסיור", "Try the tour")}</button>}</div>}
           {turns.length === 1 && <p className={styles.caption}>{t("בוחרים נושא, ואני אכוון אתכם לכלים המתאימים.", "Choose a topic and I’ll help you find the right tools.")}</p>}
           {status === "fallback" && <p className={styles.caption}>{t("הדמות האישית לא זמינה כרגע. העזרה עדיין כאן.", "Your avatar is unavailable right now. You can still use the helper.")}</p>}
         </div>
@@ -172,8 +183,5 @@ function HelperConversation({ userId, demo, lang }: { userId: string; demo: bool
           <button type="button" disabled={turns.length === 1} onClick={() => { setNotice(null); setTurns([{ topic: "root" }]); }}><House size={16} aria-hidden="true" />{t("כל הנושאים", "All topics")}</button>
         </footer>
       </section>}
-    </div>
-    {tourOpen && createPortal(<MuxiTour lang={lang} userId={userId} controls={<ThemeToggle lang={lang} />}
-      onClose={() => { setTourOpen(false); requestAnimationFrame(() => launcher.current?.focus({ preventScroll: true })); }} />, document.body)}
-  </>;
+    </div>;
 }

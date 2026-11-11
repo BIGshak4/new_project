@@ -18,7 +18,8 @@ function assertClosedTools(html: string, names: string[]) {
     assert.match(button, /aria-expanded="false"/);
     const panel = button.match(/aria-controls="([^"]+)"/)?.[1];
     assert.ok(panel, `${name} identifies its panel`);
-    assert.ok(html.includes(`<div id="${panel}" hidden="">`), `${name} starts with its panel hidden`);
+    const escapedId = panel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    assert.match(html, new RegExp(`<div(?=[^>]*\\bid="${escapedId}")(?=[^>]*\\bhidden="")[^>]*>`), `${name} starts with its panel hidden`);
   }
 }
 

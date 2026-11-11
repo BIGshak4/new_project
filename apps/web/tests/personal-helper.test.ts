@@ -75,7 +75,7 @@ test("destinations stay on known site routes and preserve cross-page practice in
     assert.equal(url.origin, "https://jobrun.example");
     assert.ok(["/", "/games", "/games/shop"].includes(url.pathname));
     assert.equal(url.hash, "");
-    if (["learn", "library", "interview"].includes(destination)) {
+    if (["learn", "library", "fundamentals", "interview"].includes(destination)) {
       assert.equal(readWorkspaceRoute(url.search).route.view, destination, "A category link must open its selected category");
       assert.deepEqual([...url.searchParams.keys()].sort(), ["nav", "view"]);
     } else assert.equal(url.search, "");
@@ -84,7 +84,7 @@ test("destinations stay on known site routes and preserve cross-page practice in
 
 test("focus selectors remain attached to real editor controls, never hint or submission actions", () => {
   const component = (name: string) => readFileSync(new URL(`../src/components/${name}.tsx`, import.meta.url), "utf8");
-  const sources = ["answer-editor", "technical-code-editor", "code-execution-panel", "circuit-editor", "visual-answer", "practice-session"].map(component).join("\n");
+  const sources = ["answer-editor", "technical-code-editor", "code-execution-panel", "circuit-editor", "visual-answer", "practice-session", "learn-home", "goal-summary"].map(component).join("\n");
   for (const selector of Object.values(helperTargets)) {
     assert.doesNotMatch(selector, /hint|solution-open|submit|reference/);
     for (const match of selector.matchAll(/\[data-muxi-control="([a-z-]+)"\]/g)) {

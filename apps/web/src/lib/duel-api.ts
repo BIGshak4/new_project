@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { Duel, DuelClient, DuelLanguage, DuelList, DuelWallet } from "./duel-types";
+import type { Duel, DuelClient, DuelLanguage, DuelList, DuelWallet, QuizPracticeRound, QuizPracticeResult } from "./duel-types";
 
 export class DuelApiError extends Error {
   constructor(public code: string, message: string, public status = 0) { super(message); this.name = "DuelApiError"; }
@@ -28,6 +28,10 @@ export function duelApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_BA
     return payload as T;
   }
   return {
+    practice: {
+      start: (language) => call<QuizPracticeRound>(`/v1/duels/practice?language=${language}`),
+      answer: (round_token, choice) => call<QuizPracticeResult>("/v1/duels/practice/answer", { round_token, choice }),
+    },
     list: () => call<DuelList>("/v1/duels"),
     wallet: (language: DuelLanguage) => call<DuelWallet>(`/v1/me/coins?language=${language}`),
     get: (id) => call<Duel>(`/v1/duels/${encodeURIComponent(id)}`),

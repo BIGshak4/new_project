@@ -1,0 +1,21 @@
+.practice { padding-block: 30px; border-block-start: 1px solid var(--line); }
+.practice h2 { margin: 0 0 12px; font-size: 23px; }
+.practice > p { margin: 0 0 20px; color: var(--muted); }
+.round { display: grid; gap: 20px; max-width: 780px; }
+.round > h3 { font-size: clamp(21px, 3vw, 28px); line-height: 1.6; margin: 8px 0 0; overflow-wrap: anywhere; }
+.round > button { justify-self: start; }
+.choices { display: grid; gap: 12px; padding: 0; margin: 0; border: 0; min-width: 0; }
+.legend { padding: 0; margin-block-end: 12px; color: var(--muted); }
+.choice { display: flex; align-items: center; gap: 12px; min-height: 62px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); cursor: pointer; line-height: 1.65; overflow-wrap: anywhere; }
+.choice:hover { border-color: var(--link); }
+.choice.selected { border-color: var(--link); background: var(--surface-2); }
+.choice.correct { border-color: var(--ok); background: var(--ok-soft); }
+.choice:focus-within { outline: 2px solid var(--link); outline-offset: 4px; }
+.choice input[type="radio"] { width: 18px; height: 18px; min-height: 18px; padding: 0; flex: 0 0 18px; accent-color: var(--link); }
+.choice > svg { flex-shrink: 0; color: var(--ok); }
+.choices:disabled .choice { cursor: default; }
+.result { padding-block: 20px; border-block: 1px solid var(--line); }
+.result h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font-size: 21px; }
+.result p { margin: 10px 0 0; }
+.round :is(h3):focus { outline: none; }
+@media (max-width: 650px) { .choice { gap: 8px; padding: 12px; } .round > button { width: 100%; } }

@@ -63,7 +63,7 @@ function QuestionActionsForQuestion({ lang, api, companies, reportedCompanies, .
   }
 
   return <div className={styles.root} dir={lang === "he" ? "rtl" : "ltr"} lang={lang}>
-    <section className={styles.frame} aria-label={t("דיווחים על השאלה", "Question reports")}>
+    <section className={styles.frame} data-member-tour="question-reports" aria-label={t("דיווחים על השאלה", "Question reports")}>
       <div className={styles.toolbar}>
         <strong className={styles.label}>{t("על השאלה הזאת", "About this question")}</strong>
         <div className={styles.actions}>

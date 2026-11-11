@@ -26,7 +26,7 @@ export function GoalSummary({ goal, lang, onEdit }: { goal: Goal; lang: "he" | "
   return <section className={styles.summary} aria-labelledby={`${id}-title`} data-goal-summary tabIndex={-1}>
     <header className={styles.header}>
       <h2 id={`${id}-title`}><Target size={25} aria-hidden="true" />{he ? "היעד שלכם" : "Your learning goal"}</h2>
-      <button type="button" onClick={onEdit} aria-label={he ? "עריכת היעד" : "Edit goal"}><PencilLine size={17} aria-hidden="true" />{he ? "עריכת היעד" : "Edit goal"}</button>
+      <button type="button" data-member-tour="goal-edit" data-muxi-control="goal-edit" onClick={onEdit} aria-label={he ? "עריכת היעד" : "Edit goal"}><PencilLine size={17} aria-hidden="true" />{he ? "עריכת היעד" : "Edit goal"}</button>
     </header>
     <dl className={styles.fields}>
       <div className={styles.roles}><dt>{he ? explore ? "מסלול הלמידה" : "התפקידים שבחרתם" : explore ? "Learning approach" : "Your chosen roles"}</dt><dd className={styles.roleList}>{roles.map((role) => <span className={styles.role} key={role} dir={proseDirection(role)}><BidiText>{role}</BidiText></span>)}</dd></div>

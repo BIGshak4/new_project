@@ -8,6 +8,7 @@
 }
 /* The inline circuit editor is an open, non-modal dialog. Help stays available there. */
 :global(body):has(:global([data-muxi-station])) .dock,
+:global(html[data-member-tour-active="true"]:not([data-member-tour-step="helper"])) .dock,
 :global(body):has(:global(dialog:modal)) .dock { visibility: hidden; }
 .launcher {
   display: flex;

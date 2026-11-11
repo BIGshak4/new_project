@@ -84,7 +84,7 @@ export function QuickQuizDialog({ open, lang, initialTopics, onClose, onStart, r
       const selection = selectQuickQuiz(selected, words[0]);
       if (selection) onStart({ ...selection, id: `${words[0].toString(16)}-${words[1].toString(16)}` });
     }}>
-      <fieldset className={styles.topics}>
+      <fieldset className={styles.topics} data-member-tour="quiz-topics">
         <legend>{t("נושאי הבוחן", "Quiz topics")}</legend>
         <label className={styles.selectAll}><input ref={selectAll} type="checkbox" checked={selected.length === quickTopics.length}
           onChange={event => setSelected(event.target.checked ? quickTopics.map(topic => topic.id) : [])} />
@@ -97,7 +97,7 @@ export function QuickQuizDialog({ open, lang, initialTopics, onClose, onStart, r
       <p className={styles.pool} role="status">{count >= QUICK_QUIZ_SIZE
         ? t(`10 שאלות יוגרלו מתוך ${count} שאלות בנושאים שבחרתם.`, `10 questions will be drawn from ${count} questions in your selected topics.`)
         : selected.length ? t("בחרו נושאים עם לפחות 10 שאלות.", "Choose topics containing at least 10 questions.") : t("סמנו לפחות נושא אחד כדי להתחיל.", "Select at least one topic to begin.")}</p>
-      <div className={styles.dialogActions}><button className="primary" type="submit" disabled={count < QUICK_QUIZ_SIZE}><ListChecks size={18} aria-hidden="true" />{t("ליצור בוחן של 10 שאלות", "Create a 10-question quiz")}</button>
+      <div className={styles.dialogActions}><button data-member-tour="quiz-create" className="primary" type="submit" disabled={count < QUICK_QUIZ_SIZE}><ListChecks size={18} aria-hidden="true" />{t("ליצור בוחן של 10 שאלות", "Create a 10-question quiz")}</button>
         <button type="button" onClick={onClose}>{t("ביטול", "Cancel")}</button></div>
     </form>
   </dialog>;
@@ -113,7 +113,7 @@ export function QuickQuiz({ run, lang, onBack, onNew, preview = false }: { run: 
   }, [run.id]);
   const byId = new Map(quickQuestions.map(question => [question.id, question]));
   const BackArrow = lang === "he" ? ArrowRight : ArrowLeft;
-  return <section className={`quick-practice ${styles.quiz}`} lang={lang} dir={lang === "he" ? "rtl" : "ltr"} aria-label={t("בוחן שאלות קצרות", "Short-question quiz")}>
+  return <section className={`quick-practice ${styles.quiz}`} data-member-tour="quiz-questions" lang={lang} dir={lang === "he" ? "rtl" : "ltr"} aria-label={t("בוחן שאלות קצרות", "Short-question quiz")}>
     <div className={styles.navigation}><button type="button" onClick={onBack}><BackArrow size={18} aria-hidden="true" />{t("חזרה לשאלות הקצרות", "Back to short questions")}</button>
       <button type="button" onClick={onNew} aria-haspopup="dialog"><Shuffle size={18} aria-hidden="true" />{t("בוחן חדש", "New quiz")}</button></div>
     <header className={styles.quizHeader}><h1 ref={heading} tabIndex={-1}>{t("הבוחן שלכם", "Your quiz")}</h1>

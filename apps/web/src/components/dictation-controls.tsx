@@ -87,7 +87,7 @@ export function DictationControls({ value, onChange, lang, disabled, maxLength =
         : t("הכתבה קולית", "Dictate answer");
 
   return (
-    <div className="dictation-controls" style={{ display: "grid", gap: 8, minWidth: 0 }}>
+    <div className="dictation-controls" data-member-tour="dictation" style={{ display: "grid", gap: 8, minWidth: 0 }}>
       <div className="row" style={{ flexWrap: "wrap", gap: 10 }}>
         <button
           type="button"

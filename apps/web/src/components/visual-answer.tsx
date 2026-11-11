@@ -290,7 +290,7 @@ export function VisualAnswer({
           />
         )}
       </div>
-      <div id={`${id}-photos`} hidden={!readonly && !photosOpen}>
+      <div id={`${id}-photos`} data-member-tour="photos-tools" hidden={!readonly && !photosOpen}>
         {!readonly && photos && (
           <>
             <p className="small muted">

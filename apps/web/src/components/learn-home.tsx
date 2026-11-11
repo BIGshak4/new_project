@@ -195,7 +195,7 @@ export function LearnHome({
             </div>}
           </div>
           {goalComplete && (
-            <button type="button" className="dashboard-edit-goal" onClick={onOpenGoal}>
+            <button type="button" className="dashboard-edit-goal" data-member-tour="goal-edit" data-muxi-control="goal-edit" onClick={onOpenGoal}>
               <PencilLine size={16} aria-hidden="true" />{t("עריכת היעד", "Edit goal")}
             </button>
           )}
@@ -221,7 +221,7 @@ export function LearnHome({
                 "Choose one or more roles and your daily study time. You can also start learning without a fixed goal or an interview date.",
               )}
             </p>
-            <button type="button" className="primary" onClick={onOpenGoal}>
+            <button type="button" className="primary" data-member-tour="goal-edit" data-muxi-control="goal-edit" onClick={onOpenGoal}>
               {t("להגדיר את היעד", "Set my goal")}
             </button>
           </section>

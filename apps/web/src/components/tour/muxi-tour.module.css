@@ -86,7 +86,11 @@
 .unfinished ul { list-style: none; padding: 0; margin: 8px 0; }
 .unfinished button { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: start; border: 0; background: transparent; color: var(--link); }
 .launcher { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 3px 9px; font-size: 12px; white-space: nowrap; background: var(--surface); color: var(--ink); }
-.launcherMascot { width: 32px; height: 34px; }
+.launcher .launcherMascot { width: 32px; height: 34px; }
+@media (max-width: 1250px) {
+  .launcher { width: 40px; min-width: 40px; padding: 5px; justify-content: center; }
+  .launcher > span { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
 .expandedCoach { position: fixed; inset-block-end: 16px; inset-inline-end: 16px; width: min(340px, calc(100vw - 32px)); max-height: calc(100dvh - 24px); overflow: hidden; z-index: 5; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); box-shadow: 0 8px 32px #0003; }
 .expandedBar { display: flex; align-items: center; gap: 5px; padding: 6px; border-bottom: 1px solid var(--line); background: var(--paper); }
 .expandedBar button { font-size: 12px; gap: 5px; padding-inline: 8px; }
@@ -129,7 +133,7 @@
   .expandedBody { max-height: 45vh; padding: 12px; }
   .expandedCoach .coachIdentity, .expandedCoach .stationCount, .expandedCoach .progress, .expandedCoach .hint { display: none; }
   .expandedCoach .coachTitle { margin-top: 0; } .expandedCoach .task { padding: 10px; margin-block: 10px; }
-  .launcher { padding-inline: 5px; font-size: 11px; } .launcherMascot { width: 25px; }
+  .launcher { padding-inline: 5px; font-size: 11px; } .launcher .launcherMascot { width: 25px; }
 }
 @media (prefers-reduced-motion: reduce) { .root *, .root *::before, .root *::after { scroll-behavior: auto; } }
 @media (max-width: 760px) {

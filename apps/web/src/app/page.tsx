@@ -39,6 +39,7 @@ import { GoalSummary } from "../components/goal-summary";
 import { LanguageMenu } from "../components/ui/language-menu";
 import { ThemeToggle } from "../components/ui/theme-toggle";
 import { MuxiTourLauncher } from "../components/tour/muxi-tour";
+import { MEMBER_TOUR_NAVIGATE_EVENT, emitMemberTourAction } from "../lib/member-tour";
 import { UserInboxButton } from "../components/user-inbox";
 import { MultiSelect } from "../components/ui/multi-select";
 import { AccountStats } from "../components/account-stats";
@@ -201,6 +202,16 @@ function Workspace({
     window.scrollTo({ top: 0 });
   }, []);
 
+  useEffect(() => {
+    const onTourNavigation = (event: Event) => {
+      const detail = (event as CustomEvent<{ userId: string; route: Route }>).detail;
+      if (detail?.userId !== user.id || !["learn", "library", "fundamentals", "interview", "history", "bookmarks"].includes(detail.route?.view)) return;
+      navigate(detail.route);
+    };
+    window.addEventListener(MEMBER_TOUR_NAVIGATE_EVENT, onTourNavigation);
+    return () => window.removeEventListener(MEMBER_TOUR_NAVIGATE_EVENT, onTourNavigation);
+  }, [navigate, user.id]);
+
   const loadGoal = useCallback(async () => {
     const revision = ++goalRevision.current;
     setGoalLoadFailed(false);
@@ -324,6 +335,7 @@ function Workspace({
     return () => window.removeEventListener(ACCOUNT_GOAL_SAVED, receiveTourGoal);
   }, [user.id, applySavedGoal]);
   const onGoalSaved = (g: Goal) => {
+    emitMemberTourAction(user.id, "goal-saved");
     applySavedGoal(g);
     requestAnimationFrame(() => {
       const destination = goal?.complete
@@ -762,7 +774,7 @@ function Workspace({
                   <div className="search">
                     <Search size={17} />
                     <input
-                      aria-label={t("חיפוש שאלות", "Search questions")}
+                      data-member-tour="library-search" aria-label={t("חיפוש שאלות", "Search questions")}
                       placeholder={t(
                         "חפשו שאלה, נושא או חברה…",
                         "Search a question, topic or company…",
@@ -847,7 +859,7 @@ function Workspace({
                     >
                       <div className="library-question-main">
                         <QuestionTitle lang={lang}>
-                          <button type="button" className="library-question-open" onClick={() => openQuestion(q)}>
+                          <button type="button" data-member-tour="library-question" className="library-question-open" onClick={() => openQuestion(q)}>
                             <BidiText>{q.title}</BidiText>
                           </button>
                         </QuestionTitle>

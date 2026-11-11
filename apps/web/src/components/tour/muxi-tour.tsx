@@ -10,6 +10,7 @@ import { MuxiMascot } from "./muxi-mascot";
 import { MuxiGuidance } from "./muxi-guidance";
 import { lockBodyScroll } from "../../lib/body-scroll-lock";
 import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
+import { MEMBER_TOUR_START_EVENT } from "../../lib/member-tour";
 import { UserInboxButton } from "../user-inbox";
 import { checkpoint, initialTourProgress, isGuestExercise, parseTourProgress, stationReady, tourKey, tourSteps, type TourKind, type TourProgress } from "../../lib/muxi-tour";
 import styles from "./muxi-tour.module.css";
@@ -51,13 +52,11 @@ function MuxiScene({ finished = false }: { finished?: boolean }) {
 
 /** The production workspace remains mounted while this locally scoped tour is open. */
 export function MuxiTourLauncher({ userId, lang, controls }: { userId: string; lang: Lang; controls: ReactNode }) {
-  const [open, setOpen] = useState(false);
   return <>
-    <button type="button" className={styles.launcher} onClick={() => setOpen(true)} aria-haspopup="dialog">
+    <button type="button" className={styles.launcher} onClick={() => window.dispatchEvent(new CustomEvent(MEMBER_TOUR_START_EVENT, { detail: { userId } }))}>
       <MuxiMascot className={styles.launcherMascot} />
       <span>{lang === "he" ? "סיור עם מוקסי" : "Tour with Muxi"}</span>
     </button>
-    {open && createPortal(<MuxiTour lang={lang} userId={userId} controls={controls} onClose={() => setOpen(false)} />, document.body)}
   </>;
 }
 

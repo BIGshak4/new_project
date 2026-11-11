@@ -34,6 +34,8 @@ import { Reveal } from "./ui/motion";
 import { toast } from "./toaster";
 import { FollowUps } from "./follow-ups";
 import { useFeedbackArrival } from "./use-feedback-arrival";
+import { emitMemberTourAction } from "../lib/member-tour";
+import { questionCategory } from "../lib/question-discovery";
 import { parseTechnicalAnswer } from "../lib/technical-answer";
 import { referenceInLanguage } from "../lib/material-locale";
 import { supabase } from "../lib/supabase";
@@ -125,6 +127,16 @@ export function PracticeSession({
   const answered = !!attempt?.submission;
   const submittedRevision = attempt?.submission?.revision;
   const attemptQuestionId = attempt?.question.id;
+  useEffect(() => {
+    if (!loading && question) window.dispatchEvent(new CustomEvent("jobrun:member-tour-practice", { detail: {
+      userId: user.id, questionKey: question.key, subject: questionCategory(question), attemptId: attempt?.id, submitted: !!attempt?.submission,
+    } }));
+  }, [loading, question?.key, question?.subject, question?.category, attempt?.id, !!attempt?.submission, user.id]);
+  useEffect(() => {
+    if (!demo && attempt?.submission?.status === "done" && attempt.submission.assessed_by === "model" && !attempt.feedback_pending && !attempt.submission.feedback_pending) {
+      emitMemberTourAction(user.id, "feedback-ready");
+    }
+  }, [demo, attempt?.submission, attempt?.feedback_pending, user.id]);
   useEffect(() => {
     if (attemptQuestionId && submittedRevision !== undefined) onRefreshEntry(attemptQuestionId);
   }, [attemptQuestionId, submittedRevision, onRefreshEntry]);
@@ -597,7 +609,7 @@ export function PracticeSession({
                   : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
                 {attempt && (
                   <>
-                    <div className="row" style={{ marginTop: 24 }}>
+                    <div className="row" data-member-tour="practice-hints" style={{ marginTop: 24 }}>
                       <button
                         disabled={
                           disabled ||
@@ -622,7 +634,7 @@ export function PracticeSession({
                         /{question.hint_count}
                       </button>
                       <button
-                        disabled={disabled || !!pending || !!attempt.reference}
+                        data-member-tour="practice-reference" disabled={disabled || !!pending || !!attempt.reference}
                         onClick={() =>
                           void mutate(
                             async () =>
@@ -694,7 +706,7 @@ export function PracticeSession({
                       )}
                     </p>
                     <div className="sheet-actions">
-                      <button className="primary" onClick={() => void start()} disabled={busy}>
+                      <button className="primary" data-member-tour="practice-start" onClick={() => void start()} disabled={busy}>
                         {busy ? t("פותחים תרגול…", "Opening practice…") : t("כתיבת פתרון", "Write my answer")}
                       </button>
                       {question.has_reference && <button onClick={() => void start(true)} disabled={busy}>
@@ -823,7 +835,7 @@ export function PracticeSession({
                               ((!answer.trim() && !hasVisual(visual)) ||
                                 answer.length > 20000))
                           }
-                          onClick={() => void submit()}
+                          data-member-tour="practice-submit" onClick={() => void submit()}
                         >
                           {busy
                             ? t("שומרים את הפתרון…", "Saving your solution…")
@@ -931,7 +943,8 @@ export function PracticeSession({
             {attempt?.submission && (
               <section
                 id="feedback"
-                ref={feedbackRef}
+                data-member-tour="practice-feedback" ref={feedbackRef}
+                data-member-feedback-ready={!demo && attempt.submission.status === "done" && attempt.submission.assessed_by === "model" && !attempt.feedback_pending && !attempt.submission.feedback_pending ? "true" : undefined}
                 data-feedback-attempt={attempt.id}
                 style={{ scrollMarginBlockStart: 110 }}
                 className="practice-flow"

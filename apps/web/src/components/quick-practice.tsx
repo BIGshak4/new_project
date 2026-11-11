@@ -151,7 +151,7 @@ export function QuickPractice({ lang, api, userId, initialQuestionKey }: { lang:
       <div><h1>{t("יסודות בקטנה", "A little practice")}</h1>
         <p>{t("שאלה קצרה, רעיון אחד. כמה רגעים לחזק את הבסיס לראיון הבא.", "One short question, one idea. A few moments to strengthen your interview foundations.")}</p></div>
       <div className={quizStyles.entry}><p className="quick-total">{t(`${quickQuestions.length} שאלות קצרות`, `${quickQuestions.length} short questions`)}</p>
-        <button ref={quizTrigger} className="primary" type="button" onClick={() => setQuizDialogOpen(true)} aria-haspopup="dialog">{t("בוחן", "Quiz")}</button></div>
+        <button data-member-tour="quick-quiz" ref={quizTrigger} className="primary" type="button" onClick={() => setQuizDialogOpen(true)} aria-haspopup="dialog">{t("בוחן", "Quiz")}</button></div>
     </div>
     <QuickQuizDialog open={quizDialogOpen} lang={lang} initialTopics={topic === "all" ? undefined : [topic]} onClose={() => setQuizDialogOpen(false)} onStart={run => { quiz.start(run); setQuizDialogOpen(false); }} returnFocus={quizTrigger} />
     <div className="quick-history-views" role="group" aria-label={t("סינון לפי התרגול שלי", "Filter by my practice")}>
@@ -162,10 +162,10 @@ export function QuickPractice({ lang, api, userId, initialQuestionKey }: { lang:
       ] as const).map(([value, label]) => <button key={value} disabled={saving} aria-pressed={historyView === value}
         className={historyView === value ? "active" : ""} onClick={() => { setHistoryView(value); setRevealedId(null); setSaveError(null); }}>{label}</button>)}
     </div>
-    <button ref={filterToggle} className="quick-filter-toggle" onClick={() => setFiltersOpen(!filtersOpen)} aria-expanded={filtersOpen} aria-controls="quick-filters">
+    <button ref={filterToggle} data-member-tour="quick-topics-toggle" className="quick-filter-toggle" onClick={() => setFiltersOpen(!filtersOpen)} aria-expanded={filtersOpen} aria-controls="quick-filters">
       <Search size={17} aria-hidden="true" />{t("נושא וחיפוש", "Topic and search")}{" · "}{topic === "all" ? t("הכול", "All") : quickTopics.find(item => item.id === topic)?.label[lang]}
     </button>
-    <div id="quick-filters" className={`quick-controls ${filtersOpen ? "is-open" : ""}`}>
+    <div data-member-tour="quick-topics" id="quick-filters" className={`quick-controls ${filtersOpen ? "is-open" : ""}`}>
       <div className="quick-topics" role="group" aria-label={t("בחירת נושא", "Choose a topic")}>
         {[{ id: "all" as const, label: { he: "הכול", en: "All" } }, ...quickTopics].map(item =>
           <button key={item.id} disabled={saving} className={topic === item.id ? "active" : ""} aria-pressed={topic === item.id}
@@ -192,7 +192,7 @@ export function QuickPractice({ lang, api, userId, initialQuestionKey }: { lang:
         <StudyText text={question.prompt[lang]} lang={lang} />
         {question.code?.language === "python" && <p className="small muted">{t("המימוש המוצע כתוב בפייתון. דרך הפתרון מוסברת בקצרה בהמשך.", "The proposed implementation uses Python. A short explanation of the approach appears below.")}</p>}
         <p className="quick-think">{t("נסו לענות בראש לפני פתיחת הפתרון.", "Try answering in your head before opening the solution.")}</p>
-        <button className={revealed ? "text-button quick-reveal" : "primary quick-reveal"} onClick={() => revealed ? setRevealedId(null) : reveal()} aria-expanded={!!revealed} aria-controls="quick-answer">
+        <button data-member-tour="quick-reveal" className={revealed ? "text-button quick-reveal" : "primary quick-reveal"} onClick={() => revealed ? setRevealedId(null) : reveal()} aria-expanded={!!revealed} aria-controls="quick-answer">
           {revealed ? t("הסתרת הפתרון", "Hide solution") : t("הצגת פתרון קצר", "Show short solution")}</button>
         {revealed && <section id="quick-answer" className="quick-answer" aria-label={t("פתרון קצר", "Short solution")}>
             <h3>{t("הפתרון בקצרה", "The short solution")}</h3>
@@ -202,7 +202,7 @@ export function QuickPractice({ lang, api, userId, initialQuestionKey }: { lang:
             <p className="quick-takeaway"><strong>{t("מה לוקחים הלאה?", "What carries over?")}</strong> <BidiText>{question.takeaway[lang]}</BidiText></p>
           </section>}
         <div className="quick-actions">
-          {state !== "completed" && <button className="primary" disabled={saving} onClick={() => void complete()}>
+          {state !== "completed" && <button className="primary" disabled={saving} data-member-tour="quick-complete" onClick={() => void complete()}>
             <Check size={17} aria-hidden="true" />{saving ? t("שומרים…", "Saving…") : t("סיימתי, לשאלה הבאה", "Finished, next question")}</button>}
           <button disabled={saving || index === questions.length - 1} onClick={() => choose(questions[index + 1].id)}>
             {t("דילוג", "Skip")}<NextArrow size={18} aria-hidden="true" /></button>

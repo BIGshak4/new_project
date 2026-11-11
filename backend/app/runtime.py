@@ -134,7 +134,8 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                    image_fetcher=fetcher, billing=billing, coins=coins,
                    avatars=AvatarsService(store, coins, load_avatar_catalog(settings.seeds_dir / "avatar_cosmetics.json")),
                    duels=DuelService(store, catalog, provider, coins, reviewed_only=settings.suggest_reviewed_only,
-                                     site_url=settings.site_url, quiz=load_quiz(settings.seeds_dir / "duel_quiz.json")),
+                                     site_url=settings.site_url, quiz=load_quiz(settings.seeds_dir / "duel_quiz.json"),
+                                     practice_secret=settings.supabase_service_role_key),
                    fundamentals=FundamentalsService(
                        DbFundamentalsRepository() if kind == "database" else MemoryFundamentalsRepository(),
                        load_fundamentals_catalog(settings.seeds_dir / "fundamentals_catalog.json")),

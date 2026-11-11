@@ -15,6 +15,8 @@ import { MotionProvider } from "../components/ui/motion";
 import { SupportReporter } from "../components/support-reporter";
 import { UserInboxProvider } from "../components/user-inbox";
 import { PersonalHelper } from "../components/personal-helper/personal-helper";
+import { MemberTour } from "../components/tour/member-tour";
+import "../components/tour/member-tour.css";
 
 // Ion is the production face. Older gallery faces remain available without preloading them.
 const serif = Frank_Ruhl_Libre({
@@ -71,6 +73,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <UserInboxProvider>
+          <MemberTour />
           <MotionProvider>{children}</MotionProvider>
           <Toaster />
           <SupportReporter />

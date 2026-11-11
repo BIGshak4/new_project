@@ -160,7 +160,7 @@ function InterviewLobby({ api, lang, demo, onStarted, initialDuration, userId }:
           )}
         </p>
         <h3>{t("כמה זמן יש לכם?", "How long do you have?")}</h3>
-        <div className="duration-picker" role="radiogroup" aria-label={t("משך הראיון", "Interview duration")}>
+        <div data-member-tour="interview-duration" className="duration-picker" role="radiogroup" aria-label={t("משך הראיון", "Interview duration")}>
           {DURATIONS.map((d) => (
             <button
               key={d}
@@ -179,12 +179,12 @@ function InterviewLobby({ api, lang, demo, onStarted, initialDuration, userId }:
           <li>{t("אפשר לסיים מוקדם; הדוח מכסה את מה שנענה.", "You can stop early; the report covers what you answered.")}</li>
         </ul>
         {error && <p className="notice error" role="alert"><BidiText>{error}</BidiText></p>}
-        <button className="primary" disabled={busy || !!deletingId} onClick={() => void start()}>
+        <button className="primary" data-member-tour="interview-start" disabled={busy || !!deletingId} onClick={() => void start()}>
           <MessageSquareText size={16} aria-hidden="true" /> {busy ? t("פותחים את הראיון…", "Opening the interview…") : t("להתחיל ראיון בכתב", "Start written interview")}
         </button>
       </div>
       {(past.length > 0 || historyState !== "loading") && (
-        <div className="interview-past">
+        <div className="interview-past" data-member-tour="interview-history">
           <h3 ref={historyHeading} tabIndex={-1}>{t("ראיונות קודמים", "Previous interviews")}</h3>
           {historyMessage && <p className="small" role="status">{t("הראיון נמחק מהרשימה.", "The interview was removed from your history.")}</p>}
           {historyError && <p className="notice error" role="alert"><BidiText>{historyError.code === "unauthenticated" || historyError.code === "forbidden" ? apiMessage(historyError, lang) : t("המחיקה לא הושלמה. נסו שוב או רעננו את הרשימה.", "The interview could not be deleted. Try again or refresh the list.")}</BidiText></p>}
@@ -394,7 +394,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
   const ss = String(secondsLeft % 60).padStart(2, "0");
   const Arrow = lang === "he" ? ArrowLeft : ArrowRight;
   return (
-    <section className="interview-room">
+    <section data-member-tour="interview-answer" className="interview-room">
       <header ref={barRef} className="interview-bar">
         <span className={`interview-timer tone-${tone}`} dir="ltr" aria-live="off">
           <Clock3 size={16} /> {mm}:{ss}
@@ -408,7 +408,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
         <span className="interview-plan small muted" title={interview.plan.map((p) => p.label).join(", ")}>
           <BidiText>{[...new Set(interview.plan.map((p) => subjectLabel(p.subject, lang)))].join(" · ")}</BidiText>
         </span>
-        <button className="ghost" disabled={busy} onClick={() => void end()}>
+        <button className="ghost" disabled={busy} data-member-tour="interview-end" onClick={() => void end()}>
           <Square size={14} /> {t("סיום מוקדם", "End early")}
         </button>
       </header>
@@ -543,7 +543,7 @@ function InterviewReportView({
   const reduced = useReducedMotion();
   const overall = report?.fit["session_overall"] ?? report?.fit["role"];
   return (
-    <section className="interview-report">
+    <section data-member-tour="interview-report" className="interview-report">
       <div className="page-heading">
         <div>
           <h1>{t("דוח הראיון", "Interview report")}</h1>

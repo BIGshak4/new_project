@@ -22,7 +22,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime, timedelta
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Response
 from pydantic import BaseModel, Field
 
 from app.api.deps import Avatars, CurrentAccess, Duels
@@ -65,6 +65,26 @@ class QuizAnswerView(BaseModel):
     choice: int | None = None                   # None: the minute ran out
     correct: bool
     seconds: float
+
+
+class QuizPracticeView(BaseModel):
+    round_token: str
+    language: str
+    expires_at: datetime
+    question: QuizItemView
+
+
+class QuizPracticeAnswerRequest(BaseModel):
+    round_token: str = Field(..., min_length=1, max_length=2048)
+    choice: int = Field(..., ge=0, le=3, strict=True)
+
+
+class QuizPracticeResultView(BaseModel):
+    question: QuizItemView
+    choice: int
+    correct: bool
+    correct_index: int
+    explanation: str
 
 
 class QuizReviewView(BaseModel):
@@ -265,6 +285,19 @@ async def accept_duel(body: AcceptDuelRequest, access: CurrentAccess, duels: Due
     duel = await duels.accept(access.user_id, body.code)
     configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
     return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
+
+
+@router.get("/practice", response_model=QuizPracticeView, summary="Try one real game question without coins or an opponent")
+async def practice_question(access: CurrentAccess, duels: Duels, response: Response,
+                            language: str = Query("he", pattern="^(he|en)$")) -> dict:
+    response.headers["Cache-Control"] = "private, no-store"
+    return duels.practice.start(access.user_id, language)
+
+
+@router.post("/practice/answer", response_model=QuizPracticeResultView, summary="Check the selected answer to a practice round")
+async def practice_answer(body: QuizPracticeAnswerRequest, access: CurrentAccess, duels: Duels, response: Response) -> dict:
+    response.headers["Cache-Control"] = "private, no-store"
+    return duels.practice.answer(access.user_id, body.round_token, body.choice)
 
 
 @router.post("/{duel_id}/ready", response_model=DuelView, summary="Ready for the quiz: both ready starts the server clock")

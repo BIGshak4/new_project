@@ -43,6 +43,7 @@ from app.repo.duels import Duel, DuelsUnavailable, StaleDuel
 from app.repo.questions import DEVELOPMENT_STATUSES, SERVABLE_STATUSES
 from app.schemas.bank import BankQuestion
 from app.services.coins import CoinsService
+from app.services.quiz_practice import QuizPractice
 
 log = logging.getLogger("app.duels")
 
@@ -113,7 +114,8 @@ def load_quiz(path: Path) -> list[QuizQuestion]:
 
 class DuelService:
     def __init__(self, store, catalog: Catalog, provider: Provider, coins: CoinsService, *, reviewed_only: bool = True,
-                 site_url: str = "", quiz: list[QuizQuestion] | None = None, approved_only: bool = True):
+                 site_url: str = "", quiz: list[QuizQuestion] | None = None, approved_only: bool = True,
+                 practice_secret: str | None = None):
         self.store, self.catalog, self.provider, self.coins = store, catalog, provider, coins
         self.rules = coins.rules
         self.reviewed_only = reviewed_only
@@ -121,6 +123,7 @@ class DuelService:
         self.quiz = {q.key: q for q in (quiz or [])}
         self.site_url = site_url.rstrip("/")
         self.clock = lambda: datetime.now(UTC)   # tests move it
+        self.practice = QuizPractice(self, secret=practice_secret)
 
     # ------------------------------------------------------------------ the pools
 

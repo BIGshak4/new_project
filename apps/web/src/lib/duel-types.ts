@@ -18,7 +18,14 @@ export type Duel = {
 export type DuelRules = { stake: number; quiz_questions: number; quiz_seconds_per_question: number; quiz_available: boolean; quiz_source_count?: number; quiz_variant_count?: number; readiness_required?: boolean; no_monetary_value: boolean };
 export type DuelList = { duels: Duel[]; rules: DuelRules };
 export type DuelWallet = { balance: number; enabled: boolean; no_monetary_value: boolean };
+export type QuizPracticeRound = { round_token: string; language: DuelLanguage; expires_at: string; question: QuizItem };
+export type QuizPracticeResult = { question: QuizItem; choice: number; correct: boolean; correct_index: number; explanation: string };
+export type QuizPracticeClient = {
+  start(language: DuelLanguage): Promise<QuizPracticeRound>;
+  answer(roundToken: string, choice: number): Promise<QuizPracticeResult>;
+};
 export type DuelClient = {
+  practice?: QuizPracticeClient;
   list(): Promise<DuelList>; wallet(language: DuelLanguage): Promise<DuelWallet>;
   get(id: string): Promise<Duel>; create(language: DuelLanguage): Promise<Duel>;
   accept(code: string): Promise<Duel>; ready(id: string): Promise<Duel>;

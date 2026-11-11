@@ -60,7 +60,7 @@ export function FollowUps({
           ? t("פירוק לשלבים", "Broken into steps")
           : t("שאלת המשך", "Follow-up");
   return (
-    <section className="follow-ups" aria-label={t("שאלות המשך", "Follow-up questions")}>
+    <section className="follow-ups" data-member-tour="practice-followup" aria-label={t("שאלות המשך", "Follow-up questions")}>
       <h3>
         <MessageSquare size={18} aria-hidden="true" /> {t("שאלות המשך", "Follow-up questions")}
       </h3>

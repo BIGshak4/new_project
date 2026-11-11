@@ -79,7 +79,7 @@ export function ResumeQuestion({ api, userId, lang, questions, entries, recent, 
     else if (visit.attemptId) navigate({ view: "library", attempt: visit.attemptId });
     else navigate({ view: "library", question: visit.questionKey });
   }
-  return <section className={styles.resume}>
+  return <section className={styles.resume} data-member-tour="resume">
     <History size={22} aria-hidden="true" />
     <div className={styles.copy}><h2>{he ? "שנמשיך מאיפה שעצרת?" : "Pick up where you left off?"}</h2>
       <p><BidiText>{result.title}</BidiText></p></div>
