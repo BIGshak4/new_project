@@ -398,7 +398,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מהו הערך המרבי של מספר ללא סימן בן 5 ביטים?",
+        "he": "מהו הערך המרבי של מספר לא מסומן בן 5 ביטים?",
         "en": "What is the largest unsigned value representable with 5 bits?"
       },
       "choices": [
@@ -476,7 +476,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מהו מספר הביטים המזערי הדרוש לייצוג כל המספרים ללא סימן מ־0 עד 20, כולל?",
+        "he": "מהו מספר הביטים המזערי הדרוש לייצוג כל המספרים הלא מסומנים מ־0 עד 20, כולל?",
         "en": "What is the minimum bit width needed to represent every unsigned integer from 0 through 20 inclusive?"
       },
       "choices": [
@@ -515,7 +515,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מהו הטווח של מספר ללא סימן בן 6 ביטים?",
+        "he": "מהו הטווח של מספר לא מסומן בן 6 ביטים?",
         "en": "What is the range of an unsigned 6-bit integer?"
       },
       "choices": [
@@ -554,7 +554,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מרחיבים שדה ללא סימן מ־4 ביטים ל־5 ביטים. פי כמה גדל מספר הערכים שאפשר לייצג?",
+        "he": "מרחיבים שדה לא מסומן מ־4 ביטים ל־5 ביטים. פי כמה גדל מספר הערכים שאפשר לייצג?",
         "en": "An unsigned field grows from 4 bits to 5 bits. By what factor does its number of representable values grow?"
       },
       "choices": [
@@ -593,7 +593,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מחברים את המספרים ללא סימן 14 ו־3, ושומרים רק את 4 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "he": "מחברים את המספרים הלא מסומנים 14 ו־3, ושומרים רק את 4 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
         "en": "Add unsigned integers 14 and 3, keeping only the lowest 4 bits. What decimal value is stored?"
       },
       "choices": [
@@ -632,7 +632,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מחברים את המספרים ללא סימן 7 ו־2, ושומרים רק את 3 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "he": "מחברים את המספרים הלא מסומנים 7 ו־2, ושומרים רק את 3 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
         "en": "Add unsigned integers 7 and 2, keeping only the lowest 3 bits. What decimal value is stored?"
       },
       "choices": [
@@ -671,7 +671,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מחברים את המספרים ללא סימן 15 ו־1, ושומרים רק את 4 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "he": "מחברים את המספרים הלא מסומנים 15 ו־1, ושומרים רק את 4 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
         "en": "Add unsigned integers 15 and 1, keeping only the lowest 4 bits. What decimal value is stored?"
       },
       "choices": [
@@ -710,7 +710,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מחברים את המספרים ללא סימן 30 ו־5, ושומרים רק את 5 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "he": "מחברים את המספרים הלא מסומנים 30 ו־5, ושומרים רק את 5 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
         "en": "Add unsigned integers 30 and 5, keeping only the lowest 5 bits. What decimal value is stored?"
       },
       "choices": [
@@ -749,7 +749,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מחברים את המספרים ללא סימן 6 ו־1, ושומרים רק את 3 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
+        "he": "מחברים את המספרים הלא מסומנים 6 ו־1, ושומרים רק את 3 הביטים הנמוכים. מה הערך העשרוני שנשמר?",
         "en": "Add unsigned integers 6 and 1, keeping only the lowest 3 bits. What decimal value is stored?"
       },
       "choices": [
@@ -817,8 +817,7 @@
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending",
-        "wording_updated_on": "2026-11-04"
+        "professional_review": "pending"
       }
     },
     {
@@ -857,8 +856,7 @@
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending",
-        "wording_updated_on": "2026-11-04"
+        "professional_review": "pending"
       }
     },
     {
@@ -897,8 +895,7 @@
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending",
-        "wording_updated_on": "2026-11-04"
+        "professional_review": "pending"
       }
     },
     {
@@ -937,8 +934,7 @@
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending",
-        "wording_updated_on": "2026-11-04"
+        "professional_review": "pending"
       }
     },
     {
@@ -948,8 +944,8 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "פליפ-פלופ D דוגם בחזית עולה, ללא איפוס. ערכי D היציבים סביב שלוש חזיתות עוקבות הם 1, 0, 1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
-        "en": "A D flip-flop samples on rising edges, with no reset. The validly stable D values at three successive edges are 1, 0, 1. What is Q after each edge and propagation delay?"
+        "he": "פליפ-פלופ D דוגם בחזית עולה, ללא איפוס. ערכי D היציבים סביב שלוש חזיתות עוקבות הם 1,0,1. מהו רצף Q אחרי כל חזית וזמן ההתפשטות?",
+        "en": "A D flip-flop samples on rising edges, with no reset. The validly stable D values at three successive edges are 1,0,1. What is Q after each edge and propagation delay?"
       },
       "choices": [
         {
@@ -971,14 +967,13 @@
       ],
       "correct": 1,
       "explanation": {
-        "he": "כל חזית שומרת את D שנדגם בה, ולכן רצף Q הוא אותו רצף: 1, 0, 1.",
-        "en": "Each edge stores its sampled D, giving the same sequence at Q: 1, 0, 1."
+        "he": "כל חזית שומרת את D שנדגם בה, ולכן רצף Q הוא אותו רצף: 1,0,1.",
+        "en": "Each edge stores its sampled D, giving the same sequence at Q: 1,0,1."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",
         "on": "2026-10-29",
-        "professional_review": "pending",
-        "wording_updated_on": "2026-11-04"
+        "professional_review": "pending"
       }
     },
     {
@@ -988,7 +983,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "מונה ללא סימן בן 2 ביטים מתחיל בערך העשרוני 2, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 3 חזיתות, כשנשמרים רק 2 ביטים?",
+        "he": "מונה לא מסומן בן 2 ביטים מתחיל בערך העשרוני 2, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 3 חזיתות, כשנשמרים רק 2 ביטים?",
         "en": "An unsigned 2-bit counter starts at decimal 2 and increments on every rising edge without reset. What is its value after 3 edges, keeping only 2 bits?"
       },
       "choices": [
@@ -1027,7 +1022,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "מונה ללא סימן בן 3 ביטים מתחיל בערך העשרוני 6, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 4 חזיתות, כשנשמרים רק 3 ביטים?",
+        "he": "מונה לא מסומן בן 3 ביטים מתחיל בערך העשרוני 6, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 4 חזיתות, כשנשמרים רק 3 ביטים?",
         "en": "An unsigned 3-bit counter starts at decimal 6 and increments on every rising edge without reset. What is its value after 4 edges, keeping only 3 bits?"
       },
       "choices": [
@@ -1066,7 +1061,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "מונה ללא סימן בן 3 ביטים מתחיל בערך העשרוני 0, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 9 חזיתות, כשנשמרים רק 3 ביטים?",
+        "he": "מונה לא מסומן בן 3 ביטים מתחיל בערך העשרוני 0, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 9 חזיתות, כשנשמרים רק 3 ביטים?",
         "en": "An unsigned 3-bit counter starts at decimal 0 and increments on every rising edge without reset. What is its value after 9 edges, keeping only 3 bits?"
       },
       "choices": [
@@ -1105,7 +1100,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "מונה ללא סימן בן 4 ביטים מתחיל בערך העשרוני 14, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 3 חזיתות, כשנשמרים רק 4 ביטים?",
+        "he": "מונה לא מסומן בן 4 ביטים מתחיל בערך העשרוני 14, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 3 חזיתות, כשנשמרים רק 4 ביטים?",
         "en": "An unsigned 4-bit counter starts at decimal 14 and increments on every rising edge without reset. What is its value after 3 edges, keeping only 4 bits?"
       },
       "choices": [
@@ -1144,7 +1139,7 @@
       "topic": "sequential",
       "status": "approved",
       "prompt": {
-        "he": "מונה ללא סימן בן 2 ביטים מתחיל בערך העשרוני 1, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 4 חזיתות, כשנשמרים רק 2 ביטים?",
+        "he": "מונה לא מסומן בן 2 ביטים מתחיל בערך העשרוני 1, ומוסיף 1 בכל חזית עולה ללא איפוס. מה ערכו אחרי 4 חזיתות, כשנשמרים רק 2 ביטים?",
         "en": "An unsigned 2-bit counter starts at decimal 1 and increments on every rising edge without reset. What is its value after 4 edges, keeping only 2 bits?"
       },
       "choices": [
@@ -1183,7 +1178,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מהו הערך העשרוני של המספר הבינארי הללא סימן 10011?",
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 10011?",
         "en": "What is the decimal value of the unsigned binary number 10011?"
       },
       "choices": [
@@ -1222,7 +1217,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מהו הערך העשרוני של המספר הבינארי הללא סימן 01101?",
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 01101?",
         "en": "What is the decimal value of the unsigned binary number 01101?"
       },
       "choices": [
@@ -1261,7 +1256,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מהו הערך העשרוני של המספר הבינארי הללא סימן 10101?",
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 10101?",
         "en": "What is the decimal value of the unsigned binary number 10101?"
       },
       "choices": [
@@ -1300,7 +1295,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מהו הערך העשרוני של המספר הבינארי הללא סימן 11010?",
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 11010?",
         "en": "What is the decimal value of the unsigned binary number 11010?"
       },
       "choices": [
@@ -1339,7 +1334,7 @@
       "topic": "bits",
       "status": "approved",
       "prompt": {
-        "he": "מהו הערך העשרוני של המספר הבינארי הללא סימן 100001?",
+        "he": "מהו הערך העשרוני של המספר הבינארי הלא מסומן 100001?",
         "en": "What is the decimal value of the unsigned binary number 100001?"
       },
       "choices": [
@@ -1830,8 +1825,8 @@
       ],
       "correct": 0,
       "explanation": {
-        "he": "רק בזוג (1,2), (5,8) סכום ערכי x וסכום ערכי y זוגיים; האמצע הוא (3,5).",
-        "en": "Only (1,2), (5,8) have even sums for both x and y; their midpoint is (3,5)."
+        "he": "רק בזוג (1,2),(5,8) סכום ערכי x וסכום ערכי y זוגיים; האמצע הוא (3,5).",
+        "en": "Only (1,2),(5,8) have even sums for both x and y; their midpoint is (3,5)."
       },
       "release_approval": {
         "basis": "user_authorized_pilot_release",

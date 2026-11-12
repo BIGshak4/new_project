@@ -96,7 +96,7 @@ def run():
         emit(
             61,
             v,
-            f"בשתי מילים ללא סימן ברוחב {w} ביטים, A={a}, B={b}. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
+            f"בשתי מילים לא מסומנות ברוחב {w} ביטים, A={a}, B={b}. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
             f"For unsigned {w}-bit words A={a}, B={b}, compute their XOR, then set eq=1 only if every result bit is zero. What is obtained?",
             opts,
             (
@@ -114,7 +114,7 @@ def run():
             numeric(
                 62,
                 v,
-                "בחצי מחבר ללא נשא נכנס, A=B=1. מצרפים את הביטים בסדר CS, כאשר C הוא ביט הנשיאה. מה הערך העשרוני של CS?",
+                "בחצי מחבר ללא נשא נכנס, A=B=1. מצרפים את הביטים בסדר CS, כאשר C הוא הנשיאה. מה הערך העשרוני של CS?",
                 "In a half adder with no carry-in, A=B=1. Concatenate CS, with carry C first. What is the decimal value of CS?",
                 2,
                 ("S=0 ו־C=1, ולכן CS=10 בבינארי, שערכו 2.", "S=0 and C=1, so CS is binary 10, equal to 2."),
@@ -225,7 +225,7 @@ def run():
         ]
         fn = {"AND": lambda a, b: a & b, "OR": lambda a, b: a | b, "XOR": lambda a, b: a ^ b}[gate]
         assert fn(x, b) != fn(stuck, b)
-        extra_he = " נדרש גם ש־B=0." if gate == "XOR" else ""
+        extra_he = " נדרשת גם B=0." if gate == "XOR" else ""
         extra_en = " Also require B=0." if gate == "XOR" else ""
         emit(
             66,
@@ -379,7 +379,7 @@ def run():
         emit(
             71,
             v,
-            f"A={a} ו־B={b} הם ערכים ללא סימן ברוחב {w} ביטים. מה מתקבל כשמחברים ברוחב {w} ואז מוסיפים אפס משמאל, לעומת הרחבה ל־{w + 1} ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
+            f"A={a} ו־B={b} הם לא מסומנים ברוחב {w} ביטים. מה מתקבל כשמחברים ברוחב {w} ואז מוסיפים אפס משמאל, לעומת הרחבה ל־{w + 1} ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
             f"A={a} and B={b} are unsigned {w}-bit values. What results from adding at width {w} and then prepending zero, versus widening to {w + 1} bits before adding? Give decimal values in that order.",
             [
                 f"{truncated}, {exact}",
@@ -403,7 +403,7 @@ def run():
         numeric(
             72,
             v,
-            f"מספרים ללא סימן מקיימים a={a}, b=a+{gap}, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
+            f"מספרים לא מסומנים מקיימים a={a}, b=a+{gap}, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
             f"Unsigned integers satisfy a={a}, b=a+{gap}, and both are represented exactly. What is their arithmetic mean without computing a+b?",
             value,
             (
@@ -446,7 +446,7 @@ def run():
         numeric(
             74,
             v,
-            f"x={x} הוא שלם ללא סימן. שומרים את {k} הביטים הנמוכים שלו כדי לחשב x modulo {1 << k}. מה השארית העשרונית?",
+            f"x={x} הוא שלם לא מסומן. שומרים את {k} הביטים הנמוכים שלו כדי לחשב x modulo {1 << k}. מה השארית העשרונית?",
             f"x={x} is an unsigned integer. Keep its lowest {k} bits to compute x modulo {1 << k}. What is the decimal remainder?",
             value,
             (
@@ -504,7 +504,7 @@ def run():
         numeric(
             77,
             v,
-            f"מכפילים מספר ללא סימן ברוחב {a} ביטים במספר ללא סימן ברוחב {b} ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
+            f"מכפילים מספר לא מסומן ברוחב {a} ביטים במספר לא מסומן ברוחב {b} ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
             f"Multiply an unsigned {a}-bit value by an unsigned {b}-bit value. What minimum output width represents every product exactly?",
             width,
             (
@@ -569,7 +569,7 @@ def run():
         emit(
             80,
             v,
-            f"ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q={start}. בין חזיתות, D נקבע ל־{end}, ו־EN של הלאץ׳ נשאר {en}. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מהם שני המוצאים?",
+            f"ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q={start}. בין חזיתות, D נקבע ל־{end}, ו־EN של הלאץ׳ נשאר {en}. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
             f"A D latch and a rising-edge D flip-flop initially have Q={start}. Between edges, D is set to {end}, while the latch EN remains {en}. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?",
             options,
             (
@@ -779,19 +779,19 @@ def run():
         returned = items[0]
         remaining = items[1:] + [new]
         good = (
-            f"נקרא {returned}; תוכן התור שנותר: {','.join(remaining)}",
+            f"נקרא {returned}; נותר {','.join(remaining)}",
             f"Read {returned}; remaining {','.join(remaining)}",
         )
         emit(
             88,
             v,
             f"FIFO מלא מכיל {','.join(items)} לפי סדר היציאה. החוזה מקבל קריאה וכתיבה יחד גם כשהוא מלא, וקורא מידע ישן לפני הדריסה. באותו קצה קוראים וכותבים {new}. מה נקרא ומה נשאר?",
-            f"A full FIFO contains {','.join(items)} in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. At one edge, a read and a write of {new} occur. What is read and what remains?",
+            f"A full FIFO contains {','.join(items)} in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. One edge reads and writes {new}. What is read and what remains?",
             [
                 good,
-                (f"נקרא {new}; תוכן התור שנותר: {','.join(items)}", f"Read {new}; remaining {','.join(items)}"),
+                (f"נקרא {new}; נותר {','.join(items)}", f"Read {new}; remaining {','.join(items)}"),
                 (
-                    f"נקרא {returned}; תוכן התור שנותר: {','.join(items[1:])}",
+                    f"נקרא {returned}; נותר {','.join(items[1:])}",
                     f"Read {returned}; remaining {','.join(items[1:])}",
                 ),
                 ("שתי הפעולות נדחות", "Both operations are rejected"),
@@ -833,8 +833,8 @@ def run():
         emit(
             90,
             v,
-            f"בממשק ready/valid, העברה מתבצעת רק בקצה שבו שני האותות 1. השולח מציג valid=1 ונתון {data}; ready נשאר 0 במשך {'מחזור אחד' if stalls == 1 else f'{stalls} מחזורים'}. אין reset. מה עליו להציג עד קבלת ההעברה?",
-            f"In a ready/valid interface, transfer occurs only at an edge with both signals 1. The sender presents valid=1 and data {data}; ready stays 0 for {stalls} {'cycle' if stalls == 1 else 'cycles'}. There is no reset. What must it present until acceptance?",
+            f"בממשק ready/valid, העברה מתבצעת רק בקצה שבו שני האותות 1. השולח מציג valid=1 ונתון {data}; ready נשאר 0 במשך {stalls} מחזורים. אין reset. מה עליו להציג עד קבלת ההעברה?",
+            f"In a ready/valid interface, transfer occurs only at an edge with both signals 1. The sender presents valid=1 and data {data}; ready stays 0 for {stalls} cycles. There is no reset. What must it present until acceptance?",
             [
                 (f"valid=1; data={data}", f"valid=1; data={data}"),
                 ("valid=0; הנתון הבא", "valid=0; next data item"),
@@ -860,7 +860,7 @@ def run():
         numeric(
             91,
             v,
-            f"מונה רווי ללא סימן ברוחב {width} ביטים מתחיל ב־{start}. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי {steps} בקשות?",
+            f"מונה רווי לא מסומן ברוחב {width} ביטים מתחיל ב־{start}. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי {steps} בקשות?",
             f"An unsigned {width}-bit saturating counter starts at {start}. Each increment request adds 1 unless it is already at the maximum. What is its value after {steps} requests?",
             value,
             (
@@ -949,7 +949,7 @@ def run():
                     "next gets IDLE: assignment coverage is complete, but hold behavior is wrong",
                 ),
                 ("next מקבל RUN כמתוכנן", "next gets RUN as intended"),
-                ("ברירת המחדל בהכרח יוצרת לאץ׳", "The default necessarily causes a latch"),
+                ("חסר בהכרח לאץ׳ בגלל ברירת המחדל", "The default necessarily causes a latch"),
                 ("next מקבל DONE", "next gets DONE"),
             ],
             (
@@ -1169,7 +1169,7 @@ def run():
         numeric(
             98,
             v,
-            f"מכונת Moore נכנסת, בקצה טריגר, לשרשרת של {stages} מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; המצב האחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון {period} ns. מה רוחב הפולס ב־ns?",
+            f"מכונת Moore נכנסת, בקצה טריגר, לשרשרת של {stages} מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; אחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון {period} ns. מה רוחב הפולס ב־ns?",
             f"On a trigger edge, a Moore machine enters a chain of {stages} pulse states. Each outputs 1; every edge advances one state, with the last returning to IDLE, output 0. Ignore triggers during the chain and propagation delays. Clock period is {period} ns. What is pulse width in ns?",
             result,
             (
@@ -1184,7 +1184,7 @@ def run():
         numeric(
             99,
             v,
-            f"נתונים עוברים בצינור של {stages} אוגרים טוריים ללא עצירות, עם מעבר של אוגר אחד בכל חזית. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
+            f"נתונים עוברים בצינור של {stages} רשומות טוריות ללא עצירות, עם רשומה אחת בכל קצה. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
             f"Data passes through {stages} serial registers without stalls, one register per edge. valid marks real input items. By how many cycles must valid be delayed to match output data? Assume a defined valid reset.",
             stages,
             (
@@ -1198,7 +1198,7 @@ def run():
     for v, bits in enumerate(["", "1", "10", "11", "1011"], 1):
         parity = sum(map(int, bits)) % 2
         last = int(bits[-1]) if bits else 0
-        text = bits or "הריקה"
+        text = bits or "ריקה"
         text_en = bits or "empty"
         choices = [f"parity={parity}, last={last}"] + [
             f"parity={p}, last={b}"
@@ -1209,7 +1209,7 @@ def run():
             100,
             v,
             f"מכונה שומרת זוג: parity הוא 1 אם מספר האחדות שנקראו אי־זוגי, ו־last הוא הביט האחרון. בתחילה שניהם 0. אחרי סדרת הקלט {text}, מה הזוג?",
-            f"A machine retains a pair: parity is 1 for an odd number of ones read, and last is the latest bit. Both start at 0. After {'input sequence ' + text_en if bits else 'the empty input sequence'}, what is the pair?",
+            f"A machine retains a pair: parity is 1 for an odd number of ones read, and last is the latest bit. Both start at 0. After input sequence {text_en}, what is the pair?",
             choices,
             (
                 "מעדכנים parity באמצעות XOR עם כל ביט, ושומרים אותו ביט ב־last. שתי העובדות יחד דורשות עד ארבעה קודי מצב.",
@@ -1278,7 +1278,7 @@ def run():
         emit(
             103,
             v,
-            f"מממשים F={expr} באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מהם חיבורי D0,D1 לפי הסדר?",
+            f"מממשים F={expr} באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מה חיבורי D0,D1 לפי הסדר?",
             f"Implement F={expr} with a MUX selecting D0 for S=0 and D1 for S=1. Set S=A. What are D0,D1, in order?",
             [f"{d0}; {d1}", f"{d1}; {d0}", "A; NOT A", "0; 0"],
             (
@@ -1328,7 +1328,7 @@ def run():
         emit(
             104,
             v,
-            f"ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר {pairs}, מהי סדרת Y?",
+            f"ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר {pairs}, מה סדרת Y?",
             f"Four NAND gates are connected as t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). For AB pairs {pairs}, in that order, what is the Y sequence?",
             [good] + wrong,
             (
@@ -1493,7 +1493,7 @@ def run():
         emit(
             109,
             v,
-            f"Q שומר את דגימת In האחרונה, Q={sample}, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים {', '.join(changes)}. מהי סדרת OUT אחרי כל שינוי?",
+            f"Q שומר את דגימת In האחרונה, Q={sample}, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים {', '.join(changes)}. מה סדרת OUT אחרי כל שינוי?",
             f"Q retains the last In sample, Q={sample}, and OUT=In XOR Q. Between edges, with zero delays, In takes successive values {', '.join(changes)}. What is the OUT sequence after each change?",
             options,
             (
@@ -1525,7 +1525,7 @@ def run():
         emit(
             111,
             v,
-            f"בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא {period} ns, והשעון עצמו גבוה רק {clock_high} ns בכל מחזור. לאחר אתחול, מהו מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+            f"בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא {period} ns, והשעון עצמו גבוה רק {clock_high} ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
             f"A rising-edge flip-flop has D=NOT Q. Rising edges are {period} ns apart, and the clock itself is high for only {clock_high} ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?",
             [
                 (f"{2 * period} ns; 50%", f"{2 * period} ns; 50%"),
@@ -1672,7 +1672,7 @@ def run():
         emit(
             117,
             v,
-            f"נדרשות לפחות {threshold} אחדות בכל חלון הזזה של {window} דגימות. רק הדגימות {', '.join(map(str, one_positions))} הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של {window} דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה {end}, בסדר הזה?",
+            f"נדרש לפחות {threshold} אחדות בכל חלון הזזה של {window} דגימות. רק הדגימות {', '.join(map(str, one_positions))} הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של {window} דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה {end}, בסדר הזה?",
             f"Require at least {threshold} ones in every sliding window of {window} samples. Only samples {', '.join(map(str, one_positions))} are 1, with numbering from 1. A faulty implementation clears its count after each separate block of {window} samples. What are the required and faulty outputs at sample {end}, in that order?",
             ["1, 0", "0, 1", "0, 0", "1, 1"],
             (

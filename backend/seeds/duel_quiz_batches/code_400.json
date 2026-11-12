@@ -346,8 +346,8 @@
     "topic": "algorithms",
     "status": "draft",
     "prompt": {
-      "he": "כמה שלשות אינדקסים i<j<k במערך [0,0,0,0] סכום הערכים שלהן הוא 0? כאן סופרים הופעות, לא שלשות ערכים ייחודיות.",
-      "en": "How many index triples i<j<k in [0,0,0,0] have values summing to 0? Count occurrences, not distinct value triples."
+      "he": "כמה שלשות אינדקסים i<j<k במערך [0,0,0,0] סכומן 0? כאן סופרים הופעות, לא שלשות ערכים ייחודיות.",
+      "en": "How many index triples i<j<k in [0,0,0,0] sum to 0? Count occurrences, not distinct value triples."
     },
     "choices": [
       {
@@ -380,7 +380,7 @@
     "topic": "algorithms",
     "status": "draft",
     "prompt": {
-      "he": "מחפשים שלשות ערכים ייחודיות שסכומן 0 ב־[-1,-1,2], תוך שימוש באינדקסים שונים. כמה שלשות יאבדו אם נהפוך את הקלט לקבוצת ערכים לפני החיפוש?",
+      "he": "מחפשים שלשות ערכים ייחודיות מסכום 0 ב־[-1,-1,2], תוך שימוש באינדקסים שונים. כמה שלשות יאבדו אם נהפוך את הקלט לקבוצת ערכים לפני החיפוש?",
       "en": "Seek distinct value triples summing to 0 in [-1,-1,2], using different indices. How many valid triples disappear if the input is deduplicated before searching?"
     },
     "choices": [
@@ -448,7 +448,7 @@
     "topic": "algorithms",
     "status": "draft",
     "prompt": {
-      "he": "כמה שלשות ערכים ייחודיות שסכומן 0 יש ב־[-1,0,1,2,-1,-4]? כל שלשה משתמשת בשלושה אינדקסים שונים.",
+      "he": "כמה שלשות ערכים ייחודיות מסכום 0 יש ב־[-1,0,1,2,-1,-4]? כל שלשה משתמשת בשלושה אינדקסים שונים.",
       "en": "How many distinct value triples sum to 0 in [-1,0,1,2,-1,-4]? Each uses three different indices."
     },
     "choices": [
@@ -482,7 +482,7 @@
     "topic": "algorithms",
     "status": "draft",
     "prompt": {
-      "he": "במערך הממוין [2,3,4,5] אפילו סכום שלושת הקטנים גדול מ־6. כמה שלשות שסכומן 6 יכולות להישאר לחיפוש?",
+      "he": "במערך הממוין [2,3,4,5] אפילו סכום שלושת הקטנים גדול מ־6. כמה שלשות מסכום 6 יכולות להישאר לחיפוש?",
       "en": "In sorted [2,3,4,5], even the three smallest values sum above 6. How many sum-6 triples can remain to search?"
     },
     "choices": [
@@ -505,7 +505,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "הסכום המזערי הוא 2+3+4=9, ולכן אין שלשה שסכומה 6.",
+      "he": "הסכום המזערי הוא 2+3+4=9, ולכן אין שלשה מסכום 6.",
       "en": "The minimum sum is 2+3+4=9, so no sum-6 triple exists."
     }
   },
@@ -1468,7 +1468,7 @@
     "topic": "python",
     "status": "draft",
     "prompt": {
-      "he": "דחיסה יציבה שומרת מ־[20,3,21,4] רק ערכים שגדולים מ־19 או שווים לו. מה סדר הפלט?",
+      "he": "דחיסה יציבה שומרת מ־[20,3,21,4] רק ערכים שלפחות 19. מה סדר הפלט?",
       "en": "Stable compaction retains only values at least 19 from [20,3,21,4]. What is the output order?"
     },
     "choices": [
@@ -1774,7 +1774,7 @@
     "topic": "python",
     "status": "draft",
     "prompt": {
-      "he": "מה קיבולת המחרוזת הדרושה ל־255 ללא סימן, בייצוג בינארי מינימלי כולל NUL?",
+      "he": "מה קיבולת המחרוזת הדרושה ל־255 בלתי מסומן, בייצוג בינארי מינימלי כולל NUL?",
       "en": "What string capacity is needed for unsigned 255 in minimal binary, including NUL?"
     },
     "choices": [
@@ -2046,7 +2046,7 @@
     "topic": "algorithms",
     "status": "draft",
     "prompt": {
-      "he": "ברשימה 0→1→2→3→4→2, המפגש הראשון של Floyd הוא בצומת 3. מהי כניסת המעגל, שהיא הצומת הראשון במעגל שאליו מגיעים מהראש?",
+      "he": "ברשימה 0→1→2→3→4→2, המפגש הראשון של Floyd הוא בצומת 3. מהי כניסת המעגל, שהיא הצומת הראשון אליו נכנסים במעגל מהראש?",
       "en": "In list 0→1→2→3→4→2, Floyd first meets at node 3. What is the cycle entry, the first cyclic node reached from the head?"
     },
     "choices": [
@@ -2251,7 +2251,7 @@
     "status": "draft",
     "prompt": {
       "he": "מוצאים מינימום ומקסימום של 1 ערכים בשיטת הזוגות, כולל אתחול. כמה השוואות מתבצעות? בקלט אי־זוגי מאתחלים בערך הראשון.",
-      "en": "Find minimum and maximum of 1 value by pairing, including initialization. How many comparisons are performed? For odd input, initialize from the first value."
+      "en": "Find minimum and maximum of 1 values by pairing, including initialization. How many comparisons are performed? For odd input, initialize from the first value."
     },
     "choices": [
       {
@@ -2420,8 +2420,8 @@
     "topic": "algorithms",
     "status": "draft",
     "prompt": {
-      "he": "בהשוואה לקסיקוגרפית של (מקבלים, בחירות ראשונות), שני ציונים הם (4,2) ו־(4,3). איזה מהם נבחר?",
-      "en": "Using lexicographic (served, first choices), scores are (4,2) and (4,3). Which is selected?"
+      "he": "בהשוואה לקסיקוגרפית של (מקבלים,בחירות ראשונות), שני ציונים הם (4,2) ו־(4,3). איזה מהם נבחר?",
+      "en": "Using lexicographic (served,first choices), scores are (4,2) and (4,3). Which is selected?"
     },
     "choices": [
       {
@@ -2556,7 +2556,7 @@
     "topic": "algorithms",
     "status": "draft",
     "prompt": {
-      "he": "משימות דורשות 2 עובדים ב־`[1,3)` ו־3 ב־`[3,5)`. החלפה מיידית מותרת, ללא זמן מעבר. מה מינימום מספר העובדים?",
+      "he": "משימות דורשות 2 עובדים ב־`[1,3)` ו־3 ב־`[3,5)`. החלפה מיידית מותרת, ללא מעבר. מה מינימום מספר העובדים?",
       "en": "Tasks need 2 workers in `[1,3)` and 3 in `[3,5)`. Immediate reassignment is allowed, without travel. What is the minimum headcount?"
     },
     "choices": [
@@ -2896,7 +2896,7 @@
     "topic": "algorithms",
     "status": "draft",
     "prompt": {
-      "he": "טבלת popcount כוללת תשובה לכל קלט ללא סימן בן 8 ביטים. כמה כניסות דרושות, כולל הקלט 0?",
+      "he": "טבלת popcount כוללת תשובה לכל קלט בלתי מסומן בן 8 ביטים. כמה כניסות דרושות, כולל הקלט 0?",
       "en": "A popcount table stores an answer for every unsigned 8-bit input. How many entries are needed, including input 0?"
     },
     "choices": [
@@ -3259,8 +3259,8 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "הפלטים הם aab, aba, baa: בדיוק 3.",
-      "en": "The outputs are aab, aba, baa: exactly 3."
+      "he": "הפלטים הם aab,aba,baa: בדיוק 3.",
+      "en": "The outputs are aab,aba,baa: exactly 3."
     }
   },
   {
@@ -3780,7 +3780,7 @@
     "topic": "python",
     "status": "draft",
     "prompt": {
-      "he": "בזרם רק סוגריים עגולים נספרים; מתעלמים מתווים אחרים. מה מחזירה בדיקת תקינות הקידומת (a)?",
+      "he": "בזרם רק סוגריים עגולים נספרים; תווים אחרים מתעלמים. מה מחזירה בדיקת תקינות הקידומת (a)?",
       "en": "Only round parentheses matter in a stream; other characters are ignored. What does whole-prefix validity return for (a)?"
     },
     "choices": [

@@ -6,8 +6,6 @@ import hashlib
 import json
 from pathlib import Path
 
-from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
-
 import pytest
 
 from app.engine.catalog import load_catalog
@@ -116,16 +114,11 @@ def test_completeness_audit_covers_every_prior_record_and_names_only_two_needed_
 def test_short_banks_and_attestation_registry_are_unchanged():
     baseline=BATCH1107B10_BASELINE
     for name,expected in baseline['short_card_source_sha256'].items():
-        assert digest(before_current_copy('fundamentals', name, read(ROOT/'apps/web/src/content'/name)))==expected
+        assert digest(read(ROOT/'apps/web/src/content'/name))==expected
     for name,key in [('fundamentals_catalog.json','fundamentals_catalog_sha256'),
                      ('duel_quiz.json','quiz_bank_sha256'),
                      ('solution_review_attestations.json','review_registry_canonical_sha256')]:
-        actual = read(SEEDS / name)
-        if name == 'fundamentals_catalog.json':
-            actual = before_current_fundamentals_manifest(actual)
-        elif name == 'duel_quiz.json':
-            actual = before_current_copy('quiz', name, actual)
-        assert digest(actual) == baseline[key]
+        assert digest(read(SEEDS/name))==baseline[key]
 
 
 @pytest.mark.parametrize('mutation',['title','hint','prompt','version','media','digest','asset_ordinal'])

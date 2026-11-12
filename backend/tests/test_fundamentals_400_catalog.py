@@ -12,10 +12,6 @@ from pathlib import Path
 import pytest
 
 from tests.preparation_history import BASELINE, assert_pre_batch90_archive
-from tests.copy_november12_history import (
-    before_current_copy, before_current_fundamentals_bytes,
-    before_current_fundamentals_manifest,
-)
 
 ROOT=Path(__file__).resolve().parents[2]
 CONTENT=ROOT/'apps/web/src/content'
@@ -44,11 +40,10 @@ def old_id(key):
 
 def test_old_250_card_bytes_and_revisions_are_preserved():
     for name,expected in OLD_FILE_SHA256.items():
-        assert hashlib.sha256(before_current_fundamentals_bytes(name, (CONTENT/name).read_bytes())).hexdigest()==expected,name
+        assert hashlib.sha256((CONTENT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==expected,name
     web=read(CONTENT/'fundamentals-revisions.json')
     backend=read(SEEDS/'fundamentals_catalog.json')['questions']
     assert len(web)==len(backend)==500 and web==backend
-    web = before_current_fundamentals_manifest({'questions': web})['questions']
     original={key:value for key,value in web.items() if old_id(key)}
     assert len(original)==250 and canonical_digest(original)==OLD_REVISIONS_SHA256
 
@@ -82,10 +77,10 @@ def test_all_400_cards_have_distinct_bilingual_objectives_and_exact_mix():
 
 
 def test_every_prior_quiz_object_and_authorization_is_unchanged():
-    quiz=before_current_copy('quiz', 'duel_quiz.json', read(SEEDS/'duel_quiz.json'))['questions']
+    quiz=read(SEEDS/'duel_quiz.json')['questions']
     original=[q for q in quiz if not q.get('source_key') or old_id(q['source_key'])]
     assert len(original)==1290 and canonical_digest(original)==OLD_QUIZ_SHA256
-    manifest=before_current_copy('quiz', 'release-manifest.json', read(SEEDS/'duel_quiz_batches/release-manifest.json'))
+    manifest=read(SEEDS/'duel_quiz_batches/release-manifest.json')
     preserved=[entry for entry in manifest['questions'] if old_id(entry['key'].rsplit('-v',1)[0])]
     assert len(preserved)==1200 and canonical_digest(preserved)==OLD_RELEASE_SHA256
     new=[q for q in quiz if q.get('source_key') and 126 <= int(q['source_key'].rsplit('-',1)[1]) <= 200]

@@ -3,8 +3,6 @@ import hashlib
 import json
 from pathlib import Path
 
-from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
-
 from app.engine.catalog import load_catalog
 from app.engine.solution_review import solution_review
 from app.services import question_resources
@@ -102,7 +100,7 @@ def test_new_and_expanded_content_is_bilingual_proposed_and_private():
 
 def test_short_cards_quizzes_and_review_registry_are_unchanged():
     for name, previous in BATCH22_BASELINE['short_card_source_sha256'].items():
-        assert digest(before_current_copy('fundamentals', name, read(ROOT/'apps/web/src/content'/name)))==previous
-    assert digest(before_current_fundamentals_manifest(read(SEEDS/'fundamentals_catalog.json'))) == BATCH22_BASELINE['fundamentals_catalog_sha256']
-    assert digest(before_current_copy('quiz', 'duel_quiz.json', read(SEEDS/'duel_quiz.json'))) == BATCH22_BASELINE['quiz_bank_sha256']
+        assert digest(read(ROOT/'apps/web/src/content'/name))==previous
+    assert digest(read(SEEDS/'fundamentals_catalog.json')) == BATCH22_BASELINE['fundamentals_catalog_sha256']
+    assert digest(read(SEEDS/'duel_quiz.json')) == BATCH22_BASELINE['quiz_bank_sha256']
     assert digest(read(SEEDS/'solution_review_attestations.json')) == BATCH22_BASELINE['review_registry_canonical_sha256']

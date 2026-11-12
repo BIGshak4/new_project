@@ -13,8 +13,6 @@ import re
 import uuid
 from pathlib import Path
 
-from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
-
 import pytest
 
 from app.api.errors import ApiError
@@ -210,12 +208,11 @@ def test_all_400_short_card_objects_revisions_and_2000_quiz_variants_remain_unch
     cards = []
     assert len(BATCH110_BASELINE["short_card_source_sha256"]) == 11
     for name, previous_hash in BATCH110_BASELINE["short_card_source_sha256"].items():
-        current = before_current_copy("fundamentals", name, read(content / name))
+        current = read(content / name)
         assert digest(current) == previous_hash, name
         cards.extend(current)
     assert len(cards) == len({card["id"] for card in cards}) == 400
-    current_registry = read(SEEDS / "fundamentals_catalog.json")
-    registry = before_current_fundamentals_manifest(current_registry)
+    registry = read(SEEDS / "fundamentals_catalog.json")
     # Later authorized expansions add keys, while this intake's content stays frozen.
     historical_registry = {**registry, "questions": {
         key: revision for key, revision in registry["questions"].items()
@@ -223,8 +220,8 @@ def test_all_400_short_card_objects_revisions_and_2000_quiz_variants_remain_unch
     }}
     assert len(historical_registry["questions"]) == 400
     assert digest(historical_registry) == BATCH110_BASELINE["fundamentals_catalog_sha256"]
-    assert read(content / "fundamentals-revisions.json") == current_registry["questions"]
-    quiz = before_current_copy("quiz", "duel_quiz.json", read(SEEDS / "duel_quiz.json"))["questions"]
+    assert read(content / "fundamentals-revisions.json") == registry["questions"]
+    quiz = read(SEEDS / "duel_quiz.json")["questions"]
     historical_quiz = [q for q in quiz if not q.get("source_key")
                        or int(q["source_key"].rsplit("-", 1)[1]) <= 200]
     assert digest(sorted(historical_quiz, key=lambda q: q["key"])) == (

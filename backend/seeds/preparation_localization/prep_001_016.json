@@ -70,7 +70,7 @@
           "note": "כל מיקום קלט נספר כיחידה אחת; השלישי מחבר c1,c2 במשקל שתיים, לא יחד עם x במשקל יחידה."
         },
         "000,111 ושלוש אפשרויות one-hot.",
-        "נשאי HA במשקל 2 והנשא הלא בשימוש במשקל 4.",
+        "נשאי HA במשקל2 והנשא הלא בשימוש במשקל4.",
         "0→0000",
         "255→1000",
         "01001010→0011"
@@ -118,7 +118,7 @@
         "method": "סימולציה ממצה של כל 256 הקלטים בני שמונת הביטים באמצעות רשימת החיבורים של שבעת המחברים; כל פלט התאים לספירת הביטים המתמטית.",
         "checked_on": "2026-09-24",
         "batch11_five_input_fa": "הווריאנט עבר 32 וקטורים, 96 משוואות עמודה, שמונה שורות FA וארבע דחיות קלט. מניית חסם תחתון מלאה בדקה 56 רשתות FA יחיד ו־6,720 רשתות שני FA, ללא פתרון. Python בלבד; לא HDL או חומרה.",
-        "batch1103_three_bit_ha_only": "שמונה קלטים נבדקו מול ספירה עצמאית, ונבדק שהנשא האחרון תמיד 0. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+        "batch1103_three_bit_ha_only": "שמונה קלטים נבדקו מול ספירה עצמאית, ונבדק שהנשא האחרון תמיד0. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
         "1107n30_eight_fa_only": "מודלים עצמאיים עברו: קובייה בחמישה ערכי התנגדות, 3,072 גשרי DC במתח שאינו אפס, דוגמת מתח אפס, 64 זוגות נגדי משוב ו־256 בדיקות הגבר סופי, עשר פאזות סינוס, 1,024 קלטי מכפיל, 256 קלטי ספירת אחדות, 256 זוגות חיבור וארבע שורות NAND. ראיה: checks/night1107n30-hardware-model-verification.json. בדיקות אלה הן Python וחישוב רציונלי; קומפילציית SystemVerilog מתועדת בנפרד בדוח native של האצווה. לא בוצעו SPICE, סינתזה, ניתוח תזמון או מדידת חומרה.\n\nבדיקת Icarus Verilog 12 בפועל עברה: 1,664 השוואות RTL באצוות החומרה, כולל כל קלטי המכפיל, ספירת אחדות וחיבור, כל שורות NAND ו־124 בדיקות לוח פאזה עם איפוס והשהיה. ראיה: checks/night1107n30-native-verification.json. ריצת הקוד הייתה בסביבה זמנית מבודדת ללא רשת; אין להסיק מכך SPICE או סינתזה."
       },
       "en": {
@@ -127,7 +127,7 @@
         "checked_on": "2026-09-24",
         "batch11_five_input_fa": "Variant passed 32 vectors, 96 column equations, eight FA rows and four rejected inputs. Complete lower-bound enumeration found no solution among 56 one-FA/6,720 two-FA networks. Python only, not HDL or hardware.",
         "batch1103_three_bit_ha_only": "All eight inputs were compared with an independent count, including zero final carry. HDL/simulation evidence is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed.",
-        "1107n30_eight_fa_only": "Independent models passed: five cube resistance scales, 3,072 nonzero-source DC bridges plus a zero-source example, 64 feedback-resistor pairs and 256 finite-gain checks, ten sine phases, 1,024 multiplier inputs, 256 popcount inputs, 256 addition pairs and four NAND truth rows. Evidence: checks/night1107n30-hardware-model-verification.json. These are Python/exact-rational checks; SystemVerilog compilation is documented separately in the batch native report. No SPICE, synthesis, timing analysis or hardware measurement was performed.\n\nActual Icarus Verilog 12 execution passed 1,664 hardware RTL comparisons, including all multiplier, popcount and adder inputs, all NAND rows and 124 phase-schedule checks with reset and hold. Evidence: checks/night1107n30-native-verification.json. Execution used a temporary isolated environment with networking denied; this is not SPICE or synthesis."
+        "1107n30_eight_fa_only": "Independent models passed: five cube resistance scales, 3,072 nonzero-source DC bridges plus a zero-source example, 64 feedback-resistor pairs and 256 finite-gain checks, ten sine phases, 1,024 multiplier inputs, 256 popcount inputs, 256 addition pairs and four NAND truth rows. Evidence: checks/night1107n30-hardware-model-verification.json. These are Python/exact-rational checks; SystemVerilog compilation is documented separately in the batch native report. No SPICE, synthesis, timing analysis or hardware measurement was performed.\n\nActual Icarus Verilog12 execution passed 1,664 hardware RTL comparisons, including all multiplier, popcount and adder inputs, all NAND rows and 124 phase-schedule checks with reset and hold. Evidence: checks/night1107n30-native-verification.json. Execution used a temporary isolated environment with networking denied; this is not SPICE or synthesis."
       }
     },
     "interview_answer": {
@@ -143,7 +143,7 @@
         {
           "key": "seven-bit-popcount",
           "source_path": "sources/prep-001-seven-bit-2026-09-28.png",
-          "original_prompt": "נתון Bus בן 7 ביט. תכנן מערכת המורכבת ממחברים, מחסרים FFs וכו' שתספור את מספר האחדות ב Bus הנתון.\nלדוגמא, עבור (1001101) תתקבל התוצאה 100",
+          "original_prompt": "נתון Bus בן 7 ביט. תכנן מערכת המורכבת ממחברים, מחסרים FFs וכו' שתספור את מספר האחדות בBus הנתון.\nלדוגמא, עבור (1001101) תתקבל התוצאה 100",
           "translation_en": "נתון אפיק בן 7 ביטים. תכננו מערכת באמצעות מחברים, מחסרים, פליפ-פלופים וכדומה, שתספור את האחדות באפיק. לדוגמה, הקלט (1001101) מפיק 100.",
           "input_width": 7,
           "output_width": 3,
@@ -205,11 +205,11 @@
           "integration_status": ""
         },
         {
-          "prompt": "### הרחבה: סכום האחדות בשלושה ביטים באמצעות HA בלבד\nקבלו שלושה ביטים יחד והחזירו מספר בינארי בן שתי סיביות המייצג כמה מהם 1. מותר להשתמש ב־Half Adders בלבד, חיווט ופיצול אותות; ללא FA, שער נוסף או זיכרון. הבהרות: כל קלט תורם 0 או 1 לספירה, ולא את משקלו במספר המקורי. הפלט בטווח 0..3. אין צורך להוכיח מינימום רכיבים.",
+          "prompt": "### הרחבה: סכום האחדות בשלושה ביטים באמצעות HA בלבד\nקבלו שלושה ביטים יחד והחזירו מספר בינארי בן שתי סיביות המייצג כמה מהם1. מותר להשתמש ב־Half Adders בלבד, חיווט ופיצול אותות; ללא FA, שער נוסף או זיכרון. הבהרות: כל קלט תורם0 או1 לספירה, ולא את משקלו במספר המקורי. הפלט בטווח0..3. אין צורך להוכיח מינימום רכיבים.",
           "hints": [
             "מהו הערך המרבי של הספירה וכמה ביטים דרושים לה?",
-            "HA מפצל סכום של שני ביטים לשארית במשקל 1 ולנשא במשקל 2. הוסיפו את הביט השלישי לשארית.",
-            "נשארו שני נשאים במשקל 2. האם הם יכולים להיות 1 יחד? חברו אותם ב־HA נוסף וקבעו מה קורה לנשא שלו."
+            "HA מפצל סכום של שני ביטים לשארית במשקל1 ולנשא במשקל2. הוסיפו את הביט השלישי לשארית.",
+            "נשארו שני נשאים במשקל2. האם הם יכולים להיות1 יחד? חברו אותם ב־HA נוסף וקבעו מה קורה לנשא שלו."
           ],
           "integration_status": ""
         },
@@ -288,11 +288,11 @@
           "integration_status": "Supplementary hints only; the existing queue does not select by variant."
         },
         {
-          "prompt": "### Extension: population count of three bits using HAs only\nAccept three simultaneous bits and return their population count as a two-bit binary number. Use only half adders, wiring and fanout; no FA, external gates or storage. Each input contributes 0 or 1, not its original binary place value. Output ranges 0..3. A minimum-component proof is not required.",
+          "prompt": "### Extension: population count of three bits using HAs only\nAccept three simultaneous bits and return their population count as a two-bit binary number. Use only half adders, wiring and fanout; no FA, external gates or storage. Each input contributes0 or1, not its original binary place value. Output ranges0..3. A minimum-component proof is not required.",
           "hints": [
             "What is the maximum count, and how many output bits does it need?",
             "A half adder splits two unit-weight bits into a unit sum and a weight-two carry. Add the third input to the sum.",
-            "Two weight-two carries remain. Can both be 1? Combine them in another HA and analyze its carry."
+            "Two weight-two carries remain. Can both be1? Combine them in another HA and analyze its carry."
           ],
           "integration_status": ""
         },
@@ -312,7 +312,7 @@
         "ערבוב משקלי יחידה ושתיים באותו FA.",
         "החלפת ה־FA השלישי ב־HA למרות איסור הספרייה.",
         "פלט זוגיות של ביט אחד או קיצוץ הספירה לשני ביטים.",
-        "חיבור נשאים כאילו הם סיביות במשקל 1; שימוש ב־OR חיצוני; התעלמות מהסיבה שהנשא האחרון 0.",
+        "חיבור נשאים כאילו הם סיביות במשקל1; שימוש ב־OR חיצוני; התעלמות מהסיבה שהנשא האחרון0.",
         "קבלת פלט בן שלוש סיביות.",
         "חיבור נשאים במשקל שגוי.",
         "ספירת FA עם אפס כרכיב חינם."
@@ -322,7 +322,7 @@
         "Mixing weight-one and weight-two inputs in one FA.",
         "Replacing the third FA with an HA despite the library restriction.",
         "Returning one parity bit or truncating the count to two bits.",
-        "Treating carries as unit-weight bits; adding an external OR; discarding carry without proving it is 0.",
+        "Treating carries as unit-weight bits; adding an external OR; discarding carry without proving it is0.",
         "Using only three output bits.",
         "Combining carries at the wrong weight.",
         "Treating a zero-tied FA as free."
@@ -349,7 +349,7 @@
         },
         {
           "question": "מה נדרש אם נוסף ביט קלט רביעי?",
-          "direction": "התוצאה יכולה להגיע 4 ולכן דרושים שלושה ביטי פלט; יש לטפל גם בנשיאה למשקל 4.",
+          "direction": "התוצאה יכולה להגיע4 ולכן דרושים שלושה ביטי פלט; יש לטפל גם בנשיאה למשקל4.",
           "tests": "רוחב פלט ומשקלי נשיאה."
         },
         {
@@ -366,7 +366,7 @@
         },
         {
           "question": "What changes with a fourth input bit?",
-          "direction": "The count can reach 4, so three outputs and a weight-four carry are needed.",
+          "direction": "The count can reach4, so three outputs and a weight-four carry are needed.",
           "tests": "Output sizing and carry weights."
         },
         {
@@ -623,8 +623,8 @@
           "case": "Input changes and returns between sampling edges",
           "expected": "No detected change if consecutive sampled values are equal."
         },
-        "011 gives 001 under the extension contract.",
-        "P=2 gives 100% after startup.",
+        "011 gives001 under the extension contract.",
+        "P=2 gives100% after startup.",
         "Between-edge changes may disappear; reset may cancel an in-flight event."
       ]
     },
@@ -643,12 +643,12 @@
         "scope": "Python discrete-state model, not HDL simulation or physical timing/metastability validation.",
         "checked_on": "2026-09-24",
         "script_path": "checks/check_prep_004.py",
-        "variant_004_delayed_duty": "Passed 16,382 stream/initialization pairs,100 even periods and a same-phase 50%-wave alias counterexample; Python and exact fractions only."
+        "variant_004_delayed_duty": "Passed16,382stream/initialization pairs,100even periods and a same-phase50%-wave alias counterexample; Python and exact fractions only."
       }
     },
     "interview_answer": {
       "he": "אשתמש בשני D-FF שמופעלים באותה חזית עלייה: הראשון דוגם את In והשני שומר את הדגימה הקודמת. XOR של המוצאים מזהה שינוי בין הדגימות ומפיק מחזור גבוה בעקבות שינוי מבודד. אם נדרש פלט רשום, אפשר לשמור את הדגימה הקודמת ב־FF אחד ולרשום את תוצאת ה־XOR ב־FF השני, באותו מספר רכיבים.\n\nאגדיר y[k]=x[k−1] XOR x[k−2], ואשמור שתי דגימות ומוצא רשום. בגל נדגם של P מחזורים עם שתי החלפות מתקבל duty של 2/P במצב מתמיד, כולל 100% עבור P=2; אות אנלוגי מהיר יכול להתקפל ולהחמיץ שינויים.",
-      "en": "I would use two D-FFs triggered by the same rising edge: the first samples In and the second stores the previous sample. XOR of their outputs detects a difference between the samples and produces one high cycle following an isolated change. If a registered output is required, one FF can store the previous sample and the second can register the XOR result, using the same number of components.\n\nDefine y[k]=x[k−1] XOR x[k−2], retain two samples and a registered output. A P-cycle sampled square wave with two transitions gives steady duty2/P, including 100% at P=2; fast analog changes may alias or be missed."
+      "en": "I would use two D-FFs triggered by the same rising edge: the first samples In and the second stores the previous sample. XOR of their outputs detects a difference between the samples and produces one high cycle following an isolated change. If a registered output is required, one FF can store the previous sample and the second can register the XOR result, using the same number of components.\n\nDefine y[k]=x[k−1] XOR x[k−2], retain two samples and a registered output. A P-cycle sampled square wave with two transitions gives steady duty2/P, including100% atP=2; fast analog changes may alias or be missed."
     },
     "relationship_note": {
       "he": "נושא קשור של פולס בעקבות קלט נדגם; תרשים התזמון אינו זהה לתרגיל HW-013, העוסק בחזית עלייה בלבד.",
@@ -1698,7 +1698,7 @@
         "מהירויות קבועות ושונות, ללא תיקו, עייפות או שינוי תנאים.",
         "בכל מירוץ משתתפים חמישה סוסים שונים ומתקבל סדר הסיום המלא שלהם.",
         "ממזערים את מספר המירוצים המבטיח הצלחה בכל סדר מהירויות; הצלחה מוקדמת במקרה ממוזל אינה מקטינה חסם של המקרה הגרוע.",
-        "25 מספרים שונים בסדר מלא; הקופסה ממיינת בדיוק 5 בסדר יורד.",
+        "25 מספרים שונים בסדר מלא; הקופסה ממיינת בדיוק5 בסדר יורד.",
         "רק הקופסה חושפת סדר; התניות חופשיות משמשות ניתוב לפי זהות בלבד.",
         "מפרידים רשת צירופית משימוש סדרתי חוזר עם אחסון ובקרה."
       ],
@@ -1707,7 +1707,7 @@
         "Distinct fixed speeds, no ties, no fatigue or changing conditions.",
         "Each race includes five distinct horses and returns their complete finishing order.",
         "Minimize the number of races guaranteeing success for every speed ordering; early lucky outcomes do not lower a worst-case bound.",
-        "25 distinct total-order values; each block sorts exactly 5 descending.",
+        "25distinct total-order values; each block sorts exactly5descending.",
         "Only the block reveals ordering; free conditions perform identity-based routing only.",
         "Separate combinational instances from sequential reuse with storage/control."
       ]
@@ -1718,14 +1718,14 @@
         "result": "7 מירוצים כאשר נצפה סדר בלבד; 5 עם זמנים מדויקים הניתנים להשוואה",
         "upper_bound": "חמישה מירוצי קבוצות, מירוץ אחד של המנצחים ומירוץ אחד של חמשת המועמדים הנותרים למקומות שני ושלישי.",
         "lower_bound": "אי־האפשרות הכללית להסתפק בשישה מירוצים מופנית לניתוח המקרים של san ב־Mathematics Stack Exchange. הדוגמה הנגדית של שתי השלישיות בפתרון מוכיחה רק אי־מספיקות לאחר החלוקה המתוארת לקבוצות; הסימולציה מאמתת מספיקות, ולא את החסם התחתון הכללי.",
-        "variant_009_sorter_variant": "7 קריאות במקרה הגרוע במודל חמש־דרך. מימוש פרוס משתמש 7 רכיבים; מימוש סדרתי יכול להשתמש ברכיב אחד וב־7 קריאות. לא מינימום שטח כולל."
+        "variant_009_sorter_variant": "7 קריאות במקרה הגרוע במודל חמש־דרך. מימוש פרוס משתמש7רכיבים; מימוש סדרתי יכול להשתמש ברכיב אחד וב־7קריאות. לא מינימום שטח כולל."
       },
       "en": {
         "criterion": "minimum guaranteed worst-case race count",
         "result": "7 races under order-only observations; 5 with exact comparable times",
         "upper_bound": "Five group races, one winners' race and one race among the five remaining second/third-place candidates.",
         "lower_bound": "General six-race impossibility referenced to san's case analysis on Mathematics Stack Exchange. The two-triple counterexample in the solution only proves insufficiency after the stated grouping; simulation verifies sufficiency, not the general lower bound.",
-        "variant_009_sorter_variant": "7 worst-case queries in the five-way ordering model. Unrolling uses 7 instances; sequential reuse can use 1 instance for 7 queries. Not a total-area optimum."
+        "variant_009_sorter_variant": "7worst-case queries in the five-way ordering model. Unrolling uses7instances; sequential reuse can use1instance for7queries. Not a total-area optimum."
       }
     },
     "edge_cases": {
@@ -1759,7 +1759,7 @@
         "script_path": "checks/check_prep_009.py",
         "method": "23,800 סדרי מהירויות: כל 13,800 ההצבות הסדורות של שלושת המהירים ביותר כאשר יתר הדירוגים קבועים, ועוד 10,000 סדרים מלאים אקראיים עם זרע קבוע. נבדקים הסדר המדויק של שלושת המהירים, חמישה משתתפים שונים בכל מירוץ ובדיוק שבעה מירוצים.",
         "scope": "נכונות האסטרטגיה במקרי הסדר המלא היציב שנבדקו; זו אינה בדיקה ממצה של 25! סדרים או הוכחה חישובית למינימליות. מספיקות כללית נובעת גם מטיעון הפסילה.",
-        "variant_009_sorter_variant": "13,800 הצבות של השלישייה ועוד 1,000 תמורות, כולן מול מיון מלא ובדיקת 7 קריאות."
+        "variant_009_sorter_variant": "13,800 הצבות של השלישייה ועוד1,000תמורות, כולן מול מיון מלא ובדיקת7קריאות."
       },
       "en": {
         "status": "passed",
@@ -1767,12 +1767,12 @@
         "script_path": "checks/check_prep_009.py",
         "method": "23,800 speed orderings: all 13,800 ordered placements of the fastest three with remaining ranks fixed, plus 10,000 seeded random full orders. Checks exact top-three order, five distinct entrants per race and exactly seven races.",
         "scope": "Strategy correctness in tested stable strict-order cases; not exhaustive over 25! orders and not a computational proof of minimality. General sufficiency also follows from the elimination argument.",
-        "variant_009_sorter_variant": "13,800 top-three placements plus 1,000 permutations versus full sorting, each checked for 7 calls."
+        "variant_009_sorter_variant": "13,800top-three placements plus1,000permutations versus full sorting, each checked for7calls."
       }
     },
     "interview_answer": {
-      "he": "בהנחה שאין זמני ריצה, אריץ חמש קבוצות ואז את חמשת המנצחים. אסמן את הקבוצות לפי דירוג המנצחים A עד E. A1 ראשון כללי; לפעמים סוס שלא ניצח בקבוצה עדיין מהיר ממנצח של קבוצה אחרת. לכן אריץ A2,A3,B1,B2,C1: שני הראשונים הם השני והשלישי הכלליים. בסך הכול שבעה מירוצים.\n\nממיינים חמש קבוצות ואז את המנצחים; הגדול ידוע, וחמישה מועמדים בלבד נשארים למקומות 2,3. הפעלה שביעית מכריעה. מספר הרכיבים הפיזיים תלוי אם שימוש חוזר מותר.",
-      "en": "Assuming no race times are available, I would run five groups and then race their five winners. I would label groups A through E by their winners' ranking. A1 is fastest overall; a horse that did not win its group can still be faster than another group's winner. I would therefore race A2,A3,B1,B2,C1: its first two are second and third overall. Seven races in total.\n\nSort five groups and their winners. The maximum is known and five candidates remain for places 2 and 3. A seventh query resolves them; physical instance count depends on reuse."
+      "he": "בהנחה שאין זמני ריצה, אריץ חמש קבוצות ואז את חמשת המנצחים. אסמן את הקבוצות לפי דירוג המנצחים A עד E. A1 ראשון כללי; לפעמים סוס שלא ניצח בקבוצה עדיין מהיר ממנצח של קבוצה אחרת. לכן אריץ A2,A3,B1,B2,C1: שני הראשונים הם השני והשלישי הכלליים. בסך הכול שבעה מירוצים.\n\nממיינים חמש קבוצות ואז את המנצחים; הגדול ידוע, וחמישה מועמדים בלבד נשארים למקומות2,3. הפעלה שביעית מכריעה. מספר הרכיבים הפיזיים תלוי אם שימוש חוזר מותר.",
+      "en": "Assuming no race times are available, I would run five groups and then race their five winners. I would label groups A through E by their winners' ranking. A1 is fastest overall; a horse that did not win its group can still be faster than another group's winner. I would therefore race A2,A3,B1,B2,C1: its first two are second and third overall. Seven races in total.\n\nSort five groups and their winners. The maximum is known and five candidates remain for places2and3. A seventh query resolves them; physical instance count depends on reuse."
     },
     "common_mistakes": {
       "he": [
@@ -1810,14 +1810,14 @@
       "he": [
         {
           "question": "מה משתנה כאשר מרשים להשוות ערכים מחוץ לקופסה ללא עלות?",
-          "answer_direction": "אפשר למצוא שלישייה בלי A; החסם על קריאות A כבר אינו מודל משמעותי.",
+          "answer_direction": "אפשר למצוא שלישייה בליA; החסם על קריאותA כבר אינו מודל משמעותי.",
           "principle": "חסם אופטימליות תלוי בגבול המשאבים."
         }
       ],
       "en": [
         {
           "question": "What changes if free external value comparisons are allowed?",
-          "answer_direction": "Top three can be found without A; the A-query lower bound no longer models the task.",
+          "answer_direction": "Top three can be found withoutA; theA-query lower bound no longer models the task.",
           "principle": "Optimality bounds depend on resource boundaries."
         }
       ]
@@ -1825,22 +1825,22 @@
     "prompt_variants": {
       "he": {
         "009_sorter_variant": {
-          "prompt": "### וריאציה חומרתית: 25 מספרים ורכיב שממיין חמישה\nרכיב A מקבל חמישה מספרים שונים ומחזיר אותם בסדר יורד. תכננו מערכת שמחזירה את שלושת הגדולים מתוך 25, עם מעט שימושים ברכיב. המקור מבקש מינימום רכיבי A ומאפשר התניות על מוצאיהם.\n\nהבחינו בין מספר הפעלות לבין מספר רכיבים פיזיים. במודל הראשי נבחר רשת צירופית ללא מחזורי שימוש חוזר, שבה כל סדר יחסי נלמד רק מרכיבי A. מותר לנתב ערכים לפי זהות הזוכה של רכיב A, אך אסור לבצע השוואות סדר חופשיות מחוץ להם. זהות ניתנת למעקב בחיווט מותנה או בבדיקת שוויון של ערכים שונים. בנוסף דונו במודל סדרתי שמאפשר לשמור תוצאות ולהשתמש שוב באותה קופסה. המקור אינו מכריע בין המודלים.",
+          "prompt": "### וריאציה חומרתית: 25 מספרים ורכיב שממיין חמישה\nרכיבA מקבל חמישה מספרים שונים ומחזיר אותם בסדר יורד. תכננו מערכת שמחזירה את שלושת הגדולים מתוך25, עם מעט שימושים ברכיב. המקור מבקש מינימום רכיביA ומאפשר התניות על מוצאיהם.\n\nהבחינו בין מספר הפעלות לבין מספר רכיבים פיזיים. במודל הראשי נבחר רשת צירופית ללא מחזורי שימוש חוזר, שבה כל סדר יחסי נלמד רק מרכיביA. מותר לנתב ערכים לפי זהות הזוכה של רכיבA, אך אסור לבצע השוואות סדר חופשיות מחוץ להם. זהות ניתנת למעקב בחיווט מותנה או בבדיקת שוויון של ערכים שונים. בנוסף דונו במודל סדרתי שמאפשר לשמור תוצאות ולהשתמש שוב באותה קופסה. המקור אינו מכריע בין המודלים.",
           "hints": [
             "החלוקה לחמש קבוצות מהשאלה המקורית עדיין מועילה. אילו מספרים אפשר לפסול אחרי שממיינים גם את חמשת המנצחים?",
             "מספר שכבר ידועים שלושה גדולים ממנו אינו מועמד לשלישייה. עקבו גם אחרי המיקום בתוך קבוצה וגם אחרי דירוג מנצחי הקבוצות.",
-            "סמנו את הקבוצות אחרי דירוג המנצחים A,B,C,D,E. המועמדים למקומות 2,3 הם A2,A3,B1,B2,C1. הפרידו בין שבע הפעלות לבין כמה קופסאות פיזיות מחזיקים."
+            "סמנו את הקבוצות אחרי דירוג המנצחיםA,B,C,D,E. המועמדים למקומות2,3 הםA2,A3,B1,B2,C1. הפרידו בין שבע הפעלות לבין כמה קופסאות פיזיות מחזיקים."
           ],
           "integration_status": ""
         }
       },
       "en": {
         "009_sorter_variant": {
-          "prompt": "### Hardware variant:25 numbers and a five-way sorter\nBlockA takes five distinct numbers and returns them in descending order. Return the top three among 25 using few block uses. The source asks for the minimum number of A components and allows conditions on their outputs.\n\nDistinguish invocations from physical instances. The main model is an acyclic combinational network without time reuse: only A blocks reveal relative order. Values may be routed according to winner identity, but no free external order comparisons are allowed. Identity can be tracked by conditional routing or equality on distinct values. Also discuss sequential reuse with stored intermediate results. The source does not choose between these models.",
+          "prompt": "### Hardware variant:25numbers and a five-way sorter\nBlockA takes five distinct numbers and returns them in descending order. Return the top three among25using few block uses. The source asks for the minimum number ofAcomponents and allows conditions on their outputs.\n\nDistinguish invocations from physical instances. The main model is an acyclic combinational network without time reuse: onlyAblocks reveal relative order. Values may be routed according to winner identity, but no free external order comparisons are allowed. Identity can be tracked by conditional routing or equality on distinct values. Also discuss sequential reuse with stored intermediate results. The source does not choose between these models.",
           "hints": [
             "The original five groups remain useful. Which numbers can be discarded after sorting the five group winners?",
             "A value with three known larger values cannot be in the top three. Track both within-group rank and winner-group rank.",
-            "After ranking group winners as A,B,C,D,E, places 2 and 3 come from A2,A3,B1,B2,C1. Separate seven invocations from physical block count."
+            "After ranking group winners asA,B,C,D,E, places2and3 come fromA2,A3,B1,B2,C1. Separate seven invocations from physical block count."
           ],
           "integration_status": ""
         }
@@ -3490,7 +3490,7 @@
         "כמה קבוצות פעילות: הקבוצה הגבוהה ביותר מנצחת",
         "כמה בקשות באותה קבוצה: האינדקס המקומי הגבוה ביותר מנצח",
         "קודים של קבוצות לא פעילות אינם רשאים להשפיע על פלט תקף",
-        "כל הכניסות 0: valid=0.",
+        "כל הכניסות0: valid=0.",
         "I0 בלבד: valid=1, code=0.",
         "כמה קבוצות פעילות; יש לבחור את בעלת האינדקס הקטן.",
         "כל הכניסות 0: valid=0.",
@@ -3533,7 +3533,7 @@
       }
     },
     "interview_answer": {
-      "he": "אחלק לארבע קבוצות ואשתמש בבקר מקומי לכל אחת. אבחר את הקבוצה הפעילה הגבוהה לפי אותות Y, ואשתמש בקוד הקבוצה לבחירת הקוד המקומי ב־MUX. אשרשר את שני קודי שני הביטים לקבלת אינדקס בן ארבעה ביטים. בחירת הקבוצה דורשת בקר חמישי או שערים. מאחר ששערים אחרים מותרים, אין מינימום מוחלט של ארבעה או חמישה בקרים ללא אילוץ נוסף על הארכיטקטורה.\n\nאחשב valid וקוד בכל רביעייה, אקודד את הקבוצה הראשונה שאינה ריקה ואבחר את הקוד המקומי שלה ב־MUX. בשערים אחסום כל כניסה אם יש 1 נמוך ממנה.\n\nאחשב valid וקוד בכל רביעייה, אקודד את הקבוצה הראשונה שאינה ריקה ואבחר את הקוד המקומי שלה ב־MUX. בשערים אחסום כל כניסה אם יש 1 נמוך ממנה.",
+      "he": "אחלק לארבע קבוצות ואשתמש בבקר מקומי לכל אחת. אבחר את הקבוצה הפעילה הגבוהה לפי אותות Y, ואשתמש בקוד הקבוצה לבחירת הקוד המקומי ב־MUX. אשרשר את שני קודי שני הביטים לקבלת אינדקס בן ארבעה ביטים. בחירת הקבוצה דורשת בקר חמישי או שערים. מאחר ששערים אחרים מותרים, אין מינימום מוחלט של ארבעה או חמישה בקרים ללא אילוץ נוסף על הארכיטקטורה.\n\nאחשב valid וקוד בכל רביעייה, אקודד את הקבוצה הראשונה שאינה ריקה ואבחר את הקוד המקומי שלה ב־MUX. בשערים אחסום כל כניסה אם יש1 נמוך ממנה.\n\nאחשב valid וקוד בכל רביעייה, אקודד את הקבוצה הראשונה שאינה ריקה ואבחר את הקוד המקומי שלה ב־MUX. בשערים אחסום כל כניסה אם יש 1 נמוך ממנה.",
       "en": "I would divide the inputs into four groups with one local controller each. I would select the highest active group using the Y signals, then use its group code to select the local code through a MUX. Concatenating the two two-bit codes gives a four-bit index. Group selection requires a fifth controller or gates. Since additional gates are allowed, no absolute minimum of four or five controllers follows without a further architecture constraint.\n\nCompute local valid/index, encode the first nonempty group and mux its local code. Gate logic suppresses each input if a lower bit is active.\n\nCompute local valid/index, encode the first nonempty group and mux its local code. Gate logic suppresses each input if a lower bit is active."
     },
     "common_mistakes": {
@@ -3608,10 +3608,10 @@
           }
         ],
         "batch90_lsb_priority": {
-          "prompt": "### Additional exercises: rightmost priority and basic gates\nGiven a four-input encoder returning the rightmost 1 position and valid; build a 16-input encoder from it. Another exercise asks for an eight-input priority encoder from basic gates.\n\nThis variant assigns highest priority to the LOWEST input index, unlike the original contract above. Choose I0=LSB, a binary position and valid. Normalize inactive code to 0; valid=0 distinguishes it from the genuine active I0 case. For eight inputs choose AND/OR/NOT gates with wiring and fanout; no cell-library optimum is specified.",
+          "prompt": "### Additional exercises: rightmost priority and basic gates\nGiven a four-input encoder returning the rightmost1 position and valid; build a 16-input encoder from it. Another exercise asks for an eight-input priority encoder from basic gates.\n\nThis variant assigns highest priority to the LOWEST input index, unlike the original contract above. Choose I0=LSB, a binary position and valid. Normalize inactive code to 0; valid=0 distinguishes it from the genuine active I0 case. For eight inputs choose AND/OR/NOT gates with wiring and fanout; no cell-library optimum is specified.",
           "hints": [
             "Local priority is insufficient: select the first nonempty group as well.",
-            "Split 16 inputs into four groups; group-valid priority gives the upper two index bits.",
+            "Split16 inputs into four groups; group-valid priority gives the upper two index bits.",
             "Mux the winning local code. For gate-only logic, inhibit each input when any lower input is asserted."
           ],
           "integration_status": ""
@@ -3641,8 +3641,8 @@
         "status": "Follow-up prepared in content; not connected to the interactive follow-up queue.",
         "batch90_lsb_priority": [
           {
-            "question": "Does index 0 prove no input was active?",
-            "answer_direction": "No. Input 0 is a genuine winner; valid distinguishes it.",
+            "question": "Does index0 prove no input was active?",
+            "answer_direction": "No. Input0 is a genuine winner; valid distinguishes it.",
             "principle": "A zero value is not absence."
           }
         ]
@@ -3650,7 +3650,7 @@
     },
     "source_ambiguities": {
       "he": [
-        "צילום 16 אינו מציין כיוון קדימות; כאן נבחר LSB בגלוי.",
+        "צילום16 אינו מציין כיוון קדימות; כאן נבחר LSB בגלוי.",
         "המספר המינימלי תלוי בעלות ובפעולות שמותר לבצע ללא קופסה.",
         "צילום 16 אינו מציין כיוון קדימות; כאן נבחר LSB בגלוי.",
         "המספר המינימלי תלוי בעלות ובפעולות שמותר לבצע ללא קופסה."

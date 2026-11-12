@@ -12,8 +12,6 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
-
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -27,7 +25,6 @@ def fixture():
 
 
 def before_learner_copy_short_file(name, cards):
-    cards = before_current_copy("fundamentals", name, cards)
     frozen = fixture()["files"][name]
     assert digest(cards) == frozen["after_sha256"], ("short_copy_current", name)
     result = copy.deepcopy(cards)
@@ -46,16 +43,14 @@ def before_learner_copy_short_file(name, cards):
 
 def before_learner_copy_short_manifest(manifest):
     """Preserve the old 250-card manifest hash without replacing live revisions."""
-    manifest = before_current_fundamentals_manifest(manifest)
     baseline = json.loads((Path(__file__).parent / "fixtures/preparation_before_20261107_batch30.json").read_bytes())
     assert digest(manifest) == baseline["fundamentals_catalog_sha256"]
     result = copy.deepcopy(manifest)
     for name in fixture()["files"]:
         cards = json.loads((ROOT / "apps/web/src/content" / name).read_bytes())
-        original = {card["id"]: card for card in before_current_copy("fundamentals", name, cards)}
         for current, previous in zip(cards, before_learner_copy_short_file(name, cards), strict=True):
             ident = current["id"]
-            assert manifest["questions"][ident] == digest(original[ident])
+            assert manifest["questions"][ident] == digest(current)
             if int(ident.rsplit("-", 1)[1]) <= 125:
                 result["questions"][ident] = digest(previous)
     return result

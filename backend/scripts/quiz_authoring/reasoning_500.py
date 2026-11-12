@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import itertools
 import json
-import re
 import math
 from collections import deque
 from fractions import Fraction as F
@@ -19,20 +18,8 @@ CONTENT = ROOT / "apps/web/src/content/fundamentals-reasoning-500.json"
 OUT = ROOT / "backend/seeds/duel_quiz_batches"
 
 
-def prose_spacing(text):
-    """Space prose punctuation while retaining code literals and digit grouping."""
-    text = str(text)
-    if not re.search(r"[א-ת]|[A-Za-z]{2,}", text):
-        return text
-    parts = re.split(r"(`[^`]*`)", text)
-    for i in range(0, len(parts), 2):
-        parts[i] = re.sub(r"(?<![0-9]),(?=\S)|(?<=[0-9]),(?![0-9]{3}(?:\D|$))(?=\S)|;(?=\S)", lambda m: m[0] + " ", parts[i])
-        parts[i] = re.sub(r":(?=[A-Za-zא-ת])", ": ", parts[i])
-    return "".join(parts)
-
-
 def pair(he, en=None):
-    return {"he": prose_spacing(he), "en": prose_spacing(he if en is None else en)}
+    return {"he": str(he), "en": str(he if en is None else en)}
 
 
 def alternatives(value, task):
@@ -122,7 +109,7 @@ def build_bundle():
         "nested_mean", [(dict(n=n), F(n, 4)) for n in [4, 2, 6, 1, 8]],
         ("A אחיד בשלמים 0..{n}; לאחריו B אחיד בשלמים 0..A, כולל הגבולות. מהי תוחלת B?",
          "A is uniform over integers 0..{n}; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"),
-        ("לכל A=a, הממוצע של B הוא a/2. מחשבים שוב ממוצע לפי התפלגות A; אי־תלות אינה נדרשת.",
+        ("לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
          "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."),
         "Law of total expectation, checked by exact weighted outcome enumeration.")
 
@@ -326,7 +313,7 @@ def build_bundle():
     add(224,[159,154],("לבחור מדידות שמבדילות כל זוג", "Choose measurements distinguishing every pair"),
         ("כיסוי דרישות וזיהוי מצבים הן שתי מטרות שונות של בדיקה.", "Requirement coverage and state identification are different testing objectives."),
         "measurement_cover",[(dict(patterns=p),measurements(p)) for p in measure_cases],
-        ("כל שורה ב־{patterns} מציגה תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+        ("כל שורה ב־{patterns} היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
          "Each row of {patterns} lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"),
         ("בקבוצת העמודות הנבחרת לכל מצב חייבת להיות חתימה שונה. מספיק להבדיל כל זוג מצבים; כמות המדידות לבדה אינה מבטיחה זאת.",
          "Every state needs a distinct signature on selected columns. Distinguish every state pair; the measurement count alone is insufficient."),
@@ -395,7 +382,7 @@ def build_bundle():
     add(231,[169],("ממקסמים את ההסתברות הכוללת", "Optimize the complete probability"),
         ("אופטימום מקומי בקבוצה אחת אינו מספיק בלי לחשב את שתי הקבוצות.", "Improving one group alone does not replace calculating the total objective."),
         "urn_optimum",[(dict(red=r,white=w),urn_best(r,w)) for r,w in [(3,3),(2,4),(1,4),(4,2),(2,1)]],
-        ("מחלקים {red} כדורים אדומים ו־{white} לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד באופן אחיד ואז כדור מתוכו באופן אחיד. מה ההסתברות המרבית לקבל אדום?",
+        ("מחלקים {red} כדורים אדומים ו־{white} לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
          "Split {red} red and {white} white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"),
         ("מחשבים ממוצע של שני השברים האדומים בכל חלוקה חוקית. אפשר לבדוק את כל החלוקות הקטנות, ולא להחליף בחירה אחידה של כד בבחירה אחידה של כדור.",
          "Average the two red fractions for each legal split. Enumerate these small allocations; uniform urn selection is not uniform selection among all balls."),

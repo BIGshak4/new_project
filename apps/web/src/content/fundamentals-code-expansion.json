@@ -36,12 +36,12 @@
     "topic": "algorithms",
     "title": {"he": "תיקו במיון", "en": "A tie during sorting"},
     "prompt": {
-      "he": "הרשומות הן [('A', 2), ('B', 1), ('C', 2)]. מיינו לפי המספר בסדר עולה, כך שרשומות עם מספר שווה ישמרו על סדרן המקורי. כתבו פונקציה שמחזירה רשימה חדשה.",
-      "en": "Records are [('A', 2), ('B', 1), ('C', 2)]. Sort by number in ascending order, preserving original order among equal numbers. Write a function returning a new list."
+      "he": "הרשומות הן [('A',2),('B',1),('C',2)]. מיינו לפי המספר בסדר עולה, כך שרשומות עם מספר שווה ישמרו על סדרן המקורי. כתבו פונקציה שמחזירה רשימה חדשה.",
+      "en": "Records are [('A',2),('B',1),('C',2)]. Sort by number in ascending order, preserving original order among equal numbers. Write a function returning a new list."
     },
     "answer": {
-      "he": "התוצאה היא [('B', 1), ('A', 2), ('C', 2)]. מיון יציב שומר ש־A יישאר לפני C, כי המספרים שלהם שווים. sorted של פייתון יציב; key בוחר את המספר בלי להוסיף את השם כשובר שוויון.",
-      "en": "The result is [('B', 1), ('A', 2), ('C', 2)]. A stable sort keeps A before C because their numbers match. Python's sorted is stable; key selects the number without adding the name as a tie-breaker."
+      "he": "התוצאה היא [('B',1),('A',2),('C',2)]. מיון יציב שומר ש־A יישאר לפני C, כי המספרים שלהם שווים. sorted של פייתון יציב; key בוחר את המספר בלי להוסיף את השם כשובר שוויון.",
+      "en": "The result is [('B',1),('A',2),('C',2)]. A stable sort keeps A before C because their numbers match. Python's sorted is stable; key selects the number without adding the name as a tie-breaker."
     },
     "takeaway": {"he": "לפני מיון, הגדירו גם מה קורה כשמפתחות שווים.", "en": "Before sorting, define what should happen when keys are equal."},
     "code": {"language": "python", "text": "def stable_by_number(records):\n    return sorted(records, key=lambda record: record[1])"}
@@ -51,12 +51,12 @@
     "topic": "algorithms",
     "title": {"he": "מותר להחליף איבר עם עצמו", "en": "Allow an item to swap with itself"},
     "prompt": {
-      "he": "בערבוב Fisher–Yates של [A, B, C], מתחילים באינדקס 2 ומחליפים אותו עם אינדקס אקראי. האם לבחור מבין 0, 1 בלבד, או מבין 0, 1, 2? בהמשך מטפלים רק באינדקסים 0 ו־1.",
-      "en": "In Fisher–Yates shuffling of [A, B, C], first swap index 2 with a random index. Should the choices be just 0, 1 or all of 0, 1, 2? Later steps touch only indices 0 and 1."
+      "he": "בערבוב Fisher–Yates של [A,B,C], מתחילים באינדקס 2 ומחליפים אותו עם אינדקס אקראי. האם לבחור מבין 0,1 בלבד, או מבין 0,1,2? בהמשך מטפלים רק באינדקסים 0 ו־1.",
+      "en": "In Fisher–Yates shuffling of [A,B,C], first swap index 2 with a random index. Should the choices be just 0,1 or all of 0,1,2? Later steps touch only indices 0 and 1."
     },
     "answer": {
-      "he": "בוחרים באופן אחיד מבין 0, 1, 2, כולל החלפה עצמית. בלי האפשרות 2, האיבר C מוכרח לעזוב את המקום האחרון ולא יוכל לחזור אליו; לכן חלק מהסידורים אינם אפשריים. בכל שלב i בוחרים באופן אחיד ועצמאי מתוך 0 עד i, כולל i.",
-      "en": "Choose uniformly from 0, 1, 2, including a self-swap. Excluding 2 forces C out of the final position, with no later chance to return, making some permutations impossible. At each step i, choose uniformly and independently from 0 through i inclusive."
+      "he": "בוחרים באופן אחיד מבין 0,1,2, כולל החלפה עצמית. בלי האפשרות 2, האיבר C מוכרח לעזוב את המקום האחרון ולא יוכל לחזור אליו; לכן חלק מהסידורים אינם אפשריים. בכל שלב i בוחרים באופן אחיד ועצמאי מתוך 0 עד i, כולל i.",
+      "en": "Choose uniformly from 0,1,2, including a self-swap. Excluding 2 forces C out of the final position, with no later chance to return, making some permutations impossible. At each step i, choose uniformly and independently from 0 through i inclusive."
     },
     "takeaway": {"he": "בערבוב אקראי, גם האפשרות להשאיר איבר במקומו חייבת לקבל סיכוי.", "en": "A random shuffle must also allow an item to stay in place."}
   },
@@ -111,8 +111,8 @@
       "en": "Return the sums of all contiguous length-k windows in an integer list. Assume 1≤k≤the list length. How can each one-position move update the sum without adding all k items again?"
     },
     "answer": {
-      "he": "מחשבים פעם אחת את סכום החלון הראשון. בכל הזזה מחסרים את האיבר שיצא ומוסיפים את האיבר שנכנס. למשל, ברשימה [2, 5, 1] וב־k=2 מתקבלים 7 ואז 7−2+1=6. גם ערכים שליליים מותרים.",
-      "en": "Sum the first window once. Each move subtracts the departing item and adds the arriving item. For [2, 5, 1] with k=2, the sums are 7 and then 7−2+1=6. Negative values also work."
+      "he": "מחשבים פעם אחת את סכום החלון הראשון. בכל הזזה מחסרים את האיבר שיצא ומוסיפים את האיבר שנכנס. למשל, ברשימה [2,5,1] וב־k=2 מתקבלים 7 ואז 7−2+1=6. גם ערכים שליליים מותרים.",
+      "en": "Sum the first window once. Each move subtracts the departing item and adds the arriving item. For [2,5,1] with k=2, the sums are 7 and then 7−2+1=6. Negative values also work."
     },
     "takeaway": {"he": "כשרוב הנתונים נשארים זהים, עדכנו רק את ההבדל בין שתי הבעיות.", "en": "When most data stays unchanged, update only the difference between consecutive problems."},
     "code": {
@@ -175,12 +175,12 @@
     "topic": "python",
     "title": {"he": "הגבול האחרון אינו נכלל", "en": "The stopping boundary is excluded"},
     "prompt": {
-      "he": "כתבו פונקציה שמסכמת את השלמים מ־1 עד n כולל n, עבור n שלם לא שלילי. עבור n=0 התוצאה 0. האם range(1, n) כולל את כל האיברים הדרושים?",
-      "en": "Sum the integers from 1 through n inclusive, where n is a nonnegative integer. For n=0 return 0. Does range(1, n) include every required item?"
+      "he": "כתבו פונקציה שמסכמת את השלמים מ־1 עד n כולל n, עבור n שלם לא שלילי. עבור n=0 התוצאה 0. האם range(1,n) כולל את כל האיברים הדרושים?",
+      "en": "Sum the integers from 1 through n inclusive, where n is a nonnegative integer. For n=0 return 0. Does range(1,n) include every required item?"
     },
     "answer": {
-      "he": "לא: range אינו כולל את גבול העצירה. משתמשים ב־range(1, n+1), כך שהאיבר האחרון הוא n. כש־n=0 מתקבל טווח ריק, ו־sum שלו מחזיר 0.",
-      "en": "No: range excludes its stopping boundary. Use range(1, n+1), making n the last item. When n=0, the range is empty and sum returns 0."
+      "he": "לא: range אינו כולל את גבול העצירה. משתמשים ב־range(1,n+1), כך שהאיבר האחרון הוא n. כש־n=0 מתקבל טווח ריק, ו־sum שלו מחזיר 0.",
+      "en": "No: range excludes its stopping boundary. Use range(1,n+1), making n the last item. When n=0, the range is empty and sum returns 0."
     },
     "takeaway": {"he": "בכל לולאה הגדירו אם הגבול האחרון כלול, ובדקו גם טווח ריק.", "en": "For every loop, define whether the stopping boundary is included and check an empty range."},
     "code": {"language": "python", "text": "def sum_through(n):\n    return sum(range(1, n + 1))"}

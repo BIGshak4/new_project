@@ -37,7 +37,7 @@
       "en": "A is uniform over integers 0..4; B is then uniform over integers 0..A, including endpoints. What is the expectation of B?"
     },
     "answer": {
-      "he": "1. לכל A=a, הממוצע של B הוא a/2. מחשבים שוב ממוצע לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "he": "1. לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
       "en": "1. For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
     },
     "takeaway": {
@@ -171,8 +171,8 @@
       "en": "An agenda selects the winner"
     },
     "prompt": {
-      "he": "מועמדים מקודדים 0, 1, 2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
-      "en": "Candidates are 0, 1, 2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 0 waits for the winner between the other two. Who wins the final?"
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 0 waits for the winner between the other two. Who wins the final?"
     },
     "answer": {
       "he": "0. בכל כיוון של המעגל, המנצח בעימות הראשון הוא דווקא מי שהממתין בגמר מנצח בעימות זוגי.",
@@ -194,8 +194,8 @@
       "en": "Overall ties are not pairwise ties"
     },
     "prompt": {
-      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x, m−x, m−x, x, x, m−x. כאן m=5, x=1. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
-      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x, m−x, m−x, x, x, m−x. Here m=5, x=1. Earlier means preferred. What is the absolute vote margin in A versus B?"
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=5, x=1. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=5, x=1. Earlier means preferred. What is the absolute vote margin in A versus B?"
     },
     "answer": {
       "he": "3. מסכמים בנפרד את הדירוגים שמציבים A לפני B ואת אלה שמציבים B לפני A. תיקו בסיכומי מקומות אינו מספיק.",
@@ -380,8 +380,8 @@
       "en": "Unfold a surface before shortening"
     },
     "prompt": {
-      "he": "תיבה מלבנית בעלת מקצועות 1, 1, 1. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b, c), (a+c, b), (b+c, a). מה ריבוע אורך המסלול הקצר מביניהן?",
-      "en": "A rectangular box has edge lengths 1, 1, 1. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b, c), (a+c, b), (b+c, a). What is the squared length of the shortest route among them?"
+      "he": "תיבה מלבנית בעלת מקצועות 1,1,1. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 1,1,1. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
     },
     "answer": {
       "he": "5. בכל פריסה הקטע הישר הוא הקצר ביותר. משווים ריבועי אורכים לפי פיתגורס, בלי להתבלבל עם אלכסון פנימי שאינו מסלול על המשטח.",
@@ -449,8 +449,8 @@
       "en": "A partial order leaves several rankings"
     },
     "prompt": {
-      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a, b] ברשימה [[0, 1]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
-      "en": "There are 3 horses with distinct speeds. Each pair [a, b] in [[0, 1]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 3 horses with distinct speeds. Each pair [a,b] in [[0, 1]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
     },
     "answer": {
       "he": "3. סופרים רק סדרים שמכבדים כל השוואה, כולל השלכות מעבריות. אין להפוך היעדר השוואה לשוויון או לקבוע סדר שרירותי בין הבלתי ידועים.",
@@ -496,8 +496,8 @@
       "en": "Priority changes the service order"
     },
     "prompt": {
-      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A, B הם 1, 4; משקלי החשיבות שלהם 1, 10. אם CA, CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
-      "en": "One server processes two jobs available at time 0 without preemption. Durations A, B are 1, 4; importance weights are 1, 10. If CA, CB are completion times, what is the minimum wa·CA+wb·CB?"
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 1,4; משקלי החשיבות שלהם 1,10. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 1,4; importance weights are 1,10. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
     },
     "answer": {
       "he": "45. מחשבים את זמני הסיום בשני הסדרים ואת העלות המשוקללת שלהם. משימה קצרה אינה בהכרח ראשונה כשמשקלי ההמתנה שונים.",
@@ -543,7 +543,7 @@
       "en": "Choose measurements distinguishing every pair"
     },
     "prompt": {
-      "he": "כל שורה ב־[[0, 0], [0, 1], [1, 0], [1, 1]] מציגה תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "he": "כל שורה ב־[[0, 0], [0, 1], [1, 0], [1, 1]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
       "en": "Each row of [[0, 0], [0, 1], [1, 0], [1, 1]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
     },
     "answer": {
@@ -704,7 +704,7 @@
       "en": "Optimize the complete probability"
     },
     "prompt": {
-      "he": "מחלקים 3 כדורים אדומים ו־3 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד באופן אחיד ואז כדור מתוכו באופן אחיד. מה ההסתברות המרבית לקבל אדום?",
+      "he": "מחלקים 3 כדורים אדומים ו־3 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
       "en": "Split 3 red and 3 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
     },
     "answer": {

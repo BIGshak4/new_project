@@ -22,18 +22,6 @@ CHECKS = []
 SPECS = []
 
 
-def prose_spacing(text):
-    """Space prose punctuation while retaining code literals and digit grouping."""
-    text = str(text)
-    if not re.search(r"[א-ת]|[A-Za-z]{2,}", text):
-        return text
-    parts = re.split(r"(`[^`]*`)", text)
-    for i in range(0, len(parts), 2):
-        parts[i] = re.sub(r"(?<![0-9]),(?=\S)|(?<=[0-9]),(?![0-9]{3}(?:\D|$))(?=\S)|;(?=\S)", lambda m: m[0] + " ", parts[i])
-        parts[i] = re.sub(r":(?=[A-Za-zא-ת])", ": ", parts[i])
-    return "".join(parts)
-
-
 def loc(he, en):
     return {"he": he, "en": en}
 
@@ -226,7 +214,7 @@ def model(method, p):
 
 DOMAINS = {
     "doping": {
-        "permanent": loc("סימום קבוע של החומר", "Permanent material doping"),
+        "permanent": loc("זיהום קבוע של החומר", "Permanent material doping"),
         "reversible": loc("שכבת היפוך הנשלטת במתח", "Voltage-controlled inversion layer"),
         "insulator": loc("בידוד השער", "Gate insulation"),
         "inductor": loc("אנרגיית סליל", "Inductor energy"),
@@ -403,7 +391,7 @@ def definitions():
         "מדידת RC אינה מפרידה בין R ל־C בלי מידע נוסף.",
         "An RC response alone does not separate R from C.",
         "rc_ambiguity",
-        "נמדד קבוע זמן tau={tau}ms. איזה C ב־µF מתאים אם R={r}kΩ? R אינו ידוע מהעקומה לבדה.",
+        "נמדדה קבועת זמן tau={tau}ms. איזה C ב־µF מתאים אם R={r}kΩ? R אינו ידוע מהעקומה לבדה.",
         "Measured tau={tau}ms. What C in µF fits R={r}kΩ? The curve alone does not specify R.",
         "C=tau/R. שינוי R משנה את הקיבול המתאים לאותה עקומה; צריך למדוד או לדעת את R בנפרד.",
         "C=tau/R. Changing R changes the compatible capacitance while preserving the curve; independently measure or know R.",
@@ -469,7 +457,7 @@ def definitions():
         "במודל קבל טורי ללא clamp,C הוא {before}V וקצה B קופץ ב־{jump}V. מהו C מיד אחרי הקפיצה,גם אם עבר את VDD?",
         "In an unclamped coupling model,C is {before}V and B jumps by {jump}V. What is C immediately afterward,even if it exceeds VDD?",
         "המודל מתיר overshoot: מוסיפים ל־C את אותה קפיצה. רכיב פיזי עשוי לכלול הגנה,שמשנה גם את מצב הקבל.",
-        "The model permits overshoot: add the same step to C. Physical protection may limit it and change capacitor history.",
+        "The model permits overshoot:add the same step to C. Physical protection may limit it and change capacitor history.",
         [dict(before=b, jump=j) for b, j in [(3, 3), (2, 1), (5, 5), (1, -2), (0, 2)]],
     )
     add(
@@ -607,7 +595,7 @@ def definitions():
         "להמחשת עומס NMOS,מחליפים מסלול pull-up ב־{pullup}kΩ ו־pull-down פעיל ב־{pulldown}kΩ בטור. VDD={vdd}V. מה זרם המסילה ב־mA?",
         "For an NMOS-load illustration,use {pullup}kΩ pull-up and active {pulldown}kΩ pull-down in series. VDD={vdd}V. What is rail current in mA?",
         "שני מסלולים מוליכים יוצרים זרם גם בלי מיתוג: I=VDD/(Rup+Rdown). זוהי המחשת התנגדויות,לא מודל MOS מדויק.",
-        "Both conducting paths create current without switching: I=VDD/(Rup+Rdown). This resistance illustration is not an exact MOS model.",
+        "Both conducting paths create current without switching:I=VDD/(Rup+Rdown). This resistance illustration is not an exact MOS model.",
         [
             dict(pullup=u, pulldown=d, vdd=v)
             for u, d, v in [(9, 1, 5), (4, 1, 3), (1, 1, 2), (19, 1, 4), (2, 3, 5)]
@@ -637,7 +625,7 @@ def definitions():
         "אנרגיה יכולה לעבור מהשדה החשמלי למגנטי.",
         "Energy can move from electric to magnetic storage.",
         "lc_quarter",
-        "ב־LC אידאלי,V0={v0}V,C={c}F,L={l}H וזרם התחלתי 0. ברבע מחזור ראשון מתח הקבל 0. מהו זרם הסליל, כשהכיוון החיובי מוגדר כלפי מטה?",
+        "ב־LC אידאלי,V0={v0}V,C={c}F,L={l}H וזרם התחלתי 0. ברבע מחזור ראשון מתח הקבל 0. מהו זרם הסליל החיובי כלפי מטה?",
         "In ideal LC,V0={v0}V,C={c}F,L={l}H and initial current0. At the first quarter-period capacitor voltage is0. What is downward inductor current?",
         "משימור אנרגיה LI²/2=CV0²/2 מתקבל I=V0√(C/L),עם הסימן לפי ההגדרה. אפס מתח אינו אפס אנרגיה כוללת.",
         "Energy conservation gives LI²/2=CV0²/2 and I=V0√(C/L),with the defined sign. Zero voltage is not zero total energy.",
@@ -658,7 +646,7 @@ def definitions():
         "קבל מתחיל ב־V0={v0}V וזרם הסליל 0. מה מתח הקבל אחרי חצי מחזור LC אידאלי וללא הפסדים?",
         "A capacitor starts at V0={v0}V with zero inductor current. What is its voltage after half an ideal lossless LC period?",
         "vC=V0 cos(ωt). בחצי מחזור cos(π)=−1; האנרגיה חזרה לקבל בקוטביות הפוכה.",
-        "vC=V0 cos(ωt). At half a period cos(π)=−1: energy is back in the capacitor with reversed polarity.",
+        "vC=V0 cos(ωt). At half a period cos(π)=−1:energy is back in the capacitor with reversed polarity.",
         [dict(v0=v) for v in [1, 3, -2, 0, 5]],
     )
     add(
@@ -688,8 +676,8 @@ def definitions():
         "הקלה על המקור אינה מבטלת השהיית יציאה.",
         "Unloading the source does not remove output delay.",
         "buffer_delay",
-        "מודל באפר: Rs={rs},Cin={cin},Rb={rb},CL={cl},tb={tb},ביחידות עקביות. מה אומדן ההשהיה ln(2)(RsCin+RbCL)+tb?",
-        "Buffer model: Rs={rs},Cin={cin},Rb={rb},CL={cl},tb={tb},in consistent units. What is ln(2)(RsCin+RbCL)+tb?",
+        "מודל באפר:Rs={rs},Cin={cin},Rb={rb},CL={cl},tb={tb},ביחידות עקביות. מה אומדן ההשהיה ln(2)(RsCin+RbCL)+tb?",
+        "Buffer model:Rs={rs},Cin={cin},Rb={rb},CL={cl},tb={tb},in consistent units. What is ln(2)(RsCin+RbCL)+tb?",
         "המקור טוען את Cin,ואז הבאפר מניע את CL. מוסיפים גם tb; לא משווים רק התנגדות יציאה.",
         "The source charges Cin,then the buffer drives CL. Add tb as well; output resistance alone is not the complete comparison.",
         [
@@ -730,8 +718,8 @@ def definitions():
         "טבלת אמת אינה קובעת זרם מותר.",
         "A truth table does not specify allowed current.",
         "led_resistor",
-        "לד טורי: Vs={vs}V,Vf={vf}V,נפילת דרייבר Vd={vd}V וזרם רצוי {current}mA. איזה נגד ב־kΩ נותן המודל האידאלי?",
-        "Series LED: Vs={vs}V,Vf={vf}V,driver drop Vd={vd}V,target current{current}mA. What resistor in kΩ follows the ideal model?",
+        "לד טורי:Vs={vs}V,Vf={vf}V,נפילת דרייבר Vd={vd}V וזרם רצוי {current}mA. איזה נגד ב־kΩ נותן המודל האידאלי?",
+        "Series LED:Vs={vs}V,Vf={vf}V,driver drop Vd={vd}V,target current{current}mA. What resistor in kΩ follows the ideal model?",
         "R=(Vs−Vf−Vd)/I. זו המחשה; במימוש בודקים טווח Vf,דירוגי זרם והספק,ולא מניחים ששער מספק זרם בלתי מוגבל.",
         "R=(Vs−Vf−Vd)/I. Check Vf variation,current/power ratings in hardware; a logic output is not an unlimited current source.",
         [
@@ -841,8 +829,8 @@ def definitions():
         "אותם ערכים סופיים אינם מבטיחים אותה הפרעת תזמון.",
         "Identical final values need not imply identical timing interference.",
         "window_overlap",
-        "להערכת חפיפה בלבד,מעבר הקורבן פעיל ב־[{v0},{v1}] ns ומעבר השכן ב־[{a0},{a1}] ns. כמה ns חופפים? אין כאן חישוב delay פיזי.",
-        "For overlap accounting only,the victim transition spans [{v0},{v1}] ns and the aggressor spans [{a0},{a1}] ns. How many ns overlap? This is not physical delay.",
+        "להערכת חפיפה בלבד,מעבר הקורבן פעיל ב־[{v0},{v1}]ns ומעבר השכן ב־[{a0},{a1}]ns. כמה ns חופפים? אין כאן חישוב delay פיזי.",
+        "For overlap accounting only,the victim transition spans[{v0},{v1}]ns and the aggressor spans[{a0},{a1}]ns. How many ns overlap? This is not physical delay.",
         "אורך החיתוך הוא max(0,min(ends)−max(starts)). חלון ללא חפיפה שונה ממעברים מיושרים גם אם שני הביטים מסיימים באותם ערכים.",
         "Intersection length is max(0,min(ends)−max(starts)). Nonoverlapping activity differs from aligned transitions despite identical final bits.",
         [
@@ -859,8 +847,8 @@ def definitions():
         "הקטנת צימוד אינה בהכרח הקטנת כל הקיבול.",
         "Less coupling does not necessarily mean less total capacitance.",
         "shield_delta",
-        "במודל מעבר נגדי,Ceff=Cg+2Cc. לפני מגן: Cg={old_cg},Cc={old_cc}; אחריו: Cg={new_cg},Cc={new_cc}. מה השינוי Ceff_after−Ceff_before?",
-        "For opposite ramps,Ceff=Cg+2Cc. Before shielding: Cg={old_cg},Cc={old_cc}; afterward: Cg={new_cg},Cc={new_cc}. What is Ceff_after−Ceff_before?",
+        "במודל מעבר נגדי,Ceff=Cg+2Cc. לפני מגן:Cg={old_cg},Cc={old_cc}; אחריו:Cg={new_cg},Cc={new_cc}. מה השינוי Ceff_after−Ceff_before?",
+        "For opposite ramps,Ceff=Cg+2Cc. Before shielding:Cg={old_cg},Cc={old_cc}; afterward:Cg={new_cg},Cc={new_cc}. What is Ceff_after−Ceff_before?",
         "מחשבים את שתי התרומות. מגן יכול להקטין Cc ולהגדיל Cg,ולכן צריך להעריך מחדש השהיה והספק במקום להניח שיפור חינם.",
         "Count both terms. Shielding can reduce Cc while increasing Cg,so recompute delay and power rather than assuming a free improvement.",
         [
@@ -892,7 +880,7 @@ def definitions():
         "סינון דיגיטלי אינו מחזיר מידע שכבר התקפל.",
         "Digital filtering cannot restore already aliased information.",
         "alias",
-        "קוסינוס בתדר {frequency}kHz נדגם ב־fs={fs}kHz. מה תדר ה־alias הלא־שלילי בתחום0..fs/2? נניח דגימה אחידה אידאלית.",
+        "קוסינוס בתדר {frequency}kHz נדגם ב־fs={fs}kHz. מה תדר ה־alias החיובי בתחום0..fs/2? נניח דגימה אחידה אידאלית.",
         "A cosine at{frequency}kHz is sampled at fs={fs}kHz. What is its nonnegative alias in0..fs/2 under ideal uniform sampling?",
         "תדרים הנבדלים בכפולות fs,ובהיפוך סימן לקוסינוס,יכולים ליצור אותן דגימות. מסנן אנלוגי לפני הדגימה מונע את הערבוב מלכתחילה.",
         "Frequencies differing by fs multiples,and sign for cosine,can share samples. Analog filtering before sampling prevents the mixing.",
@@ -907,8 +895,8 @@ def definitions():
         "בדגימת bandpass גם מיקום הפס קובע.",
         "Bandpass sampling depends on band location too.",
         "band_interval",
-        "לפס ממשי חיובי ({fl},{fh}),ובחירת m={m}>1,מה גבולות חלון fs: 2fh/m < fs < 2fl/(m−1)? הגבולות עצמם אינם כלולים.",
-        "For positive real band ({fl},{fh}) and m={m}>1,what are the bounds of2fh/m < fs < 2fl/(m−1)? Endpoints are excluded.",
+        "לפס ממשי חיובי({fl},{fh}),ובחירת m={m}>1,מה גבולות חלון fs:2fh/m < fs < 2fl/(m−1)? הגבולות עצמם אינם כלולים.",
+        "For positive real band({fl},{fh}) and m={m}>1,what are the bounds of2fh/m < fs < 2fl/(m−1)? Endpoints are excluded.",
         "שני הגבולות מונעים חפיפה בין עותקים ספקטרליים גם עם הפס השלילי. דרישה fs>2·bandwidth לבדה אינה מספיקה לכל מיקום.",
         "Both bounds prevent spectral-copy overlap,including the negative band. Merely exceeding twice bandwidth is not sufficient for every band location.",
         [
@@ -925,9 +913,9 @@ def definitions():
         "נגיעה בקצות פס אינה מרווח בטוח לכל אות.",
         "Touching band edges is not safe margin for every signal.",
         "band_margin",
-        "החוזה דורש חלון פתוח לפס ({fl},{fh}),m={m}: 2fh/m < fs < 2fl/(m−1). האם fs={fs} נמצא בתוכו?",
-        "The contract requires the open interval for band ({fl},{fh}),m={m}: 2fh/m < fs < 2fl/(m−1). Is fs={fs} inside?",
-        "בודקים את שני אי־השוויונות בקפדנות. שוויון אינו עונה לחוזה הפתוח; בפס סגור טוני קצה עלולים להיות בלתי נבדלים.",
+        "החוזה דורש חלון פתוח לפס({fl},{fh}),m={m}:2fh/m < fs < 2fl/(m−1). האם fs={fs} נמצא בתוכו?",
+        "The contract requires the open interval for band({fl},{fh}),m={m}:2fh/m < fs < 2fl/(m−1). Is fs={fs} inside?",
+        "בודקים את שתי אי־השוויונות בקפדנות. שוויון אינו עונה לחוזה הפתוח; בפס סגור טוני קצה עלולים להיות בלתי נבדלים.",
         "Check both strict inequalities. Equality fails this open contract; closed-band edge tones can become indistinguishable.",
         [
             dict(fl=axis_value, fh=h, m=m, fs=s)
@@ -950,7 +938,7 @@ def definitions():
         "One parity bit can detect a change without locating it.",
         "parity_locations",
         "למילת מידע בת {n} ביטים נשמר ביט זוגיות. התגלתה זוגיות שגויה וידוע שהתקלקל בדיוק ביט מידע אחד. כמה מיקומי תקלה אפשריים עדיין מתאימים לזוגיות לבדה?",
-        "A word containing {n} data bits stores one parity bit. Parity is wrong and exactly one data bit flipped. How many fault positions remain compatible with parity alone?",
+        "An{n}-data-bit word stores one parity bit. Parity is wrong and exactly one data bit flipped. How many fault positions remain compatible with parity alone?",
         "כל אחד מביטי המידע יכול להפוך זוגיות. ללא מידע נוסף כל המיקומים אפשריים,כך שאין דרך כללית לשחזר את המילה.",
         "Every data-bit flip changes parity. Without other information all positions remain possible,so general recovery is impossible.",
         [dict(n=n) for n in [8, 4, 2, 16, 1]],
@@ -964,7 +952,7 @@ def definitions():
         "תיקון דורש קוד נפרד לכל מיקום וגם ללא שגיאה.",
         "Correction needs distinct signatures for every position and no error.",
         "hamming_bits",
-        "ל־{data} ביטי מידע נדרש תיקון תקלה יחידה בכל המילה,כולל ביטי הבדיקה. מה r המינימלי המקיים2^r≥1+{data}+r?",
+        "ל־{data} ביטי מידע נדרשת תיקון תקלה יחידה בכל המילה,כולל ביטי הבדיקה. מה r המינימלי המקיים2^r≥1+{data}+r?",
         "For{data}data bits,correct one flip anywhere including check bits. What is the smallest r satisfying2^r≥1+{data}+r?",
         "צריך להבחין בין ללא תקלה לבין כל אחד מ־data+r מיקומים. זו מגבלת יתירות,לא הוכחת מינימום שערים או מחזורי קריאה.",
         "Distinguish no error from each of data+r positions. This bounds redundancy,not minimum gate count or read latency.",
@@ -994,8 +982,8 @@ def definitions():
         "SECDED מפריד תיקון יחיד מזיהוי זוג תקלות.",
         "SECDED separates single correction from double-error detection.",
         "secded",
-        "ב־SECDED,לכל היותר2 תקלות. סינדרום S={syndrome},ודגל שגיאת הזוגיות הכוללת הוא P={parity}. מה האבחנה? S מתייחס למילת Hamming ללא הביט הכולל.",
-        "In SECDED,at most2 faults: syndrome S={syndrome},overall parity-error flag P={parity}. What is the diagnosis? S excludes the overall parity bit.",
+        "ב־SECDED,לכל היותר2 תקלות. סינדרום S={syndrome},וזוגיות כוללת שגויה P={parity}. מה האבחנה? S מתייחס למילת Hamming ללא הביט הכולל.",
+        "In SECDED,at most2 faults:syndrome S={syndrome},bad overall parity P={parity}. What is the diagnosis? S excludes the overall parity bit.",
         "זוגיות שגויה מתאימה למספר אי־זוגי של תקלות. עם ההבטחה,סינדרום לא אפס וזוגיות תקינה מציינים זוג שאין לתקן כיחיד.",
         "Bad parity indicates an odd count. Under the promise,nonzero syndrome with correct parity identifies a double error that must not be single-corrected.",
         [dict(syndrome=s, parity=p) for s, p in [(0, 0), (0, 1), (5, 1), (6, 0), (12, 1)]],
@@ -1011,8 +999,8 @@ def definitions():
         "short_syndrome",
         "בקוד Hamming מקוצר בן12 ביטים עם הבטחת עד תקלה יחידה,נקרא סינדרום {syndrome}. מה הפעולה המותרת במודל?",
         "A shortened12-bit Hamming code promises at most one fault. Its syndrome is{syndrome}. What action is valid in this model?",
-        "0 מציין ללא שגיאה תחת ההבטחה,1..12 מאפשרים תיקון. 13..15 אינם מיקומי מילה ולכן מצביעים על מצב מחוץ למודל.",
-        "Zero means no error under the promise;1..12 locate a correction. 13..15 are not stored positions and must be rejected as outside the model.",
+        "0 מציין ללא שגיאה תחת ההבטחה,1..12 מאפשרים תיקון.13..15 אינם מיקומי מילה ולכן מצביעים על מצב מחוץ למודל.",
+        "Zero means no error under the promise;1..12 locate a correction.13..15 are not stored positions and must be rejected as outside the model.",
         [dict(syndrome=s) for s in [0, 12, 13, 15, 8]],
     )
     add(
@@ -1072,9 +1060,9 @@ def definitions():
         "יש לטפל גם במקרה המהיר ביותר שהממשק מתיר.",
         "Handle the fastest completion the interface permits.",
         "immediate_completion",
-        "במצב ISSUE: פקודה accepted={accepted},והשלמה תואמת done={done} באותה חזית. החוזה מתיר זאת. לאיזה מצב עוברים? accepted=0 מחייב done=0.",
+        "במצב ISSUE:פקודה accepted={accepted},והשלמה תואמת done={done} באותה חזית. החוזה מתיר זאת. לאיזה מצב עוברים? accepted=0 מחייב done=0.",
         "In ISSUE,command accepted={accepted} and matching done={done} occur at this edge. The contract permits immediate completion. Which state follows? accepted=0 requires done=0.",
-        "כשקבלה והשלמה חופפות שומרים תגובה ונכנסים ל־RESP. מעבר עיוור ל־WAIT עלול להחמיץ את האירוע היחיד.",
+        "כשקבלה והשלמה חופפות שומרים תגובה ונכנסים RESP. מעבר עיוור ל־WAIT עלול להחמיץ את האירוע היחיד.",
         "When acceptance and completion coincide,retain the response and enter RESP. Blindly entering WAIT can lose the only completion event.",
         [
             dict(accepted=a, done=d, tag=i)
@@ -1091,7 +1079,7 @@ def definitions():
         "Fairness requires an explicit arbitration policy.",
         "round_robin",
         "READ ו־WRITE מבקשים ברציפות. round-robin מקבל{n} בקשות,החל ב־{first_label}. כל פעולה ותגובה משלימות לפני הבחירה הבאה. מה סדר הקבלות?",
-        "READ and WRITE request continuously. Round-robin accepts{n}requests,starting with {first_label}. Each operation and response completes before the next arbitration. What is the acceptance order?",
+        "READ and WRITE request continuously. Round-robin accepts{n}requests,starting with{first_label}. Each operation and response completes before the next arbitration. What is the acceptance order?",
         "בשתי בקשות מתמשכות מחליפים זוכה בכל קבלה. זה מונע רעב בהנחת התקדמות; אינו מבטיח latency מספרי לזיכרון.",
         "With both persistent requests,the winner alternates at each acceptance. This prevents starvation under progress assumptions,not a numeric memory-latency guarantee.",
         [
@@ -1108,7 +1096,7 @@ def definitions():
         "בטיחות בסריאליזציה באה במחיר של מקביליות.",
         "Serialization trades concurrency for a simple safety invariant.",
         "serialized_issue",
-        "בקר שמבצע פעולות בזו אחר זו אינו מקבל פעולה נוספת עד שתגובת הקודמת נצרכת בחזית{previous_response_consumed}. הוא חוזר ל־IDLE אחריה. באיזו חזית מוקדמת אפשר לקבל בקשה חדשה?",
+        "בקר מסוריאל אינו מקבל פעולה נוספת עד שתגובת הקודמת נצרכת בחזית{previous_response_consumed}. הוא חוזר ל־IDLE אחריה. באיזו חזית מוקדמת אפשר לקבל בקשה חדשה?",
         "A serialized controller accepts nothing new until the previous response is consumed at edge{previous_response_consumed}; IDLE begins afterward. At which earliest edge can a new request be accepted?",
         "לפי מכונת המצבים הזאת הבחירה הבאה בחזית העוקבת,גם בכתובת אחרת. זו פשרה בטוחה ולא טענת throughput מיטבי.",
         "In this state-machine contract,the next acceptance is on the following edge,even for another address. This is a safe tradeoff,not optimal throughput.",
@@ -1169,9 +1157,9 @@ def definitions():
         "A recurrence can replace multiplication in a known sequence.",
         "odd_delta",
         "רכיב מחזיק n={n} ו־s=n². כמה צריך להוסיף ל־s כדי לקבל (n+1)² בלי מכפל?",
-        "A component holds n={n} and s=n². What must be added to s to obtain (n+1)² without multiplication?",
+        "A component holds n={n} and s=n². What must be added to s to obtain(n+1)² without multiplication?",
         "מהזהות (n+1)²=n²+2n+1 מוסיפים את המספר האי־זוגי2n+1. הצמדה של1 לימין n מייצגת את אותו ערך.",
-        "The identity (n+1)²=n²+2n+1 gives the odd increment2n+1. Appending1 to n in binary encodes that value.",
+        "The identity(n+1)²=n²+2n+1 gives the odd increment2n+1. Appending1 to n in binary encodes that value.",
         [dict(n=n) for n in [0, 1, 3, 7, 15]],
     )
     add(
@@ -1213,8 +1201,8 @@ def definitions():
         "טבלת פעולות צריכה להראות גם מצב ביניים.",
         "An operation schedule must show intermediate state.",
         "xor_swap",
-        "בהחלפה על אוגרים נפרדים,X={x},Y={y}. מבצעים X←X XOR Y,אחר כך Y←X XOR Y,אחר כך X←X XOR Y,בחזיתות נפרדות. מה X,Y לאחר מספר חזיתות השווה ל־{edges}?",
-        "With separate registers,X={x},Y={y},perform X←X XOR Y,then Y←X XOR Y,then X←X XOR Y on separate edges. What is X,Y after a total of {edges} clock edges?",
+        "בהחלפה על אוגרים נפרדים,X={x},Y={y}. מבצעים X←X XOR Y,אחר כך Y←X XOR Y,אחר כך X←X XOR Y,בחזיתות נפרדות. מה X,Y אחרי{edges} חזיתות?",
+        "With separate registers,X={x},Y={y},perform X←X XOR Y,then Y←X XOR Y,then X←X XOR Y on separate edges. What is X,Y after{edges}edges?",
         "כל שורה משתמשת במצב החדש מן השורה הקודמת,ורק אוגר היעד נטען. ביטול XOR משחזר את שני הערכים,גם כשהם שווים.",
         "Each step uses the preceding step’s state and loads only its target. XOR cancellation recovers both originals,including equal values.",
         [dict(x=x, y=y, edges=e) for x, y, e in [(3, 5, 1), (3, 5, 2), (3, 5, 3), (7, 7, 3), (0, 9, 2)]],
@@ -1243,8 +1231,8 @@ def definitions():
         "מרחיבים מונה בשעון משותף ובבדיקת הערך הישן.",
         "Extend a counter with a shared clock and old-state carry.",
         "extended_counter",
-        "מונה4 ביטים ו־FF גבוה יוצרים מונה modulo32. לפני החזית המורחב הוא{initial}; הגבוה מתהפך כשהנמוך הישן15. מה הערך לאחר מספר חזיתות השווה ל־{edges}?",
-        "A4-bit counter and high FF form modulo32. The initial extended count is{initial}; high toggles when old low=15. What is the value after a total of {edges} clock edges?",
+        "מונה4 ביטים ו־FF גבוה יוצרים מונה modulo32. לפני החזית המורחב הוא{initial}; הגבוה מתהפך כשהנמוך הישן15. מה הערך אחרי{edges} חזיתות?",
+        "A4-bit counter and high FF form modulo32. The initial extended count is{initial}; high toggles when old low=15. What follows{edges}edges?",
         "הנמוך עוטף באותה חזית שבה הגבוה מתהפך. כולם דוגמים את המצב הישן; אין צורך להפוך פלט מונה לשעון חדש.",
         "Low wrap and high toggle occur at the same edge using old state. No counter output must become a new clock.",
         [dict(initial=i, edges=e) for i, e in [(15, 1), (31, 1), (14, 2), (0, 16), (30, 3)]],
@@ -1258,7 +1246,7 @@ def definitions():
         "בהשוואה לא מסומנת,הביט השונה הגבוה ביותר מכריע.",
         "The highest differing bit decides unsigned comparison.",
         "compare_msb",
-        "משווים מילים ללא סימן בנות4 ביטים: A={a},B={b}. הביטים הנמוכים אינם רשאים לגבור על הבדל גבוה יותר. מה היחס?",
+        "משווים מילים לא מסומנות בנות4 ביטים:A={a},B={b}. הביטים הנמוכים אינם רשאים לגבור על הבדל גבוה יותר. מה היחס?",
         "Compare unsigned4-bit words A={a},B={b}. Lower bits cannot override a higher differing bit. What is the relation?",
         "מתחילים מן ה־MSB. רק כל עוד הביטים שווים ממשיכים למטה; ההבדל הראשון קובע את הכיוון.",
         "Scan from the MSB; continue only while equal. The first differing bit fixes the result.",
@@ -1334,7 +1322,7 @@ def definitions():
         "Decomposing a constant exposes arithmetic structure.",
         "times_thirteen",
         "מחשבים13x כ־(x<<3)+(x<<2)+x בחשבון מדויק. עבור x={x},מה התוצאה? הזזות קבועות מותרות כחיווט.",
-        "Compute exact13x as (x<<3)+(x<<2)+x. For x={x},what is the result? Fixed shifts may be wiring.",
+        "Compute exact13x as(x<<3)+(x<<2)+x. For x={x},what is the result? Fixed shifts may be wiring.",
         "13=8+4+1,ולכן החיבור שקול לכפל. יש להרחיב לפני הזזות וחיבורים; הרחבה אחרי חיתוך אינה משחזרת ביטים.",
         "13=8+4+1,so the sum equals multiplication. Widen before shifts/addition; widening a truncated result cannot restore bits.",
         [dict(x=x) for x in [0, 1, 3, 15, 255]],
@@ -1363,7 +1351,7 @@ def definitions():
         "לפני שימוש בטבלה קובעים signedness.",
         "Specify signedness before choosing a truth table.",
         "signed_square",
-        "התבנית בת2 הביטים היא הערך העשרוני{bits},ומפורשת במשלים לשתיים. מה הריבוע המתמטי המדויק שלה? זהו פירוש מסומן,לא unsigned.",
+        "התבנית בת2 הביטים היא הערך העשרוני{bits},ומפורשת במשלים לשתיים. מה הריבוע המתמטי המדויק שלה? זהו פירוש חתום,לא unsigned.",
         "A2-bit pattern has unsigned code{bits}but is interpreted as two’s complement. What is its exact mathematical square? This is signed,not unsigned.",
         "הקודים0,1,2,3 מייצגים0,1,−2,−1. הריבועים הם0,1,4,1,שלא כמו טבלת unsigned בשורה11.",
         "Codes0,1,2,3 denote0,1,−2,−1. Their squares are0,1,4,1,unlike the unsigned table at11.",
@@ -1396,7 +1384,7 @@ def definitions():
         "בגלאי רצפים,reset משתמש ב־OE:אחדות באורך זוגי,השקול להיסטוריה ריקה. הביט הראשון הוא{first}. איזה מצב היסטוריה מתקבל ללא אירוע שגיאה? Z/O=סוג,E/O=זוגי/אי־זוגי.",
         "The run detector resets to OE:even ones,equivalent to empty history. First bit is{first}. Which history state follows without an error? Z/O=bit type,E/O=even/odd.",
         "ביט ראשון יוצר רצף באורך1:אפס עובר ל־ZO ואחד ל־OO. הרצף המדומה באורך0 אינו מדווח כשגיאה.",
-        "The first bit starts a length1 run: zero enters ZO,one enters OO. The virtual length0 history causes no error.",
+        "The first bit starts a length1 run:zero enters ZO,one enters OO. The virtual length0 history causes no error.",
         [dict(first=b, case=i) for i, b in enumerate([0, 1, 0, 1, 1])],
     )
     add(
@@ -1438,8 +1426,8 @@ def definitions():
         "שמירת זוכה מחייבת חסימת כתיבות מאוחרות.",
         "Retaining a winner requires blocking later writes.",
         "winner",
-        "אוגר זוכה מתחיל ריק. בכל צעד מגיע לכל היותר מסיים אחד; - פירושו אין מסיים. הרצף הוא {trace}. מי צריך להישאר שמור?",
-        "A winner register starts empty. At most one finisher arrives per step;- means none. The sequence is {trace}. Who must remain stored?",
+        "אוגר זוכה מתחיל ריק. בכל צעד מגיע לכל היותר מסיים אחד; - פירושו אין מסיים. הרצף הוא{trace}. מי צריך להישאר שמור?",
+        "A winner register starts empty. At most one finisher arrives per step;- means none. The sequence is{trace}. Who must remain stored?",
         "טוענים רק כשהאוגר ריק ויש אירוע. לאחר הזכייה מתעלמים ממסיימים מאוחרים עד reset; זה אינו מנגנון העדיפות האחרון.",
         "Load only while empty and an event arrives. Ignore later finishers until reset; this is not last-arrival priority.",
         [dict(arrivals=list(w), trace=",".join(w)) for w in ["-AB", "BCA", "--C", "---", "C-A"]],
@@ -1469,7 +1457,7 @@ def definitions():
         "Count a complete passage,not just first-sensor activation.",
         "door_retreat",
         "שני גלאים מסודרים,אדם יחיד וללא דגימות חסרות. נתיב החסימות הוא{trace},ומסתיים באותו צד שממנו התחיל. מה שינוי ספירת האנשים בפנים?",
-        "Two ordered sensors,one person,no missed samples: trace{trace}ends on the starting side. What is the net occupancy change?",
+        "Two ordered sensors,one person,no missed samples:trace{trace}ends on the starting side. What is the net occupancy change?",
         "האדם התקרב ונסוג בלי להשלים מעבר. שינוי הספירה0; עדכון על החסימה הראשונה היה יוצר ספירת שווא.",
         "The person approached and retreated without a completed passage. Net change is0; counting first activation creates a false entry.",
         [dict(trace=t) for t in ["00,10,00", "00,01,00", "00,10,11,10,00", "00,01,11,01,00", "00,10,10,00"]],
@@ -1570,8 +1558,8 @@ def definitions():
         "בלוק מיון יכול להפריד חצי נמוך וחצי גבוה.",
         "A sorter can split blocks into lower and upper halves.",
         "compare_split",
-        "שני בלוקים שווי אורך הם {left} ו־{right}. פעולת compare-split ממיינת את האיחוד ומחזירה לבלוק הראשון את החצי הנמוך. מה נשאר בו?",
-        "Equal-length blocks are {left} and {right}. Compare-split sorts their union and returns the lower half to the first block. What remains there?",
+        "שני בלוקים שווי אורך הם{left} ו־{right}. פעולת compare-split ממיינת את האיחוד ומחזירה לבלוק הראשון את החצי הנמוך. מה נשאר בו?",
+        "Equal-length blocks are{left}and{right}. Compare-split sorts their union and returns the lower half to the first block. What remains there?",
         "ממיינים את כל ההופעות ושומרים את החצי הנמוך,כולל כפילויות. אין די בהשוואת איבר יחיד או במקסימום של כל בלוק.",
         "Sort all occurrences and retain the lower half,including duplicates. One scalar comparison or block maximum is insufficient.",
         [
@@ -1609,8 +1597,8 @@ def definitions():
         "ריפוד צריך להיות גדול בהגדרה,לא רק בדוגמה.",
         "Padding must be greater by definition,not only in an example.",
         "padding_failure",
-        "מרפדים רשימת נתונים {real} בערך sentinel={sentinel},ממיינים ועורכים חיתוך לאורך המקורי. מה הפלט בפועל? אין תג שמבדיל ריפוד מנתון.",
-        "Pad real data {real} with sentinel={sentinel},sort,and keep the original length. What output actually remains? No tag separates padding from real data.",
+        "מרפדים רשימת אמת{real} בערך sentinel={sentinel},ממיינים ועורכים חיתוך לאורך המקורי. מה הפלט בפועל? אין תג שמבדיל ריפוד מנתון.",
+        "Pad real data{real}with sentinel={sentinel},sort,and keep the original length. What output actually remains? No tag separates padding from real data.",
         "אם sentinel קטן מנתון אמיתי הוא נכנס לפלט ודוחק מידע. תג ריפוד שמדורג מעל כל נתון פותר זאת בלי לנחש גבול מספרי.",
         "A sentinel smaller than real data enters the output and displaces it. A padding tag ordered above all real data avoids guessing a numeric bound.",
         [
@@ -1647,7 +1635,7 @@ def refinements():
         by_id[180]["explanation"][lang] = by_id[180]["explanation"][lang].replace("log2(", "log₂(")
     s = by_id[154]
     s["prompt"] = loc(
-        "דוגמים x(t)=sin(2π·{frequency}t+φ),ב־fs=2·{frequency} וב־φ={phase}π. מהן ארבע הדגימות עבור n=0,1,2,3?",
+        "דוגמים x(t)=sin(2π·{frequency}t+φ),ב־fs=2·{frequency} וב־φ={phase}π. מה ארבע הדגימות עבור n=0,1,2,3?",
         "Sample x(t)=sin(2π·{frequency}t+φ) at fs=2·{frequency},with φ={phase}π. What are samples n=0,1,2,3?",
     )
     s["explanation"] = loc(
@@ -2134,10 +2122,7 @@ def clean(text):
         text = re.sub(r"(?<=[0-9])(?=[A-Za-z]{2})", " ", text)
         text = re.sub(r"\b([A-Za-z]{2,}|A)(?=-?[0-9])", r"\1 ", text)
     text = re.sub(r"(?<=[0-9])(?=[A-Za-z]{2})", " ", text)
-    text = re.sub(r"(?<![0-9/])1 (clock edges|data bits|edges|cycles|bits)\b", lambda m: "1 " + m[1][:-1], text)
-    text = re.sub(r"(?<![0-9/])1 ביטים", "ביט אחד", text)
-    text = re.sub(r"(?<![0-9/])1 מחזורים", "מחזור אחד", text)
-    return prose_spacing(text).strip()
+    return text.strip()
 
 
 def build():

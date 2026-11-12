@@ -14,7 +14,7 @@
         "XOR is permitted; conditionals and conditional expressions are forbidden.",
         "Other input values need not be preserved.",
         "x is promised4/7; constants allowed.",
-        "Division is allowed in C; XOR only in D.",
+        "Division is allowed inC; XOR only inD.",
         "The reciprocal interpretation explicitly resolves repeated source wording."
       ]
     },
@@ -52,13 +52,13 @@
         "AND may clear a bit but does not set it in the reverse direction.",
         "Confusing the task with swapping two variables or inventing a validation requirement.",
         "Usingif in a no-branch part.",
-        "Reusing the 9/13 mask 4 instead of 3.",
-        "Claiming the source explicitly supplied 7→4."
+        "Reusing the 9/13 mask4 instead of 3.",
+        "Claiming the source explicitly supplied7→4."
       ]
     },
     "interview_answer": {
       "he": "9 ו־13 שונים רק בביט שמשקלו 4. XOR עם 4 הופך אותו בשני הכיוונים, ולכן מחזירים x^4. ההבטחה שקלט הוא אחד משניהם חיונית.\n\nלסעיפי if, חיסור, ללא חיסור ו־XOR אתן בהתאמה תנאי,11−x,28/x, x XOR3, תחת הבטחת הקלט 4/7.",
-      "en": "9 and 13 differ only at the bit of weight 4. XOR with 4 toggles it in both directions, so return x^4. The two-value domain promise is essential.\n\nForif, subtraction, no-subtraction and XOR use a branch,11−x,28/x andx XOR3 under the 4/7 promise."
+      "en": "9 and 13 differ only at the bit of weight 4. XOR with 4 toggles it in both directions, so return x^4. The two-value domain promise is essential.\n\nForif, subtraction, no-subtraction andXOR use a branch,11−x,28/x andx XOR3 under the 4/7 promise."
     },
     "source_ambiguities": {
       "he": "המקור אינו קובע שפת תכנות או עלות מינימלית. הותר XOR במפורש בתרגיל; קלטים אחרים נשארים מחוץ לחוזה המקורי.\n\n[\"המקור חוזר על אותו כיוון פעמיים; ההשלמה ההדדית היא הנחת עריכה.\", \"Intel מדווחת בצילום בלבד.\"]",
@@ -66,7 +66,7 @@
     },
     "verification": {
       "he": "שני מקרי הדרישה ו־131,072 כיווני מיפוי של ההכללה נבדקו בפייתון. בדיקת AST בודקת היעדר תנאי בפונקציה הראשית; לא בוצע ניסוי חומרה.\n\n8 מקרי קלט/חלופה,8 בדיקות הפעלה כפולה,3 בדיקות AST.",
-      "en": "Both required cases and 131,072 generalized directional mappings were checked in Python. An AST check verifies no conditional in the primary function; no hardware experiment was performed.\n\nEight input/method cases, eight involutions, three AST restriction checks."
+      "en": "Both required cases and 131,072 generalized directional mappings were checked in Python. An AST check verifies no conditional in the primary function; no hardware experiment was performed.\n\nEight input/method cases, eight involutions, threeAST restriction checks."
     },
     "solution_extensions": {
       "he": {
@@ -106,11 +106,11 @@
       },
       "en": {
         "119_four_seven_70": {
-          "prompt": "### Extension: map 4 and 7 under four operation sets\nx is promised to be 4 or 7. A. Return the other value usingif. B. Noif, addition/subtraction only. C. Noif, addition or subtraction. D. XOR only.\n\nThe source repeats 4→7 twice and omits the reverse rule. Preserve it verbatim; the edited task explicitly interprets the intended reciprocal map4→7,7→4 from its domain and parts. Under the literal text alone, behavior for 7 remains unspecified. Constants are allowed and each part has its own restrictions. For C show integer division exact on the promised domain; forbidding division too would be an added restriction, and XOR works when available. This is not swapping two variables as in PREP-077.",
+          "prompt": "### Extension: map4 and 7 under four operation sets\nx is promised to be4 or7. A. Return the other value usingif. B. Noif, addition/subtraction only. C. Noif, addition or subtraction. D. XOR only.\n\nThe source repeats4→7 twice and omits the reverse rule. Preserve it verbatim; the edited task explicitly interprets the intended reciprocal map4→7,7→4 from its domain and parts. Under the literal text alone, behavior for 7 remains unspecified. Constants are allowed and each part has its own restrictions. ForC show integer division exact on the promised domain; forbidding division too would be an added restriction, andXOR works when available. This is not swapping two variables as inPREP-077.",
           "hints": [
             "Only two values are promised. The formula need not define a replacement rule for every integer.",
-            "Their sum 4+7 and product 4·7 are shared by both directions. How can subtraction or division use them?",
-            "4 XOR7 equals 3, and applying the same XOR mask twice restores input. Also test 11−x and 28/x on 4,7."
+            "Their sum4+7 and product4·7 are shared by both directions. How can subtraction or division use them?",
+            "4 XOR7 equals 3, and applying the same XOR mask twice restores input. Also test 11−x and 28/x on4,7."
           ],
           "integration_status": ""
         }
@@ -195,7 +195,7 @@
         "VT>0 and β>0; core omits subthreshold conduction, leakage and channel-length modulation.",
         "The planar cross-section is conceptual; fabrication discussion and parameters do not specify a commercial device.",
         "The source node is unidentified;gate is not asserted as source fact.",
-        "Added illustration explicitly chooses NMOS, Rpullup, Ron, Cout and forced gate step."
+        "Added illustration explicitly choosesNMOS, Rpullup, Ron, Cout and forced gate step."
       ]
     },
     "optimality": {
@@ -204,7 +204,7 @@
     },
     "verification": {
       "he": "בוצעו 858 נקודות על רשת ערכים עם אינטגרציית מטען עצמאית ב־Decimal בדיוק 60 ספרות; 27 מקרי הרחבת CLM, שתי דוגמאות חיבור שונות של VDD וארבע דחיות קלט. נבדקו גבולות ויחידות בדוגמה. זו בדיקת משוואות Python, לא אימות תהליך, סימולציית רכיב או מדידה.\n\n16 תצורות ו־16,016 דגימות מול RK4 עצמאי; לא SPICE ולא זיהוי כוונת המילה במקור.",
-      "en": "Executed 858 grid points against independent 60-digit Decimal charge integration, 27 CLM-extension cases, two distinct VDD connections and four rejected inputs. Boundary behavior and example units were checked. This verifies Python equations, not fabrication, device simulation or measurements.\n\nSixteen scenarios,16,016 samples versus independent RK4; neither SPICE nor resolution of the source typo."
+      "en": "Executed 858 grid points against independent 60-digit Decimal charge integration, 27 CLM-extension cases, two distinct VDD connections and four rejected inputs. Boundary behavior and example units were checked. This verifies Python equations, not fabrication, device simulation or measurements.\n\nSixteen scenarios,16,016 samples versus independentRK4; neitherSPICE nor resolution of the source typo."
     },
     "edge_cases": {
       "he": [
@@ -252,7 +252,7 @@
     },
     "interview_answer": {
       "he": "ב־NMOS בגוף p יש מקור ושפך n+ ושער מבודד. את האילוח יוצרים בייצור, למשל בהחדרת תורמים וטיפול חום; שער חיובי יוצר תעלת היפוך ניידת, לא אילוח. מעל VT הזרם בטריודה הוא β[(VGS−VT)VDS−VDS²/2], וברוויה β(VGS−VT)²/2 כאשר VDS≥VGS−VT. VDD משפיע לפי חיבורי VGS,VDS והגוף, ולכן חייבים לציין מעגל הטיה.\n\nטרנזיסטור יכול לשלוט בזרם כמתג או מגבר. לפני תגובת מדרגה אברר סוג, צומת, הטיה ועומס; ״לגודל״ אינו נתון מספיק. רק בהנחת NMOS pull-down מוגדרת אפשר להסביר פריקת מוצא וקבוע זמן.",
-      "en": "An NMOS has n+ source/drain in a p body and an insulated gate. Fabrication, for example donor implantation and annealing, creates the doping; positive gate bias creates mobile inversion, not doping. Above VT, triode current is β[(VGS−VT)VDS−VDS²/2]; saturation is β(VGS−VT)²/2 for VDS≥VGS−VT. VDD acts through the actual gate/drain/body biases, so specify a circuit.\n\nA transistor can control current as a switch or amplifier. Before a step response, identify type, node, bias and load; the source word is insufficient. A specified NMOS pull-down permits a conditional output-discharge example."
+      "en": "An NMOS has n+ source/drain in a p body and an insulated gate. Fabrication, for example donor implantation and annealing, creates the doping; positive gate bias creates mobile inversion, not doping. Above VT, triode current is β[(VGS−VT)VDS−VDS²/2]; saturation is β(VGS−VT)²/2 for VDS≥VGS−VT. VDD acts through the actual gate/drain/body biases, so specify a circuit.\n\nA transistor can control current as a switch or amplifier. Before a step response, identify type, node, bias and load; the source word is insufficient. A specifiedNMOS pull-down permits a conditional output-discharge example."
     },
     "source_ambiguities": {
       "he": [
@@ -302,7 +302,7 @@
           "principle": "Separate a first-order model from device data."
         },
         {
-          "question": "What is needed beyond fixed Ron?",
+          "question": "What is needed beyond fixedRon?",
           "answer_direction": "A process/device model, bias, capacitances, load and source; then use the nonlinear equations or appropriate simulation.",
           "principle": "A simple model has explicit limits."
         }
@@ -352,11 +352,11 @@
       },
       "en": {
         "115_gate_step_70": {
-          "prompt": "### Extension: transistor role and an unidentified step-input node\nWhat does a transistor do, and what happens when a step is applied? The screenshot literally uses the unidentified word legodel; no circuit or input node is specified. Do not silently replace it withgate or assert one output waveform. First identify missing information. As a separately labeled illustration only, analyze an NMOS pull-down with resistor pull-up to VDD and output capacitance, whose gate is forced from 0 to VDD and output starts high. Distinguish an ideal gate step from a step source connected through resistance and gate capacitance.",
+          "prompt": "### Extension: transistor role and an unidentified step-input node\nWhat does a transistor do, and what happens when a step is applied? The screenshot literally uses the unidentified word legodel; no circuit or input node is specified. Do not silently replace it withgate or assert one output waveform. First identify missing information. As a separately labeled illustration only, analyze anNMOS pull-down with resistor pull-up to VDD and output capacitance, whose gate is forced from 0 to VDD and output starts high. Distinguish an ideal gate step from a step source connected through resistance and gate capacitance.",
           "hints": [
             "A transistor can switch or amplify, but response depends on the circuit. Which node receives the step?",
-            "In an NMOS illustration a high gate can form a conducting channel and discharge output; loading and capacitance govern the transition.",
-            "An explicitly chosen Ron switch plus pull-up approaches a divider voltage with time constant(Rpullup||Ron)Cout. This is an added illustration, not the missing original circuit."
+            "In anNMOS illustration a high gate can form a conducting channel and discharge output; loading and capacitance govern the transition.",
+            "An explicitly chosenRon switch plus pull-up approaches a divider voltage with time constant(Rpullup||Ron)Cout. This is an added illustration, not the missing original circuit."
           ],
           "integration_status": ""
         }

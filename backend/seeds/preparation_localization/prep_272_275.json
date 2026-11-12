@@ -2,25 +2,25 @@
   "PREP-272": {
     "assumptions": {
       "he": [
-        "מערך 9×9 של int unsigned; תחום 1..9; ללא תאים נתונים מראש.",
+        "מערך9×9 של int unsigned; תחום1..9; ללא תאים נתונים מראש.",
         "לוח פתרון מלא, בלי דרישת אחידות או יצירת חידה יחידה."
       ],
       "en": [
-        "A9×9 unsigned integer array; domain 1..9; no givens.",
+        "A9×9 unsigned integer array; domain1..9; no givens.",
         "A complete solution grid, with no uniformity or unique-puzzle requirement."
       ]
     },
     "optimality": {
-      "he": "81 משתני מספר שלם,81 אילוצי תחום ו־810 זוגות שכנים שונים. הרחבת הלולאות בוחנת 6561 זוגות. זמן פתרון תלוי ב־solver; אין הבטחת O(1) רק מפני שגודל הלוח קבוע.",
-      "en": "81 integer variables,81 domain constraints and 810 unique peer inequalities. Loop expansion considers 6561 pairs. Solving time depends on the solver; a fixed board size does not justify a practical constant-time guarantee."
+      "he": "81 משתני מספר שלם,81 אילוצי תחום ו־810 זוגות שכנים שונים. הרחבת הלולאות בוחנת6561 זוגות. זמן פתרון תלוי ב־solver; אין הבטחת O(1) רק מפני שגודל הלוח קבוע.",
+      "en": "81 integer variables,81 domain constraints and810 unique peer inequalities. Loop expansion considers6561 pairs. Solving time depends on the solver; a fixed board size does not justify a practical constant-time guarantee."
     },
     "verification": {
-      "he": "אימות ממשי: הקוד קומפל ב־Verilator 5.032 ונקרא solver מקומי Z3 4.13.3, במכונה מבודדת עם רשת חסומה. הוגרלו שישה לוחות, שניים לכל seed 11,37,101; בודק Python בלתי תלוי אימת לכל לוח 9 שורות,9 עמודות ו־9 אזורים,162 קבוצות בסך הכול. בודק התקינות עצמו עבר 82 מקרי קבלה/דחייה. Icarus שימש לתרגילי RTL האחרים, לא לפתרון אילוצי המחלקה. ראיה: checks/batch1107b10-native-verification.json. שישה לוחות אינם הוכחת אחידות סטטיסטית ואינם בדיקה של כל הלוחות האפשריים.",
-      "en": "Executed verification: Verilator 5.032 compiled the code and invoked local Z3 4.13.3 in a network-denied isolated VM. Six grids were generated, two each for seeds 11,37,101. An independent Python validator checked all nine rows, nine columns and nine boxes per board,162 groups total. The validator itself passed 82 acceptance/rejection cases. Icarus ran the other RTL exercises, not this class-constraint solver. Evidence: checks/batch1107b10-native-verification.json. Six grids do not prove uniform sampling or exhaust all possible solutions."
+      "he": "אימות ממשי: הקוד קומפל ב־Verilator5.032 ונקרא solver מקומי Z3 4.13.3, במכונה מבודדת עם רשת חסומה. הוגרלו שישה לוחות, שניים לכל seed11,37,101; בודק Python בלתי תלוי אימת לכל לוח9 שורות,9 עמודות ו־9 אזורים,162 קבוצות בסך הכול. בודק התקינות עצמו עבר82 מקרי קבלה/דחייה. Icarus שימש לתרגילי RTL האחרים, לא לפתרון אילוצי המחלקה. ראיה: checks/batch1107b10-native-verification.json. שישה לוחות אינם הוכחת אחידות סטטיסטית ואינם בדיקה של כל הלוחות האפשריים.",
+      "en": "Executed verification: Verilator5.032 compiled the code and invoked local Z3 4.13.3 in a network-denied isolated VM. Six grids were generated, two each for seeds11,37,101. An independent Python validator checked all nine rows, nine columns and nine boxes per board,162 groups total. The validator itself passed82 acceptance/rejection cases. Icarus ran the other RTL exercises, not this class-constraint solver. Evidence: checks/batch1107b10-native-verification.json. Six grids do not prove uniform sampling or exhaust all possible solutions."
     },
     "edge_cases": {
       "he": [
-        "לוח חוקי מול ערך 0/10, כפילות שורה, עמודה או אזור.",
+        "לוח חוקי מול ערך0/10, כפילות שורה, עמודה או אזור.",
         "כישלון randomize; כמה הגרלות; seed זהה לעומת שונה."
       ],
       "en": [
@@ -29,12 +29,12 @@
       ]
     },
     "common_mistakes": {
-      "he": "אילוץ סכום 45 בלבד; השוואת תא לעצמו; אזור לפי שארית בחלוקה 3 במקום חלוקה שלמה; התעלמות מערך randomize; טענה שהלוחות אחידים.",
-      "en": "Only constraining sum 45; self-inequality; using modulo 3 instead of integer division for boxes; ignoring randomize failure; claiming uniform output."
+      "he": "אילוץ סכום45 בלבד; השוואת תא לעצמו; אזור לפי שארית בחלוקה3 במקום חלוקה שלמה; התעלמות מערך randomize; טענה שהלוחות אחידים.",
+      "en": "Only constraining sum45; self-inequality; using modulo3 instead of integer division for boxes; ignoring randomize failure; claiming uniform output."
     },
     "interview_answer": {
-      "he": "אגריל 81 תאים בתחום 1..9 ואחייב אי־שוויון לכל זוג באותה שורה, עמודה או קופסה. אבדוק randomize ואז אאמת 27 קבוצות באופן עצמאי.",
-      "en": "Randomize 81 cells in 1..9 and constrain every row/column/box peer pair unequal. Check randomize, then independently validate 27 groups."
+      "he": "אגריל81 תאים בתחום1..9 ואחייב אי־שוויון לכל זוג באותה שורה, עמודה או קופסה. אבדוק randomize ואז אאמת27 קבוצות באופן עצמאי.",
+      "en": "Randomize81 cells in1..9 and constrain every row/column/box peer pair unequal. Check randomize, then independently validate27 groups."
     },
     "source_ambiguities": {
       "he": "המקור אומר רק ליצור מערך לפי חוקי סודוקו. בחירת לוח פתרון מלא, היעדר נתונים קבועים וטיפול בכישלון הוגדרו כהשלמות לימודיות.",

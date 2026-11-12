@@ -18,21 +18,9 @@ OUT = ROOT / "backend/seeds/duel_quiz_batches"
 SHORT = ROOT / "apps/web/src/content/fundamentals-reasoning-400.json"
 
 
-def prose_spacing(text):
-    """Space prose punctuation while retaining code literals and digit grouping."""
-    text = str(text)
-    if not re.search(r"[א-ת]|[A-Za-z]{2,}", text):
-        return text
-    parts = re.split(r"(`[^`]*`)", text)
-    for i in range(0, len(parts), 2):
-        parts[i] = re.sub(r"(?<![0-9]),(?=\S)|(?<=[0-9]),(?![0-9]{3}(?:\D|$))(?=\S)|;(?=\S)", lambda m: m[0] + " ", parts[i])
-        parts[i] = re.sub(r":(?=[A-Za-zא-ת])", ": ", parts[i])
-    return "".join(parts)
-
-
 def p(he, en=None):
     return {
-        lg: prose_spacing(re.sub(r"(?<![0-9])1 hats are red", "1 hat is red", str(value).replace("יש 1 כובעים אדומים", "יש כובע אדום אחד")))
+        lg: re.sub(r",(?=[A-Za-zא-ת])", ", ", str(value))
         for lg, value in (("he", he), ("en", he if en is None else en))
     }
 
@@ -610,7 +598,7 @@ def build_bundle():
         [146],
         ("ממוצע שרק מתקרבים אליו", "An average only approached"),
         (
-            "ערך גבולי שמתקרבים אליו אינו בהכרח ערך שאפשר להשיג בפעולה סופית.",
+            "גבול מושג במגמה אינו בהכרח ערך שאפשר להשיג בפעולה סופית.",
             "A limiting value need not be attainable by a finite action.",
         ),
         cases,
@@ -687,13 +675,13 @@ def build_bundle():
         cases.append(
             case(
                 (
-                    f"משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה={cc},חלב={cm}; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר בקצב של {'מעלה אחת' if a == 1 else str(a) + ' מעלות'} לדקה; קצב קירור התערובת הוא {b if b is not None else 'לא ידוע'}. איזה סיום חם יותר?",
-                    f"Compare adding milk before versus after one minute. Heat capacities: coffee={cc},milk={cm}; milk stays at fixed temperature. Coffee alone cools {a} {'degree' if a == 1 else 'degrees'}/minute; mixture rate is {b if b is not None else 'unknown'}. Which finishes warmer?",
+                    f"משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה={cc},חלב={cm}; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר {a} מעלות לדקה; התערובת {b if b is not None else 'לא ידוע'}. איזה סיום חם יותר?",
+                    f"Compare adding milk before versus after one minute. Heat capacities: coffee={cc},milk={cm}; milk stays at fixed temperature. Coffee alone cools {a} degrees/minute; mixture rate is {b if b is not None else 'unknown'}. Which finishes warmer?",
                 ),
                 v,
                 (
                     "משווים קירור של התערובת למשקל קירור הקפה לבדו בתערובת. בלי קצב התערובת לא ניתן להכריע; עצם הלינאריות אינה מגדירה אותו.",
-                    "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate,the comparison is undetermined; linearity alone does not specify it.",
+                    "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate,the comparison is undetermined;linearity alone does not specify it.",
                 ),
                 dict(cc=cc, cm=cm, a=a, b=None if b is None else str(b)),
                 "compare two explicitly defined affine cooling schedules",
@@ -719,7 +707,7 @@ def build_bundle():
             case(
                 (
                     f"מטפס מתחיל בגובה 0. במשך דקה הוא עולה במהירות {up} יחידות לדקה,ובדקת המנוחה יורד {down}. הדפוס חוזר,והתנועה רציפה. מתי בדקות ייגע לראשונה בגובה {height}? עוצרים מיד במגע.",
-                    f"A climber starts at height 0,climbs at {up} units/minute for one minute,then slips {down} during a one-minute rest. The cycle repeats continuously. At what time in minutes does the climber first reach height {height}? Stop immediately at contact.",
+                    f"A climber starts at height 0,climbs at {up} units/minute for one minute,then slips {down} during a one-minute rest. The cycle repeats continuously. At what time in minutes first reach height {height}? Stop immediately at contact.",
                 ),
                 time,
                 (
@@ -749,8 +737,8 @@ def build_bundle():
         cases.append(
             case(
                 (
-                    f"בודקים רק בטיקים שלמים `t=0, 1, 2, ...`. מצביע שמאל מתחיל ב־{left} ומתקדם {a} בכל טיק; ימין מתחיל ב־{right} ויורד {b}. באיזה טיק הם באותו אינדקס?",
-                    f"Observe only integer ticks `t=0, 1, 2, ...`. Left starts at {left} and advances {a} per tick; right starts at {right} and decreases {b}. At which tick do they occupy the same index?",
+                    f"בודקים רק בטיקים שלמים t=0,1,2,... . מצביע שמאל מתחיל ב־{left} ומתקדם {a} בכל טיק; ימין מתחיל ב־{right} ויורד {b}. באיזה טיק הם באותו אינדקס?",
+                    f"Observe only integer ticks t=0,1,2,... . Left starts at {left} and advances {a} per tick; right starts at {right} and decreases {b}. At which tick do they occupy the same index?",
                 ),
                 v,
                 (
@@ -811,7 +799,7 @@ def build_bundle():
                 v,
                 (
                     "קידומת סופית לבדה אינה חוק. כשנמסר כלל מפורש מפעילים אותו; אחרת המשכים שונים יכולים להתאים לאותו עבר.",
-                    "A finite prefix is not a rule. Apply an explicit recurrence when supplied; otherwise different continuations can share the same past.",
+                    "A finite prefix is not a rule. Apply an explicit recurrence when supplied;otherwise different continuations can share the same past.",
                 ),
                 dict(prefix=prefix, rule=rule),
                 "construct distinct valid continuations or apply a supplied rule",
@@ -920,7 +908,7 @@ def build_bundle():
             case(
                 (
                     f"על שולחן עגול יש רק מטבע מרכזי ברדיוס {radius}. יריב מניח זהה במרחק {distance},והתגובה ממול. כל המיקומים בגבולות השולחן; מגע מותר. האם מהלך היריב חוקי והאם זוג המטבעות החדשים חופף?",
-                    f"A circular table holds only a radius-{radius} central coin. An equal opponent coin is {distance} from center; reply at its opposite point. All positions fit table boundaries; tangency is allowed. Is the opponent move legal,and does the new pair overlap?",
+                    f"A circular table holds only a radius-{radius} central coin. An equal opponent coin is {distance} from center;reply at its opposite point. All positions fit table boundaries;tangency is allowed. Is the opponent move legal,and does the new pair overlap?",
                 ),
                 v,
                 (
@@ -990,7 +978,7 @@ def build_bundle():
                 v,
                 (
                     "בסירה החפץ דחה מים לפי משקלו. אם הוא שוקע הוא דוחה רק את נפחו,ואם הוא צף דחייתו נשארת לפי אותו משקל.",
-                    "While carried,the object displaced water by weight. Sinking leaves only its volume; floating retains the same weight-based displacement.",
+                    "While carried,the object displaced water by weight. Sinking leaves only its volume;floating retains the same weight-based displacement.",
                 ),
                 dict(rho=None if rho is None else str(rho), water=water),
                 "whole-system displacement before and after unloading",
@@ -1014,8 +1002,8 @@ def build_bundle():
         cases.append(
             case(
                 (
-                    f"בוחרים תיבה בסיכוי 1/2 לכל אחת,ואז בוחרים כדור מתוכה באופן אחיד. גדלי התיבות הם A={a},B={b}. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
-                    f"Choose either urn with probability 1/2,then a ball uniformly at random within it. Urn sizes are A={a},B={b}. What is the probability of selecting one particular marked ball in A?",
+                    f"בוחרים תיבה בסיכוי 1/2 לכל אחת,ואז כדור אחיד מתוכה. גדלי התיבות הם A={a},B={b}. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
+                    f"Choose either urn with probability 1/2,then a uniform ball within it. Urn sizes are A={a},B={b}. What is the probability of selecting one particular marked ball in A?",
                 ),
                 chance,
                 (
@@ -1049,7 +1037,7 @@ def build_bundle():
         cases.append(
             case(
                 (
-                    f"מחלקים {total} כדורים לשתי תיבות,A בגודל {size}. בוחרים תיבה באופן אחיד ואז כדור מתוכה באופן אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום,או שאינה מוגדרת?",
+                    f"מחלקים {total} כדורים לשתי תיבות,A בגודל {size}. בוחרים תיבה אחיד ואז כדור אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום,או שאינה מוגדרת?",
                     f"Split {total} balls into urns,A having size {size}. Choose an urn uniformly,then a ball uniformly. Exchange a white in A for a red in B,keeping sizes fixed. Both balls are guaranteed when both urns are nonempty. What changes,or is the exchange undefined?",
                 ),
                 v,
@@ -1155,7 +1143,7 @@ def build_bundle():
         cases.append(
             case(
                 (
-                    f"בדיוק אחד מ־{bottles} בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן {start},ותוצאה מופיעה בדיוק {delay} שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן {observe}? לפני הופעת תוצאה כל תוצאות הבדיקות שליליות.",
+                    f"בדיוק אחד מ־{bottles} בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן {start},ותוצאה מופיעה בדיוק {delay} שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן {observe}? לפני הופעת תוצאה כולם שליליים.",
                     f"Exactly one of {bottles} bottles is poisoned,each with a unique test code. All tests start at time {start}; outcomes appear exactly {delay} hours later. How many distinct observable patterns are possible at time {observe}? Before then all results are negative.",
                 ),
                 patterns,
@@ -1186,7 +1174,7 @@ def build_bundle():
             case(
                 (
                     f"מחלקים {people} חובשי כובעים לקבוצות של 3; שארית של 1 או 2 מצרפים לשלישייה האחרונה. בכל קבוצה הראשון משדר זוגיות וכל האחרים יודעים בוודאות את צבעם. כמה נכונים מובטחים בלי לסמוך על המובילים?",
-                    f"Split {people} hat wearers into groups of 3; merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?",
+                    f"Split {people} hat wearers into groups of 3;merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?",
                 ),
                 safe,
                 (
@@ -1214,12 +1202,12 @@ def build_bundle():
             case(
                 (
                     f"יש {people} חובשי כובעים בינאריים ללא מכסה. מדברים מאחור לפנים; כל אחד רואה רק לפניו ושומע תשובות קודמות. מותר תיאום,ורק מילת צבע אחת לכל אדם. מה המספר המרבי של נכונים שאפשר להבטיח לכל חלוקת צבעים?",
-                    f"There are {people} binary-hat wearers with no color quota. They speak rear-to-front; each sees only ahead and hears earlier answers. Prior coordination is allowed; each says one color word. What maximum correct-answer count can be guaranteed for every coloring?",
+                    f"There are {people} binary-hat wearers with no color quota. They speak rear-to-front;each sees only ahead and hears earlier answers. Prior coordination is allowed;each says one color word. What maximum correct-answer count can be guaranteed for every coloring?",
                 ),
                 people - 1,
                 (
                     "זוגיות מהראשון מאפשרת לכל האחרים להסיק את צבעם. אי אפשר להבטיח את כולם: החלפת כובע הראשון אינה משנה שום מידע שזמין לו.",
-                    "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible: flipping only the first hat leaves that speaker's information unchanged.",
+                    "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible:flipping only the first hat leaves that speaker's information unchanged.",
                 ),
                 dict(people=people),
                 "parity construction plus indistinguishable-world upper bound",
@@ -1308,7 +1296,7 @@ def build_bundle():
                 partner,
                 (
                     "מי שלחץ לכולם חוץ מבן זוגו חייב להיות בן זוגו של המדווח אפס. מסירים אותם וחוזרים; מספרי בני הזוג משלימים ל־2n−2.",
-                    "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat; spouse counts complement to 2n−2.",
+                    "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat;spouse counts complement to 2n−2.",
                 ),
                 dict(couples=couples, degree=degree),
                 "recursive extreme-pair elimination in a spouse-excluded handshake graph",
@@ -1331,7 +1319,7 @@ def build_bundle():
             case(
                 (
                     f"יש {red} כובעים אדומים בפועל. כל אדם רואה את האחרים בלבד. פורסם לפחות אדום אחד; כולם מסיקים בהיגיון ושומעים גם שתיקה בסבבים סימולטניים. אדם מכריז אדום רק כשבטוח. הסבב הראשון הוא 1. באיזה סבב תישמע ההכרזה הראשונה?",
-                    f"Actually {red} hats are red. Each reasoner sees only others. At least one red is publicly announced; everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?",
+                    f"Actually {red} hats are red. Each reasoner sees only others. At least one red is publicly announced;everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?",
                 ),
                 red,
                 (
@@ -1360,7 +1348,7 @@ def build_bundle():
             case(
                 (
                     f"גמל מעביר מלאי המחייב {loads} מטענים לאורך קטע קצר. בכל הלוך הוא נושא מטען,וחוזר רק כדי להביא את הבא; אחרי המטען האחרון אינו חוזר. הוא אוכל בננה לכל יחידת דרך. כמה בננות נצרכות ליחידת התקדמות?",
-                    f"A camel moves inventory requiring {loads} loads along a short segment. It goes forward with each load and returns only to collect the next; there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?",
+                    f"A camel moves inventory requiring {loads} loads along a short segment. It goes forward with each load and returns only to collect the next;there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?",
                 ),
                 crossings,
                 (
@@ -1432,7 +1420,7 @@ def build_bundle():
         cases.append(
             case(
                 (
-                    f"מחברים את הנקודות בסדר הנתון וסוגרים את המסלול בחזרה לנקודה הראשונה: {pts}. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
+                    f"מחברים את הנקודות בסדר הנתון וסוגרים לראשונה: {pts}. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
                     f"Connect these vertices in order and close back to the first: {pts}. Which classification is justified? Equal-sign local turns alone do not establish absence of self-intersection.",
                 ),
                 v,
@@ -1476,7 +1464,7 @@ def build_bundle():
             case(
                 (
                     f"נקודות גבול מסודרות: {pts}. קמירות ממש דורשת פניות לא־אפס מאותו סימן; קמירות חלשה מתירה פנייה אפס לאורך צלע. איך מסווגים את הגבול?",
-                    f"Ordered boundary vertices: {pts}. Strict convexity requires same-sign nonzero turns; weak convexity permits zero turns along an edge. How is this boundary classified?",
+                    f"Ordered boundary vertices: {pts}. Strict convexity requires same-sign nonzero turns;weak convexity permits zero turns along an edge. How is this boundary classified?",
                 ),
                 v,
                 (
@@ -1491,7 +1479,7 @@ def build_bundle():
     add(
         164,
         [108],
-        ("קמירות חלשה וקמירות ממש אינן אותה דרישה", "Weak and strict convexity differ"),
+        ("קמירות חלשה וממש אינן אותה דרישה", "Weak and strict convexity differ"),
         (
             "מקרה שוויון יכול להיות חוקי בהגדרה אחת ופסול באחרת; הגדירו אותו מראש.",
             "An equality case may be valid under one definition and invalid under another;define it explicitly.",
@@ -1542,7 +1530,7 @@ def build_bundle():
             case(
                 (
                     f"ארבעה מתגים מסודרים סביב שולחן ריבועי. 1 הוא דלוק. שני תיאורים הם {a} ו־{b},באותו כיוון סריקה. מותר רק סיבוב ברבעי סיבוב,לא שיקוף. האם הם אותו מצב עד כדי סיבוב?",
-                    f"Four switches surround a square table; 1 means ON. Two descriptions are {a} and {b},read in the same direction. Only quarter-turn rotations,not reflections,are allowed. Are they the same state up to rotation?",
+                    f"Four switches surround a square table;1 means ON. Two descriptions are {a} and {b},read in the same direction. Only quarter-turn rotations,not reflections,are allowed. Are they the same state up to rotation?",
                 ),
                 v,
                 (
@@ -1728,7 +1716,7 @@ def build_bundle():
             case(
                 (
                     f"מטרתך לנצח בסוף. ניסיון פגיעה מצליח בסיכוי {prob}. לאחר הצלחה סיכוי הניצחון העתידי שלך {hit},ולאחר החטאה {miss}. החטאה מכוונת מובילה לאותו המשך של החטאה. איזו פעולה עדיפה?",
-                    f"Your goal is eventual victory. An attempted hit succeeds with probability {prob}. After a hit your continuation win chance is {hit}; after a miss it is {miss}. Deliberately missing gives the same miss continuation. Which action is better?",
+                    f"Your goal is eventual victory. An attempted hit succeeds with probability {prob}. After a hit your continuation win chance is {hit};after a miss it is {miss}. Deliberately missing gives the same miss continuation. Which action is better?",
                 ),
                 v,
                 (
@@ -1794,8 +1782,8 @@ def build_bundle():
         cases.append(
             case(
                 (
-                    f"בוחרים תיבה A או B בסיכוי 1/2 ואז בוחרים כדור באופן אחיד. כמויות (אדומים,לבנים): A=({ar},{aw}),B=({br},{bw}). נצפה אדום. מה הסיכוי שנבחרה A?",
-                    f"Choose urn A or B with probability 1/2,then a ball uniformly at random. Counts (red,white): A=({ar},{aw}),B=({br},{bw}). A red was observed. What is the probability A was chosen?",
+                    f"בוחרים תיבה A או B בסיכוי 1/2 ואז כדור אחיד. כמויות (אדומים,לבנים): A=({ar},{aw}),B=({br},{bw}). נצפה אדום. מה הסיכוי שנבחרה A?",
+                    f"Choose urn A or B with probability 1/2,then a uniform ball. Counts (red,white): A=({ar},{aw}),B=({br},{bw}). A red was observed. What is the probability A was chosen?",
                 ),
                 posterior,
                 (
@@ -1867,7 +1855,7 @@ def build_bundle():
                 worst,
                 (
                     "בהטיה נשארים מועמדים בצד הקל,ובאיזון הלא־נשקלים. אם נשארים יותר מ־3 מועמדים,אי אפשר להכריע בשקילה היחידה שנותרה. מתכננים לפי הענף הגרוע.",
-                    "A tilt leaves the lighter pan's candidates; balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch.",
+                    "A tilt leaves the lighter pan's candidates;balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch.",
                 ),
                 dict(total=total, pan=pan),
                 "partition known-lighter hypotheses by first-weighing outcomes",
@@ -1902,7 +1890,7 @@ def build_bundle():
         cases.append(
             case(
                 (
-                    f"מונה משותף מתחיל ב־{initial}. לכל אחד מ־A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי,W כותבת את העותק+1. סדר הפעולות הוא {events}. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
+                    f"מונה משותף מתחיל ב־{initial}. לכל A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי,W כותבת העותק+1. סדר הפעולות הוא {events}. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
                     f"A shared counter starts at {initial}. Each of A and B performs R to read a local copy,and W to write that copy+1. Event order is {events}. What is the final counter? Read and write together are not atomic.",
                 ),
                 shared,

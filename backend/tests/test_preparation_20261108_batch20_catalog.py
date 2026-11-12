@@ -22,7 +22,6 @@ from tests.preparation_history import (
     digest,
 )
 from tests.preparation_november8_batch20_history import before_batch1108b20_compiled
-from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
 
 ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / "interview_preparation"
@@ -92,18 +91,7 @@ def test_current_difficulties_reach_engine_without_exposing_scores_to_learners()
             assert solution_review(q).status == "pending_review"
     old = BATCH1108B20_BASELINE["difficulty_ratings"]
     revised_keys = {selected[ident].key for ident in VARIANTS | SOURCE_ONLY}
-    compiled = {q["key"]: q for name in ("example", "preparation")
-                for q in read(SEEDS / f"questions/{name}_bank.json")}
-    for key, entry in old.items():
-        if key in revised_keys:
-            continue
-        # Copy changes rebind the fingerprint while preserving the reviewed score
-        # and rationale. The exact reverse projection still proves the old hash.
-        kind = "example" if key.startswith("example-") else "preparation"
-        previous = before_current_copy(kind, f"compiled:{key}", compiled[key])
-        assert difficulty_fingerprint(previous) == entry["content_sha256"]
-        assert {k: v for k, v in ratings[key].items() if k != "content_sha256"} == {
-            k: v for k, v in entry.items() if k != "content_sha256"}
+    assert all(ratings[key] == entry for key, entry in old.items() if key not in revised_keys)
     for ident in SOURCE_ONLY:
         key = selected[ident].key
         assert ratings[key]["difficulty"] == old[key]["difficulty"]
@@ -141,17 +129,11 @@ def test_original_literal_threshold_and_sine_ambiguity_are_preserved():
 def test_fundamentals_quiz_and_human_registry_unchanged():
     baseline = BATCH1108B20_BASELINE
     for name, expected in baseline["short_card_source_sha256"].items():
-        assert digest(before_current_copy("fundamentals", name,
-                                          read(ROOT / "apps/web/src/content" / name))) == expected
+        assert digest(read(ROOT / "apps/web/src/content" / name)) == expected
     for name, key in [("fundamentals_catalog.json", "fundamentals_catalog_sha256"),
                       ("duel_quiz.json", "quiz_bank_sha256"),
                       ("solution_review_attestations.json", "review_registry_canonical_sha256")]:
-        actual = read(SEEDS / name)
-        if name == "fundamentals_catalog.json":
-            actual = before_current_fundamentals_manifest(actual)
-        elif name == "duel_quiz.json":
-            actual = before_current_copy("quiz", name, actual)
-        assert digest(actual) == baseline[key]
+        assert digest(read(SEEDS / name)) == baseline[key]
 
 
 def test_native_proof_is_bound_to_sources_and_confirmed_running_session_policy():

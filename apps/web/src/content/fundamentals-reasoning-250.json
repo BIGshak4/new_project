@@ -67,8 +67,8 @@
     "topic": "reasoning",
     "interviewIds": ["PREP-084"],
     "title": {"he": "ימין ושמאל מתבטלים, אבל מה עם קדימה?", "en": "Left and right cancel, but what about forward?"},
-    "prompt": {"he": "צלחת אופקית מאוזנת נתמכת בנקודה (0, 0) ללא מומנט מהתמיכה. מניחים שתי מסות שוות ב־(−1, 1) וב־(1, 1). האם ביטול קואורדינטות x מבטיח שהצלחת תישאר מאוזנת סטטית?", "en": "A balanced horizontal plate has a point support at (0, 0) supplying no torque. Place equal masses at (−1, 1) and (1, 1). Does cancellation of the x coordinates guarantee continued static balance?"},
-    "answer": {"he": "לא. סכום ה־x הוא 0, אבל סכום ה־y הוא 2. שתי המסות נמצאות באותו צד בכיוון y, ולכן מרכז המסה הנוסף אינו מעל התמיכה. עבור מסות שוות צריך שסכום שני רכיבי המיקום יהיה (0, 0), ולא רק רכיב אחד.", "en": "No. The x sum is 0, but the y sum is 2. Both masses lie on the same side in the y direction, so their combined centre of mass is not above the support. For equal masses, both position components must sum to (0, 0), not just one."},
+    "prompt": {"he": "צלחת אופקית מאוזנת נתמכת בנקודה (0,0) ללא מומנט מהתמיכה. מניחים שתי מסות שוות ב־(−1,1) וב־(1,1). האם ביטול קואורדינטות x מבטיח שהצלחת תישאר מאוזנת סטטית?", "en": "A balanced horizontal plate has a point support at (0,0) supplying no torque. Place equal masses at (−1,1) and (1,1). Does cancellation of the x coordinates guarantee continued static balance?"},
+    "answer": {"he": "לא. סכום ה־x הוא 0, אבל סכום ה־y הוא 2. שתי המסות נמצאות באותו צד בכיוון y, ולכן מרכז המסה הנוסף אינו מעל התמיכה. עבור מסות שוות צריך שסכום שני רכיבי המיקום יהיה (0,0), ולא רק רכיב אחד.", "en": "No. The x sum is 0, but the y sum is 2. Both masses lie on the same side in the y direction, so their combined centre of mass is not above the support. For equal masses, both position components must sum to (0,0), not just one."},
     "takeaway": {"he": "בדיקה במישור דורשת את שני הרכיבים; סימטריה בציר אחד אינה מספיקה.", "en": "A planar condition needs both components; symmetry along one axis is insufficient."}
   },
   {

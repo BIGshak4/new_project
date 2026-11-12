@@ -199,7 +199,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "לכל A=a, הממוצע של B הוא a/2. מחשבים שוב ממוצע לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
       "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
     }
   },
@@ -233,7 +233,7 @@
     ],
     "correct": 0,
     "explanation": {
-      "he": "לכל A=a, הממוצע של B הוא a/2. מחשבים שוב ממוצע לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
       "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
     }
   },
@@ -267,7 +267,7 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "לכל A=a, הממוצע של B הוא a/2. מחשבים שוב ממוצע לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
       "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
     }
   },
@@ -301,7 +301,7 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "לכל A=a, הממוצע של B הוא a/2. מחשבים שוב ממוצע לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
       "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
     }
   },
@@ -335,7 +335,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "לכל A=a, הממוצע של B הוא a/2. מחשבים שוב ממוצע לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "he": "לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
       "en": "For A=a the mean of B is a/2. Average again over A; independence is unnecessary."
     }
   },
@@ -1196,8 +1196,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מועמדים מקודדים 0, 1, 2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
-      "en": "Candidates are 0, 1, 2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 0 waits for the winner between the other two. Who wins the final?"
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 0 waits for the winner between the other two. Who wins the final?"
     },
     "choices": [
       {
@@ -1230,8 +1230,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מועמדים מקודדים 0, 1, 2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 1 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
-      "en": "Candidates are 0, 1, 2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 1 waits for the winner between the other two. Who wins the final?"
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 1 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 1 waits for the winner between the other two. Who wins the final?"
     },
     "choices": [
       {
@@ -1264,8 +1264,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מועמדים מקודדים 0, 1, 2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 2 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
-      "en": "Candidates are 0, 1, 2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 2 waits for the winner between the other two. Who wins the final?"
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 2 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 2 waits for the winner between the other two. Who wins the final?"
     },
     "choices": [
       {
@@ -1298,8 +1298,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מועמדים מקודדים 0, 1, 2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=1. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
-      "en": "Candidates are 0, 1, 2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=1. Candidate 0 waits for the winner between the other two. Who wins the final?"
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=1. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=1. Candidate 0 waits for the winner between the other two. Who wins the final?"
     },
     "choices": [
       {
@@ -1332,8 +1332,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מועמדים מקודדים 0, 1, 2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=1. מועמד 2 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
-      "en": "Candidates are 0, 1, 2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=1. Candidate 2 waits for the winner between the other two. Who wins the final?"
+      "he": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=1. מועמד 2 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "en": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=1. Candidate 2 waits for the winner between the other two. Who wins the final?"
     },
     "choices": [
       {
@@ -1366,8 +1366,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x, m−x, m−x, x, x, m−x. כאן m=5, x=1. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
-      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x, m−x, m−x, x, x, m−x. Here m=5, x=1. Earlier means preferred. What is the absolute vote margin in A versus B?"
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=5, x=1. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=5, x=1. Earlier means preferred. What is the absolute vote margin in A versus B?"
     },
     "choices": [
       {
@@ -1400,8 +1400,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x, m−x, m−x, x, x, m−x. כאן m=5, x=4. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
-      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x, m−x, m−x, x, x, m−x. Here m=5, x=4. Earlier means preferred. What is the absolute vote margin in A versus B?"
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=5, x=4. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=5, x=4. Earlier means preferred. What is the absolute vote margin in A versus B?"
     },
     "choices": [
       {
@@ -1434,8 +1434,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x, m−x, m−x, x, x, m−x. כאן m=3, x=0. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
-      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x, m−x, m−x, x, x, m−x. Here m=3, x=0. Earlier means preferred. What is the absolute vote margin in A versus B?"
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=3, x=0. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=3, x=0. Earlier means preferred. What is the absolute vote margin in A versus B?"
     },
     "choices": [
       {
@@ -1468,8 +1468,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x, m−x, m−x, x, x, m−x. כאן m=4, x=2. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
-      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x, m−x, m−x, x, x, m−x. Here m=4, x=2. Earlier means preferred. What is the absolute vote margin in A versus B?"
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=4, x=2. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=4, x=2. Earlier means preferred. What is the absolute vote margin in A versus B?"
     },
     "choices": [
       {
@@ -1502,8 +1502,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x, m−x, m−x, x, x, m−x. כאן m=7, x=5. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
-      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x, m−x, m−x, x, x, m−x. Here m=7, x=5. Earlier means preferred. What is the absolute vote margin in A versus B?"
+      "he": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=7, x=5. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "en": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=7, x=5. Earlier means preferred. What is the absolute vote margin in A versus B?"
     },
     "choices": [
       {
@@ -2726,8 +2726,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "תיבה מלבנית בעלת מקצועות 1, 1, 1. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b, c), (a+c, b), (b+c, a). מה ריבוע אורך המסלול הקצר מביניהן?",
-      "en": "A rectangular box has edge lengths 1, 1, 1. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b, c), (a+c, b), (b+c, a). What is the squared length of the shortest route among them?"
+      "he": "תיבה מלבנית בעלת מקצועות 1,1,1. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 1,1,1. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
     },
     "choices": [
       {
@@ -2760,8 +2760,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "תיבה מלבנית בעלת מקצועות 1, 2, 3. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b, c), (a+c, b), (b+c, a). מה ריבוע אורך המסלול הקצר מביניהן?",
-      "en": "A rectangular box has edge lengths 1, 2, 3. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b, c), (a+c, b), (b+c, a). What is the squared length of the shortest route among them?"
+      "he": "תיבה מלבנית בעלת מקצועות 1,2,3. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 1,2,3. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
     },
     "choices": [
       {
@@ -2794,8 +2794,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "תיבה מלבנית בעלת מקצועות 2, 2, 3. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b, c), (a+c, b), (b+c, a). מה ריבוע אורך המסלול הקצר מביניהן?",
-      "en": "A rectangular box has edge lengths 2, 2, 3. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b, c), (a+c, b), (b+c, a). What is the squared length of the shortest route among them?"
+      "he": "תיבה מלבנית בעלת מקצועות 2,2,3. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 2,2,3. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
     },
     "choices": [
       {
@@ -2828,8 +2828,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "תיבה מלבנית בעלת מקצועות 2, 3, 4. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b, c), (a+c, b), (b+c, a). מה ריבוע אורך המסלול הקצר מביניהן?",
-      "en": "A rectangular box has edge lengths 2, 3, 4. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b, c), (a+c, b), (b+c, a). What is the squared length of the shortest route among them?"
+      "he": "תיבה מלבנית בעלת מקצועות 2,3,4. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 2,3,4. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
     },
     "choices": [
       {
@@ -2862,8 +2862,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "תיבה מלבנית בעלת מקצועות 1, 1, 4. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b, c), (a+c, b), (b+c, a). מה ריבוע אורך המסלול הקצר מביניהן?",
-      "en": "A rectangular box has edge lengths 1, 1, 4. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b, c), (a+c, b), (b+c, a). What is the squared length of the shortest route among them?"
+      "he": "תיבה מלבנית בעלת מקצועות 1,1,4. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "en": "A rectangular box has edge lengths 1,1,4. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?"
     },
     "choices": [
       {
@@ -3236,8 +3236,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a, b] ברשימה [[0, 1]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
-      "en": "There are 3 horses with distinct speeds. Each pair [a, b] in [[0, 1]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 3 horses with distinct speeds. Each pair [a,b] in [[0, 1]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
     },
     "choices": [
       {
@@ -3270,8 +3270,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a, b] ברשימה [[0, 1], [1, 2]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
-      "en": "There are 3 horses with distinct speeds. Each pair [a, b] in [[0, 1], [1, 2]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+      "he": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1], [1, 2]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 3 horses with distinct speeds. Each pair [a,b] in [[0, 1], [1, 2]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
     },
     "choices": [
       {
@@ -3304,8 +3304,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a, b] ברשימה [[0, 1], [0, 2]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
-      "en": "There are 4 horses with distinct speeds. Each pair [a, b] in [[0, 1], [0, 2]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1], [0, 2]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 4 horses with distinct speeds. Each pair [a,b] in [[0, 1], [0, 2]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
     },
     "choices": [
       {
@@ -3338,8 +3338,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a, b] ברשימה [[0, 1], [2, 3]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
-      "en": "There are 4 horses with distinct speeds. Each pair [a, b] in [[0, 1], [2, 3]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1], [2, 3]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 4 horses with distinct speeds. Each pair [a,b] in [[0, 1], [2, 3]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
     },
     "choices": [
       {
@@ -3372,8 +3372,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a, b] ברשימה [] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
-      "en": "There are 4 horses with distinct speeds. Each pair [a, b] in [] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+      "he": "יש 4 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "en": "There are 4 horses with distinct speeds. Each pair [a,b] in [] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
     },
     "choices": [
       {
@@ -3576,8 +3576,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A, B הם 1, 4; משקלי החשיבות שלהם 1, 10. אם CA, CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
-      "en": "One server processes two jobs available at time 0 without preemption. Durations A, B are 1, 4; importance weights are 1, 10. If CA, CB are completion times, what is the minimum wa·CA+wb·CB?"
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 1,4; משקלי החשיבות שלהם 1,10. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 1,4; importance weights are 1,10. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
     },
     "choices": [
       {
@@ -3610,8 +3610,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A, B הם 2, 3; משקלי החשיבות שלהם 2, 1. אם CA, CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
-      "en": "One server processes two jobs available at time 0 without preemption. Durations A, B are 2, 3; importance weights are 2, 1. If CA, CB are completion times, what is the minimum wa·CA+wb·CB?"
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 2,3; משקלי החשיבות שלהם 2,1. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 2,3; importance weights are 2,1. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
     },
     "choices": [
       {
@@ -3644,8 +3644,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A, B הם 3, 1; משקלי החשיבות שלהם 4, 1. אם CA, CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
-      "en": "One server processes two jobs available at time 0 without preemption. Durations A, B are 3, 1; importance weights are 4, 1. If CA, CB are completion times, what is the minimum wa·CA+wb·CB?"
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 3,1; משקלי החשיבות שלהם 4,1. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 3,1; importance weights are 4,1. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
     },
     "choices": [
       {
@@ -3678,8 +3678,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A, B הם 2, 2; משקלי החשיבות שלהם 1, 3. אם CA, CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
-      "en": "One server processes two jobs available at time 0 without preemption. Durations A, B are 2, 2; importance weights are 1, 3. If CA, CB are completion times, what is the minimum wa·CA+wb·CB?"
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 2,2; משקלי החשיבות שלהם 1,3. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 2,2; importance weights are 1,3. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
     },
     "choices": [
       {
@@ -3712,8 +3712,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A, B הם 4, 5; משקלי החשיבות שלהם 3, 2. אם CA, CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
-      "en": "One server processes two jobs available at time 0 without preemption. Durations A, B are 4, 5; importance weights are 3, 2. If CA, CB are completion times, what is the minimum wa·CA+wb·CB?"
+      "he": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 4,5; משקלי החשיבות שלהם 3,2. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "en": "One server processes two jobs available at time 0 without preemption. Durations A,B are 4,5; importance weights are 3,2. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?"
     },
     "choices": [
       {
@@ -3916,7 +3916,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "כל שורה ב־[[0, 0], [0, 1], [1, 0], [1, 1]] מציגה תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "he": "כל שורה ב־[[0, 0], [0, 1], [1, 0], [1, 1]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
       "en": "Each row of [[0, 0], [0, 1], [1, 0], [1, 1]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
     },
     "choices": [
@@ -3950,7 +3950,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "כל שורה ב־[[0, 0, 0], [0, 0, 1], [1, 1, 0]] מציגה תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "he": "כל שורה ב־[[0, 0, 0], [0, 0, 1], [1, 1, 0]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
       "en": "Each row of [[0, 0, 0], [0, 0, 1], [1, 1, 0]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
     },
     "choices": [
@@ -3984,7 +3984,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "כל שורה ב־[[0, 0, 0], [1, 1, 1]] מציגה תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "he": "כל שורה ב־[[0, 0, 0], [1, 1, 1]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
       "en": "Each row of [[0, 0, 0], [1, 1, 1]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
     },
     "choices": [
@@ -4018,7 +4018,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "כל שורה ב־[[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 0]] מציגה תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "he": "כל שורה ב־[[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 0]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
       "en": "Each row of [[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 0]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
     },
     "choices": [
@@ -4052,7 +4052,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "כל שורה ב־[[0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]] מציגה תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "he": "כל שורה ב־[[0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
       "en": "Each row of [[0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]] lists predicted binary measurement results for one hidden state. Measurements are reliable and chosen in advance. What minimum number of columns guarantees identifying the correct row?"
     },
     "choices": [
@@ -5106,7 +5106,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 3 כדורים אדומים ו־3 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד באופן אחיד ואז כדור מתוכו באופן אחיד. מה ההסתברות המרבית לקבל אדום?",
+      "he": "מחלקים 3 כדורים אדומים ו־3 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
       "en": "Split 3 red and 3 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
     },
     "choices": [
@@ -5140,7 +5140,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 2 כדורים אדומים ו־4 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד באופן אחיד ואז כדור מתוכו באופן אחיד. מה ההסתברות המרבית לקבל אדום?",
+      "he": "מחלקים 2 כדורים אדומים ו־4 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
       "en": "Split 2 red and 4 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
     },
     "choices": [
@@ -5174,7 +5174,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 1 כדורים אדומים ו־4 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד באופן אחיד ואז כדור מתוכו באופן אחיד. מה ההסתברות המרבית לקבל אדום?",
+      "he": "מחלקים 1 כדורים אדומים ו־4 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
       "en": "Split 1 red and 4 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
     },
     "choices": [
@@ -5208,7 +5208,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 4 כדורים אדומים ו־2 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד באופן אחיד ואז כדור מתוכו באופן אחיד. מה ההסתברות המרבית לקבל אדום?",
+      "he": "מחלקים 4 כדורים אדומים ו־2 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
       "en": "Split 4 red and 2 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
     },
     "choices": [
@@ -5242,7 +5242,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 2 כדורים אדומים ו־1 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד באופן אחיד ואז כדור מתוכו באופן אחיד. מה ההסתברות המרבית לקבל אדום?",
+      "he": "מחלקים 2 כדורים אדומים ו־1 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
       "en": "Split 2 red and 1 white balls between two nonempty urns without loss. Choose an urn uniformly, then a ball uniformly within it. What is the maximum probability of red?"
     },
     "choices": [

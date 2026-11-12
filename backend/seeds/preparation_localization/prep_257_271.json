@@ -6,7 +6,7 @@
         "הרחבת אפסים לפני חישוב המכפלה; מימוש צירופי ללא גלישה."
       ],
       "en": [
-        "Ordinary unsigned binary 0..15; BCD tens and units.",
+        "Ordinary unsigned binary0..15; BCD tens and units.",
         "Zero extension precedes arithmetic; combinational operation without overflow."
       ]
     },
@@ -15,26 +15,26 @@
       "en": "A shift-and-add product and seven unrolled conversion steps. For generalized n-bit conversion an unrolled decimal construction has approximately O(n²) correction cells; a serial version trades area for cycles. No physical minimum is claimed."
     },
     "verification": {
-      "he": "בדיקת Python ממצה של 16 קלטים מול כפל ו־divmod עצמאיים עברה. הקוד המצורף הוא RTL; מצב קימפולו וסימולצייתו נרשם בדוח האצווה, בנפרד מהמודל.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog 12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה 172,128 בדיקות; רתמת FIFO נפרדת עברה 15,729 בדיקות עם 5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
-      "en": "Exhaustive Python verification of 16 inputs against independent multiplication/divmod passed. The attached RTL is distinct from the model; compilation/simulation status is recorded in the batch report.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog 12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed 172,128 checks; the separate FIFO harness passed 15,729 checks with 5,587 accepted writes and 5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
+      "he": "בדיקת Python ממצה של16 קלטים מול כפל ו־divmod עצמאיים עברה. הקוד המצורף הוא RTL; מצב קימפולו וסימולצייתו נרשם בדוח האצווה, בנפרד מהמודל.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה172,128 בדיקות; רתמת FIFO נפרדת עברה15,729 בדיקות עם5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
+      "en": "Exhaustive Python verification of16 inputs against independent multiplication/divmod passed. The attached RTL is distinct from the model; compilation/simulation status is recorded in the batch report.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed172,128 checks; the separate FIFO harness passed15,729 checks with5,587 accepted writes and5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
     },
     "edge_cases": {
       "he": [
-        "0,1,2 ו־15; מעבר יחידות 9→עשרות 1.",
-        "הקלטים 10..15 חוקיים;75 דורש שבע סיביות בינאריות."
+        "0,1,2 ו־15; מעבר יחידות9→עשרות1.",
+        "הקלטים10..15 חוקיים;75 דורש שבע סיביות בינאריות."
       ],
       "en": [
-        "0,1,2,15 and the decimal 9-to 10 boundary.",
-        "Inputs 10..15 are legal;75 requires seven binary bits."
+        "0,1,2,15 and the decimal9-to10 boundary.",
+        "Inputs10..15 are legal;75 requires seven binary bits."
       ]
     },
     "common_mistakes": {
-      "he": "חיתוך ההזזה לרוחב 4; פירוש הקלט כ־BCD; חיבור שני ניבלים של מכפלה בינארית ישירות למסכי ספרות.",
+      "he": "חיתוך ההזזה לרוחב4; פירוש הקלט כ־BCD; חיבור שני ניבלים של מכפלה בינארית ישירות למסכי ספרות.",
       "en": "Truncating the shift to four bits; interpreting x as BCD; driving digit displays directly with binary nibbles."
     },
     "interview_answer": {
-      "he": "ארחיב את הקלט לשבע סיביות, אחבר x לארבע פעמים x, ואז אמיר את התוצאה לשתי ספרות BCD. הטווח המרבי 75 קובע את הרוחב ואת מספר הספרות.",
-      "en": "Widen to seven bits, add x to four times x, then convert to two BCD digits. Maximum 75 determines the binary width and decimal digit count."
+      "he": "ארחיב את הקלט לשבע סיביות, אחבר x לארבע פעמים x, ואז אמיר את התוצאה לשתי ספרות BCD. הטווח המרבי75 קובע את הרוחב ואת מספר הספרות.",
+      "en": "Widen to seven bits, add x to four times x, then convert to two BCD digits. Maximum75 determines the binary width and decimal digit count."
     },
     "source_ambiguities": {
       "he": "המקור אינו מגדיר BCD או מסכי שבעה מקטעים. קידוד שתי הספרות וכיוון A/B הם הבהרות עריכה מפורשות.",
@@ -69,7 +69,7 @@
       "en": "Linear graph DP/topological core plus output size; this deterministic implementation additionally sorts names. Counting or one witness is not enumeration of every path."
     },
     "verification": {
-      "he": "1,903 בדיקות Python השוו לגרף אורקל רקורסיבי עצמאי: כל DAG מסודר עד 5 באפרים,800 דפוסים בני 6, חרוט reset, שימוש מעורב ומעגל שנדחה. אין סריקת netlist תעשייתי אמיתי.",
+      "he": "1,903 בדיקות Python השוו לגרף אורקל רקורסיבי עצמאי: כל DAG מסודר עד5 באפרים,800 דפוסים בני6, חרוט reset, שימוש מעורב ומעגל שנדחה. אין סריקת netlist תעשייתי אמיתי.",
       "en": "1,903 Python checks compare with an independent recursive graph oracle: every ordered DAG through five buffers,800 six-buffer patterns, reset-only/mixed cones and a rejected cycle. No industrial netlist was scanned."
     },
     "edge_cases": {
@@ -99,7 +99,7 @@
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם לכל קשת זמן השהיה אחר?",
-        "direction": "מחליפים תוספת 1 במשקל, מגדירים תחומי שעון ונקודות פתיחה/סיום; מגבלות STA אינן נובעות רק מקישוריות.",
+        "direction": "מחליפים תוספת1 במשקל, מגדירים תחומי שעון ונקודות פתיחה/סיום; מגבלות STA אינן נובעות רק מקישוריות.",
         "tests": "הבדל בין אורך גרף ומסלול תזמון."
       },
       "en": {
@@ -112,12 +112,12 @@
   "PREP-262": {
     "assumptions": {
       "he": [
-        "התחום החוקי 0..32; שש סיביות בינאריות, שני קודי BCD.",
-        "valid=0 ויציאות 00 מחוץ לתחום; valid=1 בקלט חוקי."
+        "התחום החוקי0..32; שש סיביות בינאריות, שני קודי BCD.",
+        "valid=0 ויציאות00 מחוץ לתחום; valid=1 בקלט חוקי."
       ],
       "en": [
-        "Legal range 0..32; six binary bits and two BCD digit codes.",
-        "Out-of-range inputs produce valid0/digits00; legal inputs produce valid 1."
+        "Legal range0..32; six binary bits and two BCD digit codes.",
+        "Out-of-range inputs produce valid0/digits00; legal inputs produce valid1."
       ]
     },
     "optimality": {
@@ -125,8 +125,8 @@
       "en": "Six unrolled conversion steps and a range check; three threshold comparisons and remainder calculation are another option. No gate-count or timing minimum is claimed."
     },
     "verification": {
-      "he": "כל 64 דפוסי הקלט נבדקו ב־Python מול divmod:33 חוקיים ו־31 פסולים. בדיקת RTL מתועדת בנפרד בדוח.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog 12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה 172,128 בדיקות; רתמת FIFO נפרדת עברה 15,729 בדיקות עם 5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
-      "en": "All 64 input patterns were checked in Python against divmod:33 legal and 31 invalid. RTL execution is recorded separately in the batch report.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog 12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed 172,128 checks; the separate FIFO harness passed 15,729 checks with 5,587 accepted writes and 5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
+      "he": "כל64 דפוסי הקלט נבדקו ב־Python מול divmod:33 חוקיים ו־31 פסולים. בדיקת RTL מתועדת בנפרד בדוח.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה172,128 בדיקות; רתמת FIFO נפרדת עברה15,729 בדיקות עם5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
+      "en": "All64 input patterns were checked in Python against divmod:33 legal and31 invalid. RTL execution is recorded separately in the batch report.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed172,128 checks; the separate FIFO harness passed15,729 checks with5,587 accepted writes and5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
     },
     "edge_cases": {
       "he": [
@@ -139,25 +139,25 @@
       ]
     },
     "common_mistakes": {
-      "he": "פיצול לניבלים; התעלמות מההבדל בין שש סיביות לתחום 32; יציאת 13 למסך ספרה; רוחב 1 לחיבור של תוצאות השוואה.",
-      "en": "Splitting into nibbles; confusing six-bit capacity with the source limit 32; passing 13 to a digit cell; adding comparator bits without widening."
+      "he": "פיצול לניבלים; התעלמות מההבדל בין שש סיביות לתחום32; יציאת13 למסך ספרה; רוחב1 לחיבור של תוצאות השוואה.",
+      "en": "Splitting into nibbles; confusing six-bit capacity with the source limit32; passing13 to a digit cell; adding comparator bits without widening."
     },
     "interview_answer": {
-      "he": "אחשב עשרות ויחידות כך ש־x=10t+u, ואז כל מסך מקבל ספרת BCD חוקית. לטווח קטן אפשר להשתמש בספי 10,20,30, או בממיר בינארי ל־BCD.",
-      "en": "Compute tens and units satisfying x=10t+u, then feed each display a legal BCD digit. Use thresholds 10,20,30 for this range or binary-to-BCD conversion."
+      "he": "אחשב עשרות ויחידות כך ש־x=10t+u, ואז כל מסך מקבל ספרת BCD חוקית. לטווח קטן אפשר להשתמש בספי10,20,30, או בממיר בינארי ל־BCD.",
+      "en": "Compute tens and units satisfying x=10t+u, then feed each display a legal BCD digit. Use thresholds10,20,30 for this range or binary-to-BCD conversion."
     },
     "source_ambiguities": {
-      "he": "שש סיביות יכולות לייצג 63, אך המקור אומר במפורש עד 32. valid ומדיניות אפס מוביל נוספו כדי להגדיר התנהגות מלאה.",
-      "en": "Six bits encode 63, but the source explicitly says through 32. Valid and leading-zero policies are added to make the contract complete."
+      "he": "שש סיביות יכולות לייצג63, אך המקור אומר במפורש עד32. valid ומדיניות אפס מוביל נוספו כדי להגדיר התנהגות מלאה.",
+      "en": "Six bits encode63, but the source explicitly says through32. Valid and leading-zero policies are added to make the contract complete."
     },
     "solution_extensions": {
       "he": {
-        "question": "כיצד מרחיבים למספר 0..255?",
+        "question": "כיצד מרחיבים למספר0..255?",
         "direction": "נדרשות שלוש ספרות, שמונה צעדי המרה ו־12 חוטי BCD; שתי תצוגות אינן מספיקות לייצוג כל הערכים.",
         "tests": "רוחב, טווח ומספר ספרות."
       },
       "en": {
-        "question": "How does the design change for 0..255?",
+        "question": "How does the design change for0..255?",
         "direction": "Use three digits, eight conversion steps and twelve BCD wires; two displays cannot represent every value.",
         "tests": "Widths, range and digit count."
       }
@@ -179,8 +179,8 @@
       "en": "Saturating fold: O(N) cells and O(N) depth; balanced tree: O(N) cells and O(log N) depth under a constant-width cell model."
     },
     "verification": {
-      "he": "כל 8,190 צירופי הקלט לרוחבים 1..12 נבדקו ב־Python מול ספירת ספרות 1 עצמאית. אין הוכחת שטח או תזמון של סינתזה.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog 12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה 172,128 בדיקות; רתמת FIFO נפרדת עברה 15,729 בדיקות עם 5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
-      "en": "All 8,190 input combinations for widths 1..12 were checked in Python against an independent bit-count oracle. No synthesized area/timing result is claimed.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog 12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed 172,128 checks; the separate FIFO harness passed 15,729 checks with 5,587 accepted writes and 5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
+      "he": "כל8,190 צירופי הקלט לרוחבים1..12 נבדקו ב־Python מול ספירת ספרות1 עצמאית. אין הוכחת שטח או תזמון של סינתזה.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה172,128 בדיקות; רתמת FIFO נפרדת עברה15,729 בדיקות עם5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
+      "en": "All8,190 input combinations for widths1..12 were checked in Python against an independent bit-count oracle. No synthesized area/timing result is claimed.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed172,128 checks; the separate FIFO harness passed15,729 checks with5,587 accepted writes and5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
     },
     "edge_cases": {
       "he": [
@@ -193,12 +193,12 @@
       ]
     },
     "common_mistakes": {
-      "he": "השוואה ל־2 במקום 3; XOR של כל הביטים; גלישה בסכום רווי; הנחה שהלולאה צוברת מצב בזמן.",
-      "en": "Threshold 2 instead of 3; XOR parity; overflow before saturation; interpreting the combinational loop as persistent state."
+      "he": "השוואה ל־2 במקום3; XOR של כל הביטים; גלישה בסכום רווי; הנחה שהלולאה צוברת מצב בזמן.",
+      "en": "Threshold2 instead of3; XOR parity; overflow before saturation; interpreting the combinational loop as persistent state."
     },
     "interview_answer": {
-      "he": "אשמור רק ארבע קטגוריות של כמות אחדות:0,1,2,3 ומעלה. קיפול או עץ רווי מחשבים אותן, והקטגוריה האחרונה מפעילה את הפלט.",
-      "en": "Track four categories 0,1,2,and at least 3. A saturating fold or tree computes them; the last category asserts the output."
+      "he": "אשמור רק ארבע קטגוריות של כמות אחדות:0,1,2,3ומעלה. קיפול או עץ רווי מחשבים אותן, והקטגוריה האחרונה מפעילה את הפלט.",
+      "en": "Track four categories0,1,2,and at least3. A saturating fold or tree computes them; the last category asserts the output."
     },
     "source_ambiguities": {
       "he": "מספר הכניסות ויעד האופטימיזציה חסרים במקור; הוגדר פרמטר N ומימוש צירופי ללא טענת מינימום.",
@@ -207,12 +207,12 @@
     "solution_extensions": {
       "he": {
         "question": "מה משתנה אם מבקשים בדיוק שלוש אחדות?",
-        "direction": "צריך להבחין בין 3 ל־4 ומעלה: חמש קטגוריות או ספירה מלאה; רוויה ב־3 כבר מאבדת מידע נחוץ.",
+        "direction": "צריך להבחין בין3 ל־4ומעלה: חמש קטגוריות או ספירה מלאה; רוויה ב־3 כבר מאבדת מידע נחוץ.",
         "tests": "איזה מידע מותר לדחוס."
       },
       "en": {
         "question": "What changes for exactly three ones?",
-        "direction": "Distinguish 3 from at least 4 using five categories or a full count; saturation at 3 loses necessary information.",
+        "direction": "Distinguish3 from at least4 using five categories or a full count; saturation at3 loses necessary information.",
         "tests": "Choosing sufficient compressed information."
       }
     }
@@ -220,7 +220,7 @@
   "PREP-264": {
     "assumptions": {
       "he": [
-        "עומק חזקה של שתיים, AW≥1,W≥1; מצביעים ברוחב AW+1 ושני שלבי סנכרון לכל כיוון.",
+        "עומק חזקה של שתיים, AW≥1,W≥1; מצביעים ברוחבAW+1 ושני שלבי סנכרון לכל כיוון.",
         "דגלים רשומים, נתון קריאה רשום, ללא bypass; full/empty ישנים קובעים קבלת בקשה.",
         "איפוס שני הצדדים יחד ושחרור מסונכרן בכל תחום; RAM אינו מתאפס."
       ],
@@ -235,8 +235,8 @@
       "en": "D·W memory bits plus O(log D) pointer/synchronizer state. At most one accepted operation per unblocked local edge; pointer/flag crossing introduces conservative bubbles. No physical minimum is claimed."
     },
     "verification": {
-      "he": "מודל אירועים Python מול deque עצמאי עבר 500,056 בדיקות לרוחבי כתובת 1..5, כולל 250,000 אירועי שעון, גלישות, סדר נתונים וניסוי R1..R4. בדיקות RTL ונתוניהן נרשמות בנפרד; אין הדמיית מטא־יציבות או אישור CDC פיזי.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog 12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה 172,128 בדיקות; רתמת FIFO נפרדת עברה 15,729 בדיקות עם 5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
-      "en": "The Python event model passed 500,056 checks against an independent deque across address widths 1..5, including 250,000 clock events, wraparound, data ordering and the R1..R4 trace. RTL results are recorded separately; metastability and physical CDC closure are not simulated.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog 12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed 172,128 checks; the separate FIFO harness passed 15,729 checks with 5,587 accepted writes and 5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
+      "he": "מודל אירועים Python מול deque עצמאי עבר500,056 בדיקות לרוחבי כתובת1..5, כולל250,000 אירועי שעון, גלישות, סדר נתונים וניסוי R1..R4. בדיקות RTL ונתוניהן נרשמות בנפרד; אין הדמיית מטא־יציבות או אישור CDC פיזי.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה172,128 בדיקות; רתמת FIFO נפרדת עברה15,729 בדיקות עם5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
+      "en": "The Python event model passed500,056 checks against an independent deque across address widths1..5, including250,000 clock events, wraparound, data ordering and the R1..R4 trace. RTL results are recorded separately; metastability and physical CDC closure are not simulated.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed172,128 checks; the separate FIFO harness passed15,729 checks with5,587 accepted writes and5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
     },
     "edge_cases": {
       "he": [
@@ -524,7 +524,7 @@
     },
     "verification": {
       "he": "30,210 בדיקות מודל: 30 קבוצות פרמטרים עם 1,001 דגימות RK4 לכל קבוצה, יחסי גבול ועוד 180 מקדמי החזרה בתדר. ללא SPICE או ניסוי.",
-      "en": "30,210 model checks:30 parameter sets with 1,001 RK4 samples each, boundary identities and 180 frequency coefficients. No SPICE or experiment."
+      "en": "30,210 model checks:30 parameter sets with1,001 RK4 samples each, boundary identities and180 frequency coefficients. No SPICE or experiment."
     },
     "edge_cases": {
       "he": "רגע לפני ואחרי הגעת חזית; קבל טעון מראש; C→0 או C גדול; סף באזור לא מוגדר; קצוות לא מותאמים; ביטים קצרים מזמן ההתייצבות.",
@@ -549,11 +549,11 @@
     "technical_references": {
       "he": [
         "[MIT — קווי תמסורת וגלים](https://ocw.mit.edu/courses/6-013-electromagnetics-and-applications-spring-2009/d3be4ea78b036a6362230fb41780cf54_MIT6_013S09_notes.pdf)",
-        "[University of Wisconsin — סיום קיבולי, פרק 9](https://pages.hep.wisc.edu/~prepost/623/transmissionlines.html)"
+        "[University of Wisconsin — סיום קיבולי, פרק9](https://pages.hep.wisc.edu/~prepost/623/transmissionlines.html)"
       ],
       "en": [
         "[MIT — transmission lines and waves](https://ocw.mit.edu/courses/6-013-electromagnetics-and-applications-spring-2009/d3be4ea78b036a6362230fb41780cf54_MIT6_013S09_notes.pdf)",
-        "[University of Wisconsin — capacitive termination, section 9](https://pages.hep.wisc.edu/~prepost/623/transmissionlines.html)"
+        "[University of Wisconsin — capacitive termination, section9](https://pages.hep.wisc.edu/~prepost/623/transmissionlines.html)"
       ]
     }
   },
@@ -568,7 +568,7 @@
     },
     "verification": {
       "he": "36 בדיקות: 18 רשתות חלל עגול/ריבועי עם דפנות בפוטנציאל קבוע, ועוד 18 השוואות לנוסחה באינטגרציית שדה של 10,000 תאים. סטיית החלל המרבית קטנה מ־4×10⁻¹² וולט בדוגמאות.",
-      "en": "36 checks:18 circular/square cavity grids with constant walls and 18 capacitance comparisons against 10,000-cell radial integration. Maximum sample cavity error was below 4×10⁻¹²volts."
+      "en": "36 checks:18 circular/square cavity grids with constant walls and18 capacitance comparisons against10,000-cell radial integration. Maximum sample cavity error was below4×10⁻¹²volts."
     },
     "edge_cases": {
       "he": "חלל פתוח; מטען כלוא; אלקטרודה נוספת; קצוות גליל; דיאלקטרי חיצוני שונה; הארקה אחרת; שדה משתנה בזמן.",
@@ -618,7 +618,7 @@
     },
     "common_mistakes": {
       "he": "לקרוא לאזור המחסור חסר מטען; לומר P חיובי כולו; להפוך כיוון שדה; לקבע 0.7V לכל דיודה; להציג Vbi כמקור אנרגיה חיצוני.",
-      "en": "Calling depletion charge-free; treating all P bulk as positive; reversing field direction; assuming 0.7V for every diode; using Vbi as an external energy source."
+      "en": "Calling depletion charge-free; treating all P bulk as positive; reversing field direction; assuming0.7V for every diode; using Vbi as an external energy source."
     },
     "interview_answer": {
       "he": "דיפוזיה חושפת יוני אילוח ויוצרת שדה N→P. הסחיפה מאזנת דיפוזיה בשיווי משקל; הטיה קדמית מורידה מחסום ואחורית מגדילה מחסור, עד גבולות המודל.",
@@ -654,7 +654,7 @@
     },
     "verification": {
       "he": "9,840 רצפים שרירותיים, מקרה שלמים גדולים ועוד 9,481 משפחות בעלות חוזה הפסגה נבדקו מול מקסימום עצמאי, ספירת get ומצב הסיום. אין ניסוי מכשיר אמיתי.",
-      "en": "9,840 arbitrary sequences, one large-integer case and 9,481 promised peak families checked against an independent maximum, get counts and final setting. No physical instrument test."
+      "en": "9,840 arbitrary sequences, one large-integer case and9,481 promised peak families checked against an independent maximum, get counts and final setting. No physical instrument test."
     },
     "edge_cases": {
       "he": "n=1; מקסימום בקצה; ערכים שווים כולם; פלטו מקסימום; פלטו נמוך שמפר חוזה מהיר; NaN; רעש; מצב סופי שאינו האחרון שנמדד.",
@@ -673,8 +673,8 @@
       "en": "The source says “micro with zoom” without a clear instrument type. The edited problem uses a generic instrument; unimodality, noise and settling are not supplied source facts."
     },
     "solution_extensions": {
-      "he": "אם מדידה יקרה פי 100 מתזוזה, מתי cache משתלם? אם יש רעש גאוסי ידוע, הגדירו יעד שגיאה וביטחון לפני חישוב מספר חזרות.",
-      "en": "If a measurement costs 100 times a move, when is caching useful? With known Gaussian noise, specify error/confidence goals before deciding repeat counts."
+      "he": "אם מדידה יקרה פי100 מתזוזה, מתי cache משתלם? אם יש רעש גאוסי ידוע, הגדירו יעד שגיאה וביטחון לפני חישוב מספר חזרות.",
+      "en": "If a measurement costs100times a move, when is caching useful? With known Gaussian noise, specify error/confidence goals before deciding repeat counts."
     },
     "technical_references": {
       "he": [
@@ -691,7 +691,7 @@
       "en": "Supplied physical inventory, positive integer values, each index used once; nonnegative integer target, exact payment, no change.\n\n[\"Explicitly selected inventory: [100,60,35,25,15,10], indices 0..5 and one physical coin per index.\", \"Exact target 120; no change, overpayment, splitting or additional coin.\"]"
     },
     "optimality": {
-      "he": "מינימום מספר המטבעות מוכח ברקורסיית שתי אפשרויות. מימוש עם שחזור O(n(T+1)) זמן ומקום; יעד 120 קבוע, אך יעד משתנה פסאודו־פולינומי.\n\nהמינימום הוא 3: [1,2,3]. שלישייה חוקית משיגה 120, ואין יחיד או זוג אפשרי; אין צורך בהנחה שחמדנות מיטבית.",
+      "he": "מינימום מספר המטבעות מוכח ברקורסיית שתי אפשרויות. מימוש עם שחזור O(n(T+1)) זמן ומקום; יעד120 קבוע, אך יעד משתנה פסאודו־פולינומי.\n\nהמינימום הוא 3: [1,2,3]. שלישייה חוקית משיגה 120, ואין יחיד או זוג אפשרי; אין צורך בהנחה שחמדנות מיטבית.",
       "en": "Minimum cardinality is proved by the take/skip recurrence. Reconstruction uses O(n(T+1)) time/space;120 is fixed, variable T gives pseudopolynomial cost.\n\nMinimum 3, at indices [1,2,3]. A legal triple achieves 120 and no single/pair can; greedy optimality is not assumed."
     },
     "verification": {
@@ -699,12 +699,12 @@
       "en": "51,060 inventory/target cases against independent subset enumeration; unique indices, exact sums, optimal counts, greedy failure and no reuse.\n\n7,854 inventory/target cases against a subset oracle; all 64 subsets of the selected instance confirm minimum 3 and unique optimal indices [1,2,3]."
     },
     "edge_cases": {
-      "he": "רשימה ריקה; יעד 0; מטבע גדול מהיעד; עריכים שווים; אין פתרון; ערך לא חיובי; יעד גדול וצריכת זיכרון; פתרונות מינימליים רבים.\n\n[\"60 יחיד אינו שני מטבעות; שוויון עריך אינו זהות פיזית.\", \"חמדנות בוחרת 100+15 ונתקעת ביתרה 5.\", \"הכללה ליעד 0 מחזירה קבוצה ריקה; מלאי שאינו מאפשר יעד מחזיר None.\"]",
+      "he": "רשימה ריקה; יעד0; מטבע גדול מהיעד; עריכים שווים; אין פתרון; ערך לא חיובי; יעד גדול וצריכת זיכרון; פתרונות מינימליים רבים.\n\n[\"60 יחיד אינו שני מטבעות; שוויון עריך אינו זהות פיזית.\", \"חמדנות בוחרת 100+15 ונתקעת ביתרה 5.\", \"הכללה ליעד 0 מחזירה קבוצה ריקה; מלאי שאינו מאפשר יעד מחזיר None.\"]",
       "en": "Empty inventory; zero target; oversized coin; duplicate denominations; impossible target; invalid value; large-target memory; multiple minimum subsets.\n\n[\"One 60 coin is not two coins; denomination and physical identity differ.\", \"Greedy takes 100+15 and stalls with unpaid 5.\", \"The general zero target returns an empty subset; unreachable targets return None.\"]"
     },
     "common_mistakes": {
-      "he": "להניח עריכים; להחזיר 7 בלי דרישה לכל סכום; לעדכן DP עולה; למחזר 60 יחיד; להבטיח חמדנות; לשחזר דרך הורים שנדרסו.\n\n[\"שימוש ב־60 פעמיים, או הוספת מטבע 5 שלא ניתן.\", \"הצגת שלישייה בלי להוכיח שאין זוג.\", \"ייחוס המלאי הלימודי למקור הראיון.\"]",
-      "en": "Inventing denominations; answering seven without all-amount coverage; ascending DP; reusing one 60 coin; assuming greedy; backtracking through overwritten parents.\n\n[\"Using 60 twice or inventing an unavailable 5 coin.\", \"Showing a triple without excluding pairs.\", \"Attributing the teaching inventory to the interview source.\"]"
+      "he": "להניח עריכים; להחזיר7 בלי דרישה לכל סכום; לעדכן DP עולה; למחזר60 יחיד; להבטיח חמדנות; לשחזר דרך הורים שנדרסו.\n\n[\"שימוש ב־60 פעמיים, או הוספת מטבע 5 שלא ניתן.\", \"הצגת שלישייה בלי להוכיח שאין זוג.\", \"ייחוס המלאי הלימודי למקור הראיון.\"]",
+      "en": "Inventing denominations; answering seven without all-amount coverage; ascending DP; reusing one60coin; assuming greedy; backtracking through overwritten parents.\n\n[\"Using 60 twice or inventing an unavailable 5 coin.\", \"Showing a triple without excluding pairs.\", \"Attributing the teaching inventory to the interview source.\"]"
     },
     "interview_answer": {
       "he": "ללא מלאי אין מספר יחיד. עם מטבעות פיזיים נתונים אבחר מינימום בין דילוג ולקיחה פעם אחת; שתי האפשרויות משתמשות רק במטבעות הקודמים.\n\nבמלאי הנבחר אבחר 60,35,25 באינדקסים 1,2,3. אין 120 יחיד ואין זוג משלים, ולכן 3 מינימלי. חמדנות נתקעת ב־100+15 למרות הפתרון.",
@@ -715,8 +715,8 @@
       "en": "The source omits denominations, inventory and all-amount coverage. The completion is explicitly parameterized, not reconstruction of missing facts.\n\nThe numerical inventory is an explicitly authored teaching completion, not reconstructed screenshot data. The original insufficiency analysis and parameterized problem remain intact."
     },
     "solution_extensions": {
-      "he": "אם צריך רק מספר מטבעות, צמצמו לשורה אחת ועדכנו בסדר יורד. אם נדרשת מערכת שמכסה כל סכום 0..120, זו בעיה אחרת:7 משקולות בינאריות מספיקות וחסם 2^m≥121 הכרחי.\n\n{\"question\": \"מה משתנה אם נוסף מטבע פיזי נוסף בערך 60?\", \"direction\": \"60+60 נותן כעת פתרון בשני אינדקסים שונים; כל מטבע עדיין חד־פעמי. האלגוריתם אינו משתנה, רק המלאי.\", \"status\": \"המשך לימודי נפרד.\"}",
-      "en": "For count only, use one row updated descending. Designing coins covering every amount 0..120 is different:seven binary weights suffice and 2^m≥121 is necessary.\n\n{\"question\": \"What changes if another physical 60 coin is added?\", \"direction\": \"60+60 now gives two distinct indices; each coin remains single-use. The algorithm is unchanged, only inventory changes.\", \"status\": \"Separate teaching follow-up.\"}"
+      "he": "אם צריך רק מספר מטבעות, צמצמו לשורה אחת ועדכנו בסדר יורד. אם נדרשת מערכת שמכסה כל סכום0..120, זו בעיה אחרת:7 משקולות בינאריות מספיקות וחסם2^m≥121 הכרחי.\n\n{\"question\": \"מה משתנה אם נוסף מטבע פיזי נוסף בערך 60?\", \"direction\": \"60+60 נותן כעת פתרון בשני אינדקסים שונים; כל מטבע עדיין חד־פעמי. האלגוריתם אינו משתנה, רק המלאי.\", \"status\": \"המשך לימודי נפרד.\"}",
+      "en": "For count only, use one row updated descending. Designing coins covering every amount0..120 is different:seven binary weights suffice and2^m≥121 is necessary.\n\n{\"question\": \"What changes if another physical 60 coin is added?\", \"direction\": \"60+60 now gives two distinct indices; each coin remains single-use. The algorithm is unchanged, only inventory changes.\", \"status\": \"Separate teaching follow-up.\"}"
     },
     "technical_references": {
       "he": [

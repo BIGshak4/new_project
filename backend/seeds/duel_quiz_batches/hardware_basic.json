@@ -1706,8 +1706,8 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מזיזים את המילה ללא סימן 00010011 שמאלה בביט אחד, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
-      "en": "Shift unsigned 00010011 left by 1 bit position, insert zeros on the right, and keep only 8 bits. What is stored?"
+      "he": "מזיזים את המילה הלא מסומנת 00010011 שמאלה ב־1 מיקומים, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
+      "en": "Shift unsigned 00010011 left by 1 positions, insert zeros on the right, and keep only 8 bits. What is stored?"
     },
     "choices": [
       {
@@ -1740,8 +1740,8 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מזיזים את המילה ללא סימן 01000111 שמאלה בביט אחד, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
-      "en": "Shift unsigned 01000111 left by 1 bit position, insert zeros on the right, and keep only 8 bits. What is stored?"
+      "he": "מזיזים את המילה הלא מסומנת 01000111 שמאלה ב־1 מיקומים, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
+      "en": "Shift unsigned 01000111 left by 1 positions, insert zeros on the right, and keep only 8 bits. What is stored?"
     },
     "choices": [
       {
@@ -1774,8 +1774,8 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מזיזים את המילה ללא סימן 00101101 שמאלה ב־2 ביטים, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
-      "en": "Shift unsigned 00101101 left by 2 bit positions, insert zeros on the right, and keep only 8 bits. What is stored?"
+      "he": "מזיזים את המילה הלא מסומנת 00101101 שמאלה ב־2 מיקומים, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
+      "en": "Shift unsigned 00101101 left by 2 positions, insert zeros on the right, and keep only 8 bits. What is stored?"
     },
     "choices": [
       {
@@ -1808,8 +1808,8 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מזיזים את המילה ללא סימן 10000001 שמאלה בביט אחד, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
-      "en": "Shift unsigned 10000001 left by 1 bit position, insert zeros on the right, and keep only 8 bits. What is stored?"
+      "he": "מזיזים את המילה הלא מסומנת 10000001 שמאלה ב־1 מיקומים, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
+      "en": "Shift unsigned 10000001 left by 1 positions, insert zeros on the right, and keep only 8 bits. What is stored?"
     },
     "choices": [
       {
@@ -1842,8 +1842,8 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מזיזים את המילה ללא סימן 00001101 שמאלה ב־3 ביטים, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
-      "en": "Shift unsigned 00001101 left by 3 bit positions, insert zeros on the right, and keep only 8 bits. What is stored?"
+      "he": "מזיזים את המילה הלא מסומנת 00001101 שמאלה ב־3 מיקומים, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
+      "en": "Shift unsigned 00001101 left by 3 positions, insert zeros on the right, and keep only 8 bits. What is stored?"
     },
     "choices": [
       {
@@ -4959,7 +4959,7 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "2 ביטים מספקים 4 קודים; מספר הקודים הפנויים לאחר הקצאת 3 הוא 1.",
+      "he": "2 ביטים מספקים 4 קודים; לאחר הקצאת 3 נותרו 1.",
       "en": "2 bits provide 4 codes; assigning 3 leaves 1."
     }
   },
@@ -4993,7 +4993,7 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "3 ביטים מספקים 8 קודים; מספר הקודים הפנויים לאחר הקצאת 5 הוא 3.",
+      "he": "3 ביטים מספקים 8 קודים; לאחר הקצאת 5 נותרו 3.",
       "en": "3 bits provide 8 codes; assigning 5 leaves 3."
     }
   },
@@ -5027,7 +5027,7 @@
     ],
     "correct": 0,
     "explanation": {
-      "he": "3 ביטים מספקים 8 קודים; מספר הקודים הפנויים לאחר הקצאת 7 הוא 1.",
+      "he": "3 ביטים מספקים 8 קודים; לאחר הקצאת 7 נותרו 1.",
       "en": "3 bits provide 8 codes; assigning 7 leaves 1."
     }
   },
@@ -5061,7 +5061,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "4 ביטים מספקים 16 קודים; מספר הקודים הפנויים לאחר הקצאת 9 הוא 7.",
+      "he": "4 ביטים מספקים 16 קודים; לאחר הקצאת 9 נותרו 7.",
       "en": "4 bits provide 16 codes; assigning 9 leaves 7."
     }
   },
@@ -5095,7 +5095,7 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "4 ביטים מספקים 16 קודים; מספר הקודים הפנויים לאחר הקצאת 12 הוא 4.",
+      "he": "4 ביטים מספקים 16 קודים; לאחר הקצאת 12 נותרו 4.",
       "en": "4 bits provide 16 codes; assigning 12 leaves 4."
     }
   },
@@ -5956,7 +5956,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מפיקים ביט y=1 עבור מספר אי־זוגי ללא סימן ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 101101, 001010, 111111, 100000 לפי הסדר?",
+      "he": "מפיקים ביט y=1 עבור מספר לא מסומן אי־זוגי ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 101101, 001010, 111111, 100000 לפי הסדר?",
       "en": "Produce y=1 for an odd unsigned integer and y=0 for an even integer. What are the y values for 101101, 001010, 111111, 100000 in order?"
     },
     "choices": [
@@ -5990,7 +5990,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מפיקים ביט y=1 עבור מספר אי־זוגי ללא סימן ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 000001, 101000, 001100, 110011 לפי הסדר?",
+      "he": "מפיקים ביט y=1 עבור מספר לא מסומן אי־זוגי ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 000001, 101000, 001100, 110011 לפי הסדר?",
       "en": "Produce y=1 for an odd unsigned integer and y=0 for an even integer. What are the y values for 000001, 101000, 001100, 110011 in order?"
     },
     "choices": [
@@ -6024,7 +6024,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מפיקים ביט y=1 עבור מספר אי־זוגי ללא סימן ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 100101, 111000, 010101, 000000 לפי הסדר?",
+      "he": "מפיקים ביט y=1 עבור מספר לא מסומן אי־זוגי ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 100101, 111000, 010101, 000000 לפי הסדר?",
       "en": "Produce y=1 for an odd unsigned integer and y=0 for an even integer. What are the y values for 100101, 111000, 010101, 000000 in order?"
     },
     "choices": [
@@ -6058,7 +6058,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מפיקים ביט y=1 עבור מספר אי־זוגי ללא סימן ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 101010, 001111, 110000, 100111 לפי הסדר?",
+      "he": "מפיקים ביט y=1 עבור מספר לא מסומן אי־זוגי ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 101010, 001111, 110000, 100111 לפי הסדר?",
       "en": "Produce y=1 for an odd unsigned integer and y=0 for an even integer. What are the y values for 101010, 001111, 110000, 100111 in order?"
     },
     "choices": [
@@ -6092,7 +6092,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מפיקים ביט y=1 עבור מספר אי־זוגי ללא סימן ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 011001, 110110, 000010, 001101 לפי הסדר?",
+      "he": "מפיקים ביט y=1 עבור מספר לא מסומן אי־זוגי ו־y=0 עבור מספר זוגי. מהם ערכי y עבור 011001, 110110, 000010, 001101 לפי הסדר?",
       "en": "Produce y=1 for an odd unsigned integer and y=0 for an even integer. What are the y values for 011001, 110110, 000010, 001101 in order?"
     },
     "choices": [
@@ -6126,7 +6126,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהו הייצוג של המספר ללא סימן 19 בדיוק ב־5 ביטים?",
+      "he": "מהו הייצוג של המספר הלא מסומן 19 בדיוק ב־5 ביטים?",
       "en": "What is the representation of unsigned 19 using exactly 5 bits?"
     },
     "choices": [
@@ -6160,7 +6160,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהו הייצוג של המספר ללא סימן 42 בדיוק ב־6 ביטים?",
+      "he": "מהו הייצוג של המספר הלא מסומן 42 בדיוק ב־6 ביטים?",
       "en": "What is the representation of unsigned 42 using exactly 6 bits?"
     },
     "choices": [
@@ -6194,7 +6194,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהו הייצוג של המספר ללא סימן 57 בדיוק ב־6 ביטים?",
+      "he": "מהו הייצוג של המספר הלא מסומן 57 בדיוק ב־6 ביטים?",
       "en": "What is the representation of unsigned 57 using exactly 6 bits?"
     },
     "choices": [
@@ -6228,7 +6228,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהו הייצוג של המספר ללא סימן 70 בדיוק ב־7 ביטים?",
+      "he": "מהו הייצוג של המספר הלא מסומן 70 בדיוק ב־7 ביטים?",
       "en": "What is the representation of unsigned 70 using exactly 7 bits?"
     },
     "choices": [
@@ -6262,7 +6262,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהו הייצוג של המספר ללא סימן 11 בדיוק ב־5 ביטים?",
+      "he": "מהו הייצוג של המספר הלא מסומן 11 בדיוק ב־5 ביטים?",
       "en": "What is the representation of unsigned 11 using exactly 5 bits?"
     },
     "choices": [
@@ -6296,7 +6296,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהם ערכי המילה 1101 בפירוש ללא סימן ובפירוש משלים ל־2 ברוחב 4 ביטים, בסדר זה?",
+      "he": "מהם ערכי המילה 1101 בפירוש לא מסומן ובפירוש משלים ל־2 ברוחב 4 ביטים, בסדר זה?",
       "en": "What are the values of word 1101 under unsigned and 4-bit two's-complement interpretations, in that order?"
     },
     "choices": [
@@ -6330,7 +6330,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהם ערכי המילה 1011 בפירוש ללא סימן ובפירוש משלים ל־2 ברוחב 4 ביטים, בסדר זה?",
+      "he": "מהם ערכי המילה 1011 בפירוש לא מסומן ובפירוש משלים ל־2 ברוחב 4 ביטים, בסדר זה?",
       "en": "What are the values of word 1011 under unsigned and 4-bit two's-complement interpretations, in that order?"
     },
     "choices": [
@@ -6364,7 +6364,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהם ערכי המילה 11100 בפירוש ללא סימן ובפירוש משלים ל־2 ברוחב 5 ביטים, בסדר זה?",
+      "he": "מהם ערכי המילה 11100 בפירוש לא מסומן ובפירוש משלים ל־2 ברוחב 5 ביטים, בסדר זה?",
       "en": "What are the values of word 11100 under unsigned and 5-bit two's-complement interpretations, in that order?"
     },
     "choices": [
@@ -6398,7 +6398,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהם ערכי המילה 10010 בפירוש ללא סימן ובפירוש משלים ל־2 ברוחב 5 ביטים, בסדר זה?",
+      "he": "מהם ערכי המילה 10010 בפירוש לא מסומן ובפירוש משלים ל־2 ברוחב 5 ביטים, בסדר זה?",
       "en": "What are the values of word 10010 under unsigned and 5-bit two's-complement interpretations, in that order?"
     },
     "choices": [
@@ -6432,7 +6432,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מהם ערכי המילה 0110 בפירוש ללא סימן ובפירוש משלים ל־2 ברוחב 4 ביטים, בסדר זה?",
+      "he": "מהם ערכי המילה 0110 בפירוש לא מסומן ובפירוש משלים ל־2 ברוחב 4 ביטים, בסדר זה?",
       "en": "What are the values of word 0110 under unsigned and 4-bit two's-complement interpretations, in that order?"
     },
     "choices": [
@@ -6659,7 +6659,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "במילה הנכונה יש בדיוק ביט אחד שערכו 1; מילה שכולה אפסים אינה one-hot.",
+      "he": "במילה הנכונה יש בדיוק 1 אחד; מילה שכולה אפסים אינה one-hot.",
       "en": "The correct word has exactly one 1; an all-zero word is not one-hot."
     }
   },
@@ -6693,7 +6693,7 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "במילה הנכונה יש בדיוק ביט אחד שערכו 1; מילה שכולה אפסים אינה one-hot.",
+      "he": "במילה הנכונה יש בדיוק 1 אחד; מילה שכולה אפסים אינה one-hot.",
       "en": "The correct word has exactly one 1; an all-zero word is not one-hot."
     }
   },
@@ -6727,7 +6727,7 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "במילה הנכונה יש בדיוק ביט אחד שערכו 1; מילה שכולה אפסים אינה one-hot.",
+      "he": "במילה הנכונה יש בדיוק 1 אחד; מילה שכולה אפסים אינה one-hot.",
       "en": "The correct word has exactly one 1; an all-zero word is not one-hot."
     }
   },
@@ -6761,7 +6761,7 @@
     ],
     "correct": 0,
     "explanation": {
-      "he": "במילה הנכונה יש בדיוק ביט אחד שערכו 1; מילה שכולה אפסים אינה one-hot.",
+      "he": "במילה הנכונה יש בדיוק 1 אחד; מילה שכולה אפסים אינה one-hot.",
       "en": "The correct word has exactly one 1; an all-zero word is not one-hot."
     }
   },
@@ -6795,7 +6795,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "במילה הנכונה יש בדיוק ביט אחד שערכו 1; מילה שכולה אפסים אינה one-hot.",
+      "he": "במילה הנכונה יש בדיוק 1 אחד; מילה שכולה אפסים אינה one-hot.",
       "en": "The correct word has exactly one 1; an all-zero word is not one-hot."
     }
   },
@@ -7316,7 +7316,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 3 ביטים מתחיל ב־011. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=1, 0, 1, 1, מה נשמר אחרי כל חזית?",
+      "he": "מונה לא מסומן בן 3 ביטים מתחיל ב־011. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=1, 0, 1, 1, מה נשמר אחרי כל חזית?",
       "en": "A 3-bit unsigned counter starts at 011. At each rising edge it increments only if EN=1; otherwise it holds. Keep only 3 bits, with no reset. For EN=1, 0, 1, 1, what is stored after each edge?"
     },
     "choices": [
@@ -7350,7 +7350,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 3 ביטים מתחיל ב־110. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=1, 1, 0, 1, מה נשמר אחרי כל חזית?",
+      "he": "מונה לא מסומן בן 3 ביטים מתחיל ב־110. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=1, 1, 0, 1, מה נשמר אחרי כל חזית?",
       "en": "A 3-bit unsigned counter starts at 110. At each rising edge it increments only if EN=1; otherwise it holds. Keep only 3 bits, with no reset. For EN=1, 1, 0, 1, what is stored after each edge?"
     },
     "choices": [
@@ -7384,7 +7384,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 3 ביטים מתחיל ב־000. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=0, 1, 0, 1, מה נשמר אחרי כל חזית?",
+      "he": "מונה לא מסומן בן 3 ביטים מתחיל ב־000. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=0, 1, 0, 1, מה נשמר אחרי כל חזית?",
       "en": "A 3-bit unsigned counter starts at 000. At each rising edge it increments only if EN=1; otherwise it holds. Keep only 3 bits, with no reset. For EN=0, 1, 0, 1, what is stored after each edge?"
     },
     "choices": [
@@ -7418,7 +7418,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 3 ביטים מתחיל ב־111. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=1, 1, 1, 0, מה נשמר אחרי כל חזית?",
+      "he": "מונה לא מסומן בן 3 ביטים מתחיל ב־111. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=1, 1, 1, 0, מה נשמר אחרי כל חזית?",
       "en": "A 3-bit unsigned counter starts at 111. At each rising edge it increments only if EN=1; otherwise it holds. Keep only 3 bits, with no reset. For EN=1, 1, 1, 0, what is stored after each edge?"
     },
     "choices": [
@@ -7452,7 +7452,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 3 ביטים מתחיל ב־100. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=0, 0, 1, 1, מה נשמר אחרי כל חזית?",
+      "he": "מונה לא מסומן בן 3 ביטים מתחיל ב־100. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN=0, 0, 1, 1, מה נשמר אחרי כל חזית?",
       "en": "A 3-bit unsigned counter starts at 100. At each rising edge it increments only if EN=1; otherwise it holds. Keep only 3 bits, with no reset. For EN=0, 0, 1, 1, what is stored after each edge?"
     },
     "choices": [
@@ -7486,8 +7486,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 3 ביטים מתחיל ב־0. הוא קטן ב־1 בכל חזית עולה, שומר רק 3 ביטים וללא איפוס. מה נשמר אחרי חזית אחת?",
-      "en": "A 3-bit unsigned counter starts at 0. It decrements by 1 on each rising edge, keeps only 3 bits, and has no reset. What is stored after 1 edge?"
+      "he": "מונה לא מסומן בן 3 ביטים מתחיל ב־0. הוא קטן ב־1 בכל חזית עולה, שומר רק 3 ביטים וללא איפוס. מה נשמר אחרי 1 חזיתות?",
+      "en": "A 3-bit unsigned counter starts at 0. It decrements by 1 on each rising edge, keeps only 3 bits, and has no reset. What is stored after 1 edges?"
     },
     "choices": [
       {
@@ -7520,7 +7520,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 4 ביטים מתחיל ב־0. הוא קטן ב־1 בכל חזית עולה, שומר רק 4 ביטים וללא איפוס. מה נשמר אחרי 2 חזיתות?",
+      "he": "מונה לא מסומן בן 4 ביטים מתחיל ב־0. הוא קטן ב־1 בכל חזית עולה, שומר רק 4 ביטים וללא איפוס. מה נשמר אחרי 2 חזיתות?",
       "en": "A 4-bit unsigned counter starts at 0. It decrements by 1 on each rising edge, keeps only 4 bits, and has no reset. What is stored after 2 edges?"
     },
     "choices": [
@@ -7554,7 +7554,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 3 ביטים מתחיל ב־1. הוא קטן ב־1 בכל חזית עולה, שומר רק 3 ביטים וללא איפוס. מה נשמר אחרי 3 חזיתות?",
+      "he": "מונה לא מסומן בן 3 ביטים מתחיל ב־1. הוא קטן ב־1 בכל חזית עולה, שומר רק 3 ביטים וללא איפוס. מה נשמר אחרי 3 חזיתות?",
       "en": "A 3-bit unsigned counter starts at 1. It decrements by 1 on each rising edge, keeps only 3 bits, and has no reset. What is stored after 3 edges?"
     },
     "choices": [
@@ -7588,8 +7588,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 5 ביטים מתחיל ב־0. הוא קטן ב־1 בכל חזית עולה, שומר רק 5 ביטים וללא איפוס. מה נשמר אחרי חזית אחת?",
-      "en": "A 5-bit unsigned counter starts at 0. It decrements by 1 on each rising edge, keeps only 5 bits, and has no reset. What is stored after 1 edge?"
+      "he": "מונה לא מסומן בן 5 ביטים מתחיל ב־0. הוא קטן ב־1 בכל חזית עולה, שומר רק 5 ביטים וללא איפוס. מה נשמר אחרי 1 חזיתות?",
+      "en": "A 5-bit unsigned counter starts at 0. It decrements by 1 on each rising edge, keeps only 5 bits, and has no reset. What is stored after 1 edges?"
     },
     "choices": [
       {
@@ -7622,7 +7622,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה ללא סימן בן 4 ביטים מתחיל ב־2. הוא קטן ב־1 בכל חזית עולה, שומר רק 4 ביטים וללא איפוס. מה נשמר אחרי 4 חזיתות?",
+      "he": "מונה לא מסומן בן 4 ביטים מתחיל ב־2. הוא קטן ב־1 בכל חזית עולה, שומר רק 4 ביטים וללא איפוס. מה נשמר אחרי 4 חזיתות?",
       "en": "A 4-bit unsigned counter starts at 2. It decrements by 1 on each rising edge, keeps only 4 bits, and has no reset. What is stored after 4 edges?"
     },
     "choices": [
@@ -7656,8 +7656,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=1 יציב כנדרש סביב החזית העולה הראשונה. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
-      "en": "A D flip-flop has no reset or specified initial value. D=1 is stable as required around the first rising edge. What is guaranteed about Q before the first edge and after the final edge, in that order?"
+      "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=1 יציב כנדרש סביב כל אחת מ־1 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+      "en": "A D flip-flop has no reset or specified initial value. D=1 is stable as required around each of the first 1 rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?"
     },
     "choices": [
       {
@@ -7690,8 +7690,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=0 יציב כנדרש סביב החזית העולה הראשונה. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
-      "en": "A D flip-flop has no reset or specified initial value. D=0 is stable as required around the first rising edge. What is guaranteed about Q before the first edge and after the final edge, in that order?"
+      "he": "לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D=0 יציב כנדרש סביב כל אחת מ־1 החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+      "en": "A D flip-flop has no reset or specified initial value. D=0 is stable as required around each of the first 1 rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?"
     },
     "choices": [
       {
@@ -7826,7 +7826,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה בינארי ללא סימן בן 3 ביטים מתחיל ב־000 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 0 אחרי 4 החזיתות הראשונות?",
+      "he": "מונה בינארי לא מסומן בן 3 ביטים מתחיל ב־000 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 0 אחרי 4 החזיתות הראשונות?",
       "en": "A 3-bit unsigned binary counter starts at 000 and increments on each rising edge, wrapping with no reset. Bit 0 is the rightmost bit. What are the values of bit 0 after the first 4 edges?"
     },
     "choices": [
@@ -7849,8 +7849,8 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "ביט 0 מחליף ערך כל צעד; עוקבים אחר קוד המונה בכל חזית.",
-      "en": "Bit 0 toggles every increment; trace the counter code at each edge."
+      "he": "ביט 0 מחליף ערך כל 1 צעדים; עוקבים אחר קוד המונה בכל חזית.",
+      "en": "Bit 0 toggles every 1 increments; trace the counter code at each edge."
     }
   },
   {
@@ -7860,7 +7860,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה בינארי ללא סימן בן 3 ביטים מתחיל ב־000 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 1 אחרי 4 החזיתות הראשונות?",
+      "he": "מונה בינארי לא מסומן בן 3 ביטים מתחיל ב־000 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 1 אחרי 4 החזיתות הראשונות?",
       "en": "A 3-bit unsigned binary counter starts at 000 and increments on each rising edge, wrapping with no reset. Bit 0 is the rightmost bit. What are the values of bit 1 after the first 4 edges?"
     },
     "choices": [
@@ -7894,7 +7894,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה בינארי ללא סימן בן 3 ביטים מתחיל ב־010 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 0 אחרי 5 החזיתות הראשונות?",
+      "he": "מונה בינארי לא מסומן בן 3 ביטים מתחיל ב־010 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 0 אחרי 5 החזיתות הראשונות?",
       "en": "A 3-bit unsigned binary counter starts at 010 and increments on each rising edge, wrapping with no reset. Bit 0 is the rightmost bit. What are the values of bit 0 after the first 5 edges?"
     },
     "choices": [
@@ -7917,8 +7917,8 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "ביט 0 מחליף ערך כל צעד; עוקבים אחר קוד המונה בכל חזית.",
-      "en": "Bit 0 toggles every increment; trace the counter code at each edge."
+      "he": "ביט 0 מחליף ערך כל 1 צעדים; עוקבים אחר קוד המונה בכל חזית.",
+      "en": "Bit 0 toggles every 1 increments; trace the counter code at each edge."
     }
   },
   {
@@ -7928,7 +7928,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה בינארי ללא סימן בן 3 ביטים מתחיל ב־001 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 1 אחרי 5 החזיתות הראשונות?",
+      "he": "מונה בינארי לא מסומן בן 3 ביטים מתחיל ב־001 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 1 אחרי 5 החזיתות הראשונות?",
       "en": "A 3-bit unsigned binary counter starts at 001 and increments on each rising edge, wrapping with no reset. Bit 0 is the rightmost bit. What are the values of bit 1 after the first 5 edges?"
     },
     "choices": [
@@ -7962,7 +7962,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה בינארי ללא סימן בן 3 ביטים מתחיל ב־011 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 2 אחרי 5 החזיתות הראשונות?",
+      "he": "מונה בינארי לא מסומן בן 3 ביטים מתחיל ב־011 וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט 2 אחרי 5 החזיתות הראשונות?",
       "en": "A 3-bit unsigned binary counter starts at 011 and increments on each rising edge, wrapping with no reset. Bit 0 is the rightmost bit. What are the values of bit 2 after the first 5 edges?"
     },
     "choices": [
@@ -8846,8 +8846,8 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "מונה בן 2 ביטים מתקדם במחזור 00→01→10→00. עבור המצב הלא חוקי 11 הוגדר מעבר התאוששות אל 00. מתחילים ב־11 ואין איפוס. מהו המצב לאחר חזית עולה אחת?",
-      "en": "A 2-bit counter follows 00→01→10→00. Invalid state 11 has a recovery transition to 00. Start in 11 with no reset. What is the state after 1 rising edge?"
+      "he": "מונה בן 2 ביטים מתקדם במחזור 00→01→10→00. עבור המצב הלא חוקי 11 הוגדר מעבר התאוששות אל 00. מתחילים ב־11 ואין איפוס. מהו המצב לאחר 1 חזיתות עולות?",
+      "en": "A 2-bit counter follows 00→01→10→00. Invalid state 11 has a recovery transition to 00. Start in 11 with no reset. What is the state after 1 rising edges?"
     },
     "choices": [
       {
@@ -8914,8 +8914,8 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "מונה בן 2 ביטים מתקדם במחזור 00→01→10→00. עבור המצב הלא חוקי 11 הוגדר מעבר התאוששות אל 01. מתחילים ב־11 ואין איפוס. מהו המצב לאחר חזית עולה אחת?",
-      "en": "A 2-bit counter follows 00→01→10→00. Invalid state 11 has a recovery transition to 01. Start in 11 with no reset. What is the state after 1 rising edge?"
+      "he": "מונה בן 2 ביטים מתקדם במחזור 00→01→10→00. עבור המצב הלא חוקי 11 הוגדר מעבר התאוששות אל 01. מתחילים ב־11 ואין איפוס. מהו המצב לאחר 1 חזיתות עולות?",
+      "en": "A 2-bit counter follows 00→01→10→00. Invalid state 11 has a recovery transition to 01. Start in 11 with no reset. What is the state after 1 rising edges?"
     },
     "choices": [
       {

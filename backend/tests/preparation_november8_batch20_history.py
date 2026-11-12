@@ -11,7 +11,6 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-from tests.copy_november12_history import before_current_copy
 
 def digest(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -43,7 +42,6 @@ def compiled_projections():
 
 
 def before_batch1108b20_compiled(question):
-    question = before_current_copy("preparation", f"compiled:{question['key']}", question)
     ident = question["assets"]["preparation_id"]
     if ident not in baseline()["records"]:
         return copy.deepcopy(question)
@@ -80,7 +78,6 @@ def before_batch1108b20_compiled(question):
 
 
 def before_batch1108b20_localized(ident, value):
-    value = before_current_copy("preparation", f"localized:{ident}", value)
     if ident not in baseline()["localized_material"]:
         return copy.deepcopy(value)
     frozen = baseline()["localized_material"][ident]

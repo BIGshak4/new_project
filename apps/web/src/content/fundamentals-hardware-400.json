@@ -10,7 +10,7 @@
       "en": "Same curve, different capacitance"
     },
     "prompt": {
-      "he": "נמדד קבוע זמן tau=2 ms. איזה C ב־µF מתאים אם R=1kΩ? R אינו ידוע מהעקומה לבדה.",
+      "he": "נמדדה קבועת זמן tau=2 ms. איזה C ב־µF מתאים אם R=1kΩ? R אינו ידוע מהעקומה לבדה.",
       "en": "Measured tau=2 ms. What C in µF fits R=1kΩ? The curve alone does not specify R."
     },
     "answer": {
@@ -107,7 +107,7 @@
     },
     "answer": {
       "he": "6. המודל מתיר overshoot: מוסיפים ל־C את אותה קפיצה. רכיב פיזי עשוי לכלול הגנה, שמשנה גם את מצב הקבל.",
-      "en": "6. The model permits overshoot: add the same step to C. Physical protection may limit it and change capacitor history."
+      "en": "6. The model permits overshoot:add the same step to C. Physical protection may limit it and change capacitor history."
     },
     "takeaway": {
       "he": "אין להוסיף דיודת הגנה למודל שלא הגדיר אותה.",
@@ -175,7 +175,7 @@
       "en": "In a MOS model, the action is implanting donors in the source. Which result fits?"
     },
     "answer": {
-      "he": "סימום קבוע של החומר. השתלת מזהמים יוצרת אזור חומר מסומם; מתח שער יוצר שכבת היפוך הפיכה ואינו מחליף את הרכב המזהמים.",
+      "he": "זיהום קבוע של החומר. השתלת מזהמים יוצרת אזור חומר מסומם; מתח שער יוצר שכבת היפוך הפיכה ואינו מחליף את הרכב המזהמים.",
       "en": "Permanent material doping. Implantation changes material doping; gate bias creates a reversible inversion layer without replacing dopants."
     },
     "takeaway": {
@@ -291,7 +291,7 @@
     },
     "answer": {
       "he": "0.5. שני מסלולים מוליכים יוצרים זרם גם בלי מיתוג: I=VDD/(Rup+Rdown). זוהי המחשת התנגדויות, לא מודל MOS מדויק.",
-      "en": "0.5. Both conducting paths create current without switching: I=VDD/(Rup+Rdown). This resistance illustration is not an exact MOS model."
+      "en": "0.5. Both conducting paths create current without switching:I=VDD/(Rup+Rdown). This resistance illustration is not an exact MOS model."
     },
     "takeaway": {
       "he": "פלט יציב אינו מבטיח שההספק הסטטי אפס.",
@@ -332,7 +332,7 @@
       "en": "Zero voltage, maximum current"
     },
     "prompt": {
-      "he": "ב־LC אידאלי, V0=2V, C=1F, L=1H וזרם התחלתי 0. ברבע מחזור ראשון מתח הקבל 0. מהו זרם הסליל, כשהכיוון החיובי מוגדר כלפי מטה?",
+      "he": "ב־LC אידאלי, V0=2V, C=1F, L=1H וזרם התחלתי 0. ברבע מחזור ראשון מתח הקבל 0. מהו זרם הסליל החיובי כלפי מטה?",
       "en": "In ideal LC, V0=2V, C=1F, L=1H and initial current 0. At the first quarter-period capacitor voltage is 0. What is downward inductor current?"
     },
     "answer": {
@@ -360,7 +360,7 @@
     },
     "answer": {
       "he": "-1. vC=V0 cos(ωt). בחצי מחזור cos(π)=−1; האנרגיה חזרה לקבל בקוטביות הפוכה.",
-      "en": "-1. vC=V0 cos(ωt). At half a period cos(π)=−1: energy is back in the capacitor with reversed polarity."
+      "en": "-1. vC=V0 cos(ωt). At half a period cos(π)=−1:energy is back in the capacitor with reversed polarity."
     },
     "takeaway": {
       "he": "סליל אינו רק נגד שמרוקן קבל.",
@@ -401,8 +401,8 @@
       "en": "Count the whole buffered path"
     },
     "prompt": {
-      "he": "מודל באפר: Rs=10, Cin=1, Rb=1, CL=20, tb=2, ביחידות עקביות. מה אומדן ההשהיה ln(2)(RsCin+RbCL)+tb?",
-      "en": "Buffer model: Rs=10, Cin=1, Rb=1, CL=20, tb=2, in consistent units. What is ln(2)(RsCin+RbCL)+tb?"
+      "he": "מודל באפר:Rs=10, Cin=1, Rb=1, CL=20, tb=2, ביחידות עקביות. מה אומדן ההשהיה ln(2)(RsCin+RbCL)+tb?",
+      "en": "Buffer model:Rs=10, Cin=1, Rb=1, CL=20, tb=2, in consistent units. What is ln(2)(RsCin+RbCL)+tb?"
     },
     "answer": {
       "he": "22.7944. המקור טוען את Cin, ואז הבאפר מניע את CL. מוסיפים גם tb; לא משווים רק התנגדות יציאה.",
@@ -447,8 +447,8 @@
       "en": "An LED also needs current limiting"
     },
     "prompt": {
-      "he": "לד טורי: Vs=5V, Vf=2V, נפילת דרייבר Vd=0V וזרם רצוי 3 mA. איזה נגד ב־kΩ נותן המודל האידאלי?",
-      "en": "Series LED: Vs=5V, Vf=2V, driver drop Vd=0V, target current 3 mA. What resistor in kΩ follows the ideal model?"
+      "he": "לד טורי:Vs=5V, Vf=2V, נפילת דרייבר Vd=0V וזרם רצוי 3 mA. איזה נגד ב־kΩ נותן המודל האידאלי?",
+      "en": "Series LED:Vs=5V, Vf=2V, driver drop Vd=0V, target current 3 mA. What resistor in kΩ follows the ideal model?"
     },
     "answer": {
       "he": "1. R=(Vs−Vf−Vd)/I. זו המחשה; במימוש בודקים טווח Vf, דירוגי זרם והספק, ולא מניחים ששער מספק זרם בלתי מוגבל.",
@@ -608,8 +608,8 @@
       "en": "Activity windows matter"
     },
     "prompt": {
-      "he": "להערכת חפיפה בלבד, מעבר הקורבן פעיל ב־[1, 4] ns ומעבר השכן ב־[2, 5] ns. כמה ns חופפים? אין כאן חישוב delay פיזי.",
-      "en": "For overlap accounting only, the victim transition spans [1, 4] ns and the aggressor spans [2, 5] ns. How many ns overlap? This is not physical delay."
+      "he": "להערכת חפיפה בלבד, מעבר הקורבן פעיל ב־[1, 4]ns ומעבר השכן ב־[2, 5]ns. כמה ns חופפים? אין כאן חישוב delay פיזי.",
+      "en": "For overlap accounting only, the victim transition spans[1, 4]ns and the aggressor spans[2, 5]ns. How many ns overlap? This is not physical delay."
     },
     "answer": {
       "he": "2. אורך החיתוך הוא max(0, min(ends)−max(starts)). חלון ללא חפיפה שונה ממעברים מיושרים גם אם שני הביטים מסיימים באותם ערכים.",
@@ -631,8 +631,8 @@
       "en": "A shield also adds load"
     },
     "prompt": {
-      "he": "במודל מעבר נגדי, Ceff=Cg+2 Cc. לפני מגן: Cg=2, Cc=2; אחריו: Cg=3, Cc=0.5. מה השינוי Ceff_after−Ceff_before?",
-      "en": "For opposite ramps, Ceff=Cg+2 Cc. Before shielding: Cg=2, Cc=2; afterward: Cg=3, Cc=0.5. What is Ceff_after−Ceff_before?"
+      "he": "במודל מעבר נגדי, Ceff=Cg+2 Cc. לפני מגן:Cg=2, Cc=2; אחריו:Cg=3, Cc=0.5. מה השינוי Ceff_after−Ceff_before?",
+      "en": "For opposite ramps, Ceff=Cg+2 Cc. Before shielding:Cg=2, Cc=2; afterward:Cg=3, Cc=0.5. What is Ceff_after−Ceff_before?"
     },
     "answer": {
       "he": "-2. מחשבים את שתי התרומות. מגן יכול להקטין Cc ולהגדיל Cg, ולכן צריך להעריך מחדש השהיה והספק במקום להניח שיפור חינם.",
@@ -654,7 +654,7 @@
       "en": "A sine wave invisible to sampling"
     },
     "prompt": {
-      "he": "דוגמים x(t)=sin(2π·1t+φ), ב־fs=2·1 וב־φ=0π. מהן ארבע הדגימות עבור n=0, 1, 2, 3?",
+      "he": "דוגמים x(t)=sin(2π·1t+φ), ב־fs=2·1 וב־φ=0π. מה ארבע הדגימות עבור n=0, 1, 2, 3?",
       "en": "Sample x(t)=sin(2π·1t+φ) at fs=2·1, with φ=0π. What are samples n=0, 1, 2, 3?"
     },
     "answer": {
@@ -677,7 +677,7 @@
       "en": "After aliasing, it is too late"
     },
     "prompt": {
-      "he": "קוסינוס בתדר 18 kHz נדגם ב־fs=20 kHz. מה תדר ה־alias הלא־שלילי בתחום 0..fs/2? נניח דגימה אחידה אידאלית.",
+      "he": "קוסינוס בתדר 18 kHz נדגם ב־fs=20 kHz. מה תדר ה־alias החיובי בתחום 0..fs/2? נניח דגימה אחידה אידאלית.",
       "en": "A cosine at 18 kHz is sampled at fs=20 kHz. What is its nonnegative alias in 0..fs/2 under ideal uniform sampling?"
     },
     "answer": {
@@ -700,8 +700,8 @@
       "en": "Bandwidth is not the whole story"
     },
     "prompt": {
-      "he": "לפס ממשי חיובי (90, 110), ובחירת m=5>1, מה גבולות חלון fs: 2 fh/m < fs < 2 fl/(m−1)? הגבולות עצמם אינם כלולים.",
-      "en": "For positive real band (90, 110) and m=5>1, what are the bounds of 2 fh/m < fs < 2 fl/(m−1)? Endpoints are excluded."
+      "he": "לפס ממשי חיובי(90, 110), ובחירת m=5>1, מה גבולות חלון fs:2 fh/m < fs < 2 fl/(m−1)? הגבולות עצמם אינם כלולים.",
+      "en": "For positive real band(90, 110) and m=5>1, what are the bounds of 2 fh/m < fs < 2 fl/(m−1)? Endpoints are excluded."
     },
     "answer": {
       "he": "44, 45. שני הגבולות מונעים חפיפה בין עותקים ספקטרליים גם עם הפס השלילי. דרישה fs>2·bandwidth לבדה אינה מספיקה לכל מיקום.",
@@ -723,11 +723,11 @@
       "en": "An open bound is a real condition"
     },
     "prompt": {
-      "he": "החוזה דורש חלון פתוח לפס (90, 110), m=5: 2 fh/m < fs < 2 fl/(m−1). האם fs=44.5 נמצא בתוכו?",
-      "en": "The contract requires the open interval for band (90, 110), m=5: 2 fh/m < fs < 2 fl/(m−1). Is fs=44.5 inside?"
+      "he": "החוזה דורש חלון פתוח לפס(90, 110), m=5:2 fh/m < fs < 2 fl/(m−1). האם fs=44.5 נמצא בתוכו?",
+      "en": "The contract requires the open interval for band(90, 110), m=5:2 fh/m < fs < 2 fl/(m−1). Is fs=44.5 inside?"
     },
     "answer": {
-      "he": "בתוך החלון הפתוח שנבחר. בודקים את שני אי־השוויונות בקפדנות. שוויון אינו עונה לחוזה הפתוח; בפס סגור טוני קצה עלולים להיות בלתי נבדלים.",
+      "he": "בתוך החלון הפתוח שנבחר. בודקים את שתי אי־השוויונות בקפדנות. שוויון אינו עונה לחוזה הפתוח; בפס סגור טוני קצה עלולים להיות בלתי נבדלים.",
       "en": "Inside the selected open safe interval. Check both strict inequalities. Equality fails this open contract; closed-band edge tones can become indistinguishable."
     },
     "takeaway": {
@@ -747,7 +747,7 @@
     },
     "prompt": {
       "he": "למילת מידע בת 8 ביטים נשמר ביט זוגיות. התגלתה זוגיות שגויה וידוע שהתקלקל בדיוק ביט מידע אחד. כמה מיקומי תקלה אפשריים עדיין מתאימים לזוגיות לבדה?",
-      "en": "A word containing 8 data bits stores one parity bit. Parity is wrong and exactly one data bit flipped. How many fault positions remain compatible with parity alone?"
+      "en": "An 8-data-bit word stores one parity bit. Parity is wrong and exactly one data bit flipped. How many fault positions remain compatible with parity alone?"
     },
     "answer": {
       "he": "8. כל אחד מביטי המידע יכול להפוך זוגיות, ולכן נותרים n מיקומים אפשריים. כש־n>1 אין איתור יחיד; n=1 הוא החריג הטריוויאלי.",
@@ -769,7 +769,7 @@
       "en": "How many check bits are needed?"
     },
     "prompt": {
-      "he": "ל־8 ביטי מידע נדרש תיקון תקלה יחידה בכל המילה, כולל ביטי הבדיקה. מה r המינימלי המקיים 2^r≥1+8+r?",
+      "he": "ל־8 ביטי מידע נדרשת תיקון תקלה יחידה בכל המילה, כולל ביטי הבדיקה. מה r המינימלי המקיים 2^r≥1+8+r?",
       "en": "For 8 data bits, correct one flip anywhere including check bits. What is the smallest r satisfying 2^r≥1+8+r?"
     },
     "answer": {
@@ -815,8 +815,8 @@
       "en": "Two errors are not one error"
     },
     "prompt": {
-      "he": "ב־SECDED, לכל היותר 2 תקלות. סינדרום S=0, ודגל שגיאת הזוגיות הכוללת הוא P=0. מה האבחנה? S מתייחס למילת Hamming ללא הביט הכולל.",
-      "en": "In SECDED, at most 2 faults: syndrome S=0, overall parity-error flag P=0. What is the diagnosis? S excludes the overall parity bit."
+      "he": "ב־SECDED, לכל היותר 2 תקלות. סינדרום S=0, וזוגיות כוללת שגויה P=0. מה האבחנה? S מתייחס למילת Hamming ללא הביט הכולל.",
+      "en": "In SECDED, at most 2 faults:syndrome S=0, bad overall parity P=0. What is the diagnosis? S excludes the overall parity bit."
     },
     "answer": {
       "he": "אין שגיאה תחת ההבטחה. זוגיות שגויה מתאימה למספר אי־זוגי של תקלות. עם ההבטחה, סינדרום לא אפס וזוגיות תקינה מציינים זוג שאין לתקן כיחיד.",
@@ -842,8 +842,8 @@
       "en": "A shortened 12-bit Hamming code promises at most one fault. Its syndrome is 0. What action is valid in this model?"
     },
     "answer": {
-      "he": "ללא שגיאה תחת הבטחת יחיד. 0 מציין ללא שגיאה תחת ההבטחה, 1..12 מאפשרים תיקון. 13..15 אינם מיקומי מילה ולכן מצביעים על מצב מחוץ למודל.",
-      "en": "No error under the single-error promise. 0 means no error under the promise; 1..12 locate a correction. 13..15 are not stored positions and must be rejected as outside the model."
+      "he": "ללא שגיאה תחת הבטחת יחיד. 0 מציין ללא שגיאה תחת ההבטחה, 1..12 מאפשרים תיקון.13..15 אינם מיקומי מילה ולכן מצביעים על מצב מחוץ למודל.",
+      "en": "No error under the single-error promise. 0 means no error under the promise; 1..12 locate a correction.13..15 are not stored positions and must be rejected as outside the model."
     },
     "takeaway": {
       "he": "קוד מקוצר אינו מתיר להפוך ביט מחוץ למילה.",
@@ -930,11 +930,11 @@
       "en": "Completion on the acceptance edge"
     },
     "prompt": {
-      "he": "במצב ISSUE: פקודה accepted=1, והשלמה תואמת done=1 באותה חזית. החוזה מתיר זאת. לאיזה מצב עוברים? accepted=0 מחייב done=0.",
+      "he": "במצב ISSUE:פקודה accepted=1, והשלמה תואמת done=1 באותה חזית. החוזה מתיר זאת. לאיזה מצב עוברים? accepted=0 מחייב done=0.",
       "en": "In ISSUE, command accepted=1 and matching done=1 occur at this edge. The contract permits immediate completion. Which state follows? accepted=0 requires done=0."
     },
     "answer": {
-      "he": "RESP: לשמור תגובה. כשקבלה והשלמה חופפות שומרים תגובה ונכנסים ל־RESP. מעבר עיוור ל־WAIT עלול להחמיץ את האירוע היחיד.",
+      "he": "RESP: לשמור תגובה. כשקבלה והשלמה חופפות שומרים תגובה ונכנסים RESP. מעבר עיוור ל־WAIT עלול להחמיץ את האירוע היחיד.",
       "en": "RESP: retain response. When acceptance and completion coincide, retain the response and enter RESP. Blindly entering WAIT can lose the only completion event."
     },
     "takeaway": {
@@ -954,7 +954,7 @@
     },
     "prompt": {
       "he": "READ ו־WRITE מבקשים ברציפות. round-robin מקבל 4 בקשות, החל ב־R. כל פעולה ותגובה משלימות לפני הבחירה הבאה. מה סדר הקבלות?",
-      "en": "READ and WRITE request continuously. Round-robin accepts 4 requests, starting with R. Each operation and response completes before the next arbitration. What is the acceptance order?"
+      "en": "READ and WRITE request continuously. Round-robin accepts 4 requests, starting withR. Each operation and response completes before the next arbitration. What is the acceptance order?"
     },
     "answer": {
       "he": "R, W, R, W. בשתי בקשות מתמשכות מחליפים זוכה בכל קבלה. זה מונע רעב בהנחת התקדמות; אינו מבטיח latency מספרי לזיכרון.",
@@ -976,7 +976,7 @@
       "en": "Different addresses can still wait"
     },
     "prompt": {
-      "he": "בקר שמבצע פעולות בזו אחר זו אינו מקבל פעולה נוספת עד שתגובת הקודמת נצרכת בחזית 3. הוא חוזר ל־IDLE אחריה. באיזו חזית מוקדמת אפשר לקבל בקשה חדשה?",
+      "he": "בקר מסוריאל אינו מקבל פעולה נוספת עד שתגובת הקודמת נצרכת בחזית 3. הוא חוזר ל־IDLE אחריה. באיזו חזית מוקדמת אפשר לקבל בקשה חדשה?",
       "en": "A serialized controller accepts nothing new until the previous response is consumed at edge 3; IDLE begins afterward. At which earliest edge can a new request be accepted?"
     },
     "answer": {
@@ -1069,11 +1069,11 @@
     },
     "prompt": {
       "he": "רכיב מחזיק n=0 ו־s=n². כמה צריך להוסיף ל־s כדי לקבל (n+1)² בלי מכפל?",
-      "en": "A component holds n=0 and s=n². What must be added to s to obtain (n+1)² without multiplication?"
+      "en": "A component holds n=0 and s=n². What must be added to s to obtain(n+1)² without multiplication?"
     },
     "answer": {
       "he": "1. מהזהות (n+1)²=n²+2n+1 מוסיפים את המספר האי־זוגי 2n+1. הצמדה של 1 לימין n מייצגת את אותו ערך.",
-      "en": "1. The identity (n+1)²=n²+2n+1 gives the odd increment 2n+1. Appending 1 to n in binary encodes that value."
+      "en": "1. The identity(n+1)²=n²+2n+1 gives the odd increment 2n+1. Appending 1 to n in binary encodes that value."
     },
     "takeaway": {
       "he": "רקורסיה יכולה להחליף מכפל ברצף ידוע.",
@@ -1137,8 +1137,8 @@
       "en": "Values midway through a swap"
     },
     "prompt": {
-      "he": "בהחלפה על אוגרים נפרדים, X=3, Y=5. מבצעים X←X XOR Y, אחר כך Y←X XOR Y, אחר כך X←X XOR Y, בחזיתות נפרדות. מה X, Y לאחר מספר חזיתות השווה ל־1?",
-      "en": "With separate registers, X=3, Y=5, perform X←X XOR Y, then Y←X XOR Y, then X←X XOR Y on separate edges. What is X, Y after a total of 1 clock edge?"
+      "he": "בהחלפה על אוגרים נפרדים, X=3, Y=5. מבצעים X←X XOR Y, אחר כך Y←X XOR Y, אחר כך X←X XOR Y, בחזיתות נפרדות. מה X, Y אחרי 1 חזיתות?",
+      "en": "With separate registers, X=3, Y=5, perform X←X XOR Y, then Y←X XOR Y, then X←X XOR Y on separate edges. What is X, Y after 1 edges?"
     },
     "answer": {
       "he": "6, 5. כל שורה משתמשת במצב החדש מן השורה הקודמת, ורק אוגר היעד נטען. ביטול XOR משחזר את שני הערכים, גם כשהם שווים.",
@@ -1183,8 +1183,8 @@
       "en": "Carry from the black-box counter"
     },
     "prompt": {
-      "he": "מונה 4 ביטים ו־FF גבוה יוצרים מונה modulo 32. לפני החזית המורחב הוא 15; הגבוה מתהפך כשהנמוך הישן 15. מה הערך לאחר מספר חזיתות השווה ל־1?",
-      "en": "A 4-bit counter and high FF form modulo 32. The initial extended count is 15; high toggles when old low=15. What is the value after a total of 1 clock edge?"
+      "he": "מונה 4 ביטים ו־FF גבוה יוצרים מונה modulo 32. לפני החזית המורחב הוא 15; הגבוה מתהפך כשהנמוך הישן 15. מה הערך אחרי 1 חזיתות?",
+      "en": "A 4-bit counter and high FF form modulo 32. The initial extended count is 15; high toggles when old low=15. What follows 1 edges?"
     },
     "answer": {
       "he": "16. הנמוך עוטף באותה חזית שבה הגבוה מתהפך. כולם דוגמים את המצב הישן; אין צורך להפוך פלט מונה לשעון חדש.",
@@ -1206,7 +1206,7 @@
       "en": "Which bit decides the comparison?"
     },
     "prompt": {
-      "he": "משווים מילים ללא סימן בנות 4 ביטים: A=8, B=7. הביטים הנמוכים אינם רשאים לגבור על הבדל גבוה יותר. מה היחס?",
+      "he": "משווים מילים לא מסומנות בנות 4 ביטים:A=8, B=7. הביטים הנמוכים אינם רשאים לגבור על הבדל גבוה יותר. מה היחס?",
       "en": "Compare unsigned 4-bit words A=8, B=7. Lower bits cannot override a higher differing bit. What is the relation?"
     },
     "answer": {
@@ -1322,7 +1322,7 @@
     },
     "prompt": {
       "he": "מחשבים 13x כ־(x<<3)+(x<<2)+x בחשבון מדויק. עבור x=0, מה התוצאה? הזזות קבועות מותרות כחיווט.",
-      "en": "Compute exact 13x as (x<<3)+(x<<2)+x. For x=0, what is the result? Fixed shifts may be wiring."
+      "en": "Compute exact 13x as(x<<3)+(x<<2)+x. For x=0, what is the result? Fixed shifts may be wiring."
     },
     "answer": {
       "he": "0. 13=8+4+1, ולכן החיבור שקול לכפל. יש להרחיב לפני הזזות וחיבורים; הרחבה אחרי חיתוך אינה משחזרת ביטים.",
@@ -1367,7 +1367,7 @@
       "en": "Squaring depends on input interpretation"
     },
     "prompt": {
-      "he": "התבנית בת 2 הביטים היא הערך העשרוני 3, ומפורשת במשלים לשתיים. מה הריבוע המתמטי המדויק שלה? זהו פירוש מסומן, לא unsigned.",
+      "he": "התבנית בת 2 הביטים היא הערך העשרוני 3, ומפורשת במשלים לשתיים. מה הריבוע המתמטי המדויק שלה? זהו פירוש חתום, לא unsigned.",
       "en": "A 2-bit pattern has unsigned code 3 but is interpreted as two’s complement. What is its exact mathematical square? This is signed, not unsigned."
     },
     "answer": {
@@ -1417,8 +1417,8 @@
       "en": "ZO/ZE mean odd/even zero runs; OO/OE mean odd/even one runs. Before reset, state=OO; reset sets OE, equivalent to empty history. First subsequent bit=0. What history state follows without error?"
     },
     "answer": {
-      "he": "ZO. ביט ראשון יוצר רצף באורך 1: אפס עובר ל־ZO ואחד ל־OO. הרצף המדומה באורך 0 אינו מדווח כשגיאה.",
-      "en": "ZO. The first bit starts a length 1 run: zero enters ZO, one enters OO. The virtual length 0 history causes no error."
+      "he": "ZO. ביט ראשון יוצר רצף באורך 1:אפס עובר ל־ZO ואחד ל־OO. הרצף המדומה באורך 0 אינו מדווח כשגיאה.",
+      "en": "ZO. The first bit starts a length 1 run:zero enters ZO, one enters OO. The virtual length 0 history causes no error."
     },
     "takeaway": {
       "he": "מצבים שקולים נקבעים לפי התנהגות עתידית.",
@@ -1482,8 +1482,8 @@
       "en": "The first stays first"
     },
     "prompt": {
-      "he": "אוגר זוכה מתחיל ריק. בכל צעד מגיע לכל היותר מסיים אחד; - פירושו אין מסיים. הרצף הוא -, A, B. מי צריך להישאר שמור?",
-      "en": "A winner register starts empty. At most one finisher arrives per step; - means none. The sequence is -, A, B. Who must remain stored?"
+      "he": "אוגר זוכה מתחיל ריק. בכל צעד מגיע לכל היותר מסיים אחד; - פירושו אין מסיים. הרצף הוא-, A, B. מי צריך להישאר שמור?",
+      "en": "A winner register starts empty. At most one finisher arrives per step; - means none. The sequence is-, A, B. Who must remain stored?"
     },
     "answer": {
       "he": "A. טוענים רק כשהאוגר ריק ויש אירוע. לאחר הזכייה מתעלמים ממסיימים מאוחרים עד reset; זה אינו מנגנון העדיפות האחרון.",
@@ -1529,7 +1529,7 @@
     },
     "prompt": {
       "he": "שני גלאים מסודרים, אדם יחיד וללא דגימות חסרות. נתיב החסימות הוא 00, 10, 00, ומסתיים באותו צד שממנו התחיל. מה שינוי ספירת האנשים בפנים?",
-      "en": "Two ordered sensors, one person, no missed samples: trace 00, 10, 00 ends on the starting side. What is the net occupancy change?"
+      "en": "Two ordered sensors, one person, no missed samples:trace 00, 10, 00 ends on the starting side. What is the net occupancy change?"
     },
     "answer": {
       "he": "0. האדם התקרב ונסוג בלי להשלים מעבר. שינוי הספירה 0; עדכון על החסימה הראשונה היה יוצר ספירת שווא.",
@@ -1666,8 +1666,8 @@
       "en": "Compare-split whole blocks"
     },
     "prompt": {
-      "he": "שני בלוקים שווי אורך הם [1, 9] ו־[2, 8]. פעולת compare-split ממיינת את האיחוד ומחזירה לבלוק הראשון את החצי הנמוך. מה נשאר בו?",
-      "en": "Equal-length blocks are [1, 9] and [2, 8]. Compare-split sorts their union and returns the lower half to the first block. What remains there?"
+      "he": "שני בלוקים שווי אורך הם[1, 9] ו־[2, 8]. פעולת compare-split ממיינת את האיחוד ומחזירה לבלוק הראשון את החצי הנמוך. מה נשאר בו?",
+      "en": "Equal-length blocks are[1, 9]and[2, 8]. Compare-split sorts their union and returns the lower half to the first block. What remains there?"
     },
     "answer": {
       "he": "1, 2. ממיינים את כל ההופעות ושומרים את החצי הנמוך, כולל כפילויות. אין די בהשוואת איבר יחיד או במקסימום של כל בלוק.",
@@ -1712,8 +1712,8 @@
       "en": "A guessed infinity can erase data"
     },
     "prompt": {
-      "he": "מרפדים רשימת נתונים [1, 200] בערך sentinel=100, ממיינים ועורכים חיתוך לאורך המקורי. מה הפלט בפועל? אין תג שמבדיל ריפוד מנתון.",
-      "en": "Pad real data [1, 200] with sentinel=100, sort, and keep the original length. What output actually remains? No tag separates padding from real data."
+      "he": "מרפדים רשימת אמת[1, 200] בערך sentinel=100, ממיינים ועורכים חיתוך לאורך המקורי. מה הפלט בפועל? אין תג שמבדיל ריפוד מנתון.",
+      "en": "Pad real data[1, 200]with sentinel=100, sort, and keep the original length. What output actually remains? No tag separates padding from real data."
     },
     "answer": {
       "he": "1, 100. אם sentinel קטן מנתון אמיתי הוא נכנס לפלט ודוחק מידע. תג ריפוד שמדורג מעל כל נתון פותר זאת בלי לנחש גבול מספרי.",

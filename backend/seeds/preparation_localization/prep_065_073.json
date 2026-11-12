@@ -6,14 +6,14 @@
         "D עומד בתזמון בשני הנתיבים, כולל המהפך; אין איפוס נוסף.",
         "הקשר בין DFF ללאץ׳ מוסבר בנפרד ואינו משנה בשקט את הרכיב הנתון.",
         "שני מימושים נפרדים, כל אחד פליפ-פלופ D יחיד; דגימה בחזית עולה.",
-        "rst סינכרוני גובר ומאתחל 0;00 משמר את Q הקודם."
+        "rst סינכרוני גובר ומאתחל0;00 משמר את Q הקודם."
       ],
       "en": [
         "Rising-edge synchronous active-high SR primitive; 11 forbidden.",
         "D meets timing on both paths, including inversion; no additional reset.",
         "Transparent-latch interpretation is distinguished explicitly.",
         "Two separate alternatives, each one rising-edge DFF.",
-        "Synchronous rst overrides and initializes 0;00 holds old Q."
+        "Synchronous rst overrides and initializes0;00 holds old Q."
       ]
     },
     "optimality": {
@@ -33,8 +33,8 @@
       }
     },
     "verification": {
-      "he": "עברו 4 שילובי Q,D, שמונת שילובי SR, 4,094 רצפים ו־36,868 חזיתות במודל פייתון. קוד HDL לא קומפל ולא סומלץ; תזמון וגליצ׳ים פיזיים לא נבדקו.\n\n16 בדיקות Python ממצות: שני מצבים ישנים, ארבע בקשות ושתי עדיפויות, מול טבלת אמת נפרדת. RTL ואיפוס נבדקים בנפרד בדוח הסימולציה.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog 12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה 172,128 בדיקות; רתמת FIFO נפרדת עברה 15,729 בדיקות עם 5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
-      "en": "Passed four Q,D combinations, eight SR rows, 4,094 streams and 36,868 edges in Python. HDL uncompiled/unsimulated; physical timing and glitches untested.\n\nSixteen exhaustive Python checks cover two old states, four requests and two priorities against a separate truth table. RTL/reset checks are recorded separately in simulation evidence.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog 12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed 172,128 checks; the separate FIFO harness passed 15,729 checks with 5,587 accepted writes and 5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
+      "he": "עברו 4 שילובי Q,D, שמונת שילובי SR, 4,094 רצפים ו־36,868 חזיתות במודל פייתון. קוד HDL לא קומפל ולא סומלץ; תזמון וגליצ׳ים פיזיים לא נבדקו.\n\n16 בדיקות Python ממצות: שני מצבים ישנים, ארבע בקשות ושתי עדיפויות, מול טבלת אמת נפרדת. RTL ואיפוס נבדקים בנפרד בדוח הסימולציה.\n\nאימות RTL בפועל: ששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog12 עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת. הרתמה המשולבת עברה172,128 בדיקות; רתמת FIFO נפרדת עברה15,729 בדיקות עם5,587 כתיבות ו־5,587 קריאות מאושרות. הכיסוי כולל שתי גרסאות SR, שני סדרי קלט טורי, כל קלטי BCD והסף, ותעבורת FIFO דיגיטלית מוגבלת. ראיה: checks/batch1107-native-verification.json. אין סינתזה, STA, סימולציית מטא־יציבות או אישור CDC פיזי.",
+      "en": "Passed four Q,D combinations, eight SR rows, 4,094 streams and 36,868 edges in Python. HDL uncompiled/unsimulated; physical timing and glitches untested.\n\nSixteen exhaustive Python checks cover two old states, four requests and two priorities against a separate truth table. RTL/reset checks are recorded separately in simulation evidence.\n\nExecuted RTL verification: the six batch hardware implementations were compiled with Icarus Verilog12 -g2012 -Wall and run with vvp in an isolated network-denied environment. The combined harness passed172,128 checks; the separate FIFO harness passed15,729 checks with5,587 accepted writes and5,587 accepted reads. Scope includes both SR priorities, both serial input orders, BCD/threshold inputs and bounded ideal FIFO traffic. Evidence: checks/batch1107-native-verification.json. No synthesis, STA, metastability simulation or physical CDC closure was performed."
     },
     "edge_cases": {
       "he": [
@@ -42,7 +42,7 @@
         "אין חזית: Q נשמר.",
         "שינוי D סמוך לחזית עלול להפר תזמון.",
         "S,R אסינכרוניים או לאץ׳ שקוף אינם מממשים את אותו חוזה.",
-        "11 בשני המימושים,00 במצב 0 ובמצב 1, איפוס יחד עם 11.",
+        "11 בשני המימושים,00 במצב0 ובמצב1, איפוס יחד עם11.",
         "קלט לא יציב סביב החזית אינו מבטיח פונקציה דיגיטלית אידאלית."
       ],
       "en": [
@@ -50,7 +50,7 @@
         "No edge means hold.",
         "D changes near the edge may violate timing.",
         "Asynchronous S,R or transparent latches have a different contract.",
-        "11 under both priorities,00 holding0/1 and reset coinciding with 11.",
+        "11 under both priorities,00 holding0/1 and reset coinciding with11.",
         "Unstable inputs near capture do not guarantee ideal digital behavior."
       ]
     },
@@ -67,7 +67,7 @@
         "Calling a transparent latch a DFF.",
         "Assuming inversion removes every transient overlap.",
         "Treating asynchronous clear as a synchronous data input.",
-        "Swapping priority equations; interpreting the wording as toggle without history; treating NOR-latch 11 as defined; using preset/clear instead of D logic."
+        "Swapping priority equations; interpreting the wording as toggle without history; treating NOR-latch11 as defined; using preset/clear instead of D logic."
       ]
     },
     "interview_answer": {
@@ -80,8 +80,8 @@
         "direction": "ל־SR סינכרוני אפשר לבחור S=EN AND D ו־R=EN AND NOT D. ב־EN=0 מתקבל 00 ושמירה. בדקו גם תזמון של EN.",
         "status": "מוכן בתוכן; לא מחובר לתור המשך חי.",
         "batch1107_sr_from_dff_priorities": {
-          "question": "כיצד יוצרים התחלפות אוטומטית של התוצאה בכל בקשת 11?",
-          "direction": "זהו חוזה אחר התלוי בהיסטוריה; אפשר להגדיר 11 כ־Qnext=NOT Q, אבל אין לקרוא לזה עדיפות set/reset.",
+          "question": "כיצד יוצרים התחלפות אוטומטית של התוצאה בכל בקשת11?",
+          "direction": "זהו חוזה אחר התלוי בהיסטוריה; אפשר להגדיר11 כ־Qnext=NOT Q, אבל אין לקרוא לזה עדיפות set/reset.",
           "tests": "הבחנה בין עדיפות לבין toggle."
         }
       },
@@ -90,8 +90,8 @@
         "direction": "For synchronous SR use S=EN AND D and R=EN AND NOT D. Disabled gives 00 and hold; EN also has timing constraints.",
         "status": "Prepared in content, not connected to the live follow-up queue.",
         "batch1107_sr_from_dff_priorities": {
-          "question": "How could 11 alternate the result on each occurrence?",
-          "direction": "That is another history-dependent contract: define 11 as Qnext=NOT Q, rather than calling it set/reset priority.",
+          "question": "How could11 alternate the result on each occurrence?",
+          "direction": "That is another history-dependent contract: define11 as Qnext=NOT Q, rather than calling it set/reset priority.",
           "tests": "Priority versus toggle semantics."
         }
       }
@@ -103,7 +103,7 @@
     "prompt_variants": {
       "he": {
         "batch1107_sr_from_dff_priorities": {
-          "prompt": "### וריאציה הפוכה: SR בעזרת פליפ-פלופ D, עם שתי אפשרויות עדיפות\nממשו רכיב SR דוגם בחזית עולה באמצעות פליפ-פלופ D אחד ושערים. בנו שתי חלופות נפרדות: S=R=1 יוצר 1 בחלופה הראשונה, ו־0 בשנייה. בשתיהן 00 משמר מצב,10 מציב 1 ו־01 מאפס.\n\nזו פרשנות מפורשת למקור המקוצר: ״פעם״ מתאר שני מימושים חלופיים, לא החלפה אוטומטית בכל הופעת 11. נוספה כניסת rst סינכרונית פעילה בגבוה לאתחול ידוע 0; עדיפותה גבוהה מ־S,R. הקלטים עומדים ב־setup/hold. אין לשנות בדיעבד את רכיב ה־SR המקורי, שבו 11 אסור, ואין כאן לאץ׳ אסינכרוני.",
+          "prompt": "### וריאציה הפוכה: SR בעזרת פליפ-פלופ D, עם שתי אפשרויות עדיפות\nממשו רכיב SR דוגם בחזית עולה באמצעות פליפ-פלופ D אחד ושערים. בנו שתי חלופות נפרדות: S=R=1 יוצר1 בחלופה הראשונה, ו־0 בשנייה. בשתיהן00 משמר מצב,10 מציב1 ו־01 מאפס.\n\nזו פרשנות מפורשת למקור המקוצר: ״פעם״ מתאר שני מימושים חלופיים, לא החלפה אוטומטית בכל הופעת11. נוספה כניסת rst סינכרונית פעילה בגבוה לאתחול ידוע0; עדיפותה גבוהה מ־S,R. הקלטים עומדים ב־setup/hold. אין לשנות בדיעבד את רכיב ה־SR המקורי, שבו11 אסור, ואין כאן לאץ׳ אסינכרוני.",
           "hints": [
             "כתבו טבלת מצב הבא הכוללת גם את המצב הנוכחי Q.",
             "בגרסת עדיפות להצבה, S=1 צריך להכריע בלי קשר ל־R. בגרסת עדיפות לאיפוס, R=1 צריך להכריע בלי קשר ל־S.",
@@ -113,7 +113,7 @@
       },
       "en": {
         "batch1107_sr_from_dff_priorities": {
-          "prompt": "### Reverse conversion: SR from one DFF, with two priority choices\nImplement rising-edge SR behavior using one D flip-flop and gates. Construct two separate alternatives: S=R=1 produces 1 in the first, and 0 in the second. Both hold at 00, set at 10 and reset at 01.\n\nThis explicitly interprets the terse source as two alternative implementations, not automatic alternation on successive 11 events. A synchronous active-high rst is added for known initialization to 0 and overrides S,R. Inputs meet setup/hold. Do not retroactively change the original SR primitive, whose 11 was forbidden; this is not an asynchronous latch.",
+          "prompt": "### Reverse conversion: SR from one DFF, with two priority choices\nImplement rising-edge SR behavior using one D flip-flop and gates. Construct two separate alternatives: S=R=1 produces1 in the first, and0 in the second. Both hold at00, set at10 and reset at01.\n\nThis explicitly interprets the terse source as two alternative implementations, not automatic alternation on successive11 events. A synchronous active-high rst is added for known initialization to0 and overrides S,R. Inputs meet setup/hold. Do not retroactively change the original SR primitive, whose11 was forbidden; this is not an asynchronous latch.",
           "hints": [
             "Write next-state behavior including current Q.",
             "With set priority, S1 overrides R; with reset priority, R1 overrides S.",
@@ -148,7 +148,7 @@
         "result": "עד קריאה וכתיבה אחת בחזית; O(1) פעולות בקרה למחזור. מצב לוגי 9W+11 ביטים.",
         "proof": "אין הזזת התור; רק גישה ממוספרת, קידום שני מצביעים ועדכון תפוסה.",
         "scope": "אין מינימום שטח/מספר FF/השהיה; העלות הפיזית תלויה במיפוי זיכרון.",
-        "batch1107b10_depth-four-ready-valid": "4W+7 ביטי זיכרון ובוחר 4:1; זמן פעולה אלגוריתמי O(1) לתור בעל עומק קבוע."
+        "batch1107b10_depth-four-ready-valid": "4W+7 ביטי זיכרון ובוחר4:1; זמן פעולה אלגוריתמי O(1) לתור בעל עומק קבוע."
       },
       "en": {
         "criterion": "Throughput and operation count for this construction.",
@@ -171,7 +171,7 @@
         "איפוס בעת שתי בקשות דוחה אותן ומאפס פלט.",
         "כמה סיבובים אינם משנים סדר; אין לאפס את הזיכרון כדי למנוע קריאת זבל.",
         "ריק, מלא, חסימת הצרכן, מילוי עד מלא וריקון.",
-        "push+pop בתפוסה 1 ובתפוסה 4; גלישת מצביעים ואיפוס."
+        "push+pop בתפוסה1 ובתפוסה4; גלישת מצביעים ואיפוס."
       ],
       "en": [
         "Equal pointers mean empty or full; count distinguishes them.",
@@ -181,7 +181,7 @@
         "Reset with both requests rejects both and clears read outputs.",
         "Wrap preserves order; occupancy prevents stale reads without resetting memory.",
         "Empty, full, backpressure, fill and drain.",
-        "Simultaneous transfers at occupancy 1 and 4, pointer wrap and reset."
+        "Simultaneous transfers at occupancy1 and4, pointer wrap and reset."
       ]
     },
     "common_mistakes": {
@@ -246,7 +246,7 @@
           "prompt": "### וריאציה: FIFO בעומק ארבע עם ready ו־valid\nממשו תור חומרה בן ארבע מילים באמצעות FF, בוחרים ושערים. הציגו ממשק שמודיע מתי ניתן להכניס מידע ומתי ניתן לקרוא מידע.\n\nהשלמות חוזה: כל מילה היא W סיביות, W חיובי. יש שעון יחיד ואיפוס סינכרוני. לכניסה in_valid,in_ready,in_data; ליציאה out_valid,out_ready,out_data. פעולה מתקבלת בעליית שעון כאשר שני אותות לחיצת היד 1. הראש מוצג בצירוף ללא קריאה הרסנית; בעת חסימת הצרכן הוא יציב. בתור ריק אין מעקף ישיר מהכניסה ליציאה. בתור מלא מותר לקבל כתיבה רק יחד עם קריאה מאושרת באותה עלייה. זו וריאציה נפרדת מממשק הקריאה הרשומה בפתרון המקורי.",
           "hints": [
             "איך תבחינו בין ריק ומלא כשהמצביעים שווים?",
-            "מונה תפוסה 0..4 מגדיר valid. האם תור מלא יכול לקבל מילה אם מוציאים ממנו מילה באותה עלייה?",
+            "מונה תפוסה0..4 מגדיר valid. האם תור מלא יכול לקבל מילה אם מוציאים ממנו מילה באותה עלייה?",
             "הגדירו pop=out_valid AND out_ready; אז in_ready=(count<4) OR pop. קדמו כל מצביע רק על פעולה מאושרת ועדכנו count לפי ההפרש."
           ]
         }
@@ -256,7 +256,7 @@
           "prompt": "### Variant: depth-four ready/valid FIFO\nImplement a four-word hardware FIFO using flip-flops, multiplexers and gates. Indicate when input can be accepted and when output can be read.\n\nCompleted contract: positive word width W, one clock and synchronous reset. Input has in_valid,in_ready,in_data; output has out_valid,out_ready,out_data. Transfer occurs at a rising edge with both handshake signals high. The head is shown combinationally and remains stable under downstream backpressure. There is no empty input-to-output bypass. A full FIFO accepts replacement only with a simultaneous accepted read. This is distinct from the original registered-read interface.",
           "hints": [
             "How do equal pointers distinguish empty from full?",
-            "Occupancy 0..4 defines valid. Can a full FIFO accept a word when one is removed at the same edge?",
+            "Occupancy0..4 defines valid. Can a full FIFO accept a word when one is removed at the same edge?",
             "Set pop=out_valid AND out_ready; then in_ready=(count<4) OR pop. Advance pointers only on accepted transfers and update count by their difference."
           ]
         }
@@ -433,7 +433,7 @@
         "צילום 11 מוסיף ארבע פונקציות אך אינו מציין זמינות קבועים או משלים; ההרשאות ועלות המשלים מפורשות בעריכה."
       ],
       "en": [
-        "Screenshot eleven adds four functions but omits constant/complement availability; permissions and complement cost are explicit assumptions."
+        "Screenshot eleven adds four functions but omits constant/complement availability; permissions and complement cost are explicit explicit assumptions."
       ]
     }
   },
@@ -553,7 +553,7 @@
       },
       "en": {
         "criterion": "Costs of two correct constructions under their integer models.",
-        "result": "Up to B-bit integers: O(B) time/intermediate bits; fixed 32: O(1) word operations/storage.",
+        "result": "Up to B-bit integers: O(B) time/intermediate bits; fixed32: O(1) word operations/storage.",
         "proof": "A fixed number of additions, subtraction, absolute value and division by two touches up to B bits; the mask construction has a fixed word-operation count.",
         "scope": "No minimum-operation, branch-free machine-code or security constant-time claim; C++ not compiled."
       }

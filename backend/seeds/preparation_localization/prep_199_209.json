@@ -696,15 +696,15 @@
       "he": [
         "מספר שלם לא שלילי בייצוג בינארי רגיל; אפס ואפסים מובילים מותרים.",
         "לניתוח זמן קבוע מניחים ערך זמין במילת מכונה ומחלקים קבועים 2,4,8.",
-        "שתי חלופות נפרדות על מודולו 7: הכנסה מימין או משקל נמוך תחילה.",
-        "rst גובר, bit_valid=0 משמר את כל המצב, פלט ריק 0; אפס לא־ריק מתחלק.",
+        "שתי חלופות נפרדות על מודולו7: הכנסה מימין או משקל נמוך תחילה.",
+        "rst גובר, bit_valid=0 משמר את כל המצב, פלט ריק0; אפס לא־ריק מתחלק.",
         "הוספה מימין, מילה חדשה באיפוס, bit_valid משהה; מילה ריקה אינה תקפה."
       ],
       "en": [
         "Nonnegative ordinary binary integer; zero and leading zeros allowed.",
         "Constant-time analysis assumes a value already in a machine word and the fixed divisors two, four and eight.",
-        "Separate modulo 7 right-append and lowest-weight-first contracts.",
-        "Reset overrides, invalid cycles hold all state, empty output 0; nonempty zero is divisible.",
+        "Separate modulo7 right-append and lowest-weight-first contracts.",
+        "Reset overrides, invalid cycles hold all state, empty output0; nonempty zero is divisible.",
         "Right append; reset separates words; bit_valid pauses; the empty word is invalid."
       ]
     },
@@ -713,8 +713,8 @@
       "en": "Divisibility by 2^k is equivalent to zero in the low k bits. The three fixed tests take O(1) word operations; validating text takes O(L). No constant-bit-cost claim for unbounded numbers and k.\n\nPrimary: three remainder bits plus seen; direct alternative: three remainder bits, two phase bits and seen. Constant-width update without storing the complete integer or claiming a minimum.\n\nTwo suffix bits and seen; no dependence on number length."
     },
     "verification": {
-      "he": "65,536 קלטי 16 סיביות נבדקו בכל שלוש הבדיקות. בנוסף בוצעו 589,852 השוואות כלליות של חזקה ומסכה מול שארית, כולל ערכים סביב 2^200.\n\n360,456 בדיקות Python לכל הקידומות של כל המילים באורכים 1..12 השוו שאריות ופלטים לשחזור מספר שלם עצמאי בשני סדרי הקלט. הרתמה המתוקנת קומפלה והורצה בפועל ב־Icarus 12:172,128 בדיקות עברו, כולל שתי חלופות מודולו 7, איפוס ו־valid. ראיה: checks/batch1107-native206-correction-verification.json. אין סינתזה או אישור תזמון/CDC פיזי.\n\nאימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון.",
-      "en": "All 65,536 16-bit inputs were checked for the three divisors. General exponent tests made 589,852 mask-versus-remainder comparisons, including values around 2^200.\n\n360,456 Python checks over all prefixes of all words length 1..12 compare exact remainders and outputs with independent integer reconstruction in both input orders. The corrected combined harness was compiled/run with Icarus 12:172,128 checks passed, including both modulo 7 variants, reset and valid. Evidence: checks/batch1107-native206-correction-verification.json. No synthesis or physical timing/CDC closure is claimed.\n\nExecuted RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
+      "he": "65,536 קלטי 16 סיביות נבדקו בכל שלוש הבדיקות. בנוסף בוצעו 589,852 השוואות כלליות של חזקה ומסכה מול שארית, כולל ערכים סביב 2^200.\n\n360,456 בדיקות Python לכל הקידומות של כל המילים באורכים1..12 השוו שאריות ופלטים לשחזור מספר שלם עצמאי בשני סדרי הקלט. הרתמה המתוקנת קומפלה והורצה בפועל ב־Icarus12:172,128 בדיקות עברו, כולל שתי חלופות מודולו7, איפוס ו־valid. ראיה: checks/batch1107-native206-correction-verification.json. אין סינתזה או אישור תזמון/CDC פיזי.\n\nאימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון.",
+      "en": "All 65,536 16-bit inputs were checked for the three divisors. General exponent tests made 589,852 mask-versus-remainder comparisons, including values around 2^200.\n\n360,456 Python checks over all prefixes of all words length1..12 compare exact remainders and outputs with independent integer reconstruction in both input orders. The corrected combined harness was compiled/run with Icarus12:172,128 checks passed, including both modulo7 variants, reset and valid. Evidence: checks/batch1107-native206-correction-verification.json. No synthesis or physical timing/CDC closure is claimed.\n\nExecuted RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
     },
     "edge_cases": {
       "he": [
@@ -744,7 +744,7 @@
         "להשתמש במסכה 4 לבדיקת התחלקות ב־4 במקום במסכה 3.",
         "לבלבל התחלקות בחזקה של שתיים עם היות המספר חזקה של שתיים.",
         "לטעון לזמן קבוע גם כאשר חייבים לסרוק ולאמת מחרוזת ארוכה.",
-        "בדיקת שתי סיביות אחרונות במקום שארית 7; החלפת סדרי קלט; שכחת פאזה ב־LSB-first; גלישה לפני חיסור; פלט 1 למילה ריקה.",
+        "בדיקת שתי סיביות אחרונות במקום שארית7; החלפת סדרי קלט; שכחת פאזה ב־LSB-first; גלישה לפני חיסור; פלט1 למילה ריקה.",
         "שמירת המספר ללא חסם; בדיקת רק הסיבית האחרונה; ערבוב הוספה ל־LSB עם הגעת LSB ראשון."
       ],
       "en": [
@@ -752,13 +752,13 @@
         "Using mask four for divisibility by four instead of mask three.",
         "Confusing divisible by a power of two with being a power of two.",
         "Claiming constant time while parsing and validating a long text input.",
-        "Checking final two bits instead of modulo 7; interchanging input orders; losing LSB-first phase; truncating before subtraction; reporting an empty word as valid.",
+        "Checking final two bits instead of modulo7; interchanging input orders; losing LSB-first phase; truncating before subtraction; reporting an empty word as valid.",
         "Storing an unbounded integer; checking only the last bit; confusing insertion at LSB with LSB-first arrival."
       ]
     },
     "interview_answer": {
-      "he": "הסיבית הנמוכה קובעת התחלקות ב־2; שתי הנמוכות חייבות להיות 00 ל־4, ושלוש הנמוכות 000 ל־8. כל שאר הסיביות כבר תורמות כפולות של המחלק, ולכן בדיקת הסיומת מספיקה. אפס עובר את כולן.\n\nאשמור את השארית בשבע. בהכנסה מימין rnext=(2r+b) mod7; אם המשקל הנמוך מגיע ראשון, אוסיף b כפול משקל מחזורי 1,2,4 ואקדם פאזה.\n\nבחלק בארבע מעניינות רק שתי הסיביות האחרונות; אזיז אותן בכל ביט ואבדוק 00 עם דגל מילה לא ריקה.",
-      "en": "The low bit must be zero for two, the low pair 00 for four, and the low triple 000 for eight. Higher bits already contribute multiples of the divisor, so the suffix is sufficient. Zero passes all three.\n\nStore a remainder modulo 7. For right append rnext=(2r+b) mod7; for lowest-weight-first add b times cyclic weight 1,2,4 and advance the phase.\n\nOnly the last two bits matter modulo four; shift them on each bit and test 00 with a nonempty flag."
+      "he": "הסיבית הנמוכה קובעת התחלקות ב־2; שתי הנמוכות חייבות להיות 00 ל־4, ושלוש הנמוכות 000 ל־8. כל שאר הסיביות כבר תורמות כפולות של המחלק, ולכן בדיקת הסיומת מספיקה. אפס עובר את כולן.\n\nאשמור את השארית בשבע. בהכנסה מימין rnext=(2r+b) mod7; אם המשקל הנמוך מגיע ראשון, אוסיף b כפול משקל מחזורי1,2,4 ואקדם פאזה.\n\nבחלק בארבע מעניינות רק שתי הסיביות האחרונות; אזיז אותן בכל ביט ואבדוק 00 עם דגל מילה לא ריקה.",
+      "en": "The low bit must be zero for two, the low pair 00 for four, and the low triple 000 for eight. Higher bits already contribute multiples of the divisor, so the suffix is sufficient. Zero passes all three.\n\nStore a remainder modulo7. For right append rnext=(2r+b) mod7; for lowest-weight-first add b times cyclic weight1,2,4 and advance the phase.\n\nOnly the last two bits matter modulo four; shift them on each bit and test00 with a nonempty flag."
     },
     "source_ambiguities": {
       "he": [
@@ -781,7 +781,7 @@
         },
         {
           "question": "שאלת המשך שלנו: איך משתנה המימוש למודולוס חיובי אחר?",
-          "direction": "בהכנסה מימין משתמשים ב־(2r+b) modm. ב־LSB-first צריך לעקוב אחר 2^k modm או לבחור קידוד אחר ולהוכיחו; מחזור המשקלים תלוי ב־m.",
+          "direction": "בהכנסה מימין משתמשים ב־(2r+b) modm. ב־LSB-first צריך לעקוב אחר2^k modm או לבחור קידוד אחר ולהוכיחו; מחזור המשקלים תלוי ב־m.",
           "tests": "הכללת אינווריאנט השארית והבחנה בין סדרי קלט."
         },
         {
@@ -802,7 +802,7 @@
         },
         {
           "question": "Our authored follow-up: how does another positive modulus change the machine?",
-          "direction": "Right append uses (2r+b) modm. Lowest-weight-first tracks 2^k modm or uses another proved encoding; the weight cycle depends on m.",
+          "direction": "Right append uses (2r+b) modm. Lowest-weight-first tracks2^k modm or uses another proved encoding; the weight cycle depends on m.",
           "tests": "Generalizing remainder invariants while preserving input order."
         },
         {
@@ -819,11 +819,11 @@
     "prompt_variants": {
       "he": {
         "batch1107_serial_into_lsb_and_lsb_first": {
-          "prompt": "### וריאציה מקושרת: מכונה טורית להתחלקות בשבע\nבנו מכונת מצבים המקבלת ביט בכל מחזור ומחזירה האם המספר הנוכחי מתחלק בשבע. המקור אומר ״ל־LSB״: בקריאה העיקרית ביט חדש מוכנס מימין, ולכן Nnext=2N+b. הציגו מצבים, טבלת מעברים, פלט ומימוש.\n\nבנפרד נתחו חלופת LSB-first אמיתית: סיבית המשקל 1 מגיעה ראשונה ואחריה משקלים 2,4,8,..., ולכן Nnext=N+b·2^k. זהו סדר קלט שונה, שיש לו משוואת מצב אחרת.\n\nהבהרות לשתי החלופות: כל חזית עולה עם bit_valid=1 מקבלת ביט;0 משמר מצב. rst סינכרוני פעיל בגבוה גובר ומתחיל מילה חדשה. הפלט מתאר את הקידומת הלא־ריקה אחרי החזית; במילה ריקה הפלט 0. אפסים מותרים והמספר 0 מתחלק בשבע. אין לאחסן את המספר השלם, ואין מגבלת אורך מילה. השאלה המקורית על התחלקות ב־2,4,8 נשמרת בחלקה הקודם; זהו תרגיל טורי נפרד על 7. במקור מוזכר סעיף המשך שנשכח: הוא נשאר לא ידוע; ההמשך המוצע שלנו הוא חומר ערוך.",
+          "prompt": "### וריאציה מקושרת: מכונה טורית להתחלקות בשבע\nבנו מכונת מצבים המקבלת ביט בכל מחזור ומחזירה האם המספר הנוכחי מתחלק בשבע. המקור אומר ״ל־LSB״: בקריאה העיקרית ביט חדש מוכנס מימין, ולכן Nnext=2N+b. הציגו מצבים, טבלת מעברים, פלט ומימוש.\n\nבנפרד נתחו חלופת LSB-first אמיתית: סיבית המשקל1 מגיעה ראשונה ואחריה משקלים2,4,8,..., ולכן Nnext=N+b·2^k. זהו סדר קלט שונה, שיש לו משוואת מצב אחרת.\n\nהבהרות לשתי החלופות: כל חזית עולה עם bit_valid=1 מקבלת ביט;0 משמר מצב. rst סינכרוני פעיל בגבוה גובר ומתחיל מילה חדשה. הפלט מתאר את הקידומת הלא־ריקה אחרי החזית; במילה ריקה הפלט0. אפסים מותרים והמספר0 מתחלק בשבע. אין לאחסן את המספר השלם, ואין מגבלת אורך מילה. השאלה המקורית על התחלקות ב־2,4,8 נשמרת בחלקה הקודם; זהו תרגיל טורי נפרד על7. במקור מוזכר סעיף המשך שנשכח: הוא נשאר לא ידוע; ההמשך המוצע שלנו הוא חומר ערוך.",
           "hints": [
             "בררו כיצד ביט חדש משנה את המספר: כניסה מימין או הגעת המשקל הנמוך תחילה. איזה מידע על המספר דרוש להכרעת התחלקות בשבע?",
-            "בהכנסה מימין, אם המספר הוא 7q+r, אחרי הביט b הוא 14q+2r+b. לכן רק השארית r נחוצה.",
-            "השתמשו בשבע שאריות 0..6 ובעדכון (2r+b) mod7. בחלופת LSB-first עקבו גם אחר משקל הביט modulo 7: המחזור הוא 1,2,4."
+            "בהכנסה מימין, אם המספר הוא7q+r, אחרי הביט b הוא14q+2r+b. לכן רק השארית r נחוצה.",
+            "השתמשו בשבע שאריות0..6 ובעדכון (2r+b) mod7. בחלופת LSB-first עקבו גם אחר משקל הביט modulo7: המחזור הוא1,2,4."
           ]
         },
         "batch1107b10_serial-four-right-append": {
@@ -837,11 +837,11 @@
       },
       "en": {
         "batch1107_serial_into_lsb_and_lsb_first": {
-          "prompt": "### Linked variant: serial divisibility by seven\nBuild a machine accepting one bit per cycle and indicating whether the current number is divisible by seven. The source says into the LSB: the primary reading appends at the right, Nnext=2N+b. Give states, a transition table, output and implementation.\n\nSeparately analyze true LSB-first arrival: weight 1 arrives first, then 2,4,8,..., so Nnext=N+b·2^k. That is a different input order and requires a different state update.\n\nFor both alternatives, a rising edge with bit_valid1 accepts a bit; zero holds. Synchronous active-high rst overrides and begins a word. Output describes the nonempty prefix after capture, with output 0 for the empty word. Zeros are legal and zero is divisible by seven. Do not store the whole integer; word length is unbounded. The preceding original2/4/8 exercise remains unchanged; this is a separate serial 7 exercise. The forgotten source follow-up remains unknown; our proposed follow-up is explicitly authored material.",
+          "prompt": "### Linked variant: serial divisibility by seven\nBuild a machine accepting one bit per cycle and indicating whether the current number is divisible by seven. The source says into the LSB: the primary reading appends at the right, Nnext=2N+b. Give states, a transition table, output and implementation.\n\nSeparately analyze true LSB-first arrival: weight1 arrives first, then2,4,8,..., so Nnext=N+b·2^k. That is a different input order and requires a different state update.\n\nFor both alternatives, a rising edge with bit_valid1 accepts a bit; zero holds. Synchronous active-high rst overrides and begins a word. Output describes the nonempty prefix after capture, with output0 for the empty word. Zeros are legal and zero is divisible by seven. Do not store the whole integer; word length is unbounded. The preceding original2/4/8 exercise remains unchanged; this is a separate serial7 exercise. The forgotten source follow-up remains unknown; our proposed follow-up is explicitly authored material.",
           "hints": [
             "First define how a new bit changes the number: right append or lowest-weight-first arrival. What information suffices for divisibility by seven?",
-            "For right append, write N=7q+r: the next value is 14q+2r+b, so only r matters.",
-            "Use seven remainders 0..6 with update (2r+b) mod7. For true LSB-first also track the bit weight modulo 7, repeating 1,2,4."
+            "For right append, write N=7q+r: the next value is14q+2r+b, so only r matters.",
+            "Use seven remainders0..6 with update (2r+b) mod7. For true LSB-first also track the bit weight modulo7, repeating1,2,4."
           ]
         },
         "batch1107b10_serial-four-right-append": {

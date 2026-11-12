@@ -64,7 +64,7 @@ def test_61_midpoint_requires_each_coordinate_not_just_total_parity():
     assert tuple(Fraction(a + b, 2) for a, b in zip((2, 5), (8, 1), strict=True)) == (5, 3)
     assert sum((1, 2)) + sum((2, 1)) == 6
     assert Fraction(1 + 2, 2).denominator != 1
-    assert_numeric_claim(61, "(5, 3)")
+    assert_numeric_claim(61, "(5,3)")
 
 
 def test_62_pooled_test_signatures_decode_every_contaminated_bottle():

@@ -1,9 +1,9 @@
-// Real-renderer regression: all three current banks, both translations, and
+// Real-renderer regression: all 73 canonical questions, both translations, and
 // independent browser glyph measurements for mixed-direction technical text.
 // Run from apps/web: node tools/screenshots/bidi-localization.mjs
 // The fixture binds loopback only and blocks every nonfixture network request.
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
@@ -25,39 +25,13 @@ const bankBytes = bankPaths.map(path => readFileSync(path));
 const bankHashes = bankBytes.map(bytes => createHash("sha256").update(bytes).digest("hex"));
 const banks = bankBytes.map(bytes => JSON.parse(bytes.toString("utf8")));
 const questions = banks.flat();
-const entries = [], corpus = [];
-const sourceDigests = new Map(bankPaths.map((path, i) => [path, bankHashes[i]]));
-function readCorpus(path) {
-  const bytes = readFileSync(path);
-  sourceDigests.set(path, createHash("sha256").update(bytes).digest("hex"));
-  return JSON.parse(bytes.toString("utf8"));
+const entries = [];
+function strings(value, path, question, lang) {
+  if (typeof value === "string") entries.push({ id: entries.length, key: question.key, lang, path, text: value, solution: path === "reference_solution" });
+  else if (value && typeof value === "object") for (const [key, child] of Object.entries(value)) strings(child, path ? `${path}.${key}` : key, question, lang);
 }
-function strings(value, path, question, lang, inline = false) {
-  if (typeof value === "string") entries.push({ id: entries.length, key: question.key, lang, path, text: value, inline, solution: path === "reference_solution" });
-  else if (value && typeof value === "object" && ("he" in value || "en" in value)) strings(value[lang], path, question, lang, inline);
-  else if (value && typeof value === "object") for (const [key, child] of Object.entries(value)) strings(child, path ? `${path}.${key}` : key, question, lang, inline);
-}
-for (const question of questions) for (const lang of ["he", "en"]) {
-  strings(question.translations[lang], "", question, lang);
-  strings(question.assets.preparation_resource?.learner_material, "material", question, lang);
-}
-corpus.push({ bank: "interview", records: questions.length });
-const content = join(web, "src/content");
-const fundamentals = readdirSync(content).filter(name => /^fundamentals-(hardware|code|reasoning).*\.json$/.test(name))
-  .flatMap(name => readCorpus(join(content, name)));
-for (const card of fundamentals) for (const lang of ["he", "en"]) for (const field of ["title", "prompt", "answer", "takeaway"]) {
-  strings(card[field][lang], field, { key: card.id }, lang, field === "title" || field === "takeaway");
-}
-corpus.push({ bank: "fundamentals", records: fundamentals.length });
-const quiz = readCorpus(join(web, "../../backend/seeds/duel_quiz.json")).questions;
-for (const question of quiz) for (const lang of ["he", "en"]) for (const field of ["prompt", "choices", "explanation"]) strings(question[field], field, question, lang, true);
-corpus.push({ bank: "multiple_choice", records: quiz.length });
-if (!questions.length || !fundamentals.length || !quiz.length) throw new Error("Every question bank must be present.");
-// Repeated template strings get one real-browser check per rendering mode and
-// language, with complete source-field coverage counted separately in the report.
-const sourceFields = entries.length;
-const uniqueEntries = [...new Map(entries.map(entry => [JSON.stringify([entry.lang, entry.text, entry.solution, entry.inline]), entry])).values()];
-entries.splice(0, entries.length, ...uniqueEntries);
+for (const question of questions) for (const lang of ["he", "en"]) strings(question.translations[lang], "", question, lang);
+if (banks[0].length !== 30 || banks[1].length !== 43 || entries.length !== 1330) throw new Error("Expected the 30 + 43 canonical questions and all 1,330 localized string fields.");
 
 // These expected units are written independently of the segmentation helper.
 // Browser Range rectangles check actual glyph placement, including both bracket
@@ -103,10 +77,10 @@ import {BidiText} from './src/components/bidi-text';
 import {solutionMarkdown} from './src/lib/solution-markdown';
 const entries=${JSON.stringify(entries)},questions=${JSON.stringify(questions)},specimens=${JSON.stringify(specimens)};
 const root=createRoot(document.getElementById('root'));
-function Plain({entry}) {return <div className="control" aria-hidden="true">{entry.inline?entry.text:<Markdown remarkPlugins={[remarkGfm]} skipHtml components={{img:({alt})=><span>{alt}</span>}}>{entry.solution?solutionMarkdown(entry.text):entry.text}</Markdown>}</div>}
-function Pair({entry}) {return <><div className="actual">{entry.inline?<div className="study-text" dir={entry.lang==='he'?'rtl':'ltr'}><BidiText>{entry.text}</BidiText></div>:<StudyText text={entry.text} solution={entry.solution} lang={entry.lang}/>}</div><Plain entry={entry}/></>}
+function Plain({entry}) {return <div className="control" aria-hidden="true"><Markdown remarkPlugins={[remarkGfm]} skipHtml components={{img:({alt})=><span>{alt}</span>}}>{entry.solution?solutionMarkdown(entry.text):entry.text}</Markdown></div>}
+function Pair({entry}) {return <><div className="actual"><StudyText text={entry.text} solution={entry.solution}/></div><Plain entry={entry}/></>}
 function Fixture({view}) {
- if(view.mode==='corpus') return <main data-mode="corpus">{entries.slice(view.start,view.end).map(entry=><article key={entry.id} className="field" data-id={entry.id} data-language={entry.lang} data-inline={entry.inline?'true':'false'}><h2 className="field-label">{entry.key} · {entry.lang} · {entry.path}</h2><Pair entry={entry}/></article>)}</main>;
+ if(view.mode==='corpus') return <main data-mode="corpus">{entries.slice(view.start,view.end).map(entry=><article key={entry.id} className="field" data-id={entry.id} data-language={entry.lang}><h2 className="field-label">{entry.key} · {entry.lang} · {entry.path}</h2><Pair entry={entry}/></article>)}</main>;
  if(view.mode==='specimens') return <main data-mode="specimens"><h1>{view.lang==='he'?'בדיקות תצוגת סוגריים':'Bracket rendering checks'}</h1><section className="specimens">{specimens.map(entry=><article key={entry.id} data-case={entry.id} className="field geometry"><h2 className="field-label">{entry.id}</h2><Pair entry={entry}/></article>)}</section></main>;
  const question=questions.find(question=>question.key===view.key),translation=question.translations[view.lang],material=question.assets.preparation_resource;
  return <main data-mode="question" data-key={question.key}><p className="field-label">{question.key}</p><h1><BidiText>{translation.title}</BidiText></h1><section className="question-prompt"><StudyText text={translation.prompt}/></section><section><StudyText text={translation.requirements}/></section><section><h2>{view.lang==='he'?'רמזים':'Hints'}</h2><ol>{translation.hints?.map((text,index)=><li key={index}><StudyText text={text}/></li>)}</ol></section><section className="reference-solution"><h2>{view.lang==='he'?'פתרון מוצע':'Reference solution'}</h2><StudyText text={translation.reference_solution} solution/></section>{material&&<TechnicalMaterial material={material} lang={view.lang}/>}</main>;
@@ -120,25 +94,18 @@ window.fixtureReady=true;`;
 function inspectFields() {
   const failures = [], fields = [...document.querySelectorAll(".field")];
   let blocks = 0, isolates = 0;
-  const direction = (text, lang) => {
-    const rtl = /[\p{Script=Hebrew}\p{Script=Arabic}]/u.test(text);
-    const latin = /[\p{Script=Latin}\p{Script=Greek}]/u.test(text);
-    if (rtl) return latin && lang === "en" ? "ltr" : "rtl";
-    return latin ? "ltr" : lang === "he" ? "rtl" : "ltr";
+  const direction = text => {
+    const letter = text.match(/[\p{L}\u200e\u200f]/u)?.[0];
+    return letter && /[\p{Script=Hebrew}\p{Script=Arabic}\u200f]/u.test(letter) ? "rtl" : "ltr";
   };
   for (const field of fields) {
     const actual = field.querySelector(".actual .study-text"), control = field.querySelector(".control");
     const id = field.dataset.id ?? field.dataset.case;
     if (actual.textContent !== control.textContent) failures.push({ id, check: "literal text parity", actual: actual.textContent, expected: control.textContent });
-    if (field.dataset.inline === "true") {
-      const expected = field.dataset.language === "he" ? "rtl" : "ltr";
-      const computed = getComputedStyle(actual).direction;
-      if (computed !== expected) failures.push({ id, check: "inline container language direction", expected, computed });
-    }
-    for (const block of actual.querySelectorAll("p,li,h1,h2,h3,h4,h5,h6,th,td")) {
+    for (const block of actual.querySelectorAll("p,li,h1,h2,h3,h4,h5,h6,th,td,blockquote")) {
       if (!block.textContent.trim()) continue;
       blocks++;
-      const expected = direction(block.textContent, field.dataset.language), computed = getComputedStyle(block).direction;
+      const expected = direction(block.textContent), computed = getComputedStyle(block).direction;
       if (computed !== expected) failures.push({ id, check: "source paragraph direction", tag: block.tagName, text: block.textContent.slice(0, 180), expected, computed });
     }
     for (const isolate of actual.querySelectorAll("bdi[dir=ltr]")) {
@@ -229,7 +196,7 @@ try {
     const origin = `http://127.0.0.1:${server.address().port}`;
     browser = await chromium.launch({ executablePath: edge, headless: true });
     for (const [device, width, height] of [["desktop", 1440, 1000], ["mobile", 390, 844]]) {
-      for (const lang of ["he"]) {
+      for (const lang of ["he", "en"]) {
         const environment = `${device}-${lang}-${lang === "he" ? "light" : "dark"}`;
         const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, isMobile: device === "mobile", reducedMotion: "reduce" });
         await context.route("**/*", route => {
@@ -243,15 +210,15 @@ try {
         await page.goto(origin);
         await page.waitForFunction(() => window.fixtureReady);
         const counts = { environment, fields: 0, blocks: 0, isolates: 0, batches: 0, questionVersions: new Set() };
-        for (let start = 0; start < entries.length; start += 200) {
-          const end = Math.min(start + 200, entries.length);
+        for (let start = 0; start < entries.length; start += 80) {
+          const end = Math.min(start + 80, entries.length);
           await render(page, { mode: "corpus", lang, start, end });
           const result = await page.evaluate(inspectFields);
           counts.fields += result.fields; counts.blocks += result.blocks; counts.isolates += result.isolates; counts.batches++;
           for (const entry of entries.slice(start, end)) counts.questionVersions.add(`${entry.key}:${entry.lang}`);
           check(`${environment}: fields ${start + 1}–${end} preserve Markdown text and source direction`, result.fields === end - start && !result.failures.length, result.failures.length ? result.failures : undefined);
         }
-        check(`${environment}: complete deduplicated corpus`, counts.fields === entries.length, { fields: counts.fields, versions: counts.questionVersions.size, blocks: counts.blocks, isolates: counts.isolates });
+        check(`${environment}: complete canonical corpus`, counts.fields === 1330 && counts.questionVersions.size === 146, { fields: counts.fields, versions: counts.questionVersions.size, blocks: counts.blocks, isolates: counts.isolates });
         coverage.push({ ...counts, questionVersions: counts.questionVersions.size });
         await render(page, { mode: "specimens", lang });
         const specimenFields = await page.evaluate(inspectFields);
@@ -275,13 +242,13 @@ try {
     }
     check("No API, database, external, or nonfixture HTTP requests", requests.every(request => request.allowed), { requests: requests.length, blocked: requests.filter(request => !request.allowed).length });
   }
-  check("All three question-bank source bytes are unchanged", [...sourceDigests].every(([path, hash]) => createHash("sha256").update(readFileSync(path)).digest("hex") === hash));
+  check("Canonical question source bytes are unchanged", bankPaths.every((path, i) => createHash("sha256").update(readFileSync(path)).digest("hex") === bankHashes[i]), bankHashes);
 } catch (error) {
   errors.push(error.stack ?? error.message);
 } finally {
   await browser?.close();
   await new Promise(done => server ? server.close(done) : done());
-  const report = { started: new Date(started).toISOString(), seconds: (Date.now() - started) / 1000, corpus, sourceFields, uniqueRenderedFields: entries.length,
+  const report = { started: new Date(started).toISOString(), seconds: (Date.now() - started) / 1000, questions: questions.length, versions: 146, localizedStringFields: entries.length,
     passed: checks.filter(check => check.pass).length, failed: checks.filter(check => !check.pass).length, coverage, checks, screenshots, errors, requests,
     scope: "Actual StudyText, BidiText and TechnicalMaterial bundled from source, compared with an unsegmented Markdown control and handwritten Range/glyph expectations. Fresh isolated headless Edge contexts; loopback fixture only; no accounts or API/database access." };
   mkdirSync(out, { recursive: true });

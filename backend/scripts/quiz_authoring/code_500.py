@@ -74,7 +74,7 @@ def build():
          [[0, 1], [0, 2], [1, 2], [1, 1]], [1, 2], "רק אינדקסים 1 ו־2 מרוחקים יחידה; זוג של רשומה עם עצמה אינו מותר.",
          "Only indices 1 and 2 are one unit apart; pairing a record with itself is disallowed.")
     emit(236, 5, "distance2", {"a": [10, -7], "b": [13, -3]},
-         "מזיזים יחד שתי נקודות שההפרש ביניהן הוא (3,4), כך שמיקומיהן החדשים הם (10,-7),(13,-3). מה המרחק בריבוע לאחר ההזזה?",
+         "מזיזים את שני קצות הווקטור (3,4) לאותה נקודת מוצא: (10,-7),(13,-3). מה המרחק בריבוע לאחר ההזזה?",
          "Translate both endpoints of displacement (3,4) to (10,-7),(13,-3). What is their squared distance after translation?",
          [5, 25, 49, 250], 25, "הזזה משותפת אינה משנה הפרשים: עדיין מתקבל 3²+4²=25.",
          "A common translation preserves differences: 3²+4² remains 25.")
@@ -134,11 +134,11 @@ def build():
     emit(240, 1, "list_prepend", {"list": [], "value": 7, "success": True},
          "מכניסים בהצלחה ערך 7 לראש רשימה ריקה. הפונקציה מחזירה את הראש החדש. מה סדר הערכים ברשימת הקורא אחרי שהראש הוחלף?",
          "Successfully prepend value 7 to an empty list. The function returns the new head. What values are in the caller's list after assigning that head?",
-         [[], [7], [0, 7], [7, 7]], [7], "חוליה אחת מצביעה באמצעות next ל־NULL; היא הראש החדש.", "One node points next to NULL and becomes the new head.")
+         [[], [7], [0, 7], [7, 7]], [7], "חוליה אחת מצביעת next ל־NULL; היא הראש החדש.", "One node points next to NULL and becomes the new head.")
     emit(240, 2, "new_next", {"old_head": "B", "new_node": "A"},
          "הראש הישן הוא B, וחוליה חדשה A עומדת להתפרסם כראש. מה צריך להיות A.next כדי לשמר את הרשימה הישנה?",
          "Old head is B and new node A will become the head. What must A.next be to preserve the old list?",
-         ["A", "B", "NULL", named("uninitialized", "לא מאותחל", "uninitialized")], "B", "A.next חייב להצביע לראש הישן B לפני עדכון הראש.", "A.next must point to old head B before publishing A.")
+         ["A", "B", "NULL", "uninitialized"], "B", "A.next חייב להצביע לראש הישן B לפני עדכון הראש.", "A.next must point to old head B before publishing A.")
     emit(240, 3, "list_prepend", {"list": [4, 8], "value": 7, "success": False},
          "הכנסה לראש [4,8] נכשלת בהקצאת החוליה 7. החוזה מבטיח כשל ללא שינוי. מה נשאר ברשימת הקורא?",
          "Prepending 7 to [4,8] fails during allocation. The contract guarantees no change on failure. What remains in the caller's list?",
@@ -146,7 +146,7 @@ def build():
     emit(240, 4, "local_head", {"caller_head": "B", "local_assignment": "A"},
          "ב־C ראש B נמסר כמצביע לפי ערך. הפונקציה מציבה רק בעותק המקומי head=A, אינה משנה חוליות ואינה מחזירה ראש. מה ראש הקורא?",
          "In C, head B is passed as a pointer by value. The function only assigns its local head=A, changes no nodes and returns no head. What is the caller's head?",
-         ["A", "B", "NULL", named("A then B", "A ואז B", "A then B")], "B", "המצביע המקומי הוא עותק; צריך להחזיר ראש או לעדכן דרך מצביע לראש.", "The local pointer is a copy; return the head or update through a pointer to it.")
+         ["A", "B", "NULL", "A then B"], "B", "המצביע המקומי הוא עותק; צריך להחזיר ראש או לעדכן דרך מצביע לראש.", "The local pointer is a copy; return the head or update through a pointer to it.")
     emit(240, 5, "insertion_link", {"before": "P", "after": "Q", "new": "N"},
          "מכניסים N בין P ל־Q ברשימה. לפני שמציבים P.next=N, מה צריך להציב ב־N.next?",
          "Insert N between P and Q in a list. Before assigning P.next=N, what must be assigned to N.next?",
@@ -178,7 +178,7 @@ def build():
          "Leaf יורש מ־Middle שיורש מ־Base. מוחקים דרך Base* עם הורס וירטואלי ציבורי. מה סדר שלושת ההורסים?",
          "Leaf derives from Middle, which derives from Base. Delete through Base* with a public virtual destructor. What is the three-destructor order?",
          [["Base", "Middle", "Leaf"], ["Leaf", "Middle", "Base"], ["Leaf", "Base"], ub], ["Leaf", "Middle", "Base"],
-         "ההריסה עולה בהיררכיה מהנגזר ביותר: Leaf, Middle, Base.", "Destruction climbs from the most derived type: Leaf, Middle, Base.")
+         "ההריסה עולה בהיררכיה מהנגזר ביותר: Leaf,Middle,Base.", "Destruction climbs from the most derived type: Leaf,Middle,Base.")
     emit(242, 3, "delete_trace", {"chain": ["Base", "Derived"], "pointer": "Base", "virtual": False},
          "Base רגיל, עם הורס ציבורי שאינו וירטואלי. Base* מצביע ל־new Derived ומבצעים delete דרכו. מה קובע התקן במקרה הרגיל הזה?",
          "Ordinary Base has a public nonvirtual destructor. A Base* points to new Derived and is deleted through that pointer. What applies in this ordinary case?",
@@ -190,7 +190,7 @@ def build():
          [["Base"], ["Derived", "Base"], [], ub], ["Base"], "אין כאן אי־התאמה בין טיפוס דינמי לבסיס; Base עצמו נהרס.",
          "There is no dynamic-type/base mismatch here; Base itself is destroyed.")
     emit(242, 5, "delete_trace", {"chain": ["Base", "Derived"], "pointer": "Derived", "virtual": False},
-         "Derived* מצביע ל־new Derived ומוחקים דרך אותו Derived*. שני ההורסים ציבוריים; ההורס של Base אינו וירטואלי. מה סדרם?",
+         "Derived* מצביע ל־new Derived ומוחקים דרך אותו Derived*. שני ההורסים ציבוריים; Base אינו וירטואלי. מה סדרם?",
          "A Derived* points to new Derived and deletion uses that Derived*. Both destructors are public; Base's is nonvirtual. What is their order?",
          [["Base"], ["Derived", "Base"], ["Base", "Derived"], ub], ["Derived", "Base"], "המחיקה מתחילה בטיפוס הנכון Derived; לאחריו נהרס תת־אובייקט Base.",
          "Deletion starts at the correct type Derived, followed by its Base subobject.")
@@ -203,11 +203,11 @@ def build():
         (5, [[1, 2], [3, 4], [5, 6], [], [], [], []], "work_and_depth", [7, 3], [[7, 3], [3, 7], [7, 7], [3, 3]]),
     ]
     for v, children, kind, expected, options in trees:
-        shape = "עץ ריק" if not children else "שרשרת בת 7 צמתים" if v == 2 else f"עץ בינארי מושלם בן {len(children)} צמתים (כל הרמות מלאות)"
+        shape = "ריק" if not children else "שרשרת בת 7 צמתים" if v == 2 else f"עץ בינארי מושלם בן {len(children)} צמתים (כל הרמות מלאות)"
         english = "an empty tree" if not children else "a chain of 7 nodes" if v == 2 else f"a perfect binary tree of {len(children)} nodes (every level is full)"
         emit(243, v, "tree_stack", {"children": children, "kind": kind},
-             f"רקורסיית עומק מבקרת כל צומת פעם אחת ב{shape}. ללא קריאות NULL או אופטימיזציית זנב, " + ("מה הצמד [ביקורים כוללים, מסגרות פעילות בשיא]?" if kind == "work_and_depth" else "מה מספר מסגרות הצמתים הפעילות המרבי?"),
-             f"Depth-first recursion visits every node once in {english}. Exclude NULL calls and tail-call optimization. " + ("What is [total visits, peak active frames]?" if kind == "work_and_depth" else "What is the peak number of active node frames?"),
+             f"רקורסיית עומק מבקרת כל צומת פעם אחת ב{shape}. ללא קריאות NULL או אופטימיזציית זנב, " + ("מה הצמד [ביקורים כוללים,מסגרות פעילות בשיא]?" if kind == "work_and_depth" else "מה מספר מסגרות הצמתים הפעילות המרבי?"),
+             f"Depth-first recursion visits every node once in {english}. Exclude NULL calls and tail-call optimization. " + ("What is [total visits,peak active frames]?" if kind == "work_and_depth" else "What is the peak number of active node frames?"),
              options, expected, "מסגרות פעילות עוקבות אחר מסלול שטרם חזר; ענפים שהסתיימו כבר יצאו מהמחסנית.",
              "Active frames follow an unfinished path; completed branches have already left the stack.")
 
@@ -221,8 +221,8 @@ def build():
     for v, tokens, kind, expected, options in expression_cases:
         expr = "".join(map(str, tokens))
         emit(244, v, "expression", {"tokens": tokens, "kind": kind},
-             f"הביטוי הוא {expr}, עם קדימות כפל רגילה וחשבון מדויק. " + ("מה הצמד [סכום איברים שסוימו, מכפלה נוכחית] מיד לפני =?" if kind == "state" else "מה התוצאה לפני סימן הסיום?"),
-             f"Expression {expr} uses normal multiplication precedence and exact arithmetic. " + ("What is [sum of completed terms, current product] immediately before =?" if kind == "state" else "What is its value at the terminator?"),
+             f"הביטוי הוא {expr}, עם קדימות כפל רגילה וחשבון מדויק. " + ("מה הצמד [סכום איברים שסוימו,מכפלה נוכחית] מיד לפני =?" if kind == "state" else "מה התוצאה לפני סימן הסיום?"),
+             f"Expression {expr} uses normal multiplication precedence and exact arithmetic. " + ("What is [sum of completed terms,current product] immediately before =?" if kind == "state" else "What is its value at the terminator?"),
              options, expected, "משלימים את איברי הכפל לפני צירופם לסכום; במקרה זה מתקבל " + label(expected) + ".",
              "Finish product terms before adding them to the sum; this case gives " + label(expected) + ".")
 
@@ -247,8 +247,8 @@ def build():
         (5, [], [], [[], [[0, 0]], [[0, 1]], [[-1, 1]]]),
     ]:
         emit(246, v, "top_two", {"values": values},
-             f"למערך {label(values)}, החזירו עד שני ערכים שונים בסדר יורד, כל אחד כ־[ערך, שכיחות]. אין להוסיף ערך חסר. מה הפלט?",
-             f"For array {label(values)}, return up to two distinct values in descending order as [value, frequency]. Do not invent a missing value. What is returned?",
+             f"למערך {label(values)}, החזירו עד שני ערכים שונים בסדר יורד, כל אחד כ־[ערך,שכיחות]. אין להוסיף ערך חסר. מה הפלט?",
+             f"For array {label(values)}, return up to two distinct values in descending order as [value,frequency]. Do not invent a missing value. What is returned?",
              options, expected, "סופרים הופעות לכל ערך, בוחרים את שני המפתחות הגדולים ביותר ומשמרים את מוניהם.",
              "Count each value's occurrences, select the two greatest keys and retain their counts.")
 
@@ -269,8 +269,8 @@ def build():
                                         (4, [[3, 7], [6, 9]], 3, [3, 6, 7, None]),
                                         (5, [[0, 1], [1, 6]], 0, [0, 1, 6, None])]:
         emit(248, v, "residual_triple", {"counts": counts},
-             f"השכיחויות לאחר מחיקת שתי הופעות של ערך אחד הן {label(counts)}, כל זוג [ערך, כמות]. במקור כל כמות התחלקה ב־3. איזה ערך נפגע?",
-             f"After deleting two occurrences of one value, frequencies are {label(counts)}, each pair [value, count]. Every original count was divisible by 3. Which value was affected?",
+             f"השכיחויות לאחר מחיקת שתי הופעות של ערך אחד הן {label(counts)}, כל זוג [ערך,כמות]. במקור כל כמות התחלקה ב־3. איזה ערך נפגע?",
+             f"After deleting two occurrences of one value, frequencies are {label(counts)}, each pair [value,count]. Every original count was divisible by 3. Which value was affected?",
              options, expected, "לערך שנפגע יש שכיחות השקולה ל־1 מודולו 3; כל שאר השכיחויות שקולות ל־0 מודולו 3.",
              "The affected frequency is 1 modulo 3; all other frequencies are 0 modulo 3.")
 

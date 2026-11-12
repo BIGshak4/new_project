@@ -184,7 +184,7 @@ def test_108_planar_moments_need_both_components():
     total = tuple(sum(moment[axis] for moment in torques) for axis in range(3))
     assert total == (-2, 0, 0)
     assert total != (0, 0, 0)
-    assert_claim(108, "(0, 0)")
+    assert_claim(108, "(0,0)")
 
 
 def test_109_superposition_preserves_zero_added_moment():

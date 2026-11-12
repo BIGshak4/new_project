@@ -492,8 +492,8 @@
       "en": "A light that toggles"
     },
     "prompt": {
-      "he": "מכונה מתחילה ב־OFF. בכל חזית שעון, t=1 מחליף מצב ו־t=0 משאיר אותו. הנורה דולקת רק ב־ON. מה המצב אחרי הקלטים 1, 0, 1?",
-      "en": "A machine starts in OFF. At each clock edge, t=1 toggles the state and t=0 holds it. The light is on only in ON. What are the states after inputs 1, 0, 1?"
+      "he": "מכונה מתחילה ב־OFF. בכל חזית שעון, t=1 מחליף מצב ו־t=0 משאיר אותו. הנורה דולקת רק ב־ON. מה המצב אחרי הקלטים 1,0,1?",
+      "en": "A machine starts in OFF. At each clock edge, t=1 toggles the state and t=0 holds it. The light is on only in ON. What are the states after inputs 1,0,1?"
     },
     "answer": {
       "he": "אחרי כל חזית: `ON, ON, OFF`. מעבר עצמי בתרשים פירושו שהמצב נשאר כפי שהיה. מוצא הנורה הוא 0 ב־OFF ו־1 ב־ON.",
@@ -542,8 +542,8 @@
       "en": "Detect a 0-to-1 transition"
     },
     "prompt": {
-      "he": "המצב LOW או HIGH שומר את x הקודם, ומתחילים ב־LOW. רוצים y=1 רק כש־x הנוכחי הוא 1 והקודם היה 0. בתרשים התווית היא x/y. מהם המוצאים עבור 1, 1, 0, 1?",
-      "en": "LOW or HIGH stores the previous x, starting in LOW. We want y=1 only when current x is 1 and previous x was 0. Diagram labels are x/y. What outputs correspond to 1, 1, 0, 1?"
+      "he": "המצב LOW או HIGH שומר את x הקודם, ומתחילים ב־LOW. רוצים y=1 רק כש־x הנוכחי הוא 1 והקודם היה 0. בתרשים התווית היא x/y. מהם המוצאים עבור 1,1,0,1?",
+      "en": "LOW or HIGH stores the previous x, starting in LOW. We want y=1 only when current x is 1 and previous x was 0. Diagram labels are x/y. What outputs correspond to 1,1,0,1?"
     },
     "answer": {
       "he": "המוצאים הם `1, 0, 0, 1`. מחשבים `y=x AND (previous_x==0)` לפני עדכון המצב. לאחר כל דגימה המצב שומר את x שזה עתה נקרא.",
@@ -592,8 +592,8 @@
       "en": "Parity across a stream"
     },
     "prompt": {
-      "he": "קוראים ביט x בכל חזית שעון. מתחילים ב־EVEN: מספר ערכי ה־1 שנקראו הוא זוגי. ODD מציין מספר אי־זוגי. מה המצבים אחרי הקלטים 1, 0, 1, 1?",
-      "en": "Read bit x at each clock edge. Start in EVEN: the number of 1s read is even. ODD means the count is odd. What states follow inputs 1, 0, 1, 1?"
+      "he": "קוראים ביט x בכל חזית שעון. מתחילים ב־EVEN: מספר ערכי ה־1 שנקראו הוא זוגי. ODD מציין מספר אי־זוגי. מה המצבים אחרי הקלטים 1,0,1,1?",
+      "en": "Read bit x at each clock edge. Start in EVEN: the number of 1s read is even. ODD means the count is odd. What states follow inputs 1,0,1,1?"
     },
     "answer": {
       "he": "המצבים הם `ODD, ODD, EVEN, ODD`. קלט 0 אינו משנה את מספר האחדות; קלט 1 מחליף זוגיות. אם רוצים מוצא לזוגיות אי־זוגית, הוא 1 בדיוק במצב ODD.",
@@ -642,8 +642,8 @@
       "en": "Two consecutive 1s"
     },
     "prompt": {
-      "he": "דוגמים x בחזית עולה. ZERO: אין 1 בסוף הרצף; ONE: יש 1 אחד בסוף; TWO: לפחות שניים רצופים בסוף. מתחילים ב־ZERO. המוצא 1 רק ב־TWO. מה המוצא אחרי כל קלט ב־1, 0, 1, 1, 0?",
-      "en": "Sample x on rising edges. ZERO means no trailing 1; ONE means one trailing 1; TWO means at least two trailing 1s. Start in ZERO. Output is 1 only in TWO. What is the output after each input in 1, 0, 1, 1, 0?"
+      "he": "דוגמים x בחזית עולה. ZERO: אין 1 בסוף הרצף; ONE: יש 1 אחד בסוף; TWO: לפחות שניים רצופים בסוף. מתחילים ב־ZERO. המוצא 1 רק ב־TWO. מה המוצא אחרי כל קלט ב־1,0,1,1,0?",
+      "en": "Sample x on rising edges. ZERO means no trailing 1; ONE means one trailing 1; TWO means at least two trailing 1s. Start in ZERO. Output is 1 only in TWO. What is the output after each input in 1,0,1,1,0?"
     },
     "answer": {
       "he": "המוצאים אחרי הדגימות הם `0, 0, 0, 1, 0`. שני ערכי 1 רצופים מביאים ל־TWO; קלט 0 מחזיר תמיד ל־ZERO. קלט 1 נוסף ב־TWO משאיר את המוצא 1.",
@@ -662,8 +662,8 @@
       "en": "Remember an event"
     },
     "prompt": {
-      "he": "מכונה מתחילה ב־WAIT, עם מוצא 0. בחזית עולה שבה p=1 עוברים ל־SET, עם מוצא 1, ונשארים שם עד איפוס. אין איפוס ברצף 0, 1, 0. מהם המוצאים אחרי החזיתות?",
-      "en": "A machine starts in WAIT, with output 0. A rising edge with p=1 moves it to SET, with output 1, where it stays until reset. With no reset during 0, 1, 0, what are the outputs after the edges?"
+      "he": "מכונה מתחילה ב־WAIT, עם מוצא 0. בחזית עולה שבה p=1 עוברים ל־SET, עם מוצא 1, ונשארים שם עד איפוס. אין איפוס ברצף 0,1,0. מהם המוצאים אחרי החזיתות?",
+      "en": "A machine starts in WAIT, with output 0. A rising edge with p=1 moves it to SET, with output 1, where it stays until reset. With no reset during 0,1,0, what are the outputs after the edges?"
     },
     "answer": {
       "he": "המוצאים הם `0, 1, 1`. החזרה של p ל־0 אינה מוחקת את האירוע שכבר נשמר. איפוס מחזיר ל־WAIT; בתרשים מוצגים המעברים כשאין איפוס. התווית any p פירושה p=0 או p=1.",
@@ -947,7 +947,7 @@
       "en": "Bit A passes through two NOT gates in series. After signals settle, what is the output? What if a third NOT gate is added?"
     },
     "answer": {
-      "he": "בשני שערים מתקבל `NOT (NOT A) = A`. בשלושה שערים מתקבל `NOT A`. שתי שלילות מבטלות זו את זו מבחינת הערך הלוגי לאחר ההתייצבות.",
+      "he": "בשני שערים מתקבל `NOT (NOT A) = A`. בשלושה שערים מתקבל `NOT A`. כל זוג שלילות מבטל זו את זו מבחינת הערך הלוגי לאחר ההתייצבות.",
       "en": "Two gates give `NOT (NOT A) = A`. Three give `NOT A`. Each pair of inversions cancels in the settled logical value."
     },
     "takeaway": {
@@ -1007,8 +1007,8 @@
       "en": "What is the decimal value of unsigned 10110? Explain using bit weights."
     },
     "answer": {
-      "he": "המשקלים משמאל לימין הם 16, 8, 4, 2, 1. מחברים רק משקלים שהביט שלהם 1: `16+4+2=22`.",
-      "en": "The weights from left to right are 16, 8, 4, 2, 1. Add only weights whose bits are 1: `16+4+2=22`."
+      "he": "המשקלים משמאל לימין הם 16,8,4,2,1. מחברים רק משקלים שהביט שלהם 1: `16+4+2=22`.",
+      "en": "The weights from left to right are 16,8,4,2,1. Add only weights whose bits are 1: `16+4+2=22`."
     },
     "takeaway": {
       "he": "כל צעד שמאלה מכפיל את משקל הביט ב־2.",
@@ -1023,12 +1023,12 @@
       "en": "Write a number in binary"
     },
     "prompt": {
-      "he": "ייצגו את המספר הלא מסומן 37 בשישה ביטים. אפשר להיעזר במשקלים 32, 16, 8, 4, 2, 1.",
-      "en": "Represent unsigned 37 using six bits. You may use weights 32, 16, 8, 4, 2, 1."
+      "he": "ייצגו את המספר הלא מסומן 37 בשישה ביטים. אפשר להיעזר במשקלים 32,16,8,4,2,1.",
+      "en": "Represent unsigned 37 using six bits. You may use weights 32,16,8,4,2,1."
     },
     "answer": {
-      "he": "`37=32+4+1`, ולכן הייצוג הוא `100101`. רק הביטים שמשקלם 32, 4, 1 דולקים.",
-      "en": "`37=32+4+1`, so the representation is `100101`. Only the bits with weights 32, 4, 1 are set."
+      "he": "`37=32+4+1`, ולכן הייצוג הוא `100101`. רק הביטים שמשקלם 32,4,1 דולקים.",
+      "en": "`37=32+4+1`, so the representation is `100101`. Only the bits with weights 32,4,1 are set."
     },
     "takeaway": {
       "he": "בוחרים את משקלי הביטים שסכומם הוא המספר המבוקש.",
@@ -1043,8 +1043,8 @@
       "en": "Same bits, different interpretation"
     },
     "prompt": {
-      "he": "מהו 1110 כמספר לא מסומן, ומהו כמספר מסומן בן 4 ביטים במשלים ל־2? במקרה המסומן משקלי הביטים הם ‎-8, 4, 2, 1.",
-      "en": "What is 1110 as an unsigned number, and as a signed 4-bit two’s-complement number? In the signed case, the weights are -8, 4, 2, 1."
+      "he": "מהו 1110 כמספר לא מסומן, ומהו כמספר מסומן בן 4 ביטים במשלים ל־2? במקרה המסומן משקלי הביטים הם ‎-8,4,2,1.",
+      "en": "What is 1110 as an unsigned number, and as a signed 4-bit two’s-complement number? In the signed case, the weights are -8,4,2,1."
     },
     "answer": {
       "he": "לא מסומן: `8+4+2=14`. במשלים ל־2: `-8+4+2=-2`. הביטים לא השתנו; סוג הייצוג קובע את משמעות הביט השמאלי.",
@@ -1103,8 +1103,8 @@
       "en": "A sum bit and a carry bit"
     },
     "prompt": {
-      "he": "מחברים ביטים A=1 ו־B=1 ונשא נכנס Cin=1. התוצאה נכתבת בשני ביטים Cout, S. מה הם?",
-      "en": "Add bits A=1 and B=1 with carry-in Cin=1. Write the result as two bits Cout, S. What are they?"
+      "he": "מחברים ביטים A=1 ו־B=1 ונשא נכנס Cin=1. התוצאה נכתבת בשני ביטים Cout,S. מה הם?",
+      "en": "Add bits A=1 and B=1 with carry-in Cin=1. Write the result as two bits Cout,S. What are they?"
     },
     "answer": {
       "he": "`1+1+1=3`, ובבינארי `11`. לכן `Cout=1, S=1`. ביט הסכום S הוא הביט הנמוך, והנשא Cout הוא הביט הגבוה.",
@@ -1173,8 +1173,8 @@
       "en": "A counter that counts only when enabled"
     },
     "prompt": {
-      "he": "מונה בן 3 ביטים מתחיל ב־011. בכל חזית עולה הוא מוסיף 1 אם EN=1, ואחרת שומר את ערכו. אין איפוס. מהם הערכים אחרי EN=1, 0, 1, 1?",
-      "en": "A 3-bit counter starts at 011. On each rising edge it increments if EN=1, otherwise it holds. Reset is inactive. What values follow EN=1, 0, 1, 1?"
+      "he": "מונה בן 3 ביטים מתחיל ב־011. בכל חזית עולה הוא מוסיף 1 אם EN=1, ואחרת שומר את ערכו. אין איפוס. מהם הערכים אחרי EN=1,0,1,1?",
+      "en": "A 3-bit counter starts at 011. On each rising edge it increments if EN=1, otherwise it holds. Reset is inactive. What values follow EN=1,0,1,1?"
     },
     "answer": {
       "he": "אחרי החזיתות: `100, 100, 101, 110`. בחזית השנייה EN=0, ולכן עצם הגעת השעון אינה גורמת לספירה.",
@@ -1273,8 +1273,8 @@
       "en": "A pulse through a pipeline"
     },
     "prompt": {
-      "he": "שלושה פליפ-פלופי D חולקים חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000. ערכי x בחזיתות הם 1, 0, 0, 0, ללא איפוס נוסף. מה נשמר אחרי כל חזית?",
-      "en": "Three D flip-flops share a rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=000. The sampled x values are 1, 0, 0, 0, with no further reset. What is stored after each edge?"
+      "he": "שלושה פליפ-פלופי D חולקים חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000. ערכי x בחזיתות הם 1,0,0,0, ללא איפוס נוסף. מה נשמר אחרי כל חזית?",
+      "en": "Three D flip-flops share a rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=000. The sampled x values are 1,0,0,0, with no further reset. What is stored after each edge?"
     },
     "answer": {
       "he": "אחרי החזיתות: `100, 010, 001, 000`. ה־1 מתקדם פליפ-פלופ אחד בכל חזית, משום שכל פליפ-פלופ דוגם את מוצא השלב הקודם כפי שהיה לפני החזית.",
@@ -1293,8 +1293,8 @@
       "en": "A request while busy"
     },
     "prompt": {
-      "he": "מתחילים ב־READY. בחזית עולה, r=1 במצב READY מתחיל פעולה ועובר ל־BUSY; ב־BUSY מתעלמים מ־r וממתינים ל־d=1. מה המצבים אחרי זוגות הקלט (r, d): (1, 0), (1, 0), (0, 1)?",
-      "en": "Start in READY. At a rising edge, r=1 in READY starts work and enters BUSY; BUSY ignores r and waits for d=1. What states follow input pairs (r, d): (1, 0), (1, 0), (0, 1)?"
+      "he": "מתחילים ב־READY. בחזית עולה, r=1 במצב READY מתחיל פעולה ועובר ל־BUSY; ב־BUSY מתעלמים מ־r וממתינים ל־d=1. מה המצבים אחרי זוגות הקלט (r,d): (1,0),(1,0),(0,1)?",
+      "en": "Start in READY. At a rising edge, r=1 in READY starts work and enters BUSY; BUSY ignores r and waits for d=1. What states follow input pairs (r,d): (1,0),(1,0),(0,1)?"
     },
     "answer": {
       "he": "המצבים הם `BUSY, BUSY, READY`. הבקשה השנייה אינה מתחילה פעולה נוספת בזמן BUSY. החזרה ל־READY מתבצעת כשדוגמים d=1. המוצא ״פנוי״ הוא 1 רק ב־READY.",
@@ -1343,8 +1343,8 @@
       "en": "A product every second coin"
     },
     "prompt": {
-      "he": "בכל חזית עולה, c=1 מציין מטבע אחד ו־c=0 שאין מטבע. מוצר עולה שני מטבעות, וללא עודף. מתחילים ב־EMPTY; ONE מציין מטבע שמור. מהו y, אישור הוצאת מוצר, עבור 1, 0, 1, 1? תווית בתרשים: c/y.",
-      "en": "At each rising edge, c=1 means one coin and c=0 means no coin. A product costs two coins, with no change. Start in EMPTY; ONE means one stored coin. What are dispense outputs y for 1, 0, 1, 1? Diagram labels are c/y."
+      "he": "בכל חזית עולה, c=1 מציין מטבע אחד ו־c=0 שאין מטבע. מוצר עולה שני מטבעות, וללא עודף. מתחילים ב־EMPTY; ONE מציין מטבע שמור. מהו y, אישור הוצאת מוצר, עבור 1,0,1,1? תווית בתרשים: c/y.",
+      "en": "At each rising edge, c=1 means one coin and c=0 means no coin. A product costs two coins, with no change. Start in EMPTY; ONE means one stored coin. What are dispense outputs y for 1,0,1,1? Diagram labels are c/y."
     },
     "answer": {
       "he": "המוצאים לכל דגימה הם `0, 0, 1, 0`. המטבע השני מוציא מוצר ומחזיר ל־EMPTY. y מחושב מהמצב שלפני הדגימה ומהקלט c; ONE לבדו אינו מספיק להוצאת מוצר.",
@@ -1489,8 +1489,8 @@
       "en": "Overlapping detections"
     },
     "prompt": {
-      "he": "דוגמים x בכל חזית. ZERO פירושו שהביט הקודם 0, ו־ONE שהקודם 1; מתחילים ב־ZERO. y=1 בכל זוג 11, כולל חפיפה. מהם המוצאים עבור 1, 1, 1, 0, 1? תוויות התרשים הן x/y.",
-      "en": "Sample x at each edge. ZERO means the previous bit was 0; ONE means it was 1. Start in ZERO. Output y=1 for each pair 11, including overlaps. What outputs follow 1, 1, 1, 0, 1? Diagram labels are x/y."
+      "he": "דוגמים x בכל חזית. ZERO פירושו שהביט הקודם 0, ו־ONE שהקודם 1; מתחילים ב־ZERO. y=1 בכל זוג 11, כולל חפיפה. מהם המוצאים עבור 1,1,1,0,1? תוויות התרשים הן x/y.",
+      "en": "Sample x at each edge. ZERO means the previous bit was 0; ONE means it was 1. Start in ZERO. Output y=1 for each pair 11, including overlaps. What outputs follow 1,1,1,0,1? Diagram labels are x/y."
     },
     "answer": {
       "he": "המוצאים הם `0, 1, 1, 0, 0`. ב־111 יש שני זוגות חופפים: ביטים 1–2 וביטים 2–3. לאחר זיהוי נשארים ב־ONE, כי הביט האחרון עדיין 1.",

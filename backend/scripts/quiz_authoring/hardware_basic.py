@@ -489,8 +489,8 @@ def build():
         binary(
             11,
             v,
-            f"מזיזים את המילה ללא סימן {value:08b} שמאלה {'בביט אחד' if shift == 1 else f'ב־{shift} ביטים'}, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
-            f"Shift unsigned {value:08b} left by {shift} bit {'position' if shift == 1 else 'positions'}, insert zeros on the right, and keep only 8 bits. What is stored?",
+            f"מזיזים את המילה הלא מסומנת {value:08b} שמאלה ב־{shift} מיקומים, מכניסים אפסים מימין ושומרים רק 8 ביטים. מה נשמר?",
+            f"Shift unsigned {value:08b} left by {shift} positions, insert zeros on the right, and keep only 8 bits. What is stored?",
             result,
             8,
             f"מכפילים ב־{2**shift} ושומרים את השארית בחלוקה ב־256: {result:08b}.",
@@ -762,7 +762,7 @@ def build():
             f"A machine has {states} states. Use compact binary encoding with the minimum number of bits. How many bits are required and how many codes remain unused, in that order?",
             good,
             [f"{width + 1}, {2 ** (width + 1) - states}", f"{width}, {unused + 1}", f"{width + 1}, {unused}"],
-            f"{width} ביטים מספקים {2**width} קודים; מספר הקודים הפנויים לאחר הקצאת {states} הוא {unused}.",
+            f"{width} ביטים מספקים {2**width} קודים; לאחר הקצאת {states} נותרו {unused}.",
             f"{width} bits provide {2**width} codes; assigning {states} leaves {unused}.",
             "statebits",
             p,
@@ -849,7 +849,7 @@ def build():
         seq(
             39,
             v,
-            f"מפיקים ביט y=1 עבור מספר אי־זוגי ללא סימן ו־y=0 עבור מספר זוגי. מהם ערכי y עבור {', '.join(words)} לפי הסדר?",
+            f"מפיקים ביט y=1 עבור מספר לא מסומן אי־זוגי ו־y=0 עבור מספר זוגי. מהם ערכי y עבור {', '.join(words)} לפי הסדר?",
             f"Produce y=1 for an odd unsigned integer and y=0 for an even integer. What are the y values for {', '.join(words)} in order?",
             values,
             "רק הביט הימני קובע זוגיות: 1 מציין מספר אי־זוגי.",
@@ -864,7 +864,7 @@ def build():
         binary(
             41,
             v,
-            f"מהו הייצוג של המספר ללא סימן {value} בדיוק ב־{width} ביטים?",
+            f"מהו הייצוג של המספר הלא מסומן {value} בדיוק ב־{width} ביטים?",
             f"What is the representation of unsigned {value} using exactly {width} bits?",
             value,
             width,
@@ -881,7 +881,7 @@ def build():
         emit(
             42,
             v,
-            f"מהם ערכי המילה {word} בפירוש ללא סימן ובפירוש משלים ל־2 ברוחב {len(word)} ביטים, בסדר זה?",
+            f"מהם ערכי המילה {word} בפירוש לא מסומן ובפירוש משלים ל־2 ברוחב {len(word)} ביטים, בסדר זה?",
             f"What are the values of word {word} under unsigned and {len(word)}-bit two's-complement interpretations, in that order?",
             good,
             [f"{signed}, {unsigned}", f"{unsigned}, {signed + 1}", f"{unsigned + 1}, {signed}"]
@@ -921,7 +921,7 @@ def build():
             f"Which of the following {width}-bit words is one-hot, meaning it contains exactly one bit equal to 1?",
             word,
             bad,
-            "במילה הנכונה יש בדיוק ביט אחד שערכו 1; מילה שכולה אפסים אינה one-hot.",
+            "במילה הנכונה יש בדיוק 1 אחד; מילה שכולה אפסים אינה one-hot.",
             "The correct word has exactly one 1; an all-zero word is not one-hot.",
             "onehot",
             {"words": words},
@@ -1000,7 +1000,7 @@ def build():
         seq(
             48,
             v,
-            f"מונה ללא סימן בן 3 ביטים מתחיל ב־{initial:03b}. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN={text(xs)}, מה נשמר אחרי כל חזית?",
+            f"מונה לא מסומן בן 3 ביטים מתחיל ב־{initial:03b}. בכל חזית עולה הוא גדל ב־1 רק אם EN=1, אחרת שומר את ערכו. שומרים רק 3 ביטים ואין איפוס. עבור EN={text(xs)}, מה נשמר אחרי כל חזית?",
             f"A 3-bit unsigned counter starts at {initial:03b}. At each rising edge it increments only if EN=1; otherwise it holds. Keep only 3 bits, with no reset. For EN={text(xs)}, what is stored after each edge?",
             result,
             "סופרים רק חזיתות שבהן EN=1; הערכים נעטפים בחזרה ל־0 אחרי 7.",
@@ -1016,8 +1016,8 @@ def build():
         binary(
             49,
             v,
-            f"מונה ללא סימן בן {width} ביטים מתחיל ב־{initial}. הוא קטן ב־1 בכל חזית עולה, שומר רק {width} ביטים וללא איפוס. מה נשמר אחרי {'חזית אחת' if edges == 1 else f'{edges} חזיתות'}?",
-            f"A {width}-bit unsigned counter starts at {initial}. It decrements by 1 on each rising edge, keeps only {width} bits, and has no reset. What is stored after {edges} {'edge' if edges == 1 else 'edges'}?",
+            f"מונה לא מסומן בן {width} ביטים מתחיל ב־{initial}. הוא קטן ב־1 בכל חזית עולה, שומר רק {width} ביטים וללא איפוס. מה נשמר אחרי {edges} חזיתות?",
+            f"A {width}-bit unsigned counter starts at {initial}. It decrements by 1 on each rising edge, keeps only {width} bits, and has no reset. What is stored after {edges} edges?",
             result,
             width,
             f"החיסור מתבצע מודולו {2**width}; צעד אחורה מ־0 נותן {2**width - 1}.",
@@ -1032,8 +1032,8 @@ def build():
         emit(
             51,
             v,
-            f"לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D={data} יציב כנדרש סביב {'החזית העולה הראשונה' if edges == 1 else f'כל אחת מ־{edges} החזיתות העולות הראשונות'}. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
-            f"A D flip-flop has no reset or specified initial value. D={data} is stable as required around {'the first rising edge' if edges == 1 else f'each of the first {edges} rising edges'}. What is guaranteed about Q before the first edge and after the final edge, in that order?",
+            f"לפליפ-פלופ D אין איפוס ואין ערך התחלתי מוגדר. D={data} יציב כנדרש סביב כל אחת מ־{edges} החזיתות העולות הראשונות. מה מובטח לגבי Q לפני החזית הראשונה ולאחר החזית האחרונה, בסדר זה?",
+            f"A D flip-flop has no reset or specified initial value. D={data} is stable as required around each of the first {edges} rising edges. What is guaranteed about Q before the first edge and after the final edge, in that order?",
             good,
             [
                 (f"0; {data}", f"0; {data}"),
@@ -1052,11 +1052,11 @@ def build():
         seq(
             52,
             v,
-            f"מונה בינארי ללא סימן בן 3 ביטים מתחיל ב־{initial:03b} וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט {bit} אחרי {edges} החזיתות הראשונות?",
+            f"מונה בינארי לא מסומן בן 3 ביטים מתחיל ב־{initial:03b} וגדל ב־1 בכל חזית עולה, עם גלישה וללא איפוס. ביט 0 הוא הימני. מהם ערכי ביט {bit} אחרי {edges} החזיתות הראשונות?",
             f"A 3-bit unsigned binary counter starts at {initial:03b} and increments on each rising edge, wrapping with no reset. Bit 0 is the rightmost bit. What are the values of bit {bit} after the first {edges} edges?",
             result,
-            f"ביט {bit} מחליף ערך כל {'צעד' if bit == 0 else f'{2**bit} צעדים'}; עוקבים אחר קוד המונה בכל חזית.",
-            f"Bit {bit} toggles every {'increment' if bit == 0 else f'{2**bit} increments'}; trace the counter code at each edge.",
+            f"ביט {bit} מחליף ערך כל {2**bit} צעדים; עוקבים אחר קוד המונה בכל חזית.",
+            f"Bit {bit} toggles every {2**bit} increments; trace the counter code at each edge.",
             "counter_bit",
             p,
         )
@@ -1185,8 +1185,8 @@ def build():
         binary(
             60,
             v,
-            f"מונה בן 2 ביטים מתקדם במחזור 00→01→10→00. עבור המצב הלא חוקי 11 הוגדר מעבר התאוששות אל {recovery:02b}. מתחילים ב־11 ואין איפוס. מהו המצב לאחר {'חזית עולה אחת' if edges == 1 else f'{edges} חזיתות עולות'}?",
-            f"A 2-bit counter follows 00→01→10→00. Invalid state 11 has a recovery transition to {recovery:02b}. Start in 11 with no reset. What is the state after {edges} rising {'edge' if edges == 1 else 'edges'}?",
+            f"מונה בן 2 ביטים מתקדם במחזור 00→01→10→00. עבור המצב הלא חוקי 11 הוגדר מעבר התאוששות אל {recovery:02b}. מתחילים ב־11 ואין איפוס. מהו המצב לאחר {edges} חזיתות עולות?",
+            f"A 2-bit counter follows 00→01→10→00. Invalid state 11 has a recovery transition to {recovery:02b}. Start in 11 with no reset. What is the state after {edges} rising edges?",
             result,
             2,
             "החזית הראשונה מבצעת את מעבר ההתאוששות; לאחריה מתקדמים במחזור החוקי.",

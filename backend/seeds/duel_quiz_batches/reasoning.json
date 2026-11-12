@@ -6,8 +6,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״לא ב־A״, ״ב־A״, ״לא ב־B״. מספר המשפטים הנכונים הוא בדיוק 1. היכן המטבע?",
-      "en": "A coin is in exactly one of boxes A, B, C. The three statements, in order, are 'not in A', 'in A', 'not in B'. Exactly 1 statement is true. Where is the coin?"
+      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״לא ב־A״, ״ב־A״, ״לא ב־B״. בדיוק 1 מהמשפטים נכונים. היכן המטבע?",
+      "en": "A coin is in exactly one of boxes A, B, C. The three statements, in order, are 'not in A', 'in A', 'not in B'. Exactly 1 statements are true. Where is the coin?"
     },
     "choices": [
       {
@@ -40,7 +40,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״ב־A״, ״ב־A״, ״ב־B״. מספר המשפטים הנכונים הוא בדיוק 2. היכן המטבע?",
+      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״ב־A״, ״ב־A״, ״ב־B״. בדיוק 2 מהמשפטים נכונים. היכן המטבע?",
       "en": "A coin is in exactly one of boxes A, B, C. The three statements, in order, are 'in A', 'in A', 'in B'. Exactly 2 statements are true. Where is the coin?"
     },
     "choices": [
@@ -74,7 +74,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״ב־C״, ״לא ב־A״, ״ב־B״. מספר המשפטים הנכונים הוא בדיוק 0. היכן המטבע?",
+      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״ב־C״, ״לא ב־A״, ״ב־B״. בדיוק 0 מהמשפטים נכונים. היכן המטבע?",
       "en": "A coin is in exactly one of boxes A, B, C. The three statements, in order, are 'in C', 'not in A', 'in B'. Exactly 0 statements are true. Where is the coin?"
     },
     "choices": [
@@ -108,7 +108,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״לא ב־C״, ״ב־B״, ״ב־B״. מספר המשפטים הנכונים הוא בדיוק 3. היכן המטבע?",
+      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״לא ב־C״, ״ב־B״, ״ב־B״. בדיוק 3 מהמשפטים נכונים. היכן המטבע?",
       "en": "A coin is in exactly one of boxes A, B, C. The three statements, in order, are 'not in C', 'in B', 'in B'. Exactly 3 statements are true. Where is the coin?"
     },
     "choices": [
@@ -142,7 +142,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״ב־C״, ״ב־C״, ״לא ב־C״. מספר המשפטים הנכונים הוא בדיוק 2. היכן המטבע?",
+      "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: ״ב־C״, ״ב־C״, ״לא ב־C״. בדיוק 2 מהמשפטים נכונים. היכן המטבע?",
       "en": "A coin is in exactly one of boxes A, B, C. The three statements, in order, are 'in C', 'in C', 'not in C'. Exactly 2 statements are true. Where is the coin?"
     },
     "choices": [
@@ -1026,8 +1026,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 3 משדרים, וכל אחד רשאי לשלוח לכל היותר 2 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף ספירות ללא משדר, שמספרן לכל היותר 1. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
-      "en": "There are 3 senders, each allowed at most 2 signals. Each signal is collected once, and an unknown initial state may add up to 1 count without a sender. What is the smallest count proving everyone participated?"
+      "he": "יש 3 משדרים, וכל אחד רשאי לשלוח לכל היותר 2 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף עד 1 ספירות ללא משדר. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
+      "en": "There are 3 senders, each allowed at most 2 signals. Each signal is collected once, and an unknown initial state may add up to 1 counts without a sender. What is the smallest count proving everyone participated?"
     },
     "choices": [
       {
@@ -1060,8 +1060,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 4 משדרים, וכל אחד רשאי לשלוח לכל היותר 2 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף ספירות ללא משדר, שמספרן לכל היותר 1. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
-      "en": "There are 4 senders, each allowed at most 2 signals. Each signal is collected once, and an unknown initial state may add up to 1 count without a sender. What is the smallest count proving everyone participated?"
+      "he": "יש 4 משדרים, וכל אחד רשאי לשלוח לכל היותר 2 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף עד 1 ספירות ללא משדר. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
+      "en": "There are 4 senders, each allowed at most 2 signals. Each signal is collected once, and an unknown initial state may add up to 1 counts without a sender. What is the smallest count proving everyone participated?"
     },
     "choices": [
       {
@@ -1094,8 +1094,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 5 משדרים, וכל אחד רשאי לשלוח לכל היותר 2 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף ספירות ללא משדר, שמספרן לכל היותר 1. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
-      "en": "There are 5 senders, each allowed at most 2 signals. Each signal is collected once, and an unknown initial state may add up to 1 count without a sender. What is the smallest count proving everyone participated?"
+      "he": "יש 5 משדרים, וכל אחד רשאי לשלוח לכל היותר 2 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף עד 1 ספירות ללא משדר. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
+      "en": "There are 5 senders, each allowed at most 2 signals. Each signal is collected once, and an unknown initial state may add up to 1 counts without a sender. What is the smallest count proving everyone participated?"
     },
     "choices": [
       {
@@ -1128,8 +1128,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 3 משדרים, וכל אחד רשאי לשלוח לכל היותר 3 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף ספירות ללא משדר, שמספרן לכל היותר 1. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
-      "en": "There are 3 senders, each allowed at most 3 signals. Each signal is collected once, and an unknown initial state may add up to 1 count without a sender. What is the smallest count proving everyone participated?"
+      "he": "יש 3 משדרים, וכל אחד רשאי לשלוח לכל היותר 3 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף עד 1 ספירות ללא משדר. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
+      "en": "There are 3 senders, each allowed at most 3 signals. Each signal is collected once, and an unknown initial state may add up to 1 counts without a sender. What is the smallest count proving everyone participated?"
     },
     "choices": [
       {
@@ -1162,7 +1162,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 4 משדרים, וכל אחד רשאי לשלוח לכל היותר 3 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף ספירות ללא משדר, שמספרן לכל היותר 2. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
+      "he": "יש 4 משדרים, וכל אחד רשאי לשלוח לכל היותר 3 אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף עד 2 ספירות ללא משדר. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
       "en": "There are 4 senders, each allowed at most 3 signals. Each signal is collected once, and an unknown initial state may add up to 2 counts without a sender. What is the smallest count proving everyone participated?"
     },
     "choices": [
@@ -1706,8 +1706,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני צעצועים עוברים מרחק כולל של 2 מטרים. A עובר 1 מטר במהירות 1 מטר לשנייה ואת היתר במהירות 2; B עובר הכול במהירות 2. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
-      "en": "Two toys each travel 2 meters. A covers 1 meter at 1 m/s and the rest at 2 m/s; B covers the entire route at 2 m/s. Ignore speed-change time. How many seconds later does A finish, despite equal final speeds?"
+      "he": "שני צעצועים עוברים מרחק כולל של 2 מטרים. A עובר 1 מטרים במהירות 1 מטר לשנייה ואת היתר במהירות 2; B עובר הכול במהירות 2. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
+      "en": "Two toys each travel 2 meters. A covers 1 meters at 1 m/s and the rest at 2 m/s; B covers the entire route at 2 m/s. Ignore speed-change time. How many seconds later does A finish, despite equal final speeds?"
     },
     "choices": [
       {
@@ -1740,7 +1740,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני צעצועים עוברים מרחק כולל של 4 מטרים. A עובר 2 מטר במהירות 1 מטר לשנייה ואת היתר במהירות 4; B עובר הכול במהירות 4. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
+      "he": "שני צעצועים עוברים מרחק כולל של 4 מטרים. A עובר 2 מטרים במהירות 1 מטר לשנייה ואת היתר במהירות 4; B עובר הכול במהירות 4. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
       "en": "Two toys each travel 4 meters. A covers 2 meters at 1 m/s and the rest at 4 m/s; B covers the entire route at 4 m/s. Ignore speed-change time. How many seconds later does A finish, despite equal final speeds?"
     },
     "choices": [
@@ -1774,7 +1774,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני צעצועים עוברים מרחק כולל של 6 מטרים. A עובר 3 מטר במהירות 2 מטר לשנייה ואת היתר במהירות 3; B עובר הכול במהירות 3. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
+      "he": "שני צעצועים עוברים מרחק כולל של 6 מטרים. A עובר 3 מטרים במהירות 2 מטר לשנייה ואת היתר במהירות 3; B עובר הכול במהירות 3. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
       "en": "Two toys each travel 6 meters. A covers 3 meters at 2 m/s and the rest at 3 m/s; B covers the entire route at 3 m/s. Ignore speed-change time. How many seconds later does A finish, despite equal final speeds?"
     },
     "choices": [
@@ -1808,7 +1808,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני צעצועים עוברים מרחק כולל של 8 מטרים. A עובר 4 מטר במהירות 2 מטר לשנייה ואת היתר במהירות 4; B עובר הכול במהירות 4. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
+      "he": "שני צעצועים עוברים מרחק כולל של 8 מטרים. A עובר 4 מטרים במהירות 2 מטר לשנייה ואת היתר במהירות 4; B עובר הכול במהירות 4. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
       "en": "Two toys each travel 8 meters. A covers 4 meters at 2 m/s and the rest at 4 m/s; B covers the entire route at 4 m/s. Ignore speed-change time. How many seconds later does A finish, despite equal final speeds?"
     },
     "choices": [
@@ -1842,7 +1842,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני צעצועים עוברים מרחק כולל של 12 מטרים. A עובר 6 מטר במהירות 3 מטר לשנייה ואת היתר במהירות 6; B עובר הכול במהירות 6. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
+      "he": "שני צעצועים עוברים מרחק כולל של 12 מטרים. A עובר 6 מטרים במהירות 3 מטר לשנייה ואת היתר במהירות 6; B עובר הכול במהירות 6. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
       "en": "Two toys each travel 12 meters. A covers 6 meters at 3 m/s and the rest at 6 m/s; B covers the entire route at 6 m/s. Ignore speed-change time. How many seconds later does A finish, despite equal final speeds?"
     },
     "choices": [
@@ -2046,8 +2046,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 2 ק״ג במרחק 1 מטר מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 2 מטר לאיזון סטטי בכבידה אחידה?",
-      "en": "A weightless horizontal bar rests on a pivot supplying no torque. Hang 2 kg at 1 meter to the left. What mass in kg must hang 2 meters to the right for static balance in uniform gravity?"
+      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 2 ק״ג במרחק 1 מטרים מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 2 מטרים לאיזון סטטי בכבידה אחידה?",
+      "en": "A weightless horizontal bar rests on a pivot supplying no torque. Hang 2 kg at 1 meters to the left. What mass in kg must hang 2 meters to the right for static balance in uniform gravity?"
     },
     "choices": [
       {
@@ -2080,7 +2080,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 3 ק״ג במרחק 2 מטר מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 3 מטר לאיזון סטטי בכבידה אחידה?",
+      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 3 ק״ג במרחק 2 מטרים מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 3 מטרים לאיזון סטטי בכבידה אחידה?",
       "en": "A weightless horizontal bar rests on a pivot supplying no torque. Hang 3 kg at 2 meters to the left. What mass in kg must hang 3 meters to the right for static balance in uniform gravity?"
     },
     "choices": [
@@ -2114,7 +2114,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 4 ק״ג במרחק 3 מטר מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 6 מטר לאיזון סטטי בכבידה אחידה?",
+      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 4 ק״ג במרחק 3 מטרים מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 6 מטרים לאיזון סטטי בכבידה אחידה?",
       "en": "A weightless horizontal bar rests on a pivot supplying no torque. Hang 4 kg at 3 meters to the left. What mass in kg must hang 6 meters to the right for static balance in uniform gravity?"
     },
     "choices": [
@@ -2148,8 +2148,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 6 ק״ג במרחק 1 מטר מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 3 מטר לאיזון סטטי בכבידה אחידה?",
-      "en": "A weightless horizontal bar rests on a pivot supplying no torque. Hang 6 kg at 1 meter to the left. What mass in kg must hang 3 meters to the right for static balance in uniform gravity?"
+      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 6 ק״ג במרחק 1 מטרים מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 3 מטרים לאיזון סטטי בכבידה אחידה?",
+      "en": "A weightless horizontal bar rests on a pivot supplying no torque. Hang 6 kg at 1 meters to the left. What mass in kg must hang 3 meters to the right for static balance in uniform gravity?"
     },
     "choices": [
       {
@@ -2182,7 +2182,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 5 ק״ג במרחק 4 מטר מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 2 מטר לאיזון סטטי בכבידה אחידה?",
+      "he": "מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים 5 ק״ג במרחק 4 מטרים מהציר. איזו מסה בק״ג יש לתלות מימין במרחק 2 מטרים לאיזון סטטי בכבידה אחידה?",
       "en": "A weightless horizontal bar rests on a pivot supplying no torque. Hang 5 kg at 4 meters to the left. What mass in kg must hang 2 meters to the right for static balance in uniform gravity?"
     },
     "choices": [
@@ -2726,8 +2726,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "קרן יוצאת מנקודה שאינה על שפת מצולע פשוט. מספר החציות שלה את השפה עד האינסוף הוא 1. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
-      "en": "A ray from a point off a simple polygon's boundary crosses the boundary 1 time before infinity. Every crossing is proper, with no vertices or tangencies. What follows about the point?"
+      "he": "קרן מנקודה שאינה על שפת מצולע פשוט חוצה את השפה 1 פעמים לפני האינסוף. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
+      "en": "A ray from a point off a simple polygon's boundary crosses the boundary 1 times before infinity. Every crossing is proper, with no vertices or tangencies. What follows about the point?"
     },
     "choices": [
       {
@@ -2760,7 +2760,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "קרן יוצאת מנקודה שאינה על שפת מצולע פשוט. מספר החציות שלה את השפה עד האינסוף הוא 2. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
+      "he": "קרן מנקודה שאינה על שפת מצולע פשוט חוצה את השפה 2 פעמים לפני האינסוף. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
       "en": "A ray from a point off a simple polygon's boundary crosses the boundary 2 times before infinity. Every crossing is proper, with no vertices or tangencies. What follows about the point?"
     },
     "choices": [
@@ -2794,7 +2794,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "קרן יוצאת מנקודה שאינה על שפת מצולע פשוט. מספר החציות שלה את השפה עד האינסוף הוא 3. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
+      "he": "קרן מנקודה שאינה על שפת מצולע פשוט חוצה את השפה 3 פעמים לפני האינסוף. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
       "en": "A ray from a point off a simple polygon's boundary crosses the boundary 3 times before infinity. Every crossing is proper, with no vertices or tangencies. What follows about the point?"
     },
     "choices": [
@@ -2828,7 +2828,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "קרן יוצאת מנקודה שאינה על שפת מצולע פשוט. מספר החציות שלה את השפה עד האינסוף הוא 4. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
+      "he": "קרן מנקודה שאינה על שפת מצולע פשוט חוצה את השפה 4 פעמים לפני האינסוף. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
       "en": "A ray from a point off a simple polygon's boundary crosses the boundary 4 times before infinity. Every crossing is proper, with no vertices or tangencies. What follows about the point?"
     },
     "choices": [
@@ -2862,7 +2862,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "קרן יוצאת מנקודה שאינה על שפת מצולע פשוט. מספר החציות שלה את השפה עד האינסוף הוא 5. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
+      "he": "קרן מנקודה שאינה על שפת מצולע פשוט חוצה את השפה 5 פעמים לפני האינסוף. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
       "en": "A ray from a point off a simple polygon's boundary crosses the boundary 5 times before infinity. Every crossing is proper, with no vertices or tangencies. What follows about the point?"
     },
     "choices": [
@@ -3406,8 +3406,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שחיין מקיף מרכז ברדיוס 1/4 מטר במהירות 1 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 1 מטר במהירות 3. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
-      "en": "A swimmer circles a center at radius 1/4 m and speed 1 m/s; a runner circles the same center at radius 1 m and speed 3 m/s. By how many radians per second is the swimmer's angular speed greater?"
+      "he": "שחיין מקיף מרכז ברדיוס 1/4 מטרים במהירות 1 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 1 מטרים במהירות 3. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
+      "en": "A swimmer circles a center at radius 1/4 meters and speed 1 m/s; a runner circles the same center at radius 1 meters and speed 3 m/s. By how many radians per second is the swimmer's angular speed greater?"
     },
     "choices": [
       {
@@ -3440,8 +3440,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שחיין מקיף מרכז ברדיוס 1/2 מטר במהירות 2 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 2 מטר במהירות 6. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
-      "en": "A swimmer circles a center at radius 1/2 m and speed 2 m/s; a runner circles the same center at radius 2 m and speed 6 m/s. By how many radians per second is the swimmer's angular speed greater?"
+      "he": "שחיין מקיף מרכז ברדיוס 1/2 מטרים במהירות 2 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 2 מטרים במהירות 6. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
+      "en": "A swimmer circles a center at radius 1/2 meters and speed 2 m/s; a runner circles the same center at radius 2 meters and speed 6 m/s. By how many radians per second is the swimmer's angular speed greater?"
     },
     "choices": [
       {
@@ -3474,8 +3474,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שחיין מקיף מרכז ברדיוס 1 מטר במהירות 3 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 2 מטר במהירות 5. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
-      "en": "A swimmer circles a center at radius 1 m and speed 3 m/s; a runner circles the same center at radius 2 m and speed 5 m/s. By how many radians per second is the swimmer's angular speed greater?"
+      "he": "שחיין מקיף מרכז ברדיוס 1 מטרים במהירות 3 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 2 מטרים במהירות 5. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
+      "en": "A swimmer circles a center at radius 1 meters and speed 3 m/s; a runner circles the same center at radius 2 meters and speed 5 m/s. By how many radians per second is the swimmer's angular speed greater?"
     },
     "choices": [
       {
@@ -3508,8 +3508,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שחיין מקיף מרכז ברדיוס 2 מטר במהירות 6 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 3 מטר במהירות 8. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
-      "en": "A swimmer circles a center at radius 2 m and speed 6 m/s; a runner circles the same center at radius 3 m and speed 8 m/s. By how many radians per second is the swimmer's angular speed greater?"
+      "he": "שחיין מקיף מרכז ברדיוס 2 מטרים במהירות 6 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 3 מטרים במהירות 8. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
+      "en": "A swimmer circles a center at radius 2 meters and speed 6 m/s; a runner circles the same center at radius 3 meters and speed 8 m/s. By how many radians per second is the swimmer's angular speed greater?"
     },
     "choices": [
       {
@@ -3542,8 +3542,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שחיין מקיף מרכז ברדיוס 1/3 מטר במהירות 1 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 2 מטר במהירות 5. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
-      "en": "A swimmer circles a center at radius 1/3 m and speed 1 m/s; a runner circles the same center at radius 2 m and speed 5 m/s. By how many radians per second is the swimmer's angular speed greater?"
+      "he": "שחיין מקיף מרכז ברדיוס 1/3 מטרים במהירות 1 מטר לשנייה; רץ מקיף אותו מרכז ברדיוס 2 מטרים במהירות 5. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
+      "en": "A swimmer circles a center at radius 1/3 meters and speed 1 m/s; a runner circles the same center at radius 2 meters and speed 5 m/s. By how many radians per second is the swimmer's angular speed greater?"
     },
     "choices": [
       {
@@ -3939,7 +3939,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "האמירה מקודדת את הכובעים שהדובר רואה; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
+      "he": "האמירה מקודדת את מה שנראה לאחרים; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
       "en": "The word encodes the visible hats; changing only the speaker's own hat does not change the message."
     }
   },
@@ -3973,7 +3973,7 @@
     ],
     "correct": 0,
     "explanation": {
-      "he": "האמירה מקודדת את הכובעים שהדובר רואה; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
+      "he": "האמירה מקודדת את מה שנראה לאחרים; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
       "en": "The word encodes the visible hats; changing only the speaker's own hat does not change the message."
     }
   },
@@ -4007,7 +4007,7 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "האמירה מקודדת את הכובעים שהדובר רואה; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
+      "he": "האמירה מקודדת את מה שנראה לאחרים; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
       "en": "The word encodes the visible hats; changing only the speaker's own hat does not change the message."
     }
   },
@@ -4041,7 +4041,7 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "האמירה מקודדת את הכובעים שהדובר רואה; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
+      "he": "האמירה מקודדת את מה שנראה לאחרים; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
       "en": "The word encodes the visible hats; changing only the speaker's own hat does not change the message."
     }
   },
@@ -4075,7 +4075,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "האמירה מקודדת את הכובעים שהדובר רואה; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
+      "he": "האמירה מקודדת את מה שנראה לאחרים; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
       "en": "The word encodes the visible hats; changing only the speaker's own hat does not change the message."
     }
   },
@@ -4086,8 +4086,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטילים 2 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות שבהן מספר המטבעות שהראו עץ הוא לפחות 1. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
-      "en": "Toss 2 fair independent coins and retain only outcomes with at least 1 head. Among retained outcomes, what is the probability that all coins showed heads?"
+      "he": "מטילים 2 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות עם לפחות 1 פעמים עץ. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
+      "en": "Toss 2 fair independent coins and retain only outcomes with at least 1 heads. Among retained outcomes, what is the probability that all coins showed heads?"
     },
     "choices": [
       {
@@ -4120,8 +4120,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטילים 3 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות שבהן מספר המטבעות שהראו עץ הוא לפחות 1. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
-      "en": "Toss 3 fair independent coins and retain only outcomes with at least 1 head. Among retained outcomes, what is the probability that all coins showed heads?"
+      "he": "מטילים 3 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות עם לפחות 1 פעמים עץ. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
+      "en": "Toss 3 fair independent coins and retain only outcomes with at least 1 heads. Among retained outcomes, what is the probability that all coins showed heads?"
     },
     "choices": [
       {
@@ -4154,7 +4154,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטילים 3 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות שבהן מספר המטבעות שהראו עץ הוא לפחות 2. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
+      "he": "מטילים 3 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות עם לפחות 2 פעמים עץ. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
       "en": "Toss 3 fair independent coins and retain only outcomes with at least 2 heads. Among retained outcomes, what is the probability that all coins showed heads?"
     },
     "choices": [
@@ -4188,8 +4188,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטילים 4 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות שבהן מספר המטבעות שהראו עץ הוא לפחות 1. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
-      "en": "Toss 4 fair independent coins and retain only outcomes with at least 1 head. Among retained outcomes, what is the probability that all coins showed heads?"
+      "he": "מטילים 4 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות עם לפחות 1 פעמים עץ. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
+      "en": "Toss 4 fair independent coins and retain only outcomes with at least 1 heads. Among retained outcomes, what is the probability that all coins showed heads?"
     },
     "choices": [
       {
@@ -4222,7 +4222,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטילים 4 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות שבהן מספר המטבעות שהראו עץ הוא לפחות 3. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
+      "he": "מטילים 4 מטבעות הוגנים ועצמאיים ושומרים רק תוצאות עם לפחות 3 פעמים עץ. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
       "en": "Toss 4 fair independent coins and retain only outcomes with at least 3 heads. Among retained outcomes, what is the probability that all coins showed heads?"
     },
     "choices": [
@@ -5503,7 +5503,7 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "הקופסה המסומנת ״תערובת״ מכילה סוג פרי אחד בלבד. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
+      "he": "הקופסה המסומנת כתערובת טהורה. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
       "en": "The mixed-labeled box is pure. Once identified, requiring every label to be wrong fixes the other two contents."
     }
   },
@@ -5537,7 +5537,7 @@
     ],
     "correct": 0,
     "explanation": {
-      "he": "הקופסה המסומנת ״תערובת״ מכילה סוג פרי אחד בלבד. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
+      "he": "הקופסה המסומנת כתערובת טהורה. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
       "en": "The mixed-labeled box is pure. Once identified, requiring every label to be wrong fixes the other two contents."
     }
   },
@@ -5571,7 +5571,7 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "הקופסה המסומנת ״תערובת״ מכילה סוג פרי אחד בלבד. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
+      "he": "הקופסה המסומנת כתערובת טהורה. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
       "en": "The mixed-labeled box is pure. Once identified, requiring every label to be wrong fixes the other two contents."
     }
   },
@@ -5605,7 +5605,7 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "הקופסה המסומנת ״תערובת״ מכילה סוג פרי אחד בלבד. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
+      "he": "הקופסה המסומנת כתערובת טהורה. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
       "en": "The mixed-labeled box is pure. Once identified, requiring every label to be wrong fixes the other two contents."
     }
   },
@@ -5616,7 +5616,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את A מול B, תוצאת השקילה: המאזניים מאוזנים. איזה מטבע כבד?",
+      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את A מול B, ו־המאזניים מאוזנים. איזה מטבע כבד?",
       "en": "There are three coins A, B, C; exactly one is heavy and the others weigh the same. Weigh A against B; the pans balance. Which coin is heavy?"
     },
     "choices": [
@@ -5650,7 +5650,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את A מול B, תוצאת השקילה: A כבד יותר. איזה מטבע כבד?",
+      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את A מול B, ו־A כבד יותר. איזה מטבע כבד?",
       "en": "There are three coins A, B, C; exactly one is heavy and the others weigh the same. Weigh A against B; A is heavier. Which coin is heavy?"
     },
     "choices": [
@@ -5684,7 +5684,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את A מול B, תוצאת השקילה: B כבד יותר. איזה מטבע כבד?",
+      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את A מול B, ו־B כבד יותר. איזה מטבע כבד?",
       "en": "There are three coins A, B, C; exactly one is heavy and the others weigh the same. Weigh A against B; B is heavier. Which coin is heavy?"
     },
     "choices": [
@@ -5718,7 +5718,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את A מול C, תוצאת השקילה: המאזניים מאוזנים. איזה מטבע כבד?",
+      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את A מול C, ו־המאזניים מאוזנים. איזה מטבע כבד?",
       "en": "There are three coins A, B, C; exactly one is heavy and the others weigh the same. Weigh A against C; the pans balance. Which coin is heavy?"
     },
     "choices": [
@@ -5752,7 +5752,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את B מול C, תוצאת השקילה: C כבד יותר. איזה מטבע כבד?",
+      "he": "יש שלושה מטבעות A, B, C; בדיוק אחד כבד והאחרים שווים. שוקלים את B מול C, ו־C כבד יותר. איזה מטבע כבד?",
       "en": "There are three coins A, B, C; exactly one is heavy and the others weigh the same. Weigh B against C; C is heavier. Which coin is heavy?"
     },
     "choices": [
@@ -6466,8 +6466,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספר הצעדים הדרושים הוא 2 ימינה ו־1 למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
-      "en": "Reach a point 2 steps right and 1 step up. Each move is one unit right or up only. How many routes are possible when step order matters?"
+      "he": "צריך להגיע 2 צעדים ימינה ו־1 צעדים למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
+      "en": "Reach a point 2 steps right and 1 steps up. Each move is one unit right or up only. How many routes are possible when step order matters?"
     },
     "choices": [
       {
@@ -6489,8 +6489,8 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "מתוך 3 מקומות ברצף, בוחרים 1 עבור הצעדים למעלה.",
-      "en": "Choose 1 of the 3 sequence positions for upward steps."
+      "he": "בוחרים אילו 1 מתוך 3 המקומות ברצף יהיו צעדים למעלה.",
+      "en": "Choose which 1 of the 3 sequence positions are upward steps."
     }
   },
   {
@@ -6500,8 +6500,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספר הצעדים הדרושים הוא 3 ימינה ו־1 למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
-      "en": "Reach a point 3 steps right and 1 step up. Each move is one unit right or up only. How many routes are possible when step order matters?"
+      "he": "צריך להגיע 3 צעדים ימינה ו־1 צעדים למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
+      "en": "Reach a point 3 steps right and 1 steps up. Each move is one unit right or up only. How many routes are possible when step order matters?"
     },
     "choices": [
       {
@@ -6523,8 +6523,8 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "מתוך 4 מקומות ברצף, בוחרים 1 עבור הצעדים למעלה.",
-      "en": "Choose 1 of the 4 sequence positions for upward steps."
+      "he": "בוחרים אילו 1 מתוך 4 המקומות ברצף יהיו צעדים למעלה.",
+      "en": "Choose which 1 of the 4 sequence positions are upward steps."
     }
   },
   {
@@ -6534,7 +6534,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספר הצעדים הדרושים הוא 2 ימינה ו־2 למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
+      "he": "צריך להגיע 2 צעדים ימינה ו־2 צעדים למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
       "en": "Reach a point 2 steps right and 2 steps up. Each move is one unit right or up only. How many routes are possible when step order matters?"
     },
     "choices": [
@@ -6557,8 +6557,8 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "מתוך 4 מקומות ברצף, בוחרים 2 עבור הצעדים למעלה.",
-      "en": "Choose 2 of the 4 sequence positions for upward steps."
+      "he": "בוחרים אילו 2 מתוך 4 המקומות ברצף יהיו צעדים למעלה.",
+      "en": "Choose which 2 of the 4 sequence positions are upward steps."
     }
   },
   {
@@ -6568,8 +6568,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספר הצעדים הדרושים הוא 4 ימינה ו־1 למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
-      "en": "Reach a point 4 steps right and 1 step up. Each move is one unit right or up only. How many routes are possible when step order matters?"
+      "he": "צריך להגיע 4 צעדים ימינה ו־1 צעדים למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
+      "en": "Reach a point 4 steps right and 1 steps up. Each move is one unit right or up only. How many routes are possible when step order matters?"
     },
     "choices": [
       {
@@ -6591,8 +6591,8 @@
     ],
     "correct": 0,
     "explanation": {
-      "he": "מתוך 5 מקומות ברצף, בוחרים 1 עבור הצעדים למעלה.",
-      "en": "Choose 1 of the 5 sequence positions for upward steps."
+      "he": "בוחרים אילו 1 מתוך 5 המקומות ברצף יהיו צעדים למעלה.",
+      "en": "Choose which 1 of the 5 sequence positions are upward steps."
     }
   },
   {
@@ -6602,7 +6602,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מספר הצעדים הדרושים הוא 3 ימינה ו־2 למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
+      "he": "צריך להגיע 3 צעדים ימינה ו־2 צעדים למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
       "en": "Reach a point 3 steps right and 2 steps up. Each move is one unit right or up only. How many routes are possible when step order matters?"
     },
     "choices": [
@@ -6625,8 +6625,8 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "מתוך 5 מקומות ברצף, בוחרים 2 עבור הצעדים למעלה.",
-      "en": "Choose 2 of the 5 sequence positions for upward steps."
+      "he": "בוחרים אילו 2 מתוך 5 המקומות ברצף יהיו צעדים למעלה.",
+      "en": "Choose which 2 of the 5 sequence positions are upward steps."
     }
   },
   {
@@ -9526,8 +9526,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מספר השקילות שמבצעים הוא 1 ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
-      "en": "Each balance weighing has three possible outcomes. Perform 1 weighing and record the outcomes in order. What is the maximum number of different outcome sequences? This does not claim that every coin puzzle is solvable this way."
+      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מבצעים 1 שקילות ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
+      "en": "Each balance weighing has three possible outcomes. Perform 1 weighings and record the outcomes in order. What is the maximum number of different outcome sequences? This does not claim that every coin puzzle is solvable this way."
     },
     "choices": [
       {
@@ -9560,7 +9560,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מספר השקילות שמבצעים הוא 2 ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
+      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מבצעים 2 שקילות ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
       "en": "Each balance weighing has three possible outcomes. Perform 2 weighings and record the outcomes in order. What is the maximum number of different outcome sequences? This does not claim that every coin puzzle is solvable this way."
     },
     "choices": [
@@ -9594,7 +9594,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מספר השקילות שמבצעים הוא 3 ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
+      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מבצעים 3 שקילות ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
       "en": "Each balance weighing has three possible outcomes. Perform 3 weighings and record the outcomes in order. What is the maximum number of different outcome sequences? This does not claim that every coin puzzle is solvable this way."
     },
     "choices": [
@@ -9628,7 +9628,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מספר השקילות שמבצעים הוא 4 ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
+      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מבצעים 4 שקילות ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
       "en": "Each balance weighing has three possible outcomes. Perform 4 weighings and record the outcomes in order. What is the maximum number of different outcome sequences? This does not claim that every coin puzzle is solvable this way."
     },
     "choices": [
@@ -9662,7 +9662,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מספר השקילות שמבצעים הוא 5 ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
+      "he": "לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מבצעים 5 שקילות ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
       "en": "Each balance weighing has three possible outcomes. Perform 5 weighings and record the outcomes in order. What is the maximum number of different outcome sequences? This does not claim that every coin puzzle is solvable this way."
     },
     "choices": [
@@ -9866,7 +9866,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי שבו מספר האדומים הוא 1 ומספר הכחולים הוא 3, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
+      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי של 1 אדומים ו־3 כחולים, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
       "en": "A bag has only red and blue balls, at least one of each, with unspecified counts. Draw one ball uniformly at random, so each ball is equally likely. What red probability is possible for 1 red and 3 blue balls, illustrating that the probability need not be one half?"
     },
     "choices": [
@@ -9900,7 +9900,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי שבו מספר האדומים הוא 2 ומספר הכחולים הוא 5, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
+      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי של 2 אדומים ו־5 כחולים, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
       "en": "A bag has only red and blue balls, at least one of each, with unspecified counts. Draw one ball uniformly at random, so each ball is equally likely. What red probability is possible for 2 red and 5 blue balls, illustrating that the probability need not be one half?"
     },
     "choices": [
@@ -9934,7 +9934,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי שבו מספר האדומים הוא 3 ומספר הכחולים הוא 1, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
+      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי של 3 אדומים ו־1 כחולים, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
       "en": "A bag has only red and blue balls, at least one of each, with unspecified counts. Draw one ball uniformly at random, so each ball is equally likely. What red probability is possible for 3 red and 1 blue balls, illustrating that the probability need not be one half?"
     },
     "choices": [
@@ -9968,7 +9968,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי שבו מספר האדומים הוא 4 ומספר הכחולים הוא 6, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
+      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי של 4 אדומים ו־6 כחולים, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
       "en": "A bag has only red and blue balls, at least one of each, with unspecified counts. Draw one ball uniformly at random, so each ball is equally likely. What red probability is possible for 4 red and 6 blue balls, illustrating that the probability need not be one half?"
     },
     "choices": [
@@ -10002,7 +10002,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי שבו מספר האדומים הוא 5 ומספר הכחולים הוא 2, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
+      "he": "שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי של 5 אדומים ו־2 כחולים, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
       "en": "A bag has only red and blue balls, at least one of each, with unspecified counts. Draw one ball uniformly at random, so each ball is equally likely. What red probability is possible for 5 red and 2 blue balls, illustrating that the probability need not be one half?"
     },
     "choices": [
@@ -10546,8 +10546,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בין 12 מטבעות יש בדיוק 3 מטבעות עץ. בוחרים בדיוק 3 מטבעות; בפועל מספר מטבעות העץ ביניהם היה 1, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
-      "en": "Among 12 coins, exactly 3 show heads. Select exactly 3 coins; in this case the selection contains 1 head, though their faces cannot be seen. Flip every selected coin. How many heads will each group then contain?"
+      "he": "בין 12 מטבעות יש בדיוק 3 מטבעות עץ. בוחרים בדיוק 3 מטבעות; בפועל היו ביניהם 1 מטבעות עץ, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
+      "en": "Among 12 coins, exactly 3 show heads. Select exactly 3 coins; in this case the selection contains 1 heads, though their faces cannot be seen. Flip every selected coin. How many heads will each group then contain?"
     },
     "choices": [
       {
@@ -10569,8 +10569,8 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "מספר מטבעות העץ מחוץ לקבוצה הוא 2; בקבוצה ההיפוך הופך לעץ את מטבעות הפלי, שמספרם 2.",
-      "en": "The unselected group has a heads count of 2; flipping converts the selection's tails count of 2 into heads."
+      "he": "מחוץ לקבוצה יש 2 מטבעות עץ; בקבוצה ההיפוך הופך את 2 מטבעות הפלי לעץ.",
+      "en": "The unselected group has 2 heads; flipping turns the selection's 2 tails into heads."
     }
   },
   {
@@ -10580,7 +10580,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בין 15 מטבעות יש בדיוק 4 מטבעות עץ. בוחרים בדיוק 4 מטבעות; בפועל מספר מטבעות העץ ביניהם היה 2, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
+      "he": "בין 15 מטבעות יש בדיוק 4 מטבעות עץ. בוחרים בדיוק 4 מטבעות; בפועל היו ביניהם 2 מטבעות עץ, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
       "en": "Among 15 coins, exactly 4 show heads. Select exactly 4 coins; in this case the selection contains 2 heads, though their faces cannot be seen. Flip every selected coin. How many heads will each group then contain?"
     },
     "choices": [
@@ -10603,8 +10603,8 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "מספר מטבעות העץ מחוץ לקבוצה הוא 2; בקבוצה ההיפוך הופך לעץ את מטבעות הפלי, שמספרם 2.",
-      "en": "The unselected group has a heads count of 2; flipping converts the selection's tails count of 2 into heads."
+      "he": "מחוץ לקבוצה יש 2 מטבעות עץ; בקבוצה ההיפוך הופך את 2 מטבעות הפלי לעץ.",
+      "en": "The unselected group has 2 heads; flipping turns the selection's 2 tails into heads."
     }
   },
   {
@@ -10614,7 +10614,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בין 20 מטבעות יש בדיוק 5 מטבעות עץ. בוחרים בדיוק 5 מטבעות; בפועל מספר מטבעות העץ ביניהם היה 0, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
+      "he": "בין 20 מטבעות יש בדיוק 5 מטבעות עץ. בוחרים בדיוק 5 מטבעות; בפועל היו ביניהם 0 מטבעות עץ, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
       "en": "Among 20 coins, exactly 5 show heads. Select exactly 5 coins; in this case the selection contains 0 heads, though their faces cannot be seen. Flip every selected coin. How many heads will each group then contain?"
     },
     "choices": [
@@ -10637,8 +10637,8 @@
     ],
     "correct": 0,
     "explanation": {
-      "he": "מספר מטבעות העץ מחוץ לקבוצה הוא 5; בקבוצה ההיפוך הופך לעץ את מטבעות הפלי, שמספרם 5.",
-      "en": "The unselected group has a heads count of 5; flipping converts the selection's tails count of 5 into heads."
+      "he": "מחוץ לקבוצה יש 5 מטבעות עץ; בקבוצה ההיפוך הופך את 5 מטבעות הפלי לעץ.",
+      "en": "The unselected group has 5 heads; flipping turns the selection's 5 tails into heads."
     }
   },
   {
@@ -10648,7 +10648,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בין 18 מטבעות יש בדיוק 6 מטבעות עץ. בוחרים בדיוק 6 מטבעות; בפועל מספר מטבעות העץ ביניהם היה 4, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
+      "he": "בין 18 מטבעות יש בדיוק 6 מטבעות עץ. בוחרים בדיוק 6 מטבעות; בפועל היו ביניהם 4 מטבעות עץ, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
       "en": "Among 18 coins, exactly 6 show heads. Select exactly 6 coins; in this case the selection contains 4 heads, though their faces cannot be seen. Flip every selected coin. How many heads will each group then contain?"
     },
     "choices": [
@@ -10671,8 +10671,8 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "מספר מטבעות העץ מחוץ לקבוצה הוא 2; בקבוצה ההיפוך הופך לעץ את מטבעות הפלי, שמספרם 2.",
-      "en": "The unselected group has a heads count of 2; flipping converts the selection's tails count of 2 into heads."
+      "he": "מחוץ לקבוצה יש 2 מטבעות עץ; בקבוצה ההיפוך הופך את 2 מטבעות הפלי לעץ.",
+      "en": "The unselected group has 2 heads; flipping turns the selection's 2 tails into heads."
     }
   },
   {
@@ -10682,7 +10682,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בין 10 מטבעות יש בדיוק 2 מטבעות עץ. בוחרים בדיוק 2 מטבעות; בפועל מספר מטבעות העץ ביניהם היה 2, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
+      "he": "בין 10 מטבעות יש בדיוק 2 מטבעות עץ. בוחרים בדיוק 2 מטבעות; בפועל היו ביניהם 2 מטבעות עץ, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
       "en": "Among 10 coins, exactly 2 show heads. Select exactly 2 coins; in this case the selection contains 2 heads, though their faces cannot be seen. Flip every selected coin. How many heads will each group then contain?"
     },
     "choices": [
@@ -10705,8 +10705,8 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "מספר מטבעות העץ מחוץ לקבוצה הוא 0; בקבוצה ההיפוך הופך לעץ את מטבעות הפלי, שמספרם 0.",
-      "en": "The unselected group has a heads count of 0; flipping converts the selection's tails count of 0 into heads."
+      "he": "מחוץ לקבוצה יש 0 מטבעות עץ; בקבוצה ההיפוך הופך את 0 מטבעות הפלי לעץ.",
+      "en": "The unselected group has 0 heads; flipping turns the selection's 0 tails into heads."
     }
   },
   {
@@ -10886,7 +10886,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מותרים רק זוגות הספרות הסמוכות 12, 23. המחרוזת חייבת להתחיל ב־1. מדוע אי אפשר לבנות מחרוזת באורך 4?",
+      "he": "מותרות רק זוגות הספרות הסמוכות 12, 23. המחרוזת חייבת להתחיל ב־1. מדוע אי אפשר לבנות מחרוזת באורך 4?",
       "en": "The only allowed adjacent digit pairs are 12, 23. The string must start with 1. Why can no string of length 4 be built?"
     },
     "choices": [
@@ -10920,7 +10920,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מותרים רק זוגות הספרות הסמוכות 12, 23, 34. המחרוזת חייבת להתחיל ב־1. מדוע אי אפשר לבנות מחרוזת באורך 5?",
+      "he": "מותרות רק זוגות הספרות הסמוכות 12, 23, 34. המחרוזת חייבת להתחיל ב־1. מדוע אי אפשר לבנות מחרוזת באורך 5?",
       "en": "The only allowed adjacent digit pairs are 12, 23, 34. The string must start with 1. Why can no string of length 5 be built?"
     },
     "choices": [
@@ -10954,7 +10954,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מותרים רק זוגות הספרות הסמוכות 24, 45, 56. המחרוזת חייבת להתחיל ב־2. מדוע אי אפשר לבנות מחרוזת באורך 5?",
+      "he": "מותרות רק זוגות הספרות הסמוכות 24, 45, 56. המחרוזת חייבת להתחיל ב־2. מדוע אי אפשר לבנות מחרוזת באורך 5?",
       "en": "The only allowed adjacent digit pairs are 24, 45, 56. The string must start with 2. Why can no string of length 5 be built?"
     },
     "choices": [
@@ -10988,7 +10988,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מותרים רק זוגות הספרות הסמוכות 13, 35, 57, 79. המחרוזת חייבת להתחיל ב־1. מדוע אי אפשר לבנות מחרוזת באורך 6?",
+      "he": "מותרות רק זוגות הספרות הסמוכות 13, 35, 57, 79. המחרוזת חייבת להתחיל ב־1. מדוע אי אפשר לבנות מחרוזת באורך 6?",
       "en": "The only allowed adjacent digit pairs are 13, 35, 57, 79. The string must start with 1. Why can no string of length 6 be built?"
     },
     "choices": [
@@ -11022,7 +11022,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מותרים רק זוגות הספרות הסמוכות 24, 48. המחרוזת חייבת להתחיל ב־2. מדוע אי אפשר לבנות מחרוזת באורך 4?",
+      "he": "מותרות רק זוגות הספרות הסמוכות 24, 48. המחרוזת חייבת להתחיל ב־2. מדוע אי אפשר לבנות מחרוזת באורך 4?",
       "en": "The only allowed adjacent digit pairs are 24, 48. The string must start with 2. Why can no string of length 4 be built?"
     },
     "choices": [
@@ -12076,8 +12076,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 0 בכל המדידות הזהות, שמספרן 1. איזה זוג מצבים נשאר אפשרי?",
-      "en": "Hidden bits A and B do not change. Only A XOR B is measured, giving 0 in each of 1 identical measurement. Which pair of states remains possible?"
+      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 0 בכל אחת מ־1 מדידות זהות. איזה זוג מצבים נשאר אפשרי?",
+      "en": "Hidden bits A and B do not change. Only A XOR B is measured, giving 0 in each of 1 identical measurements. Which pair of states remains possible?"
     },
     "choices": [
       {
@@ -12110,8 +12110,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 1 בכל המדידות הזהות, שמספרן 1. איזה זוג מצבים נשאר אפשרי?",
-      "en": "Hidden bits A and B do not change. Only A XOR B is measured, giving 1 in each of 1 identical measurement. Which pair of states remains possible?"
+      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 1 בכל אחת מ־1 מדידות זהות. איזה זוג מצבים נשאר אפשרי?",
+      "en": "Hidden bits A and B do not change. Only A XOR B is measured, giving 1 in each of 1 identical measurements. Which pair of states remains possible?"
     },
     "choices": [
       {
@@ -12144,7 +12144,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 0 בכל המדידות הזהות, שמספרן 3. איזה זוג מצבים נשאר אפשרי?",
+      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 0 בכל אחת מ־3 מדידות זהות. איזה זוג מצבים נשאר אפשרי?",
       "en": "Hidden bits A and B do not change. Only A XOR B is measured, giving 0 in each of 3 identical measurements. Which pair of states remains possible?"
     },
     "choices": [
@@ -12178,7 +12178,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 1 בכל המדידות הזהות, שמספרן 4. איזה זוג מצבים נשאר אפשרי?",
+      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 1 בכל אחת מ־4 מדידות זהות. איזה זוג מצבים נשאר אפשרי?",
       "en": "Hidden bits A and B do not change. Only A XOR B is measured, giving 1 in each of 4 identical measurements. Which pair of states remains possible?"
     },
     "choices": [
@@ -12212,7 +12212,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 0 בכל המדידות הזהות, שמספרן 10. איזה זוג מצבים נשאר אפשרי?",
+      "he": "שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה 0 בכל אחת מ־10 מדידות זהות. איזה זוג מצבים נשאר אפשרי?",
       "en": "Hidden bits A and B do not change. Only A XOR B is measured, giving 0 in each of 10 identical measurements. Which pair of states remains possible?"
     },
     "choices": [
@@ -13266,8 +13266,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חוט על גליל שהיקפו 3 ס״מ וגובהו 4 ס״מ משלים מספר סיבובים מלאים השווה ל־1 מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
-      "en": "A wire on a cylinder of circumference 3 cm and height 4 cm makes 1 full turn from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness."
+      "he": "חוט על גליל שהיקפו 3 ס״מ וגובהו 4 ס״מ עושה 1 סיבובים מלאים מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
+      "en": "A wire on a cylinder of circumference 3 cm and height 4 cm makes 1 full turns from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness."
     },
     "choices": [
       {
@@ -13300,8 +13300,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חוט על גליל שהיקפו 6 ס״מ וגובהו 8 ס״מ משלים מספר סיבובים מלאים השווה ל־1 מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
-      "en": "A wire on a cylinder of circumference 6 cm and height 8 cm makes 1 full turn from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness."
+      "he": "חוט על גליל שהיקפו 6 ס״מ וגובהו 8 ס״מ עושה 1 סיבובים מלאים מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
+      "en": "A wire on a cylinder of circumference 6 cm and height 8 cm makes 1 full turns from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness."
     },
     "choices": [
       {
@@ -13334,8 +13334,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חוט על גליל שהיקפו 5 ס״מ וגובהו 12 ס״מ משלים מספר סיבובים מלאים השווה ל־1 מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
-      "en": "A wire on a cylinder of circumference 5 cm and height 12 cm makes 1 full turn from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness."
+      "he": "חוט על גליל שהיקפו 5 ס״מ וגובהו 12 ס״מ עושה 1 סיבובים מלאים מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
+      "en": "A wire on a cylinder of circumference 5 cm and height 12 cm makes 1 full turns from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness."
     },
     "choices": [
       {
@@ -13368,7 +13368,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חוט על גליל שהיקפו 3 ס״מ וגובהו 8 ס״מ משלים מספר סיבובים מלאים השווה ל־2 מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
+      "he": "חוט על גליל שהיקפו 3 ס״מ וגובהו 8 ס״מ עושה 2 סיבובים מלאים מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
       "en": "A wire on a cylinder of circumference 3 cm and height 8 cm makes 2 full turns from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness."
     },
     "choices": [
@@ -13402,7 +13402,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חוט על גליל שהיקפו 4 ס״מ וגובהו 15 ס״מ משלים מספר סיבובים מלאים השווה ל־2 מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
+      "he": "חוט על גליל שהיקפו 4 ס״מ וגובהו 15 ס״מ עושה 2 סיבובים מלאים מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
       "en": "A wire on a cylinder of circumference 4 cm and height 15 cm makes 2 full turns from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness."
     },
     "choices": [
@@ -14116,7 +14116,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע הוגן הוטל באופן עצמאי 4 פעמים והראה עץ בכל ההטלות. מה ההסתברות לקבל פלי בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
+      "he": "מטבע הוגן הוטל באופן עצמאי 4 פעמים והראה עץ בכל ההטלות. מה ההסתברות ל־פלי בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
       "en": "A fair coin was tossed independently 4 times and showed heads every time. What is the probability of tails on the next toss, if fairness and independence remain unchanged?"
     },
     "choices": [
@@ -14150,7 +14150,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע הוגן הוטל באופן עצמאי 6 פעמים והראה עץ בכל ההטלות. מה ההסתברות לקבל עץ בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
+      "he": "מטבע הוגן הוטל באופן עצמאי 6 פעמים והראה עץ בכל ההטלות. מה ההסתברות ל־עץ בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
       "en": "A fair coin was tossed independently 6 times and showed heads every time. What is the probability of heads on the next toss, if fairness and independence remain unchanged?"
     },
     "choices": [
@@ -14184,7 +14184,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע הוגן הוטל באופן עצמאי 10 פעמים והראה עץ בכל ההטלות. מה ההסתברות לקבל פלי בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
+      "he": "מטבע הוגן הוטל באופן עצמאי 10 פעמים והראה עץ בכל ההטלות. מה ההסתברות ל־פלי בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
       "en": "A fair coin was tossed independently 10 times and showed heads every time. What is the probability of tails on the next toss, if fairness and independence remain unchanged?"
     },
     "choices": [
@@ -14218,7 +14218,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע הוגן הוטל באופן עצמאי 3 פעמים והראה עץ בכל ההטלות. מה ההסתברות לקבל עץ בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
+      "he": "מטבע הוגן הוטל באופן עצמאי 3 פעמים והראה עץ בכל ההטלות. מה ההסתברות ל־עץ בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
       "en": "A fair coin was tossed independently 3 times and showed heads every time. What is the probability of heads on the next toss, if fairness and independence remain unchanged?"
     },
     "choices": [
@@ -14252,7 +14252,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטבע הוגן הוטל באופן עצמאי 20 פעמים והראה עץ בכל ההטלות. מה ההסתברות לקבל פלי בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
+      "he": "מטבע הוגן הוטל באופן עצמאי 20 פעמים והראה עץ בכל ההטלות. מה ההסתברות ל־פלי בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
       "en": "A fair coin was tossed independently 20 times and showed heads every time. What is the probability of tails on the next toss, if fairness and independence remain unchanged?"
     },
     "choices": [

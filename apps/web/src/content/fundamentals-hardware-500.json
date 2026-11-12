@@ -10,8 +10,8 @@
       "en": "Rotation returns bits at the opposite end"
     },
     "prompt": {
-      "he": "מסובבים את המילה ללא סימן 1001 ברוחב 4 ימינה במספר מקומות השווה ל־1, באופן מעגלי. מה ערך הפלט העשרוני?",
-      "en": "Rotate unsigned 1001, width 4, right by 1 position cyclically. What is the decimal output?"
+      "he": "מסובבים את המילה הבלתי מסומנת 1001 ברוחב 4 ימינה ב־1 מקומות, באופן מעגלי. מה ערך הפלט העשרוני?",
+      "en": "Rotate unsigned 1001, width 4, right by 1 positions cyclically. What is the decimal output?"
     },
     "answer": {
       "he": "12. הביטים היוצאים מצד ימין חוזרים לשמאל; מסכת הרוחב מסירה ביטים עודפים.",
@@ -56,8 +56,8 @@
       "en": "Count stages in a controlled rotator"
     },
     "prompt": {
-      "he": "מסובב מעגלי ברוחב 4, חזקה של 2, בנוי בשלבי סיבוב מותנה 1, 2 וכן הלאה עד 2. בכל שלב MUX של ביט אחד לכל ביט. כמה רכיבי MUX 2:1 יש בסך הכול?",
-      "en": "A width-4 cyclic rotator, a power of 2, uses conditional rotation stages 1, 2 and so on through 2. Each stage has one single-bit MUX per bit. How many 2:1 MUXes are used in total?"
+      "he": "מסובב מעגלי ברוחב 4, חזקה של 2, בנוי בשלבי סיבוב מותנה 1,2 וכן הלאה עד 2. בכל שלב MUX של ביט אחד לכל ביט. כמה רכיבי MUX 2:1 יש בסך הכול?",
+      "en": "A width-4 cyclic rotator, a power of 2, uses conditional rotation stages 1,2 and so on through 2. Each stage has one single-bit MUX per bit. How many 2:1 MUXes are used in total?"
     },
     "answer": {
       "he": "8. יש log2 של הרוחב שלבים, וכל שלב משתמש במספר MUX השווה לרוחב.",
@@ -121,8 +121,8 @@
       "PREP-214"
     ],
     "title": {
-      "he": "מהי סיבית הבחירה הגבוהה?",
-      "en": "Which select bit is high-order?"
+      "he": "מי סיבית הבחירה הגבוהה",
+      "en": "Which select bit is high-order"
     },
     "prompt": {
       "he": "MUX 4:1 משתמש ב־S1 כסיבית הבחירה הגבוהה וב־S0 כנמוכה. הנתונים D0..D3 הם [7, 2, 9, 4]; S1=1, S0=0. מה הפלט?",
@@ -148,8 +148,8 @@
       "en": "An intermediate select code creates a pulse even without delays"
     },
     "prompt": {
-      "he": "MUX 4:1 אידאלי ללא השהיה מחזיק D0..D3=[0, 1, 1, 0]. הבחירה משתנה מ־00 ל־11: S0 עולה בזמן 1 ns ו־S1 בזמן 4 ns. לכמה ns הפלט יהיה 1 בין שני מצבי הקצה?",
-      "en": "An ideal zero-delay 4:1 MUX holds D0..D3=[0, 1, 1, 0]. Selection changes from 00 to 11: S0 rises at 1 ns and S1 at 4 ns. For how many ns is output 1 between the endpoint states?"
+      "he": "MUX 4:1 אידאלי ללא השהיה מחזיק D0..D3=[0,1,1,0]. הבחירה משתנה מ־00 ל־11: S0 עולה בזמן 1 ns ו־S1 בזמן 4 ns. לכמה ns הפלט יהיה 1 בין שני מצבי הקצה?",
+      "en": "An ideal zero-delay 4:1 MUX holds D0..D3=[0,1,1,0]. Selection changes from 00 to 11: S0 rises at 1 ns and S1 at 4 ns. For how many ns is output 1 between the endpoint states?"
     },
     "answer": {
       "he": "3. בין שני שינויי הבחירה נבחר D1 או D2. גם MUX ללא השהיות מגיב לקוד הביניים; איזון השהיות פנימיות לבדו אינו מונע זאת.",
@@ -171,8 +171,8 @@
       "en": "Overlapping conduction regions in a CMOS inverter"
     },
     "prompt": {
-      "he": "במודל סף למהפך CMOS, VDD=4 V ומתח שני השערים 0 V. ספי ההולכה הם Vtn=1 V ו־|Vtp|=1 V. הולכה דורשת מתח שער־מקור שעובר ממש את הסף המתאים. מה [PMOS מוליך, NMOS מוליך], בביטי 0/1?",
-      "en": "In a CMOS inverter threshold model, VDD=4 V and both gates are at 0 V. Thresholds are Vtn=1 V and |Vtp|=1 V. Conduction requires gate-source magnitude strictly beyond the relevant threshold. What is [PMOS on, NMOS on] as 0/1 bits?"
+      "he": "במודל סף למהפך CMOS, VDD=4 V ומתח שני השערים 0 V. ספי ההולכה הם Vtn=1 V ו־|Vtp|=1 V. הולכה דורשת מתח שער־מקור שעובר ממש את הסף המתאים. מה [PMOS מוליך,NMOS מוליך], בביטי 0/1?",
+      "en": "In a CMOS inverter threshold model, VDD=4 V and both gates are at 0 V. Thresholds are Vtn=1 V and |Vtp|=1 V. Conduction requires gate-source magnitude strictly beyond the relevant threshold. What is [PMOS on,NMOS on] as 0/1 bits?"
     },
     "answer": {
       "he": "[1,0]. עבור NMOS בודקים VG>Vtn; עבור PMOS בודקים VDD-VG>|Vtp|. באזור המעבר ייתכנו שני רכיבים מוליכים או שניהם כבויים.",
@@ -447,8 +447,8 @@
       "en": "An acceptance bubble is not a zero bit"
     },
     "prompt": {
-      "he": "גלאי חופף 0101 מקבל מדגמי [Valid, ביט]: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. במחזור לא תקף המצב מוחזק והפלט 0. באילו מחזורי שעון פיזיים, ממוספרים מ־1, יופק פולס? המצב בתחילה ריק.",
-      "en": "An overlapping 0101 detector receives [Valid, bit] samples: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. On invalid cycles state holds and output is 0. At which physical clock cycles, numbered from 1, does a pulse occur? Start with empty history."
+      "he": "גלאי חופף 0101 מקבל מדגמי [Valid,ביט]: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. במחזור לא תקף המצב מוחזק והפלט 0. באילו מחזורי שעון פיזיים, ממוספרים מ־1, יופק פולס? המצב בתחילה ריק.",
+      "en": "An overlapping 0101 detector receives [Valid,bit] samples: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. On invalid cycles state holds and output is 0. At which physical clock cycles, numbered from 1, does a pulse occur? Start with empty history."
     },
     "answer": {
       "he": "[5]. רק דגימות תקפות מצטרפות לרצף, אבל הפולס ממוקם על ציר מחזורי השעון המקורי.",
@@ -493,8 +493,8 @@
       "en": "A Valid bubble is not a mismatch"
     },
     "prompt": {
-      "he": "מונה רצף התאמות מתחיל ב־0, מול ערך שמור 5. מדגמים [Valid, נתון] הם [[1, 5], [0, 2], [1, 5]]. אי־התאמה תקפה מאפסת; Valid=0 מקפיא. מה המונה בסוף?",
-      "en": "A matching-streak counter starts at 0 with reference 5. Samples [Valid, data] are [[1, 5], [0, 2], [1, 5]]. A valid mismatch resets; Valid=0 holds. What is the final count?"
+      "he": "מונה רצף התאמות מתחיל ב־0, מול ערך שמור 5. מדגמים [Valid,נתון] הם [[1, 5], [0, 2], [1, 5]]. אי־התאמה תקפה מאפסת; Valid=0 מקפיא. מה המונה בסוף?",
+      "en": "A matching-streak counter starts at 0 with reference 5. Samples [Valid,data] are [[1, 5], [0, 2], [1, 5]]. A valid mismatch resets; Valid=0 holds. What is the final count?"
     },
     "answer": {
       "he": "2. דגימה לא תקפה אינה שוברת רצף של דגימות תקפות; רק אי־התאמה תקפה מאפסת.",
@@ -516,8 +516,8 @@
       "en": "Two equal references do not double-count"
     },
     "prompt": {
-      "he": "שני ערכים שמורים הם [5, 5]. מדגמים [Valid, נתון] הם [[1, 5], [1, 2]]. משווים לשניהם במקביל, ומקבלים הצלחה אם לפחות השוואה אחת שווה. כמה הצלחות תקפות יש?",
-      "en": "Two stored references are [5, 5]. Samples [Valid, data] are [[1, 5], [1, 2]]. Compare both in parallel and accept a match if either equals the sample. How many valid matches occur?"
+      "he": "שני ערכים שמורים הם [5, 5]. מדגמים [Valid,נתון] הם [[1, 5], [1, 2]]. משווים לשניהם במקביל, ומקבלים הצלחה אם לפחות השוואה אחת שווה. כמה הצלחות תקפות יש?",
+      "en": "Two stored references are [5, 5]. Samples [Valid,data] are [[1, 5], [1, 2]]. Compare both in parallel and accept a match if either equals the sample. How many valid matches occur?"
     },
     "answer": {
       "he": "1. מחברים ב־OR את שתי תוצאות השוויון, ומסננים באמצעות Valid; לא סופרים אותה דגימה פעמיים.",
@@ -631,8 +631,8 @@
       "en": "Mean over a completed-packet cohort"
     },
     "prompt": {
-      "he": "רק החבילות שהושלמו נכללות בממוצע. זוגות [כניסה, יציאה] שלהן הם [[0, 4], [1, 7]]. מה זמן השהייה הממוצע? חבילות פעילות אינן כלולות. התוצאה שלמה.",
-      "en": "Only completed packets enter this mean. Their [arrival, departure] pairs are [[0, 4], [1, 7]]. What is mean residence time? Active packets are excluded. The result is an integer."
+      "he": "רק החבילות שהושלמו נכללות בממוצע. זוגות [כניסה,יציאה] שלהן הם [[0, 4], [1, 7]]. מה זמן השהייה הממוצע? חבילות פעילות אינן כלולות. התוצאה שלמה.",
+      "en": "Only completed packets enter this mean. Their [arrival,departure] pairs are [[0, 4], [1, 7]]. What is mean residence time? Active packets are excluded. The result is an integer."
     },
     "answer": {
       "he": "5. מסכמים יציאה פחות כניסה לכל חבילה שהושלמה ומחלקים במספר החבילות האלה.",
@@ -700,8 +700,8 @@
       "en": "Data holds while Valid falls"
     },
     "prompt": {
-      "he": "בזיכרון סינכרוני read_data הישן הוא 3. כש־re_en=0 היציאה מחזיקה ערך ו־Valid=0; כש־re_en=1 נלכד 7 ו־Valid=1. כעת re_en=0. מה [read_data, Valid] אחרי החזית?",
-      "en": "A synchronous memory's old read_data is 3. With re_en=0 it holds data and sets Valid=0; with re_en=1 it captures 7 and sets Valid=1. Now re_en=0. What is [read_data, Valid] after the edge?"
+      "he": "בזיכרון סינכרוני read_data הישן הוא 3. כש־re_en=0 היציאה מחזיקה ערך ו־Valid=0; כש־re_en=1 נלכד 7 ו־Valid=1. כעת re_en=0. מה [read_data,Valid] אחרי החזית?",
+      "en": "A synchronous memory's old read_data is 3. With re_en=0 it holds data and sets Valid=0; with re_en=1 it captures 7 and sets Valid=1. Now re_en=0. What is [read_data,Valid] after the edge?"
     },
     "answer": {
       "he": "[3,0]. הנתון המוחזק אינו בהכרח תשובה חדשה; Valid מבדיל בין קבלה חדשה לבין ערך ישן.",
@@ -747,7 +747,7 @@
     },
     "prompt": {
       "he": "בונים ארבע מילות זיכרון ברוחב 8 ביטים. בנוסף, מספר רגיסטרי היציאה ברוחב מילה הוא 1. מתעלמים מ־Valid ובקרה. כמה FF לאחסון נתונים דרושים?",
-      "en": "Build four memory words, each 8 bits wide, plus 1 word-wide output register. Ignore Valid and control. How many data-storage FFs are required?"
+      "en": "Build four memory words, each 8 bits wide, plus 1 word-wide output registers. Ignore Valid and control. How many data-storage FFs are required?"
     },
     "answer": {
       "he": "40. יש ארבע מילות אחסון ועוד כל רגיסטר יציאה שנדרש בנפרד; כל ביט דורש FF במימוש זה.",
@@ -815,8 +815,8 @@
       "en": "Select sum and carry together"
     },
     "prompt": {
-      "he": "מחבר carry-select מחבר A=3 ו־B=1, כל אחד 4 ביטים. מחלקים לשתי קבוצות של 2 ביטים, עם carry-in כללי אפס. הקבוצה הגבוהה מחשבת מראש עם נשא 0 ועם 1. מה [שני ביטי סכום גבוהים כערך עשרוני, נשא סופי] אחרי בחירה לפי הקבוצה הנמוכה?",
-      "en": "A carry-select adder adds 4-bit A=3 and B=1 in two 2-bit groups, with initial carry-in zero. The high group precomputes carry-in 0 and 1. What is [high two sum bits as decimal, final carry] after selection by the low group?"
+      "he": "מחבר carry-select מחבר A=3 ו־B=1, כל אחד 4 ביטים. מחלקים לשתי קבוצות של 2 ביטים, עם carry-in כללי אפס. הקבוצה הגבוהה מחשבת מראש עם נשא 0 ועם 1. מה [שני ביטי סכום גבוהים כערך עשרוני,נשא סופי] אחרי בחירה לפי הקבוצה הנמוכה?",
+      "en": "A carry-select adder adds 4-bit A=3 and B=1 in two 2-bit groups, with initial carry-in zero. The high group precomputes carry-in 0 and 1. What is [high two sum bits as decimal,final carry] after selection by the low group?"
     },
     "answer": {
       "he": "[1,0]. מחשבים נשא משני הביטים הנמוכים ובוחרים בעזרתו את זוג תוצאת הסכום והנשא הגבוהים; אסור לבחור אותם מנתיבי קדם־חישוב שונים.",
@@ -838,8 +838,8 @@
       "en": "Carry propagation across a whole group"
     },
     "prompt": {
-      "he": "מחברים מילים ברוחב 4: A=6, B=9. מגדירים G כנשא החוצה עם carry-in=0, ו־P=1 רק אם הנשיאה החוצה שווה ל־carry-in עבור שתי אפשרויותיו. מה [P, G] של כל הקבוצה?",
-      "en": "Add width-4 words A=6 and B=9. G is carry-out with carry-in=0; P=1 only if carry-out equals carry-in for both possible inputs. What is the whole group's [P, G]?"
+      "he": "מחברים מילים ברוחב 4: A=6, B=9. מגדירים G כנשא החוצה עם carry-in=0, ו־P=1 רק אם הנשיאה החוצה שווה ל־carry-in עבור שתי אפשרויותיו. מה [P,G] של כל הקבוצה?",
+      "en": "Add width-4 words A=6 and B=9. G is carry-out with carry-in=0; P=1 only if carry-out equals carry-in for both possible inputs. What is the whole group's [P,G]?"
     },
     "answer": {
       "he": "[1,0]. G נבדק עם נשא כניסה אפס. הקבוצה מעבירה נשא רק כשסכומה ללא נשא הוא בדיוק 2^W-1.",
@@ -861,7 +861,7 @@
       "en": "Width of a sum with unequal input widths"
     },
     "prompt": {
-      "he": "מחברים מספר ללא סימן בן 2 ביטים למספר ללא סימן בן 4 ביטים. מה רוחב הפלט המזערי ששומר כל סכום אפשרי ללא גלישה?",
+      "he": "מחברים מספר בלתי מסומן בן 2 ביטים למספר בלתי מסומן בן 4 ביטים. מה רוחב הפלט המזערי ששומר כל סכום אפשרי ללא גלישה?",
       "en": "Add an unsigned 2-bit number to an unsigned 4-bit number. What minimum output width preserves every possible sum without overflow?"
     },
     "answer": {
@@ -884,7 +884,7 @@
       "en": "A mean rounded upward"
     },
     "prompt": {
-      "he": "מחשבים ממוצע של מספרים ללא סימן A=2, B=5, עם חיבור ברוחב מספיק. נדרש עיגול כלפי מעלה. מה הפלט השלם?",
+      "he": "מחשבים ממוצע של מספרים בלתי מסומנים A=2, B=5, עם חיבור ברוחב מספיק. נדרש עיגול כלפי מעלה. מה הפלט השלם?",
       "en": "Average unsigned A=2 and B=5 using a sufficiently wide sum. Round upward. What integer is output?"
     },
     "answer": {
@@ -1022,7 +1022,7 @@
       "en": "Width of the highest-one index"
     },
     "prompt": {
-      "he": "למילה ללא סימן ברוחב 4 ו־x>0, מחזירים floor(log2(x)). כמה ביטי פלט מספיקים לכל התוצאות? אינדיקציית x=0 נשמרת בנפרד.",
+      "he": "למילה בלתי מסומנת ברוחב 4 ו־x>0, מחזירים floor(log2(x)). כמה ביטי פלט מספיקים לכל התוצאות? אינדיקציית x=0 נשמרת בנפרד.",
       "en": "For a width-4 unsigned word with x>0, return floor(log2(x)). How many output bits cover every result? Validity for x=0 is handled separately."
     },
     "answer": {

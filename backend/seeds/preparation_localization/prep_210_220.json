@@ -54,7 +54,7 @@
         "המקור מתיר חזרת ערכים בשלשות. אין לפרש זאת כהבטחת שלשות שונות או מיון. נשמר הנוסח המקורי בנפרד."
       ],
       "en": [
-        "The source does not specify numeric type or cost model; integer values and access/comparison costs are explicit assumptions.",
+        "The source does not specify numeric type or cost model; integer values and access/comparison costs are explicit explicit assumptions.",
         "The source permits repeated group values. Distinct triples and sorting are not promised. Original text is preserved separately."
       ]
     },
@@ -198,7 +198,7 @@
         "לא נוספה פעולת הסרה למימוש הנדרש; היא נידונה כהמשך בלבד. הנוסח המקורי נשמר בנפרד."
       ],
       "en": [
-        "The source names operations but omits direction, payload type, indexing, ownership, failure behavior and lifetime APIs; these are explicit definitions.",
+        "The source names operations but omits direction, payload type, indexing, ownership, failure behavior and lifetime APIs; these are explicit explicit definitions.",
         "Removal is discussed only as a follow-up, not added to the required implementation. Original text is preserved separately."
       ]
     },
@@ -443,8 +443,8 @@
       "en": "Two state bits are necessary for the four-state synchronous cycle. The shown realization uses 2 DFFs, NOT and XOR plus reset; no power/transistor optimum is asserted."
     },
     "verification": {
-      "he": "1,024 חזיתות מול מונה עצמאי ואיפוס מכל 4 מצבים; מודל Python, ללא בדיקת חומרה פיזית. אימות RTL שבוצע בפועל: SystemVerilog קומפל והורץ בהצלחה מול assertions ל־128 חזיתות ול־4 פאזות איפוס. זהו היקף נפרד מבדיקת Python בת 1,024 חזיתות. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
-      "en": "1,024 edges against an independent counter and reset from all 4 states; Python model, no physical hardware test. Actual RTL validation: SystemVerilog compiled and completed self-checking simulation for 128 edges and 4 reset phases. This scope is distinct from the 1,024-edge Python model check. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
+      "he": "1,024 חזיתות מול מונה עצמאי ואיפוס מכל 4 מצבים; מודל Python, ללא בדיקת חומרה פיזית. אימות RTL שבוצע בפועל: SystemVerilog קומפל והורץ בהצלחה מול assertions ל־128 חזיתות ול־4 פאזות איפוס. זהו היקף נפרד מבדיקת Python בת1,024 חזיתות. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
+      "en": "1,024 edges against an independent counter and reset from all 4 states; Python model, no physical hardware test. Actual RTL validation: SystemVerilog compiled and completed self-checking simulation for128 edges and4 reset phases. This scope is distinct from the1,024-edge Python model check. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
     },
     "edge_cases": {
       "he": [
@@ -505,8 +505,8 @@
       "en": "Moore: seven prefix states and 3 FFs; Mealy: six and 3 FFs plus an FF for registered output; window: 6 FFs. No mapped-area/frequency/power optimum is claimed."
     },
     "verification": {
-      "he": "כל 8,191 הרצפים באורכים 0..12: 90,114 בדיקות קידומת מול אורקל סיומת, בשלושה מודלים; חפיפות 6,9; reset ו־hold. מודל Python. אימות RTL שבוצע בפועל: Moore ואוגר הזזה קומפלו והורצו מול assertions בכל 511 הרצפים באורכים 0..8, שהם 3,586 קידומות, ובדוגמת החפיפה 101101101 עם זיהויים 6,9. טווח Python הגדול יותר וגרסת Mealy נבדקו בנפרד במודל בלבד. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
-      "en": "All 8,191 streams of lengths 0..12: 90,114 prefix comparisons against a suffix oracle in three models; overlap 6,9; reset/hold. Python model. Actual RTL validation: Moore and shift-register implementations compiled and passed assertions on all 511 streams of lengths 0..8 (3,586 prefixes), plus overlap 101101101 at positions 6,9. The larger Python range and Mealy alternative were separately model-checked. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
+      "he": "כל 8,191 הרצפים באורכים 0..12: 90,114 בדיקות קידומת מול אורקל סיומת, בשלושה מודלים; חפיפות 6,9; reset ו־hold. מודל Python. אימות RTL שבוצע בפועל: Moore ואוגר הזזה קומפלו והורצו מול assertions בכל511 הרצפים באורכים0..8, שהם3,586 קידומות, ובדוגמת החפיפה101101101 עם זיהויים6,9. טווח Python הגדול יותר וגרסת Mealy נבדקו בנפרד במודל בלבד. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
+      "en": "All 8,191 streams of lengths 0..12: 90,114 prefix comparisons against a suffix oracle in three models; overlap 6,9; reset/hold. Python model. Actual RTL validation: Moore and shift-register implementations compiled and passed assertions on all511 streams of lengths0..8 (3,586 prefixes), plus overlap101101101 at positions6,9. The larger Python range and Mealy alternative were separately model-checked. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
     },
     "edge_cases": {
       "he": [
@@ -563,16 +563,16 @@
       ]
     },
     "optimality": {
-      "he": "אחסון ישיר: 64 או 128 ביטי נתונים ועוד תפוסה/בקר. שתי השוואות במקביל נותנות השהיה קטנה יותר ממשווה משותף סדרתי באותו חוזה; אין אופטימום כללי. חסם 128 ביטים לקבוצות בגודל עד 2 כולל מידע תפוסה.",
+      "he": "אחסון ישיר: 64 או 128 ביטי נתונים ועוד תפוסה/בקר. שתי השוואות במקביל נותנות השהיה קטנה יותר ממשווה משותף סדרתי באותו חוזה; אין אופטימום כללי. חסם 128 ביטים לקבוצות בגודל עד2 כולל מידע תפוסה.",
       "en": "Direct storage: 64 or 128 data bits plus occupancy/control. Parallel comparison reduces latency relative to serial reuse under the same interface, not a global optimum. The 128-bit bound for sets of size at most two includes occupancy information."
     },
     "verification": {
-      "he": "138,240 בדיקות קידומת ברוחב 3, 45 קבוצות שמורות, idle/reset ו־2,003 מקרי 64 ביט; בדיקת חסם במספרים שלמים. מודל Python. אימות RTL שבוצע בפועל: המימוש בן 64 ביט קומפל והורץ מול assertions ל־512 דגימות תקפות בשני המצבים, עם ערכי קצה, idle, רישום ו־reset. אלה בדיקות trace מוגבלות, בנוסף לבדיקה הממצה של מודל Python ברוחב 3. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
-      "en": "138,240 width-3 prefix checks, 45 stored collections, idle/reset and 2,003 64-bit cases; integer information-bound check. Python model. Actual RTL validation: the 64-bit design compiled and passed assertions on 512 accepted samples across single/pair modes, including edge values, idle, enrollment and reset. These bounded traces supplement the exhaustive width 3 Python model checks. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
+      "he": "138,240 בדיקות קידומת ברוחב3, 45 קבוצות שמורות, idle/reset ו־2,003 מקרי64 ביט; בדיקת חסם במספרים שלמים. מודל Python. אימות RTL שבוצע בפועל: המימוש בן64 ביט קומפל והורץ מול assertions ל־512 דגימות תקפות בשני המצבים, עם ערכי קצה, idle, רישום ו־reset. אלה בדיקות trace מוגבלות, בנוסף לבדיקה הממצה של מודל Python ברוחב3. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
+      "en": "138,240 width-3 prefix checks, 45 stored collections, idle/reset and 2,003 64-bit cases; integer information-bound check. Python model. Actual RTL validation: the64-bit design compiled and passed assertions on512 accepted samples across single/pair modes, including edge values, idle, enrollment and reset. These bounded traces supplement the exhaustive width3 Python model checks. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
     },
     "edge_cases": {
       "he": [
-        "ערך רשום 0 לעומת מקום ריק; שני ערכים זהים; התאמה ראשונה בלבד; hit,idle,hit; hit,miss,hit; שלושה hits; reset/תצורה באמצע רצף."
+        "ערך רשום0 לעומת מקום ריק; שני ערכים זהים; התאמה ראשונה בלבד; hit,idle,hit; hit,miss,hit; שלושה hits; reset/תצורה באמצע רצף."
       ],
       "en": [
         "Enrolled zero versus empty slot; duplicate entries; only one hit; hit,idle,hit; hit,miss,hit; three hits; reset/configuration during a streak."
@@ -620,10 +620,10 @@
   "PREP-219": {
     "assumptions": {
       "he": [
-        "קדימות * לפני +; אין סוגריים/מינוס; n≥1; מספרים ללא סימן W ביט; חשבון מודולו 2^W; token_valid/ready; מימוש ראשי בעל פעולות צירופיות במחזור."
+        "קדימות * לפני +; אין סוגריים/מינוס; n≥1; מספרים ללא סימן W ביט; חשבון מודולו2^W; token_valid/ready; מימוש ראשי בעל פעולות צירופיות במחזור."
       ],
       "en": [
-        "Times before plus; no parentheses/unary minus; n≥1; unsigned W-bit operands; modulo 2^W; token_valid/ready; main implementation has single-cycle combinational operations."
+        "Times before plus; no parentheses/unary minus; n≥1; unsigned W-bit operands; modulo2^W; token_valid/ready; main implementation has single-cycle combinational operations."
       ]
     },
     "optimality": {
@@ -631,8 +631,8 @@
       "en": "O(n) tokens and O(1) words/O(W) storage: two W-bit accumulators, a W-bit result and small controller. Multiplier time/area are implementation-dependent; no gate optimum or unbounded exact arithmetic claim."
     },
     "verification": {
-      "he": "38,130 ביטויים מול פירוק עצמאי לסכום מכפלות; רוחבים 1,2,4 ועד 5 מספרים, גלישה/idle/reset/5 רצפים פסולים; 2+3*4=14. מודל Python. אימות RTL שבוצע בפועל: המימוש ברוחב 8 קומפל והורץ מול assertions ל־256 ביטויים בני 6 אופרנדים, עם idle, תחביר, reset ודוגמת הקדימות. הבדיקה הגדולה ברוחבים 1,2,4 היא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
-      "en": "38,130 expressions versus independent multiplication-run partitioning; widths 1,2,4 up to 5 numbers, overflow/idle/reset/5 malformed sequences; 2+3*4=14. Python model. Actual RTL validation: the width 8 design compiled and passed assertions on 256 six-operand expressions plus idle, grammar, reset and precedence cases. The larger width 1,2,4 enumeration is a separate Python model check. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
+      "he": "38,130 ביטויים מול פירוק עצמאי לסכום מכפלות; רוחבים1,2,4 ועד5 מספרים, גלישה/idle/reset/5 רצפים פסולים; 2+3*4=14. מודל Python. אימות RTL שבוצע בפועל: המימוש ברוחב8 קומפל והורץ מול assertions ל־256 ביטויים בני6 אופרנדים, עם idle, תחביר, reset ודוגמת הקדימות. הבדיקה הגדולה ברוחבים1,2,4 היא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
+      "en": "38,130 expressions versus independent multiplication-run partitioning; widths1,2,4 up to5 numbers, overflow/idle/reset/5 malformed sequences; 2+3*4=14. Python model. Actual RTL validation: the width8 design compiled and passed assertions on256 six-operand expressions plus idle, grammar, reset and precedence cases. The larger width1,2,4 enumeration is a separate Python model check. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
     },
     "edge_cases": {
       "he": [
@@ -686,54 +686,54 @@
   "PREP-220": {
     "assumptions": {
       "he": [
-        "W≥1; פורט 1R1W על clk משותף; שני enables מתקבלים יחד; read-first בהתנגשות; תגובה רשומה; reset סינכרוני מאתחל כל הנתונים."
+        "W≥1; פורט1R1W על clk משותף; שני enables מתקבלים יחד; read-first בהתנגשות; תגובה רשומה; reset סינכרוני מאתחל כל הנתונים."
       ],
       "en": [
-        "W≥1; common-clock 1R1W; both enables accepted together; read-first collision; registered response; synchronous reset initializes all data."
+        "W≥1; common-clock1R1W; both enables accepted together; read-first collision; registered response; synchronous reset initializes all data."
       ]
     },
     "optimality": {
-      "he": "מימוש FF מפורש:4W לאחסון ועוד W לפלט ועוד 1 ל־Valid, כלומר 5W+1. דקודר/load/mux נוספים. אין מינימום טרנזיסטורים אוניברסלי או אופטימום מול מאקרו זיכרון.",
-      "en": "Explicit FF design:4W storage plus W output plus 1 Valid, totaling 5W+1. Decoder/load/mux logic is additional. No universal transistor minimum or memory-macro optimum."
+      "he": "מימוש FF מפורש:4W לאחסון ועוד W לפלט ועוד1 ל־Valid, כלומר5W+1. דקודר/load/mux נוספים. אין מינימום טרנזיסטורים אוניברסלי או אופטימום מול מאקרו זיכרון.",
+      "en": "Explicit FF design:4W storage plus W output plus1 Valid, totaling5W+1. Decoder/load/mux logic is additional. No universal transistor minimum or memory-macro optimum."
     },
     "verification": {
-      "he": "16,384 מעברי W=1 ממצים מול snapshot לפני חזית, כולל reset וכל תכני הזיכרון, כתובות, enables ומצבי יציאה; נוסף trace 64 ביט. מודל Python. אימות RTL שבוצע בפועל: הזיכרון ברוחב 1 קומפל והורץ מול assertions בכל 16,384 מצבי המעבר המתוארים, כולל התנגשות, idle ו־reset. trace 64 הביט הוא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
-      "en": "16,384 exhaustive W=1 transitions against a pre-edge snapshot, including reset and all memory contents, addresses, enables and output states; extra 64-bit trace. Python model. Actual RTL validation: width 1 memory compiled and passed assertions on all 16,384 described transitions, including collision, idle and reset. The 64-bit trace is a separate Python model check. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
+      "he": "16,384 מעברי W=1 ממצים מול snapshot לפני חזית, כולל reset וכל תכני הזיכרון, כתובות, enables ומצבי יציאה; נוסף trace64 ביט. מודל Python. אימות RTL שבוצע בפועל: הזיכרון ברוחב1 קומפל והורץ מול assertions בכל16,384 מצבי המעבר המתוארים, כולל התנגשות, idle ו־reset. trace64 הביט הוא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
+      "en": "16,384 exhaustive W=1 transitions against a pre-edge snapshot, including reset and all memory contents, addresses, enables and output states; extra64-bit trace. Python model. Actual RTL validation: width1 memory compiled and passed assertions on all16,384 described transitions, including collision, idle and reset. The64-bit trace is a separate Python model check. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed."
     },
     "edge_cases": {
       "he": [
-        "קריאה/כתיבה סימולטניות לכתובת שווה או שונה; ללא פעולות; קריאה ראשונה אחרי reset; נתון 0 תקף; reset עם שני enables; read_data נשמר כש־Valid 0."
+        "קריאה/כתיבה סימולטניות לכתובת שווה או שונה; ללא פעולות; קריאה ראשונה אחרי reset; נתון0 תקף; reset עם שני enables; read_data נשמר כש־Valid0."
       ],
       "en": [
-        "Simultaneous same/different-address read/write; no operations; first read after reset; valid zero data; reset with both enables; read_data holds while Valid 0."
+        "Simultaneous same/different-address read/write; no operations; first read after reset; valid zero data; reset with both enables; read_data holds while Valid0."
       ]
     },
     "common_mistakes": {
       "he": [
         "הנחת single-port למרות כתובות נפרדות.",
         "כתיבת blocking שמחליפה read-first ב־write-first.",
-        "Valid שנשאר 1 במחזור idle.",
-        "ספירת 4W FF ושכחת פלט רשום ודגל.",
+        "Valid שנשאר1 במחזור idle.",
+        "ספירת4W FF ושכחת פלט רשום ודגל.",
         "קריאה מתוכן לא מאותחל בלי חוזה."
       ],
       "en": [
         "Assuming single-port despite separate addresses.",
         "Blocking writes accidentally changing read-first to write-first.",
         "Leaving Valid high on idle.",
-        "Counting 4W FFs but forgetting registered output and flag.",
+        "Counting4W FFs but forgetting registered output and flag.",
         "Reading uninitialized contents without a contract."
       ]
     },
     "interview_answer": {
-      "he": "ארבעה רגיסטרי W ביט, דקודר כתיבה 2 ל־4 ומוקס קריאה 4 ל־1. הקריאה נרשמת, Valid מעוכב עם הבקשה; בחוזה שלי שני הפורטים עובדים יחד וקריאה בהתנגשות מקבלת ערך ישן. העלות 5W+1 FF.",
-      "en": "Four W-bit registers, a2-to-4 write decoder and 4:1 read mux. Register the response and its validity. Both ports operate together; collision reads old data. The realization uses 5W+1 FFs."
+      "he": "ארבעה רגיסטרי W ביט, דקודר כתיבה2ל־4 ומוקס קריאה4ל־1. הקריאה נרשמת, Valid מעוכב עם הבקשה; בחוזה שלי שני הפורטים עובדים יחד וקריאה בהתנגשות מקבלת ערך ישן. העלות5W+1 FF.",
+      "en": "Four W-bit registers, a2-to-4 write decoder and4:1 read mux. Register the response and its validity. Both ports operate together; collision reads old data. The realization uses5W+1 FFs."
     },
     "source_ambiguities": {
       "he": [
-        "המקור אינו מגדיר רוחב W, reset, תוכן התחלתי, התנגשות או השהיית תגובה. הושלם חוזה 1R1W סינכרוני read-first עם אתחול 0."
+        "המקור אינו מגדיר רוחב W, reset, תוכן התחלתי, התנגשות או השהיית תגובה. הושלם חוזה1R1W סינכרוני read-first עם אתחול0."
       ],
       "en": [
-        "W, reset, initial contents, collision behavior and response latency are unspecified. A synchronous 1R1W read-first contract with zero initialization is supplied."
+        "W, reset, initial contents, collision behavior and response latency are unspecified. A synchronous1R1W read-first contract with zero initialization is supplied."
       ]
     },
     "solution_extensions": {

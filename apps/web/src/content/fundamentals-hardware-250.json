@@ -14,7 +14,7 @@
       "en": "Three weight-4 bits enter a full adder. Its sum output S has weight 4. In the next stage, should carry K be combined with other weight-4 bits or with weight-8 bits?"
     },
     "answer": {
-      "he": "עם ביטים במשקל 8. המחבר מקיים `A+B+C=S+2K`, ולכן `4(A+B+C)=4S+8K`. למשל שלוש אחדות מייצגים 12: סכום 1 במשקל 4 ונשא 1 במשקל 8. כדי לשמר את הערך, כניסות של מחבר רגיל באותו שלב צריכות להשתייך לאותו משקל.",
+      "he": "עם ביטים במשקל 8. המחבר מקיים `A+B+C=S+2K`, ולכן `4(A+B+C)=4S+8K`. למשל שלושה אחדות מייצגים 12: סכום 1 במשקל 4 ונשא 1 במשקל 8. כדי לשמר את הערך, כניסות של מחבר רגיל באותו שלב צריכות להשתייך לאותו משקל.",
       "en": "With weight-8 bits. The adder preserves `A+B+C=S+2K`, so `4(A+B+C)=4S+8K`. Three ones represent 12: sum 1 at weight 4 plus carry 1 at weight 8. To preserve value, inputs combined by an ordinary adder at one stage must share the same weight."
     },
     "takeaway": {
@@ -41,8 +41,8 @@
       "en": "In a full adder, when do A and B alone determine carry-out, and when does carry-out equal carry-in Cin?"
     },
     "answer": {
-      "he": "אם A=B=0, הנשיאה היא 0 בלי קשר ל־Cin. אם A=B=1, הנשיאה היא 1. אם A שונה מ־B, כבר יש בדיוק ביט אחד שערכו 1, ולכן Cin קובע אם הסכום מגיע ל־2. נגדיר `P=A XOR B`: אם P=1 בוחרים Cin, ואחרת בוחרים A.",
-      "en": "If A=B=0, carry is 0 regardless of Cin. If A=B=1, carry is 1. If A differs from B, exactly one of them is 1, so Cin decides whether the total reaches 2. Set `P=A XOR B`: select Cin when P=1, otherwise select A."
+      "he": "אם A=B=0, הנשיאה היא 0 בלי קשר ל־Cin. אם A=B=1, הנשיאה היא 1. אם A שונה מ־B, כבר יש בדיוק אחד אחד, ולכן Cin קובע אם הסכום מגיע ל־2. נגדיר `P=A XOR B`: אם P=1 בוחרים Cin, ואחרת בוחרים A.",
+      "en": "If A=B=0, carry is 0 regardless of Cin. If A=B=1, carry is 1. If A differs from B, exactly one is already present, so Cin decides whether the total reaches 2. Set `P=A XOR B`: select Cin when P=1, otherwise select A."
     },
     "takeaway": {
       "he": "אפשר לבנות נשיאה מבחירת אחד משני ערכים לפי השאלה אם הקלטים שונים.",
@@ -102,8 +102,8 @@
       "en": "Let `t=NAND(A,B)`, followed by `u=NAND(A,t)`, `v=NAND(B,t)` and `Y=NAND(u,v)`. What function results, and how many NAND gates are required?"
     },
     "answer": {
-      "he": "מתקבל XOR בארבעה שערים. עבור A, B בסדר 00, 01, 10, 11 הפלט הוא 0, 1, 1, 0. השער t משותף לשני הענפים; אין צורך לבנות אותו פעמיים. זהו מימוש לוגי, ללא טענה על תזמון פיזי או גליצ׳ים.",
-      "en": "This builds XOR with four gates. For A, B in order 00, 01, 10, 11, the output is 0, 1, 1, 0. The t gate feeds both branches and need not be built twice. This is a logical construction, with no claim about physical timing or glitches."
+      "he": "מתקבל XOR בארבעה שערים. עבור A,B בסדר 00,01,10,11 הפלט הוא 0,1,1,0. השער t משותף לשני הענפים; אין צורך לבנות אותו פעמיים. זהו מימוש לוגי, ללא טענה על תזמון פיזי או גליצ׳ים.",
+      "en": "This builds XOR with four gates. For A,B in order 00,01,10,11, the output is 0,1,1,0. The t gate feeds both branches and need not be built twice. This is a logical construction, with no claim about physical timing or glitches."
     },
     "takeaway": {
       "he": "תוצאת ביניים משותפת יכולה לצמצם את מספר השערים במימוש.",
@@ -341,8 +341,8 @@
       "en": "A window starting with zeros"
     },
     "prompt": {
-      "he": "גלאי מוציא 1 אם לפחות שלוש מתוך עשר הדגימות האחרונות הן 1. לפי החוזה, לפני ההתחלה ההיסטוריה מלאה באפסים. אחרי דגימות 1, 1, 1, האם כבר מותר לפלט להיות 1?",
-      "en": "A detector outputs 1 when at least three of the last ten samples are 1. Its contract initializes pre-start history to zeros. After samples 1, 1, 1, may output already be 1?"
+      "he": "גלאי מוציא 1 אם לפחות שלוש מתוך עשר הדגימות האחרונות הן 1. לפי החוזה, לפני ההתחלה ההיסטוריה מלאה באפסים. אחרי דגימות 1,1,1, האם כבר מותר לפלט להיות 1?",
+      "en": "A detector outputs 1 when at least three of the last ten samples are 1. Its contract initializes pre-start history to zeros. After samples 1,1,1, may output already be 1?"
     },
     "answer": {
       "he": "כן. אחרי הדגימה השלישית החלון כולל שלוש אחדות ושבעה אפסים קודמים, ולכן הפלט צריך להיות 1. אין צורך לחכות לעשר דגימות אמיתיות. חוזה שמגדיר פלט כלא תקף עד מילוי החלון יהיה חוזה אחר.",
@@ -387,8 +387,8 @@
       "en": "Test beyond the threshold too"
     },
     "prompt": {
-      "he": "הדרישה היא Y=1 כשיש לפחות שלוש אחדות בחלון. מימוש שגוי בודק count==3. בדיקות עם ספירות 0, 2, 3 עברו. איזו ספירה נוספת תגלה את השגיאה?",
-      "en": "Y must be 1 for at least three ones in a window. A faulty implementation uses count==3. Tests at counts 0, 2, 3 passed. What additional count reveals the error?"
+      "he": "הדרישה היא Y=1 כשיש לפחות שלוש אחדות בחלון. מימוש שגוי בודק count==3. בדיקות עם ספירות 0,2,3 עברו. איזו ספירה נוספת תגלה את השגיאה?",
+      "en": "Y must be 1 for at least three ones in a window. A faulty implementation uses count==3. Tests at counts 0,2,3 passed. What additional count reveals the error?"
     },
     "answer": {
       "he": "למשל 4: הדרישה מחזירה 1, אך בדיקת שוויון מחזירה 0. בודקים מתחת לסף, בסף וגם מעליו. הביטוי הנכון הוא `count>=3`, כל עוד count הוא מספר האחדות בחלון המוגדר.",
@@ -411,8 +411,8 @@
       "en": "A sliding window is not a separate block"
     },
     "prompt": {
-      "he": "רוצים לפחות שלוש אחדות בכל חלון נע של עשר דגימות. מימוש מאפס את הספירה אחרי דגימות 10, 20, 30. בדגימות 9, 10, 11 יש 1 ובכל האחרות 0. מה צריך להיות הפלט בדגימה 11?",
-      "en": "Detect at least three ones in each sliding ten-sample window. An implementation clears its count after samples 10, 20, 30. Samples 9, 10, 11 are 1 and all others 0. What should output be at sample 11?"
+      "he": "רוצים לפחות שלוש אחדות בכל חלון נע של עשר דגימות. מימוש מאפס את הספירה אחרי דגימות 10,20,30. בדגימות 9,10,11 יש 1 ובכל האחרות 0. מה צריך להיות הפלט בדגימה 11?",
+      "en": "Detect at least three ones in each sliding ten-sample window. An implementation clears its count after samples 10,20,30. Samples 9,10,11 are 1 and all others 0. What should output be at sample 11?"
     },
     "answer": {
       "he": "1. החלון שמסתיים בדגימה 11 כולל את דגימות 2..11, ובהן כל שלוש האחדות. איפוס ב־10 מפריד אותן בין שני בלוקים ומפספס את המקרה. חלון נע מזיז את הגבול בדגימה אחת בכל צעד; בלוקים נפרדים משתמשים בגבולות קבועים.",
@@ -461,7 +461,7 @@
       "en": "Two logical addresses might access the same memory cell. Write 1 to every address, then read all addresses and obtain 1 everywhere. Does this rule out address aliasing?"
     },
     "answer": {
-      "he": "לא. גם כתובות שמשתפות תא יקראו 1, כי כולן קיבלו אותו ערך. כדי לחשוף חפיפה צריך ליצור ביניהן הבדל: למשל לכתוב לכתובת אחת 0 ולאחרת 1, ואז לבדוק שלא דרסו זו את זו. מניחים שמיפוי הקריאה והכתיבה יציב.",
+      "he": "לא. גם כתובות שמשתפות תא יקראו 1, כי כולן קיבלו אותו ערך. כדי לחשוף חפיפה צריך ליצור ביניהן הבדל: למשל לכתוב לכתובת אחת 0 ולאחרת 1, ואז לבדוק שלא דרסו זו את זו. מיפוי הקריאה והכתיבה מניחים יציב.",
       "en": "No. Aliased addresses also read 1 because every write used that value. Expose aliasing by creating a difference: for example, write 0 to one address and 1 to another, then check they did not overwrite each other. Assume a stable read/write mapping."
     },
     "takeaway": {

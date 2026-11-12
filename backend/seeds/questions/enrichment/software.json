@@ -265,7 +265,7 @@
     "hints": {
       "en": ["Shift the field down to bit 0 first, then keep only width bits. What mask keeps exactly width bits?",
              "mask = (1u << width) - 1 works for width up to 31; for width == 32 the shift is undefined, so return reg directly (validity implies lsb == 0). Result: (reg >> lsb) & mask."],
-      "he": ["הזיזו קודם את השדה למטה לביט 0, ואז שמרו רק width ביטים. איזו מסכה שומרת בדיוק width ביטים?",
+      "he": ["הזיזו קודם את השדה למטה לביט 0, ואז שמרו רק width ביטים. איזו מסיכה שומרת בדיוק width ביטים?",
              "mask = (1u << width) - 1 עובד עבור width עד 31; עבור width == 32 ההזזה לא מוגדרת, ולכן החזירו את reg ישירות (תקינות הקלט מחייבת lsb == 0). התוצאה: (reg >> lsb) & mask."]
     },
     "requirements": {
@@ -281,11 +281,11 @@
     "common_errors": [
       {"key": "shift_by_32", "core": true, "skill": "bit_manipulation", "tip_key": "check_the_boundary", "en": "(1u << 32) - 1 is evaluated for the full-width case, which is undefined behavior in C.", "he": "(1u << 32) - 1 מחושב במקרה הרוחב המלא, וזו התנהגות לא מוגדרת ב-C."},
       {"key": "signed_literal_shift", "core": false, "skill": "bit_manipulation", "en": "1 << 31 is done on a signed int, which overflows.", "he": "1 << 31 מבוצע על int עם סימן, וזה גולש."},
-      {"key": "mask_before_shift", "core": false, "skill": "bit_manipulation", "en": "The mask is applied at the field's position but the result is not shifted down, so it is not right-aligned.", "he": "המסכה מוחלת במיקום השדה אבל התוצאה לא מוזזת למטה, ולכן אינה מיושרת לימין."}
+      {"key": "mask_before_shift", "core": false, "skill": "bit_manipulation", "en": "The mask is applied at the field's position but the result is not shifted down, so it is not right-aligned.", "he": "המסיכה מוחלת במיקום השדה אבל התוצאה לא מוזזת למטה, ולכן אינה מיושרת לימין."}
     ],
     "accepted_approaches": {
       "en": ["A uint64_t intermediate mask, avoiding the special case.", "mask = ~0u >> (32 - width), which is defined for width in 1..32."],
-      "he": ["מסכת ביניים מסוג uint64_t, שמונעת את המקרה המיוחד.", "mask = ~0u >> (32 - width), שמוגדר עבור width בין 1 ל-32."]
+      "he": ["מסיכת ביניים מסוג uint64_t, שמונעת את המקרה המיוחד.", "mask = ~0u >> (32 - width), שמוגדר עבור width בין 1 ל-32."]
     }
   },
 

@@ -38,7 +38,7 @@
     "hints": {
       "en": ["De Morgan turns an OR of two signals into a NAND of their complements. Which two gates give you the complements?",
              "Build it in three steps: invert A and B with self-connected NAND gates, NAND those two results to get A OR B, then NAND with E and invert the result once more."],
-      "he": ["כלל דה־מורגן הופך OR של שני אותות ל-NAND של המשלימים שלהם. אילו שני שערים נותנים לכם את המשלימים?",
+      "he": ["De Morgan הופך OR של שני אותות ל-NAND של המשלימים שלהם. אילו שני שערים נותנים לכם את המשלימים?",
              "בנו בשלושה שלבים: הפכו את A ו-B בעזרת שערי NAND עם כניסות מחוברות, בצעו NAND על שתי התוצאות כדי לקבל A OR B, ואז NAND עם E והפכו את התוצאה פעם נוספת."]
     },
     "requirements": {
@@ -73,7 +73,7 @@
     },
     "requirements": {
       "en": "A complete answer (1) computes a per-bit mismatch vector gated by the mask, (2) reduces it to a single bit correctly, (3) gives equal=1 for A=1010, B=1001, M=1100, and (4) explains that M=0000 gives equal=1 because nothing is compared.",
-      "he": "תשובה מלאה (1) מחשבת וקטור אי-התאמה לכל ביט בשליטת המסכה, (2) מצמצמת אותו לביט יחיד נכון, (3) נותנת equal=1 עבור A=1010, B=1001, M=1100, ו-(4) מסבירה ש-M=0000 נותן equal=1 כי לא מושווה דבר."
+      "he": "תשובה מלאה (1) מחשבת וקטור אי-התאמה לכל ביט בשליטת המסיכה, (2) מצמצמת אותו לביט יחיד נכון, (3) נותנת equal=1 עבור A=1010, B=1001, M=1100, ו-(4) מסבירה ש-M=0000 נותן equal=1 כי לא מושווה דבר."
     },
     "rubric": [
       {"key": "mismatch_vector", "weight": 0.30, "en": "Uses (A XOR B) AND M, or an equivalent, for the selected mismatches.", "he": "משתמשים ב-(A XOR B) AND M, או בשקול לו, לאי-ההתאמות שנבחרו."},
@@ -83,7 +83,7 @@
     ],
     "common_errors": [
       {"key": "bitwise_not_instead_of_reduction", "core": true, "skill": "combinational_blocks", "en": "~((A ^ B) & M) is a four-bit vector, not the single bit the question asks for.", "he": "~((A ^ B) & M) הוא וקטור של ארבעה ביטים, ולא הביט היחיד שהשאלה מבקשת."},
-      {"key": "mask_applied_after_reduction", "core": false, "skill": "boolean_algebra", "en": "The mismatches are reduced before the mask is applied, so ignored bits still block equality.", "he": "אי-ההתאמות מצומצמות לפני החלת המסכה, ולכן ביטים שאמורים להיות מוזנחים עדיין מונעים שוויון."},
+      {"key": "mask_applied_after_reduction", "core": false, "skill": "boolean_algebra", "en": "The mismatches are reduced before the mask is applied, so ignored bits still block equality.", "he": "אי-ההתאמות מצומצמות לפני החלת המסיכה, ולכן ביטים שאמורים להיות מוזנחים עדיין מונעים שוויון."},
       {"key": "zero_mask_gives_zero", "core": false, "skill": "boolean_algebra", "tip_key": "restate_the_requirement", "en": "M=0000 is said to give equal=0. With nothing selected, every selected bit trivially matches.", "he": "נטען ש-M=0000 נותן equal=0. כשלא נבחר דבר, כל ביט שנבחר תואם באופן טריוויאלי."}
     ],
     "accepted_approaches": {

@@ -6,7 +6,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "בשתי מילים ללא סימן ברוחב 4 ביטים, A=3, B=3. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
+      "he": "בשתי מילים לא מסומנות ברוחב 4 ביטים, A=3, B=3. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
       "en": "For unsigned 4-bit words A=3, B=3, compute their XOR, then set eq=1 only if every result bit is zero. What is obtained?"
     },
     "choices": [
@@ -40,7 +40,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "בשתי מילים ללא סימן ברוחב 4 ביטים, A=3, B=7. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
+      "he": "בשתי מילים לא מסומנות ברוחב 4 ביטים, A=3, B=7. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
       "en": "For unsigned 4-bit words A=3, B=7, compute their XOR, then set eq=1 only if every result bit is zero. What is obtained?"
     },
     "choices": [
@@ -74,7 +74,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "בשתי מילים ללא סימן ברוחב 4 ביטים, A=10, B=2. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
+      "he": "בשתי מילים לא מסומנות ברוחב 4 ביטים, A=10, B=2. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
       "en": "For unsigned 4-bit words A=10, B=2, compute their XOR, then set eq=1 only if every result bit is zero. What is obtained?"
     },
     "choices": [
@@ -108,7 +108,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "בשתי מילים ללא סימן ברוחב 5 ביטים, A=0, B=0. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
+      "he": "בשתי מילים לא מסומנות ברוחב 5 ביטים, A=0, B=0. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
       "en": "For unsigned 5-bit words A=0, B=0, compute their XOR, then set eq=1 only if every result bit is zero. What is obtained?"
     },
     "choices": [
@@ -142,7 +142,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "בשתי מילים ללא סימן ברוחב 5 ביטים, A=17, B=19. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
+      "he": "בשתי מילים לא מסומנות ברוחב 5 ביטים, A=17, B=19. מחשבים XOR בין המילים, ואז eq=1 רק אם כל ביטי התוצאה אפס. מה מתקבל?",
       "en": "For unsigned 5-bit words A=17, B=19, compute their XOR, then set eq=1 only if every result bit is zero. What is obtained?"
     },
     "choices": [
@@ -312,7 +312,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "בחצי מחבר ללא נשא נכנס, A=B=1. מצרפים את הביטים בסדר CS, כאשר C הוא ביט הנשיאה. מה הערך העשרוני של CS?",
+      "he": "בחצי מחבר ללא נשא נכנס, A=B=1. מצרפים את הביטים בסדר CS, כאשר C הוא הנשיאה. מה הערך העשרוני של CS?",
       "en": "In a half adder with no carry-in, A=B=1. Concatenate CS, with carry C first. What is the decimal value of CS?"
     },
     "choices": [
@@ -992,7 +992,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "Y=X XOR B. הענף X עלול להיות תקוע ב־0. איזה קלט חושף את התקלה ב־Y? נדרש גם ש־B=0.",
+      "he": "Y=X XOR B. הענף X עלול להיות תקוע ב־0. איזה קלט חושף את התקלה ב־Y? נדרשת גם B=0.",
       "en": "Y=X XOR B. Branch X may be stuck at 0. Which input reveals the fault at Y? Also require B=0."
     },
     "choices": [
@@ -1706,7 +1706,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "A=15 ו־B=1 הם ערכים ללא סימן ברוחב 4 ביטים. מה מתקבל כשמחברים ברוחב 4 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־5 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
+      "he": "A=15 ו־B=1 הם לא מסומנים ברוחב 4 ביטים. מה מתקבל כשמחברים ברוחב 4 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־5 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
       "en": "A=15 and B=1 are unsigned 4-bit values. What results from adding at width 4 and then prepending zero, versus widening to 5 bits before adding? Give decimal values in that order."
     },
     "choices": [
@@ -1740,7 +1740,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "A=12 ו־B=7 הם ערכים ללא סימן ברוחב 4 ביטים. מה מתקבל כשמחברים ברוחב 4 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־5 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
+      "he": "A=12 ו־B=7 הם לא מסומנים ברוחב 4 ביטים. מה מתקבל כשמחברים ברוחב 4 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־5 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
       "en": "A=12 and B=7 are unsigned 4-bit values. What results from adding at width 4 and then prepending zero, versus widening to 5 bits before adding? Give decimal values in that order."
     },
     "choices": [
@@ -1774,7 +1774,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "A=31 ו־B=2 הם ערכים ללא סימן ברוחב 5 ביטים. מה מתקבל כשמחברים ברוחב 5 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־6 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
+      "he": "A=31 ו־B=2 הם לא מסומנים ברוחב 5 ביטים. מה מתקבל כשמחברים ברוחב 5 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־6 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
       "en": "A=31 and B=2 are unsigned 5-bit values. What results from adding at width 5 and then prepending zero, versus widening to 6 bits before adding? Give decimal values in that order."
     },
     "choices": [
@@ -1808,7 +1808,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "A=7 ו־B=5 הם ערכים ללא סימן ברוחב 3 ביטים. מה מתקבל כשמחברים ברוחב 3 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־4 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
+      "he": "A=7 ו־B=5 הם לא מסומנים ברוחב 3 ביטים. מה מתקבל כשמחברים ברוחב 3 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־4 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
       "en": "A=7 and B=5 are unsigned 3-bit values. What results from adding at width 3 and then prepending zero, versus widening to 4 bits before adding? Give decimal values in that order."
     },
     "choices": [
@@ -1842,7 +1842,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "A=20 ו־B=20 הם ערכים ללא סימן ברוחב 5 ביטים. מה מתקבל כשמחברים ברוחב 5 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־6 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
+      "he": "A=20 ו־B=20 הם לא מסומנים ברוחב 5 ביטים. מה מתקבל כשמחברים ברוחב 5 ואז מוסיפים אפס משמאל, לעומת הרחבה ל־6 ביטים לפני החיבור? תנו ערכים עשרוניים בסדר הזה.",
       "en": "A=20 and B=20 are unsigned 5-bit values. What results from adding at width 5 and then prepending zero, versus widening to 6 bits before adding? Give decimal values in that order."
     },
     "choices": [
@@ -1876,7 +1876,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מספרים ללא סימן מקיימים a=4, b=a+2, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
+      "he": "מספרים לא מסומנים מקיימים a=4, b=a+2, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
       "en": "Unsigned integers satisfy a=4, b=a+2, and both are represented exactly. What is their arithmetic mean without computing a+b?"
     },
     "choices": [
@@ -1910,7 +1910,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מספרים ללא סימן מקיימים a=7, b=a+4, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
+      "he": "מספרים לא מסומנים מקיימים a=7, b=a+4, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
       "en": "Unsigned integers satisfy a=7, b=a+4, and both are represented exactly. What is their arithmetic mean without computing a+b?"
     },
     "choices": [
@@ -1944,7 +1944,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מספרים ללא סימן מקיימים a=10, b=a+6, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
+      "he": "מספרים לא מסומנים מקיימים a=10, b=a+6, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
       "en": "Unsigned integers satisfy a=10, b=a+6, and both are represented exactly. What is their arithmetic mean without computing a+b?"
     },
     "choices": [
@@ -1978,7 +1978,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מספרים ללא סימן מקיימים a=12, b=a+2, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
+      "he": "מספרים לא מסומנים מקיימים a=12, b=a+2, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
       "en": "Unsigned integers satisfy a=12, b=a+2, and both are represented exactly. What is their arithmetic mean without computing a+b?"
     },
     "choices": [
@@ -2012,7 +2012,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מספרים ללא סימן מקיימים a=3, b=a+8, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
+      "he": "מספרים לא מסומנים מקיימים a=3, b=a+8, ושניהם מיוצגים בדיוק. מה הממוצע החשבוני בלי לחשב a+b?",
       "en": "Unsigned integers satisfy a=3, b=a+8, and both are represented exactly. What is their arithmetic mean without computing a+b?"
     },
     "choices": [
@@ -2216,7 +2216,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "x=53 הוא שלם ללא סימן. שומרים את 3 הביטים הנמוכים שלו כדי לחשב x modulo 8. מה השארית העשרונית?",
+      "he": "x=53 הוא שלם לא מסומן. שומרים את 3 הביטים הנמוכים שלו כדי לחשב x modulo 8. מה השארית העשרונית?",
       "en": "x=53 is an unsigned integer. Keep its lowest 3 bits to compute x modulo 8. What is the decimal remainder?"
     },
     "choices": [
@@ -2250,7 +2250,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "x=27 הוא שלם ללא סימן. שומרים את 2 הביטים הנמוכים שלו כדי לחשב x modulo 4. מה השארית העשרונית?",
+      "he": "x=27 הוא שלם לא מסומן. שומרים את 2 הביטים הנמוכים שלו כדי לחשב x modulo 4. מה השארית העשרונית?",
       "en": "x=27 is an unsigned integer. Keep its lowest 2 bits to compute x modulo 4. What is the decimal remainder?"
     },
     "choices": [
@@ -2284,7 +2284,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "x=94 הוא שלם ללא סימן. שומרים את 4 הביטים הנמוכים שלו כדי לחשב x modulo 16. מה השארית העשרונית?",
+      "he": "x=94 הוא שלם לא מסומן. שומרים את 4 הביטים הנמוכים שלו כדי לחשב x modulo 16. מה השארית העשרונית?",
       "en": "x=94 is an unsigned integer. Keep its lowest 4 bits to compute x modulo 16. What is the decimal remainder?"
     },
     "choices": [
@@ -2318,7 +2318,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "x=41 הוא שלם ללא סימן. שומרים את 3 הביטים הנמוכים שלו כדי לחשב x modulo 8. מה השארית העשרונית?",
+      "he": "x=41 הוא שלם לא מסומן. שומרים את 3 הביטים הנמוכים שלו כדי לחשב x modulo 8. מה השארית העשרונית?",
       "en": "x=41 is an unsigned integer. Keep its lowest 3 bits to compute x modulo 8. What is the decimal remainder?"
     },
     "choices": [
@@ -2352,7 +2352,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "x=127 הוא שלם ללא סימן. שומרים את 5 הביטים הנמוכים שלו כדי לחשב x modulo 32. מה השארית העשרונית?",
+      "he": "x=127 הוא שלם לא מסומן. שומרים את 5 הביטים הנמוכים שלו כדי לחשב x modulo 32. מה השארית העשרונית?",
       "en": "x=127 is an unsigned integer. Keep its lowest 5 bits to compute x modulo 32. What is the decimal remainder?"
     },
     "choices": [
@@ -2726,7 +2726,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מכפילים מספר ללא סימן ברוחב 2 ביטים במספר ללא סימן ברוחב 2 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
+      "he": "מכפילים מספר לא מסומן ברוחב 2 ביטים במספר לא מסומן ברוחב 2 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
       "en": "Multiply an unsigned 2-bit value by an unsigned 2-bit value. What minimum output width represents every product exactly?"
     },
     "choices": [
@@ -2760,7 +2760,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מכפילים מספר ללא סימן ברוחב 3 ביטים במספר ללא סימן ברוחב 3 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
+      "he": "מכפילים מספר לא מסומן ברוחב 3 ביטים במספר לא מסומן ברוחב 3 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
       "en": "Multiply an unsigned 3-bit value by an unsigned 3-bit value. What minimum output width represents every product exactly?"
     },
     "choices": [
@@ -2794,7 +2794,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מכפילים מספר ללא סימן ברוחב 4 ביטים במספר ללא סימן ברוחב 4 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
+      "he": "מכפילים מספר לא מסומן ברוחב 4 ביטים במספר לא מסומן ברוחב 4 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
       "en": "Multiply an unsigned 4-bit value by an unsigned 4-bit value. What minimum output width represents every product exactly?"
     },
     "choices": [
@@ -2828,7 +2828,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מכפילים מספר ללא סימן ברוחב 3 ביטים במספר ללא סימן ברוחב 5 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
+      "he": "מכפילים מספר לא מסומן ברוחב 3 ביטים במספר לא מסומן ברוחב 5 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
       "en": "Multiply an unsigned 3-bit value by an unsigned 5-bit value. What minimum output width represents every product exactly?"
     },
     "choices": [
@@ -2862,7 +2862,7 @@
     "topic": "bits",
     "status": "draft",
     "prompt": {
-      "he": "מכפילים מספר ללא סימן ברוחב 5 ביטים במספר ללא סימן ברוחב 5 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
+      "he": "מכפילים מספר לא מסומן ברוחב 5 ביטים במספר לא מסומן ברוחב 5 ביטים. מה רוחב המוצא המזערי שמכיל כל מכפלה בדיוק?",
       "en": "Multiply an unsigned 5-bit value by an unsigned 5-bit value. What minimum output width represents every product exactly?"
     },
     "choices": [
@@ -3236,7 +3236,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=0. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מהם שני המוצאים?",
+      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=0. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
       "en": "A D latch and a rising-edge D flip-flop initially have Q=0. Between edges, D is set to 1, while the latch EN remains 1. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
     },
     "choices": [
@@ -3270,7 +3270,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־0, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מהם שני המוצאים?",
+      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־0, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
       "en": "A D latch and a rising-edge D flip-flop initially have Q=1. Between edges, D is set to 0, while the latch EN remains 1. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
     },
     "choices": [
@@ -3304,7 +3304,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=0. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 0. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מהם שני המוצאים?",
+      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=0. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 0. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
       "en": "A D latch and a rising-edge D flip-flop initially have Q=0. Between edges, D is set to 1, while the latch EN remains 0. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
     },
     "choices": [
@@ -3338,7 +3338,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־0, ו־EN של הלאץ׳ נשאר 0. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מהם שני המוצאים?",
+      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־0, ו־EN של הלאץ׳ נשאר 0. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
       "en": "A D latch and a rising-edge D flip-flop initially have Q=1. Between edges, D is set to 0, while the latch EN remains 0. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
     },
     "choices": [
@@ -3372,7 +3372,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מהם שני המוצאים?",
+      "he": "ללַאץ׳ D ולפליפ-פלופ D בעל חזית עולה יש בתחילה Q=1. בין חזיתות, D נקבע ל־1, ו־EN של הלאץ׳ נשאר 1. אין בקרות אסינכרוניות. לאחר השהיית ההתפשטות ולפני החזית הבאה, מה שני המוצאים?",
       "en": "A D latch and a rising-edge D flip-flop initially have Q=1. Between edges, D is set to 1, while the latch EN remains 1. There are no asynchronous controls. After propagation and before the next edge, what are the outputs?"
     },
     "choices": [
@@ -4597,7 +4597,7 @@
     "status": "draft",
     "prompt": {
       "he": "FIFO מלא מכיל A,B,C לפי סדר היציאה. החוזה מקבל קריאה וכתיבה יחד גם כשהוא מלא, וקורא מידע ישן לפני הדריסה. באותו קצה קוראים וכותבים X. מה נקרא ומה נשאר?",
-      "en": "A full FIFO contains A,B,C in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. At one edge, a read and a write of X occur. What is read and what remains?"
+      "en": "A full FIFO contains A,B,C in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. One edge reads and writes X. What is read and what remains?"
     },
     "choices": [
       {
@@ -4605,15 +4605,15 @@
         "en": "Both operations are rejected"
       },
       {
-        "he": "נקרא A; תוכן התור שנותר: B,C,X",
+        "he": "נקרא A; נותר B,C,X",
         "en": "Read A; remaining B,C,X"
       },
       {
-        "he": "נקרא X; תוכן התור שנותר: A,B,C",
+        "he": "נקרא X; נותר A,B,C",
         "en": "Read X; remaining A,B,C"
       },
       {
-        "he": "נקרא A; תוכן התור שנותר: B,C",
+        "he": "נקרא A; נותר B,C",
         "en": "Read A; remaining B,C"
       }
     ],
@@ -4631,11 +4631,11 @@
     "status": "draft",
     "prompt": {
       "he": "FIFO מלא מכיל P,Q,R,S לפי סדר היציאה. החוזה מקבל קריאה וכתיבה יחד גם כשהוא מלא, וקורא מידע ישן לפני הדריסה. באותו קצה קוראים וכותבים Y. מה נקרא ומה נשאר?",
-      "en": "A full FIFO contains P,Q,R,S in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. At one edge, a read and a write of Y occur. What is read and what remains?"
+      "en": "A full FIFO contains P,Q,R,S in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. One edge reads and writes Y. What is read and what remains?"
     },
     "choices": [
       {
-        "he": "נקרא P; תוכן התור שנותר: Q,R,S",
+        "he": "נקרא P; נותר Q,R,S",
         "en": "Read P; remaining Q,R,S"
       },
       {
@@ -4643,11 +4643,11 @@
         "en": "Both operations are rejected"
       },
       {
-        "he": "נקרא P; תוכן התור שנותר: Q,R,S,Y",
+        "he": "נקרא P; נותר Q,R,S,Y",
         "en": "Read P; remaining Q,R,S,Y"
       },
       {
-        "he": "נקרא Y; תוכן התור שנותר: P,Q,R,S",
+        "he": "נקרא Y; נותר P,Q,R,S",
         "en": "Read Y; remaining P,Q,R,S"
       }
     ],
@@ -4665,15 +4665,15 @@
     "status": "draft",
     "prompt": {
       "he": "FIFO מלא מכיל M,N לפי סדר היציאה. החוזה מקבל קריאה וכתיבה יחד גם כשהוא מלא, וקורא מידע ישן לפני הדריסה. באותו קצה קוראים וכותבים Z. מה נקרא ומה נשאר?",
-      "en": "A full FIFO contains M,N in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. At one edge, a read and a write of Z occur. What is read and what remains?"
+      "en": "A full FIFO contains M,N in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. One edge reads and writes Z. What is read and what remains?"
     },
     "choices": [
       {
-        "he": "נקרא Z; תוכן התור שנותר: M,N",
+        "he": "נקרא Z; נותר M,N",
         "en": "Read Z; remaining M,N"
       },
       {
-        "he": "נקרא M; תוכן התור שנותר: N",
+        "he": "נקרא M; נותר N",
         "en": "Read M; remaining N"
       },
       {
@@ -4681,7 +4681,7 @@
         "en": "Both operations are rejected"
       },
       {
-        "he": "נקרא M; תוכן התור שנותר: N,Z",
+        "he": "נקרא M; נותר N,Z",
         "en": "Read M; remaining N,Z"
       }
     ],
@@ -4699,19 +4699,19 @@
     "status": "draft",
     "prompt": {
       "he": "FIFO מלא מכיל J,K,L,M,N לפי סדר היציאה. החוזה מקבל קריאה וכתיבה יחד גם כשהוא מלא, וקורא מידע ישן לפני הדריסה. באותו קצה קוראים וכותבים W. מה נקרא ומה נשאר?",
-      "en": "A full FIFO contains J,K,L,M,N in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. At one edge, a read and a write of W occur. What is read and what remains?"
+      "en": "A full FIFO contains J,K,L,M,N in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. One edge reads and writes W. What is read and what remains?"
     },
     "choices": [
       {
-        "he": "נקרא J; תוכן התור שנותר: K,L,M,N,W",
+        "he": "נקרא J; נותר K,L,M,N,W",
         "en": "Read J; remaining K,L,M,N,W"
       },
       {
-        "he": "נקרא W; תוכן התור שנותר: J,K,L,M,N",
+        "he": "נקרא W; נותר J,K,L,M,N",
         "en": "Read W; remaining J,K,L,M,N"
       },
       {
-        "he": "נקרא J; תוכן התור שנותר: K,L,M,N",
+        "he": "נקרא J; נותר K,L,M,N",
         "en": "Read J; remaining K,L,M,N"
       },
       {
@@ -4733,7 +4733,7 @@
     "status": "draft",
     "prompt": {
       "he": "FIFO מלא מכיל R,S,T לפי סדר היציאה. החוזה מקבל קריאה וכתיבה יחד גם כשהוא מלא, וקורא מידע ישן לפני הדריסה. באותו קצה קוראים וכותבים V. מה נקרא ומה נשאר?",
-      "en": "A full FIFO contains R,S,T in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. At one edge, a read and a write of V occur. What is read and what remains?"
+      "en": "A full FIFO contains R,S,T in output order. Its contract accepts a simultaneous read/write when full and reads old data before overwrite. One edge reads and writes V. What is read and what remains?"
     },
     "choices": [
       {
@@ -4741,15 +4741,15 @@
         "en": "Both operations are rejected"
       },
       {
-        "he": "נקרא R; תוכן התור שנותר: S,T,V",
+        "he": "נקרא R; נותר S,T,V",
         "en": "Read R; remaining S,T,V"
       },
       {
-        "he": "נקרא V; תוכן התור שנותר: R,S,T",
+        "he": "נקרא V; נותר R,S,T",
         "en": "Read V; remaining R,S,T"
       },
       {
-        "he": "נקרא R; תוכן התור שנותר: S,T",
+        "he": "נקרא R; נותר S,T",
         "en": "Read R; remaining S,T"
       }
     ],
@@ -4936,8 +4936,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "בממשק ready/valid, העברה מתבצעת רק בקצה שבו שני האותות 1. השולח מציג valid=1 ונתון A; ready נשאר 0 במשך מחזור אחד. אין reset. מה עליו להציג עד קבלת ההעברה?",
-      "en": "In a ready/valid interface, transfer occurs only at an edge with both signals 1. The sender presents valid=1 and data A; ready stays 0 for 1 cycle. There is no reset. What must it present until acceptance?"
+      "he": "בממשק ready/valid, העברה מתבצעת רק בקצה שבו שני האותות 1. השולח מציג valid=1 ונתון A; ready נשאר 0 במשך 1 מחזורים. אין reset. מה עליו להציג עד קבלת ההעברה?",
+      "en": "In a ready/valid interface, transfer occurs only at an edge with both signals 1. The sender presents valid=1 and data A; ready stays 0 for 1 cycles. There is no reset. What must it present until acceptance?"
     },
     "choices": [
       {
@@ -5106,7 +5106,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה רווי ללא סימן ברוחב 3 ביטים מתחיל ב־6. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 3 בקשות?",
+      "he": "מונה רווי לא מסומן ברוחב 3 ביטים מתחיל ב־6. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 3 בקשות?",
       "en": "An unsigned 3-bit saturating counter starts at 6. Each increment request adds 1 unless it is already at the maximum. What is its value after 3 requests?"
     },
     "choices": [
@@ -5140,7 +5140,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה רווי ללא סימן ברוחב 4 ביטים מתחיל ב־13. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 4 בקשות?",
+      "he": "מונה רווי לא מסומן ברוחב 4 ביטים מתחיל ב־13. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 4 בקשות?",
       "en": "An unsigned 4-bit saturating counter starts at 13. Each increment request adds 1 unless it is already at the maximum. What is its value after 4 requests?"
     },
     "choices": [
@@ -5174,7 +5174,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה רווי ללא סימן ברוחב 3 ביטים מתחיל ב־5. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 4 בקשות?",
+      "he": "מונה רווי לא מסומן ברוחב 3 ביטים מתחיל ב־5. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 4 בקשות?",
       "en": "An unsigned 3-bit saturating counter starts at 5. Each increment request adds 1 unless it is already at the maximum. What is its value after 4 requests?"
     },
     "choices": [
@@ -5208,7 +5208,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה רווי ללא סימן ברוחב 4 ביטים מתחיל ב־14. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 2 בקשות?",
+      "he": "מונה רווי לא מסומן ברוחב 4 ביטים מתחיל ב־14. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 2 בקשות?",
       "en": "An unsigned 4-bit saturating counter starts at 14. Each increment request adds 1 unless it is already at the maximum. What is its value after 2 requests?"
     },
     "choices": [
@@ -5242,7 +5242,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "מונה רווי ללא סימן ברוחב 5 ביטים מתחיל ב־29. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 5 בקשות?",
+      "he": "מונה רווי לא מסומן ברוחב 5 ביטים מתחיל ב־29. הוא מתקדם ב־1 בכל בקשת הגדלה, ונשאר בערך המרבי אם כבר הגיע אליו. מה ערכו אחרי 5 בקשות?",
       "en": "An unsigned 5-bit saturating counter starts at 29. Each increment request adds 1 unless it is already at the maximum. What is its value after 5 requests?"
     },
     "choices": [
@@ -5565,7 +5565,7 @@
         "en": "next gets RUN as intended"
       },
       {
-        "he": "ברירת המחדל בהכרח יוצרת לאץ׳",
+        "he": "חסר בהכרח לאץ׳ בגלל ברירת המחדל",
         "en": "The default necessarily causes a latch"
       }
     ],
@@ -6296,7 +6296,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 2 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; המצב האחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 10 ns. מה רוחב הפולס ב־ns?",
+      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 2 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; אחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 10 ns. מה רוחב הפולס ב־ns?",
       "en": "On a trigger edge, a Moore machine enters a chain of 2 pulse states. Each outputs 1; every edge advances one state, with the last returning to IDLE, output 0. Ignore triggers during the chain and propagation delays. Clock period is 10 ns. What is pulse width in ns?"
     },
     "choices": [
@@ -6330,7 +6330,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 3 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; המצב האחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 8 ns. מה רוחב הפולס ב־ns?",
+      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 3 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; אחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 8 ns. מה רוחב הפולס ב־ns?",
       "en": "On a trigger edge, a Moore machine enters a chain of 3 pulse states. Each outputs 1; every edge advances one state, with the last returning to IDLE, output 0. Ignore triggers during the chain and propagation delays. Clock period is 8 ns. What is pulse width in ns?"
     },
     "choices": [
@@ -6364,7 +6364,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 4 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; המצב האחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 5 ns. מה רוחב הפולס ב־ns?",
+      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 4 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; אחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 5 ns. מה רוחב הפולס ב־ns?",
       "en": "On a trigger edge, a Moore machine enters a chain of 4 pulse states. Each outputs 1; every edge advances one state, with the last returning to IDLE, output 0. Ignore triggers during the chain and propagation delays. Clock period is 5 ns. What is pulse width in ns?"
     },
     "choices": [
@@ -6398,7 +6398,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 2 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; המצב האחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 12 ns. מה רוחב הפולס ב־ns?",
+      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 2 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; אחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 12 ns. מה רוחב הפולס ב־ns?",
       "en": "On a trigger edge, a Moore machine enters a chain of 2 pulse states. Each outputs 1; every edge advances one state, with the last returning to IDLE, output 0. Ignore triggers during the chain and propagation delays. Clock period is 12 ns. What is pulse width in ns?"
     },
     "choices": [
@@ -6432,7 +6432,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 3 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; המצב האחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 7 ns. מה רוחב הפולס ב־ns?",
+      "he": "מכונת Moore נכנסת, בקצה טריגר, לשרשרת של 3 מצבי פולס. המוצא 1 בכל מצב בשרשרת, וכל קצה מתקדם למצב הבא; אחרון חוזר ל־IDLE שמוציא 0. מתעלמים מטריגרים בשרשרת ומהשהיות. מחזור השעון 7 ns. מה רוחב הפולס ב־ns?",
       "en": "On a trigger edge, a Moore machine enters a chain of 3 pulse states. Each outputs 1; every edge advances one state, with the last returning to IDLE, output 0. Ignore triggers during the chain and propagation delays. Clock period is 7 ns. What is pulse width in ns?"
     },
     "choices": [
@@ -6466,7 +6466,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "נתונים עוברים בצינור של 2 אוגרים טוריים ללא עצירות, עם מעבר של אוגר אחד בכל חזית. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
+      "he": "נתונים עוברים בצינור של 2 רשומות טוריות ללא עצירות, עם רשומה אחת בכל קצה. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
       "en": "Data passes through 2 serial registers without stalls, one register per edge. valid marks real input items. By how many cycles must valid be delayed to match output data? Assume a defined valid reset."
     },
     "choices": [
@@ -6500,7 +6500,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "נתונים עוברים בצינור של 3 אוגרים טוריים ללא עצירות, עם מעבר של אוגר אחד בכל חזית. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
+      "he": "נתונים עוברים בצינור של 3 רשומות טוריות ללא עצירות, עם רשומה אחת בכל קצה. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
       "en": "Data passes through 3 serial registers without stalls, one register per edge. valid marks real input items. By how many cycles must valid be delayed to match output data? Assume a defined valid reset."
     },
     "choices": [
@@ -6534,7 +6534,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "נתונים עוברים בצינור של 4 אוגרים טוריים ללא עצירות, עם מעבר של אוגר אחד בכל חזית. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
+      "he": "נתונים עוברים בצינור של 4 רשומות טוריות ללא עצירות, עם רשומה אחת בכל קצה. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
       "en": "Data passes through 4 serial registers without stalls, one register per edge. valid marks real input items. By how many cycles must valid be delayed to match output data? Assume a defined valid reset."
     },
     "choices": [
@@ -6568,7 +6568,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "נתונים עוברים בצינור של 5 אוגרים טוריים ללא עצירות, עם מעבר של אוגר אחד בכל חזית. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
+      "he": "נתונים עוברים בצינור של 5 רשומות טוריות ללא עצירות, עם רשומה אחת בכל קצה. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
       "en": "Data passes through 5 serial registers without stalls, one register per edge. valid marks real input items. By how many cycles must valid be delayed to match output data? Assume a defined valid reset."
     },
     "choices": [
@@ -6602,7 +6602,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "נתונים עוברים בצינור של 6 אוגרים טוריים ללא עצירות, עם מעבר של אוגר אחד בכל חזית. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
+      "he": "נתונים עוברים בצינור של 6 רשומות טוריות ללא עצירות, עם רשומה אחת בכל קצה. valid מסמן אם פריט הקלט אמיתי. בכמה מחזורים יש לעכב את valid כדי שיתאים לנתוני המוצא? הניחו איפוס מוגדר ל־valid.",
       "en": "Data passes through 6 serial registers without stalls, one register per edge. valid marks real input items. By how many cycles must valid be delayed to match output data? Assume a defined valid reset."
     },
     "choices": [
@@ -6636,8 +6636,8 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "מכונה שומרת זוג: parity הוא 1 אם מספר האחדות שנקראו אי־זוגי, ו־last הוא הביט האחרון. בתחילה שניהם 0. אחרי סדרת הקלט הריקה, מה הזוג?",
-      "en": "A machine retains a pair: parity is 1 for an odd number of ones read, and last is the latest bit. Both start at 0. After the empty input sequence, what is the pair?"
+      "he": "מכונה שומרת זוג: parity הוא 1 אם מספר האחדות שנקראו אי־זוגי, ו־last הוא הביט האחרון. בתחילה שניהם 0. אחרי סדרת הקלט ריקה, מה הזוג?",
+      "en": "A machine retains a pair: parity is 1 for an odd number of ones read, and last is the latest bit. Both start at 0. After input sequence empty, what is the pair?"
     },
     "choices": [
       {
@@ -7146,7 +7146,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "מממשים F=(NOT A AND B) OR (A AND C) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מהם חיבורי D0,D1 לפי הסדר?",
+      "he": "מממשים F=(NOT A AND B) OR (A AND C) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מה חיבורי D0,D1 לפי הסדר?",
       "en": "Implement F=(NOT A AND B) OR (A AND C) with a MUX selecting D0 for S=0 and D1 for S=1. Set S=A. What are D0,D1, in order?"
     },
     "choices": [
@@ -7180,7 +7180,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "מממשים F=(NOT A AND NOT B) OR (A AND C) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מהם חיבורי D0,D1 לפי הסדר?",
+      "he": "מממשים F=(NOT A AND NOT B) OR (A AND C) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מה חיבורי D0,D1 לפי הסדר?",
       "en": "Implement F=(NOT A AND NOT B) OR (A AND C) with a MUX selecting D0 for S=0 and D1 for S=1. Set S=A. What are D0,D1, in order?"
     },
     "choices": [
@@ -7214,7 +7214,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "מממשים F=(NOT A AND B) OR (A AND NOT C) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מהם חיבורי D0,D1 לפי הסדר?",
+      "he": "מממשים F=(NOT A AND B) OR (A AND NOT C) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מה חיבורי D0,D1 לפי הסדר?",
       "en": "Implement F=(NOT A AND B) OR (A AND NOT C) with a MUX selecting D0 for S=0 and D1 for S=1. Set S=A. What are D0,D1, in order?"
     },
     "choices": [
@@ -7248,7 +7248,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "מממשים F=(NOT A AND 0) OR (A AND B) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מהם חיבורי D0,D1 לפי הסדר?",
+      "he": "מממשים F=(NOT A AND 0) OR (A AND B) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מה חיבורי D0,D1 לפי הסדר?",
       "en": "Implement F=(NOT A AND 0) OR (A AND B) with a MUX selecting D0 for S=0 and D1 for S=1. Set S=A. What are D0,D1, in order?"
     },
     "choices": [
@@ -7282,7 +7282,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "מממשים F=(NOT A AND C) OR (A AND 1) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מהם חיבורי D0,D1 לפי הסדר?",
+      "he": "מממשים F=(NOT A AND C) OR (A AND 1) באמצעות MUX שבוחר D0 כש־S=0 ו־D1 כש־S=1. קובעים S=A. מה חיבורי D0,D1 לפי הסדר?",
       "en": "Implement F=(NOT A AND C) OR (A AND 1) with a MUX selecting D0 for S=0 and D1 for S=1. Set S=A. What are D0,D1, in order?"
     },
     "choices": [
@@ -7316,7 +7316,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 00; 01; 11, מהי סדרת Y?",
+      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 00; 01; 11, מה סדרת Y?",
       "en": "Four NAND gates are connected as t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). For AB pairs 00; 01; 11, in that order, what is the Y sequence?"
     },
     "choices": [
@@ -7350,7 +7350,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 11; 10; 00, מהי סדרת Y?",
+      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 11; 10; 00, מה סדרת Y?",
       "en": "Four NAND gates are connected as t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). For AB pairs 11; 10; 00, in that order, what is the Y sequence?"
     },
     "choices": [
@@ -7384,7 +7384,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 01; 10; 11, מהי סדרת Y?",
+      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 01; 10; 11, מה סדרת Y?",
       "en": "Four NAND gates are connected as t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). For AB pairs 01; 10; 11, in that order, what is the Y sequence?"
     },
     "choices": [
@@ -7418,7 +7418,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 10; 00; 01, מהי סדרת Y?",
+      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 10; 00; 01, מה סדרת Y?",
       "en": "Four NAND gates are connected as t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). For AB pairs 10; 00; 01, in that order, what is the Y sequence?"
     },
     "choices": [
@@ -7452,7 +7452,7 @@
     "topic": "gates",
     "status": "draft",
     "prompt": {
-      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 00; 11; 01; 10, מהי סדרת Y?",
+      "he": "ארבעה שערי NAND מחוברים כך: t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). עבור זוגות AB בסדר 00; 11; 01; 10, מה סדרת Y?",
       "en": "Four NAND gates are connected as t=NAND(A,B), u=NAND(A,t), v=NAND(B,t), Y=NAND(u,v). For AB pairs 00; 11; 01; 10, in that order, what is the Y sequence?"
     },
     "choices": [
@@ -8166,7 +8166,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "Q שומר את דגימת In האחרונה, Q=0, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 1. מהי סדרת OUT אחרי כל שינוי?",
+      "he": "Q שומר את דגימת In האחרונה, Q=0, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 1. מה סדרת OUT אחרי כל שינוי?",
       "en": "Q retains the last In sample, Q=0, and OUT=In XOR Q. Between edges, with zero delays, In takes successive values 1. What is the OUT sequence after each change?"
     },
     "choices": [
@@ -8200,7 +8200,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "Q שומר את דגימת In האחרונה, Q=1, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 0. מהי סדרת OUT אחרי כל שינוי?",
+      "he": "Q שומר את דגימת In האחרונה, Q=1, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 0. מה סדרת OUT אחרי כל שינוי?",
       "en": "Q retains the last In sample, Q=1, and OUT=In XOR Q. Between edges, with zero delays, In takes successive values 0. What is the OUT sequence after each change?"
     },
     "choices": [
@@ -8234,7 +8234,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "Q שומר את דגימת In האחרונה, Q=0, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 1, 0. מהי סדרת OUT אחרי כל שינוי?",
+      "he": "Q שומר את דגימת In האחרונה, Q=0, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 1, 0. מה סדרת OUT אחרי כל שינוי?",
       "en": "Q retains the last In sample, Q=0, and OUT=In XOR Q. Between edges, with zero delays, In takes successive values 1, 0. What is the OUT sequence after each change?"
     },
     "choices": [
@@ -8268,7 +8268,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "Q שומר את דגימת In האחרונה, Q=1, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 0, 1. מהי סדרת OUT אחרי כל שינוי?",
+      "he": "Q שומר את דגימת In האחרונה, Q=1, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 0, 1. מה סדרת OUT אחרי כל שינוי?",
       "en": "Q retains the last In sample, Q=1, and OUT=In XOR Q. Between edges, with zero delays, In takes successive values 0, 1. What is the OUT sequence after each change?"
     },
     "choices": [
@@ -8302,7 +8302,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "Q שומר את דגימת In האחרונה, Q=0, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 1, 0, 1. מהי סדרת OUT אחרי כל שינוי?",
+      "he": "Q שומר את דגימת In האחרונה, Q=0, ו־OUT=In XOR Q. בין חזיתות וללא השהיות, In מקבל ברצף את הערכים 1, 0, 1. מה סדרת OUT אחרי כל שינוי?",
       "en": "Q retains the last In sample, Q=0, and OUT=In XOR Q. Between edges, with zero delays, In takes successive values 1, 0, 1. What is the OUT sequence after each change?"
     },
     "choices": [
@@ -8506,7 +8506,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 10 ns, והשעון עצמו גבוה רק 2 ns בכל מחזור. לאחר אתחול, מהו מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 10 ns, והשעון עצמו גבוה רק 2 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
       "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 10 ns apart, and the clock itself is high for only 2 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
     },
     "choices": [
@@ -8540,7 +8540,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 12 ns, והשעון עצמו גבוה רק 3 ns בכל מחזור. לאחר אתחול, מהו מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 12 ns, והשעון עצמו גבוה רק 3 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
       "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 12 ns apart, and the clock itself is high for only 3 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
     },
     "choices": [
@@ -8574,7 +8574,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 8 ns, והשעון עצמו גבוה רק 6 ns בכל מחזור. לאחר אתחול, מהו מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 8 ns, והשעון עצמו גבוה רק 6 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
       "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 8 ns apart, and the clock itself is high for only 6 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
     },
     "choices": [
@@ -8608,7 +8608,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 20 ns, והשעון עצמו גבוה רק 4 ns בכל מחזור. לאחר אתחול, מהו מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 20 ns, והשעון עצמו גבוה רק 4 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
       "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 20 ns apart, and the clock itself is high for only 4 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
     },
     "choices": [
@@ -8642,7 +8642,7 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 16 ns, והשעון עצמו גבוה רק 12 ns בכל מחזור. לאחר אתחול, מהו מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
+      "he": "בפליפ-פלופ בעל חזית עולה D=NOT Q. מרווח החזיתות העולות הוא 16 ns, והשעון עצמו גבוה רק 12 ns בכל מחזור. לאחר אתחול, מה מחזור Q ומה יחס הזמן הגבוה שלו במודל אפס השהיה?",
       "en": "A rising-edge flip-flop has D=NOT Q. Rising edges are 16 ns apart, and the clock itself is high for only 12 ns each period. After initialization, what are Q's period and high duty cycle in a zero-delay model?"
     },
     "choices": [
@@ -9526,7 +9526,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "נדרשות לפחות 3 אחדות בכל חלון הזזה של 10 דגימות. רק הדגימות 9, 10, 11 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 10 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 11, בסדר הזה?",
+      "he": "נדרש לפחות 3 אחדות בכל חלון הזזה של 10 דגימות. רק הדגימות 9, 10, 11 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 10 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 11, בסדר הזה?",
       "en": "Require at least 3 ones in every sliding window of 10 samples. Only samples 9, 10, 11 are 1, with numbering from 1. A faulty implementation clears its count after each separate block of 10 samples. What are the required and faulty outputs at sample 11, in that order?"
     },
     "choices": [
@@ -9560,7 +9560,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "נדרשות לפחות 3 אחדות בכל חלון הזזה של 8 דגימות. רק הדגימות 7, 8, 9 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 8 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 9, בסדר הזה?",
+      "he": "נדרש לפחות 3 אחדות בכל חלון הזזה של 8 דגימות. רק הדגימות 7, 8, 9 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 8 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 9, בסדר הזה?",
       "en": "Require at least 3 ones in every sliding window of 8 samples. Only samples 7, 8, 9 are 1, with numbering from 1. A faulty implementation clears its count after each separate block of 8 samples. What are the required and faulty outputs at sample 9, in that order?"
     },
     "choices": [
@@ -9594,7 +9594,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "נדרשות לפחות 4 אחדות בכל חלון הזזה של 12 דגימות. רק הדגימות 10, 11, 12, 13 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 12 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 13, בסדר הזה?",
+      "he": "נדרש לפחות 4 אחדות בכל חלון הזזה של 12 דגימות. רק הדגימות 10, 11, 12, 13 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 12 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 13, בסדר הזה?",
       "en": "Require at least 4 ones in every sliding window of 12 samples. Only samples 10, 11, 12, 13 are 1, with numbering from 1. A faulty implementation clears its count after each separate block of 12 samples. What are the required and faulty outputs at sample 13, in that order?"
     },
     "choices": [
@@ -9628,7 +9628,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "נדרשות לפחות 2 אחדות בכל חלון הזזה של 6 דגימות. רק הדגימות 6, 7 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 6 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 7, בסדר הזה?",
+      "he": "נדרש לפחות 2 אחדות בכל חלון הזזה של 6 דגימות. רק הדגימות 6, 7 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 6 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 7, בסדר הזה?",
       "en": "Require at least 2 ones in every sliding window of 6 samples. Only samples 6, 7 are 1, with numbering from 1. A faulty implementation clears its count after each separate block of 6 samples. What are the required and faulty outputs at sample 7, in that order?"
     },
     "choices": [
@@ -9662,7 +9662,7 @@
     "topic": "states",
     "status": "draft",
     "prompt": {
-      "he": "נדרשות לפחות 4 אחדות בכל חלון הזזה של 16 דגימות. רק הדגימות 14, 15, 16, 17 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 16 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 17, בסדר הזה?",
+      "he": "נדרש לפחות 4 אחדות בכל חלון הזזה של 16 דגימות. רק הדגימות 14, 15, 16, 17 הן 1; כולן ממוספרות מ־1. מימוש שגוי מאפס ספירה אחרי כל בלוק נפרד של 16 דגימות. מה המוצא הנדרש והמוצא השגוי בדגימה 17, בסדר הזה?",
       "en": "Require at least 4 ones in every sliding window of 16 samples. Only samples 14, 15, 16, 17 are 1, with numbering from 1. A faulty implementation clears its count after each separate block of 16 samples. What are the required and faulty outputs at sample 17, in that order?"
     },
     "choices": [

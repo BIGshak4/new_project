@@ -135,7 +135,7 @@
         "די במוצא קומבינטורי; היתר להשתמש בזיכרון אינו מחייב שימוש בו.",
         "המוצא הוא המספר המקורי הגדול יותר; בשוויון בוחרים A.",
         "אפשר לממש את פעולת ה־MUX מהשערים המותרים.",
-        "שני קלטי unsigned בתחום 0..3, יציאת שתי סיביות, לוגיקה צירופית.",
+        "שני קלטי unsigned בתחום0..3, יציאת שתי סיביות, לוגיקה צירופית.",
         "שני קלטי unsigned8 במקביל, קומפרטור ובוררים מותרים, ללא אוגרים."
       ],
       "en": [
@@ -144,7 +144,7 @@
         "Combinational output is sufficient; permission to use memory does not require it.",
         "Output is the larger original number; equality selects A.",
         "MUX behavior can be implemented from permitted gates.",
-        "Unsigned inputs 0..3, two-bit output, combinational logic.",
+        "Unsigned inputs0..3, two-bit output, combinational logic.",
         "Two simultaneous unsigned-eight-bit inputs; comparator/MUXes allowed; no registers."
       ]
     },
@@ -154,7 +154,7 @@
         "result": "מחסר מורחב להשוואה ומבחר ברוחב N ביטים; ללא מצב.",
         "scope": "אי אפשר לקבוע מינימום מדויק של תאים/שטח/עומק ללא ספריית שערים ויעד מיטוב. מתועדים שיקולי הפשרה בין השוואה בשרשור לבין השוואה מאוזנת.",
         "batch1107b10_two-bit-max-or-not-mux": "שני OR ושלושה MUX; עד שלוש רמות רכיבים ל־y0, ללא FF. אין הוכחת מינימום גלובלי.",
-        "1108b20_eight_bit_minmax": "קומפרטור אחד ושני בוררים בני 8 סיביות, ללא טענת מינימום."
+        "1108b20_eight_bit_minmax": "קומפרטור אחד ושני בוררים בני8 סיביות, ללא טענת מינימום."
       },
       "en": {
         "criterion": "Simple correct combinational compare-and-select construction",
@@ -173,9 +173,9 @@
         "סימנים מנוגדים בייצוג עם סימן",
         "הערך המינימלי עם סימן לעומת הערך המקסימלי עם סימן",
         "ביט הסימן של הפרש שנחתך אינו בדרך כלל דגל השוואה תקף",
-        "כל 16 זוגות, לרבות 0/3,1/2 ושוויון.",
-        "0 מול 255",
-        "128 מול 127",
+        "כל16 זוגות, לרבות0/3,1/2 ושוויון.",
+        "0 מול255",
+        "128 מול127",
         "a=b"
       ],
       "en": [
@@ -186,9 +186,9 @@
         "Opposite signed signs",
         "Minimum signed value versus maximum signed value",
         "Truncated subtractor sign is not generally a valid comparison flag",
-        "All 16 pairs including0/3,1/2 and ties.",
-        "0 versus 255",
-        "128 versus 127",
+        "All16 pairs including0/3,1/2 and ties.",
+        "0 versus255",
+        "128 versus127",
         "a=b"
       ]
     },
@@ -209,7 +209,7 @@
         "method": "174,760 pairs: exhaustive widths 1..8, signed/unsigned; exact extended difference, comparison flag and result checked.",
         "scope": "Python fixed-width bit-vector arithmetic; no HDL simulation, synthesis or physical timing.",
         "batch1107b10_two-bit-max-or-not-mux": "Executed RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis.",
-        "1108b20_eight_bit_minmax": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and 27 ground-coupling cases,100 ADC slots and 32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all 65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus 12.0 simulation passed 66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and 194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
+        "1108b20_eight_bit_minmax": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
       }
     },
     "interview_answer": {
@@ -281,14 +281,14 @@
         "question": "כיצד משתנה ההשוואה למספרים מסומנים?",
         "direction": "סיביות סימן שונות הופכות את עדיפות ה־MSB; אותו סימן מאפשר השוואת שאר הסיביות.",
         "tests": [
-          "10 לעומת 01",
-          "11 לעומת 10"
+          "10 לעומת01",
+          "11 לעומת10"
         ],
         "1108b20_eight_bit_minmax": [
           {
             "question": "איך משווים שני מספרים מסומנים?",
             "direction": "בודקים סימנים תחילה או משתמשים בקומפרטור signed תחת חוזה two’s complement.",
-            "tests": "‎−128 מול 127, ‏‎−1 מול 0 ושוויון."
+            "tests": "‎−128 מול127, ‏‎−1 מול0 ושוויון."
           }
         ]
       },
@@ -296,14 +296,14 @@
         "question": "What changes for signed numbers?",
         "direction": "Different signs reverse the high-bit priority; same-sign inputs compare their remaining bits.",
         "tests": [
-          "10 versus 01",
-          "11 versus 10"
+          "10 versus01",
+          "11 versus10"
         ],
         "1108b20_eight_bit_minmax": [
           {
             "question": "How would signed inputs change comparison?",
             "direction": "Check signs first or use a signed comparator under a two’s-complement contract.",
-            "tests": "Test−128 versus 127,−1 versus 0, and equality."
+            "tests": "Test−128 versus127,−1 versus0, and equality."
           }
         ]
       }
@@ -319,7 +319,7 @@
           ]
         },
         "1108b20_eight_bit_minmax": {
-          "prompt": "### וריאציה: מינימום ומקסימום של שני קלטים בני שמונה סיביות\nקבלו a,b במקביל והפיקו בשתי יציאות את הגבוה והנמוך. השלמה: שני הקלטים unsigned בתחום 0..255; מימוש צירופי עם קומפרטור ושערים/בוררים מותרים. אין שעון או קלט טורי. בשוויון שתי היציאות מחזירות אותו ערך. הציגו שיתוף תוצאת השוואה ובדקו את כל הזוגות; זו הרחבה נפרדת מהספרייה המוגבלת של שני הביטים בחלק הקודם.",
+          "prompt": "### וריאציה: מינימום ומקסימום של שני קלטים בני שמונה סיביות\nקבלו a,b במקביל והפיקו בשתי יציאות את הגבוה והנמוך. השלמה: שני הקלטים unsigned בתחום0..255; מימוש צירופי עם קומפרטור ושערים/בוררים מותרים. אין שעון או קלט טורי. בשוויון שתי היציאות מחזירות אותו ערך. הציגו שיתוף תוצאת השוואה ובדקו את כל הזוגות; זו הרחבה נפרדת מהספרייה המוגבלת של שני הביטים בחלק הקודם.",
           "hints": [
             "שני המוצאים הם אותם שני מספרים בסדר אחר. צריך רק לדעת אם להחליף.",
             "אות swap=(a<b) מספיק לשלוט בשני בוררים בעלי סדר נתונים הפוך.",
@@ -337,7 +337,7 @@
           ]
         },
         "1108b20_eight_bit_minmax": {
-          "prompt": "### Variant: minimum and maximum of two eight-bit inputs\nAccept simultaneous a,b and produce their maximum and minimum on separate outputs. Completion: unsigned inputs 0..255; combinational operation allowing a comparator, gates and multiplexers. There is no clock or serial input. Equal values produce that value at both outputs. Share the comparison and verify all pairs; this is separate from the earlier restricted two-bit primitive library.",
+          "prompt": "### Variant: minimum and maximum of two eight-bit inputs\nAccept simultaneous a,b and produce their maximum and minimum on separate outputs. Completion: unsigned inputs0..255; combinational operation allowing a comparator, gates and multiplexers. There is no clock or serial input. Equal values produce that value at both outputs. Share the comparison and verify all pairs; this is separate from the earlier restricted two-bit primitive library.",
           "hints": [
             "The outputs are the same two values, perhaps swapped.",
             "One swap=(a<b) signal drives two multiplexers with opposite data ordering.",
@@ -410,7 +410,7 @@
         "method": "כל 9,841 המערכים באורכים 0..8, הרצף שבמקור ומקרי קצה ארוכים; צבעים ממוינים, אותה רשימה, שימור זהויות האובייקטים ובדיוק סיווג אחד לכל פריט.",
         "numeric_variant": {
           "status": "passed",
-          "coverage": "9841 exhaustive+300 seeded arrays;read/write bounds;5 invalid values",
+          "coverage": "9841exhaustive+300seededarrays;read/writebounds;5invalidvalues",
           "scope": "מכשור בדיקה חיצוני בלבד; מימוש המיון אינו שומר מערך נוסף."
         },
         "מיון אפסים ואחדים ללא מערך עזר": "8,191 מערכים ממצים באורכים 0..12 מול מיון עצמאי ושימור זהות הרשימה."
@@ -422,7 +422,7 @@
         "method": "All 9,841 arrays at lengths 0..8, source sequence, long edge cases; sorted colors, same list, preserved object identities and exactly one classification per item.",
         "numeric_variant": {
           "status": "passed",
-          "coverage": "9841 exhaustive+300 seeded arrays;read/write bounds;5 invalid values",
+          "coverage": "9841exhaustive+300seededarrays;read/writebounds;5invalidvalues",
           "scope": "External test instrumentation only; the sorter stores no auxiliary array."
         },
         "Binary in-place partition": "8,191 exhaustive arrays of lengths 0..12 versus independent sorting and list identity."

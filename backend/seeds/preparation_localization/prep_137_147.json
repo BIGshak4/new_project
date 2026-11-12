@@ -89,14 +89,14 @@
         "N≥0 קבוע; פלט מדויק; איפוס סינכרוני נותן מחזור אפס.",
         "החזית הראשונה ללא איפוס מגדילה ל־1 אם N>0.",
         "ב־N מחזיקים; אין עטיפה שקטה; ההצבות משתמשות במצב הישן.",
-        "n≥1, איפוס סינכרוני ופלט modulo 2^n.",
+        "n≥1, איפוס סינכרוני ופלט modulo2^n.",
         "שני העדכונים משתמשים במצב הישן."
       ],
       "en": [
         "Fixed N≥0; exact result; synchronous reset represents cycle zero.",
         "First non-reset edge increments to one when N>0.",
         "Hold at N, without implicit wrapping; assignments use old state.",
-        "n≥1, synchronous reset and modulo 2^n output.",
+        "n≥1, synchronous reset and modulo2^n output.",
         "Both updates use old state."
       ]
     },
@@ -105,8 +105,8 @@
       "en": "Multiplier-free: s adder, n incrementer, concatenation, comparator and O(log(N+1)) storage. No minimum area/frequency claim; the source did not forbid a multiplier.\n\nTwo n-bit registers and two sums; O(n) stored bits and width-n logic, without a multiplier."
     },
     "verification": {
-      "he": "נבדקו כל N בין 0 ל־256: 33,924 דגימות וריצות איפוס, ועוד 15 מקרי גבול ברוחבים גדולים. השוואה לכפל שלמים עצמאי ובדיקת רוחב. Python בלבד.\n\n98,316 טענות בדיקה: רוחבים 1..12,4096 צעדים לכל רוחב ואיפוס, מול k² ו־2k+1 ישירים. סימולציית HDL מתועדת בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
-      "en": "Checked every N from zero through 256: 33,924 trajectory/reset samples plus 15 wide boundary cases, against independent integer multiplication and width bounds. Python only.\n\n98,316 checks: widths 1..12,4096 steps per width plus reset, compared with direct k² and 2k+1. HDL simulation is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
+      "he": "נבדקו כל N בין 0 ל־256: 33,924 דגימות וריצות איפוס, ועוד 15 מקרי גבול ברוחבים גדולים. השוואה לכפל שלמים עצמאי ובדיקת רוחב. Python בלבד.\n\n98,316 טענות בדיקה: רוחבים1..12,4096 צעדים לכל רוחב ואיפוס, מול k² ו־2k+1 ישירים. סימולציית HDL מתועדת בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "en": "Checked every N from zero through 256: 33,924 trajectory/reset samples plus 15 wide boundary cases, against independent integer multiplication and width bounds. Python only.\n\n98,316 checks: widths1..12,4096 steps per width plus reset, compared with direct k² and2k+1. HDL simulation is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
       "he": [
@@ -145,19 +145,19 @@
       ]
     },
     "interview_answer": {
-      "he": "אשמור מונה n ואוגר s עם האינווריאנט s=n². באותה חזית אוסיף ל־s את 2n+1 ואגדיל n, על סמך הערכים הישנים. 2n+1 הוא השרשור {n,1}. אגדיר רוחב לכל יציאה והחזקה ב־N.\n\nהפרשי ריבועים הם 1,3,5,... . אשמור ריבוע והפרש, ואעדכן אותם במקביל. אציין במפורש אם הפלט מדויק עד גבול או שארית ברוחב קבוע.",
-      "en": "Retain n and s with invariant s=n². At each edge add old 2n+1 to s and increment n. The odd difference is concatenation {n,1}. Give each output its own exact width and hold at N.\n\nSquare differences are 1,3,5,... . Store the square and next difference, updating both simultaneously; explicitly distinguish exact bounded output from fixed-width residue."
+      "he": "אשמור מונה n ואוגר s עם האינווריאנט s=n². באותה חזית אוסיף ל־s את 2n+1 ואגדיל n, על סמך הערכים הישנים. 2n+1 הוא השרשור {n,1}. אגדיר רוחב לכל יציאה והחזקה ב־N.\n\nהפרשי ריבועים הם1,3,5,... . אשמור ריבוע והפרש, ואעדכן אותם במקביל. אציין במפורש אם הפלט מדויק עד גבול או שארית ברוחב קבוע.",
+      "en": "Retain n and s with invariant s=n². At each edge add old 2n+1 to s and increment n. The odd difference is concatenation {n,1}. Give each output its own exact width and hold at N.\n\nSquare differences are1,3,5,... . Store the square and next difference, updating both simultaneously; explicitly distinguish exact bounded output from fixed-width residue."
     },
     "source_ambiguities": {
       "he": [
         "המקור אינו קובע אתחול, מחזור ראשון או התנהגות בגבול. נבחרו מחזור אפס והחזקה באופן גלוי.",
         "התג 2312313 נשמר כמקור ואינו שם חברה. שיוכי החברות לא אומתו.",
-        "רוחב n במקור אינו מגדיר מדיניות גלישה. modulo 2^n הוא חוזה משלים, לא שינוי שקט של הגרסה הסופית המקורית."
+        "רוחב n במקור אינו מגדיר מדיניות גלישה. modulo2^n הוא חוזה משלים, לא שינוי שקט של הגרסה הסופית המקורית."
       ],
       "en": [
         "The source omits initialization, first-cycle convention and terminal behavior; cycle zero and saturation are explicit additions.",
         "The tag 2312313 is source data, not an employer. Company reports are unverified.",
-        "The source width n does not specify overflow behavior. Modulo 2^n is an explicit added contract, not a silent change to the original finite-limit version."
+        "The source width n does not specify overflow behavior. Modulo2^n is an explicit added contract, not a silent change to the original finite-limit version."
       ]
     },
     "solution_extensions": {
@@ -189,22 +189,22 @@
     "prompt_variants": {
       "he": {
         "batch1103_n_bit_modular_squares": {
-          "prompt": "### הרחבה: סדרת הריבועים באוגרים בני n ביטים\nבעזרת אוגרים בני n ביטים ורכיבים מסכמים, הפיקו בכל מחזור את 1,4,9,16,... . הבהרה: רצף הריבועים המדויק אינו נכנס באוגר סופי לנצח. נבחר n≥1 ופלט שארית k² modulo 2^n, כאשר איפוס סינכרוני מציג 0 והחזית הלא־מאופסת הראשונה מפיקה 1. יש לציין עד מתי התוצאה גם הריבוע השלם ללא גלישה. זוהי וריאציית רוחב, נפרדת מהגרסה המקורית שעוצרת בגבול N.",
+          "prompt": "### הרחבה: סדרת הריבועים באוגרים בני n ביטים\nבעזרת אוגרים בני n ביטים ורכיבים מסכמים, הפיקו בכל מחזור את1,4,9,16,... . הבהרה: רצף הריבועים המדויק אינו נכנס באוגר סופי לנצח. נבחר n≥1 ופלט שארית k² modulo2^n, כאשר איפוס סינכרוני מציג0 והחזית הלא־מאופסת הראשונה מפיקה1. יש לציין עד מתי התוצאה גם הריבוע השלם ללא גלישה. זוהי וריאציית רוחב, נפרדת מהגרסה המקורית שעוצרת בגבול N.",
           "hints": [
             "מה ההפרש בין ריבועים עוקבים:1→4→9→16?",
             "ההפרשים הם מספרים אי־זוגיים, וההפרש בין שני הפרשים עוקבים קבוע.",
-            "שמרו square ו־odd. באותו שעון עדכנו square←square+odd ו־odd←odd+2, עם ערכי ההתחלה 0 ו־1."
+            "שמרו square ו־odd. באותו שעון עדכנו square←square+odd ו־odd←odd+2, עם ערכי ההתחלה0 ו־1."
           ],
           "integration_status": ""
         }
       },
       "en": {
         "batch1103_n_bit_modular_squares": {
-          "prompt": "### Extension: square sequence with n-bit registers\nUse n-bit registers and adders to emit 1,4,9,16,... one term each clock. Clarification: exact growing squares cannot fit in finite-width storage forever. Choose n≥1 and output k² modulo 2^n; synchronous reset displays 0 and the first non-reset edge emits 1. State which initial outputs are also exact non-overflowing integers. This width-based variant is separate from the original finite-N saturating contract.",
+          "prompt": "### Extension: square sequence with n-bit registers\nUse n-bit registers and adders to emit1,4,9,16,... one term each clock. Clarification: exact growing squares cannot fit in finite-width storage forever. Choose n≥1 and output k² modulo2^n; synchronous reset displays0 and the first non-reset edge emits1. State which initial outputs are also exact non-overflowing integers. This width-based variant is separate from the original finite-N saturating contract.",
           "hints": [
-            "What are the differences between consecutive squares 1,4,9,16?",
+            "What are the differences between consecutive squares1,4,9,16?",
             "They are odd numbers, whose own consecutive differences are constant.",
-            "Store square and odd; simultaneously update square←square+odd and odd←odd+2, starting from 0 and 1."
+            "Store square and odd; simultaneously update square←square+odd and odd←odd+2, starting from0 and1."
           ],
           "integration_status": ""
         }
@@ -244,7 +244,7 @@
         "A=0 for each SIZE.",
         "255+1=256, 255+2=257, 255+4=259.",
         "253+2=255 versus 254+2=256.",
-        "SIZE codes 0,3,5,6,7.",
+        "SIZE codes0,3,5,6,7.",
         "An eight-bit-only address output needs an explicit overflow contract."
       ]
     },
@@ -259,14 +259,14 @@
       "en": [
         "Using three parallel incrementers.",
         "Incrementing all A and then shifting, corrupting low bits.",
-        "Losing the 255+1 carry.",
+        "Losing the255+1 carry.",
         "Treating the specified eight-bit incrementer as a one-bit HA.",
         "Adding an unnecessary second arithmetic block instead of routing."
       ]
     },
     "interview_answer": {
-      "he": "עבור SIZE=2^k אגדיל את A>>k פעם אחת, אחזיר אותו שמאלה k ואצרף את k הביטים הנמוכים המקוריים. מוקס בוחר k=0,1,2. רק בהגדלת 255 בשלמותו נדרש נשא חיצוני AND של כל הביטים; בשאר המקרים הוא נמצא בתוצאת המגדיל המנותבת.",
-      "en": "For SIZE=2^k increment A>>k once, route it back left by k, and restore the original low k bits. A MUX selects k=0,1,2. Only whole-address 255 increment needs an external all-bits-AND carry; other carries remain in the routed incrementer output."
+      "he": "עבור SIZE=2^k אגדיל את A>>k פעם אחת, אחזיר אותו שמאלה k ואצרף את k הביטים הנמוכים המקוריים. מוקס בוחר k=0,1,2. רק בהגדלת255 בשלמותו נדרש נשא חיצוני AND של כל הביטים; בשאר המקרים הוא נמצא בתוצאת המגדיל המנותבת.",
+      "en": "For SIZE=2^k increment A>>k once, route it back left by k, and restore the original low k bits. A MUX selects k=0,1,2. Only whole-address255 increment needs an external all-bits-AND carry; other carries remain in the routed incrementer output."
     },
     "source_ambiguities": {
       "he": [
@@ -466,7 +466,7 @@
         "NULL, קיבולת אפס או קצרה באחד, קיבולת מדויקת ובתים נוספים שלא משתנים."
       ],
       "en": [
-        "0,1, powers of two, the type maximum, example 13.",
+        "0,1, powers of two, the type maximum, example13.",
         "NULL, zero/one-byte-short/exact capacity and unchanged extra bytes."
       ]
     },
@@ -479,7 +479,7 @@
       "en": [
         "Returning a decimal-digit int containing bits, with possible overflow.",
         "Forgetting NUL or returning an empty string for zero.",
-        "Writing before the capacity check or assuming int is always 32 bits."
+        "Writing before the capacity check or assuming int is always32 bits."
       ]
     },
     "interview_answer": {
@@ -492,7 +492,7 @@
     },
     "verification": {
       "he": "65,536 ערכים ועוד 733 מקרי גבול; ארבע קיבולות ו־NULL לכל ערך מול format. מודל Python הורץ; קוד C נשמר ולא קומפל.",
-      "en": "65,536 values plus 733 boundary cases; four capacities and NULL per value against format. Python equivalent executed; C source saved and uncompiled."
+      "en": "65,536 values plus733 boundary cases; four capacities and NULL per value against format. Python equivalent executed; C source saved and uncompiled."
     },
     "solution_extensions": {
       "he": {
@@ -555,8 +555,8 @@
       "en": "Source omits memory, mutation and empty behavior; these are clarified. VSW-007 is a conceptual duplicate but private/unpublished; linked without changing its state. PREP-032 finds a shared node of two lists, a different task."
     },
     "verification": {
-      "he": "50,069 צירופי גרפים וראש ועוד 2,144 מקרי שרשרת; אורקל קבוצת זהויות, היעדר שינוי קלט וחסם next עד 5N+2 נבדקו ב־Python.",
-      "en": "50,069 graph/head configurations plus 2,144 lasso cases; identity-set oracle, input preservation and next-access bound up to 5N+2 checked in Python."
+      "he": "50,069 צירופי גרפים וראש ועוד 2,144 מקרי שרשרת; אורקל קבוצת זהויות, היעדר שינוי קלט וחסם next עד5N+2 נבדקו ב־Python.",
+      "en": "50,069 graph/head configurations plus2,144 lasso cases; identity-set oracle, input preservation and next-access bound up to5N+2 checked in Python."
     },
     "solution_extensions": {
       "he": {
@@ -605,7 +605,7 @@
         "להציג דגימות כמוכיחות חסם תחתון, או לספור גם בדיקות לולאה כאילו היו השוואות איברים."
       ],
       "en": [
-        "Separate scans costing 2N−2 comparisons.",
+        "Separate scans costing2N−2 comparisons.",
         "Double-counting the first pair or omitting odd-length initialization.",
         "Treating sampled tests as a lower-bound proof, or conflating loop checks with element comparisons."
       ]

@@ -2556,8 +2556,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר בקצב של מעלה אחת לדקה; קצב קירור התערובת הוא לא ידוע. איזה סיום חם יותר?",
-      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degree/minute; mixture rate is unknown. Which finishes warmer?"
+      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר 1 מעלות לדקה; התערובת לא ידוע. איזה סיום חם יותר?",
+      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degrees/minute; mixture rate is unknown. Which finishes warmer?"
     },
     "choices": [
       {
@@ -2580,7 +2580,7 @@
     "correct": 2,
     "explanation": {
       "he": "משווים קירור של התערובת למשקל קירור הקפה לבדו בתערובת. בלי קצב התערובת לא ניתן להכריע; עצם הלינאריות אינה מגדירה אותו.",
-      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined; linearity alone does not specify it."
+      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined;linearity alone does not specify it."
     }
   },
   {
@@ -2590,8 +2590,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר בקצב של מעלה אחת לדקה; קצב קירור התערובת הוא 1. איזה סיום חם יותר?",
-      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degree/minute; mixture rate is 1. Which finishes warmer?"
+      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר 1 מעלות לדקה; התערובת 1. איזה סיום חם יותר?",
+      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degrees/minute; mixture rate is 1. Which finishes warmer?"
     },
     "choices": [
       {
@@ -2614,7 +2614,7 @@
     "correct": 3,
     "explanation": {
       "he": "משווים קירור של התערובת למשקל קירור הקפה לבדו בתערובת. בלי קצב התערובת לא ניתן להכריע; עצם הלינאריות אינה מגדירה אותו.",
-      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined; linearity alone does not specify it."
+      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined;linearity alone does not specify it."
     }
   },
   {
@@ -2624,8 +2624,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר בקצב של מעלה אחת לדקה; קצב קירור התערובת הוא 3/4. איזה סיום חם יותר?",
-      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degree/minute; mixture rate is 3/4. Which finishes warmer?"
+      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר 1 מעלות לדקה; התערובת 3/4. איזה סיום חם יותר?",
+      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degrees/minute; mixture rate is 3/4. Which finishes warmer?"
     },
     "choices": [
       {
@@ -2648,7 +2648,7 @@
     "correct": 0,
     "explanation": {
       "he": "משווים קירור של התערובת למשקל קירור הקפה לבדו בתערובת. בלי קצב התערובת לא ניתן להכריע; עצם הלינאריות אינה מגדירה אותו.",
-      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined; linearity alone does not specify it."
+      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined;linearity alone does not specify it."
     }
   },
   {
@@ -2658,8 +2658,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר בקצב של מעלה אחת לדקה; קצב קירור התערובת הוא 1/2. איזה סיום חם יותר?",
-      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degree/minute; mixture rate is 1/2. Which finishes warmer?"
+      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר 1 מעלות לדקה; התערובת 1/2. איזה סיום חם יותר?",
+      "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degrees/minute; mixture rate is 1/2. Which finishes warmer?"
     },
     "choices": [
       {
@@ -2682,7 +2682,7 @@
     "correct": 1,
     "explanation": {
       "he": "משווים קירור של התערובת למשקל קירור הקפה לבדו בתערובת. בלי קצב התערובת לא ניתן להכריע; עצם הלינאריות אינה מגדירה אותו.",
-      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined; linearity alone does not specify it."
+      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined;linearity alone does not specify it."
     }
   },
   {
@@ -2692,7 +2692,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=1, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר בקצב של 2 מעלות לדקה; קצב קירור התערובת הוא 3. איזה סיום חם יותר?",
+      "he": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=1, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר 2 מעלות לדקה; התערובת 3. איזה סיום חם יותר?",
       "en": "Compare adding milk before versus after one minute. Heat capacities: coffee=1, milk=1; milk stays at fixed temperature. Coffee alone cools 2 degrees/minute; mixture rate is 3. Which finishes warmer?"
     },
     "choices": [
@@ -2716,7 +2716,7 @@
     "correct": 2,
     "explanation": {
       "he": "משווים קירור של התערובת למשקל קירור הקפה לבדו בתערובת. בלי קצב התערובת לא ניתן להכריע; עצם הלינאריות אינה מגדירה אותו.",
-      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined; linearity alone does not specify it."
+      "en": "Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined;linearity alone does not specify it."
     }
   },
   {
@@ -2727,7 +2727,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטפס מתחיל בגובה 0. במשך דקה הוא עולה במהירות 3 יחידות לדקה, ובדקת המנוחה יורד 1. הדפוס חוזר, והתנועה רציפה. מתי בדקות ייגע לראשונה בגובה 4? עוצרים מיד במגע.",
-      "en": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes does the climber first reach height 4? Stop immediately at contact."
+      "en": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes first reach height 4? Stop immediately at contact."
     },
     "choices": [
       {
@@ -2761,7 +2761,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטפס מתחיל בגובה 0. במשך דקה הוא עולה במהירות 2 יחידות לדקה, ובדקת המנוחה יורד 1. הדפוס חוזר, והתנועה רציפה. מתי בדקות ייגע לראשונה בגובה 3? עוצרים מיד במגע.",
-      "en": "A climber starts at height 0, climbs at 2 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes does the climber first reach height 3? Stop immediately at contact."
+      "en": "A climber starts at height 0, climbs at 2 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes first reach height 3? Stop immediately at contact."
     },
     "choices": [
       {
@@ -2795,7 +2795,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטפס מתחיל בגובה 0. במשך דקה הוא עולה במהירות 3 יחידות לדקה, ובדקת המנוחה יורד 1. הדפוס חוזר, והתנועה רציפה. מתי בדקות ייגע לראשונה בגובה 2? עוצרים מיד במגע.",
-      "en": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes does the climber first reach height 2? Stop immediately at contact."
+      "en": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes first reach height 2? Stop immediately at contact."
     },
     "choices": [
       {
@@ -2829,7 +2829,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטפס מתחיל בגובה 0. במשך דקה הוא עולה במהירות 3 יחידות לדקה, ובדקת המנוחה יורד 1. הדפוס חוזר, והתנועה רציפה. מתי בדקות ייגע לראשונה בגובה 5? עוצרים מיד במגע.",
-      "en": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes does the climber first reach height 5? Stop immediately at contact."
+      "en": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes first reach height 5? Stop immediately at contact."
     },
     "choices": [
       {
@@ -2863,7 +2863,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטפס מתחיל בגובה 0. במשך דקה הוא עולה במהירות 2 יחידות לדקה, ובדקת המנוחה יורד 1. הדפוס חוזר, והתנועה רציפה. מתי בדקות ייגע לראשונה בגובה 10? עוצרים מיד במגע.",
-      "en": "A climber starts at height 0, climbs at 2 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes does the climber first reach height 10? Stop immediately at contact."
+      "en": "A climber starts at height 0, climbs at 2 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes first reach height 10? Stop immediately at contact."
     },
     "choices": [
       {
@@ -2896,8 +2896,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בודקים רק בטיקים שלמים `t=0, 1, 2, ...`. מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־10 ויורד 3. באיזה טיק הם באותו אינדקס?",
-      "en": "Observe only integer ticks `t=0, 1, 2, ...`. Left starts at 0 and advances 2 per tick; right starts at 10 and decreases 3. At which tick do they occupy the same index?"
+      "he": "בודקים רק בטיקים שלמים t=0,1,2,... . מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־10 ויורד 3. באיזה טיק הם באותו אינדקס?",
+      "en": "Observe only integer ticks t=0,1,2,... . Left starts at 0 and advances 2 per tick; right starts at 10 and decreases 3. At which tick do they occupy the same index?"
     },
     "choices": [
       {
@@ -2930,8 +2930,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בודקים רק בטיקים שלמים `t=0, 1, 2, ...`. מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־11 ויורד 3. באיזה טיק הם באותו אינדקס?",
-      "en": "Observe only integer ticks `t=0, 1, 2, ...`. Left starts at 0 and advances 2 per tick; right starts at 11 and decreases 3. At which tick do they occupy the same index?"
+      "he": "בודקים רק בטיקים שלמים t=0,1,2,... . מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־11 ויורד 3. באיזה טיק הם באותו אינדקס?",
+      "en": "Observe only integer ticks t=0,1,2,... . Left starts at 0 and advances 2 per tick; right starts at 11 and decreases 3. At which tick do they occupy the same index?"
     },
     "choices": [
       {
@@ -2964,8 +2964,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בודקים רק בטיקים שלמים `t=0, 1, 2, ...`. מצביע שמאל מתחיל ב־1 ומתקדם 2 בכל טיק; ימין מתחיל ב־9 ויורד 2. באיזה טיק הם באותו אינדקס?",
-      "en": "Observe only integer ticks `t=0, 1, 2, ...`. Left starts at 1 and advances 2 per tick; right starts at 9 and decreases 2. At which tick do they occupy the same index?"
+      "he": "בודקים רק בטיקים שלמים t=0,1,2,... . מצביע שמאל מתחיל ב־1 ומתקדם 2 בכל טיק; ימין מתחיל ב־9 ויורד 2. באיזה טיק הם באותו אינדקס?",
+      "en": "Observe only integer ticks t=0,1,2,... . Left starts at 1 and advances 2 per tick; right starts at 9 and decreases 2. At which tick do they occupy the same index?"
     },
     "choices": [
       {
@@ -2998,8 +2998,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בודקים רק בטיקים שלמים `t=0, 1, 2, ...`. מצביע שמאל מתחיל ב־3 ומתקדם 1 בכל טיק; ימין מתחיל ב־3 ויורד 1. באיזה טיק הם באותו אינדקס?",
-      "en": "Observe only integer ticks `t=0, 1, 2, ...`. Left starts at 3 and advances 1 per tick; right starts at 3 and decreases 1. At which tick do they occupy the same index?"
+      "he": "בודקים רק בטיקים שלמים t=0,1,2,... . מצביע שמאל מתחיל ב־3 ומתקדם 1 בכל טיק; ימין מתחיל ב־3 ויורד 1. באיזה טיק הם באותו אינדקס?",
+      "en": "Observe only integer ticks t=0,1,2,... . Left starts at 3 and advances 1 per tick; right starts at 3 and decreases 1. At which tick do they occupy the same index?"
     },
     "choices": [
       {
@@ -3032,8 +3032,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בודקים רק בטיקים שלמים `t=0, 1, 2, ...`. מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־3 ויורד 1. באיזה טיק הם באותו אינדקס?",
-      "en": "Observe only integer ticks `t=0, 1, 2, ...`. Left starts at 0 and advances 2 per tick; right starts at 3 and decreases 1. At which tick do they occupy the same index?"
+      "he": "בודקים רק בטיקים שלמים t=0,1,2,... . מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־3 ויורד 1. באיזה טיק הם באותו אינדקס?",
+      "en": "Observe only integer ticks t=0,1,2,... . Left starts at 0 and advances 2 per tick; right starts at 3 and decreases 1. At which tick do they occupy the same index?"
     },
     "choices": [
       {
@@ -3090,7 +3090,7 @@
     "correct": 1,
     "explanation": {
       "he": "קידומת סופית לבדה אינה חוק. כשנמסר כלל מפורש מפעילים אותו; אחרת המשכים שונים יכולים להתאים לאותו עבר.",
-      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied; otherwise different continuations can share the same past."
+      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied;otherwise different continuations can share the same past."
     }
   },
   {
@@ -3100,8 +3100,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "סדרה מתחילה [100, 98, 95]; ההפרשים הם 2, 3, 4, .... מה מוכרח להיות האיבר הבא?",
-      "en": "A sequence begins [100, 98, 95]; subtract 2, 3, 4, .... What must the next term be?"
+      "he": "סדרה מתחילה [100, 98, 95]; ההפרשים הם 2,3,4,.... מה מוכרח להיות האיבר הבא?",
+      "en": "A sequence begins [100, 98, 95]; subtract 2,3,4,.... What must the next term be?"
     },
     "choices": [
       {
@@ -3124,7 +3124,7 @@
     "correct": 2,
     "explanation": {
       "he": "קידומת סופית לבדה אינה חוק. כשנמסר כלל מפורש מפעילים אותו; אחרת המשכים שונים יכולים להתאים לאותו עבר.",
-      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied; otherwise different continuations can share the same past."
+      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied;otherwise different continuations can share the same past."
     }
   },
   {
@@ -3134,7 +3134,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "סדרה מתחילה [100, 98, 95]; מחסרים 2, 3 לסירוגין. מה מוכרח להיות האיבר הבא?",
+      "he": "סדרה מתחילה [100, 98, 95]; מחסרים 2,3 לסירוגין. מה מוכרח להיות האיבר הבא?",
       "en": "A sequence begins [100, 98, 95]; alternate subtracting 2 and 3. What must the next term be?"
     },
     "choices": [
@@ -3158,7 +3158,7 @@
     "correct": 3,
     "explanation": {
       "he": "קידומת סופית לבדה אינה חוק. כשנמסר כלל מפורש מפעילים אותו; אחרת המשכים שונים יכולים להתאים לאותו עבר.",
-      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied; otherwise different continuations can share the same past."
+      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied;otherwise different continuations can share the same past."
     }
   },
   {
@@ -3192,7 +3192,7 @@
     "correct": 0,
     "explanation": {
       "he": "קידומת סופית לבדה אינה חוק. כשנמסר כלל מפורש מפעילים אותו; אחרת המשכים שונים יכולים להתאים לאותו עבר.",
-      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied; otherwise different continuations can share the same past."
+      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied;otherwise different continuations can share the same past."
     }
   },
   {
@@ -3226,7 +3226,7 @@
     "correct": 1,
     "explanation": {
       "he": "קידומת סופית לבדה אינה חוק. כשנמסר כלל מפורש מפעילים אותו; אחרת המשכים שונים יכולים להתאים לאותו עבר.",
-      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied; otherwise different continuations can share the same past."
+      "en": "A finite prefix is not a rule. Apply an explicit recurrence when supplied;otherwise different continuations can share the same past."
     }
   },
   {
@@ -3577,7 +3577,7 @@
     "status": "draft",
     "prompt": {
       "he": "על שולחן עגול יש רק מטבע מרכזי ברדיוס 1. יריב מניח זהה במרחק 2, והתגובה ממול. כל המיקומים בגבולות השולחן; מגע מותר. האם מהלך היריב חוקי והאם זוג המטבעות החדשים חופף?",
-      "en": "A circular table holds only a radius-1 central coin. An equal opponent coin is 2 from center; reply at its opposite point. All positions fit table boundaries; tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
+      "en": "A circular table holds only a radius-1 central coin. An equal opponent coin is 2 from center;reply at its opposite point. All positions fit table boundaries;tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
     },
     "choices": [
       {
@@ -3611,7 +3611,7 @@
     "status": "draft",
     "prompt": {
       "he": "על שולחן עגול יש רק מטבע מרכזי ברדיוס 1. יריב מניח זהה במרחק 1, והתגובה ממול. כל המיקומים בגבולות השולחן; מגע מותר. האם מהלך היריב חוקי והאם זוג המטבעות החדשים חופף?",
-      "en": "A circular table holds only a radius-1 central coin. An equal opponent coin is 1 from center; reply at its opposite point. All positions fit table boundaries; tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
+      "en": "A circular table holds only a radius-1 central coin. An equal opponent coin is 1 from center;reply at its opposite point. All positions fit table boundaries;tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
     },
     "choices": [
       {
@@ -3645,7 +3645,7 @@
     "status": "draft",
     "prompt": {
       "he": "על שולחן עגול יש רק מטבע מרכזי ברדיוס 1. יריב מניח זהה במרחק 0, והתגובה ממול. כל המיקומים בגבולות השולחן; מגע מותר. האם מהלך היריב חוקי והאם זוג המטבעות החדשים חופף?",
-      "en": "A circular table holds only a radius-1 central coin. An equal opponent coin is 0 from center; reply at its opposite point. All positions fit table boundaries; tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
+      "en": "A circular table holds only a radius-1 central coin. An equal opponent coin is 0 from center;reply at its opposite point. All positions fit table boundaries;tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
     },
     "choices": [
       {
@@ -3679,7 +3679,7 @@
     "status": "draft",
     "prompt": {
       "he": "על שולחן עגול יש רק מטבע מרכזי ברדיוס 2. יריב מניח זהה במרחק 3, והתגובה ממול. כל המיקומים בגבולות השולחן; מגע מותר. האם מהלך היריב חוקי והאם זוג המטבעות החדשים חופף?",
-      "en": "A circular table holds only a radius-2 central coin. An equal opponent coin is 3 from center; reply at its opposite point. All positions fit table boundaries; tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
+      "en": "A circular table holds only a radius-2 central coin. An equal opponent coin is 3 from center;reply at its opposite point. All positions fit table boundaries;tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
     },
     "choices": [
       {
@@ -3713,7 +3713,7 @@
     "status": "draft",
     "prompt": {
       "he": "על שולחן עגול יש רק מטבע מרכזי ברדיוס 2. יריב מניח זהה במרחק 4, והתגובה ממול. כל המיקומים בגבולות השולחן; מגע מותר. האם מהלך היריב חוקי והאם זוג המטבעות החדשים חופף?",
-      "en": "A circular table holds only a radius-2 central coin. An equal opponent coin is 4 from center; reply at its opposite point. All positions fit table boundaries; tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
+      "en": "A circular table holds only a radius-2 central coin. An equal opponent coin is 4 from center;reply at its opposite point. All positions fit table boundaries;tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
     },
     "choices": [
       {
@@ -3940,7 +3940,7 @@
     "correct": 2,
     "explanation": {
       "he": "בסירה החפץ דחה מים לפי משקלו. אם הוא שוקע הוא דוחה רק את נפחו, ואם הוא צף דחייתו נשארת לפי אותו משקל.",
-      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume; floating retains the same weight-based displacement."
+      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume;floating retains the same weight-based displacement."
     }
   },
   {
@@ -3974,7 +3974,7 @@
     "correct": 3,
     "explanation": {
       "he": "בסירה החפץ דחה מים לפי משקלו. אם הוא שוקע הוא דוחה רק את נפחו, ואם הוא צף דחייתו נשארת לפי אותו משקל.",
-      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume; floating retains the same weight-based displacement."
+      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume;floating retains the same weight-based displacement."
     }
   },
   {
@@ -4008,7 +4008,7 @@
     "correct": 0,
     "explanation": {
       "he": "בסירה החפץ דחה מים לפי משקלו. אם הוא שוקע הוא דוחה רק את נפחו, ואם הוא צף דחייתו נשארת לפי אותו משקל.",
-      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume; floating retains the same weight-based displacement."
+      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume;floating retains the same weight-based displacement."
     }
   },
   {
@@ -4042,7 +4042,7 @@
     "correct": 1,
     "explanation": {
       "he": "בסירה החפץ דחה מים לפי משקלו. אם הוא שוקע הוא דוחה רק את נפחו, ואם הוא צף דחייתו נשארת לפי אותו משקל.",
-      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume; floating retains the same weight-based displacement."
+      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume;floating retains the same weight-based displacement."
     }
   },
   {
@@ -4076,7 +4076,7 @@
     "correct": 2,
     "explanation": {
       "he": "בסירה החפץ דחה מים לפי משקלו. אם הוא שוקע הוא דוחה רק את נפחו, ואם הוא צף דחייתו נשארת לפי אותו משקל.",
-      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume; floating retains the same weight-based displacement."
+      "en": "While carried, the object displaced water by weight. Sinking leaves only its volume;floating retains the same weight-based displacement."
     }
   },
   {
@@ -4086,8 +4086,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז בוחרים כדור מתוכה באופן אחיד. גדלי התיבות הם A=1, B=99. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
-      "en": "Choose either urn with probability 1/2, then a ball uniformly at random within it. Urn sizes are A=1, B=99. What is the probability of selecting one particular marked ball in A?"
+      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז כדור אחיד מתוכה. גדלי התיבות הם A=1, B=99. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
+      "en": "Choose either urn with probability 1/2, then a uniform ball within it. Urn sizes are A=1, B=99. What is the probability of selecting one particular marked ball in A?"
     },
     "choices": [
       {
@@ -4120,8 +4120,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז בוחרים כדור מתוכה באופן אחיד. גדלי התיבות הם A=2, B=8. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
-      "en": "Choose either urn with probability 1/2, then a ball uniformly at random within it. Urn sizes are A=2, B=8. What is the probability of selecting one particular marked ball in A?"
+      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז כדור אחיד מתוכה. גדלי התיבות הם A=2, B=8. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
+      "en": "Choose either urn with probability 1/2, then a uniform ball within it. Urn sizes are A=2, B=8. What is the probability of selecting one particular marked ball in A?"
     },
     "choices": [
       {
@@ -4154,8 +4154,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז בוחרים כדור מתוכה באופן אחיד. גדלי התיבות הם A=8, B=2. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
-      "en": "Choose either urn with probability 1/2, then a ball uniformly at random within it. Urn sizes are A=8, B=2. What is the probability of selecting one particular marked ball in A?"
+      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז כדור אחיד מתוכה. גדלי התיבות הם A=8, B=2. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
+      "en": "Choose either urn with probability 1/2, then a uniform ball within it. Urn sizes are A=8, B=2. What is the probability of selecting one particular marked ball in A?"
     },
     "choices": [
       {
@@ -4188,8 +4188,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז בוחרים כדור מתוכה באופן אחיד. גדלי התיבות הם A=5, B=5. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
-      "en": "Choose either urn with probability 1/2, then a ball uniformly at random within it. Urn sizes are A=5, B=5. What is the probability of selecting one particular marked ball in A?"
+      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז כדור אחיד מתוכה. גדלי התיבות הם A=5, B=5. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
+      "en": "Choose either urn with probability 1/2, then a uniform ball within it. Urn sizes are A=5, B=5. What is the probability of selecting one particular marked ball in A?"
     },
     "choices": [
       {
@@ -4222,8 +4222,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז בוחרים כדור מתוכה באופן אחיד. גדלי התיבות הם A=3, B=17. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
-      "en": "Choose either urn with probability 1/2, then a ball uniformly at random within it. Urn sizes are A=3, B=17. What is the probability of selecting one particular marked ball in A?"
+      "he": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז כדור אחיד מתוכה. גדלי התיבות הם A=3, B=17. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
+      "en": "Choose either urn with probability 1/2, then a uniform ball within it. Urn sizes are A=3, B=17. What is the probability of selecting one particular marked ball in A?"
     },
     "choices": [
       {
@@ -4256,7 +4256,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 2. בוחרים תיבה באופן אחיד ואז כדור מתוכה באופן אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
+      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 2. בוחרים תיבה אחיד ואז כדור אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
       "en": "Split 100 balls into urns, A having size 2. Choose an urn uniformly, then a ball uniformly. Exchange a white in A for a red in B, keeping sizes fixed. Both balls are guaranteed when both urns are nonempty. What changes, or is the exchange undefined?"
     },
     "choices": [
@@ -4290,7 +4290,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 50. בוחרים תיבה באופן אחיד ואז כדור מתוכה באופן אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
+      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 50. בוחרים תיבה אחיד ואז כדור אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
       "en": "Split 100 balls into urns, A having size 50. Choose an urn uniformly, then a ball uniformly. Exchange a white in A for a red in B, keeping sizes fixed. Both balls are guaranteed when both urns are nonempty. What changes, or is the exchange undefined?"
     },
     "choices": [
@@ -4324,7 +4324,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 80. בוחרים תיבה באופן אחיד ואז כדור מתוכה באופן אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
+      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 80. בוחרים תיבה אחיד ואז כדור אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
       "en": "Split 100 balls into urns, A having size 80. Choose an urn uniformly, then a ball uniformly. Exchange a white in A for a red in B, keeping sizes fixed. Both balls are guaranteed when both urns are nonempty. What changes, or is the exchange undefined?"
     },
     "choices": [
@@ -4358,7 +4358,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 0. בוחרים תיבה באופן אחיד ואז כדור מתוכה באופן אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
+      "he": "מחלקים 100 כדורים לשתי תיבות, A בגודל 0. בוחרים תיבה אחיד ואז כדור אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
       "en": "Split 100 balls into urns, A having size 0. Choose an urn uniformly, then a ball uniformly. Exchange a white in A for a red in B, keeping sizes fixed. Both balls are guaranteed when both urns are nonempty. What changes, or is the exchange undefined?"
     },
     "choices": [
@@ -4392,7 +4392,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחלקים 10 כדורים לשתי תיבות, A בגודל 3. בוחרים תיבה באופן אחיד ואז כדור מתוכה באופן אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
+      "he": "מחלקים 10 כדורים לשתי תיבות, A בגודל 3. בוחרים תיבה אחיד ואז כדור אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
       "en": "Split 10 balls into urns, A having size 3. Choose an urn uniformly, then a ball uniformly. Exchange a white in A for a red in B, keeping sizes fixed. Both balls are guaranteed when both urns are nonempty. What changes, or is the exchange undefined?"
     },
     "choices": [
@@ -4766,7 +4766,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בדיוק אחד מ־4 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 23? לפני הופעת תוצאה כל תוצאות הבדיקות שליליות.",
+      "he": "בדיוק אחד מ־4 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 23? לפני הופעת תוצאה כולם שליליים.",
       "en": "Exactly one of 4 bottles is poisoned, each with a unique test code. All tests start at time 0; outcomes appear exactly 24 hours later. How many distinct observable patterns are possible at time 23? Before then all results are negative."
     },
     "choices": [
@@ -4800,7 +4800,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בדיוק אחד מ־4 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 24? לפני הופעת תוצאה כל תוצאות הבדיקות שליליות.",
+      "he": "בדיוק אחד מ־4 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 24? לפני הופעת תוצאה כולם שליליים.",
       "en": "Exactly one of 4 bottles is poisoned, each with a unique test code. All tests start at time 0; outcomes appear exactly 24 hours later. How many distinct observable patterns are possible at time 24? Before then all results are negative."
     },
     "choices": [
@@ -4834,7 +4834,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בדיוק אחד מ־8 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 3, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 24? לפני הופעת תוצאה כל תוצאות הבדיקות שליליות.",
+      "he": "בדיוק אחד מ־8 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 3, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 24? לפני הופעת תוצאה כולם שליליים.",
       "en": "Exactly one of 8 bottles is poisoned, each with a unique test code. All tests start at time 3; outcomes appear exactly 24 hours later. How many distinct observable patterns are possible at time 24? Before then all results are negative."
     },
     "choices": [
@@ -4868,7 +4868,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בדיוק אחד מ־8 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 3, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 27? לפני הופעת תוצאה כל תוצאות הבדיקות שליליות.",
+      "he": "בדיוק אחד מ־8 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 3, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 27? לפני הופעת תוצאה כולם שליליים.",
       "en": "Exactly one of 8 bottles is poisoned, each with a unique test code. All tests start at time 3; outcomes appear exactly 24 hours later. How many distinct observable patterns are possible at time 27? Before then all results are negative."
     },
     "choices": [
@@ -4902,7 +4902,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בדיוק אחד מ־2 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 1 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 0? לפני הופעת תוצאה כל תוצאות הבדיקות שליליות.",
+      "he": "בדיוק אחד מ־2 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 1 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 0? לפני הופעת תוצאה כולם שליליים.",
       "en": "Exactly one of 2 bottles is poisoned, each with a unique test code. All tests start at time 0; outcomes appear exactly 1 hours later. How many distinct observable patterns are possible at time 0? Before then all results are negative."
     },
     "choices": [
@@ -4937,7 +4937,7 @@
     "status": "draft",
     "prompt": {
       "he": "מחלקים 1000 חובשי כובעים לקבוצות של 3; שארית של 1 או 2 מצרפים לשלישייה האחרונה. בכל קבוצה הראשון משדר זוגיות וכל האחרים יודעים בוודאות את צבעם. כמה נכונים מובטחים בלי לסמוך על המובילים?",
-      "en": "Split 1000 hat wearers into groups of 3; merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
+      "en": "Split 1000 hat wearers into groups of 3;merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
     },
     "choices": [
       {
@@ -4971,7 +4971,7 @@
     "status": "draft",
     "prompt": {
       "he": "מחלקים 10 חובשי כובעים לקבוצות של 3; שארית של 1 או 2 מצרפים לשלישייה האחרונה. בכל קבוצה הראשון משדר זוגיות וכל האחרים יודעים בוודאות את צבעם. כמה נכונים מובטחים בלי לסמוך על המובילים?",
-      "en": "Split 10 hat wearers into groups of 3; merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
+      "en": "Split 10 hat wearers into groups of 3;merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
     },
     "choices": [
       {
@@ -5005,7 +5005,7 @@
     "status": "draft",
     "prompt": {
       "he": "מחלקים 11 חובשי כובעים לקבוצות של 3; שארית של 1 או 2 מצרפים לשלישייה האחרונה. בכל קבוצה הראשון משדר זוגיות וכל האחרים יודעים בוודאות את צבעם. כמה נכונים מובטחים בלי לסמוך על המובילים?",
-      "en": "Split 11 hat wearers into groups of 3; merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
+      "en": "Split 11 hat wearers into groups of 3;merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
     },
     "choices": [
       {
@@ -5039,7 +5039,7 @@
     "status": "draft",
     "prompt": {
       "he": "מחלקים 8 חובשי כובעים לקבוצות של 3; שארית של 1 או 2 מצרפים לשלישייה האחרונה. בכל קבוצה הראשון משדר זוגיות וכל האחרים יודעים בוודאות את צבעם. כמה נכונים מובטחים בלי לסמוך על המובילים?",
-      "en": "Split 8 hat wearers into groups of 3; merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
+      "en": "Split 8 hat wearers into groups of 3;merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
     },
     "choices": [
       {
@@ -5073,7 +5073,7 @@
     "status": "draft",
     "prompt": {
       "he": "מחלקים 9 חובשי כובעים לקבוצות של 3; שארית של 1 או 2 מצרפים לשלישייה האחרונה. בכל קבוצה הראשון משדר זוגיות וכל האחרים יודעים בוודאות את צבעם. כמה נכונים מובטחים בלי לסמוך על המובילים?",
-      "en": "Split 9 hat wearers into groups of 3; merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
+      "en": "Split 9 hat wearers into groups of 3;merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
     },
     "choices": [
       {
@@ -5107,7 +5107,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 3 חובשי כובעים בינאריים ללא מכסה. מדברים מאחור לפנים; כל אחד רואה רק לפניו ושומע תשובות קודמות. מותר תיאום, ורק מילת צבע אחת לכל אדם. מה המספר המרבי של נכונים שאפשר להבטיח לכל חלוקת צבעים?",
-      "en": "There are 3 binary-hat wearers with no color quota. They speak rear-to-front; each sees only ahead and hears earlier answers. Prior coordination is allowed; each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
+      "en": "There are 3 binary-hat wearers with no color quota. They speak rear-to-front;each sees only ahead and hears earlier answers. Prior coordination is allowed;each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
     },
     "choices": [
       {
@@ -5130,7 +5130,7 @@
     "correct": 1,
     "explanation": {
       "he": "זוגיות מהראשון מאפשרת לכל האחרים להסיק את צבעם. אי אפשר להבטיח את כולם: החלפת כובע הראשון אינה משנה שום מידע שזמין לו.",
-      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible: flipping only the first hat leaves that speaker's information unchanged."
+      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible:flipping only the first hat leaves that speaker's information unchanged."
     }
   },
   {
@@ -5141,7 +5141,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 2 חובשי כובעים בינאריים ללא מכסה. מדברים מאחור לפנים; כל אחד רואה רק לפניו ושומע תשובות קודמות. מותר תיאום, ורק מילת צבע אחת לכל אדם. מה המספר המרבי של נכונים שאפשר להבטיח לכל חלוקת צבעים?",
-      "en": "There are 2 binary-hat wearers with no color quota. They speak rear-to-front; each sees only ahead and hears earlier answers. Prior coordination is allowed; each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
+      "en": "There are 2 binary-hat wearers with no color quota. They speak rear-to-front;each sees only ahead and hears earlier answers. Prior coordination is allowed;each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
     },
     "choices": [
       {
@@ -5164,7 +5164,7 @@
     "correct": 2,
     "explanation": {
       "he": "זוגיות מהראשון מאפשרת לכל האחרים להסיק את צבעם. אי אפשר להבטיח את כולם: החלפת כובע הראשון אינה משנה שום מידע שזמין לו.",
-      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible: flipping only the first hat leaves that speaker's information unchanged."
+      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible:flipping only the first hat leaves that speaker's information unchanged."
     }
   },
   {
@@ -5175,7 +5175,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 4 חובשי כובעים בינאריים ללא מכסה. מדברים מאחור לפנים; כל אחד רואה רק לפניו ושומע תשובות קודמות. מותר תיאום, ורק מילת צבע אחת לכל אדם. מה המספר המרבי של נכונים שאפשר להבטיח לכל חלוקת צבעים?",
-      "en": "There are 4 binary-hat wearers with no color quota. They speak rear-to-front; each sees only ahead and hears earlier answers. Prior coordination is allowed; each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
+      "en": "There are 4 binary-hat wearers with no color quota. They speak rear-to-front;each sees only ahead and hears earlier answers. Prior coordination is allowed;each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
     },
     "choices": [
       {
@@ -5198,7 +5198,7 @@
     "correct": 3,
     "explanation": {
       "he": "זוגיות מהראשון מאפשרת לכל האחרים להסיק את צבעם. אי אפשר להבטיח את כולם: החלפת כובע הראשון אינה משנה שום מידע שזמין לו.",
-      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible: flipping only the first hat leaves that speaker's information unchanged."
+      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible:flipping only the first hat leaves that speaker's information unchanged."
     }
   },
   {
@@ -5209,7 +5209,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 5 חובשי כובעים בינאריים ללא מכסה. מדברים מאחור לפנים; כל אחד רואה רק לפניו ושומע תשובות קודמות. מותר תיאום, ורק מילת צבע אחת לכל אדם. מה המספר המרבי של נכונים שאפשר להבטיח לכל חלוקת צבעים?",
-      "en": "There are 5 binary-hat wearers with no color quota. They speak rear-to-front; each sees only ahead and hears earlier answers. Prior coordination is allowed; each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
+      "en": "There are 5 binary-hat wearers with no color quota. They speak rear-to-front;each sees only ahead and hears earlier answers. Prior coordination is allowed;each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
     },
     "choices": [
       {
@@ -5232,7 +5232,7 @@
     "correct": 0,
     "explanation": {
       "he": "זוגיות מהראשון מאפשרת לכל האחרים להסיק את צבעם. אי אפשר להבטיח את כולם: החלפת כובע הראשון אינה משנה שום מידע שזמין לו.",
-      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible: flipping only the first hat leaves that speaker's information unchanged."
+      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible:flipping only the first hat leaves that speaker's information unchanged."
     }
   },
   {
@@ -5243,7 +5243,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 8 חובשי כובעים בינאריים ללא מכסה. מדברים מאחור לפנים; כל אחד רואה רק לפניו ושומע תשובות קודמות. מותר תיאום, ורק מילת צבע אחת לכל אדם. מה המספר המרבי של נכונים שאפשר להבטיח לכל חלוקת צבעים?",
-      "en": "There are 8 binary-hat wearers with no color quota. They speak rear-to-front; each sees only ahead and hears earlier answers. Prior coordination is allowed; each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
+      "en": "There are 8 binary-hat wearers with no color quota. They speak rear-to-front;each sees only ahead and hears earlier answers. Prior coordination is allowed;each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
     },
     "choices": [
       {
@@ -5266,7 +5266,7 @@
     "correct": 1,
     "explanation": {
       "he": "זוגיות מהראשון מאפשרת לכל האחרים להסיק את צבעם. אי אפשר להבטיח את כולם: החלפת כובע הראשון אינה משנה שום מידע שזמין לו.",
-      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible: flipping only the first hat leaves that speaker's information unchanged."
+      "en": "The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible:flipping only the first hat leaves that speaker's information unchanged."
     }
   },
   {
@@ -5276,8 +5276,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שלושה צבעי כובעים מקודדים 0, 1, 2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 2. כל תרומות הקבוצה פרט לכובעך ידועות: [1]. מה צבעך המקודד?",
-      "en": "Three hat colors are encoded 0, 1, 2. A reliable message says the group's color sum modulo 3 is 2. Every contribution except your hat is known: [1]. What is your encoded color?"
+      "he": "שלושה צבעי כובעים מקודדים 0,1,2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 2. כל תרומות הקבוצה פרט לכובעך ידועות: [1]. מה צבעך המקודד?",
+      "en": "Three hat colors are encoded 0,1,2. A reliable message says the group's color sum modulo 3 is 2. Every contribution except your hat is known: [1]. What is your encoded color?"
     },
     "choices": [
       {
@@ -5310,8 +5310,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שלושה צבעי כובעים מקודדים 0, 1, 2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 0. כל תרומות הקבוצה פרט לכובעך ידועות: [1, 1]. מה צבעך המקודד?",
-      "en": "Three hat colors are encoded 0, 1, 2. A reliable message says the group's color sum modulo 3 is 0. Every contribution except your hat is known: [1, 1]. What is your encoded color?"
+      "he": "שלושה צבעי כובעים מקודדים 0,1,2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 0. כל תרומות הקבוצה פרט לכובעך ידועות: [1, 1]. מה צבעך המקודד?",
+      "en": "Three hat colors are encoded 0,1,2. A reliable message says the group's color sum modulo 3 is 0. Every contribution except your hat is known: [1, 1]. What is your encoded color?"
     },
     "choices": [
       {
@@ -5344,8 +5344,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שלושה צבעי כובעים מקודדים 0, 1, 2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 1. כל תרומות הקבוצה פרט לכובעך ידועות: [2]. מה צבעך המקודד?",
-      "en": "Three hat colors are encoded 0, 1, 2. A reliable message says the group's color sum modulo 3 is 1. Every contribution except your hat is known: [2]. What is your encoded color?"
+      "he": "שלושה צבעי כובעים מקודדים 0,1,2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 1. כל תרומות הקבוצה פרט לכובעך ידועות: [2]. מה צבעך המקודד?",
+      "en": "Three hat colors are encoded 0,1,2. A reliable message says the group's color sum modulo 3 is 1. Every contribution except your hat is known: [2]. What is your encoded color?"
     },
     "choices": [
       {
@@ -5378,8 +5378,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שלושה צבעי כובעים מקודדים 0, 1, 2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 2. כל תרומות הקבוצה פרט לכובעך ידועות: [0, 1]. מה צבעך המקודד?",
-      "en": "Three hat colors are encoded 0, 1, 2. A reliable message says the group's color sum modulo 3 is 2. Every contribution except your hat is known: [0, 1]. What is your encoded color?"
+      "he": "שלושה צבעי כובעים מקודדים 0,1,2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 2. כל תרומות הקבוצה פרט לכובעך ידועות: [0, 1]. מה צבעך המקודד?",
+      "en": "Three hat colors are encoded 0,1,2. A reliable message says the group's color sum modulo 3 is 2. Every contribution except your hat is known: [0, 1]. What is your encoded color?"
     },
     "choices": [
       {
@@ -5412,8 +5412,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "שלושה צבעי כובעים מקודדים 0, 1, 2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 0. כל תרומות הקבוצה פרט לכובעך ידועות: [1, 2]. מה צבעך המקודד?",
-      "en": "Three hat colors are encoded 0, 1, 2. A reliable message says the group's color sum modulo 3 is 0. Every contribution except your hat is known: [1, 2]. What is your encoded color?"
+      "he": "שלושה צבעי כובעים מקודדים 0,1,2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 0. כל תרומות הקבוצה פרט לכובעך ידועות: [1, 2]. מה צבעך המקודד?",
+      "en": "Three hat colors are encoded 0,1,2. A reliable message says the group's color sum modulo 3 is 0. Every contribution except your hat is known: [1, 2]. What is your encoded color?"
     },
     "choices": [
       {
@@ -5640,7 +5640,7 @@
     "correct": 0,
     "explanation": {
       "he": "מי שלחץ לכולם חוץ מבן זוגו חייב להיות בן זוגו של המדווח אפס. מסירים אותם וחוזרים; מספרי בני הזוג משלימים ל־2n−2.",
-      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat; spouse counts complement to 2n−2."
+      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat;spouse counts complement to 2n−2."
     }
   },
   {
@@ -5674,7 +5674,7 @@
     "correct": 1,
     "explanation": {
       "he": "מי שלחץ לכולם חוץ מבן זוגו חייב להיות בן זוגו של המדווח אפס. מסירים אותם וחוזרים; מספרי בני הזוג משלימים ל־2n−2.",
-      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat; spouse counts complement to 2n−2."
+      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat;spouse counts complement to 2n−2."
     }
   },
   {
@@ -5708,7 +5708,7 @@
     "correct": 2,
     "explanation": {
       "he": "מי שלחץ לכולם חוץ מבן זוגו חייב להיות בן זוגו של המדווח אפס. מסירים אותם וחוזרים; מספרי בני הזוג משלימים ל־2n−2.",
-      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat; spouse counts complement to 2n−2."
+      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat;spouse counts complement to 2n−2."
     }
   },
   {
@@ -5742,7 +5742,7 @@
     "correct": 3,
     "explanation": {
       "he": "מי שלחץ לכולם חוץ מבן זוגו חייב להיות בן זוגו של המדווח אפס. מסירים אותם וחוזרים; מספרי בני הזוג משלימים ל־2n−2.",
-      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat; spouse counts complement to 2n−2."
+      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat;spouse counts complement to 2n−2."
     }
   },
   {
@@ -5776,7 +5776,7 @@
     "correct": 0,
     "explanation": {
       "he": "מי שלחץ לכולם חוץ מבן זוגו חייב להיות בן זוגו של המדווח אפס. מסירים אותם וחוזרים; מספרי בני הזוג משלימים ל־2n−2.",
-      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat; spouse counts complement to 2n−2."
+      "en": "The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat;spouse counts complement to 2n−2."
     }
   },
   {
@@ -5787,7 +5787,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 3 כובעים אדומים בפועל. כל אדם רואה את האחרים בלבד. פורסם לפחות אדום אחד; כולם מסיקים בהיגיון ושומעים גם שתיקה בסבבים סימולטניים. אדם מכריז אדום רק כשבטוח. הסבב הראשון הוא 1. באיזה סבב תישמע ההכרזה הראשונה?",
-      "en": "Actually 3 hats are red. Each reasoner sees only others. At least one red is publicly announced; everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
+      "en": "Actually 3 hats are red. Each reasoner sees only others. At least one red is publicly announced;everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
     },
     "choices": [
       {
@@ -5820,8 +5820,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש כובע אדום אחד בפועל. כל אדם רואה את האחרים בלבד. פורסם לפחות אדום אחד; כולם מסיקים בהיגיון ושומעים גם שתיקה בסבבים סימולטניים. אדם מכריז אדום רק כשבטוח. הסבב הראשון הוא 1. באיזה סבב תישמע ההכרזה הראשונה?",
-      "en": "Actually 1 hat is red. Each reasoner sees only others. At least one red is publicly announced; everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
+      "he": "יש 1 כובעים אדומים בפועל. כל אדם רואה את האחרים בלבד. פורסם לפחות אדום אחד; כולם מסיקים בהיגיון ושומעים גם שתיקה בסבבים סימולטניים. אדם מכריז אדום רק כשבטוח. הסבב הראשון הוא 1. באיזה סבב תישמע ההכרזה הראשונה?",
+      "en": "Actually 1 hats are red. Each reasoner sees only others. At least one red is publicly announced;everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
     },
     "choices": [
       {
@@ -5855,7 +5855,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 2 כובעים אדומים בפועל. כל אדם רואה את האחרים בלבד. פורסם לפחות אדום אחד; כולם מסיקים בהיגיון ושומעים גם שתיקה בסבבים סימולטניים. אדם מכריז אדום רק כשבטוח. הסבב הראשון הוא 1. באיזה סבב תישמע ההכרזה הראשונה?",
-      "en": "Actually 2 hats are red. Each reasoner sees only others. At least one red is publicly announced; everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
+      "en": "Actually 2 hats are red. Each reasoner sees only others. At least one red is publicly announced;everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
     },
     "choices": [
       {
@@ -5889,7 +5889,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 4 כובעים אדומים בפועל. כל אדם רואה את האחרים בלבד. פורסם לפחות אדום אחד; כולם מסיקים בהיגיון ושומעים גם שתיקה בסבבים סימולטניים. אדם מכריז אדום רק כשבטוח. הסבב הראשון הוא 1. באיזה סבב תישמע ההכרזה הראשונה?",
-      "en": "Actually 4 hats are red. Each reasoner sees only others. At least one red is publicly announced; everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
+      "en": "Actually 4 hats are red. Each reasoner sees only others. At least one red is publicly announced;everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
     },
     "choices": [
       {
@@ -5923,7 +5923,7 @@
     "status": "draft",
     "prompt": {
       "he": "יש 5 כובעים אדומים בפועל. כל אדם רואה את האחרים בלבד. פורסם לפחות אדום אחד; כולם מסיקים בהיגיון ושומעים גם שתיקה בסבבים סימולטניים. אדם מכריז אדום רק כשבטוח. הסבב הראשון הוא 1. באיזה סבב תישמע ההכרזה הראשונה?",
-      "en": "Actually 5 hats are red. Each reasoner sees only others. At least one red is publicly announced; everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
+      "en": "Actually 5 hats are red. Each reasoner sees only others. At least one red is publicly announced;everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
     },
     "choices": [
       {
@@ -5957,7 +5957,7 @@
     "status": "draft",
     "prompt": {
       "he": "גמל מעביר מלאי המחייב 3 מטענים לאורך קטע קצר. בכל הלוך הוא נושא מטען, וחוזר רק כדי להביא את הבא; אחרי המטען האחרון אינו חוזר. הוא אוכל בננה לכל יחידת דרך. כמה בננות נצרכות ליחידת התקדמות?",
-      "en": "A camel moves inventory requiring 3 loads along a short segment. It goes forward with each load and returns only to collect the next; there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
+      "en": "A camel moves inventory requiring 3 loads along a short segment. It goes forward with each load and returns only to collect the next;there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
     },
     "choices": [
       {
@@ -5991,7 +5991,7 @@
     "status": "draft",
     "prompt": {
       "he": "גמל מעביר מלאי המחייב 1 מטענים לאורך קטע קצר. בכל הלוך הוא נושא מטען, וחוזר רק כדי להביא את הבא; אחרי המטען האחרון אינו חוזר. הוא אוכל בננה לכל יחידת דרך. כמה בננות נצרכות ליחידת התקדמות?",
-      "en": "A camel moves inventory requiring 1 loads along a short segment. It goes forward with each load and returns only to collect the next; there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
+      "en": "A camel moves inventory requiring 1 loads along a short segment. It goes forward with each load and returns only to collect the next;there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
     },
     "choices": [
       {
@@ -6025,7 +6025,7 @@
     "status": "draft",
     "prompt": {
       "he": "גמל מעביר מלאי המחייב 2 מטענים לאורך קטע קצר. בכל הלוך הוא נושא מטען, וחוזר רק כדי להביא את הבא; אחרי המטען האחרון אינו חוזר. הוא אוכל בננה לכל יחידת דרך. כמה בננות נצרכות ליחידת התקדמות?",
-      "en": "A camel moves inventory requiring 2 loads along a short segment. It goes forward with each load and returns only to collect the next; there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
+      "en": "A camel moves inventory requiring 2 loads along a short segment. It goes forward with each load and returns only to collect the next;there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
     },
     "choices": [
       {
@@ -6059,7 +6059,7 @@
     "status": "draft",
     "prompt": {
       "he": "גמל מעביר מלאי המחייב 4 מטענים לאורך קטע קצר. בכל הלוך הוא נושא מטען, וחוזר רק כדי להביא את הבא; אחרי המטען האחרון אינו חוזר. הוא אוכל בננה לכל יחידת דרך. כמה בננות נצרכות ליחידת התקדמות?",
-      "en": "A camel moves inventory requiring 4 loads along a short segment. It goes forward with each load and returns only to collect the next; there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
+      "en": "A camel moves inventory requiring 4 loads along a short segment. It goes forward with each load and returns only to collect the next;there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
     },
     "choices": [
       {
@@ -6093,7 +6093,7 @@
     "status": "draft",
     "prompt": {
       "he": "גמל מעביר מלאי המחייב 5 מטענים לאורך קטע קצר. בכל הלוך הוא נושא מטען, וחוזר רק כדי להביא את הבא; אחרי המטען האחרון אינו חוזר. הוא אוכל בננה לכל יחידת דרך. כמה בננות נצרכות ליחידת התקדמות?",
-      "en": "A camel moves inventory requiring 5 loads along a short segment. It goes forward with each load and returns only to collect the next; there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
+      "en": "A camel moves inventory requiring 5 loads along a short segment. It goes forward with each load and returns only to collect the next;there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
     },
     "choices": [
       {
@@ -6296,7 +6296,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחברים את הנקודות בסדר הנתון וסוגרים את המסלול בחזרה לנקודה הראשונה: [[0, 3], [2, -3], [-3, 1], [3, 1], [-2, -3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
+      "he": "מחברים את הנקודות בסדר הנתון וסוגרים לראשונה: [[0, 3], [2, -3], [-3, 1], [3, 1], [-2, -3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
       "en": "Connect these vertices in order and close back to the first: [[0, 3], [2, -3], [-3, 1], [3, 1], [-2, -3]]. Which classification is justified? Equal-sign local turns alone do not establish absence of self-intersection."
     },
     "choices": [
@@ -6330,7 +6330,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחברים את הנקודות בסדר הנתון וסוגרים את המסלול בחזרה לנקודה הראשונה: [[0, 0], [3, 0], [3, 3], [0, 3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
+      "he": "מחברים את הנקודות בסדר הנתון וסוגרים לראשונה: [[0, 0], [3, 0], [3, 3], [0, 3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
       "en": "Connect these vertices in order and close back to the first: [[0, 0], [3, 0], [3, 3], [0, 3]]. Which classification is justified? Equal-sign local turns alone do not establish absence of self-intersection."
     },
     "choices": [
@@ -6364,7 +6364,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחברים את הנקודות בסדר הנתון וסוגרים את המסלול בחזרה לנקודה הראשונה: [[0, 0], [3, 0], [1, 1], [3, 3], [0, 3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
+      "he": "מחברים את הנקודות בסדר הנתון וסוגרים לראשונה: [[0, 0], [3, 0], [1, 1], [3, 3], [0, 3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
       "en": "Connect these vertices in order and close back to the first: [[0, 0], [3, 0], [1, 1], [3, 3], [0, 3]]. Which classification is justified? Equal-sign local turns alone do not establish absence of self-intersection."
     },
     "choices": [
@@ -6398,7 +6398,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחברים את הנקודות בסדר הנתון וסוגרים את המסלול בחזרה לנקודה הראשונה: [[0, 3], [3, 3], [3, 0], [0, 0]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
+      "he": "מחברים את הנקודות בסדר הנתון וסוגרים לראשונה: [[0, 3], [3, 3], [3, 0], [0, 0]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
       "en": "Connect these vertices in order and close back to the first: [[0, 3], [3, 3], [3, 0], [0, 0]]. Which classification is justified? Equal-sign local turns alone do not establish absence of self-intersection."
     },
     "choices": [
@@ -6432,7 +6432,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מחברים את הנקודות בסדר הנתון וסוגרים את המסלול בחזרה לנקודה הראשונה: [[0, 0], [1, 0], [2, 0]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
+      "he": "מחברים את הנקודות בסדר הנתון וסוגרים לראשונה: [[0, 0], [1, 0], [2, 0]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
       "en": "Connect these vertices in order and close back to the first: [[0, 0], [1, 0], [2, 0]]. Which classification is justified? Equal-sign local turns alone do not establish absence of self-intersection."
     },
     "choices": [
@@ -6467,7 +6467,7 @@
     "status": "draft",
     "prompt": {
       "he": "נקודות גבול מסודרות: [[0, 0], [1, 0], [2, 0], [2, 2], [0, 2]]. קמירות ממש דורשת פניות לא־אפס מאותו סימן; קמירות חלשה מתירה פנייה אפס לאורך צלע. איך מסווגים את הגבול?",
-      "en": "Ordered boundary vertices: [[0, 0], [1, 0], [2, 0], [2, 2], [0, 2]]. Strict convexity requires same-sign nonzero turns; weak convexity permits zero turns along an edge. How is this boundary classified?"
+      "en": "Ordered boundary vertices: [[0, 0], [1, 0], [2, 0], [2, 2], [0, 2]]. Strict convexity requires same-sign nonzero turns;weak convexity permits zero turns along an edge. How is this boundary classified?"
     },
     "choices": [
       {
@@ -6501,7 +6501,7 @@
     "status": "draft",
     "prompt": {
       "he": "נקודות גבול מסודרות: [[0, 0], [2, 0], [0, 2]]. קמירות ממש דורשת פניות לא־אפס מאותו סימן; קמירות חלשה מתירה פנייה אפס לאורך צלע. איך מסווגים את הגבול?",
-      "en": "Ordered boundary vertices: [[0, 0], [2, 0], [0, 2]]. Strict convexity requires same-sign nonzero turns; weak convexity permits zero turns along an edge. How is this boundary classified?"
+      "en": "Ordered boundary vertices: [[0, 0], [2, 0], [0, 2]]. Strict convexity requires same-sign nonzero turns;weak convexity permits zero turns along an edge. How is this boundary classified?"
     },
     "choices": [
       {
@@ -6535,7 +6535,7 @@
     "status": "draft",
     "prompt": {
       "he": "נקודות גבול מסודרות: [[0, 0], [3, 0], [1, 1], [3, 3], [0, 3]]. קמירות ממש דורשת פניות לא־אפס מאותו סימן; קמירות חלשה מתירה פנייה אפס לאורך צלע. איך מסווגים את הגבול?",
-      "en": "Ordered boundary vertices: [[0, 0], [3, 0], [1, 1], [3, 3], [0, 3]]. Strict convexity requires same-sign nonzero turns; weak convexity permits zero turns along an edge. How is this boundary classified?"
+      "en": "Ordered boundary vertices: [[0, 0], [3, 0], [1, 1], [3, 3], [0, 3]]. Strict convexity requires same-sign nonzero turns;weak convexity permits zero turns along an edge. How is this boundary classified?"
     },
     "choices": [
       {
@@ -6569,7 +6569,7 @@
     "status": "draft",
     "prompt": {
       "he": "נקודות גבול מסודרות: [[0, 0], [1, 0], [2, 0]]. קמירות ממש דורשת פניות לא־אפס מאותו סימן; קמירות חלשה מתירה פנייה אפס לאורך צלע. איך מסווגים את הגבול?",
-      "en": "Ordered boundary vertices: [[0, 0], [1, 0], [2, 0]]. Strict convexity requires same-sign nonzero turns; weak convexity permits zero turns along an edge. How is this boundary classified?"
+      "en": "Ordered boundary vertices: [[0, 0], [1, 0], [2, 0]]. Strict convexity requires same-sign nonzero turns;weak convexity permits zero turns along an edge. How is this boundary classified?"
     },
     "choices": [
       {
@@ -6603,7 +6603,7 @@
     "status": "draft",
     "prompt": {
       "he": "נקודות גבול מסודרות: [[0, 0], [2, 0], [2, 1], [2, 2], [0, 2]]. קמירות ממש דורשת פניות לא־אפס מאותו סימן; קמירות חלשה מתירה פנייה אפס לאורך צלע. איך מסווגים את הגבול?",
-      "en": "Ordered boundary vertices: [[0, 0], [2, 0], [2, 1], [2, 2], [0, 2]]. Strict convexity requires same-sign nonzero turns; weak convexity permits zero turns along an edge. How is this boundary classified?"
+      "en": "Ordered boundary vertices: [[0, 0], [2, 0], [2, 1], [2, 2], [0, 2]]. Strict convexity requires same-sign nonzero turns;weak convexity permits zero turns along an edge. How is this boundary classified?"
     },
     "choices": [
       {
@@ -6807,7 +6807,7 @@
     "status": "draft",
     "prompt": {
       "he": "ארבעה מתגים מסודרים סביב שולחן ריבועי. 1 הוא דלוק. שני תיאורים הם 1100 ו־1010, באותו כיוון סריקה. מותר רק סיבוב ברבעי סיבוב, לא שיקוף. האם הם אותו מצב עד כדי סיבוב?",
-      "en": "Four switches surround a square table; 1 means ON. Two descriptions are 1100 and 1010, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
+      "en": "Four switches surround a square table;1 means ON. Two descriptions are 1100 and 1010, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
     },
     "choices": [
       {
@@ -6841,7 +6841,7 @@
     "status": "draft",
     "prompt": {
       "he": "ארבעה מתגים מסודרים סביב שולחן ריבועי. 1 הוא דלוק. שני תיאורים הם 1100 ו־0110, באותו כיוון סריקה. מותר רק סיבוב ברבעי סיבוב, לא שיקוף. האם הם אותו מצב עד כדי סיבוב?",
-      "en": "Four switches surround a square table; 1 means ON. Two descriptions are 1100 and 0110, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
+      "en": "Four switches surround a square table;1 means ON. Two descriptions are 1100 and 0110, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
     },
     "choices": [
       {
@@ -6875,7 +6875,7 @@
     "status": "draft",
     "prompt": {
       "he": "ארבעה מתגים מסודרים סביב שולחן ריבועי. 1 הוא דלוק. שני תיאורים הם 1000 ו־1100, באותו כיוון סריקה. מותר רק סיבוב ברבעי סיבוב, לא שיקוף. האם הם אותו מצב עד כדי סיבוב?",
-      "en": "Four switches surround a square table; 1 means ON. Two descriptions are 1000 and 1100, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
+      "en": "Four switches surround a square table;1 means ON. Two descriptions are 1000 and 1100, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
     },
     "choices": [
       {
@@ -6909,7 +6909,7 @@
     "status": "draft",
     "prompt": {
       "he": "ארבעה מתגים מסודרים סביב שולחן ריבועי. 1 הוא דלוק. שני תיאורים הם 1001 ו־1100, באותו כיוון סריקה. מותר רק סיבוב ברבעי סיבוב, לא שיקוף. האם הם אותו מצב עד כדי סיבוב?",
-      "en": "Four switches surround a square table; 1 means ON. Two descriptions are 1001 and 1100, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
+      "en": "Four switches surround a square table;1 means ON. Two descriptions are 1001 and 1100, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
     },
     "choices": [
       {
@@ -6943,7 +6943,7 @@
     "status": "draft",
     "prompt": {
       "he": "ארבעה מתגים מסודרים סביב שולחן ריבועי. 1 הוא דלוק. שני תיאורים הם 0000 ו־0000, באותו כיוון סריקה. מותר רק סיבוב ברבעי סיבוב, לא שיקוף. האם הם אותו מצב עד כדי סיבוב?",
-      "en": "Four switches surround a square table; 1 means ON. Two descriptions are 0000 and 0000, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
+      "en": "Four switches surround a square table;1 means ON. Two descriptions are 0000 and 0000, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
     },
     "choices": [
       {
@@ -6976,7 +6976,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטרה מסתתרת באחד משני שיחים 0, 1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 1]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
+      "he": "מטרה מסתתרת באחד משני שיחים 0,1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 1]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
       "en": "A target starts in bush 0 or 1. After each missed search it must switch bushes. Search order is [0, 1]. How many initial positions can avoid every search? Capture ends the process."
     },
     "choices": [
@@ -7010,7 +7010,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטרה מסתתרת באחד משני שיחים 0, 1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 0]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
+      "he": "מטרה מסתתרת באחד משני שיחים 0,1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 0]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
       "en": "A target starts in bush 0 or 1. After each missed search it must switch bushes. Search order is [0, 0]. How many initial positions can avoid every search? Capture ends the process."
     },
     "choices": [
@@ -7044,7 +7044,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטרה מסתתרת באחד משני שיחים 0, 1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [1, 0]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
+      "he": "מטרה מסתתרת באחד משני שיחים 0,1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [1, 0]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
       "en": "A target starts in bush 0 or 1. After each missed search it must switch bushes. Search order is [1, 0]. How many initial positions can avoid every search? Capture ends the process."
     },
     "choices": [
@@ -7078,7 +7078,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטרה מסתתרת באחד משני שיחים 0, 1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 1, 0, 1]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
+      "he": "מטרה מסתתרת באחד משני שיחים 0,1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 1, 0, 1]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
       "en": "A target starts in bush 0 or 1. After each missed search it must switch bushes. Search order is [0, 1, 0, 1]. How many initial positions can avoid every search? Capture ends the process."
     },
     "choices": [
@@ -7112,7 +7112,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מטרה מסתתרת באחד משני שיחים 0, 1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא []. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
+      "he": "מטרה מסתתרת באחד משני שיחים 0,1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא []. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
       "en": "A target starts in bush 0 or 1. After each missed search it must switch bushes. Search order is []. How many initial positions can avoid every search? Capture ends the process."
     },
     "choices": [
@@ -7657,7 +7657,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטרתך לנצח בסוף. ניסיון פגיעה מצליח בסיכוי 1/2. לאחר הצלחה סיכוי הניצחון העתידי שלך 1/4, ולאחר החטאה 3/4. החטאה מכוונת מובילה לאותו המשך של החטאה. איזו פעולה עדיפה?",
-      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 1/4; after a miss it is 3/4. Deliberately missing gives the same miss continuation. Which action is better?"
+      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 1/4;after a miss it is 3/4. Deliberately missing gives the same miss continuation. Which action is better?"
     },
     "choices": [
       {
@@ -7691,7 +7691,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטרתך לנצח בסוף. ניסיון פגיעה מצליח בסיכוי 1/2. לאחר הצלחה סיכוי הניצחון העתידי שלך 3/4, ולאחר החטאה 1/4. החטאה מכוונת מובילה לאותו המשך של החטאה. איזו פעולה עדיפה?",
-      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 3/4; after a miss it is 1/4. Deliberately missing gives the same miss continuation. Which action is better?"
+      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 3/4;after a miss it is 1/4. Deliberately missing gives the same miss continuation. Which action is better?"
     },
     "choices": [
       {
@@ -7725,7 +7725,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטרתך לנצח בסוף. ניסיון פגיעה מצליח בסיכוי 1/2. לאחר הצלחה סיכוי הניצחון העתידי שלך 1/2, ולאחר החטאה 1/2. החטאה מכוונת מובילה לאותו המשך של החטאה. איזו פעולה עדיפה?",
-      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 1/2; after a miss it is 1/2. Deliberately missing gives the same miss continuation. Which action is better?"
+      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 1/2;after a miss it is 1/2. Deliberately missing gives the same miss continuation. Which action is better?"
     },
     "choices": [
       {
@@ -7759,7 +7759,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטרתך לנצח בסוף. ניסיון פגיעה מצליח בסיכוי 1/4. לאחר הצלחה סיכוי הניצחון העתידי שלך 1/10, ולאחר החטאה 4/5. החטאה מכוונת מובילה לאותו המשך של החטאה. איזו פעולה עדיפה?",
-      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/4. After a hit your continuation win chance is 1/10; after a miss it is 4/5. Deliberately missing gives the same miss continuation. Which action is better?"
+      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 1/4. After a hit your continuation win chance is 1/10;after a miss it is 4/5. Deliberately missing gives the same miss continuation. Which action is better?"
     },
     "choices": [
       {
@@ -7793,7 +7793,7 @@
     "status": "draft",
     "prompt": {
       "he": "מטרתך לנצח בסוף. ניסיון פגיעה מצליח בסיכוי 0. לאחר הצלחה סיכוי הניצחון העתידי שלך 1, ולאחר החטאה 0. החטאה מכוונת מובילה לאותו המשך של החטאה. איזו פעולה עדיפה?",
-      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 0. After a hit your continuation win chance is 1; after a miss it is 0. Deliberately missing gives the same miss continuation. Which action is better?"
+      "en": "Your goal is eventual victory. An attempted hit succeeds with probability 0. After a hit your continuation win chance is 1;after a miss it is 0. Deliberately missing gives the same miss continuation. Which action is better?"
     },
     "choices": [
       {
@@ -7996,8 +7996,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז בוחרים כדור באופן אחיד. כמויות (אדומים, לבנים): A=(1, 0), B=(49, 50). נצפה אדום. מה הסיכוי שנבחרה A?",
-      "en": "Choose urn A or B with probability 1/2, then a ball uniformly at random. Counts (red, white): A=(1, 0), B=(49, 50). A red was observed. What is the probability A was chosen?"
+      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז כדור אחיד. כמויות (אדומים, לבנים): A=(1,0), B=(49,50). נצפה אדום. מה הסיכוי שנבחרה A?",
+      "en": "Choose urn A or B with probability 1/2, then a uniform ball. Counts (red, white): A=(1,0), B=(49,50). A red was observed. What is the probability A was chosen?"
     },
     "choices": [
       {
@@ -8030,8 +8030,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז בוחרים כדור באופן אחיד. כמויות (אדומים, לבנים): A=(1, 1), B=(1, 3). נצפה אדום. מה הסיכוי שנבחרה A?",
-      "en": "Choose urn A or B with probability 1/2, then a ball uniformly at random. Counts (red, white): A=(1, 1), B=(1, 3). A red was observed. What is the probability A was chosen?"
+      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז כדור אחיד. כמויות (אדומים, לבנים): A=(1,1), B=(1,3). נצפה אדום. מה הסיכוי שנבחרה A?",
+      "en": "Choose urn A or B with probability 1/2, then a uniform ball. Counts (red, white): A=(1,1), B=(1,3). A red was observed. What is the probability A was chosen?"
     },
     "choices": [
       {
@@ -8064,8 +8064,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז בוחרים כדור באופן אחיד. כמויות (אדומים, לבנים): A=(2, 0), B=(1, 1). נצפה אדום. מה הסיכוי שנבחרה A?",
-      "en": "Choose urn A or B with probability 1/2, then a ball uniformly at random. Counts (red, white): A=(2, 0), B=(1, 1). A red was observed. What is the probability A was chosen?"
+      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז כדור אחיד. כמויות (אדומים, לבנים): A=(2,0), B=(1,1). נצפה אדום. מה הסיכוי שנבחרה A?",
+      "en": "Choose urn A or B with probability 1/2, then a uniform ball. Counts (red, white): A=(2,0), B=(1,1). A red was observed. What is the probability A was chosen?"
     },
     "choices": [
       {
@@ -8098,8 +8098,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז בוחרים כדור באופן אחיד. כמויות (אדומים, לבנים): A=(1, 3), B=(3, 1). נצפה אדום. מה הסיכוי שנבחרה A?",
-      "en": "Choose urn A or B with probability 1/2, then a ball uniformly at random. Counts (red, white): A=(1, 3), B=(3, 1). A red was observed. What is the probability A was chosen?"
+      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז כדור אחיד. כמויות (אדומים, לבנים): A=(1,3), B=(3,1). נצפה אדום. מה הסיכוי שנבחרה A?",
+      "en": "Choose urn A or B with probability 1/2, then a uniform ball. Counts (red, white): A=(1,3), B=(3,1). A red was observed. What is the probability A was chosen?"
     },
     "choices": [
       {
@@ -8132,8 +8132,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז בוחרים כדור באופן אחיד. כמויות (אדומים, לבנים): A=(2, 2), B=(2, 2). נצפה אדום. מה הסיכוי שנבחרה A?",
-      "en": "Choose urn A or B with probability 1/2, then a ball uniformly at random. Counts (red, white): A=(2, 2), B=(2, 2). A red was observed. What is the probability A was chosen?"
+      "he": "בוחרים תיבה A או B בסיכוי 1/2 ואז כדור אחיד. כמויות (אדומים, לבנים): A=(2,2), B=(2,2). נצפה אדום. מה הסיכוי שנבחרה A?",
+      "en": "Choose urn A or B with probability 1/2, then a uniform ball. Counts (red, white): A=(2,2), B=(2,2). A red was observed. What is the probability A was chosen?"
     },
     "choices": [
       {
@@ -8360,7 +8360,7 @@
     "correct": 0,
     "explanation": {
       "he": "בהטיה נשארים מועמדים בצד הקל, ובאיזון הלא־נשקלים. אם נשארים יותר מ־3 מועמדים, אי אפשר להכריע בשקילה היחידה שנותרה. מתכננים לפי הענף הגרוע.",
-      "en": "A tilt leaves the lighter pan's candidates; balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
+      "en": "A tilt leaves the lighter pan's candidates;balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
     }
   },
   {
@@ -8394,7 +8394,7 @@
     "correct": 1,
     "explanation": {
       "he": "בהטיה נשארים מועמדים בצד הקל, ובאיזון הלא־נשקלים. אם נשארים יותר מ־3 מועמדים, אי אפשר להכריע בשקילה היחידה שנותרה. מתכננים לפי הענף הגרוע.",
-      "en": "A tilt leaves the lighter pan's candidates; balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
+      "en": "A tilt leaves the lighter pan's candidates;balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
     }
   },
   {
@@ -8428,7 +8428,7 @@
     "correct": 2,
     "explanation": {
       "he": "בהטיה נשארים מועמדים בצד הקל, ובאיזון הלא־נשקלים. אם נשארים יותר מ־3 מועמדים, אי אפשר להכריע בשקילה היחידה שנותרה. מתכננים לפי הענף הגרוע.",
-      "en": "A tilt leaves the lighter pan's candidates; balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
+      "en": "A tilt leaves the lighter pan's candidates;balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
     }
   },
   {
@@ -8462,7 +8462,7 @@
     "correct": 3,
     "explanation": {
       "he": "בהטיה נשארים מועמדים בצד הקל, ובאיזון הלא־נשקלים. אם נשארים יותר מ־3 מועמדים, אי אפשר להכריע בשקילה היחידה שנותרה. מתכננים לפי הענף הגרוע.",
-      "en": "A tilt leaves the lighter pan's candidates; balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
+      "en": "A tilt leaves the lighter pan's candidates;balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
     }
   },
   {
@@ -8496,7 +8496,7 @@
     "correct": 0,
     "explanation": {
       "he": "בהטיה נשארים מועמדים בצד הקל, ובאיזון הלא־נשקלים. אם נשארים יותר מ־3 מועמדים, אי אפשר להכריע בשקילה היחידה שנותרה. מתכננים לפי הענף הגרוע.",
-      "en": "A tilt leaves the lighter pan's candidates; balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
+      "en": "A tilt leaves the lighter pan's candidates;balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
     }
   },
   {
@@ -8506,7 +8506,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מונה משותף מתחיל ב־0. לכל אחד מ־A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת את העותק+1. סדר הפעולות הוא ['RA', 'RB', 'WA', 'WB']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
+      "he": "מונה משותף מתחיל ב־0. לכל A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת העותק+1. סדר הפעולות הוא ['RA', 'RB', 'WA', 'WB']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
       "en": "A shared counter starts at 0. Each of A and B performs R to read a local copy, and W to write that copy+1. Event order is ['RA', 'RB', 'WA', 'WB']. What is the final counter? Read and write together are not atomic."
     },
     "choices": [
@@ -8540,7 +8540,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מונה משותף מתחיל ב־0. לכל אחד מ־A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת את העותק+1. סדר הפעולות הוא ['RA', 'WA', 'RB', 'WB']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
+      "he": "מונה משותף מתחיל ב־0. לכל A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת העותק+1. סדר הפעולות הוא ['RA', 'WA', 'RB', 'WB']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
       "en": "A shared counter starts at 0. Each of A and B performs R to read a local copy, and W to write that copy+1. Event order is ['RA', 'WA', 'RB', 'WB']. What is the final counter? Read and write together are not atomic."
     },
     "choices": [
@@ -8574,7 +8574,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מונה משותף מתחיל ב־5. לכל אחד מ־A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת את העותק+1. סדר הפעולות הוא ['RB', 'RA', 'WB', 'WA']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
+      "he": "מונה משותף מתחיל ב־5. לכל A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת העותק+1. סדר הפעולות הוא ['RB', 'RA', 'WB', 'WA']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
       "en": "A shared counter starts at 5. Each of A and B performs R to read a local copy, and W to write that copy+1. Event order is ['RB', 'RA', 'WB', 'WA']. What is the final counter? Read and write together are not atomic."
     },
     "choices": [
@@ -8608,7 +8608,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מונה משותף מתחיל ב־5. לכל אחד מ־A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת את העותק+1. סדר הפעולות הוא ['RB', 'WB', 'RA', 'WA']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
+      "he": "מונה משותף מתחיל ב־5. לכל A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת העותק+1. סדר הפעולות הוא ['RB', 'WB', 'RA', 'WA']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
       "en": "A shared counter starts at 5. Each of A and B performs R to read a local copy, and W to write that copy+1. Event order is ['RB', 'WB', 'RA', 'WA']. What is the final counter? Read and write together are not atomic."
     },
     "choices": [
@@ -8642,7 +8642,7 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "מונה משותף מתחיל ב־1. לכל אחד מ־A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת את העותק+1. סדר הפעולות הוא ['RA', 'RB', 'WB', 'WA']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
+      "he": "מונה משותף מתחיל ב־1. לכל A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת העותק+1. סדר הפעולות הוא ['RA', 'RB', 'WB', 'WA']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
       "en": "A shared counter starts at 1. Each of A and B performs R to read a local copy, and W to write that copy+1. Event order is ['RA', 'RB', 'WB', 'WA']. What is the final counter? Read and write together are not atomic."
     },
     "choices": [
