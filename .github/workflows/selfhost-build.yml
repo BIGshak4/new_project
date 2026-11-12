@@ -1,0 +1,248 @@
+name: Build self-hosted release images
+
+# Manual staging builder only. This workflow never deploys or contacts production.
+on:
+  workflow_dispatch:
+    inputs:
+      release_sha:
+        description: Reviewed full 40-character lowercase commit SHA
+        required: true
+        type: string
+      app_domain:
+        description: Website hostname, or repository variable SELFHOST_APP_DOMAIN
+        required: false
+        type: string
+      api_domain:
+        description: API hostname, or repository variable SELFHOST_API_DOMAIN
+        required: false
+        type: string
+      supabase_url:
+        description: PUBLIC project URL, or repository variable NEXT_PUBLIC_SUPABASE_URL
+        required: false
+        type: string
+      supabase_publishable_key:
+        description: PUBLIC publishable/anon key only, or variable NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+        required: false
+        type: string
+      include_tasks:
+        description: Also build and package the task-board image
+        required: false
+        default: false
+        type: boolean
+      tasks_domain:
+        description: Optional task-board hostname, or repository variable SELFHOST_TASKS_DOMAIN
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: selfhost-manual-builder
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      SOURCE_REVISION: ${{ inputs.release_sha }}
+      APP_DOMAIN: ${{ inputs.app_domain || vars.SELFHOST_APP_DOMAIN }}
+      API_DOMAIN: ${{ inputs.api_domain || vars.SELFHOST_API_DOMAIN }}
+      TASKS_DOMAIN: ${{ inputs.tasks_domain || vars.SELFHOST_TASKS_DOMAIN }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ inputs.supabase_url || vars.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ inputs.supabase_publishable_key || vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+      INCLUDE_TASKS: ${{ inputs.include_tasks }}
+      ACME_EMAIL: ci@example.invalid
+    steps:
+      - name: Validate the release and public build configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64, json, os, re
+          from urllib.parse import urlsplit
+
+          def require(condition, message):
+              if not condition:
+                  raise SystemExit(message)
+
+          require(re.fullmatch(r"[0-9a-f]{40}", os.environ["SOURCE_REVISION"]), "A reviewed full lowercase Git SHA is required")
+          hostname = r"(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?"
+          for name in ("APP_DOMAIN", "API_DOMAIN"):
+              require(re.fullmatch(hostname, os.environ[name]), f"{name} must be a lowercase hostname without a scheme or path")
+          if os.environ["INCLUDE_TASKS"] == "true":
+              require(re.fullmatch(hostname, os.environ["TASKS_DOMAIN"]), "TASKS_DOMAIN is required when building tasks")
+          url = urlsplit(os.environ["NEXT_PUBLIC_SUPABASE_URL"])
+          require(url.scheme == "https" and url.hostname and not url.username and not url.password
+                  and url.path in ("", "/") and not url.query and not url.fragment, "Set the public HTTPS Supabase project URL")
+          key = os.environ["NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"]
+          public_key = bool(re.fullmatch(r"sb_publishable_[A-Za-z0-9_-]+", key))
+          if not public_key and re.fullmatch(r"[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+", key):
+              try:
+                  payload = key.split(".")[1]
+                  claims = json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4)))
+                  public_key = claims.get("role") == "anon"
+              except (ValueError, TypeError, AttributeError):
+                  pass
+          require(public_key, "Use only a public publishable/anon key; backend secret and service-role keys are forbidden")
+          print("Validated the full release SHA and public frontend configuration.")
+          PY
+
+      - name: Check out the exact reviewed release
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.release_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Check the checkout and Compose definitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_REVISION"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          docker version --format '{{.Server.Os}}/{{.Server.Arch}}'
+          docker compose version
+          cp deploy/selfhost/backend.env.example deploy/selfhost/backend.env
+          compose=(docker compose -f deploy/selfhost/compose.yaml)
+          if [ "$INCLUDE_TASKS" = true ]; then compose+=(-f deploy/selfhost/compose.tasks.yaml); fi
+          "${compose[@]}" config --quiet
+
+      - name: Build the API image without runtime credentials
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build --platform linux/amd64 --pull --tag "jobrun-api:$SOURCE_REVISION" backend
+
+      - name: Build the practice image with public client configuration
+        timeout-minutes: 15
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build --platform linux/amd64 --pull \
+            --build-arg "SOURCE_REVISION=$SOURCE_REVISION" \
+            --build-arg "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL" \
+            --build-arg "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+            --build-arg "NEXT_PUBLIC_API_BASE_URL=https://$API_DOMAIN" \
+            --tag "jobrun-web:$SOURCE_REVISION" apps/web
+
+      - name: Build the optional task-board image
+        if: ${{ inputs.include_tasks }}
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build --platform linux/amd64 --pull \
+            --build-arg "SOURCE_REVISION=$SOURCE_REVISION" \
+            --build-arg "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL" \
+            --build-arg "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+            --tag "jobrun-tasks:$SOURCE_REVISION" apps/tasks
+
+      - name: Validate Caddy and import the API module with networking disabled
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker pull caddy:2.11.9-alpine
+          optional=()
+          if [ "$INCLUDE_TASKS" = true ]; then
+            optional+=(--env TASKS_DOMAIN --volume "$PWD/deploy/selfhost/caddy/tasks.caddy:/etc/caddy/optional/tasks.caddy:ro")
+          fi
+          docker run --rm --network none --env APP_DOMAIN --env API_DOMAIN --env ACME_EMAIL \
+            --volume "$PWD/deploy/selfhost/caddy:/etc/caddy:ro" "${optional[@]}" \
+            caddy:2.11.9-alpine caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+          docker run --rm --network none --env PYTHONDONTWRITEBYTECODE=1 \
+            --entrypoint /opt/venv/bin/python "jobrun-api:$SOURCE_REVISION" \
+            -c 'import app.main; print("API module imports passed; production startup/DB/model checks were not run.")'
+
+      - name: Check frontend runtime revisions and JavaScript assets locally
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          services=(web)
+          if [ "$INCLUDE_TASKS" = true ]; then services+=(tasks); fi
+          for service in "${services[@]}"; do
+            container="selfhost-$service-smoke"
+            docker run --detach --name "$container" --network none "jobrun-$service:$SOURCE_REVISION"
+            docker exec --interactive "$container" node --input-type=module - "$SOURCE_REVISION" <<'JS'
+          const expected = process.argv[2];
+          const origin = "http://127.0.0.1:3000";
+          let ready = false;
+          for (let attempt = 0; attempt < 30; attempt++) {
+            try {
+              const response = await fetch(`${origin}/api/health`, { signal: AbortSignal.timeout(1500) });
+              const health = await response.json();
+              if (response.ok && health.status === "ok" && health.revision === expected) { ready = true; break; }
+            } catch {}
+            await new Promise(resolve => setTimeout(resolve, 500));
+          }
+          if (!ready) throw new Error("The frontend did not serve the expected healthy revision");
+          const page = await fetch(origin, { signal: AbortSignal.timeout(5000) });
+          if (!page.ok) throw new Error("The frontend document did not load");
+          const html = await page.text();
+          const asset = html.match(/src="(\/_next\/static\/[^\"]+\.js(?:\?[^\"]*)?)"/);
+          if (!asset) throw new Error("The frontend document contains no local JavaScript asset");
+          const script = await fetch(new URL(asset[1], origin), { signal: AbortSignal.timeout(5000) });
+          if (!script.ok || !(await script.text()).length) throw new Error("A frontend JavaScript asset did not load");
+          console.log(`Frontend runtime, revision and JavaScript asset passed for ${expected}.`);
+          JS
+          done
+          docker run --rm --network none --entrypoint node \
+            --volume "$PWD/deploy/selfhost:/checks:ro" "jobrun-web:$SOURCE_REVISION" \
+            --test /checks/verify-release.test.mjs
+
+      - name: Package exact images and verification metadata
+        timeout-minutes: 8
+        shell: bash
+        run: |
+          set -euo pipefail
+          artifact_dir="$RUNNER_TEMP/selfhost-artifact"
+          mkdir -p "$artifact_dir"
+          images=("jobrun-api:$SOURCE_REVISION" "jobrun-web:$SOURCE_REVISION")
+          if [ "$INCLUDE_TASKS" = true ]; then images+=("jobrun-tasks:$SOURCE_REVISION"); fi
+          docker image save "${images[@]}" | gzip -1 > "$artifact_dir/images-linux-amd64.tar.gz"
+          printf '%s\n' "$SOURCE_REVISION" > "$artifact_dir/SOURCE_REVISION"
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          revision = os.environ["SOURCE_REVISION"]
+          services = ["api", "web"] + (["tasks"] if os.environ["INCLUDE_TASKS"] == "true" else [])
+          images = []
+          for service in services:
+              tag = f"jobrun-{service}:{revision}"
+              image = json.loads(subprocess.check_output(["docker", "image", "inspect", tag]))[0]
+              if (image["Os"], image["Architecture"]) != ("linux", "amd64"):
+                  raise SystemExit("An image has an unexpected platform")
+              images.append({"tag": tag, "id": image["Id"], "platform": "linux/amd64"})
+          manifest = {"format": 1, "sourceRevision": revision, "images": images,
+                      "appOrigin": "https://" + os.environ["APP_DOMAIN"],
+                      "apiOrigin": "https://" + os.environ["API_DOMAIN"],
+                      "tasksOrigin": "https://" + os.environ["TASKS_DOMAIN"] if "tasks" in services else None,
+                      "backendProductionChecks": "not-run-requires-server-runtime-configuration"}
+          output = pathlib.Path(os.environ["RUNNER_TEMP"]) / "selfhost-artifact" / "manifest.json"
+          output.write_text(json.dumps(manifest, indent=2) + "\n")
+          PY
+          (cd "$artifact_dir" && sha256sum images-linux-amd64.tar.gz SOURCE_REVISION manifest.json > SHA256SUMS)
+          {
+            printf 'Built reviewed release `%s` for `linux/amd64`.\n\n' "$SOURCE_REVISION"
+            printf 'Frontend runtime, revision and JavaScript assets passed locally in isolated containers.\n\n'
+            printf 'API module import passed. Production startup, database, authentication, models and public HTTPS remain staging checks.\n\n'
+            printf 'This manual builder did not deploy, alter DNS, seed data, or call production services. Artifact retention: one day.\n'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the release bundle for manual staging
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: jobrun-selfhost-${{ inputs.release_sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/selfhost-artifact/
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Remove only this job's smoke containers
+        if: ${{ always() }}
+        shell: bash
+        run: docker rm --force selfhost-web-smoke selfhost-tasks-smoke >/dev/null 2>&1 || true
