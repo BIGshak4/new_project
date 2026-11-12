@@ -8,7 +8,7 @@
     },
     "prompt": {
       "he": "מטבע נמצא בדיוק באחת הקופסאות A, B, C. על A כתוב ״לא ב־A״, על B כתוב ״ב־A״, ועל C כתוב ״לא ב־B״. בדיוק משפט אחד נכון. איפה המטבע?",
-      "en": "A coin is in exactly one of boxes A, B, C. A says “not in A,” B says “in A,” and C says “not in B.” Exactly one statement is true. Where is the coin?"
+      "en": "A coin is in exactly one of boxes A, B, C. A says “not in A, ” B says “in A, ” and C says “not in B.” Exactly one statement is true. Where is the coin?"
     },
     "answer": {
       "he": "ב־B. אם המטבע ב־A, שני משפטים נכונים; אם הוא ב־C, גם אז שניים נכונים. רק כשהמטבע ב־B המשפט שעל A נכון ושני האחרים שגויים.",
@@ -807,8 +807,8 @@
       "en": "A range sum from two sums"
     },
     "prompt": {
-      "he": "ברשימה [2,3,1,4] נתון מערך P=[0,2,5,6,10], שבו P[k] הוא סכום k האיברים הראשונים. מה סכום האיברים באינדקסים 1 עד 2 כולל, ואילו שני תאי P מספיקים? האינדקסים מתחילים ב־0.",
-      "en": "For [2,3,1,4], P=[0,2,5,6,10] stores P[k], the sum of the first k items. What is the sum at indices 1 through 2 inclusive, and which two P entries suffice? Indices start at 0."
+      "he": "ברשימה [2, 3, 1, 4] נתון מערך P=[0, 2, 5, 6, 10], שבו P[k] הוא סכום k האיברים הראשונים. מה סכום האיברים באינדקסים 1 עד 2 כולל, ואילו שני תאי P מספיקים? האינדקסים מתחילים ב־0.",
+      "en": "For [2, 3, 1, 4], P=[0, 2, 5, 6, 10] stores P[k], the sum of the first k items. What is the sum at indices 1 through 2 inclusive, and which two P entries suffice? Indices start at 0."
     },
     "answer": {
       "he": "הסכום הוא 4: מחשבים P[3]−P[1]=6−2. הסכום עד סוף הטווח כולל גם את מה שלפניו, ולכן מחסירים את הסכום שלפני תחילת הטווח.",
@@ -1111,8 +1111,8 @@
       "en": "Start at 0. Each move may add only 3 or 5, with no subtraction. Can you reach 7? What about 8?"
     },
     "answer": {
-      "he": "ל־7 אי אפשר: בלי 5 נקבל רק 0,3,6 לפני שעוברים אותו; עם 5 נותר להוסיף 2, שאינו אפשרי. ל־8 אפשר להגיע באמצעות 3+5.",
-      "en": "7 is impossible: without a 5, the only totals before passing it are 0,3,6; with a 5, the remaining 2 cannot be added. Reach 8 using 3+5."
+      "he": "ל־7 אי אפשר: בלי 5 נקבל רק 0, 3, 6 לפני שעוברים אותו; עם 5 נותר להוסיף 2, שאינו אפשרי. ל־8 אפשר להגיע באמצעות 3+5.",
+      "en": "7 is impossible: without a 5, the only totals before passing it are 0, 3, 6; with a 5, the remaining 2 cannot be added. Reach 8 using 3+5."
     },
     "takeaway": {
       "he": "בדקו אם צעדים מותרים יכולים להרכיב את היעד, לא רק להתקרב אליו.",
@@ -1151,8 +1151,8 @@
       "en": "Roll a fair die numbered 1 through 6. What is the probability of an even result?"
     },
     "answer": {
-      "he": "1/2. התוצאות הזוגיות הן 2,4,6: שלוש מתוך שש תוצאות שוות הסתברות.",
-      "en": "1/2. The even results are 2,4,6: three of six equally likely outcomes."
+      "he": "1/2. התוצאות הזוגיות הן 2, 4, 6: שלוש מתוך שש תוצאות שוות הסתברות.",
+      "en": "1/2. The even results are 2, 4, 6: three of six equally likely outcomes."
     },
     "takeaway": {
       "he": "כשכל התוצאות שוות בסיכוייהן, סופרים תוצאות רצויות מתוך כלל התוצאות.",
@@ -1207,8 +1207,8 @@
       "en": "One counterexample"
     },
     "prompt": {
-      "he": "מישהו בדק את המספרים הראשוניים 3,5,7,11 והסיק שכל מספר ראשוני הוא אי־זוגי. איך מפריכים את הטענה בעזרת מספר אחד?",
-      "en": "Someone checks the primes 3,5,7,11 and concludes that every prime is odd. How can one number disprove the claim?"
+      "he": "מישהו בדק את המספרים הראשוניים 3, 5, 7, 11 והסיק שכל מספר ראשוני הוא אי־זוגי. איך מפריכים את הטענה בעזרת מספר אחד?",
+      "en": "Someone checks the primes 3, 5, 7, 11 and concludes that every prime is odd. How can one number disprove the claim?"
     },
     "answer": {
       "he": "המספר 2 ראשוני וזוגי. דוגמה נגדית אחת מספיקה כדי להפריך טענה על כל המספרים, גם אם כמה דוגמאות קודמות התאימו לה.",

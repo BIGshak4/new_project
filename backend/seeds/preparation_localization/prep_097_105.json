@@ -177,7 +177,7 @@
     "solution_extensions": {
       "he": {
         "question": "איך סופרים את כל הביטים הפעילים בעזרת אותה פעולה?",
-        "direction": "כל עוד u אינו אפס, החליפו אותו ב־u&(u-1) והגדילו מונה. כל איטרציה מוחקת אחד אחד; הזמן תלוי במספר האחדים במילת הקלט."
+        "direction": "כל עוד u אינו אפס, החליפו אותו ב־u&(u-1) והגדילו מונה. כל איטרציה מוחקת ביט דלוק אחד; הזמן תלוי במספר האחדים במילת הקלט."
       },
       "en": {
         "question": "How can the same operation count all active bits?",
@@ -334,10 +334,10 @@
         "פלט חדש שומר את כל n+m המופעים; שני הקלטים נשארים ללא שינוי.",
         "גישה לאיבר לפי אינדקס ול־len בעלות קבועה; אין sort ואין דרישה למיזוג במקום.",
         "בשוויון בוחרים משמאל; ההבטחה שהקלט ממוין אינה נבדקת בידי הפונקציה.",
-        "הקידומת b[:m] בלבד היא קלט; שארn התאים קיבולת, גם כשאפס הוא נתון אמיתי.",
-        "קלטים ממוינים, ללא חפיפה; מותר לכתובb וחובה לשמרa.",
-        "הקידומת b[:m] בלבד היא קלט; שארn התאים קיבולת, גם כשאפס הוא נתון אמיתי.",
-        "קלטים ממוינים, ללא חפיפה; מותר לכתובb וחובה לשמרa."
+        "הקידומת b[:m] בלבד היא קלט; שאר n התאים קיבולת, גם כשאפס הוא נתון אמיתי.",
+        "קלטים ממוינים, ללא חפיפה; מותר לכתוב b וחובה לשמר a.",
+        "הקידומת b[:m] בלבד היא קלט; שאר n התאים קיבולת, גם כשאפס הוא נתון אמיתי.",
+        "קלטים ממוינים, ללא חפיפה; מותר לכתוב b וחובה לשמר a."
       ],
       "en": [
         "Two nondecreasing integer arrays; duplicates, zero and negatives are allowed.",
@@ -356,7 +356,7 @@
         "output": "Θ(n+m) מקומות פלט למערך מלא חדש.",
         "auxiliary": "O(1) מילות עזר מעבר לפלט; האינדקסים אינם בעלי מספר קבוע של ביטים לכל n,m.",
         "scope": "זמן לינארי נדרש לכתיבת הפלט המלא. לא נטענת מינימליות השוואות בכל מקרה או היתכנות לאותו חוזה במקום.",
-        "variant_B_inplace": "O(m+n) זמן במקרה הגרוע, O(1) מילות עזר וזהותb נשמרת. a ריק יכול להסתיים מיד; אין פלט חדש או מיון."
+        "variant_B_inplace": "O(m+n) זמן במקרה הגרוע, O(1) מילות עזר וזהות b נשמרת. a ריק יכול להסתיים מיד; אין פלט חדש או מיון."
       },
       "en": {
         "time": "Θ(n+m) word operations, with at most n+m−1 head comparisons when both inputs are nonempty.",
@@ -374,9 +374,9 @@
         "מספרים שליליים, אפס ושלמים גדולים מטופלים בהשוואה רגילה.",
         "מערכים באורכים שונים מאוד, או שכל ערכי אחד קטנים משל האחר.",
         "קלט שאינו ממוין מחוץ לחוזה; אין תיקון אוטומטי באמצעות sort.",
-        "a ריק, קידומתb ריקה, שניהם ריקים.",
+        "a ריק, קידומת b ריקה, שניהם ריקים.",
         "אפסים אמיתיים, שליליים, שוויונות רבים; m ידוע וקיבולת מדויקת.",
-        "a ריק, קידומתb ריקה, שניהם ריקים.",
+        "a ריק, קידומת b ריקה, שניהם ריקים.",
         "אפסים אמיתיים, שליליים, שוויונות רבים; m ידוע וקיבולת מדויקת."
       ],
       "en": [
@@ -402,10 +402,10 @@
         "דיווח זיכרון O(1) בלי להפריד את הפלט בגודל n+m.",
         "להסיק את m מהאפס הראשון.",
         "לכתוב מהתחלה ולדרוס קלט או לדלג על שני אינדקסים בשוויון.",
-        "להשתמש בחיתוך או מיון כפתרון בלי לחשב זיכרון, או לטעון שגםb נשמר.",
+        "להשתמש בחיתוך או מיון כפתרון בלי לחשב זיכרון, או לטעון שגם b נשמר.",
         "להסיק את m מהאפס הראשון.",
         "לכתוב מהתחלה ולדרוס קלט או לדלג על שני אינדקסים בשוויון.",
-        "להשתמש בחיתוך או מיון כפתרון בלי לחשב זיכרון, או לטעון שגםb נשמר."
+        "להשתמש בחיתוך או מיון כפתרון בלי לחשב זיכרון, או לטעון שגם b נשמר."
       ],
       "en": [
         "Advancing both cursors on equality and losing an occurrence.",
@@ -423,7 +423,7 @@
       ]
     },
     "interview_answer": {
-      "he": "אחזיק אינדקס בכל מערך ופלט חדש. בכל פעם אעתיק את הקטן משני הראשים; בשוויון אבחר משמאל ואקדם רק את האינדקס שלו. כשאחד נגמר אעתיק את יתרת האחר. כל מופע נצרך פעם אחת, ולכן הזמן Θ(n+m), הפלט Θ(n+m) וזיכרון העזר מעבר לפלט O(1) מילים.\n\nאמזג לאחור לתוךb: הגדול בין שני הקצוות נכנס למקום הימני הפנוי. היעד תמיד מימין לקידומתb שטרם נקראה. a נשמר; אם הוא נגמר, שארb כבר במקומו. זמן לינארי ועזר קבוע במילים.\n\nאמזג לאחור לתוךb: הגדול בין שני הקצוות נכנס למקום הימני הפנוי. היעד תמיד מימין לקידומתb שטרם נקראה. a נשמר; אם הוא נגמר, שארb כבר במקומו. זמן לינארי ועזר קבוע במילים.",
+      "he": "אחזיק אינדקס בכל מערך ופלט חדש. בכל פעם אעתיק את הקטן משני הראשים; בשוויון אבחר משמאל ואקדם רק את האינדקס שלו. כשאחד נגמר אעתיק את יתרת האחר. כל מופע נצרך פעם אחת, ולכן הזמן Θ(n+m), הפלט Θ(n+m) וזיכרון העזר מעבר לפלט O(1) מילים.\n\nאמזג לאחור לתוך b: הגדול בין שני הקצוות נכנס למקום הימני הפנוי. היעד תמיד מימין לקידומת b שטרם נקראה. a נשמר; אם הוא נגמר, שאר b כבר במקומו. זמן לינארי ועזר קבוע במילים.\n\nאמזג לאחור לתוך b: הגדול בין שני הקצוות נכנס למקום הימני הפנוי. היעד תמיד מימין לקידומת b שטרם נקראה. a נשמר; אם הוא נגמר, שאר b כבר במקומו. זמן לינארי ועזר קבוע במילים.",
       "en": "Keep one cursor per array and fresh output. Append the smaller current head, choosing left on ties, and advance only its cursor. When one input ends, copy the other's suffix. Every occurrence is consumed once: Θ(n+m) time and output storage, with O(1) auxiliary words beyond output.\n\nMerge backward into b: put the larger remaining end value in the rightmost destination. Destination remains beyond unread b. Preserve a; stop when a ends. Linear worst-case time, constant auxiliary words.\n\nMerge backward into b: put the larger remaining end value in the rightmost destination. Destination remains beyond unread b. Preserve a; stop when a ends. Linear worst-case time, constant auxiliary words."
     },
     "source_ambiguities": {
@@ -431,20 +431,20 @@
         "המקור כולל רק ארבע מילים באנגלית; סימן, סוג ערכים, חזרות, מיון לא יורד, פלט חדש ואי־שינוי קלט נוספו במפורש.",
         "המקור אינו מבטיח קיבולת פנויה או דורש מיזוג במקום. אלו חוזים נפרדים.",
         "בחירה משמאל בשוויון היא הבהרת יציבות, ולא הבדל שמצדיק ספירה כשאלה טכנית נוספת לעומת SW-005.",
-        "הצילום החדש אוסר מקום נוסף ומספק קיבולת ב־b, בניגוד למערך חדש בגרסה המקורית. ממוינת היא הקידומת התקפה, לא האפסים השמורים. ההבדל נשמר כסעיף נפרד תחת098.",
-        "הצילום החדש אוסר מקום נוסף ומספק קיבולת ב־b, בניגוד למערך חדש בגרסה המקורית. ממוינת היא הקידומת התקפה, לא האפסים השמורים. ההבדל נשמר כסעיף נפרד תחת098."
+        "הצילום החדש אוסר מקום נוסף ומספק קיבולת ב־b, בניגוד למערך חדש בגרסה המקורית. ממוינת היא הקידומת התקפה, לא האפסים השמורים. ההבדל נשמר כסעיף נפרד תחת 098.",
+        "הצילום החדש אוסר מקום נוסף ומספק קיבולת ב־b, בניגוד למערך חדש בגרסה המקורית. ממוינת היא הקידומת התקפה, לא האפסים השמורים. ההבדל נשמר כסעיף נפרד תחת 098."
       ],
       "en": [
-        "The source contains only four English words; integer type, duplicates, nondecreasing order, fresh output and immutability are explicit explicit assumptions.",
+        "The source contains only four English words; integer type, duplicates, nondecreasing order, fresh output and immutability are explicit assumptions.",
         "The source neither provides spare capacity nor requires in-place merging; those are separate contracts.",
         "Left-first ties are a stability clarification, not a technical difference justifying an extra unique question relative to SW-005.",
-        "New source forbids extra space and provides b capacity, unlike the original fresh output. Only the valid prefix is sorted input, not padding. Retained as a separate098 part.",
-        "New source forbids extra space and provides b capacity, unlike the original fresh output. Only the valid prefix is sorted input, not padding. Retained as a separate098 part."
+        "New source forbids extra space and provides b capacity, unlike the original fresh output. Only the valid prefix is sorted input, not padding. Retained as a separate 098 part.",
+        "New source forbids extra space and provides b capacity, unlike the original fresh output. Only the valid prefix is sorted input, not padding. Retained as a separate 098 part."
       ]
     },
     "verification": {
-      "he": "עברו 3,136 זוגות מערכים ממוינים באורכים 0..5 מעל −2,0,3 מול שחזור מתדירויות בלתי תלוי, וכן הדוגמה, ריקים, שלמים בגודל 10¹⁰⁰ ושמירת קלט. הקוד המוצע בפייתון הורץ בפועל; ללא מדידת זמן או אישור מקצועי אנושי.\n\n3,136 זוגות ממצים ועוד200 דגימות מול מיון עצמאי; נשמרו זהותb ו־a, כולל אפסים וכפילויות.\n\n3,136 זוגות ממצים ועוד200 דגימות מול מיון עצמאי; נשמרו זהותb ו־a, כולל אפסים וכפילויות.",
-      "en": "Passed 3,136 sorted-array pairs of lengths 0..5 over −2,0,3 against independent frequency reconstruction, plus the example, empty arrays, integers of magnitude 10¹⁰⁰ and input preservation. Proposed Python code executed; no timing benchmark or human professional approval.\n\n3,136 exhaustive pairs plus200 seeded pairs versus independent sorting; b identity/a preservation, zeros and duplicates checked.\n\n3,136 exhaustive pairs plus 200 seeded pairs versus independent sorting; b identity/a preservation, zeros and duplicates checked."
+      "he": "עברו 3,136 זוגות מערכים ממוינים באורכים 0..5 מעל −2,0,3 מול שחזור מתדירויות בלתי תלוי, וכן הדוגמה, ריקים, שלמים בגודל 10¹⁰⁰ ושמירת קלט. הקוד המוצע בפייתון הורץ בפועל; ללא מדידת זמן או אישור מקצועי אנושי.\n\n3,136 זוגות ממצים ועוד 200 דגימות מול מיון עצמאי; נשמרו זהות b ו־a, כולל אפסים וכפילויות.\n\n3,136 זוגות ממצים ועוד 200 דגימות מול מיון עצמאי; נשמרו זהות b ו־a, כולל אפסים וכפילויות.",
+      "en": "Passed 3,136 sorted-array pairs of lengths 0..5 over −2,0,3 against independent frequency reconstruction, plus the example, empty arrays, integers of magnitude 10¹⁰⁰ and input preservation. Proposed Python code executed; no timing benchmark or human professional approval.\n\n3,136 exhaustive pairs plus 200 seeded pairs versus independent sorting; b identity/a preservation, zeros and duplicates checked.\n\n3,136 exhaustive pairs plus 200 seeded pairs versus independent sorting; b identity/a preservation, zeros and duplicates checked."
     },
     "relationship_note": {
       "he": "אותו עיקרון וחוזה בסיסי כמו הדוגמה SW-005. זו הגרסה המבוססת על מקור שסופק ידנית, המקושרת לדוגמה הקיימת; אין להגדיל בגללה את מספר השאלות הייחודיות. יש להעדיף אותה בקבוצת כפילויות ולשמר מזהים והיסטוריית תרגול קיימים.",
@@ -457,7 +457,7 @@
         "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך.",
         "variant_B_inplace": {
           "question": "מה משתנה אם המערכים חולקים זיכרון?",
-          "direction": "כתיבה עלולה להשחית גם אתa שלא נקרא. יש להגדיר בדיוק את החפיפה ולתכנן אלגוריתם אחר או להתיר העתקה; ההוכחה הנוכחית אינה חלה.",
+          "direction": "כתיבה עלולה להשחית גם את a שלא נקרא. יש להגדיר בדיוק את החפיפה ולתכנן אלגוריתם אחר או להתיר העתקה; ההוכחה הנוכחית אינה חלה.",
           "status": ""
         }
       },
@@ -479,7 +479,7 @@
           "hints": [
             "איזו כתיבה בתחילת b עלולה לדרוס איבר שעוד לא קראתם?",
             "השטח הפנוי נמצא בסוף, והערך הגדול ביותר שנותר מתאים למקום האחרון שעוד לא מולא.",
-            "שמרו אינדקס אחרון ב־a, אינדקס אחרון בקידומת התקפה שלb ואינדקס כתיבה בסופו. מלאו מהגדול לקטן; כש־a נגמר, קידומתb שנותרה כבר במקומה."
+            "שמרו אינדקס אחרון ב־a, אינדקס אחרון בקידומת התקפה של b ואינדקס כתיבה בסופו. מלאו מהגדול לקטן; כש־a נגמר, קידומת b שנותרה כבר במקומה."
           ],
           "integration_status": ""
         }

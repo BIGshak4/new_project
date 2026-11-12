@@ -43,7 +43,7 @@
         "איפוס ותקפות יחד מאפסים ואינם קולטים ביט באותה חזית.",
         "אין לקשר מילים עצמאיות בלי לאפס ביניהן; 25 בסדר 1,0,0,1,1 מבדיל מסדר MSB.",
         "קודי מצב בינאריים 5–7 אינם מצבי המכונה; ענף ברירת המחדל בקוד הוא התאוששות הגנתית, לא מודל לתקלת חומרה.",
-        "קידומת0, המילה10011, אפסים מובילים והשהיות.",
+        "קידומת 0, המילה 10011, אפסים מובילים והשהיות.",
         "אותה סדרת ביטים בשני הסדרים; איפוס חוזר."
       ],
       "en": [
@@ -71,7 +71,7 @@
         "Updating r+b without retaining the positional weight or normalizing.",
         "Resetting before every bit or sampling output before the last acceptance edge.",
         "Treating zero as nondivisible or interpreting divisibility alone as nonempty-word validity.",
-        "Using the MSB table for LSB; claiming s always equals N modulo5; silently changing the empty-word convention."
+        "Using the MSB table for LSB; claiming s always equals N modulo 5; silently changing the empty-word convention."
       ]
     },
     "interview_answer": {
@@ -84,11 +84,11 @@
         "direction": "שומרים שארית r ואת משקל הביט הבא w, ומעדכנים r+b*w ו־2*w מודולו המחלק. זה תקף גם ל־6, אך 2 אינו הפיך מודולו 6 ולכן אסור להעתיק את נוסחת הנרמול. נתחו נגישות וצמצום מחדש.",
         "status": "שאלת המשך מוכנה בתוכן; אינה מחוברת לתור ההמשך החי.",
         "batch1107b10_msb-and-lsb-five": {
-          "question": "האם נרמול זה יעבוד מודולו4?",
-          "direction": "לא;2 אינו הפיך מודולו4. הגעת LSB-first נעזרת בשתי הסיביות הראשונות.",
+          "question": "האם נרמול זה יעבוד מודולו 4?",
+          "direction": "לא;2 אינו הפיך מודולו 4. הגעת LSB-first נעזרת בשתי הסיביות הראשונות.",
           "tests": [
             "הוכחת היעדר הופכי",
-            "השוואת00 ו־01 בסדר LSB"
+            "השוואת 00 ו־01 בסדר LSB"
           ]
         }
       },
@@ -98,10 +98,10 @@
         "status": "Follow-up prepared in content; not connected to the live follow-up queue.",
         "batch1107b10_msb-and-lsb-five": {
           "question": "Does this normalization work modulo four?",
-          "direction": "No:2 is not invertible modulo4. LSB-first divisibility depends on the first two bits.",
+          "direction": "No:2 is not invertible modulo 4. LSB-first divisibility depends on the first two bits.",
           "tests": [
             "Show no inverse exists",
-            "Compare00 and01 under LSB-first arrival"
+            "Compare 00 and 01 under LSB-first arrival"
           ]
         }
       }
@@ -116,8 +116,8 @@
           "prompt": "### הרחבה: חלוקה בחמש בשני סדרי הגעה\nהציגו גם מכונת מצבים כאשר הסיביות מגיעות מן ה־MSB, והשוו למכונת ה־LSB שלעיל. בכל ביט תקף יש לקבוע אם הקידומת שהתקבלה מתחלקת בחמש.\n\nהשלמות נשמרות: שעון יחיד, איפוס סינכרוני בתחילת מילה ו־bit_valid להשהיות. בהתאם לחוזה המקורי של השאלה, המילה הריקה מייצגת אפס ולכן אחרי איפוס היציאה 1. אם מעוניינים לפסול ריקות מוסיפים דגל seen בנפרד. אין להחליף בין ״סיבית נכנסת למקום ה־LSB״ לבין ״הסיבית הפחות משמעותית מגיעה ראשונה״.",
           "hints": [
             "בסדר MSB-first, הוספת ביט מימין מכפילה את המספר הישן בשתיים ואז מוסיפה את הביט.",
-            "האם שארית מודולו5 מספיקה כדי לעדכן את עצמה, בלי לזכור את כל המספר?",
-            "ל־MSB שמרו r ועדכנו (2r+b)%5. ל־LSB ניתן לשמור שארית מנורמלת s ולעדכן 3(s+b)%5, כי3 הוא ההופכי של2 מודולו5."
+            "האם שארית מודולו 5 מספיקה כדי לעדכן את עצמה, בלי לזכור את כל המספר?",
+            "ל־MSB שמרו r ועדכנו (2r+b)%5. ל־LSB ניתן לשמור שארית מנורמלת s ולעדכן 3(s+b)%5, כי 3 הוא ההופכי של 2 מודולו 5."
           ]
         }
       },
@@ -127,7 +127,7 @@
           "hints": [
             "MSB-first append doubles the old value and adds the bit.",
             "Does the remainder modulo five determine its own update?",
-            "For MSB first update r=(2r+b)%5. For LSB first a normalized remainder updates s=3(s+b)%5 because3 is the inverse of2 modulo5."
+            "For MSB first update r=(2r+b)%5. For LSB first a normalized remainder updates s=3(s+b)%5 because 3 is the inverse of 2 modulo 5."
           ]
         }
       }
@@ -340,7 +340,7 @@
     },
     "verification": {
       "he": "עברו 88,572 דגימות באורקל תנועה גאומטרי עצמאי לעומק 10, כל 32 צירופי מצב וקלט ובדיקות נסיגה, השהיה, דילוג, התאוששות, תקפות דביקה, גלישה ותת־גלישה. זו בדיקת מודל פייתון; לא בוצעו קומפילציה או סימולציית חומרה, ניסוי בחיישנים או ניתוח תזמונים ומעבר תחומי שעון.\n\nשני עולמות זהים לגלאי יחיד, שני מעברים מלאים ונסיגה מול המודל הקיים.\n\nבדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית.",
-      "en": "Passed 88,572 samples in an independent geometric movement oracle to depth 10, all 32 state/input pairs, and retreat/pause/skip/recovery/sticky-validity/overflow/underflow tests. This verifies a Python model, not HDL compilation/simulation, sensors, timing or CDC.\n\nTwo indistinguishable one-sensor worlds, two full traversals and one retreat against the unchanged model.\n\nIndependent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
+      "en": "Passed 88,572 samples in an independent geometric movement oracle to depth 10, all 32 state/input pairs, and retreat/pause/skip/recovery/sticky-validity/overflow/underflow tests. This verifies a Python model, not HDL compilation/simulation, sensors, timing or CDC.\n\nTwo indistinguishable one-sensor worlds, two full traversals and one retreat against the unchanged model.\n\nIndependent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and 27 ground-coupling cases,100 ADC slots and 32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all 65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus 12.0 simulation passed 66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and 194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
     },
     "edge_cases": {
       "he": [
@@ -385,7 +385,7 @@
         "הנחה שהגלאי יודע כיוון בלי שנאמר כך.",
         "ספירה על הפעלה ראשונה גם כשיש נסיגה.",
         "הצגת count_valid שגוי כמספר מדויק.",
-        "איפוס זיכרון בכל00.",
+        "איפוס זיכרון בכל 00.",
         "הבטחת כיוון מיידי גם כשהקריאות קבועות.",
         "הוספת מצבים כדי לפתור מידע שאינו נצפה."
       ],
@@ -399,7 +399,7 @@
         "Assuming a detector secretly reports direction.",
         "Counting first activation despite possible retreat.",
         "Presenting invalidcount_valid output as exact.",
-        "Resetting memory on every00.",
+        "Resetting memory on every 00.",
         "Promising instantaneous direction with unchanged observations.",
         "Adding states to recover unobservable information."
       ]
@@ -486,11 +486,11 @@
           "integration_status": ""
         },
         "1108b20_wood_short_long": {
-          "prompt": "### וריאציה: כיוון בול עץ קצר או ארוך ממרחק החיישנים\nשני חיישני נוכחות A משמאל ו־B מימין נמצאים במרחק d. כל אחד מחזיר1 כשהעץ מכסה אותו. בנו FSM ופסאודו־קוד המדווחים פולס ימינה או שמאלה לאחר מעבר שלם, עבור L<d ועבור L>d.\n\nהשלמה הכרחית: עץ יחיד, חיישנים נקודתיים, דגימה של כל שינוי ללא החמצות, התחלה ידועה כשהעץ כולו מחוץ לשני החיישנים ואיפוס לפני בדיקה. עצירות מותרות. בגרסה הקצרה נדרשת תנועה מונוטונית במהלך מעבר; שינוי כיוון או ביטול מחייבים איפוס חיצוני במצב התחלתי ידוע. בגרסה הארוכה אפשר לעקוב גם אחרי חזרה דרך אזור החפיפה. אין טענה לגילוי מהירות או כיוון מיידי כשהחיישנים אינם משתנים; L=d אינו בחוזה הראשי.",
+          "prompt": "### וריאציה: כיוון בול עץ קצר או ארוך ממרחק החיישנים\nשני חיישני נוכחות A משמאל ו־B מימין נמצאים במרחק d. כל אחד מחזיר 1 כשהעץ מכסה אותו. בנו FSM ופסאודו־קוד המדווחים פולס ימינה או שמאלה לאחר מעבר שלם, עבור L<d ועבור L>d.\n\nהשלמה הכרחית: עץ יחיד, חיישנים נקודתיים, דגימה של כל שינוי ללא החמצות, התחלה ידועה כשהעץ כולו מחוץ לשני החיישנים ואיפוס לפני בדיקה. עצירות מותרות. בגרסה הקצרה נדרשת תנועה מונוטונית במהלך מעבר; שינוי כיוון או ביטול מחייבים איפוס חיצוני במצב התחלתי ידוע. בגרסה הארוכה אפשר לעקוב גם אחרי חזרה דרך אזור החפיפה. אין טענה לגילוי מהירות או כיוון מיידי כשהחיישנים אינם משתנים; L=d אינו בחוזה הראשי.",
           "hints": [
-            "בעץ ארוך שתי הפעלות חופפות. בעץ קצר מופיע00 גם באמצע הדרך, ולכן הוא לא בהכרח מצב התחלה.",
+            "בעץ ארוך שתי הפעלות חופפות. בעץ קצר מופיע 00 גם באמצע הדרך, ולכן הוא לא בהכרח מצב התחלה.",
             "זכרו מי הופעל ראשון ומתי הופעל החיישן הנגדי. בדקו מה אפשר לדעת אם העץ הקצר מחליף כיוון בלי לשנות קריאה.",
-            "אפשר להשתמש בחמישה מצבי התקדמות: I,WAIT_B,EXIT_B,WAIT_A,EXIT_A. בעץ קצר00 בהמתנה נשמר; בעץ ארוך הוא ביטול חזרה."
+            "אפשר להשתמש בחמישה מצבי התקדמות: I,WAIT_B,EXIT_B,WAIT_A,EXIT_A. בעץ קצר 00 בהמתנה נשמר; בעץ ארוך הוא ביטול חזרה."
           ]
         }
       },
@@ -498,18 +498,18 @@
         "053_single_sensor_70": {
           "prompt": "### Extension: how many sensors, and what does “at every instant” mean?\nOnly one person traverses a hall entrance at a time. One or more passage detectors may be used; design occupancy counting and discuss failures. Clarification:no directional detector is supplied. Model each ordinary detector as presence in a sensing region without direction. Show why one detector cannot distinguish entry from exit. The original two ordered, overlapping, sampled sensors are one proposed solution. Define a counting boundary: update only on a completed full passage. If continuous location of a partially crossing person is required, define a physical boundary and semantics separately; binary presence observations alone do not promise that.",
           "hints": [
-            "Can one entry and one exit create the same0,1,0 trace at a single nondirectional detector?",
+            "Can one entry and one exit create the same 0,1,0 trace at a single nondirectional detector?",
             "Two ordered detectors reveal different activation order, but a person may pause or retreat.",
-            "Use the original full-passageFSM paths, not every edge. The phrase “at every instant” needs an explicit counting boundary."
+            "Use the original full-passage FSM paths, not every edge. The phrase “at every instant” needs an explicit counting boundary."
           ],
           "integration_status": ""
         },
         "1108b20_wood_short_long": {
-          "prompt": "### Variant: direction of wood shorter or longer than sensor spacing\nPresence sensors A on the left and B on the right are separated by d; each is1 while covered. Give an FSM and pseudocode that pulse right or left after a complete traversal for L<d and L>d.\n\nNecessary completion: one object, point sensors, every transition sampled without loss, known initial position fully outside both sensors and reset before testing. Pauses are allowed. The short version requires monotone motion during a traversal; reversal/abort requires external reset at a known initial boundary. The long version can also track returns through the overlap region. There is no claim of instantaneous velocity/direction when observations do not change; L=d is outside the primary contract.",
+          "prompt": "### Variant: direction of wood shorter or longer than sensor spacing\nPresence sensors A on the left and B on the right are separated by d; each is 1 while covered. Give an FSM and pseudocode that pulse right or left after a complete traversal for L<d and L>d.\n\nNecessary completion: one object, point sensors, every transition sampled without loss, known initial position fully outside both sensors and reset before testing. Pauses are allowed. The short version requires monotone motion during a traversal; reversal/abort requires external reset at a known initial boundary. The long version can also track returns through the overlap region. There is no claim of instantaneous velocity/direction when observations do not change; L=d is outside the primary contract.",
           "hints": [
-            "Long wood creates overlap; short wood produces00 between sensors, so00 is not automatically idle.",
+            "Long wood creates overlap; short wood produces 00 between sensors, so 00 is not automatically idle.",
             "Remember which sensor activated first and whether the opposite sensor has been reached. Consider an unseen short-object reversal.",
-            "Use five progress states I,WAIT_B,EXIT_B,WAIT_A,EXIT_A. Short-mode00 holds a waiting state; long-mode00 there aborts the attempt."
+            "Use five progress states I,WAIT_B,EXIT_B,WAIT_A,EXIT_A. Short-mode 00 holds a waiting state; long-mode 00 there aborts the attempt."
           ]
         }
       }
@@ -550,7 +550,7 @@
     },
     "verification": {
       "he": "חיפוש ממצה עם צמצום סימטריה בדק 2,436 מצבים נגישים ו־8,932 מעברים בכל מצבי ההתחלה המותרים. נבדקו שימור אסימונים, היעדר הכרזה כשמדווח טרם שלח, מכסת שתי שליחות ופעולה חוקית בכל ביקור. נוספו 400 ריצות אקראיות עם זיכרון אישי. זהו מודל פייתון; סימולציות סופיות אינן הוכחת סיום בכל סדר ואין ניסוי פיזי או אישור מומחה. הוכחת סיום משתמשת בנפרד בהנחת הוגנות.\n\nוריאציית 101 אסירים: 402 מצבים ידועים ו־82,404 לא ידועים; 1,196 ו־324,772 מעברים; 500 ריצות פרטניות. הוגנות נדרשת לסיום, ולא בוצע ניסוי פיזי.",
-      "en": "Exhaustive symmetry-reduced search covered 2,436 reachable states and 8,932 transitions across all allowed initial switch settings. It checked token conservation, no declaration with an unsignaled contributor, two-token allowance and legal action on every visit. Added 400 seeded individual-memory simulations. These are Python models, not physical trials or expert approval; finite simulations are not universal termination proof. The written liveness proof separately assumes fairness.\n\n101-prisoner variant:402 known-state and82,404 unknown-state aggregate states;1,196 and324,772 transitions;500 individual runs. Fairness is required for termination; no physical trial."
+      "en": "Exhaustive symmetry-reduced search covered 2,436 reachable states and 8,932 transitions across all allowed initial switch settings. It checked token conservation, no declaration with an unsignaled contributor, two-token allowance and legal action on every visit. Added 400 seeded individual-memory simulations. These are Python models, not physical trials or expert approval; finite simulations are not universal termination proof. The written liveness proof separately assumes fairness.\n\n101-prisoner variant:402 known-state and 82,404 unknown-state aggregate states;1,196 and 324,772 transitions;500 individual runs. Fairness is required for termination; no physical trial."
     },
     "edge_cases": {
       "he": [
@@ -691,11 +691,11 @@
     "verification": {
       "he": {
         "original": "חיפוש ממצה עם צמצום סימטריה בדק 921 מצבים נגישים ו־3,433 מעברים בכל מצבי ההתחלה המותרים. נבדקו שימור אסימונים, היעדר הכרזה כשמדווח טרם שלח, מכסת שתי שליחות ופעולה חוקית בכל ביקור. נוספו 200 ריצות אקראיות עם זיכרון אישי. זהו מודל פייתון; סימולציות סופיות אינן הוכחת סיום בכל סדר ואין ניסוי פיזי או אישור מומחה. הוכחת סיום משתמשת בנפרד בהנחת הוגנות.",
-        "hundred_prisoners": "עשר ריצות והגעה לחסם197 בהיעדר מדווח; הטיעון הכללי נשאר הוכחה."
+        "hundred_prisoners": "עשר ריצות והגעה לחסם 197 בהיעדר מדווח; הטיעון הכללי נשאר הוכחה."
       },
       "en": {
         "original": "Exhaustive symmetry-reduced search covered 921 reachable states and 3,433 transitions across all allowed initial switch settings. It checked token conservation, no declaration with an unsignaled contributor, two-token allowance and legal action on every visit. Added 200 seeded individual-memory simulations. These are Python models, not physical trials or expert approval; finite simulations are not universal termination proof. The written liveness proof separately assumes fairness.",
-        "hundred_prisoners": "Ten runs and the197 missing-contributor bound; the general argument remains a proof."
+        "hundred_prisoners": "Ten runs and the 197 missing-contributor bound; the general argument remains a proof."
       }
     },
     "edge_cases": {
@@ -748,7 +748,7 @@
         "initial_state": "המקור אינו קובע את מצב ההתחלה; הפתרון הראשי עובד גם במצב לא ידוע ומפריד את חלופת הכבוי הידוע.",
         "fairness": "אינסוף הזדמנויות או בחירה אקראית לא מפורטת אינם חסם זמן; ההנחה הנוספת היא שכל אסיר חוזר שוב ושוב.",
         "variant": "שני מתגים עם פעולת חובה אינם זהים לנורה אחת שאפשר להשאיר ללא שינוי.",
-        "hundred_prisoners": "מצב התחלתי לא נמסר ולכן הראשי אינו מניח כבוי. ההוגנות מופיעה במקור100 במפורש."
+        "hundred_prisoners": "מצב התחלתי לא נמסר ולכן הראשי אינו מניח כבוי. ההוגנות מופיעה במקור 100 במפורש."
       },
       "en": {
         "agreement": "Prior agreement and private memory are not fully specified in the source and are required by this strategy.",
@@ -773,24 +773,24 @@
     "prompt_variants": {
       "he": {
         "hundred_prisoners": {
-          "prompt": "וריאציה נוספת:100 אסירים, חדר עם מתג יחיד וביקורים חוזרים. מותר לשנות את המתג או להשאירו כפי שהוא. האסירים מתאמים תוכנית מראש, זוכרים רק את פעולותיהם ואינם מתקשרים בזמן התהליך. כל אסיר, כולל הסופר, מבקר אינסוף פעמים בהנחת ההוגנות הנתונה. מצב המתג ההתחלתי אינו ידוע. תכננו הכרזה בטוחה שכולם ביקרו, והוכיחו סיום תחת ההוגנות; אל תבטיחו חסם קבוע על מספר הביקורים. ציינו בנפרד מה מתקצר אם ידוע שהמתג כבוי בתחילה. גרסת21 האסירים המקורית נשמרת.",
+          "prompt": "וריאציה נוספת:100 אסירים, חדר עם מתג יחיד וביקורים חוזרים. מותר לשנות את המתג או להשאירו כפי שהוא. האסירים מתאמים תוכנית מראש, זוכרים רק את פעולותיהם ואינם מתקשרים בזמן התהליך. כל אסיר, כולל הסופר, מבקר אינסוף פעמים בהנחת ההוגנות הנתונה. מצב המתג ההתחלתי אינו ידוע. תכננו הכרזה בטוחה שכולם ביקרו, והוכיחו סיום תחת ההוגנות; אל תבטיחו חסם קבוע על מספר הביקורים. ציינו בנפרד מה מתקצר אם ידוע שהמתג כבוי בתחילה. גרסת 21 האסירים המקורית נשמרת.",
           "hints": [
-            "הפרידו בין אסיר אחד שסופר לבין99 שמדווחים, ובין ביקור לבין אות שניתן לאסוף.",
+            "הפרידו בין אסיר אחד שסופר לבין 99 שמדווחים, ובין ביקור לבין אות שניתן לאסוף.",
             "מתג דולק בתחילה עלול להוסיף לספירה אות שלא שייך לשום אסיר. איך מגבילים את התרומה של כל אסיר כדי להתגבר על אות כזה?",
-            "אפשרו לכל מדווח עד שני מעברי כבוי→דולק. הסופר בלבד מכבה וסופר עד198; אם מדווח אחד חסר, לכל היותר196 אותות אמיתיים ועוד אות התחלתי אחד."
+            "אפשרו לכל מדווח עד שני מעברי כבוי→דולק. הסופר בלבד מכבה וסופר עד 198; אם מדווח אחד חסר, לכל היותר 196 אותות אמיתיים ועוד אות התחלתי אחד."
           ],
-          "reference_solution": "### אותו פרוטוקול, מספר אסירים אחר\nממנים סופר אחד ו־99 מדווחים. כל מדווח זוכר אם שלח0,1 או2 אותות. אם הוא מוצא את המתג כבוי ועדיין לא שלח פעמיים, הוא מדליק ומגדיל את זיכרון השליחות; אחרת אינו משנה אותו. הסופר בלבד מכבה מתג דולק ומקדם מונה, ומכריז כשהגיע ל־198. ביקור סרק אינו נספר. אין חובה להזיז מתג בכל ביקור, ולכן אין צורך במתג סרק שני.\n\nאות דולק ממתין עד שהסופר אוסף אותו, ואחרים לא מוחקים אותו. מצב התחלתי דולק יכול להוסיף לכל היותר אות דמה אחד, כי הסופר מכבה אותו באיסוף הראשון. אילו אחד מ־99 המדווחים לא היה מבקר,98 האחרים היו שולחים לכל היותר פעמיים כל אחד. לכן:\n\n```text\ncount <= 2*98+1 = 197 < 198\n```\n\nמכאן ש־198 מוכיח שכל99 ביקרו; הסופר נמצא בחדר בעת ההכרזה, ולכן כל100 ביקרו. אין טענה שכל אחד דיווח פעמיים לפני ההכרזה: כאשר היה אות התחלתי, אחד יכול לדווח פעם אחת בלבד ועדיין להבטיח ביקור.\n\n### בטיחות וסיום הם טענות נפרדות\nהכרזה לעולם אינה שגויה, בכל סדר ביקורים. סיום דורש את ההוגנות שנמסרה: אם יש אות דולק הסופר יחזור ויאסוף; אם הוא כבוי ועדיין נדרשים אותות, יש מדווח שנותרו לו שליחות והוא יחזור. יש רק מספר סופי של שליחות ואיסופים מועילים, ולכן התהליך מסתיים בהוגנות, אף שאפשר לעכב כל צעד בהרבה ביקורי סרק. אין חסם קבוע על זמן או על מספר הביקורים. בדגימה אקראית בלתי תלויה ואחידה ההוגנות מתקיימת בהסתברות1; אין פירוש הדבר שכל רצף אינסופי אפשרי הוא הוגן.\n\nאם המתג ידוע כבוי בתחילה, מספיקה שליחה אחת מכל מדווח וספירה עד99. אין להשתמש בקיצור הזה במצב התחלתי לא ידוע. הסופר מחזיק מונה עד198, כל מדווח זיכרון של שלושה מצבים, והעבודה המקומית בכל ביקור קבועה. לא הוכח זמן צפוי מיטבי או מינימום מצבים.\n\nהמודל הקיים מקבל n=100 ומממש את ענף המצב הלא ידוע. הורצו עשר ריצות מחזוריות הוגנות עבור2,3,5,21,100 אסירים ובשני מצבי התחלה, ונבדק סדר עוין שבו מדווח אחד חסר והסופר נעצר ב־197. סיום לכל סדר הוגן נשען על ההוכחה ולא על המדגם."
+          "reference_solution": "### אותו פרוטוקול, מספר אסירים אחר\nממנים סופר אחד ו־99 מדווחים. כל מדווח זוכר אם שלח 0,1 או 2 אותות. אם הוא מוצא את המתג כבוי ועדיין לא שלח פעמיים, הוא מדליק ומגדיל את זיכרון השליחות; אחרת אינו משנה אותו. הסופר בלבד מכבה מתג דולק ומקדם מונה, ומכריז כשהגיע ל־198. ביקור סרק אינו נספר. אין חובה להזיז מתג בכל ביקור, ולכן אין צורך במתג סרק שני.\n\nאות דולק ממתין עד שהסופר אוסף אותו, ואחרים לא מוחקים אותו. מצב התחלתי דולק יכול להוסיף לכל היותר אות דמה אחד, כי הסופר מכבה אותו באיסוף הראשון. אילו אחד מ־99 המדווחים לא היה מבקר,98 האחרים היו שולחים לכל היותר פעמיים כל אחד. לכן:\n\n```text\ncount <= 2*98+1 = 197 < 198\n```\n\nמכאן ש־198 מוכיח שכל 99 ביקרו; הסופר נמצא בחדר בעת ההכרזה, ולכן כל 100 ביקרו. אין טענה שכל אחד דיווח פעמיים לפני ההכרזה: כאשר היה אות התחלתי, אחד יכול לדווח פעם אחת בלבד ועדיין להבטיח ביקור.\n\n### בטיחות וסיום הם טענות נפרדות\nהכרזה לעולם אינה שגויה, בכל סדר ביקורים. סיום דורש את ההוגנות שנמסרה: אם יש אות דולק הסופר יחזור ויאסוף; אם הוא כבוי ועדיין נדרשים אותות, יש מדווח שנותרו לו שליחות והוא יחזור. יש רק מספר סופי של שליחות ואיסופים מועילים, ולכן התהליך מסתיים בהוגנות, אף שאפשר לעכב כל צעד בהרבה ביקורי סרק. אין חסם קבוע על זמן או על מספר הביקורים. בדגימה אקראית בלתי תלויה ואחידה ההוגנות מתקיימת בהסתברות 1; אין פירוש הדבר שכל רצף אינסופי אפשרי הוא הוגן.\n\nאם המתג ידוע כבוי בתחילה, מספיקה שליחה אחת מכל מדווח וספירה עד 99. אין להשתמש בקיצור הזה במצב התחלתי לא ידוע. הסופר מחזיק מונה עד 198, כל מדווח זיכרון של שלושה מצבים, והעבודה המקומית בכל ביקור קבועה. לא הוכח זמן צפוי מיטבי או מינימום מצבים.\n\nהמודל הקיים מקבל n=100 ומממש את ענף המצב הלא ידוע. הורצו עשר ריצות מחזוריות הוגנות עבור 2,3,5,21,100 אסירים ובשני מצבי התחלה, ונבדק סדר עוין שבו מדווח אחד חסר והסופר נעצר ב־197. סיום לכל סדר הוגן נשען על ההוכחה ולא על המדגם."
         }
       },
       "en": {
         "hundred_prisoners": {
-          "prompt": "Additional variant:100 prisoners, one switch and repeated visits. A visitor may toggle or leave it unchanged. They agree beforehand, remember their own actions and do not communicate during the process. Every prisoner, including the counter, visits infinitely often under the supplied fairness premise. Initial switch state is unknown. Give a safe all-visited declaration and prove eventual termination under fairness without a fixed visit-count bound. Separately state what improves if the switch is known initially OFF. The original21-prisoner question remains unchanged.",
+          "prompt": "Additional variant:100 prisoners, one switch and repeated visits. A visitor may toggle or leave it unchanged. They agree beforehand, remember their own actions and do not communicate during the process. Every prisoner, including the counter, visits infinitely often under the supplied fairness premise. Initial switch state is unknown. Give a safe all-visited declaration and prove eventual termination under fairness without a fixed visit-count bound. Separately state what improves if the switch is known initially OFF. The original 21-prisoner question remains unchanged.",
           "hints": [
-            "Separate one counter from99 contributors, and a visit from a token that can be collected.",
+            "Separate one counter from 99 contributors, and a visit from a token that can be collected.",
             "An initially ON switch may contribute one phantom token. Bound each contributor’s lifetime reports to handle it.",
-            "Allow each contributor at most two OFF→ON reports. Only the counter clears and counts to198; a missing contributor leaves at most196 genuine reports plus one initial token."
+            "Allow each contributor at most two OFF→ON reports. Only the counter clears and counts to 198; a missing contributor leaves at most 196 genuine reports plus one initial token."
           ],
-          "reference_solution": "### Same protocol, different prisoner count\nChoose one counter and99 contributors. Each contributor remembers whether they sent0,1 or2 reports. On seeing OFF with unused allowance, turn ON and increment the private sent count; otherwise leave it unchanged. Only the counter turns an ON signal OFF and increments their counter, declaring at198. Idle visits are not reports. Toggling is optional, so no second dummy switch is needed.\n\nAn ON token persists until the counter collects it; other contributors do not erase it. An initially ON state contributes at most one phantom because the counter clears it on collection. If one of99 contributors had not visited, only98 could have sent at most twice:\n\n```text\ncount <= 2*98+1 = 197 < 198\n```\n\nThus198 proves all99 visited; the counter is present when declaring, so all100 visited. It does not prove everyone sent twice before declaring: with a phantom, one contributor may have sent only once, which still proves a visit.\n\n### Safety and termination are separate\nEvery declaration is safe under any visit order. Termination uses the stated fairness: an ON token is eventually collected by the returning counter; an OFF signal with more needed tokens eventually meets a contributor with unused allowance. Only finitely many productive sends/collections exist, so fair repeated visits finish the protocol, although arbitrarily many idle visits may delay a productive step. There is no fixed elapsed-time or visit-count bound. Independent uniform random visits are fair with probability one; not every conceivable infinite sequence is fair.\n\nIf the light is known initially OFF, one report each and99 collections suffice. Do not apply that shortcut to unknown initialization. The counter stores a count through198; each contributor has three local states; each visit takes constant local work. No expected-time or minimum-state optimality is claimed.\n\nThe existing model accepts n=100 and implements the unknown-start branch. Ten fair cyclic runs covered2,3,5,21,100 prisoners and both starting states; an adversarial schedule withholding one contributor stopped at197. General termination follows from the proof, not these examples. The original three21-prisoner hints stay in the existing queue; the hundred-prisoner hints are supplemental and are not automatically selected by variant."
+          "reference_solution": "### Same protocol, different prisoner count\nChoose one counter and 99 contributors. Each contributor remembers whether they sent 0,1 or 2 reports. On seeing OFF with unused allowance, turn ON and increment the private sent count; otherwise leave it unchanged. Only the counter turns an ON signal OFF and increments their counter, declaring at 198. Idle visits are not reports. Toggling is optional, so no second dummy switch is needed.\n\nAn ON token persists until the counter collects it; other contributors do not erase it. An initially ON state contributes at most one phantom because the counter clears it on collection. If one of 99 contributors had not visited, only 98 could have sent at most twice:\n\n```text\ncount <= 2*98+1 = 197 < 198\n```\n\nThus 198 proves all 99 visited; the counter is present when declaring, so all 100 visited. It does not prove everyone sent twice before declaring: with a phantom, one contributor may have sent only once, which still proves a visit.\n\n### Safety and termination are separate\nEvery declaration is safe under any visit order. Termination uses the stated fairness: an ON token is eventually collected by the returning counter; an OFF signal with more needed tokens eventually meets a contributor with unused allowance. Only finitely many productive sends/collections exist, so fair repeated visits finish the protocol, although arbitrarily many idle visits may delay a productive step. There is no fixed elapsed-time or visit-count bound. Independent uniform random visits are fair with probability one; not every conceivable infinite sequence is fair.\n\nIf the light is known initially OFF, one report each and 99 collections suffice. Do not apply that shortcut to unknown initialization. The counter stores a count through 198; each contributor has three local states; each visit takes constant local work. No expected-time or minimum-state optimality is claimed.\n\nThe existing model accepts n=100 and implements the unknown-start branch. Ten fair cyclic runs covered 2,3,5,21,100 prisoners and both starting states; an adversarial schedule withholding one contributor stopped at 197. General termination follows from the proof, not these examples. The original three 21-prisoner hints stay in the existing queue; the hundred-prisoner hints are supplemental and are not automatically selected by variant."
         }
       }
     }

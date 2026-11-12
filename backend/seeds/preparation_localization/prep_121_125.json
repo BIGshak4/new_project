@@ -39,8 +39,8 @@
       }
     },
     "verification": {
-      "he": "נבדקו ארבע שורות HA, כל 256 זוגות A,B, כל 1,024 משוואות העמודות, 768 מקרי בלעדיות נשאים ו־Ui=0, וחמש דחיות קלט. ההשוואה היא לחיבור שלמים עצמאי. מודל Python בלבד, ללא HDL, סינתזה או מדידה.\n\nכל4+8 השורות נבדקו מול סכום שלם, כולל הוכחת g·h=0 והיעדר שער OR חיצוני במודל.\n\nכל 4+8 השורות נבדקו מול סכום שלם, כולל הוכחת g·h=0 והיעדר שער OR חיצוני במודל.\n\nמודלים עצמאיים עברו: קובייה בחמישה ערכי התנגדות, 3,072 גשרי DC במתח שאינו אפס, דוגמת מתח אפס, 64 זוגות נגדי משוב ו־256 בדיקות הגבר סופי, עשר פאזות סינוס, 1,024 קלטי מכפיל, 256 קלטי ספירת אחדות, 256 זוגות חיבור וארבע שורות NAND. ראיה: checks/night1107n30-hardware-model-verification.json. בדיקות אלה הן Python וחישוב רציונלי; קומפילציית SystemVerilog מתועדת בנפרד בדוח native של האצווה. לא בוצעו SPICE, סינתזה, ניתוח תזמון או מדידת חומרה.\n\nבדיקת Icarus Verilog 12 בפועל עברה: 1,664 השוואות RTL באצוות החומרה, כולל כל קלטי המכפיל, ספירת אחדות וחיבור, כל שורות NAND ו־124 בדיקות לוח פאזה עם איפוס והשהיה. ראיה: checks/night1107n30-native-verification.json. ריצת הקוד הייתה בסביבה זמנית מבודדת ללא רשת; אין להסיק מכך SPICE או סינתזה.",
-      "en": "Checked four HA rows, all 256 A,B pairs, 1,024 column equations, 768 exclusive-carry/Ui=0 cases and five invalid inputs. Compared against independent integer addition. Python only; no HDL, synthesis or measurements.\n\nAll 4+8 truth rows checked against integer addition, including g·h=0 and no external OR in the model.\n\nAll 4+8 truth rows checked against integer addition, including g·h=0 and no external OR in the model.\n\nIndependent models passed: five cube resistance scales, 3,072 nonzero-source DC bridges plus a zero-source example, 64 feedback-resistor pairs and 256 finite-gain checks, ten sine phases, 1,024 multiplier inputs, 256 popcount inputs, 256 addition pairs and four NAND truth rows. Evidence: checks/night1107n30-hardware-model-verification.json. These are Python/exact-rational checks; SystemVerilog compilation is documented separately in the batch native report. No SPICE, synthesis, timing analysis or hardware measurement was performed.\n\nActual Icarus Verilog12 execution passed 1,664 hardware RTL comparisons, including all multiplier, popcount and adder inputs, all NAND rows and 124 phase-schedule checks with reset and hold. Evidence: checks/night1107n30-native-verification.json. Execution used a temporary isolated environment with networking denied; this is not SPICE or synthesis."
+      "he": "נבדקו ארבע שורות HA, כל 256 זוגות A,B, כל 1,024 משוואות העמודות, 768 מקרי בלעדיות נשאים ו־Ui=0, וחמש דחיות קלט. ההשוואה היא לחיבור שלמים עצמאי. מודל Python בלבד, ללא HDL, סינתזה או מדידה.\n\nכל 4+8 השורות נבדקו מול סכום שלם, כולל הוכחת g·h=0 והיעדר שער OR חיצוני במודל.\n\nכל 4+8 השורות נבדקו מול סכום שלם, כולל הוכחת g·h=0 והיעדר שער OR חיצוני במודל.\n\nמודלים עצמאיים עברו: קובייה בחמישה ערכי התנגדות, 3,072 גשרי DC במתח שאינו אפס, דוגמת מתח אפס, 64 זוגות נגדי משוב ו־256 בדיקות הגבר סופי, עשר פאזות סינוס, 1,024 קלטי מכפיל, 256 קלטי ספירת אחדות, 256 זוגות חיבור וארבע שורות NAND. ראיה: checks/night1107n30-hardware-model-verification.json. בדיקות אלה הן Python וחישוב רציונלי; קומפילציית SystemVerilog מתועדת בנפרד בדוח native של האצווה. לא בוצעו SPICE, סינתזה, ניתוח תזמון או מדידת חומרה.\n\nבדיקת Icarus Verilog 12 בפועל עברה: 1,664 השוואות RTL באצוות החומרה, כולל כל קלטי המכפיל, ספירת אחדות וחיבור, כל שורות NAND ו־124 בדיקות לוח פאזה עם איפוס והשהיה. ראיה: checks/night1107n30-native-verification.json. ריצת הקוד הייתה בסביבה זמנית מבודדת ללא רשת; אין להסיק מכך SPICE או סינתזה.",
+      "en": "Checked four HA rows, all 256 A,B pairs, 1,024 column equations, 768 exclusive-carry/Ui=0 cases and five invalid inputs. Compared against independent integer addition. Python only; no HDL, synthesis or measurements.\n\nAll 4+8 truth rows checked against integer addition, including g·h=0 and no external OR in the model.\n\nAll 4+8 truth rows checked against integer addition, including g·h=0 and no external OR in the model.\n\nIndependent models passed: five cube resistance scales, 3,072 nonzero-source DC bridges plus a zero-source example, 64 feedback-resistor pairs and 256 finite-gain checks, ten sine phases, 1,024 multiplier inputs, 256 popcount inputs, 256 addition pairs and four NAND truth rows. Evidence: checks/night1107n30-hardware-model-verification.json. These are Python/exact-rational checks; SystemVerilog compilation is documented separately in the batch native report. No SPICE, synthesis, timing analysis or hardware measurement was performed.\n\nActual Icarus Verilog 12 execution passed 1,664 hardware RTL comparisons, including all multiplier, popcount and adder inputs, all NAND rows and 124 phase-schedule checks with reset and hold. Evidence: checks/night1107n30-native-verification.json. Execution used a temporary isolated environment with networking denied; this is not SPICE or synthesis."
     },
     "edge_cases": {
       "he": [
@@ -51,7 +51,7 @@
         "Ui הוא Carry של HA האיחוד ואפס תמיד; C(i+1) מגיע דווקא ממוצא Sum שלו.",
         "A=B=1: g=1, h=0.",
         "Cin=1 ו־A≠B: h=1, g=0.",
-        "שלוש כניסות1 נותנות S=1, Cout=1.",
+        "שלוש כניסות 1 נותנות S=1, Cout=1.",
         "A=B=1: g=1, h=0.",
         "Cin=1 ו־A≠B: h=1, g=0.",
         "שלוש כניסות 1 נותנות S=1, Cout=1.",
@@ -117,7 +117,7 @@
         "המקור אינו מציין סימן, נשא חיצוני או רוחב תוצאה; נבחרו קלטים ללא סימן ותוצאה מלאה ללא Cin.",
         "נבחר מעגל צירופי; לא נתבקשו שעון או אחסון.",
         "Apple מופיעה במקור; השיוך מדווח ולא אומת עצמאית.",
-        "„2” בצילום מייצג סעיף2, לא „שני שערים בלבד”.",
+        "„2” בצילום מייצג סעיף 2, לא „שני שערים בלבד”.",
         "„2” בצילום מייצג סעיף 2, לא „שני שערים בלבד”.",
         "המקור אינו מציין Cin או סימן; ההשלמה הוצהרה בלי לשנות את חלק HA בלבד."
       ],
@@ -144,7 +144,7 @@
         },
         {
           "question": "למה אי אפשר להחליף כל OR ב־XOR?",
-          "answer_direction": "החלפה מותרת כאן רק משום שהוכח ששתי כניסות הנשאים אינן1 יחד.",
+          "answer_direction": "החלפה מותרת כאן רק משום שהוכח ששתי כניסות הנשאים אינן 1 יחד.",
           "principle": "שקילות תחת אינווריאנט אינה שקילות כללית."
         },
         {
@@ -182,7 +182,7 @@
         {
           "question": "How do you add Cin?",
           "direction": "Replace the first HA with an FA taking Cin.",
-          "tests": "Check 0+0+1 and15+15+1."
+          "tests": "Check 0+0+1 and 15+15+1."
         }
       ]
     },
@@ -215,7 +215,7 @@
           "prompt": "### Additional elementary source parts\nA. Implement a half adder using logic gates. B. Implement a full adder using HAs only. The source’s “2” enumerates its second part; it is not a two-gate budget. Part A allows XOR and AND primitives. Part B permits only HA cells, wires and fanout, with no external OR. Inputs/outputs are active-high and the FA has Cin. The original four-bit construction is retained.",
           "hints": [
             "A half adder preserves A+B=S+2 C.",
-            "Two HAs give the final sum and two carries. Can both carries be1 simultaneously?",
+            "Two HAs give the final sum and two carries. Can both carries be 1 simultaneously?",
             "g=A·B and h=(A XOR B)·Cin are mutually exclusive. Their OR equals XOR, so a third HA can combine them."
           ],
           "integration_status": ""
@@ -438,8 +438,8 @@
       "en": [
         "Retain return food before depositing cargo; no free return travel.",
         "At exactly 2000 or 1000 stock, the load count decreases immediately.",
-        "The integer plan has 1001 at km533; never load more than 1000.",
-        "A km533⅓ cache is unavailable in the integer-station model."
+        "The integer plan has 1001 at km 533; never load more than 1000.",
+        "A km 533⅓ cache is unavailable in the integer-station model."
       ]
     },
     "common_mistakes": {
@@ -458,7 +458,7 @@
     },
     "interview_answer": {
       "he": "שלושה מטענים דורשים 5 חציות לק״מ עד שנותרות 2000 בקילומטר 200. שני מטענים דורשים 3 עד שנותרות 1000 בקילומטר 533⅓. מכאן הליכה אחת משאירה 533⅓. לשלמים משתמשים ב־533, משאירים אחת ומוסרים 533. חסם חציות לכל חתך מוכיח שאין שיפור.",
-      "en": "Three loads cost five crossings/km until 2000 remain at km200. Two cost three until 1000 remain at km533⅓. One final trip delivers 533⅓. For whole fruit stop at533, leave one and deliver533. A cut-crossing bound excludes improvement."
+      "en": "Three loads cost five crossings/km until 2000 remain at km 200. Two cost three until 1000 remain at km 533⅓. One final trip delivers 533⅓. For whole fruit stop at 533, leave one and deliver 533. A cut-crossing bound excludes improvement."
     },
     "source_ambiguities": {
       "he": "המקור אינו מפרט מחסנים, טעינה, חלוקת בננות, תחנות שבריות, מזון חלופי או חזרת סיום. ההנחות הוספו בגלוי; ללא הגדרת מודל אין להצמיד תשובה שברית לכל קריאה של המקור.",

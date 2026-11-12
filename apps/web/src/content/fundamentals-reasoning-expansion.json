@@ -3,15 +3,15 @@
     "id": "quick-sw-61",
     "topic": "reasoning",
     "title": {"he": "אמצע של נקודות שלמות", "en": "Midpoints of integer points"},
-    "prompt": {"he": "מתי אמצע הקטע בין שתי נקודות עם קואורדינטות שלמות הוא גם נקודה שלמה? בדקו את (2,5) ו־(8,1). האם צריך לבדוק רק את סכום כל הקואורדינטות?", "en": "When is the midpoint of two integer-coordinate points also an integer-coordinate point? Check (2,5) and (8,1). Is checking the sum of all coordinates enough?"},
-    "answer": {"he": "בכל קואורדינטה בנפרד, שני הערכים צריכים להיות באותה זוגיות. כאן האמצע הוא (5,3). סכום כולל זוגי אינו מספיק: ל־(1,2) ול־(2,1) סכום כולל 6, אבל האמצע הוא (1.5,1.5).", "en": "The two values must have the same parity in every coordinate separately. Here the midpoint is (5,3). An even total sum is insufficient: (1,2) and (2,1) total 6, but their midpoint is (1.5,1.5)."},
+    "prompt": {"he": "מתי אמצע הקטע בין שתי נקודות עם קואורדינטות שלמות הוא גם נקודה שלמה? בדקו את (2, 5) ו־(8, 1). האם צריך לבדוק רק את סכום כל הקואורדינטות?", "en": "When is the midpoint of two integer-coordinate points also an integer-coordinate point? Check (2, 5) and (8, 1). Is checking the sum of all coordinates enough?"},
+    "answer": {"he": "בכל קואורדינטה בנפרד, שני הערכים צריכים להיות באותה זוגיות. כאן האמצע הוא (5, 3). סכום כולל זוגי אינו מספיק: ל־(1, 2) ול־(2, 1) סכום כולל 6, אבל האמצע הוא (1.5, 1.5).", "en": "The two values must have the same parity in every coordinate separately. Here the midpoint is (5, 3). An even total sum is insufficient: (1, 2) and (2, 1) total 6, but their midpoint is (1.5, 1.5)."},
     "takeaway": {"he": "דרישה וקטורית חייבת להתקיים בכל קואורדינטה, ולא רק בסכום הכולל.", "en": "A coordinate-wise requirement must hold in every coordinate, not merely in the total."}
   },
   {
     "id": "quick-sw-62",
     "topic": "reasoning",
     "title": {"he": "שתי בדיקות במקביל", "en": "Two tests in parallel"},
-    "prompt": {"he": "בדיוק בקבוק אחד מבין A,B,C,D מזוהם. בדיקת תערובת חיובית בדיוק כשיש בה מהבקבוק המזוהם. מותר לערבב דגימות. כיצד שתי בדיקות במקביל יזהו את הבקבוק?", "en": "Exactly one of bottles A,B,C,D is contaminated. A pooled test is positive exactly when it contains a sample from the contaminated bottle. Mixing is allowed. How can two simultaneous tests identify the bottle?"},
+    "prompt": {"he": "בדיוק בקבוק אחד מבין A, B, C, D מזוהם. בדיקת תערובת חיובית בדיוק כשיש בה מהבקבוק המזוהם. מותר לערבב דגימות. כיצד שתי בדיקות במקביל יזהו את הבקבוק?", "en": "Exactly one of bottles A, B, C, D is contaminated. A pooled test is positive exactly when it contains a sample from the contaminated bottle. Mixing is allowed. How can two simultaneous tests identify the bottle?"},
     "answer": {"he": "בודקים תערובת B+D ותערובת C+D. לפי הסדר הזה, התוצאות שלילית־שלילית מצביעות על A, חיובית־שלילית על B, שלילית־חיובית על C, וחיובית־חיובית על D. גם A, שאינו נבדק ישירות, מקבל חתימה ייחודית.", "en": "Test pools B+D and C+D. In that order, negative-negative identifies A, positive-negative identifies B, negative-positive identifies C, and positive-positive identifies D. Even A, which is not sampled directly, has a unique signature."},
     "takeaway": {"he": "תכננו חתימת תוצאות שונה לכל אפשרות, כולל חתימה שכולה שלילית.", "en": "Give every possibility a distinct outcome signature, including the all-negative signature."}
   },
@@ -51,7 +51,7 @@
     "id": "quick-sw-67",
     "topic": "reasoning",
     "title": {"he": "זוגות חוקיים שמסתיימים במבוי סתום", "en": "Legal pairs can reach a dead end"},
-    "prompt": {"he": "במחרוזת ספרות מותרות רק הזוגות הסמוכים 12 ו־23. המחרוזת חייבת להתחיל ב־1. האם אפשר לבנות מחרוזת באורך ארבע? מותר לחזור על ספרות אם הכללים מאפשרים.", "en": "A digit string may contain only adjacent pairs 12 and 23. It must start with 1. Can a length-four string be built? Repeating digits is allowed whenever the rules permit it."},
+    "prompt": {"he": "במחרוזת ספרות מותרים רק הזוגות הסמוכים 12 ו־23. המחרוזת חייבת להתחיל ב־1. האם אפשר לבנות מחרוזת באורך ארבע? מותר לחזור על ספרות אם הכללים מאפשרים.", "en": "A digit string may contain only adjacent pairs 12 and 23. It must start with 1. Can a length-four string be built? Repeating digits is allowed whenever the rules permit it."},
     "answer": {"he": "לא. אחרי 1 מוכרחים לכתוב 2, ואחריו 3. אין זוג מותר שמתחיל ב־3, ולכן אי אפשר להוסיף ספרה רביעית. נוח לצייר חצים 1→2→3 ולחפש המשך.", "en": "No. After 1 you must write 2, then 3. No allowed pair starts with 3, so no fourth digit can follow. Draw arrows 1→2→3 and look for a continuation."},
     "takeaway": {"he": "חוק מקומי מתורגם לחצים; בנייה ארוכה דורשת מסלול ארוך מספיק.", "en": "Translate a local rule into arrows; a long construction needs a sufficiently long path."}
   },
@@ -59,7 +59,7 @@
     "id": "quick-sw-68",
     "topic": "reasoning",
     "title": {"he": "למה שמונה הוא מצב מפסיד?", "en": "Why eight is a losing position"},
-    "prompt": {"he": "במשחק מתחילים כעת מסכום 8. כל שחקן בתורו מוסיף 1,2 או 3. מי שמגיע בדיוק ל־12 מנצח, ואסור לעבור אותו. האם מי שתורו כעת יכול להבטיח ניצחון?", "en": "A game currently has total 8. Players alternate adding 1,2, or 3. Reaching exactly 12 wins; overshooting is forbidden. Can the player whose turn it is now force a win?"},
+    "prompt": {"he": "במשחק מתחילים כעת מסכום 8. כל שחקן בתורו מוסיף 1, 2 או 3. מי שמגיע בדיוק ל־12 מנצח, ואסור לעבור אותו. האם מי שתורו כעת יכול להבטיח ניצחון?", "en": "A game currently has total 8. Players alternate adding 1, 2, or 3. Reaching exactly 12 wins; overshooting is forbidden. Can the player whose turn it is now force a win?"},
     "answer": {"he": "לא. אם יוסיף x, היריב יוסיף 4−x ויגיע ל־12. לכל מהלך חוקי יש ליריב תשובה מנצחת. לכן בחינת מהלך נוח אחד אינה מספיקה כדי להוכיח אסטרטגיה מנצחת.", "en": "No. If the player adds x, the opponent adds 4−x and reaches 12. Every legal first move has a winning reply. Finding one convenient sequence is therefore insufficient to prove a winning strategy."},
     "takeaway": {"he": "אסטרטגיה מבטיחה תוצאה רק אם היא עובדת מול כל תגובה חוקית של היריב.", "en": "A strategy guarantees an outcome only if it works against every legal opponent response."}
   },
@@ -68,7 +68,7 @@
     "topic": "reasoning",
     "title": {"he": "מהירות של זוג במנהרה", "en": "A pair's tunnel time"},
     "prompt": {"he": "אדם א׳ חוצה מנהרה ב־2 דקות, ואדם ב׳ ב־7 דקות. הם חוצים יחד בקצב האיטי, ואחר כך א׳ חוזר לבד עם הפנס. כמה זמן עבר עד סוף החזרה?", "en": "Person A crosses a tunnel in 2 minutes and B in 7. They cross together at the slower pace, then A returns alone with the torch. How much time has elapsed when the return ends?"},
-    "answer": {"he": "9 דקות: החצייה המשותפת אורכת max(2,7)=7 דקות, והחזרה עוד 2. לא מחברים 2+7 עבור החצייה יחד, כי שני האנשים נעים במקביל.", "en": "9 minutes: the shared crossing takes max(2,7)=7 minutes, and the return takes another 2. Do not add 2+7 for the shared crossing, because both people move simultaneously."},
+    "answer": {"he": "9 דקות: החצייה המשותפת אורכת max(2, 7)=7 דקות, והחזרה עוד 2. לא מחברים 2+7 עבור החצייה יחד, כי שני האנשים נעים במקביל.", "en": "9 minutes: the shared crossing takes max(2, 7)=7 minutes, and the return takes another 2. Do not add 2+7 for the shared crossing, because both people move simultaneously."},
     "takeaway": {"he": "הגדירו את העלות של פעולה משותפת לפני שמחברים עלויות לאורך תוכנית.", "en": "Define the cost of a joint action before adding costs across a schedule."}
   },
   {
@@ -85,7 +85,7 @@
     "title": {"he": "לפחות ראש אחד", "en": "At least one head"},
     "prompt": {"he": "מטילים מטבע הוגן שלוש פעמים באופן בלתי תלוי. מה ההסתברות לקבל לפחות ראש אחד? נסו לחשב דרך המקרה המשלים.", "en": "Toss a fair coin three independent times. What is the probability of at least one head? Try using the complementary event."},
     "answer": {"he": "7/8. המקרה המשלים הוא שלוש פעמים זנב, והסתברותו 1/8. לכן ההסתברות המבוקשת היא 1−1/8. כך נמנעים מחיבור נפרד של המקרים עם ראש אחד, שניים או שלושה.", "en": "7/8. The complement is three tails, with probability 1/8. Subtract from one: 1−1/8. This avoids separately adding the cases with one, two, and three heads."},
-    "takeaway": {"he": "כשמבקשים ״לפחות אחד״, לעיתים קל יותר לחשב ״אף אחד״ ולחסר מאחד.", "en": "For “at least one,” calculating “none” and subtracting from one is often simpler."}
+    "takeaway": {"he": "כשמבקשים ״לפחות אחד״, לעיתים קל יותר לחשב ״אף אחד״ ולחסר מאחד.", "en": "For “at least one, ” calculating “none” and subtracting from one is often simpler."}
   },
   {
     "id": "quick-sw-72",
@@ -140,7 +140,7 @@
     "topic": "reasoning",
     "title": {"he": "בדיקה שמכלה את הכלי", "en": "A test that consumes its tool"},
     "prompt": {"he": "יש כדור זכוכית אחד ובניין בן ארבע קומות. קיימת קומת שבירה: ממנה ומעלה הכדור נשבר, ומתחתיה לא. ייתכן שאינו נשבר כלל. אחרי שבירה אין כדור נוסף. איך מזהים את המקרה בוודאות, וכמה הפלות נדרשות במקרה הגרוע?", "en": "You have one glass ball and four floors. A threshold floor breaks it from that floor upward; lower floors do not. It may never break. No replacement follows breakage. How can you identify the case with certainty, and how many drops are needed in the worst case?"},
-    "answer": {"he": "בודקים מלמטה למעלה: 1,2,3,4, עד שבירה או עד הסוף. במקרה הגרוע נדרשות 4 הפלות. דילוג על קומה לא בדוקה מסוכן: אם הכדור יישבר מעליה, לא יישאר כלי שיבדיל בין קומות השבירה האפשריות.", "en": "Test upward: 1,2,3,4, stopping on breakage or after the last floor. The worst case takes 4 drops. Skipping an untested floor is unsafe: if the ball breaks above it, no tool remains to distinguish the possible threshold floors."},
+    "answer": {"he": "בודקים מלמטה למעלה: 1, 2, 3, 4, עד שבירה או עד הסוף. במקרה הגרוע נדרשות 4 הפלות. דילוג על קומה לא בדוקה מסוכן: אם הכדור יישבר מעליה, לא יישאר כלי שיבדיל בין קומות השבירה האפשריות.", "en": "Test upward: 1, 2, 3, 4, stopping on breakage or after the last floor. The worst case takes 4 drops. Skipping an untested floor is unsafe: if the ball breaks above it, no tool remains to distinguish the possible threshold floors."},
     "takeaway": {"he": "בחירת בדיקה צריכה להתחשב גם במידע שתקבלו וגם במשאבים שיישארו אחריה.", "en": "Choose a test by both the information gained and the resources left afterward."}
   },
   {
@@ -179,7 +179,7 @@
     "id": "quick-sw-83",
     "topic": "reasoning",
     "title": {"he": "נקודת מפגש שמקטינה מרחקים", "en": "A meeting point minimizing distance"},
-    "prompt": {"he": "שלושה בתים נמצאים על ישר בנקודות 0,4,10. בוחרים נקודת מפגש על אותו ישר. היכן סכום מרחקי ההליכה של שלושתם יהיה הקטן ביותר?", "en": "Three houses lie on a line at 0,4,10. Choose a meeting point on the same line. Where is the sum of all three walking distances smallest?"},
+    "prompt": {"he": "שלושה בתים נמצאים על ישר בנקודות 0, 4, 10. בוחרים נקודת מפגש על אותו ישר. היכן סכום מרחקי ההליכה של שלושתם יהיה הקטן ביותר?", "en": "Three houses lie on a line at 0, 4, 10. Choose a meeting point on the same line. Where is the sum of all three walking distances smallest?"},
     "answer": {"he": "ב־4. בין 0 ל־10, סכום המרחקים משני הקצוות תמיד 10; נשאר למזער את המרחק מהבית האמצעי, והוא אפס ב־4. מחוץ לקטע גם סכום מרחקי הקצוות גדל. הסכום המינימלי הוא 10.", "en": "At 4. Between 0 and 10, distances from the two endpoints always sum to 10; the middle house adds least at 4, where its distance is zero. Outside the interval even the endpoint sum grows. The minimum total is 10."},
     "takeaway": {"he": "במזעור סכום מרחקים על ישר, החציון שונה לעיתים מהממוצע.", "en": "For minimizing total distance on a line, the median can differ from the mean."}
   },
@@ -211,7 +211,7 @@
     "id": "quick-sw-87",
     "topic": "reasoning",
     "title": {"he": "הבחירה הגדולה אינה תמיד הטובה", "en": "The largest choice is not always best"},
-    "prompt": {"he": "צריך לשלם בדיוק 6 בעזרת מטבעות בערכים 1,3,4, עם מלאי בלתי מוגבל. המטרה היא להשתמש בכמה שפחות מטבעות. האם בחירת המטבע הגדול ביותר שאינו עובר את הסכום שנותר תמיד נותנת פתרון מיטבי?", "en": "Pay exactly 6 using unlimited coins of values 1,3,4. Minimize the number of coins. Does repeatedly choosing the largest coin that fits the remaining amount always give an optimal solution?"},
+    "prompt": {"he": "צריך לשלם בדיוק 6 בעזרת מטבעות בערכים 1, 3, 4, עם מלאי בלתי מוגבל. המטרה היא להשתמש בכמה שפחות מטבעות. האם בחירת המטבע הגדול ביותר שאינו עובר את הסכום שנותר תמיד נותנת פתרון מיטבי?", "en": "Pay exactly 6 using unlimited coins of values 1, 3, 4. Minimize the number of coins. Does repeatedly choosing the largest coin that fits the remaining amount always give an optimal solution?"},
     "answer": {"he": "לא. השיטה בוחרת 4 ואז 1 ואז 1: שלושה מטבעות. אבל 3+3 משלם בשני מטבעות בלבד. מטבע יחיד אינו מספיק כי אין מטבע בערך 6, ולכן שניים הוא המינימום.", "en": "No. The rule chooses 4, then 1, then 1: three coins. But 3+3 pays with just two coins. One coin cannot suffice because no coin has value 6, so two is optimal."},
     "takeaway": {"he": "בחירה שנראית הכי טובה עכשיו דורשת הוכחה לפני שמכריזים שהיא טובה לכל התהליך.", "en": "A locally attractive choice needs a proof before it can be called globally optimal."}
   },
@@ -221,6 +221,6 @@
     "title": {"he": "העדפות במעגל", "en": "Preferences in a cycle"},
     "prompt": {"he": "במשחק, אדום מנצח ירוק, ירוק מנצח כחול וכחול מנצח אדום. האם אפשר לסדר את שלושתם בשורה כך שכל צבע ינצח כל צבע שמופיע אחריו?", "en": "In a game, red beats green, green beats blue, and blue beats red. Can all three be ordered in a line so that every color beats every color appearing later?"},
     "answer": {"he": "לא. כל צבע שתשימו ראשון מפסיד לאחד משני הצבעים האחרים, שיהיה חייב להופיע אחריו. היחס יוצר מעגל ואינו יחס סדר מהסוג שמהירויות שונות של סוסים מגדירות.", "en": "No. Whichever color goes first loses to one of the other colors, which must appear later. The relation forms a cycle and is not an ordering relation like distinct fixed horse speeds."},
-    "takeaway": {"he": "לפני מיון לפי ״מנצח״ או ״עדיף״, ודאו שהיחס עקבי ואינו מעגלי.", "en": "Before sorting by “beats” or “preferred,” check that the relation is consistent and acyclic."}
+    "takeaway": {"he": "לפני מיון לפי ״מנצח״ או ״עדיף״, ודאו שהיחס עקבי ואינו מעגלי.", "en": "Before sorting by “beats” or “preferred, ” check that the relation is consistent and acyclic."}
   }
 ]

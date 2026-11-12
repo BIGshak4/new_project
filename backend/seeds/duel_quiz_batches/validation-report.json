@@ -238,6 +238,84 @@
       "review": "AI bilingual equivalence review; not human approval"
     },
     {
+      "key": "quick-hw-11-v1",
+      "field": "prompt",
+      "he": {
+        "00010011": 1,
+        "8": 1
+      },
+      "en": {
+        "00010011": 1,
+        "1": 1,
+        "8": 1
+      },
+      "disposition": "Hebrew spells one bit as ביט אחד; English uses 1 bit. The eight-bit shift, value and width are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-11-v2",
+      "field": "prompt",
+      "he": {
+        "01000111": 1,
+        "8": 1
+      },
+      "en": {
+        "01000111": 1,
+        "1": 1,
+        "8": 1
+      },
+      "disposition": "Hebrew spells one bit as ביט אחד; English uses 1 bit. The eight-bit shift, value and width are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-11-v4",
+      "field": "prompt",
+      "he": {
+        "10000001": 1,
+        "8": 1
+      },
+      "en": {
+        "10000001": 1,
+        "1": 1,
+        "8": 1
+      },
+      "disposition": "Hebrew spells one bit as ביט אחד; English uses 1 bit. The eight-bit shift, value and width are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-149-v2",
+      "field": "prompt",
+      "he": {
+        "2": 1
+      },
+      "en": {
+        "1": 1,
+        "2": 1
+      },
+      "disposition": "Hebrew spells a one-cycle operand as מחזור אחד; English uses 1 cycle. All latency operands and the final fraction are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-149-v5",
+      "field": "prompt",
+      "he": {},
+      "en": {
+        "1": 2
+      },
+      "disposition": "Hebrew spells a one-cycle operand as מחזור אחד; English uses 1 cycle. All latency operands and the final fraction are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-158-v5",
+      "field": "prompt",
+      "he": {},
+      "en": {
+        "1": 1
+      },
+      "disposition": "Hebrew spells the one data bit as ביט אחד; English uses 1 data bit. Both retain one parity bit and one flipped data bit.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
       "key": "quick-hw-20-v1",
       "field": "prompt",
       "he": {
@@ -333,6 +411,41 @@
         "0": 2
       },
       "disposition": "Hebrew active at 1 equals English active high.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-233-v4",
+      "field": "prompt",
+      "he": {
+        "1": 1
+      },
+      "en": {
+        "1": 2
+      },
+      "disposition": "Hebrew spells one bit as ביט אחד; English uses 1 bit. Both describe the same single-bit state components.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-238-v2",
+      "field": "prompt",
+      "he": {
+        "4": 1
+      },
+      "en": {
+        "1": 1,
+        "4": 1
+      },
+      "disposition": "Hebrew spells a one-bit operand as ביט אחד; English uses 1 bit. All bit-width operands and register counts are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-238-v5",
+      "field": "prompt",
+      "he": {},
+      "en": {
+        "1": 2
+      },
+      "disposition": "Hebrew spells a one-bit operand as ביט אחד; English uses 1 bit. All bit-width operands and register counts are identical.",
       "review": "AI bilingual equivalence review; not human approval"
     },
     {
@@ -696,6 +809,38 @@
       "review": "AI bilingual equivalence review; not human approval"
     },
     {
+      "key": "quick-hw-49-v1",
+      "field": "prompt",
+      "he": {
+        "3": 2,
+        "0": 1,
+        "1": 1
+      },
+      "en": {
+        "3": 2,
+        "0": 1,
+        "1": 2
+      },
+      "disposition": "Hebrew spells the single rising edge as חזית אחת; English uses 1 rising edge. The register values and clock count are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-49-v4",
+      "field": "prompt",
+      "he": {
+        "5": 2,
+        "0": 1,
+        "1": 1
+      },
+      "en": {
+        "5": 2,
+        "0": 1,
+        "1": 2
+      },
+      "disposition": "Hebrew spells the single rising edge as חזית אחת; English uses 1 rising edge. The register values and clock count are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
       "key": "quick-hw-52-v1",
       "field": "prompt",
       "he": {
@@ -792,6 +937,48 @@
         "5": 1
       },
       "disposition": "Hebrew explicitly says increases by 1; English increments has the same meaning.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-60-v1",
+      "field": "prompt",
+      "he": {
+        "2": 1,
+        "00": 3,
+        "01": 1,
+        "10": 1,
+        "11": 2
+      },
+      "en": {
+        "2": 1,
+        "00": 3,
+        "01": 1,
+        "10": 1,
+        "11": 2,
+        "1": 1
+      },
+      "disposition": "Hebrew spells one rising edge as חזית עולה אחת; English uses 1 rising edge. Both describe the same modulo-counter recovery.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-60-v3",
+      "field": "prompt",
+      "he": {
+        "2": 1,
+        "00": 2,
+        "01": 2,
+        "10": 1,
+        "11": 2
+      },
+      "en": {
+        "2": 1,
+        "00": 2,
+        "01": 2,
+        "10": 1,
+        "11": 2,
+        "1": 1
+      },
+      "disposition": "Hebrew spells one rising edge as חזית עולה אחת; English uses 1 rising edge. Both describe the same modulo-counter recovery.",
       "review": "AI bilingual equivalence review; not human approval"
     },
     {
@@ -961,6 +1148,92 @@
       },
       "disposition": "Hebrew complement to 2 equals English two's complement.",
       "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-hw-90-v1",
+      "field": "prompt",
+      "he": {
+        "1": 2,
+        "0": 1
+      },
+      "en": {
+        "1": 3,
+        "0": 1
+      },
+      "disposition": "Hebrew spells one cycle as מחזור אחד; English uses 1 cycle. The sampled waveform and timing parameters are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-sw-141-v1",
+      "field": "prompt",
+      "he": {
+        "3": 1,
+        "1": 1
+      },
+      "en": {
+        "3": 1,
+        "1": 2
+      },
+      "disposition": "Hebrew spells a cooling rate of one degree as מעלה אחת; English uses 1 degree. Both specify the same unknown rate and cooling model.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-sw-141-v2",
+      "field": "prompt",
+      "he": {
+        "3": 1,
+        "1": 2
+      },
+      "en": {
+        "3": 1,
+        "1": 3
+      },
+      "disposition": "Hebrew spells a cooling rate of one degree as מעלה אחת; English uses 1 degree. Both specify the same unknown rate and cooling model.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-sw-141-v3",
+      "field": "prompt",
+      "he": {
+        "3": 2,
+        "1": 1,
+        "4": 1
+      },
+      "en": {
+        "3": 2,
+        "1": 2,
+        "4": 1
+      },
+      "disposition": "Hebrew spells a cooling rate of one degree as מעלה אחת; English uses 1 degree. Both specify the same unknown rate and cooling model.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-sw-141-v4",
+      "field": "prompt",
+      "he": {
+        "3": 1,
+        "1": 2,
+        "2": 1
+      },
+      "en": {
+        "3": 1,
+        "1": 3,
+        "2": 1
+      },
+      "disposition": "Hebrew spells a cooling rate of one degree as מעלה אחת; English uses 1 degree. Both specify the same unknown rate and cooling model.",
+      "review": "AI bilingual equivalence review; not human approval"
+    },
+    {
+      "key": "quick-sw-160-v2",
+      "field": "prompt",
+      "he": {
+        "1": 1
+      },
+      "en": {
+        "1": 2
+      },
+      "disposition": "Hebrew spells one red hat as כובע אדום אחד; English uses 1 hat. The public lower bound and first-round index are identical.",
+      "review": "AI bilingual equivalence review; not human approval"
     }
   ],
   "unresolved_number_flags": 0,
@@ -969,19 +1242,19 @@
   "approved_variants": 2500,
   "release_authorization": "Harel requested live publication on 2026-10-29 and expansions under the protocols on 2026-10-30 and 2026-10-31",
   "source_sha256": {
-    "fundamentals-hardware.json": "f31081dbdb9d683eee9c3ce1bce8f03266a0190187447aae91533c00e24807c2",
-    "fundamentals-code-logic.json": "9cf619589a0cb94640b96f33e7b806a0e18886971d1c26b39248f644c09f3772",
-    "fundamentals-hardware-expansion.json": "9888d4fdd1a38d8028967da5766b76ecfc392d8b6226f6c892fbb85e2383a171",
-    "fundamentals-reasoning-expansion.json": "fd4e0d25f2f860aaa089d3fd04d5931d89cb119154d6a528e7361c397350ab92",
-    "fundamentals-code-expansion.json": "a899a4856b0305f77ac7a5c681f263603b898edc440abe3490168ece796bb033",
-    "fundamentals-hardware-250.json": "435339ea65a1931149a10cdd7231a7a0cc0687c9f80442c66edbdba655a24db4",
-    "fundamentals-reasoning-250.json": "3706fee3a1340bf5f139682929f82adf1245a98dcc1d15632f131ac14b37eae7",
-    "fundamentals-code-250.json": "30477329741d3c46465fad244c9e2c159b867f518d8218efbb5b5f09d520cee0",
-    "fundamentals-hardware-400.json": "79ea34a2eda1905a60923954c688714a3fa868f8af89793b7cf4e8d008e075a9",
-    "fundamentals-reasoning-400.json": "08df8e98c4a30b565d4d777f17f62e973e0e90244839c3f700b7dd5345229a09",
-    "fundamentals-code-400.json": "51ad5f265146c47fb87fabc5b89d06982e3300cf9a2bb0b3151e22ca5309ff60",
-    "fundamentals-hardware-500.json": "1b8aa003874dfee465c8ebef16a32ba41627879bf723c042417fbac88a27b846",
-    "fundamentals-reasoning-500.json": "82d05d75eb23ac85f81557ab19d10f762c49fa92ac0b7cea6d75526f6e21c0b8",
-    "fundamentals-code-500.json": "a6a0b041ec2b631f96257b52a8ea768df5439a56c4e489ab0dacc845bbe417a5"
+    "fundamentals-hardware.json": "2057e044be087a32904b0b8421c9bc1a174eb315dffd907088b9b485a944b8ce",
+    "fundamentals-code-logic.json": "b7064c3c1e70becf6c8240ad89a78edae496dd89d2e6a2e2e626be3dd132ac0d",
+    "fundamentals-hardware-expansion.json": "f9e4f343946f0fea46a0e78fe1b8b829b71b92944b94a6c37e0b52de227ef61c",
+    "fundamentals-reasoning-expansion.json": "c34cf505a67a05ab14b83fb0d20ffe50e2030c8d1e3ba04ce2b3cf769caff86c",
+    "fundamentals-code-expansion.json": "0b5d2d8fda683504868fef797fb9c5936c6e75a663238ab9986759cbdca00384",
+    "fundamentals-hardware-250.json": "4f771e547ca52d6946b41b069dae81b0a7b335d96f3bc550d9dd36d353961460",
+    "fundamentals-reasoning-250.json": "7da55cf81dda6d439e6b813d1e09d36f837ccbbe9a359b179fb250d2b50388ad",
+    "fundamentals-code-250.json": "27353f881601d66d0051c001de18d90278f704185d9da18a3fcd70c8bfef0ba7",
+    "fundamentals-hardware-400.json": "b9f7faa32c7746931743fc41a7599d511eb850fff97c60d8b7d5572886bd3181",
+    "fundamentals-reasoning-400.json": "8d02b6f6e23325a8f8d2d5b87e4be904ae0f9d5a8accaf77667cf64b8ebe6399",
+    "fundamentals-code-400.json": "52ff39f268ea25f33f75eba541fe49545ef2334a6d617aba5907748071fb4228",
+    "fundamentals-hardware-500.json": "8db4016d226d6530506885302c63b474c384ad71e7f12d9380bac29896ac32fa",
+    "fundamentals-reasoning-500.json": "1f49745d92ebe610fd415cf21012b86f6139c2e63da8a5652f02a941c941f00b",
+    "fundamentals-code-500.json": "de3b1689da9ea1d03371fac65cd53b24c0684af91284c67a460af636f7865359"
   }
 }

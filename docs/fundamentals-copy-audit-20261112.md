@@ -1,0 +1,13 @@
+# Fundamentals copy audit — 12 November 2026
+
+The audit covers all 500 Fundamentals cards in the 14 source JSON files, including every Hebrew and English title, prompt, answer and takeaway: 4,000 localized fields. Each pair was read in context; a separate full-field screen checked punctuation spacing, glued prose and delimiters, wrong-language characters, and Unicode direction controls. The Fundamentals schema has no answer options.
+
+The exact inventory, before/after field edits and changed revision hashes are recorded in [the machine-readable audit](../reports/fundamentals-copy-audit-20261112.json). That report also verifies that IDs, topics, interview links, code and diagrams retain the same values. Technical identifiers such as FIFO, setup/hold and Python names remain technical identifiers. Code spans distinguish literal unmatched brackets from prose punctuation.
+
+Corrections include missing prose spaces, Hebrew agreement, singular/plural forms produced by parameterized templates, and missing or misleading words. The SECDED prompt `quick-hw-161` now explicitly calls P the **parity-error flag**: its existing `S=0, P=0` values and “no error” answer remain unchanged. This removes the misleading reading that the prompt is asserting bad parity when its flag is zero. A regression enumerates all zero-, one- and two-fault cases independently.
+
+`backend/tests/fixtures/fundamentals_copy_before_20261112.json` contains reversible learner-text splices, with complete parsed-object and byte hashes for the current and previous files. The byte projection also checks that its restored parsed object equals the learner-text-only projection, preserving formatting-sensitive historical assertions. The generated Fundamentals catalog and frontend revision map were rebuilt after reconciliation with the quiz generators; prior completion records remain intact.
+
+Validation after final generator reconciliation: 2,197 tests passed across all 500 cards, the shared-generator reproduction checks, independent arithmetic and finite-model checks, typography/SECDED regressions, and the hash-bound history adapter. The completed adapter's focused suite passed all 34 tests, including rejection of unrelated mutations, reformatting and malformed splices. All 15 expansion, 400-card and 500-card catalog checks passed against the rebuilt catalogs; their original frozen hashes remain unchanged.
+
+This is an agent copy audit, not human technical approval or a publication attestation. No live database records, learner history, review approvals or difficulty scores were changed by this audit. Recorded coverage does not claim that no possible language defect remains.

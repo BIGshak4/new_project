@@ -4,6 +4,11 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from tests.copy_november12_history import (
+    before_current_copy, before_current_fundamentals_bytes,
+    before_current_fundamentals_manifest,
+)
+
 ROOT = Path(__file__).resolve().parents[2]
 CONTENT = ROOT / "apps/web/src/content"
 SEEDS = ROOT / "backend/seeds"
@@ -27,21 +32,22 @@ def prior(key):
 
 def test_prior400_bytes_ids_and_revision_hashes_are_frozen():
     for name, expected in FROZEN_SOURCES.items():
-        assert hashlib.sha256((CONTENT / name).read_bytes().replace(b"\r\n", b"\n")).hexdigest() == expected, name
+        assert hashlib.sha256(before_current_fundamentals_bytes(name, (CONTENT / name).read_bytes())).hexdigest() == expected, name
     web = read(CONTENT / "fundamentals-revisions.json")
     backend = read(SEEDS / "fundamentals_catalog.json")["questions"]
     assert web == backend and len(web) == 500
+    web = before_current_fundamentals_manifest({'questions': web})['questions']
     previous = {key: value for key, value in web.items() if prior(key)}
     assert len(previous) == 400
     assert digest(previous) == "6c29e82c63f25aeea21694435d3acdb55e6b384a1a33fd0cea4fd5cde2e0e201"
 
 
 def test_all2040_previous_quiz_objects_and1950_release_entries_are_frozen():
-    quiz = read(SEEDS / "duel_quiz.json")["questions"]
+    quiz = before_current_copy("quiz", "duel_quiz.json", read(SEEDS / "duel_quiz.json"))["questions"]
     previous = sorted([q for q in quiz if not q.get("source_key") or prior(q["source_key"])], key=lambda q: q["key"])
     assert len(previous) == 2040
     assert digest(previous) == "49d2826adfb07c0a20ab999821dbdce40b239c4f274eed036aac48afd998b776"
-    manifest = read(SEEDS / "duel_quiz_batches/release-manifest.json")
+    manifest = before_current_copy("quiz", "release-manifest.json", read(SEEDS / "duel_quiz_batches/release-manifest.json"))
     entries = [row for row in manifest["questions"] if prior(row["key"].rsplit("-v", 1)[0])]
     assert len(entries) == 1950
     assert digest(entries) == "15c66237482dc8b94c9d4d5a65ea1344a562a4edd626a125fab2c2a227571401"

@@ -421,7 +421,7 @@
         "distance": "X במקור לא צוין כשלם. הפתרון הדיסקרטי נבדק רק לסריג של צעדי יחידה; לחצי־יחידה קיימת דוגמה נגדית.",
         "timing": "הצילומים אינם קובעים מחיר לבדיקה ולקפיצה; המודל כאן מעניק יחידה לכל הוראה מבוצעת.",
         "orientation": "כיוון קדימה משותף והתחלה מסונכרנת נאמרים במפורש בתרגיל.",
-        "operation_count": "מקור הרכבות אומר שלוש פעולות אך מונה MF,MB,ifP,GOTO; נשמר הטקסט המקורי ומובהר שבעריכה יש ארבע צורות.",
+        "operation_count": "מקור הרכבות אומר שלוש פעולות אך מונה MF,MB,if P,GOTO; נשמר הטקסט המקורי ומובהר שבעריכה יש ארבע צורות.",
         "static": "המילה סטטי במקור הרובוטים מתארת את המצנח, לא את הרובוט.",
         "api_variant": "המקור החדש מתיר המתנה אך אינו קובע זמן לבדיקות. וריאנט ג בוחר בדיקות ובקרה מיידיות ומגדיר כיוון משותף, התחלה יחד וסריג שלם.",
         "variant_d": "צילום ד׳ מוסיף עצירה/המתנה אך אינו מספק חיישן מפגש, משכי פעולה או סריג. ההבהרות של ד׳ נבחרו במפורש ואינן מחליפות את מודלי א׳–ג׳."
@@ -430,7 +430,7 @@
         "distance": "Source X is not explicitly integer. The discrete solution assumes a unit lattice; half-unit separation provides a counterexample.",
         "timing": "The screenshots do not assign costs to tests/jumps; this model charges one tick to every executed primitive.",
         "orientation": "Common forward direction and synchronized start are explicit editorial additions.",
-        "operation_count": "The train source says three operations but listsMF,MB,ifP,GOTO; the literal source is retained and four forms are clarified.",
+        "operation_count": "The train source says three operations but lists MF,MB,if P,GOTO; the literal source is retained and four forms are clarified.",
         "static": "Static in the robot source refers to the parachute marker, not the moving robot.",
         "api_variant": "New API explicitly permits waiting but leaves query timing unspecified. Variant C chooses zero-time queries/control and keeps common orientation, synchronized start and integer spacing explicit.",
         "variant_d": "Source D permits stopping/waiting but specifies neither a meeting sensor, action timing nor lattice. D's declared choices do not replace A–C."

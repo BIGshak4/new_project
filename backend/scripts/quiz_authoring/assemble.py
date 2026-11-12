@@ -50,7 +50,7 @@ PILOT_SOURCES = {
     "quick-sw-03",
     "quick-sw-61",
 }
-PRESERVED_SHA256 = "34be5c55099c8697e0d4c772d85bd29189f91da98b605ed448e906153c5fa253"
+PRESERVED_SHA256 = "fb57345588f3699b784e35179d43518e23f601b049570a6192cca99e53bf10e6"
 
 
 def content_digest(question):
