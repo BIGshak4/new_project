@@ -1,0 +1,11 @@
+[Unit]
+Description=Check the public JobRun production ref at most twelve times per hour
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=5min
+RandomizedDelaySec=15s
+Unit=jobrun-updater.service
+
+[Install]
+WantedBy=timers.target

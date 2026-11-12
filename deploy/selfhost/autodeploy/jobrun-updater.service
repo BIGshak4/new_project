@@ -1,0 +1,26 @@
+[Unit]
+Description=Verify and publish a signed JobRun image pair
+Wants=network-online.target docker.service
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+UMask=0077
+ExecStart=/usr/bin/python3 /opt/jobrun/autodeploy/pull_release.py --poll
+TimeoutStartSec=20min
+StateDirectory=jobrun-autodeploy
+StateDirectoryMode=0700
+Environment=HOME=/var/lib/jobrun-autodeploy
+Environment=DOCKER_CONFIG=/var/lib/jobrun-autodeploy/docker
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/opt/jobrun/autodeploy/state /opt/jobrun/autodeploy/releases
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+

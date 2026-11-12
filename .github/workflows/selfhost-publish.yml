@@ -1,0 +1,235 @@
+name: Publish self-hosted production images
+
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+concurrency:
+  group: selfhost-production-publisher
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      SOURCE_REVISION: ${{ github.sha }}
+      APP_DOMAIN: ${{ vars.SELFHOST_APP_DOMAIN }}
+      API_DOMAIN: ${{ vars.SELFHOST_API_DOMAIN }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+      CERTIFICATE_IDENTITY: https://github.com/BIGshak4/new_project/.github/workflows/selfhost-publish.yml@refs/heads/production
+      CERTIFICATE_ISSUER: https://token.actions.githubusercontent.com
+    steps:
+      - name: Require the approved production branch and public configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = BIGshak4/new_project
+          test "$GITHUB_REF" = refs/heads/production
+          python3 - <<'PY'
+          import base64, json, os, re
+          from urllib.parse import urlsplit
+          def require(condition, message):
+              if not condition:
+                  raise SystemExit(message)
+          require(re.fullmatch(r"[0-9a-f]{40}", os.environ["SOURCE_REVISION"]), "A full lowercase release SHA is required")
+          hostname = r"(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?"
+          for name in ("APP_DOMAIN", "API_DOMAIN"):
+              require(re.fullmatch(hostname, os.environ[name]), f"{name} must be a lowercase hostname")
+          project = urlsplit(os.environ["NEXT_PUBLIC_SUPABASE_URL"])
+          require(project.scheme == "https" and project.hostname and not project.username and not project.password
+                  and project.path in ("", "/") and not project.query and not project.fragment,
+                  "Set the public HTTPS Supabase project URL")
+          key = os.environ["NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"]
+          public_key = bool(re.fullmatch(r"sb_publishable_[A-Za-z0-9_-]+", key))
+          if not public_key and re.fullmatch(r"[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+", key):
+              try:
+                  payload = key.split(".")[1]
+                  public_key = json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4))).get("role") == "anon"
+              except (ValueError, TypeError, AttributeError):
+                  pass
+          require(public_key, "Only a public publishable/anon key may enter a frontend build")
+          PY
+
+      - name: Check out the exact production commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Require the current production head
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_REVISION"
+          current_head="$(git ls-remote https://github.com/BIGshak4/new_project.git refs/heads/production | cut -f1)"
+          test "$current_head" = "$SOURCE_REVISION"
+
+      - name: Set up the pinned Node 24 runtime for repository checks
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24.22.3'
+          package-manager-cache: false
+
+      - name: Run repository frontend tests and type checking
+        timeout-minutes: 7
+        working-directory: apps/web
+        run: |
+          npm ci
+          npm exec -- next typegen
+          npm run typecheck
+          npm test
+
+      - name: Run release and host-puller guard tests
+        timeout-minutes: 2
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test deploy/selfhost/verify-release.test.mjs
+          test -f deploy/selfhost/autodeploy/test_pull_release.py
+          python3 -m unittest discover -s deploy/selfhost/autodeploy -p 'test_*.py' -v
+
+      - name: Build both credential-free linux amd64 images
+        timeout-minutes: 17
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_label=org.opencontainers.image.source=https://github.com/BIGshak4/new_project
+          revision_label="org.opencontainers.image.revision=$SOURCE_REVISION"
+          docker build --platform linux/amd64 --pull \
+            --label "$source_label" --label "$revision_label" \
+            --tag "ghcr.io/bigshak4/jobrun-api:$SOURCE_REVISION" backend
+          docker build --platform linux/amd64 --pull \
+            --label "$source_label" --label "$revision_label" \
+            --build-arg "SOURCE_REVISION=$SOURCE_REVISION" \
+            --build-arg "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL" \
+            --build-arg "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+            --build-arg "NEXT_PUBLIC_API_BASE_URL=https://$API_DOMAIN" \
+            --tag "ghcr.io/bigshak4/jobrun-web:$SOURCE_REVISION" apps/web
+          for service in api web; do
+            platform="$(docker image inspect "ghcr.io/bigshak4/jobrun-$service:$SOURCE_REVISION" --format '{{.Os}}/{{.Architecture}}')"
+            test "$platform" = linux/amd64
+          done
+
+      - name: Smoke-test the built images without production access
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm --network none --env PYTHONDONTWRITEBYTECODE=1 \
+            --entrypoint /opt/venv/bin/python "ghcr.io/bigshak4/jobrun-api:$SOURCE_REVISION" \
+            -c 'import app.main; print("API module imports passed; production credentials and database were not used.")'
+          docker run --detach --name selfhost-production-web-smoke --network none \
+            "ghcr.io/bigshak4/jobrun-web:$SOURCE_REVISION"
+          docker exec --interactive selfhost-production-web-smoke node --input-type=module - "$SOURCE_REVISION" <<'JS'
+          const expected = process.argv[2];
+          const origin = "http://127.0.0.1:3000";
+          let ready = false;
+          for (let attempt = 0; attempt < 30; attempt++) {
+            try {
+              const response = await fetch(`${origin}/api/health`, { signal: AbortSignal.timeout(1500) });
+              const health = await response.json();
+              if (response.ok && health.status === "ok" && health.revision === expected) { ready = true; break; }
+            } catch {}
+            await new Promise(resolve => setTimeout(resolve, 500));
+          }
+          if (!ready) throw new Error("The frontend did not serve the expected healthy revision");
+          const response = await fetch(origin, { signal: AbortSignal.timeout(5000) });
+          if (!response.ok) throw new Error("The frontend document did not load");
+          const html = await response.text();
+          const asset = html.match(/src="(\/_next\/static\/[^\"]+\.js(?:\?[^\"]*)?)"/);
+          if (!asset) throw new Error("No local frontend JavaScript asset was found");
+          const script = await fetch(new URL(asset[1], origin), { signal: AbortSignal.timeout(5000) });
+          if (!script.ok || !(await script.text()).length) throw new Error("A frontend JavaScript asset did not load");
+          console.log(`Frontend runtime, revision and asset check passed for ${expected}.`);
+          JS
+
+      - name: Install pinned Cosign with its verified official installer
+        uses: sigstore/cosign-installer@756fe2d284c7292c4e9b62c8a28f1e5629c59532 # v4.1.3
+        with:
+          cosign-release: v3.1.4
+
+      - name: Publish both SHA-tagged images and sign immutable digests
+        timeout-minutes: 8
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GHCR_USER: ${{ github.actor }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          current_head="$(git ls-remote https://github.com/BIGshak4/new_project.git refs/heads/production | cut -f1)"
+          test "$current_head" = "$SOURCE_REVISION"
+          printf '%s' "$GHCR_TOKEN" | docker login ghcr.io --username "$GHCR_USER" --password-stdin
+          release_id="$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT"
+          refs_file="$RUNNER_TEMP/selfhost-published-refs.tsv"
+          : > "$refs_file"
+          for service in api web; do
+            repository="ghcr.io/bigshak4/jobrun-$service"
+            image="$repository:$SOURCE_REVISION"
+            docker push "$image"
+            manifest="$(docker buildx imagetools inspect "$image" --format '{{json .Manifest}}')"
+            digest="$(printf '%s' "$manifest" | python3 -c 'import json,sys; print(json.load(sys.stdin)["digest"])')"
+            [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+            printf '%s\t%s@%s\n' "$service" "$repository" "$digest" >> "$refs_file"
+          done
+          while IFS=$'\t' read -r service reference; do
+            cosign sign --yes -a "source_revision=$SOURCE_REVISION" -a "release_id=$release_id" "$reference"
+            cosign verify --certificate-identity "$CERTIFICATE_IDENTITY" \
+              --certificate-oidc-issuer "$CERTIFICATE_ISSUER" \
+              -a "source_revision=$SOURCE_REVISION" -a "release_id=$release_id" "$reference" >/dev/null
+            printf 'Signed and verified %s: %s\n' "$service" "$reference"
+          done < "$refs_file"
+          {
+            printf 'Published and signed production source `%s` (`linux/amd64`).\n\n' "$SOURCE_REVISION"
+            printf 'Release cohort: `%s`.\n\n' "$release_id"
+            while IFS=$'\t' read -r service reference; do printf -- '- `%s`: `%s`\n' "$service" "$reference"; done < "$refs_file"
+            printf '\nThe host must verify both signatures and matching cohort before applying pinned digests. Publication alone does not confirm a live deployment.\n'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Confirm the published revision becomes live
+        if: ${{ vars.SELFHOST_VERIFY_LIVE == 'true' }}
+        timeout-minutes: 13
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, time, urllib.error, urllib.request
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  return None
+          opener = urllib.request.build_opener(NoRedirect)
+          expected = os.environ["SOURCE_REVISION"]
+          checks = [(f'https://{os.environ["APP_DOMAIN"]}/api/health', "revision"),
+                    (f'https://{os.environ["API_DOMAIN"]}/health', "source_revision")]
+          deadline = time.monotonic() + 12 * 60
+          while time.monotonic() < deadline:
+              matched = []
+              for url, field in checks:
+                  try:
+                      with opener.open(url, timeout=8) as response:
+                          health = json.load(response)
+                          matched.append(response.status == 200 and health.get("status") == "ok" and health.get(field) == expected)
+                  except (urllib.error.URLError, TimeoutError, ValueError):
+                      matched.append(False)
+              if all(matched):
+                  print(f"The website and API both serve {expected}.")
+                  break
+              time.sleep(10)
+          else:
+              raise SystemExit("Published images are not confirmed live; inspect the host pull service and keep the prior release available.")
+          PY
+
+      - name: Remove this job's smoke container and registry login
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          docker rm --force selfhost-production-web-smoke >/dev/null 2>&1 || true
+          docker logout ghcr.io >/dev/null 2>&1 || true

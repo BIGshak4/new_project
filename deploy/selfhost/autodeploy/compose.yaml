@@ -1,0 +1,52 @@
+name: jobrun
+
+x-runtime: &runtime
+  restart: unless-stopped
+  init: true
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+  logging:
+    driver: json-file
+    options: {max-size: "10m", max-file: "3"}
+  stop_grace_period: 40s
+
+services:
+  api:
+    <<: *runtime
+    image: ${API_IMAGE:?Verified immutable API image required}
+    pull_policy: never
+    env_file:
+      - path: ./backend.env
+        format: raw
+        required: true
+    environment:
+      ENV: production
+      SOURCE_REVISION: ${SOURCE_REVISION:?Reviewed revision required}
+      SITE_URL: https://${APP_DOMAIN:?Website hostname required}
+      PORT: "8000"
+    expose: ["8000"]
+    healthcheck:
+      start_period: 90s
+  web:
+    <<: *runtime
+    image: ${WEB_IMAGE:?Verified immutable web image required}
+    pull_policy: never
+    environment: {NODE_ENV: production, HOSTNAME: 0.0.0.0, PORT: "3000"}
+    expose: ["3000"]
+  caddy:
+    <<: *runtime
+    image: caddy:2.11.9-alpine
+    pull_policy: never
+    cap_add: [NET_BIND_SERVICE]
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:?Website hostname required}
+      API_DOMAIN: ${API_DOMAIN:?API hostname required}
+      ACME_EMAIL: ${ACME_EMAIL:?Certificate contact required}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  caddy_data:
+  caddy_config:

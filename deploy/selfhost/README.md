@@ -1,9 +1,11 @@
 # JobRun on one VPS
 
-Preparation for a provider-independent Linux VPS deployment. No server, domain,
-DNS record, production credential, subscription or running deployment is created
-by these files. Docker images and the Compose stack still require a real Linux
-Docker build and an end-to-end staging check before production use.
+The practice website and API are live on a DigitalOcean VPS at
+https://muxijobrun.com and https://api.muxijobrun.com. See
+[PRODUCTION.md](PRODUCTION.md) for the verified deployment, costs, operator access
+and remaining checks. The instructions below describe preparing and verifying a
+coordinated release; automatic deployment is being prepared separately and is
+not yet recorded as active in this runbook.
 
 The stack is Caddy (HTTPS), the practice app and the existing FastAPI image.
 `compose.tasks.yaml` optionally adds the task board. Supabase remains the existing
