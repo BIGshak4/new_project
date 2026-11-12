@@ -1,4 +1,5 @@
 """The 700-card release preserves prior learning records and adds 200 linked drills."""
+
 import hashlib
 import json
 from collections import Counter
@@ -15,8 +16,9 @@ def read(path):
 
 
 def digest(value):
-    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
-                                    separators=(",", ":")).encode()).hexdigest()
+    return hashlib.sha256(
+        json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
 
 
 def prior(key):
@@ -29,24 +31,39 @@ def test_prior500_revisions_and2540_quiz_records_are_unchanged():
     assert web == backend and len(web) == 700
     old = {key: value for key, value in web.items() if prior(key)}
     assert len(old) == 500
-    assert digest(old) == "290862ce23aead4603cf108a9a4a070137cae0bca2784d775816db9dfb50b36f"
+    assert digest(old) == "4ea925755eff42b2b404de5b1b003317638830d5d6358e9930e35f3291258c1a"
     quiz = read(SEEDS / "duel_quiz.json")["questions"]
-    previous = sorted([q for q in quiz if not q.get("source_key") or prior(q["source_key"])], key=lambda q: q["key"])
+    previous = sorted(
+        [q for q in quiz if not q.get("source_key") or prior(q["source_key"])], key=lambda q: q["key"]
+    )
     assert len(previous) == 2540
-    assert digest(previous) == "912b0400698cdd0c23470e651a792002fd64d7940123c23382df810c5f394196"
+    assert digest(previous) == "2c0ce24b2f1fafdd159bd109ebaf29e5a5cde977b1040d77b966a333adf3e1f6"
     entries = read(SEEDS / "duel_quiz_batches/release-manifest.json")["questions"]
     old_entries = [q for q in entries if prior(q["key"].rsplit("-v", 1)[0])]
     assert len(old_entries) == 2450
-    assert digest(old_entries) == "1629fae92b0be63a168ec513fbca70ed5b7d0a273c30ba5889b26e7f07c64019"
+    assert digest(old_entries) == "a962bf00f3f880801bfce9336883b424c462d2bef5658d62579bbe16341cad87"
 
 
 def test_200_new_cards_are_concise_bilingual_linked_and_distinct():
     new = [q for domain in DOMAINS for q in read(CONTENT / f"fundamentals-{domain}-700.json")]
-    all_cards = [q for path in CONTENT.glob("fundamentals-*.json")
-                 if isinstance(rows := read(path), list) for q in rows]
+    all_cards = [
+        q
+        for path in CONTENT.glob("fundamentals-*.json")
+        if isinstance(rows := read(path), list)
+        for q in rows
+    ]
     assert len(new) == 200 and len(all_cards) == 700
-    assert {q["id"] for q in new} == {f"quick-hw-{n}" for n in range(251, 351)} | {f"quick-sw-{n}" for n in range(251, 351)}
-    assert Counter("hardware" if q["id"].startswith("quick-hw-") else "reasoning" if q["topic"] == "reasoning" else "code" for q in all_cards) == {"hardware": 350, "reasoning": 245, "code": 105}
+    assert {q["id"] for q in new} == {f"quick-hw-{n}" for n in range(251, 351)} | {
+        f"quick-sw-{n}" for n in range(251, 351)
+    }
+    assert Counter(
+        "hardware"
+        if q["id"].startswith("quick-hw-")
+        else "reasoning"
+        if q["topic"] == "reasoning"
+        else "code"
+        for q in all_cards
+    ) == {"hardware": 350, "reasoning": 245, "code": 105}
     prep = {q["id"] for q in read(ROOT / "interview_preparation/questions.json")["questions"]}
     for lang in ("he", "en"):
         for field in ("title", "prompt"):
@@ -72,7 +89,9 @@ def test_1000_new_variants_have_hash_bound_release_and_backend_difficulty():
     assert sum(q["status"] == "approved" for q in quiz) == 3500
     counts = Counter(q["source_key"] for q in additions)
     assert len(counts) == 200 and set(counts.values()) == {5}
-    checks = {q["key"]: q for domain in DOMAINS for q in read(SEEDS / f"duel_quiz_batches/{domain}_700.checks.json")}
+    checks = {
+        q["key"]: q for domain in DOMAINS for q in read(SEEDS / f"duel_quiz_batches/{domain}_700.checks.json")
+    }
     assert set(checks) == {q["key"] for q in additions}
     for q in additions:
         assert q["release_approval"]["on"] == "2026-11-12"

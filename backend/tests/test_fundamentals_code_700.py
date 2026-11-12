@@ -4,6 +4,7 @@ Python snippets execute directly. C/C++ lifetime, ownership and atomic traces
 are explicit semantic models, not native compilation or memory-model proofs.
 CSV uses Python's independent standard-library parser as the reference.
 """
+
 from __future__ import annotations
 
 import copy
@@ -35,9 +36,13 @@ def canonical(value):
 def oracle(task, p):
     """Derive results only from independently interpreted inputs."""
     if task == "merge_frontier":
-        flattened = sorted((value, row, col) for row, values in enumerate(p["lists"]) for col, value in enumerate(values))
-        removed = Counter(row for _, row, _ in flattened[:p["consumed"]])
-        return sorted(values[removed[row]] for row, values in enumerate(p["lists"]) if removed[row] < len(values))
+        flattened = sorted(
+            (value, row, col) for row, values in enumerate(p["lists"]) for col, value in enumerate(values)
+        )
+        removed = Counter(row for _, row, _ in flattened[: p["consumed"]])
+        return sorted(
+            values[removed[row]] for row, values in enumerate(p["lists"]) if removed[row] < len(values)
+        )
     if task == "anagram":
         # ASCII-only contract: fold each code point arithmetically.
         return Counter(ord(c) | 32 for c in p["a"]) == Counter(ord(c) | 32 for c in p["b"])
@@ -60,7 +65,9 @@ def oracle(task, p):
         buffer[:] = p["edited"]
         return "".join(key)
     if task == "sudoku_candidates":
-        return [digit for digit in range(1, 10) if all(digit not in p[region] for region in ("row", "col", "box"))]
+        return [
+            digit for digit in range(1, 10) if all(digit not in p[region] for region in ("row", "col", "box"))
+        ]
     if task == "median_interval":
         # Exhaust every candidate position instead of assuming the median rule.
         positions = p["positions"]
@@ -102,7 +109,7 @@ def oracle(task, p):
             result = 10 * result + digit
         if p["number"] < 0:
             result = -result
-        return result if -(2 ** 31) <= result <= 2 ** 31 - 1 else None
+        return result if -(2**31) <= result <= 2**31 - 1 else None
     if task == "relative_sort":
         counts = Counter(p["values"])
         result = []
@@ -113,8 +120,12 @@ def oracle(task, p):
         return result
     if task == "longest_ones":
         # Enumerate all nonempty intervals independently of running counters.
-        intervals = [(j - i + 1, -i, j) for i in range(len(p["bits"])) for j in range(i, len(p["bits"]))
-                     if all(p["bits"][k] == 1 for k in range(i, j + 1))]
+        intervals = [
+            (j - i + 1, -i, j)
+            for i in range(len(p["bits"]))
+            for j in range(i, len(p["bits"]))
+            if all(p["bits"][k] == 1 for k in range(i, j + 1))
+        ]
         if not intervals:
             return None
         _, negative_start, end = max(intervals)
@@ -127,9 +138,12 @@ def oracle(task, p):
             pending = [black.pop()]
             while pending:
                 row, col = pending.pop()
-                adjacent = {(r, c) for r, c in black
-                            if max(abs(r - row), abs(c - col)) == 1
-                            and (p["neighbors"] == 8 or abs(r - row) + abs(c - col) == 1)}
+                adjacent = {
+                    (r, c)
+                    for r, c in black
+                    if max(abs(r - row), abs(c - col)) == 1
+                    and (p["neighbors"] == 8 or abs(r - row) + abs(c - col) == 1)
+                }
                 black -= adjacent
                 pending.extend(adjacent)
         return count
@@ -153,7 +167,7 @@ def oracle(task, p):
     if task == "atoi_prefix":
         matched = re.match(r" *([+-]?)([0-9]+)", p["text"])
         value = int("".join(matched.groups())) if matched else 0
-        return max(-(2 ** 31), min(2 ** 31 - 1, value))
+        return max(-(2**31), min(2**31 - 1, value))
     if task == "circular_move":
         values = p["values"]
         path = [(p["start"] + delta) % len(values) for delta in range(p["steps"] % len(values) + 1)]
@@ -189,7 +203,7 @@ def oracle(task, p):
     if task == "local_lifetime":
         if p["mode"] == "automatic":
             return [p["initial"] + delta for delta in p["deltas"]]
-        return [p["initial"] + sum(p["deltas"][:index + 1]) for index in range(len(p["deltas"]))]
+        return [p["initial"] + sum(p["deltas"][: index + 1]) for index in range(len(p["deltas"]))]
     if task == "cli_contract":
         if p["status"] != 0:
             return "status"
@@ -224,8 +238,10 @@ def oracle(task, p):
     if task == "merge_pass":
         values, width = p["values"], p["width"]
         for i in range(0, len(values), width):
-            assert values[i:i + width] == sorted(values[i:i + width])
-        return [value for i in range(0, len(values), 2 * width) for value in sorted(values[i:i + 2 * width])]
+            assert values[i : i + width] == sorted(values[i : i + width])
+        return [
+            value for i in range(0, len(values), 2 * width) for value in sorted(values[i : i + 2 * width])
+        ]
     if task == "queue_call":
         queue = deque(p["queue"])
         accepted = p["write"] is not None and len(queue) < p["capacity"]
@@ -248,10 +264,17 @@ def test_each_variant_has_exactly_one_independently_derived_answer(check):
 def test_cards_are_bounded_bilingual_original_and_source_linked():
     assert len(CARDS) == 30
     assert {c["id"] for c in CARDS} == {f"quick-sw-{n}" for n in range(321, 351)}
-    prep = {q["id"]: q for q in json.loads((ROOT / "interview_preparation/questions.json").read_bytes())["questions"]}
+    prep = {
+        q["id"]: q
+        for q in json.loads((ROOT / "interview_preparation/questions.json").read_bytes())["questions"]
+    }
     editorial = json.loads((ROOT / "backend/seeds/preparation_editorial.json").read_bytes())
-    previous = [c for file in CONTENT.glob("fundamentals-*.json") if file.name != "fundamentals-code-700.json" and "revisions" not in file.name
-                for c in json.loads(file.read_bytes())]
+    previous = [
+        c
+        for file in CONTENT.glob("fundamentals-*.json")
+        if file.name != "fundamentals-code-700.json" and "revisions" not in file.name
+        for c in json.loads(file.read_bytes())
+    ]
     for card in CARDS:
         assert card["topic"] in {"python", "algorithms"}
         assert card["interviewIds"] and set(card["interviewIds"]) <= set(prep) & set(editorial)
@@ -260,7 +283,12 @@ def test_cards_are_bounded_bilingual_original_and_source_linked():
         for field, cap in [("title", 12), ("prompt", 50), ("answer", 65), ("takeaway", 20)]:
             assert set(card[field]) == {"he", "en"}
             for language, value in card[field].items():
-                assert value == value.strip() and 0 < len(value.split()) <= cap, (card["id"], field, language, len(value.split()))
+                assert value == value.strip() and 0 < len(value.split()) <= cap, (
+                    card["id"],
+                    field,
+                    language,
+                    len(value.split()),
+                )
                 assert "\ufffd" not in value
                 if language == "en":
                     assert not re.search(r"[\u0590-\u05ff]", value)
@@ -275,7 +303,9 @@ def test_cards_are_bounded_bilingual_original_and_source_linked():
 
 
 def test_five_substantive_variants_reproducibility_and_internal_evidence():
-    spec = importlib.util.spec_from_file_location("code700", ROOT / "backend/scripts/quiz_authoring/code_700.py")
+    spec = importlib.util.spec_from_file_location(
+        "code700", ROOT / "backend/scripts/quiz_authoring/code_700.py"
+    )
     author = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(author)
     assert author.build_cards() == CARDS
@@ -304,7 +334,11 @@ def test_five_substantive_variants_reproducibility_and_internal_evidence():
             assert len({c[language] for c in row["choices"]}) == 4
             assert len(row["prompt"][language].split()) <= 50
             assert len(row["explanation"][language].split()) <= 65
-            for value in [row["prompt"][language], row["explanation"][language], *(c[language] for c in row["choices"])]:
+            for value in [
+                row["prompt"][language],
+                row["explanation"][language],
+                *(c[language] for c in row["choices"]),
+            ]:
                 assert value and value == value.strip() and "\ufffd" not in value
                 if language == "en":
                     assert not re.search(r"[\u0590-\u05ff]", value)
@@ -343,7 +377,7 @@ def test_executed_candidate_sets_all_small_region_combinations():
 
 def test_executed_decimal_reversal_boundaries_and_signed_sample():
     function = snippet(332, "reverse32")
-    for number in [*range(-10000, 10001), -(2 ** 31), 2 ** 31 - 1, 1463847412, 1534236469]:
+    for number in [*range(-10000, 10001), -(2**31), 2**31 - 1, 1463847412, 1534236469]:
         assert function(number) == oracle("reverse32", dict(number=number))
 
 
@@ -357,7 +391,17 @@ def test_executed_space_filter_preserves_other_characters_exhaustively():
 
 def test_executed_schema_extraction_distinguishes_types():
     function = snippet(345, "extract")
-    for data in [None, [], [dict(value="text")], {}, dict(value=None), dict(value=2), dict(value=False), dict(value=""), dict(value="text")]:
+    for data in [
+        None,
+        [],
+        [dict(value="text")],
+        {},
+        dict(value=None),
+        dict(value=2),
+        dict(value=False),
+        dict(value=""),
+        dict(value="text"),
+    ]:
         assert function(data) == oracle("extract_field", dict(data=data))
 
 

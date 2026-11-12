@@ -47,7 +47,7 @@ def test_old_250_card_bytes_and_revisions_are_preserved():
         assert hashlib.sha256(before_current_fundamentals_bytes(name, (CONTENT/name).read_bytes())).hexdigest()==expected,name
     web=read(CONTENT/'fundamentals-revisions.json')
     backend=read(SEEDS/'fundamentals_catalog.json')['questions']
-    assert len(web)==len(backend)==500 and web==backend
+    assert len(web)==len(backend)==700 and web==backend
     web = before_current_fundamentals_manifest({'questions': web})['questions']
     original={key:value for key,value in web.items() if old_id(key)}
     assert len(original)==250 and canonical_digest(original)==OLD_REVISIONS_SHA256

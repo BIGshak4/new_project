@@ -10716,8 +10716,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חתימות אפשריות: ['000', '010', '110', '111']. התצפית היא ?1?, שבה ? מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
-      "en": "Possible signatures: ['000', '010', '110', '111']. The observation is ?1?, where ? denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
+      "he": "חתימות אפשריות: ['000', '010', '110', '111']. התצפית היא `x1x`, שבה x מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
+      "en": "Possible signatures: ['000', '010', '110', '111']. The observation is `x1x`, where x denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
     },
     "choices": [
       {
@@ -10739,8 +10739,8 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "משווים רק מיקומים שנמדדו. סימן שאלה תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
-      "en": "Compare only measured positions. A question mark matches both 0 and 1; it must not be treated as zero."
+      "he": "משווים רק מיקומים שנמדדו. הסימון x תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
+      "en": "Compare only measured positions. The marker x matches both 0 and 1; it must not be treated as zero."
     }
   },
   {
@@ -10750,8 +10750,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חתימות אפשריות: ['00', '01', '10']. התצפית היא ??, שבה ? מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
-      "en": "Possible signatures: ['00', '01', '10']. The observation is ??, where ? denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
+      "he": "חתימות אפשריות: ['00', '01', '10']. התצפית היא `xx`, שבה x מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
+      "en": "Possible signatures: ['00', '01', '10']. The observation is `xx`, where x denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
     },
     "choices": [
       {
@@ -10773,8 +10773,8 @@
     ],
     "correct": 0,
     "explanation": {
-      "he": "משווים רק מיקומים שנמדדו. סימן שאלה תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
-      "en": "Compare only measured positions. A question mark matches both 0 and 1; it must not be treated as zero."
+      "he": "משווים רק מיקומים שנמדדו. הסימון x תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
+      "en": "Compare only measured positions. The marker x matches both 0 and 1; it must not be treated as zero."
     }
   },
   {
@@ -10784,8 +10784,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חתימות אפשריות: ['00', '11']. התצפית היא 01, שבה ? מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
-      "en": "Possible signatures: ['00', '11']. The observation is 01, where ? denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
+      "he": "חתימות אפשריות: ['00', '11']. התצפית היא `01`, שבה x מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
+      "en": "Possible signatures: ['00', '11']. The observation is `01`, where x denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
     },
     "choices": [
       {
@@ -10807,8 +10807,8 @@
     ],
     "correct": 1,
     "explanation": {
-      "he": "משווים רק מיקומים שנמדדו. סימן שאלה תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
-      "en": "Compare only measured positions. A question mark matches both 0 and 1; it must not be treated as zero."
+      "he": "משווים רק מיקומים שנמדדו. הסימון x תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
+      "en": "Compare only measured positions. The marker x matches both 0 and 1; it must not be treated as zero."
     }
   },
   {
@@ -10818,8 +10818,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חתימות אפשריות: ['000', '001', '100']. התצפית היא 00?, שבה ? מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
-      "en": "Possible signatures: ['000', '001', '100']. The observation is 00?, where ? denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
+      "he": "חתימות אפשריות: ['000', '001', '100']. התצפית היא `00x`, שבה x מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
+      "en": "Possible signatures: ['000', '001', '100']. The observation is `00x`, where x denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
     },
     "choices": [
       {
@@ -10841,8 +10841,8 @@
     ],
     "correct": 2,
     "explanation": {
-      "he": "משווים רק מיקומים שנמדדו. סימן שאלה תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
-      "en": "Compare only measured positions. A question mark matches both 0 and 1; it must not be treated as zero."
+      "he": "משווים רק מיקומים שנמדדו. הסימון x תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
+      "en": "Compare only measured positions. The marker x matches both 0 and 1; it must not be treated as zero."
     }
   },
   {
@@ -10852,8 +10852,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "חתימות אפשריות: ['010', '101']. התצפית היא 010, שבה ? מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
-      "en": "Possible signatures: ['010', '101']. The observation is 010, where ? denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
+      "he": "חתימות אפשריות: ['010', '101']. התצפית היא `010`, שבה x מציין ביט שלא נמדד. כמה חתימות עדיין מתאימות לכל הביטים הידועים?",
+      "en": "Possible signatures: ['010', '101']. The observation is `010`, where x denotes an unmeasured bit. How many signatures remain consistent with every known bit?"
     },
     "choices": [
       {
@@ -10875,8 +10875,8 @@
     ],
     "correct": 3,
     "explanation": {
-      "he": "משווים רק מיקומים שנמדדו. סימן שאלה תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
-      "en": "Compare only measured positions. A question mark matches both 0 and 1; it must not be treated as zero."
+      "he": "משווים רק מיקומים שנמדדו. הסימון x תואם גם 0 וגם 1; אסור להתייחס אליו כאפס.",
+      "en": "Compare only measured positions. The marker x matches both 0 and 1; it must not be treated as zero."
     }
   },
   {
@@ -11056,8 +11056,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 6 עובדים. דרישות הן (התחלה,סיום,עובדים): [[0, 2, 3], [1, 3, 4]], בטווחים חצי־פתוחים [התחלה,סיום). מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
-      "en": "There are 6 workers. Jobs (start,end,workers) are [[0, 2, 3], [1, 3, 4]], on half-open intervals [start,end). What is minimum capacity slack over time? A negative value indicates a shortage."
+      "he": "יש 6 עובדים. דרישות הן (התחלה,סיום,עובדים): [[0, 2, 3], [1, 3, 4]], בטווחים חצי־פתוחים `[התחלה,סיום)`. מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
+      "en": "There are 6 workers. Jobs (start,end,workers) are [[0, 2, 3], [1, 3, 4]], on half-open intervals `[start,end)`. What is minimum capacity slack over time? A negative value indicates a shortage."
     },
     "choices": [
       {
@@ -11090,8 +11090,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 5 עובדים. דרישות הן (התחלה,סיום,עובדים): [[0, 1, 5], [1, 2, 5]], בטווחים חצי־פתוחים [התחלה,סיום). מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
-      "en": "There are 5 workers. Jobs (start,end,workers) are [[0, 1, 5], [1, 2, 5]], on half-open intervals [start,end). What is minimum capacity slack over time? A negative value indicates a shortage."
+      "he": "יש 5 עובדים. דרישות הן (התחלה,סיום,עובדים): [[0, 1, 5], [1, 2, 5]], בטווחים חצי־פתוחים `[התחלה,סיום)`. מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
+      "en": "There are 5 workers. Jobs (start,end,workers) are [[0, 1, 5], [1, 2, 5]], on half-open intervals `[start,end)`. What is minimum capacity slack over time? A negative value indicates a shortage."
     },
     "choices": [
       {
@@ -11124,8 +11124,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 4 עובדים. דרישות הן (התחלה,סיום,עובדים): [[0, 3, 1], [1, 2, 2]], בטווחים חצי־פתוחים [התחלה,סיום). מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
-      "en": "There are 4 workers. Jobs (start,end,workers) are [[0, 3, 1], [1, 2, 2]], on half-open intervals [start,end). What is minimum capacity slack over time? A negative value indicates a shortage."
+      "he": "יש 4 עובדים. דרישות הן (התחלה,סיום,עובדים): [[0, 3, 1], [1, 2, 2]], בטווחים חצי־פתוחים `[התחלה,סיום)`. מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
+      "en": "There are 4 workers. Jobs (start,end,workers) are [[0, 3, 1], [1, 2, 2]], on half-open intervals `[start,end)`. What is minimum capacity slack over time? A negative value indicates a shortage."
     },
     "choices": [
       {
@@ -11158,8 +11158,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 3 עובדים. דרישות הן (התחלה,סיום,עובדים): [], בטווחים חצי־פתוחים [התחלה,סיום). מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
-      "en": "There are 3 workers. Jobs (start,end,workers) are [], on half-open intervals [start,end). What is minimum capacity slack over time? A negative value indicates a shortage."
+      "he": "יש 3 עובדים. דרישות הן (התחלה,סיום,עובדים): [], בטווחים חצי־פתוחים `[התחלה,סיום)`. מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
+      "en": "There are 3 workers. Jobs (start,end,workers) are [], on half-open intervals `[start,end)`. What is minimum capacity slack over time? A negative value indicates a shortage."
     },
     "choices": [
       {
@@ -11192,8 +11192,8 @@
     "topic": "reasoning",
     "status": "draft",
     "prompt": {
-      "he": "יש 2 עובדים. דרישות הן (התחלה,סיום,עובדים): [[0, 4, 0], [2, 3, 3]], בטווחים חצי־פתוחים [התחלה,סיום). מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
-      "en": "There are 2 workers. Jobs (start,end,workers) are [[0, 4, 0], [2, 3, 3]], on half-open intervals [start,end). What is minimum capacity slack over time? A negative value indicates a shortage."
+      "he": "יש 2 עובדים. דרישות הן (התחלה,סיום,עובדים): [[0, 4, 0], [2, 3, 3]], בטווחים חצי־פתוחים `[התחלה,סיום)`. מה מרווח הקיבולת המזערי לאורך הזמן? ערך שלילי מציין מחסור.",
+      "en": "There are 2 workers. Jobs (start,end,workers) are [[0, 4, 0], [2, 3, 3]], on half-open intervals `[start,end)`. What is minimum capacity slack over time? A negative value indicates a shortage."
     },
     "choices": [
       {

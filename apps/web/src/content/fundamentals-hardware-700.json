@@ -10,8 +10,8 @@
       "en": "Plus waits for a product or explicit bypass"
     },
     "prompt": {
-      "he": "S=3,P=5,busy=1; מוצע PLUS. done=1; רק done=1 טוען product=12 ל־P. bypass=0. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
-      "en": "S=3,P=5,busy=1; PLUS is offered. done=1; only done=1 loads product=12 into P. bypass=0. PLUS accepts iff !busy OR(done AND bypass), adding product only for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
+      "he": "S=3,P=5,busy=1; מוצע PLUS. done=1; רק done=1 טוען product=12 ל־P. bypass=0. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף ל־S את product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
+      "en": "S=3,P=5,busy=1; PLUS is offered. done=1; only done=1 loads product=12 into P. bypass=0. PLUS accepts iff !busy OR(done AND bypass), adding to S: product for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
     },
     "answer": {
       "he": "[3,12]. קבלה משתמשת במצב busy הישן. תוצאה שחוזרת בחזית אינה זמינה לאותו פלוס בלי עקיפה מפורשת; איפוס מבטל את שני העדכונים.",
@@ -20,6 +20,16 @@
     "takeaway": {
       "he": "תלות נתונים מחייבת המתנה או נתיב עקיפה מוגדר.",
       "en": "A data dependency requires waiting or a defined bypass path."
+    },
+    "diagram": {
+      "kind": "gate",
+      "gate": "MUX",
+      "inputs": [
+        "P(old)",
+        "product",
+        "S=done&bypass"
+      ],
+      "output": "term"
     }
   },
   {
@@ -66,6 +76,36 @@
     "takeaway": {
       "he": "תוקף עסקה חדשה נפרד משימור נתוני העסקה הקודמת.",
       "en": "A new transaction’s validity is separate from retaining the previous transaction’s data."
+    },
+    "diagram": {
+      "kind": "fsm",
+      "states": [
+        "V=0",
+        "V=1"
+      ],
+      "initial": "V=0",
+      "transitions": [
+        {
+          "to": "V=0",
+          "label": "reset|!eq",
+          "from": "V=0"
+        },
+        {
+          "to": "V=1",
+          "label": "!reset&eq",
+          "from": "V=0"
+        },
+        {
+          "to": "V=0",
+          "label": "reset|!eq",
+          "from": "V=1"
+        },
+        {
+          "to": "V=1",
+          "label": "!reset&eq",
+          "from": "V=1"
+        }
+      ]
     }
   },
   {
@@ -388,6 +428,16 @@
     "takeaway": {
       "he": "אופטימיזציה לקלט מאחר יכולה להאריך נתיבי קלט אחרים.",
       "en": "Optimizing a late input can lengthen other input paths."
+    },
+    "diagram": {
+      "kind": "gate",
+      "gate": "MUX",
+      "inputs": [
+        "Tree",
+        "D0",
+        "S=(index=0)"
+      ],
+      "output": "Y"
     }
   },
   {
@@ -963,6 +1013,38 @@
     "takeaway": {
       "he": "תקופת המצב עשויה להיות גדולה ממספר ערכי הפלט.",
       "en": "State period can exceed the number of output values."
+    },
+    "diagram": {
+      "kind": "fsm",
+      "states": [
+        "P1",
+        "P2",
+        "P3",
+        "P0"
+      ],
+      "initial": "P1",
+      "transitions": [
+        {
+          "to": "P2",
+          "label": "clk↑",
+          "from": "P1"
+        },
+        {
+          "to": "P3",
+          "label": "clk↑",
+          "from": "P2"
+        },
+        {
+          "to": "P0",
+          "label": "clk↑",
+          "from": "P3"
+        },
+        {
+          "to": "P1",
+          "label": "clk↑",
+          "from": "P0"
+        }
+      ]
     }
   },
   {

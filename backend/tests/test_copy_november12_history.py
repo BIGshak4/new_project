@@ -91,3 +91,81 @@ def test_only_recorded_quiz_wording_dates_can_be_removed(monkeypatch):
     addition["path"][-1] = "authored_sha256"
     with pytest.raises(AssertionError):
         history.before_current_copy("quiz", "release-manifest.json", after)
+
+
+def quiz_path(name):
+    base = history.ROOT / "backend/seeds"
+    return base / name if name == "duel_quiz.json" else base / "duel_quiz_batches" / name
+
+
+@pytest.mark.parametrize("name,count", [("duel_quiz.json", 2540), ("release-manifest.json", 2450)])
+def test_700_additions_project_to_exact_recorded_quiz_history_without_mutation(name, count):
+    actual = json.loads(quiz_path(name).read_bytes())
+    unchanged = copy.deepcopy(actual)
+    current_old = history.before_700_quiz_additions(name, actual)
+    record = history.fixture("quiz")["entries"][name]
+    assert history.digest(current_old) == record["after_sha256"]
+    previous = history.before_current_copy("quiz", name, actual)
+    assert len(previous["questions"]) == count
+    assert history.digest(previous) == record["before_sha256"]
+    assert actual == unchanged
+    if name == "duel_quiz.json":
+        assert sum(not row.get("source_key") for row in previous["questions"]) == 40
+
+
+@pytest.mark.parametrize("name", ["duel_quiz.json", "release-manifest.json"])
+@pytest.mark.parametrize("mutation", ["content", "identity", "old_disguised_as_new", "remove", "order", "metadata"])
+def test_700_projection_still_rejects_every_unrecorded_old_quiz_mutation(name, mutation):
+    actual = json.loads(quiz_path(name).read_bytes())
+    # The first two records belong to the protected history, including legacy
+    # standalone rows in the bank and old approved entries in its manifest.
+    first = actual["questions"][0]
+    if mutation == "content":
+        if name == "duel_quiz.json":
+            first["prompt"]["en"] += " Unrecorded change."
+        else:
+            first["authored_sha256"] = "0"*64
+    elif mutation == "identity":
+        first["key"] = "quick-sw-999-v1"
+    elif mutation == "old_disguised_as_new":
+        if name == "duel_quiz.json":
+            first["source_key"] = "quick-sw-251"
+        else:
+            first["key"] = "quick-sw-251-v1"
+    elif mutation == "remove":
+        del actual["questions"][0]
+    elif mutation == "order":
+        actual["questions"][0], actual["questions"][1] = actual["questions"][1], actual["questions"][0]
+    else:
+        actual["unexpected_metadata"] = True
+    with pytest.raises(AssertionError, match="nov12_current"):
+        history.before_current_copy("quiz", name, actual)
+
+
+def test_700_projection_rejects_unrecorded_about_changes():
+    actual = json.loads(quiz_path("duel_quiz.json").read_bytes())
+    actual["_about"] += " An unrelated metadata change."
+    with pytest.raises(AssertionError, match="nov12_current"):
+        history.before_current_copy("quiz", "duel_quiz.json", actual)
+
+
+def test_700_projection_identifies_only_allocated_new_ranges():
+    for ident in ("quick-hw-251", "quick-sw-320", "quick-sw-350"):
+        assert history.is_700_addition(ident)
+        assert history.is_700_addition(ident+"-v5", variant=True)
+    for ident in (None, "quiz-legacy", "quick-sw-250", "quick-hw-999", "quick-sw-251-altered"):
+        assert not history.is_700_addition(ident)
+    assert not history.is_700_addition("quick-sw-251-v6", variant=True)
+
+
+def test_pre700_revision_projection_matches_frozen_history_and_rejects_old_hash_edit():
+    actual = json.loads((history.ROOT / "backend/seeds/fundamentals_catalog.json").read_bytes())
+    unchanged = copy.deepcopy(actual)
+    previous = history.before_current_fundamentals_manifest(actual)
+    baseline = json.loads((history.FIXTURES / "preparation_before_20261108_batch20.json").read_bytes())
+    assert len(previous["questions"]) == 500
+    assert history.digest(previous) == baseline["fundamentals_catalog_sha256"]
+    assert actual == unchanged
+    actual["questions"]["quick-sw-01"] = "0"*64
+    with pytest.raises(AssertionError, match="nov12_revision"):
+        history.before_current_fundamentals_manifest(actual)

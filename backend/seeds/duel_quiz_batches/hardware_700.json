@@ -6,8 +6,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "S=3,P=5,busy=1; מוצע PLUS. done=1; רק done=1 טוען product=12 ל־P. bypass=0. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
-      "en": "S=3,P=5,busy=1; PLUS is offered. done=1; only done=1 loads product=12 into P. bypass=0. PLUS accepts iff !busy OR(done AND bypass), adding product only for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
+      "he": "S=3,P=5,busy=1; מוצע PLUS. done=1; רק done=1 טוען product=12 ל־P. bypass=0. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף ל־S את product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
+      "en": "S=3,P=5,busy=1; PLUS is offered. done=1; only done=1 loads product=12 into P. bypass=0. PLUS accepts iff !busy OR(done AND bypass), adding to S: product for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
     },
     "choices": [
       {
@@ -40,8 +40,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "S=3,P=5,busy=1; מוצע PLUS. done=0; רק done=1 טוען product=12 ל־P. bypass=0. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
-      "en": "S=3,P=5,busy=1; PLUS is offered. done=0; only done=1 loads product=12 into P. bypass=0. PLUS accepts iff !busy OR(done AND bypass), adding product only for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
+      "he": "S=3,P=5,busy=1; מוצע PLUS. done=0; רק done=1 טוען product=12 ל־P. bypass=0. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף ל־S את product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
+      "en": "S=3,P=5,busy=1; PLUS is offered. done=0; only done=1 loads product=12 into P. bypass=0. PLUS accepts iff !busy OR(done AND bypass), adding to S: product for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
     },
     "choices": [
       {
@@ -74,8 +74,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "S=3,P=5,busy=1; מוצע PLUS. done=1; רק done=1 טוען product=12 ל־P. bypass=1. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
-      "en": "S=3,P=5,busy=1; PLUS is offered. done=1; only done=1 loads product=12 into P. bypass=1. PLUS accepts iff !busy OR(done AND bypass), adding product only for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
+      "he": "S=3,P=5,busy=1; מוצע PLUS. done=1; רק done=1 טוען product=12 ל־P. bypass=1. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף ל־S את product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
+      "en": "S=3,P=5,busy=1; PLUS is offered. done=1; only done=1 loads product=12 into P. bypass=1. PLUS accepts iff !busy OR(done AND bypass), adding to S: product for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
     },
     "choices": [
       {
@@ -108,8 +108,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "S=3,P=5,busy=0; מוצע PLUS. done=0; רק done=1 טוען product=12 ל־P. bypass=0. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
-      "en": "S=3,P=5,busy=0; PLUS is offered. done=0; only done=1 loads product=12 into P. bypass=0. PLUS accepts iff !busy OR(done AND bypass), adding product only for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
+      "he": "S=3,P=5,busy=0; מוצע PLUS. done=0; רק done=1 טוען product=12 ל־P. bypass=0. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף ל־S את product רק ב־done AND bypass; אחרת P הישן. reset=0; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
+      "en": "S=3,P=5,busy=0; PLUS is offered. done=0; only done=1 loads product=12 into P. bypass=0. PLUS accepts iff !busy OR(done AND bypass), adding to S: product for done AND bypass; otherwise old P. reset=0; only reset=1 clears both with priority. What is next [S,P]?"
     },
     "choices": [
       {
@@ -142,8 +142,8 @@
     "topic": "sequential",
     "status": "draft",
     "prompt": {
-      "he": "S=3,P=5,busy=1; מוצע PLUS. done=1; רק done=1 טוען product=12 ל־P. bypass=1. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף product רק ב־done AND bypass; אחרת P הישן. reset=1; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
-      "en": "S=3,P=5,busy=1; PLUS is offered. done=1; only done=1 loads product=12 into P. bypass=1. PLUS accepts iff !busy OR(done AND bypass), adding product only for done AND bypass; otherwise old P. reset=1; only reset=1 clears both with priority. What is next [S,P]?"
+      "he": "S=3,P=5,busy=1; מוצע PLUS. done=1; רק done=1 טוען product=12 ל־P. bypass=1. PLUS מתקבל אם !busy OR(done AND bypass), ומוסיף ל־S את product רק ב־done AND bypass; אחרת P הישן. reset=1; רק reset=1 מאפס וגובר. מה [S,P] הבא?",
+      "en": "S=3,P=5,busy=1; PLUS is offered. done=1; only done=1 loads product=12 into P. bypass=1. PLUS accepts iff !busy OR(done AND bypass), adding to S: product for done AND bypass; otherwise old P. reset=1; only reset=1 clears both with priority. What is next [S,P]?"
     },
     "choices": [
       {
