@@ -11,7 +11,7 @@
     "id": "quick-hw-62", "topic": "gates",
     "title": {"he": "סכום בלי נשא נכנס", "en": "Adding without a carry-in"},
     "prompt": {"he": "מחברים שני ביטים A ו־B, ללא נשא נכנס. כתבו את ביט הסכום S ואת ביט הנשא C באמצעות שערים.", "en": "Add two bits A and B, with no carry-in. Express the sum bit S and carry bit C using gates."},
-    "answer": {"he": "`S=A XOR B` ו־`C=A AND B`. הסכומים האפשריים הם 0,1,2: ביט הסכום הוא הזוגיות, ונשא נוצר רק ב־1+1. זהו מחבר למחצה, Half Adder.", "en": "`S=A XOR B` and `C=A AND B`. Possible sums are 0,1,2: the sum bit is parity, while carry occurs only for 1+1. This is a half adder."},
+    "answer": {"he": "`S=A XOR B` ו־`C=A AND B`. הסכומים האפשריים הם 0, 1, 2: ביט הסכום הוא הזוגיות, ונשא נוצר רק ב־1+1. זהו מחבר למחצה, Half Adder.", "en": "`S=A XOR B` and `C=A AND B`. Possible sums are 0, 1, 2: the sum bit is parity, while carry occurs only for 1+1. This is a half adder."},
     "takeaway": {"he": "גוזרים כל ביט של תוצאה לפי תפקידו, ולא מנחשים שער אחד לכל החישוב.", "en": "Derive each result bit from its role, rather than guessing one gate for the whole calculation."},
     "code": {"language": "verilog", "text": "assign S = A ^ B;\nassign C = A & B;"}
   },
@@ -48,7 +48,7 @@
     "id": "quick-hw-67", "topic": "gates",
     "title": {"he": "תקלה שלא רואים ביציאה", "en": "A fault invisible at the output"},
     "prompt": {"he": "נתון Y=A AND NOT(B OR X) AND NOT C, ובמעגל התקין X=C. רק הענף אל X עלול להיתקע ב־0; הענף אל NOT C תקין. האם אפשר לזהות stuck-at-0 דרך Y?", "en": "Y=A AND NOT(B OR X) AND NOT C, with X=C when healthy. Only the branch into X may be stuck at 0; the branch into NOT C is healthy. Can stuck-at-0 be detected through Y?"},
-    "answer": {"he": "לא. כש־C=0, גם X התקין הוא 0 ואין הבדל. כש־C=1, הגורם NOT C כופה Y=0 גם בתקין וגם בתקול. לכן אין צירוף A,B,C שמבדיל דרך Y; מדובר בתקלה שאינה נצפית במוצא הזה.", "en": "No. When C=0, healthy X is already 0. When C=1, the NOT C factor forces Y=0 in both circuits. No A,B,C combination distinguishes them through Y; this fault is unobservable at that output."},
+    "answer": {"he": "לא. כש־C=0, גם X התקין הוא 0 ואין הבדל. כש־C=1, הגורם NOT C כופה Y=0 גם בתקין וגם בתקול. לכן אין צירוף A, B, C שמבדיל דרך Y; מדובר בתקלה שאינה נצפית במוצא הזה.", "en": "No. When C=0, healthy X is already 0. When C=1, the NOT C factor forces Y=0 in both circuits. No A, B, C combination distinguishes them through Y; this fault is unobservable at that output."},
     "takeaway": {"he": "לא לכל תקלה פיזית קיים וקטור בדיקה במוצאים הנתונים.", "en": "Not every physical fault has a distinguishing test at the available outputs."}
   },
   {
@@ -194,7 +194,7 @@
   {
     "id": "quick-hw-88", "topic": "sequential",
     "title": {"he": "מלא, אבל קוראים וכותבים יחד", "en": "Full, with a simultaneous read and write"},
-    "prompt": {"he": "FIFO מלא מכיל A,B,C לפי סדר היציאה. החוזה מאפשר קריאה וכתיבה יחד במלא, וקורא את הנתון הישן לפני דריסה. באותה חזית קוראים וכותבים X. מה יוצא ומה נשאר?", "en": "A full FIFO contains A,B,C in output order. Its contract accepts simultaneous read/write when full and reads old data before overwrite. One edge reads and writes X. What is returned, and what remains?"},
+    "prompt": {"he": "FIFO מלא מכיל A, B, C לפי סדר היציאה. החוזה מאפשר קריאה וכתיבה יחד במלא, וקורא את הנתון הישן לפני דריסה. באותה חזית קוראים וכותבים X. מה יוצא ומה נשאר?", "en": "A full FIFO contains A, B, C in output order. Its contract accepts simultaneous read/write when full and reads old data before overwrite. One edge reads and writes X. What is returned, and what remains?"},
     "answer": {"he": "יוצא `A`, ונשאר התור `B,C,X`. התפוסה נשארת 3. התנהגות הזיכרון באותה כתובת חייבת להתאים לחוזה קריאת־הישן; אין להניח שכל בלוק RAM יקרא לפני כתיבה ללא בדיקה או טיפול מפורש.", "en": "It returns `A`, leaving `B,C,X`. Occupancy remains 3. Same-address memory behavior must satisfy the old-data-read contract; do not assume every RAM block reads before writing without checking or handling it explicitly."},
     "takeaway": {"he": "בקשות בו־זמניות דורשות חוזה מפורש גם לגבי סדר הנתונים בזיכרון.", "en": "Simultaneous requests need an explicit contract for memory data ordering too."}
   },
@@ -216,13 +216,13 @@
     "id": "quick-hw-91", "topic": "sequential",
     "title": {"he": "מונה שעוצר בקצה", "en": "A counter that stops at the limit"},
     "prompt": {"he": "מונה רווי לא מסומן בן 3 ביטים מוסיף 1 כשהוא קטן מ־7, וב־7 נשאר 7. מתחילים ב־6. מה הערכים אחרי שלוש חזיתות עם בקשת הגדלה?", "en": "An unsigned 3-bit saturating counter increments below 7 and stays at 7 when already there. Starting at 6, what values follow three increment-request edges?"},
-    "answer": {"he": "`7, 7, 7`. הרוויה חוסמת את ההגדלה בקצה העליון. מונה מחזורי רגיל היה נותן 7,0,1; עצם הרוחב בן 3 ביטים אינו מגדיר אם החוזה הוא גלישה או רוויה.", "en": "`7, 7, 7`. Saturation blocks increments at the upper limit. A wrapping counter would give 7,0,1; having three bits alone does not specify whether the contract is wraparound or saturation."},
+    "answer": {"he": "`7, 7, 7`. הרוויה חוסמת את ההגדלה בקצה העליון. מונה מחזורי רגיל היה נותן 7, 0, 1; עצם הרוחב בן 3 ביטים אינו מגדיר אם החוזה הוא גלישה או רוויה.", "en": "`7, 7, 7`. Saturation blocks increments at the upper limit. A wrapping counter would give 7, 0, 1; having three bits alone does not specify whether the contract is wraparound or saturation."},
     "takeaway": {"he": "מגדירים את התנהגות הקצה בנפרד מרוחב האוגר.", "en": "Specify boundary behavior separately from register width."}
   },
   {
     "id": "quick-hw-92", "topic": "sequential",
     "title": {"he": "שתי פקודות מתבטלות", "en": "Two commands cancel"},
-    "prompt": {"he": "מונה בינארי בן 3 ביטים עולה כשהכניסות inc,dec הן 10, יורד ב־01 ושומר ב־00 או 11. מתי ביט Q1, שמשקלו 2, צריך להתהפך? Q0 הוא הביט הנמוך.", "en": "A 3-bit binary counter increments for inc,dec=10, decrements for 01, and holds for 00 or 11. When should Q1, the weight-2 bit, toggle? Q0 is the low bit."},
+    "prompt": {"he": "מונה בינארי בן 3 ביטים עולה כשהכניסות inc, dec הן 10, יורד ב־01 ושומר ב־00 או 11. מתי ביט Q1, שמשקלו 2, צריך להתהפך? Q0 הוא הביט הנמוך.", "en": "A 3-bit binary counter increments for inc, dec=10, decrements for 01, and holds for 00 or 11. When should Q1, the weight-2 bit, toggle? Q0 is the low bit."},
     "answer": {"he": "בהגדלה, Q1 מתהפך כש־Q0 הישן הוא 1 ונוצר נשא; בהקטנה, כש־Q0 הישן הוא 0 ונדרשת השאלה. לכן `toggle1=(inc AND NOT dec AND Q0) OR (dec AND NOT inc AND NOT Q0)`. ב־00 וב־11 לא מתהפכים.", "en": "On increment, Q1 toggles when old Q0=1 generates carry; on decrement, when old Q0=0 requires borrowing. Thus `toggle1=(inc AND NOT dec AND Q0) OR (dec AND NOT inc AND NOT Q0)`. Neither 00 nor 11 toggles it."},
     "takeaway": {"he": "לבניית מונה בשערים, גוזרים מתי כל ביט מתהפך לפי הביטים הישנים.", "en": "For a gate-level counter, derive when each bit toggles from the old bits."}
   },
@@ -254,7 +254,7 @@
     "id": "quick-hw-96", "topic": "states",
     "title": {"he": "סדר הביטים משנה את העדכון", "en": "Bit order changes the update"},
     "prompt": {"he": "קוראים ביטים מהנמוך לגבוה, LSB first, ורוצים לשמור ב־r את השארית המתמטית בחלוקה ל־3 של הערך שכבר נקרא. למה r_next=(2r+x) modulo 3, המתאימה ל־MSB first, אינה מתאימה ישירות לייצוג הזה?", "en": "Read bits least significant first, retaining in r the actual numerical remainder modulo 3 of the value read so far. Why does r_next=(2r+x) modulo 3, suitable for most significant first, not apply directly to this representation?"},
-    "answer": {"he": "לייצוג השארית המתמטית נשתמש ב־`r_next=(r+x×w) modulo 3`. המשקל w מתחיל ב־1 ומתעדכן ל־2w modulo 3, ולכן מתחלף 1,2,1,2. במימוש הישיר הזה שומרים גם את שלב המשקל. קידוד מצב אחר יכול לבדוק התחלקות בלי לשמור את השלב במפורש.", "en": "For the actual numerical remainder, use `r_next=(r+x×w) modulo 3`. Start w=1 and update w to 2w modulo 3, alternating weights 1,2,1,2. This direct representation also retains weight phase. A different state encoding can test divisibility without explicitly retaining that phase."},
+    "answer": {"he": "לייצוג השארית המתמטית נשתמש ב־`r_next=(r+x×w) modulo 3`. המשקל w מתחיל ב־1 ומתעדכן ל־2w modulo 3, ולכן מתחלף 1, 2, 1, 2. במימוש הישיר הזה שומרים גם את שלב המשקל. קידוד מצב אחר יכול לבדוק התחלקות בלי לשמור את השלב במפורש.", "en": "For the actual numerical remainder, use `r_next=(r+x×w) modulo 3`. Start w=1 and update w to 2w modulo 3, alternating weights 1, 2, 1, 2. This direct representation also retains weight phase. A different state encoding can test divisibility without explicitly retaining that phase."},
     "takeaway": {"he": "מגדירים את סדר קבלת הקלט לפני שבוחרים משמעות למצב.", "en": "Define input arrival order before choosing what the state represents."}
   },
   {

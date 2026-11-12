@@ -118,7 +118,7 @@
     },
     "interview_answer": {
       "he": "אשמור את r של הקידומת. מחשב t=2 r+b, פולט z לפי t≥5 ומחסיר 5 כשצריך. Q_next=2 Q+z. הבקרה סופית; פלט Q מקבילי לזרם בלתי מוגבל דורש אחסון גדל.",
-      "en": "Keep prefix remainder r. Compute t=2 r+b, emit z=(t≥5), subtract5 when needed and update Q_next=2 Q+z. The controller is finite; an unbounded parallel quotient needs growing storage."
+      "en": "Keep prefix remainder r. Compute t=2 r+b, emit z=(t≥5), subtract 5 when needed and update Q_next=2 Q+z. The controller is finite; an unbounded parallel quotient needs growing storage."
     },
     "source_ambiguities": {
       "he": [
@@ -228,7 +228,7 @@
         "שתי ספרות BCD ואות valid; התנהגות שגיאה מפורשת."
       ],
       "en": [
-        "Four input bits; only codes0..9 are valid digits.",
+        "Four input bits; only codes 0..9 are valid digits.",
         "Two BCD output digits and a valid flag; invalid behavior is explicit."
       ]
     },
@@ -289,7 +289,7 @@
       "en": [
         {
           "question": "Can the high tens bits be tied low?",
-          "answer_direction": "Yes. Tens ranges over0..2, so its two most significant bits are always0; fixed wires retain the four-bit BCD interface.",
+          "answer_direction": "Yes. Tens ranges over 0..2, so its two most significant bits are always 0; fixed wires retain the four-bit BCD interface.",
           "principle": "A value range can force constant bits."
         }
       ]
@@ -436,7 +436,7 @@
       ],
       "en": [
         "Zero or negative a is outside the cube contract.",
-        "Interior travel gives a√3; edges only give3a.",
+        "Interior travel gives a√3; edges only give 3a.",
         "Symmetric paths attain the same minimum."
       ]
     },
@@ -526,7 +526,7 @@
     },
     "interview_answer": {
       "he": "אייצר 25 זוגות אחידים משתי קריאות, אדחה את 21–24 ואחזיר שארית מודולו 7 עבור השאר. לכל תשובה שלושה זוגות; התוחלת 50/21 קריאות, עם עצירה בהסתברות 1 בלבד.",
-      "en": "Generate25 equiprobable pairs, reject 21..24 and return modulo 7 for the rest. Each answer has three pairs; expect 50/21 calls, with almost-sure rather than bounded termination."
+      "en": "Generate 25 equiprobable pairs, reject 21..24 and return modulo 7 for the rest. Each answer has three pairs; expect 50/21 calls, with almost-sure rather than bounded termination."
     },
     "source_ambiguities": {
       "he": [
@@ -581,7 +581,7 @@
       "en": [
         "77 yields one boom, not two.",
         "14 emits no output under the supplied rule.",
-        "69→70 introduces7;79→80 removes it; generalized API N=0 yields no lines."
+        "69→70 introduces 7;79→80 removes it; generalized API N=0 yields no lines."
       ]
     },
     "common_mistakes": {
@@ -598,7 +598,7 @@
     },
     "interview_answer": {
       "he": "אבדוק הופעת הספרה 7 ואפיק boom אחד רק בהתאמה; אחרת לא יהיה פלט. מיליון קטן מספיק גם לסריקה פשוטה. לשיפור החלטת הזיהוי אשמור ספרות ומונה שביעיות ואעדכן רק את הנשא; אספור גם את מחיר הפלט.",
-      "en": "Test for digit7 and emit one boom only on a match; otherwise emit nothing. A simple scan handles one million. To optimize membership keep decimal digits and a seven-count, update carried digits and include output cost."
+      "en": "Test for digit 7 and emit one boom only on a match; otherwise emit nothing. A simple scan handles one million. To optimize membership keep decimal digits and a seven-count, update carried digits and include output cost."
     },
     "source_ambiguities": {
       "he": [
@@ -623,7 +623,7 @@
       "en": [
         {
           "question": "What if only the count through N is needed, without printing each value?",
-          "answer_direction": "Use digit DP or count the complement without7; then visiting every integer is unnecessary.",
+          "answer_direction": "Use digit DP or count the complement without 7; then visiting every integer is unnecessary.",
           "principle": "Output requirements determine lower bounds."
         }
       ]
@@ -685,7 +685,7 @@
       ],
       "en": [
         "The source supplies sea and crossing observations but no island topology, inner-shore, proximity-range, fence, motion or boundary-start contract.",
-        "A hole-free island and a sensing strip known outside are explicit explicit assumptions; the conditional solution does not replace the source."
+        "A hole-free island and a sensing strip known outside are explicit assumptions; the conditional solution does not replace the source."
       ]
     },
     "solution_extensions": {

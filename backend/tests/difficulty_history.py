@@ -4,6 +4,7 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
+from tests.copy_november12_history import before_current_copy
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -16,6 +17,8 @@ def historical_scores():
 
 
 def before_difficulty_review(question):
+    if question["key"].startswith("example-"):
+        question = before_current_copy("example", f"compiled:{question['key']}", question)
     ratings, examples = historical_scores()
     key = question["key"]
     assert type(question["difficulty"]) is int, key

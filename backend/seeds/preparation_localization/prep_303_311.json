@@ -10,7 +10,7 @@
     },
     "verification": {
       "he": "בדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית.",
-      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
+      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and 27 ground-coupling cases,100 ADC slots and 32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all 65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus 12.0 simulation passed 66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and 194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
     },
     "edge_cases": {
       "he": [
@@ -63,7 +63,7 @@
   },
   "PREP-307": {
     "assumptions": {
-      "he": "Vs>0, קבל לא טעון ומקור מדרגה, כניסות קומפרטור ללא זרם. סף יחיד2Vs/3.",
+      "he": "Vs>0, קבל לא טעון ומקור מדרגה, כניסות קומפרטור ללא זרם. סף יחיד 2Vs/3.",
       "en": "Positive source step, uncharged capacitor, zero comparator input current; one threshold2Vs/3."
     },
     "optimality": {
@@ -72,11 +72,11 @@
     },
     "verification": {
       "he": "בדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית.",
-      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
+      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and 27 ground-coupling cases,100 ADC slots and 32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all 65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus 12.0 simulation passed 66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and 194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
     },
     "edge_cases": {
       "he": [
-        "בדיוק בסף0 במודל.",
+        "בדיוק בסף 0 במודל.",
         "קבל טעון עשוי להתחיל מעל הסף.",
         "Vs=0 מחוץ לחוזה הראשי."
       ],
@@ -99,7 +99,7 @@
       ]
     },
     "interview_answer": {
-      "he": "מחלק R מעל2R יוצר שני שלישים; משווה Vc לייחוס, ובטעינה מאפס המעבר ב־RC ln3.",
+      "he": "מחלק R מעל 2R יוצר שני שלישים; משווה Vc לייחוס, ובטעינה מאפס המעבר ב־RC ln3.",
       "en": "A top-R/bottom-2R divider creates two thirds; compare Vc to it, crossing at RC ln3 when charging from zero."
     },
     "source_ambiguities": {
@@ -125,16 +125,16 @@
   },
   "PREP-310": {
     "assumptions": {
-      "he": "ארבעה ערוצי בסיס ממשיים עד100kHz, סריקה אחידה ו־ADC משותף; דוגמת1MSPS נבחרה במפורש.",
-      "en": "Four real baseband channels through100kHz, uniform shared-ADC scanning;1MSPS is an explicit example."
+      "he": "ארבעה ערוצי בסיס ממשיים עד 100kHz, סריקה אחידה ו־ADC משותף; דוגמת 1MSPS נבחרה במפורש.",
+      "en": "Four real baseband channels through 100kHz, uniform shared-ADC scanning;1MSPS is an explicit example."
     },
     "optimality": {
-      "he": "קצב כולל גבוה מ־800kS/s; בדוגמה250kS/s לכל ערוץ. זיכרון4FsBH ביט לפני overhead.",
-      "en": "Aggregate rate above800kS/s; example250kS/s per channel. Storage4FsBH bits before overhead."
+      "he": "קצב כולל גבוה מ־800kS/s; בדוגמה 250kS/s לכל ערוץ. זיכרון 4FsBH ביט לפני overhead.",
+      "en": "Aggregate rate above800kS/s; example250kS/s per channel. Storage 4FsBH bits before overhead."
     },
     "verification": {
       "he": "בדיקות מודלים עצמאיות עברו: 81 חישובי פינות תזמון מול זמני הגעה מוחלטים, 27 דוגמאות RC בסף יחיד ו־27 בקבל מצומד לאדמה, 100 חלונות ADC ו־32 דוגמאות aliasing, ‏23,254 תצפיות גאומטריות בחיישני עץ, זוג מסלולים המדגים חוסר נצפות בעץ קצר, 32 פאזות סינוס וכל 65,536 זוגות min/max. ראיה: checks/batch1108b20-hardware-model-verification.json. בדיקות Python וחישוב מספרי אינן SPICE, נתוני תהליך, STA או מדידת ADC. קוד SystemVerilog נבדק בנפרד, ותנאי הסביבה והיקף ההרצה מתועדים בדוח native של האצווה. סימולציית Icarus 12.0 עברה 66,134 השוואות: 65,536 זוגות min/max, ‏404 דגימות חיישני עץ ו־194 צעדי סינוס. הבתים של הקוד אומתו מול SHA-256, וההרצה החוזרת בוצעה ללא גישת רשת. ראיה: checks/batch1108b20-native-verification.json. זהו כיסוי סופי מוגבל לחוזים המתוארים, ולא הוכחת חומרה פיזית.",
-      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and27 ground-coupling cases,100 ADC slots and32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus12.0 simulation passed66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
+      "en": "Independent models passed:81 corner budgets compared with absolute arrival times,27 single-threshold RC and 27 ground-coupling cases,100 ADC slots and 32 alias examples,23,254 geometric wood observations, one indistinguishable short-wood trajectory pair,32 sine phases and all 65,536 min/max pairs. Evidence: checks/batch1108b20-hardware-model-verification.json. Python/numerical checks are not SPICE, process characterization, STA or physical ADC measurements. SystemVerilog is verified separately; execution conditions and coverage are recorded in the batch native report. Icarus 12.0 simulation passed 66,134 comparisons:65,536 min/max pairs,404 wood-sensor samples and 194 sine steps. Source bytes were checked against SHA-256, and the confirmation run had network access denied. Evidence: checks/batch1108b20-native-verification.json. This is finite coverage of the stated contracts, not physical hardware signoff."
     },
     "edge_cases": {
       "he": [
@@ -173,7 +173,7 @@
         {
           "question": "איך משתנה התקציב לשמונה ערוצים?",
           "direction": "שמרו קצב לכל ערוץ והכפילו את מספר ההמרות; בדקו מחדש התייצבות וזיכרון.",
-          "tests": "סבב תגים באורך8 ומגבלת זמן לחלון."
+          "tests": "סבב תגים באורך 8 ומגבלת זמן לחלון."
         }
       ],
       "en": [
@@ -362,10 +362,10 @@
   "PREP-309": {
     "assumptions": {
       "he": [
-        "Java17, קיבולת קבועה לא שלילית, int, גישה סדרתית."
+        "Java 17, קיבולת קבועה לא שלילית, int, גישה סדרתית."
       ],
       "en": [
-        "Java17, fixed nonnegative capacity, int values, serialized access."
+        "Java 17, fixed nonnegative capacity, int values, serialized access."
       ]
     },
     "optimality": {
@@ -439,7 +439,7 @@
         "מונה אפס, מחלק 1, מנה 1; מחלק אפס, שליליים ושארית אינם קלט חוקי."
       ],
       "en": [
-        "Zero numerator, divisor1, quotient1; zero divisor, negatives and nonzero remainder are outside contract."
+        "Zero numerator, divisor 1, quotient 1; zero divisor, negatives and nonzero remainder are outside contract."
       ]
     },
     "common_mistakes": {

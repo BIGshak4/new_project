@@ -10,12 +10,12 @@
       "en": "Index pairs are not value pairs"
     },
     "prompt": {
-      "he": "במערך [1,4,1,4] מחפשים סכום 5. כמה זוגות אינדקסים i<j מתאימים, וכמה זוגות ערכים שונים? מדוע קבוצת ערכים לבדה אינה מספיקה לספירת זוגות האינדקסים?",
-      "en": "In [1,4,1,4], the target sum is 5. How many index pairs i<j qualify, and how many distinct value pairs? Why is a set of values insufficient for counting index pairs?"
+      "he": "במערך [1, 4, 1, 4] מחפשים סכום 5. כמה זוגות אינדקסים i<j מתאימים, וכמה זוגות ערכים שונים? מדוע קבוצת ערכים לבדה אינה מספיקה לספירת זוגות האינדקסים?",
+      "en": "In [1, 4, 1, 4], the target sum is 5. How many index pairs i<j qualify, and how many distinct value pairs? Why is a set of values insufficient for counting index pairs?"
     },
     "answer": {
-      "he": "יש ארבעה זוגות אינדקסים: כל אחד משני מופעי 1 מתאים לכל אחד משני מופעי 4. יש רק זוג ערכים אחד, {1,4}. קבוצת ערכים מאבדת את מספר ההופעות. בסריקה משמאל לימין מוסיפים לכל איבר את מספר המשלימים שכבר נראו, ורק אחר כך מעדכנים את תדירותו; כך לא משתמשים באיבר פעמיים.",
-      "en": "There are four index pairs: either occurrence of 1 can pair with either occurrence of 4. There is one distinct value pair, {1,4}. A set loses multiplicities. When scanning left to right, add the number of earlier complements before updating the current value's frequency; this prevents pairing an item with itself."
+      "he": "יש ארבעה זוגות אינדקסים: כל אחד משני מופעי 1 מתאים לכל אחד משני מופעי 4. יש רק זוג ערכים אחד, {1, 4}. קבוצת ערכים מאבדת את מספר ההופעות. בסריקה משמאל לימין מוסיפים לכל איבר את מספר המשלימים שכבר נראו, ורק אחר כך מעדכנים את תדירותו; כך לא משתמשים באיבר פעמיים.",
+      "en": "There are four index pairs: either occurrence of 1 can pair with either occurrence of 4. There is one distinct value pair, {1, 4}. A set loses multiplicities. When scanning left to right, add the number of earlier complements before updating the current value's frequency; this prevents pairing an item with itself."
     },
     "takeaway": {
       "he": "לפני שסופרים זוגות, הגדירו אם הופעות שוות נחשבות איברים שונים.",
@@ -137,12 +137,12 @@
       "en": "Bracket counts do not prove valid nesting"
     },
     "prompt": {
-      "he": "במחרוזת ([)] יש מספר שווה של פותחים וסוגרים מכל סוג. מדוע היא בכל זאת אינה תקינה? איזה מידע צריך לשמור בזמן הסריקה?",
-      "en": "The string ([)] has equal opening and closing counts of each type. Why is it invalid anyway? What information must a scan retain?"
+      "he": "במחרוזת `([)]` יש מספר שווה של פותחים וסוגרים מכל סוג. מדוע היא בכל זאת אינה תקינה? איזה מידע צריך לשמור בזמן הסריקה?",
+      "en": "The string `([)]` has equal opening and closing counts of each type. Why is it invalid anyway? What information must a scan retain?"
     },
     "answer": {
-      "he": "כאשר מגיעים ל־), הסוגר הפותח האחרון שעדיין לא נסגר הוא [, שאינו מתאים. שומרים מחסנית של פותחים שטרם נסגרו. כל סוגר חייב להתאים לראש המחסנית ולהסירו; מחסנית ריקה בזמן סגירה או סוג שגוי פוסלים מיד. בסוף המחסנית חייבת להיות ריקה. מונים לבדם מאבדים את סדר הקינון.",
-      "en": "At ), the most recent unmatched opener is [, which does not match. Keep a stack of unmatched openers. Each closer must match and remove its top; an empty stack on closing or a wrong type immediately invalidates the string. The stack must be empty at the end. Counts alone lose nesting order."
+      "he": "כאשר מגיעים ל־`)`, הסוגר הפותח האחרון שעדיין לא נסגר הוא `[`, שאינו מתאים. שומרים מחסנית של פותחים שטרם נסגרו. כל סוגר חייב להתאים לראש המחסנית ולהסירו; מחסנית ריקה בזמן סגירה או סוג שגוי פוסלים מיד. בסוף המחסנית חייבת להיות ריקה. מונים לבדם מאבדים את סדר הקינון.",
+      "en": "At `)`, the most recent unmatched opener is `[`, which does not match. Keep a stack of unmatched openers. Each closer must match and remove its top; an empty stack on closing or a wrong type immediately invalidates the string. The stack must be empty at the end. Counts alone lose nesting order."
     },
     "takeaway": {
       "he": "בקינון, הפתיחה האחרונה שטרם נסגרה חייבת להיסגר ראשונה.",

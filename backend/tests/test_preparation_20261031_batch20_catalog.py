@@ -11,6 +11,8 @@ import json
 import uuid
 from pathlib import Path
 
+from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
+
 import pytest
 
 from app.api.errors import ApiError
@@ -356,13 +358,14 @@ async def test_new_question_feedback_cannot_create_assessment_metrics_or_xp(cata
 # 2026-11-04: authorized learner-copy baseline; all identity, grading and source-history assertions remain in place.
 def test_short_cards_quiz_and_review_attestations_are_frozen():
     # A later authorized expansion adds keys; every pre-expansion record stays frozen.
-    registry = read(SEEDS / 'fundamentals_catalog.json')
+    current_registry = read(SEEDS / 'fundamentals_catalog.json')
+    registry = before_current_fundamentals_manifest(current_registry)
     previous_registry = {**registry, 'questions': {
         key: value for key, value in registry['questions'].items()
         if int(key.rsplit('-', 1)[1]) <= 200
     }}
     assert digest(previous_registry) == BATCH20_BASELINE['fundamentals_sha256']
-    quiz = read(SEEDS / 'duel_quiz.json')['questions']
+    quiz = before_current_copy("quiz", "duel_quiz.json", read(SEEDS / 'duel_quiz.json'))['questions']
     historical_quiz = [row for row in quiz if not row.get('source_key')
                        or int(row['source_key'].rsplit('-', 1)[1]) <= 200]
     assert digest(sorted(historical_quiz, key=lambda row: row['key'])) == (
@@ -372,10 +375,10 @@ def test_short_cards_quiz_and_review_attestations_are_frozen():
     content = ROOT / 'apps/web/src/content'
     cards = []
     for name, expected in BATCH21_BASELINE['short_card_source_sha256'].items():
-        rows = read(content / name)
+        rows = before_current_copy("fundamentals", name, read(content / name))
         assert digest(rows) == expected
         cards.extend(rows)
     assert len(cards) == len({row['id'] for row in cards}) == 400
-    assert read(content / 'fundamentals-revisions.json') == registry['questions']
+    assert read(content / 'fundamentals-revisions.json') == current_registry['questions']
     assert len(historical_quiz) == 2040
     assert sum(row['status'] == 'approved' for row in historical_quiz) == 2000

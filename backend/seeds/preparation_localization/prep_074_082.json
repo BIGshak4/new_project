@@ -166,7 +166,7 @@
     },
     "verification": {
       "he": "בדיקה ממצה של כל בקשות המחזור לכל זיכרון ביטי בעומקים 1–4 ועוד 50,000 חזיתות אקראיות מול מפרט נפרד. כל primitive נאסר מקריאה וכתיבה יחד; אין סימולציית HDL או בדיקת תזמון פיזי.",
-      "en": "Exhaustive one-edge requests from every one-bit memory of depths1..4 plus50,000 random edges against a separate specification. Primitive read/write mutual exclusion asserted; no HDL or physical timing verification."
+      "en": "Exhaustive one-edge requests from every one-bit memory of depths 1..4 plus 50,000 random edges against a separate specification. Primitive read/write mutual exclusion asserted; no HDL or physical timing verification."
     },
     "edge_cases": {
       "he": [
@@ -246,7 +246,7 @@
         "הגישות מושלמות לפי סדר והאחסון שומר נתונים; cache אינו מסתיר את ההתקן.",
         "מודל ראשי: מפה קבועה זהה לקריאה ולכתיבה; אין oracle של כתובות פיזיות.",
         "אין הבטחת זיהוי לכל תקלה או זיהוי של תמורה עקבית וחד־חד־ערכית.",
-        "המספר16 הוא רוחב מילה, והמספר10 רוחב כתובת, רק תחת הנחת RAM רגיל שהוספנו.",
+        "המספר 16 הוא רוחב מילה, והמספר 10 רוחב כתובת, רק תחת הנחת RAM רגיל שהוספנו.",
         "קווי הבקרה במקור אינם מסומנים. פעולות גישה וסיום פעולה מוגדרות מראש במודל.",
         "מותר להרוס את התוכן לצורך הבדיקה.",
         "המספר 16 הוא רוחב מילה, והמספר 10 רוחב כתובת, רק תחת הנחת RAM רגיל שהוספנו.",
@@ -258,10 +258,10 @@
         "Accesses complete in order and storage retains data; no cache hides the device.",
         "Primary model: one stable mapping for reads and writes; no physical-address oracle.",
         "No complete fault coverage or detection of consistent bijective physical renaming is claimed.",
-        "The16-bit word and10-bit address interpretation is an added conventional-RAM assumption.",
+        "The 16-bit word and 10-bit address interpretation is an added conventional-RAM assumption.",
         "Source control pins are unnamed; valid accesses and completion are defined by the model.",
         "Destructive testing is allowed under the declared contract.",
-        "The16-bit word and 10-bit address interpretation is an added conventional-RAM assumption.",
+        "The 16-bit word and 10-bit address interpretation is an added conventional-RAM assumption.",
         "Source control pins are unnamed; valid accesses and completion are defined by the model.",
         "Destructive testing is allowed under the declared contract."
       ]
@@ -283,8 +283,8 @@
       }
     },
     "verification": {
-      "he": "עברו 6,826 מקרי מפה/רוחב ממצים עד N=5, 640 מקרי מפה מדגמיים, 153 תמורות עקביות, 153 תמורות מסלול קריאה, 300 תקלות ביט נתון ו־6 פרמטרים לא תקינים. נבדקה גם דוגמה שבה write/read מיידיים מחמיצים alias. מודל Python בלבד.\n\nדגם RAM תקין ועוד26 דגמי תקלה הוזרקו ונבדקו. קיבולת16,384 ביטים אומתה בחישוב עצמאי.\n\nדגם RAM תקין ועוד 26 דגמי תקלה הוזרקו ונבדקו. קיבולת 16,384 ביטים אומתה בחישוב עצמאי.",
-      "en": "Passed 6,826 exhaustive map/width cases through N=5, 640 sampled maps, 153 consistent permutations, 153 read-path permutations, 300 stuck-data cases and six invalid-parameter cases. Also checked an alias counterexample missed by immediate write/read. Python model only.\n\nOne healthy RAM and26 injected fault models checked. Capacity16,384 bits independently calculated.\n\nOne healthy RAM and 26 injected fault models checked. Capacity16,384 bits independently calculated."
+      "he": "עברו 6,826 מקרי מפה/רוחב ממצים עד N=5, 640 מקרי מפה מדגמיים, 153 תמורות עקביות, 153 תמורות מסלול קריאה, 300 תקלות ביט נתון ו־6 פרמטרים לא תקינים. נבדקה גם דוגמה שבה write/read מיידיים מחמיצים alias. מודל Python בלבד.\n\nדגם RAM תקין ועוד 26 דגמי תקלה הוזרקו ונבדקו. קיבולת 16,384 ביטים אומתה בחישוב עצמאי.\n\nדגם RAM תקין ועוד 26 דגמי תקלה הוזרקו ונבדקו. קיבולת 16,384 ביטים אומתה בחישוב עצמאי.",
+      "en": "Passed 6,826 exhaustive map/width cases through N=5, 640 sampled maps, 153 consistent permutations, 153 read-path permutations, 300 stuck-data cases and six invalid-parameter cases. Also checked an alias counterexample missed by immediate write/read. Python model only.\n\nOne healthy RAM and 26 injected fault models checked. Capacity 16,384 bits independently calculated.\n\nOne healthy RAM and 26 injected fault models checked. Capacity 16,384 bits independently calculated."
     },
     "edge_cases": {
       "he": [
@@ -293,8 +293,8 @@
         "N שאינו חזקה של 2: בודקים רק כתובות 0..N−1.",
         "שתי כתובות בעלות אותו ביט בסבב אחד עשויות להיפרד בסבב אחר.",
         "תמורה עקבית בקריאה ובכתיבה אינה כשל נראה דרך הממשק.",
-        "כתובות0 ו־1023.",
-        "מילה שכולה0, שכולה1 וכל סיבית נתונים לבדה.",
+        "כתובות 0 ו־1023.",
+        "מילה שכולה 0, שכולה 1 וכל סיבית נתונים לבדה.",
         "קווים מקוצרים ו־aliasing בין כתובות; קריאה/כתיבה דרך פרמוטציה נסתרת.",
         "כתובות 0 ו־1023.",
         "מילה שכולה 0, שכולה 1 וכל סיבית נתונים לבדה.",
@@ -306,10 +306,10 @@
         "For non-power-of-two N test only addresses 0..N−1.",
         "Addresses equal in one tested bit may differ in another pass.",
         "A consistent read/write permutation is interface-equivalent to healthy memory.",
-        "Addresses0 and1023.",
+        "Addresses 0 and 1023.",
         "All-zero, all-one and each one-hot data word.",
         "Address aliasing and a shared hidden bijective permutation.",
-        "Addresses0 and 1023.",
+        "Addresses 0 and 1023.",
         "All-zero, all-one and each one-hot data word.",
         "Address aliasing and a shared hidden bijective permutation."
       ]
@@ -343,7 +343,7 @@
       ]
     },
     "interview_answer": {
-      "he": "אכתוב קודם לכל הכתובות ואז אקרא את כולן. כשאין מספיק ביטים לחתימה ייחודית, אבדוק בכל סבב ביט כתובת אחר ואת המשלים שלו. כל זוג aliases נבדל בביט כלשהו, ולכן אינו יכול לעבור את אותו סבב. תמורה חד־חד־ערכית זהה בקריאה ובכתיבה אינה ניתנת לזיהוי דרך הממשק בלבד.\n\nתחת חוזה10 סיביות כתובת ו־16 סיביות נתונים:1024 מילים,16,384 ביטים,2 KiB. אגדיר בקרות ותזמון ואז אבצע דפוסי נתונים ובדיקה עם ערכים שונים בכל הכתובות לפני הקריאה.\n\nתחת חוזה 10 סיביות כתובת ו־16 סיביות נתונים:1024 מילים,16,384 ביטים,2 KiB. אגדיר בקרות ותזמון ואז אבצע דפוסי נתונים ובדיקה עם ערכים שונים בכל הכתובות לפני הקריאה.",
+      "he": "אכתוב קודם לכל הכתובות ואז אקרא את כולן. כשאין מספיק ביטים לחתימה ייחודית, אבדוק בכל סבב ביט כתובת אחר ואת המשלים שלו. כל זוג aliases נבדל בביט כלשהו, ולכן אינו יכול לעבור את אותו סבב. תמורה חד־חד־ערכית זהה בקריאה ובכתיבה אינה ניתנת לזיהוי דרך הממשק בלבד.\n\nתחת חוזה 10 סיביות כתובת ו־16 סיביות נתונים:1024 מילים,16,384 ביטים,2 KiB. אגדיר בקרות ותזמון ואז אבצע דפוסי נתונים ובדיקה עם ערכים שונים בכל הכתובות לפני הקריאה.\n\nתחת חוזה 10 סיביות כתובת ו־16 סיביות נתונים:1024 מילים,16,384 ביטים,2 KiB. אגדיר בקרות ותזמון ואז אבצע דפוסי נתונים ובדיקה עם ערכים שונים בכל הכתובות לפני הקריאה.",
       "en": "Write all addresses before reading any back. If words cannot hold unique address signatures, test one address-bit plane and its complement per pass. Every aliased pair differs in some bit and cannot both pass that pattern. A consistent bijective physical renaming is unobservable through this interface alone.\n\nUnder ten address and sixteen data bits:1024 words,16,384 bits,2 KiB. Specify controls/timing, then use data patterns and distinct-address writes before readback.\n\nUnder ten address and sixteen data bits:1024 words,16,384 bits,2 KiB. Specify controls/timing, then use data patterns and distinct-address writes before readback."
     },
     "solution_extensions": {
@@ -400,10 +400,10 @@
       },
       "en": {
         "batch90_capacity": {
-          "prompt": "### Variant: memory box with 10-bit and 16-bit buses\nThe supplied sketch has an incoming bus marked10, a bidirectional bus marked16 and two unnamed control pins. Explain a possible use, what capacity can be inferred and how to test it, with pseudocode.\n\nClarification: bus widths alone do not prove RAM functionality. For capacity and testing choose conventional RAM with ten address lines and sixteen data lines, no multiplexed addresses or hidden banks. Legal read/write commands, settling times and DQ direction require an interface contract; the two source pins are not silently named WE/OE. Tests destroy data, so important contents need prior authorization or backup.",
+          "prompt": "### Variant: memory box with 10-bit and 16-bit buses\nThe supplied sketch has an incoming bus marked 10, a bidirectional bus marked 16 and two unnamed control pins. Explain a possible use, what capacity can be inferred and how to test it, with pseudocode.\n\nClarification: bus widths alone do not prove RAM functionality. For capacity and testing choose conventional RAM with ten address lines and sixteen data lines, no multiplexed addresses or hidden banks. Legal read/write commands, settling times and DQ direction require an interface contract; the two source pins are not silently named WE/OE. Tests destroy data, so important contents need prior authorization or backup.",
           "hints": [
             "Separate address count from bits per address.",
-            "Ten address bits choose2^10 words, each with 16 bits under the interface assumption.",
+            "Ten address bits choose 2^10 words, each with 16 bits under the interface assumption.",
             "Use fixed patterns, walking data bits and distinct address values written before verification; immediate write-then-read alone misses aliasing."
           ],
           "integration_status": ""
@@ -494,7 +494,7 @@
         "מונה EN בן שלושה ביטים עם איפוס סינכרוני; FF ושערים נוספים מותרים.",
         "pulse רשום למשך מחזור אחרי דגימת כל עלייה חמישית.",
         "גרסת המקור סופרת את חזיתות clk עצמו; אין x נוסף בחוזה הראשי של הנספח.",
-        "פולס רשום מחזור אחד; reset קובע שהראשון בחזית50 אחרי האיפוס.",
+        "פולס רשום מחזור אחד; reset קובע שהראשון בחזית 50 אחרי האיפוס.",
         "גרסת המקור סופרת את חזיתות clk עצמו; אין x נוסף בחוזה הראשי של הנספח.",
         "פולס רשום מחזור אחד; reset קובע שהראשון בחזית 50 אחרי האיפוס."
       ],
@@ -527,8 +527,8 @@
       }
     },
     "verification": {
-      "he": "עברו כל 8,191 רצפי הקלט באורכים 0–12, כל 16,384 רצפי קלט/איפוס באורך 7 ו־200 רצפים בני 1,000 מחזורים מול אורקל רשימת אירועים. נבדק קלט שנשאר גבוה. מודל Python בלבד; SystemVerilog לא קומפל ולא סומלץ.\n\n10,000 חזיתות,200,000 דגימות אות נפרד ו־10,000 מחזורי חלופת50% נבדקו מול אורקלי אינדקסים ומניית מעברים.\n\n10,000 חזיתות,200,000 דגימות אות נפרד ו־10,000 מחזורי חלופת 50% נבדקו מול אורקלי אינדקסים ומניית מעברים.",
-      "en": "Passed all 8,191 binary input sequences of lengths zero through twelve, 16,384 input/reset sequences of length seven and 200 one-thousand-cycle traces against an event-list oracle. Held-high input checked. Python model only; SystemVerilog uncompiled and not HDL-simulated.\n\n10,000 edges,200,000 separate-event samples and10,000 optional50%-wave cycles checked against index and transition-count oracles.\n\n10,000 edges,200,000 separate-event samples and 10,000 optional50%-wave cycles checked against index and transition-count oracles."
+      "he": "עברו כל 8,191 רצפי הקלט באורכים 0–12, כל 16,384 רצפי קלט/איפוס באורך 7 ו־200 רצפים בני 1,000 מחזורים מול אורקל רשימת אירועים. נבדק קלט שנשאר גבוה. מודל Python בלבד; SystemVerilog לא קומפל ולא סומלץ.\n\n10,000 חזיתות,200,000 דגימות אות נפרד ו־10,000 מחזורי חלופת 50% נבדקו מול אורקלי אינדקסים ומניית מעברים.\n\n10,000 חזיתות,200,000 דגימות אות נפרד ו־10,000 מחזורי חלופת 50% נבדקו מול אורקלי אינדקסים ומניית מעברים.",
+      "en": "Passed all 8,191 binary input sequences of lengths zero through twelve, 16,384 input/reset sequences of length seven and 200 one-thousand-cycle traces against an event-list oracle. Held-high input checked. Python model only; SystemVerilog uncompiled and not HDL-simulated.\n\n10,000 edges,200,000 separate-event samples and 10,000 optional 50%-wave cycles checked against index and transition-count oracles.\n\n10,000 edges,200,000 separate-event samples and 10,000 optional 50%-wave cycles checked against index and transition-count oracles."
     },
     "edge_cases": {
       "he": [
@@ -537,7 +537,7 @@
         "איפוס גובר על אירוע חמישי ועל pulse שהיה גבוה.",
         "סיום ספירת חמש אינו מאפס previous.",
         "קלט שעולה ויורד בין שתי חזיתות דגימה אינו מובטח להיקלט.",
-        "החזית49 אינה מפיקה פולס; החזית50 כן.",
+        "החזית 49 אינה מפיקה פולס; החזית 50 כן.",
         "איפוס גובר על הספירה וקובע מחדש פאזה.",
         "פולס enable אינו זהה לשעון חדש מאושר לתזמון.",
         "החזית 49 אינה מפיקה פולס; החזית 50 כן.",
@@ -565,8 +565,8 @@
         "לחשב פענוח count==4 על המצב החדש במקום להגדיר במפורש מצב ישן.",
         "להשתמש ב־x כשעון נגזר בלי חוזה תזמון.",
         "להניח ששני מסנכרנים מבטיחים קליטת כל פולס צר.",
-        "ספירת רמות1 במקום חזיתות.",
-        "בלבול בין duty cycle של2% ל־50%.",
+        "ספירת רמות 1 במקום חזיתות.",
+        "בלבול בין duty cycle של 2% ל־50%.",
         "הוספת כניסת x שלא מופיעה במקור.",
         "ספירת רמות 1 במקום חזיתות.",
         "בלבול בין duty cycle של 2% ל־50%.",
@@ -579,16 +579,16 @@
         "Using x as a derived clock without a timing contract.",
         "Assuming two synchronizer flip-flops capture every narrow pulse.",
         "Counting high levels rather than specified edges.",
-        "Confusing2% and50% duty cycles.",
+        "Confusing 2% and 50% duty cycles.",
         "Inventing a separate x input for the source.",
         "Counting high levels rather than specified edges.",
-        "Confusing2% and 50% duty cycles.",
+        "Confusing 2% and 50% duty cycles.",
         "Inventing a separate x input for the source."
       ]
     },
     "interview_answer": {
-      "he": "אשמור את הדגימה הקודמת ואחשב e=x AND NOT previous. המונה יתקדם רק כש־e=1. כשהמצב הישן 4 ויש אירוע, אאפס את המונה ואטען 1 ל־FF הפולס; בכל מחזור אחר הפולס ייטען 0. previous מתעדכן תמיד, ולכן רמה גבוהה ממושכת אינה נספרת שוב.\n\nלכל חזית clk אקדם phase מודולו50. ערך ישן49 מפיק פולס ומאפס. הפולס נמשךT והמחזור50 T; אם נדרש50% אהפוך פלט פעם ב־25 חזיתות.\n\nלכל חזית clk אקדם phase מודולו 50. ערך ישן 49 מפיק פולס ומאפס. הפולס נמשךT והמחזור 50 T; אם נדרש 50% אהפוך פלט פעם ב־25 חזיתות.",
-      "en": "Store the previous sample and compute e=x AND NOT previous. Enable the counter only on e. An event from old count four resets the counter and loads one into the pulse register; other cycles load zero. Always update previous, so a held-high input is never counted again.\n\nAdvance phase modulo 50 on each clk edge. Old49 emits a pulse and wraps. High time is T and period 50 T; for 50% duty toggle once per 25 edges.\n\nAdvance phase modulo 50 on each clk edge. Old49 emits a pulse and wraps. High time is T and period 50 T; for 50% duty toggle once per 25 edges."
+      "he": "אשמור את הדגימה הקודמת ואחשב e=x AND NOT previous. המונה יתקדם רק כש־e=1. כשהמצב הישן 4 ויש אירוע, אאפס את המונה ואטען 1 ל־FF הפולס; בכל מחזור אחר הפולס ייטען 0. previous מתעדכן תמיד, ולכן רמה גבוהה ממושכת אינה נספרת שוב.\n\nלכל חזית clk אקדם phase מודולו 50. ערך ישן 49 מפיק פולס ומאפס. הפולס נמשך T והמחזור 50 T; אם נדרש 50% אהפוך פלט פעם ב־25 חזיתות.\n\nלכל חזית clk אקדם phase מודולו 50. ערך ישן 49 מפיק פולס ומאפס. הפולס נמשך T והמחזור 50 T; אם נדרש 50% אהפוך פלט פעם ב־25 חזיתות.",
+      "en": "Store the previous sample and compute e=x AND NOT previous. Enable the counter only on e. An event from old count four resets the counter and loads one into the pulse register; other cycles load zero. Always update previous, so a held-high input is never counted again.\n\nAdvance phase modulo 50 on each clk edge. Old 49 emits a pulse and wraps. High time is T and period 50 T; for 50% duty toggle once per 25 edges.\n\nAdvance phase modulo 50 on each clk edge. Old 49 emits a pulse and wraps. High time is T and period 50 T; for 50% duty toggle once per 25 edges."
     },
     "solution_extensions": {
       "he": {
@@ -610,7 +610,7 @@
         "batch90_fiftieth_edge": [
           {
             "question": "Does toggling every fifty edges create a 50%-duty divide-by 50 clock?",
-            "answer_direction": "No. Two toggles take100 edges. Divide-by 50 needs a toggle every 25.",
+            "answer_direction": "No. Two toggles take 100 edges. Divide-by 50 needs a toggle every 25.",
             "principle": "Two half-periods make a full period."
           }
         ]
@@ -644,10 +644,10 @@
       },
       "en": {
         "batch90_fiftieth_edge": {
-          "prompt": "### Variant: a 1:50 pulse from the clock itself\nImplement a pulse on a clock rise at ratio1:50. The source specifies neither an additional data input nor duty cycle. This contract counts clk edges directly: after reset emit one full input-cycle pulse on edges 50,100,150,… No separate data-edge detector is required. The original every-fifth-rise-of-x question above is retained.\n\nA 50%-duty divided clock, or one pulse per fifty transitions of a separate x, is a different interface; those alternatives are discussed separately.",
+          "prompt": "### Variant: a 1:50 pulse from the clock itself\nImplement a pulse on a clock rise at ratio 1:50. The source specifies neither an additional data input nor duty cycle. This contract counts clk edges directly: after reset emit one full input-cycle pulse on edges 50,100,150,… No separate data-edge detector is required. The original every-fifth-rise-of-x question above is retained.\n\nA 50%-duty divided clock, or one pulse per fifty transitions of a separate x, is a different interface; those alternatives are discussed separately.",
           "hints": [
             "What phase range remembers one event every fifty clock edges?",
-            "A modulo 50 counter holds0..49. Which old value causes the pulse and wrap?",
+            "A modulo 50 counter holds 0..49. Which old value causes the pulse and wrap?",
             "Reset phase=0. On each edge pulse_next=(phase==49); next phase is 0 then, otherwise phase+1."
           ],
           "integration_status": ""

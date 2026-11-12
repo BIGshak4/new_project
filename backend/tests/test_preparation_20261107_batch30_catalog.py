@@ -6,6 +6,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
+
 import pytest
 
 from app.engine.catalog import load_catalog
@@ -133,9 +135,9 @@ def test_bilingual_hints_material_and_protected_media_stay_gated():
 
 def test_short_cards_quizzes_and_human_review_registry_are_unchanged():
     for name,previous in BATCH1107_BASELINE['short_card_source_sha256'].items():
-        assert digest(read(ROOT/'apps/web/src/content'/name))==previous
-    assert digest(read(SEEDS/'fundamentals_catalog.json'))==BATCH1107_BASELINE['fundamentals_catalog_sha256']
-    assert digest(read(SEEDS/'duel_quiz.json'))==BATCH1107_BASELINE['quiz_bank_sha256']
+        assert digest(before_current_copy('fundamentals', name, read(ROOT/'apps/web/src/content'/name)))==previous
+    assert digest(before_current_fundamentals_manifest(read(SEEDS/'fundamentals_catalog.json')))==BATCH1107_BASELINE['fundamentals_catalog_sha256']
+    assert digest(before_current_copy('quiz', 'duel_quiz.json', read(SEEDS/'duel_quiz.json')))==BATCH1107_BASELINE['quiz_bank_sha256']
     assert digest(read(SEEDS/'solution_review_attestations.json'))==BATCH1107_BASELINE['review_registry_canonical_sha256']
 
 

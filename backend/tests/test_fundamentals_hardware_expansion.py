@@ -216,7 +216,7 @@ def test_redundant_nor_branch_sa0_has_no_distinguishing_vector():
             sa1_tests.append((a, b, c))
     assert sa0_tests == []
     assert sa1_tests == [(1, 0, 0)]  # Scope matters: not all branch faults are redundant.
-    assert "No A,B,C combination" in card(67)["answer"]["en"]
+    assert "No A, B, C combination" in card(67)["answer"]["en"]
 
 
 def test_settled_boolean_zero_can_have_a_path_delay_pulse():

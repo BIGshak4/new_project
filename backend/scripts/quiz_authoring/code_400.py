@@ -94,11 +94,11 @@ def early_groups():
          [[2], [2, 2], [2, 2, 2], [0, 2, 2]], [2, 2, 2], "מיזוג שומר הופעות; שוויון אינו רשות למחוק נתון.", "Merging preserves occurrences; equality does not authorize dropping data.")
 
     emit(180, 1, "triple_index_count", {"a": [0, 0, 0, 0], "target": 0},
-         "כמה שלשות אינדקסים i<j<k במערך [0,0,0,0] סכומן 0? כאן סופרים הופעות, לא שלשות ערכים ייחודיות.",
-         "How many index triples i<j<k in [0,0,0,0] sum to 0? Count occurrences, not distinct value triples.",
+         "כמה שלשות אינדקסים i<j<k במערך [0,0,0,0] סכום הערכים שלהן הוא 0? כאן סופרים הופעות, לא שלשות ערכים ייחודיות.",
+         "How many index triples i<j<k in [0,0,0,0] have values summing to 0? Count occurrences, not distinct value triples.",
          [1, 3, 4, 6], 4, "בוחרים 3 מתוך 4 אינדקסים; יש 4 בחירות למרות שלשת ערכים יחידה.", "Choose 3 of 4 indices: 4 choices despite a single value triple.")
     emit(180, 2, "triple_unique", {"a": [-1, -1, 2], "target": 0},
-         "מחפשים שלשות ערכים ייחודיות מסכום 0 ב־[-1,-1,2], תוך שימוש באינדקסים שונים. כמה שלשות יאבדו אם נהפוך את הקלט לקבוצת ערכים לפני החיפוש?",
+         "מחפשים שלשות ערכים ייחודיות שסכומן 0 ב־[-1,-1,2], תוך שימוש באינדקסים שונים. כמה שלשות יאבדו אם נהפוך את הקלט לקבוצת ערכים לפני החיפוש?",
          "Seek distinct value triples summing to 0 in [-1,-1,2], using different indices. How many valid triples disappear if the input is deduplicated before searching?",
          [0, 1, 2, 3], 1, "השלשה (-1,-1,2) זקוקה לשתי הופעות של ‎-1; קבוצה מוחקת אחת מהן.", "Triple (-1,-1,2) requires two occurrences of -1; a set removes one.")
     emit(180, 3, "next_anchor", {"a": [-2, -2, -2, 0, 1], "i": 0},
@@ -106,13 +106,13 @@ def early_groups():
          "In sorted [-2,-2,-2,0,1], processing anchor index 0 is finished. To avoid repeated value triples, which index is the next anchor with a new value?",
          [1, 2, 3, 4], 3, "האינדקסים 1 ו־2 חוזרים על ערך העוגן; הערך הבא מתחיל באינדקס 3.", "Indices 1 and 2 repeat the anchor value; the next value starts at index 3.")
     emit(180, 4, "triple_value_count", {"a": [-1, 0, 1, 2, -1, -4], "target": 0},
-         "כמה שלשות ערכים ייחודיות מסכום 0 יש ב־[-1,0,1,2,-1,-4]? כל שלשה משתמשת בשלושה אינדקסים שונים.",
+         "כמה שלשות ערכים ייחודיות שסכומן 0 יש ב־[-1,0,1,2,-1,-4]? כל שלשה משתמשת בשלושה אינדקסים שונים.",
          "How many distinct value triples sum to 0 in [-1,0,1,2,-1,-4]? Each uses three different indices.",
          [1, 2, 3, 4], 2, "רק (-1,-1,2) ו־(-1,0,1) מתאימות; כפילות של אינדקסים אינה פלט נוסף.", "Only (-1,-1,2) and (-1,0,1) qualify; repeated index realizations do not add outputs.")
     emit(180, 5, "triple_value_count", {"a": [2, 3, 4, 5], "target": 6},
-         "במערך הממוין [2,3,4,5] אפילו סכום שלושת הקטנים גדול מ־6. כמה שלשות מסכום 6 יכולות להישאר לחיפוש?",
+         "במערך הממוין [2,3,4,5] אפילו סכום שלושת הקטנים גדול מ־6. כמה שלשות שסכומן 6 יכולות להישאר לחיפוש?",
          "In sorted [2,3,4,5], even the three smallest values sum above 6. How many sum-6 triples can remain to search?",
-         [0, 1, 2, 4], 0, "הסכום המזערי הוא 2+3+4=9, ולכן אין שלשה מסכום 6.", "The minimum sum is 2+3+4=9, so no sum-6 triple exists.")
+         [0, 1, 2, 4], 0, "הסכום המזערי הוא 2+3+4=9, ולכן אין שלשה שסכומה 6.", "The minimum sum is 2+3+4=9, so no sum-6 triple exists.")
 
     emit(181, 1, "first_free", {"used": 11, "n": 4},
          "במסכה בת 4 ביטים 1011, ביט 1 תפוס ו־0 פנוי. האינדקסים מתחילים מ־0 ב־LSB. מה אינדקס התא הפנוי הראשון?",
@@ -222,7 +222,7 @@ def middle_groups():
          "What indices does range(len(a)-1,-1,-1) produce for a list of length 3, before accounting for deletion effects?",
          [[2, 1, 0], [3, 2, 1], [2, 1], [0, 1, 2]], [2, 1, 0], "תחילת הסריקה באינדקס 2; הגבול ‎-1 אינו נכלל ולכן גם 0 נבדק.", "Start at index 2; excluded bound -1 ensures index 0 is still checked.")
     emit(186, 4, "filter_below", {"a": [20, 3, 21, 4], "t": 19},
-         "דחיסה יציבה שומרת מ־[20,3,21,4] רק ערכים שלפחות 19. מה סדר הפלט?",
+         "דחיסה יציבה שומרת מ־[20,3,21,4] רק ערכים שגדולים מ־19 או שווים לו. מה סדר הפלט?",
          "Stable compaction retains only values at least 19 from [20,3,21,4]. What is the output order?",
          [[20, 21], [21, 20], [3, 4], [20, 3, 21]], [20, 21], "יציבות שומרת את סדר 20 לפני 21; הערכים 3 ו־4 נמחקים.", "Stability preserves 20 before 21; values 3 and 4 are removed.")
     emit(186, 5, "delete_shifts", {"n": 8, "i": 0},
@@ -254,7 +254,7 @@ def middle_groups():
     for v, n, capacity, he, en in [
         (1, 0, 2, "כמה תאי char דרושים לטקסט בינארי מינימלי של 0, כולל NUL?", "How many char slots hold minimal binary text for 0, including NUL?"),
         (2, 8, 5, "כמה תאי char דרושים לטקסט 1000 של המספר 8, כולל NUL?", "How many char slots hold text 1000 for number 8, including NUL?"),
-        (3, 255, 9, "מה קיבולת המחרוזת הדרושה ל־255 בלתי מסומן, בייצוג בינארי מינימלי כולל NUL?", "What string capacity is needed for unsigned 255 in minimal binary, including NUL?"),
+        (3, 255, 9, "מה קיבולת המחרוזת הדרושה ל־255 ללא סימן, בייצוג בינארי מינימלי כולל NUL?", "What string capacity is needed for unsigned 255 in minimal binary, including NUL?"),
     ]:
         opts = [capacity, capacity - 1, capacity + 1, capacity + 2]
         emit(188, v, "binary_capacity", {"n": n}, he, en, opts, capacity,
@@ -296,7 +296,7 @@ def middle_groups():
          "A אינה פעילה ואינה ממוחזרת באצווה; האישור הישן אינו מסיר את B ל־7.", "A is inactive and not reused within the batch; its old ACK cannot remove B at 7.")
 
     emit(190, 1, "cycle_entry", {"next": [1, 2, 3, 4, 2]},
-         "ברשימה 0→1→2→3→4→2, המפגש הראשון של Floyd הוא בצומת 3. מהי כניסת המעגל, שהיא הצומת הראשון אליו נכנסים במעגל מהראש?",
+         "ברשימה 0→1→2→3→4→2, המפגש הראשון של Floyd הוא בצומת 3. מהי כניסת המעגל, שהיא הצומת הראשון במעגל שאליו מגיעים מהראש?",
          "In list 0→1→2→3→4→2, Floyd first meets at node 3. What is the cycle entry, the first cyclic node reached from the head?",
          [0, 2, 3, 4], 2, "הכניסה היא 2; צומת מפגש 3 אינו בהכרח הכניסה.", "The entry is 2; meeting node 3 need not be the entry.")
     emit(190, 2, "floyd_reset_next_pair", {"next": [1, 2, 3, 4, 2]},
@@ -319,7 +319,7 @@ def middle_groups():
     for v, n, expected in ((1, 6, 7), (2, 1, 0), (3, 5, 6)):
         emit(191, v, "pair_minmax_count", {"n": n},
              f"מוצאים מינימום ומקסימום של {n} ערכים בשיטת הזוגות, כולל אתחול. כמה השוואות מתבצעות? בקלט אי־זוגי מאתחלים בערך הראשון.",
-             f"Find minimum and maximum of {n} values by pairing, including initialization. How many comparisons are performed? For odd input, initialize from the first value.",
+             f"Find minimum and maximum of {n} {'value' if n == 1 else 'values'} by pairing, including initialization. How many comparisons are performed? For odd input, initialize from the first value.",
              [expected, expected + 1, expected + 2, expected + 3], expected,
              "זוג אתחול דורש השוואה אחת, וכל זוג אחר שלוש; ערך אתחול יחיד אינו דורש השוואה.",
              "An initial pair needs one comparison and every later pair three; a single initial value needs none.")
@@ -337,8 +337,8 @@ def middle_groups():
          "Maximize lexicographically (people receiving an acceptable choice, people receiving their first choice). Which score wins: (3,3) or (4,2)?",
          [[3, 3], [4, 2], [3, 2], [4, 3]], [4, 2], "יותר מקבלים קודם: 4 עדיף על 3 גם עם פחות בחירות ראשונות.", "More served takes priority: 4 beats 3 even with fewer first choices.")
     emit(192, 2, "lex_score", {"scores": [[4, 2], [4, 3]]},
-         "בהשוואה לקסיקוגרפית של (מקבלים,בחירות ראשונות), שני ציונים הם (4,2) ו־(4,3). איזה מהם נבחר?",
-         "Using lexicographic (served,first choices), scores are (4,2) and (4,3). Which is selected?",
+         "בהשוואה לקסיקוגרפית של (מקבלים, בחירות ראשונות), שני ציונים הם (4,2) ו־(4,3). איזה מהם נבחר?",
+         "Using lexicographic (served, first choices), scores are (4,2) and (4,3). Which is selected?",
          [[4, 2], [4, 3], [3, 4], [2, 4]], [4, 3], "מספר המקבלים שווה, ולכן מכריעות 3 בחירות ראשונות לעומת 2.", "Served counts tie, so 3 first choices beat 2.")
     emit(192, 3, "assignment_unique", {"assigned": ["a", "a"]},
          "יש תחפושת יחידה מכל סוג. הקצאה נותנת את a לשני אנשים, ושניהם מרוצים. האם מותר להשוות את ציונה להקצאות חוקיות ולבחור בה?",
@@ -355,7 +355,7 @@ def middle_groups():
          [0, 1, 5, -1], 5, "תוספת 5 לרכיב הראשון גדולה מכל הפרש אפשרי של בחירות ראשונות בתחום 0..4.", "An added 5 outweighs any possible first-choice difference within 0..4.")
 
     emit(193, 1, "worker_peak", {"intervals": [[1, 3, 2], [3, 5, 3]], "closed": False},
-         "משימות דורשות 2 עובדים ב־[1,3) ו־3 ב־[3,5). החלפה מיידית מותרת, ללא מעבר. מה מינימום מספר העובדים?",
+         "משימות דורשות 2 עובדים ב־[1,3) ו־3 ב־[3,5). החלפה מיידית מותרת, ללא זמן מעבר. מה מינימום מספר העובדים?",
          "Tasks need 2 workers in [1,3) and 3 in [3,5). Immediate reassignment is allowed, without travel. What is the minimum headcount?",
          [2, 3, 5, 6], 3, "הקטעים חצי־פתוחים ואינם חופפים; שיא הדרישה 3.", "The half-open intervals do not overlap; peak demand is 3.")
     emit(193, 2, "worker_peak", {"intervals": [[1, 3, 2], [3, 5, 3]], "closed": True},
@@ -403,7 +403,7 @@ def late_groups():
          [[], [[]], [[0]], None], [], "אין תאים ואין שורות לסמן; הצורה הריקה נשמרת.", "There are no cells or rows to mark; the empty shape is preserved.")
 
     emit(195, 1, "lookup_entries", {"width": 8},
-         "טבלת popcount כוללת תשובה לכל קלט בלתי מסומן בן 8 ביטים. כמה כניסות דרושות, כולל הקלט 0?",
+         "טבלת popcount כוללת תשובה לכל קלט ללא סימן בן 8 ביטים. כמה כניסות דרושות, כולל הקלט 0?",
          "A popcount table stores an answer for every unsigned 8-bit input. How many entries are needed, including input 0?",
          [8, 255, 256, 257], 256, "יש 2^8=256 דפוסי קלט, כולל כל האפסים.", "There are 2^8=256 input patterns, including all zeros.")
     emit(195, 2, "lookup_bytes", {"width": 8, "bytes_per_entry": 1},
@@ -448,7 +448,7 @@ def late_groups():
     emit(197, 1, "permutation_count", {"s": "aab"},
          "מדפיסים כל תמורה נראית שונה של aab פעם אחת. כמה פלטים יש?",
          "Print each distinct visible permutation of aab once. How many outputs exist?",
-         [2, 3, 6, 9], 3, "הפלטים הם aab,aba,baa: בדיוק 3.", "The outputs are aab,aba,baa: exactly 3.")
+         [2, 3, 6, 9], 3, "הפלטים הם aab, aba, baa: בדיוק 3.", "The outputs are aab, aba, baa: exactly 3.")
     emit(197, 2, "permutation_count", {"s": ""},
          "בחוזה המתמטי של מחולל תמורות, למחרוזת ריקה יש תמורה ריקה אחת. כמה פלטים המחולל צריך להחזיר?",
          "Under the mathematical permutation-generator contract, the empty string has one empty permutation. How many outputs should the generator yield?",
@@ -516,7 +516,7 @@ def late_groups():
          "Append round parentheses and test the entire prefix. What is returned after text `)(`, despite equal totals?",
          RET, "false", "סגירה קדמה לפותח; הוספה מאוחרת אינה מתקנת את הסדר.", "A close preceded its opener; later appending cannot repair that order.")
     emit(200, 2, "parenthesis_valid", {"s": "(a)"},
-         "בזרם רק סוגריים עגולים נספרים; תווים אחרים מתעלמים. מה מחזירה בדיקת תקינות הקידומת (a)?",
+         "בזרם רק סוגריים עגולים נספרים; מתעלמים מתווים אחרים. מה מחזירה בדיקת תקינות הקידומת (a)?",
          "Only round parentheses matter in a stream; other characters are ignored. What does whole-prefix validity return for (a)?",
          RET, "true", "התעלמות מ־a משאירה זוג סוגריים מסודר וסגור.", "Ignoring a leaves a correctly ordered, closed parenthesis pair.")
     emit(200, 3, "parenthesis_valid", {"s": ""},

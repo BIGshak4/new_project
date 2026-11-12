@@ -1212,7 +1212,10 @@ def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_p
             raw = original["translations"][language]
             live = runtime.text(language)
             assert digest({key: raw.get(key) for key in ("title", "hint", "hints")}) == prior["raw_hint_title_sha256"]
-            assert digest({"title": live.title, "hints": list(live.hints)}) == prior["runtime_hint_title_sha256"]
+            assert digest({
+                "title": before_learner_copy_text(runtime.key, language, "title", live.title),
+                "hints": before_learner_copy_text(runtime.key, language, "hints", list(live.hints)),
+            }) == prior["runtime_hint_title_sha256"]
             for field in ("prompt", "reference_solution"):
                 for kind, value in (("raw", raw[field]), ("runtime", before_learner_copy_text(runtime.key, language, field, getattr(live, field)))):
                     prefix = prior[kind][field]

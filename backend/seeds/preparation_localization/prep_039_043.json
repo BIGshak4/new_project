@@ -287,12 +287,12 @@
         "הקוד מניח קלט העומד בהבטחה. בדיקת האורך בקובץ הקוד אינה בדיקה מלאה של ייחודיות או תחום.",
         "חלופת הדגלים מותנית בכך שמותר O(n) זיכרון נוסף. היא משתמשת בערך המספר כאינדקס, משאירה את התא 0 ללא שימוש ומניחה את אותה הבטחת קלט.",
         "בסעיף ג בלבד: n הוא אורך הקלט; הערכים שונים ובטווח הסגור 0..n, כולל אפס. ההבטחה אינה מאומתת במלואה. הקלט נשאר ללא שינוי.",
-        "סעיף ד: תחום התשובות1..N, אפס הוא מציין מקום, חזרות מותרות.",
-        "סימון אינו משנה קלט ומאפשר אורךL כללי; הצבה דורשת רשות שינוי ואורךN−1.",
-        "גודל פלטk נפרד מעזר; הוא עשוי להיותN.",
-        "סעיף ד: תחום התשובות1..N, אפס הוא מציין מקום, חזרות מותרות.",
-        "סימון אינו משנה קלט ומאפשר אורךL כללי; הצבה דורשת רשות שינוי ואורךN−1.",
-        "גודל פלטk נפרד מעזר; הוא עשוי להיותN.",
+        "סעיף ד: תחום התשובות 1..N, אפס הוא מציין מקום, חזרות מותרות.",
+        "סימון אינו משנה קלט ומאפשר אורך L כללי; הצבה דורשת רשות שינוי ואורך N−1.",
+        "גודל פלט k נפרד מעזר; הוא עשוי להיות N.",
+        "סעיף ד: תחום התשובות 1..N, אפס הוא מציין מקום, חזרות מותרות.",
+        "סימון אינו משנה קלט ומאפשר אורך L כללי; הצבה דורשת רשות שינוי ואורך N−1.",
+        "גודל פלט k נפרד מעזר; הוא עשוי להיות N.",
         "תחום 1..n ללא חזרות, מספר חסרים ואורך הזרם מובטחים; n ידוע.",
         "מגבלת הצוברים אינה אוסרת פריט נוכחי או scratch אחרי הזרימה; אין שמירת קלט.",
         "סדר עולה ו־ 1..n+1 ללא ערך יחיד; תקינות מובטחת."
@@ -305,11 +305,11 @@
         "The code assumes the promised input contract. The file's length checks do not fully validate uniqueness or range.",
         "The flag-array alternative requires permission to use O(n) additional storage. It indexes by value, leaves index zero unused, and assumes the same valid-input promise.",
         "Part C only: n is input length; entries are distinct in the closed range 0..n, including zero. The promise is not fully validated. Input remains unchanged.",
-        "D: answer domain1..N, zero sentinel, repeats allowed.",
-        "Flags preserve input for general L; placement needs mutation permission and lengthN−1.",
+        "D: answer domain 1..N, zero sentinel, repeats allowed.",
+        "Flags preserve input for general L; placement needs mutation permission and length N−1.",
         "Output size k is separate from workspace and may equal N.",
-        "D: answer domain1..N, zero sentinel, repeats allowed.",
-        "Flags preserve input for general L; placement needs mutation permission and lengthN−1.",
+        "D: answer domain 1..N, zero sentinel, repeats allowed.",
+        "Flags preserve input for general L; placement needs mutation permission and length N−1.",
         "Output size k is separate from workspace and may equal N.",
         "Distinct 1..n observations with promised length/omissions; n known.",
         "Accumulator budget permits current item and post-stream scratch; no input retention.",
@@ -328,7 +328,7 @@
           "xor": "O(n) פעולות על מילים ו־O(1) מילות עזר, שהן O(log(n+1)) ביטים. עלות פעולת ביטים תלויה ברוחב כשמספרים אינם חסומים.",
           "proof": "דגל הוא אמת בדיוק לערך שנצפה; ב־XOR כל ערך קיים מופיע פעמיים והחסר פעם אחת. קריאה לינארית נדרשת במקרה הגרוע בקלט לא ממוין במודל זה."
         },
-        "variant_D_all_missing": "דגלים O(L+N) זמן/O(N) עזר; הצבה באורךN−1 O(N) זמן/O(1) מילות עזר, ועודO(k) פלט. כל פלטN מפורש דורשΩ(N) זמן ושטח פלט.",
+        "variant_D_all_missing": "דגלים O(L+N) זמן/O(N) עזר; הצבה באורך N−1 O(N) זמן/O(1) מילות עזר, ועוד O(k) פלט. כל פלט N מפורש דורשΩ(N) זמן ושטח פלט.",
         "variant_one_pass_moments": "מעבר קלט יחיד, צובר אחד/שניים ו־Θ(n) פעולות זרימה. עלות אריתמטיקה ושורש תלויה ברוחב; אין טענת ולידציה מלאה.",
         "מספר חסר ברצף ממוין": "O(log(n+1)) קריאות ו־ O(1) מילים; אימות מלא בנפרד O(n)."
       },
@@ -349,8 +349,8 @@
       }
     },
     "verification": {
-      "he": "48,214 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: 24,023 בדיקות של פתרונות הסכום וה־XOR ו־24,191 בדיקות של מערך הדגלים. נבדקו כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בשלושה סדרי קלט; כל סדרי השארית בגדלים 1 עד 7; תנאי התחלה, קלט ריק, שמירת הקלט ואי־החזרת אינדקס 0. בדיקות נוספות מאמתות את פונקציית הדגלים גם ללא חסרים ועם יותר משניים, בלי לשנות את סעיפי השאלה. זהו אימות תוכנה במסגרת ההנחות.\n\nסעיף ג: 46,233 תמורות חוקיות ממצות עבור n=0..7 ועוד 400 דגימות עד n=2000 עברו מול חיפוש חברות עצמאי. שני המימושים בפייתון הורצו ונבדקה שמירת הקלט; אין כאן קומפילציה ברוחב קבוע או אישור מומחה.\n\nמיצוי קלטיN−1 עבורN=1..7 ועוד300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n280,392 קלטי N−1 ממצים עבור N=1..7 ועוד 300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n46233 סדרים לחסר אחד,23116 לשניים ו־ 4950 זוגות מתוך 100; מבקר צריכה אחת ושורש מדויק.\n\nכל 20,301 אפשרויות ההשמטה ל־ n=0..200, מול החסר שנבחר, ללא שינוי קלט.",
-      "en": "48,214 Python checks passed against an independent set-difference oracle: 24,023 checks of the sum/XOR alternatives and 24,191 of the flag array. Coverage includes all 100 single omissions and all 4,950 missing pairs for n=100 in three input orders, every remaining permutation for sizes 1 through 7, initialization, empty inputs, input preservation and exclusion of unused index zero. Additional generic flags cases cover no omissions and more than two without changing the question's subparts. This is software verification under the stated assumptions.\n\nPart C: all 46,233 valid permutations for n=0..7 plus 400 seeded cases up to n=2000 passed independent membership-search checks. Both actual Python implementations ran with input preservation checked; no fixed-width compilation or expert approval is claimed.\n\nExhaustive length-N−1 inputs for N=1..7 plus300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n280,392 exhaustive length-N−1 inputs for N=1..7 plus 300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n46233 single orders,23116 double orders and 4950 hundred-range pairs; one-consumption guards and exact root.\n\nAll 20,301 omissions for n=0..200 against the selected omitted value, with no mutation."
+      "he": "48,214 בדיקות פייתון עברו מול אורקל בלתי תלוי של הפרש קבוצות: 24,023 בדיקות של פתרונות הסכום וה־XOR ו־24,191 בדיקות של מערך הדגלים. נבדקו כל 100 החסרים היחידים וכל 4,950 זוגות החסרים עבור n=100, בשלושה סדרי קלט; כל סדרי השארית בגדלים 1 עד 7; תנאי התחלה, קלט ריק, שמירת הקלט ואי־החזרת אינדקס 0. בדיקות נוספות מאמתות את פונקציית הדגלים גם ללא חסרים ועם יותר משניים, בלי לשנות את סעיפי השאלה. זהו אימות תוכנה במסגרת ההנחות.\n\nסעיף ג: 46,233 תמורות חוקיות ממצות עבור n=0..7 ועוד 400 דגימות עד n=2000 עברו מול חיפוש חברות עצמאי. שני המימושים בפייתון הורצו ונבדקה שמירת הקלט; אין כאן קומפילציה ברוחב קבוע או אישור מומחה.\n\nמיצוי קלטי N−1 עבור N=1..7 ועוד 300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n280,392 קלטי N−1 ממצים עבור N=1..7 ועוד 300 דגימות מול חברות עצמאית; נבדקו שימור קלט/רב־קבוצה ופסילה אטומית.\n\n46233 סדרים לחסר אחד,23116 לשניים ו־ 4950 זוגות מתוך 100; מבקר צריכה אחת ושורש מדויק.\n\nכל 20,301 אפשרויות ההשמטה ל־ n=0..200, מול החסר שנבחר, ללא שינוי קלט.",
+      "en": "48,214 Python checks passed against an independent set-difference oracle: 24,023 checks of the sum/XOR alternatives and 24,191 of the flag array. Coverage includes all 100 single omissions and all 4,950 missing pairs for n=100 in three input orders, every remaining permutation for sizes 1 through 7, initialization, empty inputs, input preservation and exclusion of unused index zero. Additional generic flags cases cover no omissions and more than two without changing the question's subparts. This is software verification under the stated assumptions.\n\nPart C: all 46,233 valid permutations for n=0..7 plus 400 seeded cases up to n=2000 passed independent membership-search checks. Both actual Python implementations ran with input preservation checked; no fixed-width compilation or expert approval is claimed.\n\nExhaustive length-N−1 inputs for N=1..7 plus 300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n280,392 exhaustive length-N−1 inputs for N=1..7 plus 300 seeded arrays versus membership search; preservation/multiset and atomic rejection checked.\n\n46233 single orders,23116 double orders and 4950 hundred-range pairs; one-consumption guards and exact root.\n\nAll 20,301 omissions for n=0..200 against the selected omitted value, with no mutation."
     },
     "edge_cases": {
       "he": [
@@ -363,9 +363,9 @@
         "ג: n=0 מחזיר 0; n=1 מחזיר 0 או 1 לפי הערך הקיים.",
         "ג: חסר 0, חסר n, תמורה הפוכה או לא ממוינת.",
         "ג: דוגמה [3,0,1] מחזירה 2; הדגלים כוללים גם את האינדקס 0.",
-        "הכול אפסים, הרבה חזרות, חסרN, נוכחותN ו־N=1 עם ריקה.",
+        "הכול אפסים, הרבה חזרות, חסר N, נוכחות N ו־N=1 עם ריקה.",
         "ערך כפול שכבר במקומו חייב לעצור החלפות; פסילה לפני כתיבה.",
-        "הכול אפסים, הרבה חזרות, חסרN, נוכחותN ו־N=1 עם ריקה.",
+        "הכול אפסים, הרבה חזרות, חסר N, נוכחות N ו־N=1 עם ריקה.",
         "ערך כפול שכבר במקומו חייב לעצור החלפות; פסילה לפני כתיבה.",
         "n=1 וחסר יחיד, n=2 ושני חסרים, חסר 1 או n.",
         "חסרים סמוכים או רחוקים; טיפוסי גלישה ועיגול.",
@@ -407,10 +407,10 @@
         "ג: להשתמש בחילוק נקודה צפה או להתעלם מגלישת סכום ברוחב קבוע.",
         "להחזיר אפס, להשתמש בביטול XOR למרות חזרות או להמשיך להבטיח חסר יחיד.",
         "להתעלם מזיכרון הפלט או לטעון לחסם זיכרון דגלים בכל מודל.",
-        "לגשת לאינדקסN−1 במערך בןN−1 תאים.",
+        "לגשת לאינדקס N−1 במערך בן N−1 תאים.",
         "להחזיר אפס, להשתמש בביטול XOR למרות חזרות או להמשיך להבטיח חסר יחיד.",
         "להתעלם מזיכרון הפלט או לטעון לחסם זיכרון דגלים בכל מודל.",
-        "לגשת לאינדקסN−1 במערך בןN−1 תאים.",
+        "לגשת לאינדקס N−1 במערך בן N−1 תאים.",
         "לקרוא שוב לזרם עבור פיצול XOR.",
         "להשתמש בשורש נקודה צפה או בטיפוס צר.",
         "לפרש שני צוברים כשתי סיביות או להציג בדיקת מועמדים כוולידציית ייחוד.",
@@ -443,8 +443,8 @@
       ]
     },
     "interview_answer": {
-      "he": "אבהיר שהקלט היה תמורה של 1 עד n ושאפשר לקרוא את השארית. כשמותר זיכרון נוסף, אאתחל n+1 דגלים ל־False, אסמן True עבור כל ערך שקראתי, ואחזיר את האינדקסים מ־1 עד n שהדגל שלהם נשאר False. אותה פונקציה מוצאת חסר אחד או שניים בזמן O(n) ובזיכרון נוסף O(n), ללא נוסחאות. אם נדרש זיכרון עזר קבוע במילים, לחסר אחד אשתמש בהפרש סכומים ולשניים ב־XOR וחלוקה לפי ביט מבדיל.\n\nבסעיף ג אורך הקלט n והטווח 0..n. עם זיכרון אסמן n+1 דגלים לפי הערכים ואחזיר את הדגל החסר, כולל אפס. בלי מערך עזר אעשה XOR של כל הטווח ושל הקלט; ערכים קיימים מתבטלים ונשאר החסר. הזמן לינארי, וזיכרון XOR קבוע במילים בלי לשנות את המערך.\n\nאסמן נוכחות של1..N ואחזיר כל דגל חסר; אפסים וחזרות אינם מוסיפים ערך חדש. אם מותר לשנותN−1 תאים, אציב כלv<N בביתו ואשמור דגל לנוכחותN. זמן תת־לינארי אינו אפשרי כשצריך להוציאN חסרים.\n\nאסמן נוכחות של1..N ואחזיר כל דגל חסר; אפסים וחזרות אינם מוסיפים ערך חדש. אם מותר לשנותN−1 תאים, אציב כלv<N בביתו ואשמור דגל לנוכחותN. זמן תת־לינארי אינו אפשרי כשצריך להוציאN חסרים.\n\nאחשב הפרשי סכום וריבועים במעבר יחיד. בסוף S הוא סכום החסרים ו־ 2Q−S² ריבוע הפרשם; שורש שלם והחצי־סכום משחזרים את שניהם.\n\nאחפש את המקום הראשון שבו הערך כבר אינו i+1.",
-      "en": "First clarify that the original input was a permutation of 1 through n and that the remainder is accessible. If extra memory is allowed, initialize n+1 False flags, mark True for every value read, and return the indices 1 through n whose flags remain False. One function finds one or two omissions in O(n) time and O(n) extra storage, without formulas. If constant auxiliary words are required, use a sum difference for one omission and XOR with a distinguishing-bit partition for two.\n\nIn C input length is n and domain is 0..n. With extra memory mark n+1 value-indexed flags and return the missing flag, including zero. Without an auxiliary array XOR the full range and input: present values cancel, leaving the omission. Time is linear and XOR uses constant words without modifying the array.\n\nMark presence of1..N and emit missing flags; zeros/repeats add nothing. With N−1 mutable entries, place each v<N at its home and flag N. Sublinear time is impossible when N omissions must be emitted.\n\nMark presence of1..N and emit missing flags; zeros/repeats add nothing. With N−1 mutable entries, place each v<N at its home and flag N. Sublinear time is impossible when N omissions must be emitted.\n\nAccumulate sum/square differences once. S is the omissions' sum and 2Q−S² their squared distance; exact root and half-sum recover both.\n\nFind the first index whose value is no longer i+1."
+      "he": "אבהיר שהקלט היה תמורה של 1 עד n ושאפשר לקרוא את השארית. כשמותר זיכרון נוסף, אאתחל n+1 דגלים ל־False, אסמן True עבור כל ערך שקראתי, ואחזיר את האינדקסים מ־1 עד n שהדגל שלהם נשאר False. אותה פונקציה מוצאת חסר אחד או שניים בזמן O(n) ובזיכרון נוסף O(n), ללא נוסחאות. אם נדרש זיכרון עזר קבוע במילים, לחסר אחד אשתמש בהפרש סכומים ולשניים ב־XOR וחלוקה לפי ביט מבדיל.\n\nבסעיף ג אורך הקלט n והטווח 0..n. עם זיכרון אסמן n+1 דגלים לפי הערכים ואחזיר את הדגל החסר, כולל אפס. בלי מערך עזר אעשה XOR של כל הטווח ושל הקלט; ערכים קיימים מתבטלים ונשאר החסר. הזמן לינארי, וזיכרון XOR קבוע במילים בלי לשנות את המערך.\n\nאסמן נוכחות של 1..N ואחזיר כל דגל חסר; אפסים וחזרות אינם מוסיפים ערך חדש. אם מותר לשנות N−1 תאים, אציב כל v<N בביתו ואשמור דגל לנוכחות N. זמן תת־לינארי אינו אפשרי כשצריך להוציא N חסרים.\n\nאסמן נוכחות של 1..N ואחזיר כל דגל חסר; אפסים וחזרות אינם מוסיפים ערך חדש. אם מותר לשנות N−1 תאים, אציב כל v<N בביתו ואשמור דגל לנוכחות N. זמן תת־לינארי אינו אפשרי כשצריך להוציא N חסרים.\n\nאחשב הפרשי סכום וריבועים במעבר יחיד. בסוף S הוא סכום החסרים ו־ 2Q−S² ריבוע הפרשם; שורש שלם והחצי־סכום משחזרים את שניהם.\n\nאחפש את המקום הראשון שבו הערך כבר אינו i+1.",
+      "en": "First clarify that the original input was a permutation of 1 through n and that the remainder is accessible. If extra memory is allowed, initialize n+1 False flags, mark True for every value read, and return the indices 1 through n whose flags remain False. One function finds one or two omissions in O(n) time and O(n) extra storage, without formulas. If constant auxiliary words are required, use a sum difference for one omission and XOR with a distinguishing-bit partition for two.\n\nIn C input length is n and domain is 0..n. With extra memory mark n+1 value-indexed flags and return the missing flag, including zero. Without an auxiliary array XOR the full range and input: present values cancel, leaving the omission. Time is linear and XOR uses constant words without modifying the array.\n\nMark presence of 1..N and emit missing flags; zeros/repeats add nothing. With N−1 mutable entries, place each v<N at its home and flag N. Sublinear time is impossible when N omissions must be emitted.\n\nMark presence of 1..N and emit missing flags; zeros/repeats add nothing. With N−1 mutable entries, place each v<N at its home and flag N. Sublinear time is impossible when N omissions must be emitted.\n\nAccumulate sum/square differences once. S is the omissions' sum and 2Q−S² their squared distance; exact root and half-sum recover both.\n\nFind the first index whose value is no longer i+1."
     },
     "solution_extensions": {
       "he": {
@@ -458,7 +458,7 @@
         },
         "variant_D_all_missing": {
           "question": "מה אם אסור לשנות קלט ומותר מעט זיכרון, אך מותר זמן רב יותר?",
-          "direction": "אפשר לבדוק כל מועמד מול כל הקלט בסריקות חוזרות ולהזרים חסרים; החיסכון בזיכרון בא על חשבוןO(NL) זמן.",
+          "direction": "אפשר לבדוק כל מועמד מול כל הקלט בסריקות חוזרות ולהזרים חסרים; החיסכון בזיכרון בא על חשבון O(NL) זמן.",
           "status": ""
         },
         "variant_one_pass_moments": [
@@ -518,11 +518,11 @@
           "integration_status": "מוכן בחומר המשלים; אינו מחליף את תור שלושת הרמזים המקורי של א–ב."
         },
         "D_all_missing": {
-          "prompt": "### ד. חזרות, אפסים וכל הערכים החסרים\nבסעיף החדש התחום המבוקש הוא 1..N, עם N≥1. בקלט N−1 תאים, אך כעת מותרות חזרות ואפסים; אפס הוא מציין מקום שאינו ערך בתחום. החזירו בסדר עולה את כל ערכי1..N שלא הופיעו. גם קלט שכולו אפסים אפשרי, ואז כולם חסרים. האם אפשר להבטיח גם זמן וגם מקום קטנים מ־O(N)?\n\nהבהרות: תחום הקלט0..N מובטח ונבדק במימוש החדש; אין מספרים שליליים. הבדילו זיכרון עזר מזיכרון הפלט, ופלט מפורש מזרם. תחילה פתרון שאינו משנה קלט, המוכלל לאורך L כלשהו. אחר כך חלופה מפורשת שמותר לה לשנות את N−1 התאים.",
+          "prompt": "### ד. חזרות, אפסים וכל הערכים החסרים\nבסעיף החדש התחום המבוקש הוא 1..N, עם N≥1. בקלט N−1 תאים, אך כעת מותרות חזרות ואפסים; אפס הוא מציין מקום שאינו ערך בתחום. החזירו בסדר עולה את כל ערכי 1..N שלא הופיעו. גם קלט שכולו אפסים אפשרי, ואז כולם חסרים. האם אפשר להבטיח גם זמן וגם מקום קטנים מ־O(N)?\n\nהבהרות: תחום הקלט 0..N מובטח ונבדק במימוש החדש; אין מספרים שליליים. הבדילו זיכרון עזר מזיכרון הפלט, ופלט מפורש מזרם. תחילה פתרון שאינו משנה קלט, המוכלל לאורך L כלשהו. אחר כך חלופה מפורשת שמותר לה לשנות את N−1 התאים.",
           "hints": [
             "מה משתנה בבדיקת נוכחות כאשר אותו ערך מופיע כמה פעמים, והאם צריך להחזיר אפס?",
             "דגל נוכחות אינו משתנה אחרי החזרה הראשונה. במקרה של אפסים בלבד יש לכתוב N תוצאות, בלי קשר לאלגוריתם הפנימי.",
-            "ללא שינוי קלט סמנו דגל לכל ערך. אם מותר לשנות N−1 תאים, הציבו v בתחום1..N−1 במקוםv−1, הימנעו מהחלפת כפילויות ללא סוף, ושמרו דגל יחיד לנוכחותN."
+            "ללא שינוי קלט סמנו דגל לכל ערך. אם מותר לשנות N−1 תאים, הציבו v בתחום 1..N−1 במקום v−1, הימנעו מהחלפת כפילויות ללא סוף, ושמרו דגל יחיד לנוכחות N."
           ],
           "integration_status": ""
         },
@@ -555,11 +555,11 @@
           "integration_status": ""
         },
         "D_all_missing": {
-          "prompt": "### D. Repetitions, zero sentinels and every missing value\nThe new part asks for domain1..N, N≥1. Input has N−1 entries, now allowing repetitions and zeros. Zero is a sentinel outside the requested domain. Return in ascending order every value1..N absent from input. All-zero input is valid and makes all N values missing. Can both time and space be guaranteed below O(N)?\n\nClarify auxiliary versus output storage and materialized versus streamed output. Input values lie in0..N; new implementations validate this. First give a read-only solution generalized to arbitrary length L, then an explicitly permitted mutating alternative for exactly N−1 slots. Parts A–C and their old hints remain unchanged; distinct two-omission Part B has N−2 observations.",
+          "prompt": "### D. Repetitions, zero sentinels and every missing value\nThe new part asks for domain 1..N, N≥1. Input has N−1 entries, now allowing repetitions and zeros. Zero is a sentinel outside the requested domain. Return in ascending order every value 1..N absent from input. All-zero input is valid and makes all N values missing. Can both time and space be guaranteed below O(N)?\n\nClarify auxiliary versus output storage and materialized versus streamed output. Input values lie in 0..N; new implementations validate this. First give a read-only solution generalized to arbitrary length L, then an explicitly permitted mutating alternative for exactly N−1 slots. Parts A–C and their old hints remain unchanged; distinct two-omission Part B has N−2 observations.",
           "hints": [
             "How does presence change when a value repeats, and should zero ever be returned?",
             "A presence flag does not change after the first occurrence. All-zero input requires writing N answers regardless of internal algorithm.",
-            "Read-only: mark value-indexed flags. With N−1 mutable slots, place v in1..N−1 at v−1, avoid duplicate swap loops, and retain one presence flag for N."
+            "Read-only: mark value-indexed flags. With N−1 mutable slots, place v in 1..N−1 at v−1, avoid duplicate swap loops, and retain one presence flag for N."
           ],
           "integration_status": ""
         },
@@ -583,7 +583,7 @@
       }
     },
     "source_ambiguities": {
-      "he": "צילום 9 מבטיח במפורש טווח 0..n, אורך n, מספרים שונים ודרישת זמן לינארי; אחר כך הוא אוסר מערך עזר. העריכה מגדירה קריאה בלבד, n=0 והבטחת קלט במקום אימות מלא. זו תוספת לסעיף ג ואינה מחליפה את פירושי המקור של א–ב.\n\nהצילום מחדש את סעיפי חסר אחד/שניים שכבר קיימים, ומוסיף חזרות ואף אפסים בניגוד לתחום המקורי. העריכה מפרשת אפסים כמצייני מקום, משאירה א–ג ומקצה ד לחסרים מרובים; אורךL כללי מוצג כהכללה מפורשת.\n\nהצילום חוזר על סעיפי חסר אחד/שניים שכבר קיימים, ומוסיף חזרות ואף אפסים בניגוד לתחום המקורי. העריכה מפרשת אפסים כמצייני מקום, משאירה א–ג ומקצה ד לחסרים מרובים; אורךL כללי מוצג כהכללה מפורשת.\n\nהניסוח משתנה עזר פורש כצובר בזמן הקריאה; אם נאסרת אפילו בקרת לולאה או scratch צריך חוזה מכונה אחר. הגרסה הקודמת הרשתה עוד סריקה.\n\nהתחום לא הוגדר במפורש בצילום; הבחירה נשמרת כהבהרה.",
+      "he": "צילום 9 מבטיח במפורש טווח 0..n, אורך n, מספרים שונים ודרישת זמן לינארי; אחר כך הוא אוסר מערך עזר. העריכה מגדירה קריאה בלבד, n=0 והבטחת קלט במקום אימות מלא. זו תוספת לסעיף ג ואינה מחליפה את פירושי המקור של א–ב.\n\nהצילום מחדש את סעיפי חסר אחד/שניים שכבר קיימים, ומוסיף חזרות ואף אפסים בניגוד לתחום המקורי. העריכה מפרשת אפסים כמצייני מקום, משאירה א–ג ומקצה ד לחסרים מרובים; אורך L כללי מוצג כהכללה מפורשת.\n\nהצילום חוזר על סעיפי חסר אחד/שניים שכבר קיימים, ומוסיף חזרות ואף אפסים בניגוד לתחום המקורי. העריכה מפרשת אפסים כמצייני מקום, משאירה א–ג ומקצה ד לחסרים מרובים; אורך L כללי מוצג כהכללה מפורשת.\n\nהניסוח משתנה עזר פורש כצובר בזמן הקריאה; אם נאסרת אפילו בקרת לולאה או scratch צריך חוזה מכונה אחר. הגרסה הקודמת הרשתה עוד סריקה.\n\nהתחום לא הוגדר במפורש בצילום; הבחירה נשמרת כהבהרה.",
       "en": "Image 9 explicitly promises range 0..n, length n, distinct entries and linear time, then forbids an auxiliary array. Read-only input, n=0 and a promise rather than full validation are added clarifications. This describes C and does not replace A–B source interpretations.\n\nSource repeats the existing one/two-omission parts and introduces repeats/zeros contrary to the original domain. Zeros are explicitly sentinels, A–C remain, and D handles multiple omissions; general L is a labeled generalization.\n\nSource repeats the existing one/two-omission parts and introduces repeats/zeros contrary to the original domain. Zeros are explicitly sentinels, A–C remain, and D handles multiple omissions; general L is a labeled generalization.\n\nAuxiliary variable is interpreted as a streaming accumulator. Forbidding even loop control/scratch requires another machine model. The prior version permitted rereading.\n\nThe domain is not explicit in the screenshot; the choice is recorded as a clarification."
     }
   },
@@ -704,8 +704,8 @@
         "Start in S0 with no partial match. Hardware reset is synchronous and takes priority over sampling on the same edge.",
         "The source does not choose between a detection pulse and a safe remaining open; both alternatives are separately specified and solved.",
         "An eight-bit ASCII input is a code-level implementation choice, not a requirement of the abstract state machine.",
-        "Four-code target fixed during operation; one whole0..7 code per edge.",
-        "Repetition and overlap allowed; synchronous reset returns to0 and overrides acceptance; Moore output observed after the edge."
+        "Four-code target fixed during operation; one whole 0..7 code per edge.",
+        "Repetition and overlap allowed; synchronous reset returns to 0 and overrides acceptance; Moore output observed after the edge."
       ]
     },
     "source_ambiguities": {
@@ -722,7 +722,7 @@
         "timing": "Clocking, sampling instant, and reset are unspecified. One symbol per rising edge and synchronous reset are labeled implementation clarifications.",
         "symbols": "The source states four distinct symbols. This solution uses A/B/C/D symbolically and treats other symbols as mismatches.",
         "variant_043_three_bit_symbols": [
-          "Target codes, distinctness, overlap, clock and reset were omitted; parameters and timing are explicit explicit assumptions."
+          "Target codes, distinctness, overlap, clock and reset were omitted; parameters and timing are explicit assumptions."
         ]
       }
     },
@@ -739,12 +739,12 @@
         "result": "Four abstract prefix states. The registered-output code uses two state bits and one pulse flip-flop. Persistent unlock has five logical states. O(1) work per symbol and O(m) time for m symbols.",
         "proof": "Progress is the longest suffix that is a proper prefix of ABCD. States are distinguishable by continuations D, CD, BCD, or ABCD: a suffix completing a match from a more advanced state is insufficient from a less advanced state. This justifies four abstract Mealy states, but does not imply that two flip-flops suffice for an output held after the edge.",
         "scope": "Four abstract recognition states are not the same count as hardware state including an output register. Binary encoding, comparisons, and delays depend on technology and implementation; no minimum gate count is proved.",
-        "variant_043_three_bit_symbols": "Five prefix states, three binary state bits, at most40 table rows for a fixed target. A construction bound, without minimum gate or delay claims."
+        "variant_043_three_bit_symbols": "Five prefix states, three binary state bits, at most 40 table rows for a fixed target. A construction bound, without minimum gate or delay claims."
       }
     },
     "verification": {
       "he": "אומתו 488,281 זרמים מעל A/B/C/D/X בכל האורכים מ־0 עד 8 מול אורקל עצמאי של סיומת ABCD. בכל צעד נבדקו פלט הפעימה, פתיחה מתמידה ואינווריאנט התחילית. נוספו שמונה עקבות מפורשות ואיפוס באמצע הזרם, לרבות איפוס במקום D שהיה משלים זיהוי. הבדיקות הן של מודל פייתון; קוד SystemVerilog לא הורץ בסימולטור חומרה ולא נבדק במעגל פיזי.\n\n163,840 שורות מעבר עבור כל 4,096 התבניות; 16,368 צירופי תבנית/זרם, 131,104 סמלים ו־16,368 איפוסים. Python מול אורקל סיומת מלא.",
-      "en": "All 488,281 streams over A/B/C/D/X of lengths 0 through 8 were checked against an independent ABCD suffix oracle. Each step checks pulse output, persistent unlock, and the prefix invariant. Eight explicit traces and midstream resets were added, including reset on a D that would otherwise complete a match. These are Python model checks; SystemVerilog was not HDL-simulated or tested on physical hardware.\n\n163,840 transition rows over all4,096targets;16,368target/stream pairs,131,104symbols and16,368resets. Python versus full-history suffix oracle."
+      "en": "All 488,281 streams over A/B/C/D/X of lengths 0 through 8 were checked against an independent ABCD suffix oracle. Each step checks pulse output, persistent unlock, and the prefix invariant. Eight explicit traces and midstream resets were added, including reset on a D that would otherwise complete a match. These are Python model checks; SystemVerilog was not HDL-simulated or tested on physical hardware.\n\n163,840 transition rows over all 4,096 targets;16,368 target/stream pairs,131,104 symbols and 16,368 resets. Python versus full-history suffix oracle."
     },
     "edge_cases": {
       "he": [
@@ -800,7 +800,7 @@
     },
     "interview_answer": {
       "he": "אזכור את הסיומת הארוכה ביותר שמתאימה לתחילת ABCD: ארבעה מצבים עבור ריק, A, AB ו־ABC. התו הבא הצפוי מקדם מצב, כל A מתחיל מחדש ב־A, ושאר אי־ההתאמות מחזירות לריק. רק D אחרי ABC מפיק זיהוי. בגלל שכל התווים שונים אפשר לחזור לריק אחרי התאמה מלאה. אבהיר אם רוצים פעימה או פתיחה מתמידה; לפעימה רשומה אשתמש בשתי סיביות מצב ועוד אוגר פלט, ולפתיחה מתמידה אוסיף OPEN שנשמר עד איפוס.\n\nאשמור את אורך קידומת התבנית שהיא הסיומת הארוכה ביותר בהיסטוריה, 0 עד 4. כל קוד קלט מעדכן לפי טבלת fallback שנבנתה מהתבנית; מצב 4 מזהה. כך מטפלים גם בחזרות ובחפיפה, והגרסה עם ABCD שונים היא מקרה פרטי.",
-      "en": "I remember the longest suffix matching the start of ABCD: four states for empty, A, AB, and ABC. The expected next symbol advances; any A restarts at A; other mismatches clear progress. Only D after ABC detects. Because all symbols are distinct, a full match falls back to empty. I clarify whether output is a pulse or persistent unlock. A registered pulse uses two state bits plus an output register; persistent unlock adds OPEN held until reset.\n\nRetain the longest target-prefix length that is a history suffix,0..4. Each input code uses a target-derived fallback table; state4 detects. This handles repetition and overlap; distinctABCD is a special case."
+      "en": "I remember the longest suffix matching the start of ABCD: four states for empty, A, AB, and ABC. The expected next symbol advances; any A restarts at A; other mismatches clear progress. Only D after ABC detects. Because all symbols are distinct, a full match falls back to empty. I clarify whether output is a pulse or persistent unlock. A registered pulse uses two state bits plus an output register; persistent unlock adds OPEN held until reset.\n\nRetain the longest target-prefix length that is a history suffix,0..4. Each input code uses a target-derived fallback table; state 4 detects. This handles repetition and overlap; distinct ABCD is a special case."
     },
     "solution_extensions": {
       "he": {
@@ -842,11 +842,11 @@
       },
       "en": {
         "043_three_bit_symbols": {
-          "prompt": "### Variant: four3-bit symbols\nA target contains four items, each encoded in three bits. One3-bit code is accepted at each edge. Produce one after every completed contiguous target occurrence. The source gives no target values and does not promise distinct items. Parameterize a target fixed during operation as T=(T0,T1,T2,T3), each Ti in0..7 with repetition allowed. Sample one whole symbol per edge, not one serial bit. Choose a Moore output after accepting the symbol, allow overlapping occurrences, and let synchronous reset discard partial progress. Also show how the rule simplifies for four distinct items as in the original version.",
+          "prompt": "### Variant: four 3-bit symbols\nA target contains four items, each encoded in three bits. One 3-bit code is accepted at each edge. Produce one after every completed contiguous target occurrence. The source gives no target values and does not promise distinct items. Parameterize a target fixed during operation as T=(T0,T1,T2,T3), each Ti in 0..7 with repetition allowed. Sample one whole symbol per edge, not one serial bit. Choose a Moore output after accepting the symbol, allow overlapping occurrences, and let synchronous reset discard partial progress. Also show how the rule simplifies for four distinct items as in the original version.",
           "hints": [
             "Which suffix of received symbols can still be the beginning of the target?",
-            "Repeated target items can preserve progress after a mismatch or a match. Test target1,2,1,2 against stream1,2,1,2,1,2.",
-            "Use states0..4 for the longest target prefix that is a history suffix. Append the next symbol and keep the longest matching suffix; output one only in state4."
+            "Repeated target items can preserve progress after a mismatch or a match. Test target 1,2,1,2 against stream 1,2,1,2,1,2.",
+            "Use states 0..4 for the longest target prefix that is a history suffix. Append the next symbol and keep the longest matching suffix; output one only in state 4."
           ],
           "integration_status": ""
         }

@@ -1,8 +1,8 @@
-"""Frozen review membership before Nov7 and the single new invalidation.
+"""Frozen review membership and the exact later intake/copy invalidations.
 
-Learner-copy edits on Nov4 already invalidated 25 earlier matches. Never restore
-those flags: reconstruct all 255 old compiled objects through the exact intake
-projection, then compare their content with the unchanged attestation registry.
+Reconstruct old objects only inside the hash-bound historical projection, then
+compare their content with the unchanged attestation registry. Current objects
+retain their lost approvals after every recorded content or copy revision.
 """
 from __future__ import annotations
 
@@ -64,6 +64,13 @@ PRE_INTAKE_REVIEWED_KEYS = frozenset(
 )
 NOVEMBER7_INVALIDATED_KEYS = frozenset({"prep-multiply-four-registers-unit-instructions"})
 NOVEMBER7_BATCH10_INVALIDATED_KEYS = frozenset({"prep-maximum-of-two-numbers-circuit"})
+NOVEMBER12_COPY_INVALIDATED_KEYS = frozenset({
+    "prep-full-adder-32-bit-area-delay-recursive-carry-select",
+    "example-full-adder-composition",
+    "example-overlapping-sequence-1011",
+    "example-credit-dispenser",
+    "example-request-acknowledge",
+})
 
 
 def expected_reviewed_keys():
@@ -85,4 +92,5 @@ def expected_reviewed_keys():
     assert NOVEMBER7_BATCH10_INVALIDATED_KEYS.issubset(after_first_intake)
     expected = after_first_intake - NOVEMBER7_BATCH10_INVALIDATED_KEYS
     assert len(expected) == 42
-    return expected
+    assert NOVEMBER12_COPY_INVALIDATED_KEYS.issubset(expected)
+    return expected - NOVEMBER12_COPY_INVALIDATED_KEYS
