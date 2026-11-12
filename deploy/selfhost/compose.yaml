@@ -1,0 +1,81 @@
+name: jobrun
+
+x-runtime: &runtime
+  restart: unless-stopped
+  init: true
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  api:
+    <<: *runtime
+    image: jobrun-api:${SOURCE_REVISION:?Set the reviewed full Git SHA}
+    build:
+      context: ../../backend
+    env_file:
+      - path: ./backend.env
+        format: raw
+        required: true
+    environment:
+      ENV: production
+      SOURCE_REVISION: ${SOURCE_REVISION:?Set the reviewed full Git SHA}
+      SITE_URL: https://${APP_DOMAIN:?Set the website hostname}
+      PORT: "8000"
+    expose:
+      - "8000"
+    healthcheck:
+      start_period: 90s
+    stop_grace_period: 40s
+
+  web:
+    <<: *runtime
+    image: jobrun-web:${SOURCE_REVISION:?Set the reviewed full Git SHA}
+    build:
+      context: ../../apps/web
+      args:
+        SOURCE_REVISION: ${SOURCE_REVISION:?Set the reviewed full Git SHA}
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:?Set the public Supabase URL}
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:?Set the public Supabase key}
+        NEXT_PUBLIC_API_BASE_URL: https://${API_DOMAIN:?Set the API hostname}
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+    expose:
+      - "3000"
+    stop_grace_period: 40s
+
+  caddy:
+    <<: *runtime
+    image: caddy:2.11.9-alpine
+    cap_add:
+      - NET_BIND_SERVICE
+    depends_on:
+      api:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:?Set the website hostname}
+      API_DOMAIN: ${API_DOMAIN:?Set the API hostname}
+      ACME_EMAIL: ${ACME_EMAIL:?Set the certificate contact email}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./caddy:/etc/caddy:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    stop_grace_period: 40s
+
+volumes:
+  caddy_data:
+  caddy_config:

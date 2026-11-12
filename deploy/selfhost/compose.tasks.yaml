@@ -1,0 +1,37 @@
+# Optional: add -f compose.tasks.yaml to EVERY build/up/ps/rollback command.
+services:
+  tasks:
+    image: jobrun-tasks:${SOURCE_REVISION:?Set the reviewed full Git SHA}
+    build:
+      context: ../../apps/tasks
+      args:
+        SOURCE_REVISION: ${SOURCE_REVISION:?Set the reviewed full Git SHA}
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:?Set the public Supabase URL}
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:?Set the public Supabase key}
+    restart: unless-stopped
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+    expose:
+      - "3000"
+    stop_grace_period: 40s
+
+  caddy:
+    environment:
+      TASKS_DOMAIN: ${TASKS_DOMAIN:?Set the task-board hostname}
+    depends_on:
+      tasks:
+        condition: service_healthy
+    volumes:
+      - ./caddy/tasks.caddy:/etc/caddy/optional/tasks.caddy:ro

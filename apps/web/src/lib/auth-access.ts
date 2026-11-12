@@ -41,13 +41,15 @@ export type AccessState = {
 export class AccessCheck {
   private revision = 0;
 
+  constructor(private readonly timeoutMs = 15_000) {}
+
   invalidate() {
     this.revision += 1;
   }
 
   async run(
     userId: string,
-    load: () => Promise<boolean>,
+    load: (signal: AbortSignal) => Promise<boolean>,
     currentUserId: () => string | null,
     publish: (state: AccessState) => void,
   ) {
@@ -56,10 +58,23 @@ export class AccessCheck {
     publish({ userId, checking: true, allowed: false, failed: false });
     let allowed = false;
     let failed = false;
+    const controller = new AbortController();
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     try {
-      allowed = await load();
+      // Bound the gate even when a transport fails to settle after cancellation.
+      allowed = await Promise.race([
+        load(controller.signal),
+        new Promise<never>((_, reject) => {
+          timeout = setTimeout(() => {
+            reject(new Error("Access check timed out"));
+            controller.abort();
+          }, this.timeoutMs);
+        }),
+      ]);
     } catch {
       failed = true;
+    } finally {
+      clearTimeout(timeout);
     }
     if (revision === this.revision && currentUserId() === userId)
       publish({ userId, checking: false, allowed, failed });
