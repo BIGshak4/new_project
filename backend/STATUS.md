@@ -1953,7 +1953,8 @@ was already paid; `completion_coins` on the report is the finishing bonus actual
 
 **Pilot list.** (e-mail withheld) joined `jr_members` as 'Tal' on 2026-11-07 (Shaked: "add"; dry run, then
 applied): fourteen members. (e-mail withheld) joined as 'Yaron' later the same day (Shaked: "add him"; dry run,
-then applied): fifteen members.
+then applied): fifteen members. Four more joined on 2026-11-12 as 'Noa', 'Lahav', 'Gagatsis' and 'Doron' (Shaked: "add";
+one dry run for all four, then applied; e-mails withheld): nineteen members.
 
 ## 5zzc. Cutting expenses: the background prose on flex with no reasoning (2026-11-07, Shaked: "lets check how can we cut expenses even more"; "run 1 and 2")
 
@@ -2109,6 +2110,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-12 | Pilot list: Noa, Lahav, Gagatsis and Doron join `jr_members` (nineteen members); first names only in this file. |
 | 2026-11-08 | Full security review (§5zze; `security/runs/2026-11-08-full-review.md`, SEC-015..021): the key-less payment webhook closed, the padded-answer CPU sink in the numeric checker fixed, a pixel cap on pictures, `ENV=production` with warnings separated from refusals, certifi bumped, code-runner slots per member, API security headers, tester e-mails scrubbed; operator items for Shaked (repository private, Auth settings, HEALTH_KEY, Starter) and rows 25-26 for Harel. |
 | 2026-11-08 | The judge moves to gpt-6.1-terra (§5zzd): same six bands as Sol on the real flow at −46 % on the judge, a scored answer about half a cent all-in; the report stays on Sol (`report=gpt-6.1-sol` in the role models); `render.yaml`, `.env.example`, settings test. Yaron on the pilot list (fifteen members); `pricing.py` capacity line honours `--cost`. |
 | 2026-11-07 | Expense cuts (§5zzc): the background prose (feedback, tip, follow-up) runs on OpenAI's flex tier at half price with a once-only fallback to standard, and the card and tip run with no reasoning (fallback to low); `OPENAI_ROLE_SERVICE_TIER` per role, `/health.speed.role_service_tier` and `fallbacks`; `e2e_real_flow.py` prints cost per role. Finishing bonus rule (§5zzb) and Tal on the pilot list the same day. |
