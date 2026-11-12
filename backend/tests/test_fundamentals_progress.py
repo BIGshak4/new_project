@@ -107,7 +107,7 @@ async def test_500_card_registry_accepts_new_completions_and_preserves_old_dates
     http, runtime = client
     _, token = make_token()
     auth = headers(token)
-    assert len(runtime.fundamentals.revisions) == 500
+    assert len(runtime.fundamentals.revisions) == 700
     old_url = f"/v1/fundamentals/progress/{KEY}"
     previous = await http.put(old_url, headers=auth, json={
         "content_revision": runtime.fundamentals.revisions[KEY]})
