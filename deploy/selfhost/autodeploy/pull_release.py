@@ -394,14 +394,17 @@ class Deployer:
         # back if the process/power dies midway through the maintenance window.
         atomic_json(self.state/'pending.json', {'previous': previous, 'candidate': candidate})
         self.mutation_attempted = True
+        settled = False
         try:
             self.replace_pair(candidate)
             atomic_json(self.state/'current.json', candidate)
+            settled = True
         except Exception:
             log('candidate-failed-rolling-back', candidate['revision'])
             try:
                 self.replace_pair(previous)
                 atomic_json(self.state/'current.json', previous)
+                settled = True
             except Exception:
                 try:
                     self.compose(previous, 'stop', 'caddy')
@@ -410,7 +413,7 @@ class Deployer:
                 raise DeployError('rollback-failed-updater-blocked') from None
             raise DeployError('candidate-failed-previous-restored') from None
         finally:
-            if not (self.state/'blocked.json').exists():
+            if settled:
                 (self.state/'pending.json').unlink(missing_ok=True)
 
     def recover(self):

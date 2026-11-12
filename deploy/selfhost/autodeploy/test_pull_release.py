@@ -201,6 +201,14 @@ class RolloutTests(unittest.TestCase):
         self.assertTrue(any(name == 'blocked.json' for name, value in self.writes))
         self.assertFalse(any(name == 'current.json' for name, value in self.writes))
 
+    def test_manual_interrupt_preserves_recovery_journal(self):
+        journal = self.deployer.state/'pending.json'
+        journal.write_text('synthetic-journal')
+        self.deployer.replace_pair = lambda current: (_ for _ in ()).throw(KeyboardInterrupt())
+        with self.assertRaises(KeyboardInterrupt):
+            self.deployer.deploy(self.previous, self.candidate)
+        self.assertTrue(journal.exists())
+
     def test_retry_quarantine_does_not_run_signature_or_docker(self):
         self.deployer.remote.production_revision = lambda: NEW
         def state(path, default=None):
