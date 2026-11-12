@@ -1,11 +1,26 @@
 # JobRun on one VPS
 
 The practice website and API are live on a DigitalOcean VPS at
-https://muxijobrun.com and https://api.muxijobrun.com. See
+[muxijobrun.com](https://muxijobrun.com) and
+[api.muxijobrun.com](https://api.muxijobrun.com). See
 [PRODUCTION.md](PRODUCTION.md) for the verified deployment, costs, operator access
-and remaining checks. The instructions below describe preparing and verifying a
-coordinated release; automatic deployment is being prepared separately and is
-not yet recorded as active in this runbook.
+and remaining checks. The [production publisher](AUTODEPLOY.md) has built and
+signed both public GHCR images, and the fixed host updater is installed. Its
+supervised rollback drill passed at 18:59 UTC: the signed candidate passed real
+live gates before an injected failure, then both prior c3 services were restored
+and verified. Normal deployment of `1e01ffe` then passed at 18:59:47 UTC, and
+the host timer was enabled and active at 19:00:30 UTC. Its first no-change check
+succeeded; `SELFHOST_VERIFY_LIVE=true` is configured for future publications.
+The approved Recovery ISO maintenance operation restored operator SSH access on
+12 November 2026 at 18:56:48 UTC after about ten minutes. The original host key
+and existing login key were verified; website/API c3 and database health passed.
+The production runbook records the current availability and access state.
+
+The instructions below are the manual build/transfer and recovery route.
+Ordinary production releases use the dedicated `production` branch and signed
+image route. The production runbook labels the dated verified release and checks
+the latest branch head dynamically. Do not
+use these manual Compose files concurrently with the installed updater.
 
 The stack is Caddy (HTTPS), the practice app and the existing FastAPI image.
 `compose.tasks.yaml` optionally adds the task board. Supabase remains the existing
@@ -25,6 +40,14 @@ At the provider firewall, permit public TCP 80/443 and optionally UDP 443. Limit
 SSH to the administrator's source addresses. App ports 3000/8000 are not
 published. Configure monitoring, disk-space alerts and off-server configuration
 backups; the VPS is a single failure point.
+
+The attached DigitalOcean Cloud Firewall is named `jobrun-production`. The
+verified access change places the SSH source allowlist in this provider firewall,
+with key-only SSH and no changing source allowlist inside UFW. UFW remains active
+with a default-deny policy, IPv4 SSH allowed behind that cloud restriction, and
+IPv6 SSH blocked. Future operator IP changes use the provider's
+**Networking → Firewalls** rules UI; the steps are
+in [PRODUCTION.md](PRODUCTION.md). Do not open SSH to all sources at the provider.
 
 Use a fresh checkout of a reviewed release. Preserve the current coordinated
 question-copy release: do not merge it into `master` just to obtain files, seed
@@ -114,7 +137,9 @@ then transfer the archive securely and run
 `docker load --input images-linux-amd64.tar.gz` on the server. Verify loaded image
 IDs against the manifest and keep the prior successful images for rollback.
 Continue with the server-side Compose and release checks above. This is a manual
-staging builder; automatic deployment and production promotion are not wired.
+staging builder; it does not publish or promote a production release. The
+separate production publisher and host puller are documented in
+[AUTODEPLOY.md](AUTODEPLOY.md).
 
 For the optional task board, use both `-f` options **before the subcommand** in
 every build/check/start/rollback command, and build `api web tasks`. For example:
@@ -165,12 +190,13 @@ same reviewed commit. Announce or redirect to the new site only after the revisi
 gate and authenticated functional checks pass. Update payment webhook targets
 when moving the API, preserving the provider's verification secret/procedure.
 
-For later releases, build every enabled application service with a **new common SHA tag**,
-then run `up --no-build --wait` and the same version/functional checks. This
-simple Compose setup can have a short maintenance window while containers are
-replaced; it does not implement blue/green or zero-downtime releases. CI/CD wiring
-is intentionally not enabled until a server, SSH access and release gates are
-chosen and verified. Run independent tests/previews before publishing production.
+For a manual recovery release, build every enabled application service with a
+**new common SHA tag**, then run `up --no-build --wait` and the same
+version/functional checks. Stop the installed updater timer before a manual
+replacement and reconcile its state before enabling it again. Ordinary signed
+releases are described in [AUTODEPLOY.md](AUTODEPLOY.md). Both routes can have a
+short maintenance window while containers are replaced. Run independent
+tests/previews before publishing production.
 
 ## Roll back and maintain
 

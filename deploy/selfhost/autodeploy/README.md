@@ -6,10 +6,16 @@ VPS needs no GitHub token, Git credentials, registry login, inbound CI SSH, or c
 checkout. Both GHCR packages must be public. The executor stays on its isolated
 external Vercel Sandbox broker; submitted source never executes on this VPS.
 
-This directory is prepared for review. Installing it changes the running stack's
-deployment controller. Review it and run a staged failure/rollback drill before
-enabling unattended production updates. Unit tests mock every external effect;
-they do not prove Docker/TLS/signature interoperability on the target server.
+The fixed controller is installed on the VPS. On 12 November 2026 its 23 unit
+tests passed on Linux, systemd validation passed, the c3 baseline was adopted,
+and anonymous verification of both signed public GHCR images for `1e01ffe`
+succeeded. The supervised rollback drill then passed at 18:59 UTC: a candidate
+that passed real live gates was intentionally rejected, both c3 services were
+restored and verified, and no pending/blocked state remained. Normal deployment
+of `1e01ffe` then passed at 18:59:47 UTC. The timer was enabled and active at
+19:00:30 UTC, and its first no-change invocation succeeded. See
+[the current production record](../PRODUCTION.md) before
+operating it. Unit tests mock external effects and do not replace the live gates.
 
 ## Trust and publication contract
 
@@ -55,8 +61,10 @@ New release snapshots bind the verified SHA and both immutable image references.
 Backend environment bytes are copied without shell parsing. Each snapshot is
 private, root-owned, and includes its fixed Compose/Caddy configuration.
 
-Adopt the already verified c3 release before enabling the timer. These are the
-previously verified Docker 29 immutable manifest references, not config IDs:
+The already verified c3 release was adopted as the rollback baseline. The command
+below records the initial bootstrap procedure; do not rerun it when
+`state/current.json` exists. These are the verified Docker 29 immutable manifest
+references, not config IDs:
 
 ```sh
 sudo python3 /opt/jobrun/autodeploy/pull_release.py \
@@ -72,9 +80,14 @@ all automatically selected candidates require signed GHCR references.
 
 The Compose project remains **`jobrun`**, preserving the existing
 `jobrun_caddy_data` and `jobrun_caddy_config` volumes and certificate storage.
-Keep the operator's SSH/UFW/provider firewall rules unchanged.
+The updater does not change SSH or firewall policy. Operator sources are
+restricted by the attached DigitalOcean `jobrun-production` Cloud Firewall.
+The separately approved Recovery ISO/UFW change was verified. UFW remains active
+and SSH key-only; IPv6 SSH is blocked. See [PRODUCTION.md](../PRODUCTION.md) for
+the verified recovery and future provider-UI IP-change steps.
 
-After review and the first supervised update/rollback drill:
+The commands below record activation after review and the successful supervised
+rollback/normal deployment checks. The timer is already enabled on this server:
 
 ```sh
 sudo systemctl daemon-reload

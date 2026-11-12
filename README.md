@@ -4,10 +4,10 @@ Interview preparation and a private founders' workspace, built with Next.js, Typ
 
 | App | Source | Live pilot |
 | --- | --- | --- |
-| Practice | `apps/web` | https://jobrun-practice.netlify.app |
-| Founder tasks | `apps/tasks` | https://jobrun-tasks.netlify.app |
+| Practice | `apps/web` | [muxijobrun.com](https://muxijobrun.com) |
+| Founder tasks | `apps/tasks` | [jobrun-tasks.netlify.app](https://jobrun-tasks.netlify.app) |
 
-Both apps require Supabase authentication and an approved email. Task access additionally requires founder permission. The practice database now contains 340 bilingual question records (335 unique families). Practice includes written answers, hints, reference solutions, bookmarks and progress. The deployed backend reports OpenAI configured; authenticated AI-feedback testing was outside this intake’s checks.
+Both apps require Supabase authentication and an approved email. Task access additionally requires founder permission. The practice database now contains 340 bilingual question records (335 unique families). Practice includes written answers, hints, reference solutions, bookmarks and progress. The new domain has passed authenticated question loading, saving, isolated Python execution and real OpenAI grading/feedback checks; see the [production record](deploy/selfhost/PRODUCTION.md) for their scope.
 
 The task board supports individual tasks, filters, assignees, due dates, subtasks, comments, private files, archive, version history and conflict-safe saves. Drafts persist in the current browser tab; save to synchronize across devices. The two apps share identity and database but require signing in separately on their different domains.
 
@@ -35,7 +35,9 @@ Use Node.js 24. In either app run `npm ci`, copy `.env.example` to `.env.local`,
 
 For the current implementation summary and remaining backend/model work before founder testing, start with [the handoff to Shaked for real-feedback human review](docs/shaked-human-review-handoff.md).
 
-See [the deployment and access guide](docs/netlify-and-supabase.md). Manual Netlify deployments are live; GitHub auto-deployment still needs repository-owner authorization. No paid upgrade was made.
+The practice website and API run together on a DigitalOcean VPS at [muxijobrun.com](https://muxijobrun.com) and [api.muxijobrun.com](https://api.muxijobrun.com). Supabase and the isolated code-execution broker remain the existing services. Start with the [current production runbook](deploy/selfhost/PRODUCTION.md); the [publishing guide](deploy/selfhost/AUTODEPLOY.md) describes the dedicated `production` branch and signed images. Signed publication, a supervised rollback drill, normal deployment and real OpenAI grading/feedback have passed. The host update timer is enabled and the publisher is configured to verify the live revision after future pushes. Operator SSH uses key-only authentication and a provider-managed source allowlist.
+
+Founder tasks remain on Netlify. The old practice Netlify site and Render API are retained during the transition, and the Netlify subscription has not been cancelled. The [earlier Netlify and Supabase guide](docs/netlify-and-supabase.md) remains relevant to that retained hosting.
 
 Supabase's canonical schema lives in `supabase/migrations`. The founder additions use `jr_` tables and preserve the existing product/AI schema. Seed generation is in `scripts/seed-example-questions.mjs`; it writes `supabase/seed-example-questions.sql` from the original example question bank. Seeding is an explicit database operation, never part of application startup.
 
@@ -43,6 +45,6 @@ Supabase's canonical schema lives in `supabase/migrations`. The founder addition
 
 ## Code execution — 2026-10-31
 
-The live practice site now compiles and runs Python, JavaScript, C, C++, Verilog, SystemVerilog and VHDL in isolated microVMs. See [the implementation, coverage and live verification record](docs/isolated-code-execution.md) and [executor operations](apps/executor/README.md). That record includes the current AI-feedback limitation and supersedes the earlier execution-readiness notes above.
+The live practice site compiles and runs Python, JavaScript, C, C++, Verilog, SystemVerilog and VHDL in isolated microVMs. See [the implementation, coverage and live verification record](docs/isolated-code-execution.md) and [executor operations](apps/executor/README.md) for the execution architecture and historical checks. The [current production record](deploy/selfhost/PRODUCTION.md) separately records the authenticated execution and real OpenAI-feedback checks on the new domain.
 
 For the exhaustive check of all 63 software questions, see [the software execution validation report](docs/software-execution-validation-2026-10-31.md), including reproducible commands and the distinction between execution probes and question-specific correctness tests.
