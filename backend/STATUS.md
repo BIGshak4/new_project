@@ -2194,7 +2194,7 @@ months of history).** Ranked by how soon it bites:
 | # | What | State |
 |---|---|---|
 | 1 | The question bank (about 15 MB decoded) was reloaded by every request in flight each time its minute ran out: ten at once with ten connections | **Fixed**: `repo/cache.TTLCache` loads once per key; the others get the previous value meanwhile |
-| 2 | The per-address request budget (1,800 a minute) is shared by every user if the hosting proxy presents one address | **Made checkable**: `/health.request_budget` counts private and public addresses seen. On Render: RENDERBUDGET_AFTER_DEPLOY. The live server's `/health` detail is behind its key: Harel can read it |
+| 2 | The per-address request budget (1,800 a minute) is shared by every user if the hosting proxy presents one address | **Made checkable**: `/health.request_budget` counts private and public addresses seen. On Render, read after the deploy of `c71d5ce`: a request from outside showed 1 address, public, none private, so Render hands the API each client's own address and the budget is per client. The live server's `/health` detail is behind its key: Harel can read it |
 | 3 | `SkillState.history` grows with every answer for ever and is decoded on almost every request (about 87 ms of CPU a request at 4,000 answers) | **Open, Shaked's decision**: bounding it changes what the level is averaged over. An alternative keeps today's numbers (running sums and a short tail) |
 | 4 | Progress reads a user's whole scored history to compute a streak; activity reads every answer ever | Open: code only, a date window and a distinct-day query |
 | 5 | The coin balance is a sum over the user's whole ledger on every screen; three reads on `attempt` are not index-only; the per-user sighting count has no index | **Migration written, dry-run, not applied** (`20261114130000_...sql`, part 4) |
@@ -2294,6 +2294,12 @@ server these are in Harel's environment file, not on Render.
 - The real model: `scripts/e2e_real_flow.py`, three attempts, 14 calls (the numbers in part 3).
 - The migration: dry-run only, and a read-only query afterwards showed the old index and the three policies still
   in place and nothing new created.
+- Render after the push: `/health` shows `source_revision c71d5ce`, `monthly_user_budget_ils 15`, a 3 ms database
+  round trip.
+- A trial merge of `master` into `production` in a scratch copy (not pushed): no conflicts. Its offline suite:
+  5,024 passed; the failures were the known contract test and 21 Anthropic-provider tests, and the one I opened
+  failed on a module missing from the `anthropic` package as installed under the scratch copy's long Windows path,
+  not on the merged code.
 - **Not verified:** the live suite was not run. Two new database reads (`attempts.reference_exposed`,
   `events.model_cost_since`) have run only against the in-memory store; both sit in savepoints and fail safe (a
   failed lookup pays the coins, a failed budget read refuses nobody). A read-only check of them on the real
