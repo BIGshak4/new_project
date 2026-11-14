@@ -69,6 +69,11 @@ from app.schemas.visual_answer import VisualAnswer
 
 MAX_FOLLOW_UPS = 1                # one follow-up, then the next question from the bank (Shaked, 2026-09-21)
 MAX_ANSWER_CHARS = 20_000
+# Evaluations one attempt may cause, across its answers, their retries and re-sent revisions. An honest attempt uses
+# two (the answer and the follow-up) and a few more when the model fails; without a ceiling one unit of the daily
+# allowance bought any number of paid calls on an answer the model keeps declining (security review, 2026-11-14).
+# One evaluation is at most two model calls (the evaluator retries a retryable error once).
+MAX_JUDGE_CALLS_PER_ATTEMPT = 8
 DEMO_MODELS = {"demo", "scripted", "manual", ""}
 
 
@@ -495,6 +500,7 @@ class PracticeAttempt:
                 if pending.get("wording_pending"):
                     raise PracticeError("follow_up_not_ready", "the follow-up question is still being written; "
                                                                "try again in a moment")
+                self._within_judge_calls()                       # a re-sent follow-up answer is one more call too
                 submission, _ = self._accept(answer, turn=pending["turn"], idempotency_key=idempotency_key)
                 pending["submission_revision"] = submission.revision
                 return submission, None
@@ -504,6 +510,8 @@ class PracticeAttempt:
                     return existing, self._replay(existing, answer)
                 raise PracticeError("already_submitted",
                                     "this attempt already has an evaluated answer; start a new attempt to try again")
+            if existing is None:
+                self._within_judge_calls()                       # a new revision after a failed one is one more call
             submission, replay = self._accept(answer, turn=0, idempotency_key=idempotency_key)
             return submission, (self._replay(submission, answer) if replay else None)
 
@@ -528,7 +536,13 @@ class PracticeAttempt:
                            if s.status == EvaluationStatus.FAILED and "superseded" not in s.flags), None)
             if failed is None:
                 raise PracticeError("nothing_to_retry", "no submission is waiting for evaluation")
+            self._within_judge_calls()
             return await self._evaluate(failed, latency_ms=None, revision_count=None, defer_prose=defer_prose)
+
+    def _within_judge_calls(self) -> None:
+        if sum(s.attempts for s in self.submissions) >= MAX_JUDGE_CALLS_PER_ATTEMPT:
+            raise PracticeError("usage_limit", "this answer could not be evaluated after several tries; it is saved. "
+                                               "Start a new attempt on the question later.")
 
     @staticmethod
     def _answer_text(answer) -> str:

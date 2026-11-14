@@ -19,13 +19,28 @@ from datetime import UTC, datetime, timedelta
 from app.api.errors import ApiError
 
 ROUND_TTL = timedelta(minutes=15)
+# Practice rounds one member may open in a UTC day. Each answer returns the correct option, and the rounds come from
+# the pool the duels draw from, so without a ceiling a script could collect the whole answer key in about an hour and
+# then win every duel (security review, 2026-11-14). At this pace the key takes months; a learner never gets near it.
+DAILY_ROUNDS = 150
 
 
 class QuizPractice:
-    def __init__(self, duels, *, secret: str | None = None):
+    def __init__(self, duels, *, secret: str | None = None, daily_rounds: int = DAILY_ROUNDS):
         self.duels = duels
         material = secret.encode() if secret else secrets.token_bytes(32)
         self.signing_key = hmac.digest(material, b"jobrun:quiz-practice:v1", "sha256")
+        self.daily_rounds = daily_rounds
+        self._opened: dict[uuid.UUID, int] = {}        # per process, for the day in _opened_on
+        self._opened_on = None
+
+    def _count_round(self, user_id: uuid.UUID) -> None:
+        today = self.duels.clock().date()
+        if today != self._opened_on:                   # a new day: everyone starts again, and the table stays small
+            self._opened, self._opened_on = {}, today
+        if self._opened.get(user_id, 0) >= self.daily_rounds:
+            raise ApiError("usage_limit", "today's practice rounds are used up; more tomorrow", headers={"Retry-After": "3600"})
+        self._opened[user_id] = self._opened.get(user_id, 0) + 1
 
     @staticmethod
     def _version(question) -> str:
@@ -45,6 +60,7 @@ class QuizPractice:
                   if all(question.status == "approved" for question in items)]
         if not groups:
             raise ApiError("no_reviewed_questions", "no approved game questions are available")
+        self._count_round(user_id)
         question = secrets.choice(secrets.choice(groups))
         now = self.duels.clock()
         expires = now + ROUND_TTL

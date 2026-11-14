@@ -177,7 +177,10 @@ class TestTheServicesWarmWhenAQuestionOpens:
         await warmer.drain()
         assert warmer.stats["sent"] == 1 and warmer.stats["skipped_recent"] >= 1    # within the window: no second call
         clock.now += TTL_SECONDS + 1
-        await svc.reveal_reference(user, uuid.UUID(view.id))                    # still reading, window passed
+        await svc.reveal_reference(user, uuid.UUID(view.id))                    # the reference again: nothing new was shown,
+        await warmer.drain()                                                    # so no call (it could be repeated for ever;
+        assert warmer.stats["sent"] == 1                                        # security review, 2026-11-14)
+        await svc.next_hint(user, uuid.UUID(view.id))                           # another hint really given: still reading
         await warmer.drain()
         assert warmer.stats["sent"] == 2
 

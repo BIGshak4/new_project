@@ -74,7 +74,8 @@ from app.schemas.engine import (
     SkillStatus,
 )
 from app.schemas.visual_answer import VisualAnswer
-from app.services.coins import coins_for_turn
+from app.services.budget import monthly_budget_left
+from app.services.coins import coins_for_turn, reference_seen_elsewhere
 from app.services.store import Store
 
 log = logging.getLogger("app.interview")
@@ -82,6 +83,7 @@ log = logging.getLogger("app.interview")
 LANGUAGES = ("en", "he")
 DURATIONS = SIMULATION_DURATIONS          # the lengths the lobby offers = the lengths the plan builds items with
 MAX_TURNS = 40
+MAX_JUDGE_CALLS_PER_TURN = 5              # an answer the model fails on may be sent again this many times in all
 EVALUATING_BUDGET_SECONDS = 300          # an evaluation older than this never finished: the process died
 _PLACEHOLDER = re.compile(r"\{\{\s*\w+\s*\}\}")
 
@@ -95,6 +97,7 @@ class InterviewConfig:
     reviewed_only: bool = True                  # bank questions that a person reviewed and published; never generated
     allow_hints: bool = True                    # coach mode: the candidate may ask for a hint (costs struggle budget)
     narrative: bool = True                      # write the report narrative with the model; a plain report otherwise
+    monthly_budget_usd: float = 0.0             # one user's model spend a month (services/budget.py); 0 = no ceiling
 
 
 class InterviewService:
@@ -125,6 +128,7 @@ class InterviewService:
             if started >= self.config.daily_limit:
                 raise ApiError("usage_limit", f"you have started {started} interviews today; the limit is "
                                f"{self.config.daily_limit}", headers={"Retry-After": "3600"})
+            await monthly_budget_left(tx, user_id, self.config.monthly_budget_usd)
             profile = await tx.load_profile(user_id)
             goal = await tx.load_goal(user_id)
             seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
@@ -217,6 +221,12 @@ class InterviewService:
                     if not await tx.validate_answer_images(user_id, session_id, visual.images):
                         raise ApiError("validation", "an answer image is missing or does not belong to this interview")
             question = self.catalog.questions[turn["question_key"]]
+            # a turn the model keeps failing on or declining may be sent again, but not for ever: each try is a paid
+            # judge call and the interview counted once against the day (security review, 2026-11-14)
+            tries = int(meta.get("tries") or 0)
+            if tries >= MAX_JUDGE_CALLS_PER_TURN:
+                raise ApiError("usage_limit", "this answer could not be evaluated after several tries; it is saved. "
+                                              "End the interview to see the report on the answers that were.")
 
             # 1. keep the answer before the model is called
             now = self._stamp()
@@ -244,6 +254,7 @@ class InterviewService:
                     check = (await checks.run_check_async(question.deterministic_check, checked)
                              if question.deterministic_check and checked else None)
                 skill = self.catalog.skills[question.primary_skill]
+                meta["tries"] = tries + 1                # counted where the model is really called, saved with the verdict
                 result = await evaluator.evaluate(
                     self.provider, question_context=evaluator.question_block(question, language, skill),
                     known_error_keys={e.key for e in question.common_errors}, language=language,
@@ -739,11 +750,14 @@ class InterviewService:
                     for t in turns:
                         m = t.get("question_generation_meta") or {}
                         if m.get("status") == "done" and m.get("band") and m.get("coins_awarded") is None:
+                            # looked up only for a turn that could earn: was the reference revealed in practice?
+                            seen = (m["band"] == "STRONG" and t.get("question_id") is not None
+                                    and await reference_seen_elsewhere(tx, user_id, t["question_id"]))
                             m["coins_awarded"] = await self.coins.award_for_turn(
                                 tx, user_id=user_id, session_id=session_id, turn_index=int(t["turn_index"]), band=m["band"],
                                 hints_seen=int(m.get("hint_level") or 0),
                                 related=scores.OFF_TOPIC_FLAG not in (m.get("flags") or []),
-                                question_id=t.get("question_id"))
+                                question_id=t.get("question_id"), reference_seen=seen)
                     if row["status"] == "completed" and row["state"].get("finish_coins") is None:
                         # the finishing bonus rides on the interview's own strong turns (Shaked, 2026-11-07); recorded
                         # on the row before it is saved, so the report shows what was really paid

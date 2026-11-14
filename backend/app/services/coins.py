@@ -91,10 +91,23 @@ def coins_for_answer(rules: CoinRules, *, band: str | None, difficulty: int, hin
     return rules.strong_hard_answer if difficulty >= rules.hard_difficulty_from else rules.strong_answer
 
 
-def coins_for_turn(rules: CoinRules, *, band: str | None, hints_seen: int = 0, related: bool = True) -> int:
-    if band != "STRONG" or not related or hints_seen > rules.max_hints_for_coins:
+def coins_for_turn(rules: CoinRules, *, band: str | None, hints_seen: int = 0, related: bool = True,
+                   reference_seen: bool = False) -> int:
+    if band != "STRONG" or not related or reference_seen or hints_seen > rules.max_hints_for_coins:
         return 0
     return rules.strong_interview_turn
+
+
+async def reference_seen_elsewhere(tx, user_id: uuid.UUID, question_id, *, except_attempt: uuid.UUID | None = None) -> bool:
+    """Whether this user revealed the question's reference on an attempt (other than `except_attempt`): an answer
+    after that earns no coins (security review, 2026-11-14). In a savepoint, like the earn row itself: coins must
+    never cost an answer, so a read that fails is logged and counts as "not seen"."""
+    try:
+        async with tx.savepoint():
+            return await tx.reference_exposed(user_id, question_id, except_attempt=except_attempt)
+    except Exception:                                       # noqa: BLE001
+        log.exception("coins: could not look up a revealed reference for %s; treated as not seen", user_id)
+        return False
 
 
 def coins_for_finish(rules: CoinRules, *, answered_turns: int, earned_in_interview: int, ended_early: bool = False) -> int:
@@ -193,8 +206,12 @@ class CoinsService:
         return amount if written else 0
 
     async def award_for_turn(self, tx, *, user_id: uuid.UUID, session_id: uuid.UUID, turn_index: int, band: str | None,
-                             hints_seen: int = 0, related: bool = True, question_id=None) -> int:
-        amount = coins_for_turn(self.rules, band=band, hints_seen=hints_seen, related=related)
+                             hints_seen: int = 0, related: bool = True, question_id=None,
+                             reference_seen: bool = False) -> int:
+        """`reference_seen`: the user revealed this question's reference on a practice attempt (the interview shows
+        the question's key, so the solution was one request away; security review, 2026-11-14)."""
+        amount = coins_for_turn(self.rules, band=band, hints_seen=hints_seen, related=related,
+                                reference_seen=reference_seen)
         if not await self.enabled(tx) or amount <= 0:        # look at the ledger first: the views promise only after
             return 0
         reference = self.question_reference(question_id) if question_id is not None else f"turn:{session_id}:{turn_index}"

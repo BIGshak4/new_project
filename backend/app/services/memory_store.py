@@ -669,6 +669,10 @@ class _MemoryTx:
         return {a["row"]["question_key"] for a in self.s.attempts.values()
                 if a["user_id"] == user_id and a["started_at"] >= since}
 
+    async def reference_exposed(self, user_id, question_id, *, except_attempt=None):
+        return any(a["user_id"] == user_id and str(a["question_id"]) == str(question_id) and a["row"]["reference_revealed"]
+                   and attempt_id != except_attempt for attempt_id, a in self.s.attempts.items())
+
     async def load_profile(self, user_id):
         loaded = LoadedProfile(user_id=user_id)
         for (uid, key), row in self.s.profiles.items():
@@ -717,6 +721,12 @@ class _MemoryTx:
     async def record_usage(self, *, user_id, attempt_id, usage_rows):
         self.s.usage.extend({**u, "user_id": user_id, "attempt_id": attempt_id} for u in usage_rows)
         return len(usage_rows)
+
+    async def model_cost_since(self, user_id, since):
+        # the rows carry no time of their own here (they are compared whole with recorded runs): a row counts as
+        # now unless a test dated it with `created_at`
+        return float(sum(u.get("cost_usd") or 0.0 for u in self.s.usage
+                         if u.get("user_id") == user_id and u.get("created_at", since) >= since))
 
     async def record_tip(self, *, attempt_id, tip_key, skill_key, text):
         self.s.tips.append({"attempt_id": attempt_id, "tip_key": tip_key, "skill_key": skill_key, "text": text})

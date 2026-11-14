@@ -44,6 +44,28 @@ The register contains 13 engineering records, including an installed-advisory bu
 | [SEC-020](findings/SEC-020-certifi-compromised-root.md) | Certificate bundle trusted a compromised authority | Medium (advisory Critical) | Fixed; certifi 2026.10.23 |
 | [SEC-021](findings/SEC-021-code-runner-slots-shared.md) | One member could hold everyone's code-runner slots | Low | Fixed; slots counted per member |
 
+## Finding register — 2026-11-14 scale and security review
+
+[The review](runs/2026-11-14-scale-and-security-review.md): five independent reviews (API, database and deployment, untrusted input and cost, web app, the database layer at scale). The records for this pass are the sections of the run report. Eight are fixed or added in backend code on `master` with regression tests; seven are open and need an owner. **The live site runs the `production` branch: the fixes reach it when `master` is merged there.**
+
+| ID | Finding | Severity | Current verification/status |
+|---|---|---|---|
+| SEC-022 | A small drawn circuit derived gigabytes of text | High | Fixed on master; tests pass |
+| SEC-023 | Blanks after `<` froze the API (quadratic tag filter on the event loop) | High | Fixed on master; timed test |
+| SEC-024 | Picture decoding memory (SEC-017 incomplete) and padded pictures | High on a small host | Fixed on master; tests pass |
+| SEC-025 | Coins paid after the reference was revealed on another attempt | Medium | Fixed for practice and interviews; judged duels open |
+| SEC-026 | Unlimited paid judge calls on one failing answer | Medium | Fixed for practice and interview turns |
+| SEC-027 | Duel quiz answer key collectable through practice rounds | Medium | Mitigated (daily ceiling); separate pools open |
+| SEC-028 | Warm-up calls outside every allowance | Medium-low | Fixed on master; tests pass |
+| SEC-029 | No ceiling on one member's model spend | Hardening | Added: `MONTHLY_USER_BUDGET_ILS`, 15 by default |
+| SEC-030 | Public container images carry the solution bank | High | Open; Harel and Shaked |
+| SEC-031 | Unbounded browser writes to three tables | Medium | Migration dry-run, not applied; approval needed |
+| SEC-032 | Founder rights on a shared mailbox's allow-list row | Medium | Open; approval needed |
+| SEC-033 | Two live backends on two branches; a push is a deploy | Medium | Open; operator |
+| SEC-034 | Netlify sites in the login allow-list before retirement | Medium, conditional | Open; operator |
+| SEC-035 | Numeric and truth-table checkers quadratic on a crafted answer | Medium | Open; changes a grading path |
+| SEC-036 | Web app lows (link sign-in, storage after sign-out, unencoded ids, design pages) | Low | Open; Harel |
+
 Every record separates observed evidence, the exact change, verification and residual work. Final integrated test counts and deployment revisions are recorded once in the run report to avoid adding overlapping focused-suite counts.
 
 ## Rules for every review
