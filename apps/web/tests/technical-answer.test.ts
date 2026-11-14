@@ -1,5 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { createTruthTable } from "../src/lib/answer-truth-table";
+import { dictationExplanationLimit } from "../src/lib/speech-dictation";
 import {
   answerLanguages,
   formatTechnicalAnswer,
@@ -31,6 +33,22 @@ test("legacy prose and unfamiliar fences are never discarded", () => {
       language: undefined,
     });
   }
+});
+
+test("a truth table survives alongside exact prose and a terminal executable block", () => {
+  const truthTable = createTruthTable();
+  truthTable.outputs = ["סכום", "Carry"];
+  truthTable.rows = [["0", ""], ["1", "0"], ["1", "0"], ["0", "1"]];
+  const code = "def f(a, b):\n    return a ^ b\n";
+  const explanation = "נבדוק גם את הפלט השני.";
+  const answer = formatTechnicalAnswer(explanation, code, "python", truthTable);
+  assert.ok(answer.endsWith(formatTechnicalAnswer("", code, "python")));
+  assert.deepEqual(parseTechnicalAnswer(answer), { explanation, language: "python", code, truthTable });
+  const tableOnly = formatTechnicalAnswer("", "", "text", truthTable);
+  assert.deepEqual(parseTechnicalAnswer(tableOnly), { explanation: "", language: undefined, code: "", truthTable });
+  assert.equal(formatTechnicalAnswer("a".repeat(dictationExplanationLimit(tableOnly)), "", "text", truthTable).length, 20000);
+  const damaged = tableOnly.replace("01\t1\t0", "01\t?");
+  assert.equal(parseTechnicalAnswer(damaged).explanation, damaged);
 });
 test("technical content with backticks, blank lines and no prose remains recoverable", () => {
   const code = "  table\n```\nA B | Y\n0 1 | 1\n";

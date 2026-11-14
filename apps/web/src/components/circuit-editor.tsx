@@ -18,7 +18,6 @@ import {
   type ReactFlowInstance,
 } from "@xyflow/react";
 import {
-  Expand,
   Maximize,
   Minimize,
   PanelRightOpen,
@@ -262,7 +261,7 @@ export default function CircuitEditor({
   question?: CircuitQuestionReference;
   /** Optional local interaction observer; never affects the saved circuit. */
   onActivity?: (activity: CircuitActivity) => void;
-  /** Keeps an introduction coach in the browser's top layer when expanded. */
+  /** Keeps an introduction coach in the browser's top layer in full screen. */
   guide?: ReactNode;
   /** Optional in-flow content for a guided drawing session. */
   instructions?: {
@@ -287,11 +286,10 @@ export default function CircuitEditor({
   const simulation = clocked ? clockSimulation : liveSignals;
   const [undo, setUndo] = useState<Circuit[]>([]),
     [redo, setRedo] = useState<Circuit[]>([]);
-  const [layout, setLayout] = useState<"inline" | "expanded" | "fullscreen">("inline");
-  const full = layout !== "inline";
+  const [full, setFull] = useState(false);
   const [showQuestion, setShowQuestion] = useState(true);
   const questionId = useId();
-  const expandButton = useRef<HTMLButtonElement>(null);
+  const fullscreenButton = useRef<HTMLButtonElement>(null);
   const canvas = useRef<HTMLDivElement>(null);
   const [sourcePin, setSourcePin] = useState(""),
     [targetPin, setTargetPin] = useState("");
@@ -315,7 +313,7 @@ export default function CircuitEditor({
     if (element.matches(":modal")) {
       element.close();
       element.show();
-      expandButton.current?.focus({ preventScroll: true });
+      fullscreenButton.current?.focus({ preventScroll: true });
     } else if (!element.open) {
       element.show();
     }
@@ -586,23 +584,17 @@ export default function CircuitEditor({
           )}
           <button
             type="button"
+            ref={fullscreenButton}
             data-muxi-control="circuit-fullscreen"
-            onClick={() => { setLayout(layout === "fullscreen" ? "expanded" : "fullscreen"); onActivity?.("circuit-expanded"); }}
-            aria-pressed={layout === "fullscreen"}
-            title={layout === "fullscreen" ? t("מעבר לחלון מוגדל", "Use an expanded window") : t("מילוי שטח המסך", "Fill the screen")}
-          >
-            {layout === "fullscreen" ? <Minimize size={16} /> : <Maximize size={16} />}
-            {layout === "fullscreen" ? t("חלון מוגדל", "Expanded window") : t("מסך מלא", "Full screen")}
-          </button>
-          <button
-            ref={expandButton}
-            data-muxi-control="circuit-expand"
-            type="button"
+            aria-haspopup={full ? undefined : "dialog"}
             className={full ? styles.close : undefined}
-            onClick={() => { setLayout(full ? "inline" : "expanded"); if (!full) onActivity?.("circuit-expanded"); }}
+            onClick={() => {
+              setFull(!full);
+              if (!full) onActivity?.("circuit-expanded");
+            }}
           >
-            {full ? <X size={16} /> : <Expand size={16} />}
-            {full ? t("חזרה לתשובה", "Back to answer") : t("הרחבת הלוח", "Expand drawing")}
+            {full ? <Minimize size={16} /> : <Maximize size={16} />}
+            {full ? t("חזרה לתשובה", "Back to answer") : t("מסך מלא", "Full screen")}
           </button>
         </div>
       </div>
@@ -1070,11 +1062,11 @@ export default function CircuitEditor({
       ref={dialog}
       open
       className={full ? styles.dialog : styles.inline}
-      data-layout={layout}
+      data-layout={full ? "fullscreen" : "inline"}
       role={full ? "dialog" : "region"}
       aria-modal={full ? true : undefined}
-      onCancel={(event) => { event.preventDefault(); setLayout("inline"); }}
-      aria-label={full ? t("סביבת שרטוט מורחבת", "Expanded drawing workspace") : t("עורך מעגלים", "Circuit editor")}
+      onCancel={(event) => { event.preventDefault(); setFull(false); }}
+      aria-label={full ? t("שרטוט מעגל במסך מלא", "Full-screen circuit editor") : t("עורך מעגלים", "Circuit editor")}
     >
       {content}
       {full && guide}

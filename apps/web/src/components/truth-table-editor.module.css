@@ -1,0 +1,97 @@
+.editor {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  margin-block: 12px;
+  color: var(--ink);
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.actions, .column, .column label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actions { flex-wrap: wrap; }
+.actions button, .column button, .remove { min-height: 44px; }
+
+.scroll {
+  max-height: 440px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 8px);
+  scrollbar-color: var(--muted) var(--surface);
+}
+
+.scroll:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+.table {
+  width: 100%;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.table thead { position: sticky; top: 0; z-index: 1; }
+.table th, .table td {
+  min-width: 54px;
+  text-align: center;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.table thead th {
+  color: var(--ink);
+  background: var(--surface-2);
+  font-size: 14px;
+  max-width: 160px;
+  overflow-wrap: anywhere;
+}
+
+.table thead tr:first-child th { padding-block: 8px; }
+.table thead th.outputs { background: var(--soft); border-left: 1px solid var(--line); }
+.table .divider { border-left: 1px solid var(--line); }
+.table tbody tr:last-child td { border-bottom: 0; }
+.table td { font-family: var(--font-mono, monospace); font-size: 15px; }
+.table select {
+  width: auto;
+  min-width: 58px;
+  min-height: 38px;
+  padding: 3px 6px;
+  appearance: auto;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font: inherit;
+  text-align: center;
+}
+
+.settings { min-width: 0; }
+.settings summary { cursor: pointer; color: var(--link); font-weight: 600; padding-block: 8px; }
+.groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 16px; margin-block: 12px; }
+.groups fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.groups legend { padding: 0; font-weight: 700; }
+.column { margin-block: 6px; }
+.column label { flex: 1; min-width: 0; }
+.column label > span { flex: none; font-size: 14px; }
+.column input { width: 100%; min-width: 0; min-height: 44px; padding: 6px 8px; }
+.column button { min-width: 44px; padding: 4px; }
+.remove { color: var(--danger); }
+
+@media (pointer: coarse) {
+  .table select { min-height: 44px; }
+  .settings summary { padding-block: 12px; }
+}

@@ -36,7 +36,7 @@ import { FollowUps } from "./follow-ups";
 import { useFeedbackArrival } from "./use-feedback-arrival";
 import { emitMemberTourAction } from "../lib/member-tour";
 import { questionCategory } from "../lib/question-discovery";
-import { parseTechnicalAnswer } from "../lib/technical-answer";
+import { SubmittedAnswerContent } from "./submitted-answer-content";
 import { referenceInLanguage } from "../lib/material-locale";
 import { supabase } from "../lib/supabase";
 import {
@@ -1056,16 +1056,10 @@ function SavedAnswer({
   question?: CircuitQuestionReference;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
-  const parts = parseTechnicalAnswer(s.answer);
   return (
     <section className="saved-answer">
       <h3>{t("התשובה ששלחתם", "Your submitted answer")}</h3>
-      {parts.explanation && <RichText text={parts.explanation} />}
-      {parts.code && (
-        <pre className="code-block" dir="ltr">
-          <code>{parts.code}</code>
-        </pre>
-      )}
+      <SubmittedAnswerContent answer={s.answer} lang={lang} />
       {s.visual && <VisualAnswer value={s.visual} lang={lang} question={question} />}
       <p className="help-status">
         {t("רמזים שנראו לפני השליחה", "Hints seen before submission")}:{" "}
@@ -1202,7 +1196,7 @@ function PersonalNotes({
             <summary>
               {t("הטיוטה השמורה בחשבון", "Draft saved to account")}
             </summary>
-            <RichText text={entry.answer} />
+            <SubmittedAnswerContent answer={entry.answer} lang={lang} />
           </details>
         )}
         <div className="row">

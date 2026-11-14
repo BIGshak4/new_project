@@ -8,6 +8,7 @@ import { revealDelay, timerTone } from "../lib/ui";
 import { AnimatePresence, Pop, Reveal, motion, spring, useReducedMotion } from "./ui/motion";
 import { QuestionActions } from "./question-actions";
 import { AnswerEditor } from "./answer-editor";
+import { SubmittedAnswerContent } from "./submitted-answer-content";
 import { VisualAnswer } from "./visual-answer";
 import { emptyVisual, hasVisual, type VisualAnswer as Visual } from "../lib/circuit";
 import {
@@ -489,7 +490,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
                 </p>
               )}
               <div className="row interview-actions">
-                <button className="primary" disabled={busy || uploading || (!answer.trim() && !hasVisual(visual))} onClick={() => void submit()}>
+                <button className="primary" disabled={busy || uploading || answer.length > 20000 || (!answer.trim() && !hasVisual(visual))} onClick={() => void submit()}>
                   {busy ? t("שולחים…", "Sending…") : t("שליחת התשובה", "Send answer")} <Arrow size={16} />
                 </button>
                 {interview.can_hint && secondsLeft > 0 && (
@@ -687,7 +688,7 @@ export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang })
         </span>
       </div>
       <InterviewQuestionText text={x.question} />
-      {x.answer && <p className="report-answer" dir={proseDirection(x.answer)}><BidiText>{x.answer}</BidiText></p>}
+      {x.answer && <div className="report-answer"><SubmittedAnswerContent answer={x.answer} lang={lang} /></div>}
       {x.visual && hasVisual(x.visual) && <VisualAnswer value={x.visual} lang={lang}
         question={{ title: x.skill_label, content: <InterviewQuestionText text={x.question} /> }} />}
       {x.flags?.includes("circuit_assessed") && (

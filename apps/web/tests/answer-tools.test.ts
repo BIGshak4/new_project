@@ -31,7 +31,7 @@ test("writing tools start closed for empty answers and restored code drafts in b
         value, onChange: () => { changes += 1; }, lang, disabled: false,
         codeLanguage: "c", starterCode: "int main() {}",
       }));
-      assertClosedTools(html, ["explanation-open", "code-open"]);
+      assertClosedTools(html, ["explanation-open", "code-open", "truth-table-open"]);
       assert.equal(changes, 0, "opening the question does not modify the draft");
       if (value) {
         assert.match(html, />Saved explanation<\/textarea>/);

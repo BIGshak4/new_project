@@ -269,12 +269,12 @@ export function VisualAnswer({
           <p className="small muted">
             {photos
               ? t(
-                  "פתחו את הכלים שמתאימים לכם. אפשר לשלב הסבר, קוד, מעגל ותמונות. קיפול הכלים לא מוחק את התשובה.",
-                  "Open the tools you need. You can combine an explanation, code, a circuit and images. Closing a tool keeps your answer.",
+                  "אפשר לשלב הסבר, קוד, טבלת אמת, מעגל ותמונות. התוכן נשמר גם כשמקפלים כלי.",
+                  "You can combine an explanation, code, a truth table, a circuit and images. Your work is kept when you collapse a tool.",
                 )
               : t(
-                  "פתחו את הכלים שמתאימים לכם. אפשר לשלב הסבר, קוד ומעגל. קיפול הכלים לא מוחק את התשובה.",
-                  "Open the tools you need. You can combine an explanation, code and a circuit. Closing a tool keeps your answer.",
+                  "אפשר לשלב הסבר, קוד, טבלת אמת ומעגל. התוכן נשמר גם כשמקפלים כלי.",
+                  "You can combine an explanation, code, a truth table and a circuit. Your work is kept when you collapse a tool.",
                 )}
           </p>
         </>

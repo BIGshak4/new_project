@@ -1,0 +1,56 @@
+.code-workspace {
+  position: static;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+}
+
+.code-workspace-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-block: 8px;
+}
+
+.code-workspace-controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+}
+
+.code-workspace .code-toolbar { margin-block-start: 8px; }
+
+.code-workspace:modal {
+  position: fixed;
+  inset: 0;
+  height: 100dvh;
+  max-height: none;
+  padding: 0 max(12px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  background: var(--surface);
+  color: var(--ink);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.code-workspace:modal .code-workspace-controls {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  justify-content: space-between;
+  margin: 0 0 12px;
+  padding-block: max(8px, env(safe-area-inset-top)) 8px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.code-workspace:modal .technical-code-editor .cm-editor { height: max(14rem, 62dvh); }
+.code-workspace:modal .technical-code-editor .cm-scroller { max-height: none; }
+.code-workspace:modal .technical-code-editor .cm-content { min-height: 100%; }

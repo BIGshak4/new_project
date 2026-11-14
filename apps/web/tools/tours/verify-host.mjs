@@ -183,7 +183,7 @@ try {
     const fullCircuit = page.locator('dialog:modal[data-layout="fullscreen"]');
     await fullCircuit.waitFor();
     check(await helper.isHidden(), `The full-screen circuit hides the underlying helper at ${viewport.width}px`);
-    await fullCircuit.locator('[data-muxi-control="circuit-expand"]').click();
+    await fullCircuit.locator('[data-muxi-control="circuit-fullscreen"]').click();
     await inlineCircuit.waitFor();
     await checkHelperAvailable(`Returning to the inline circuit automatically restores the helper at ${viewport.width}px`);
   }
@@ -229,9 +229,9 @@ try {
   await tour.getByRole("button", { name: "כל התחנות" }).click();
   await tour.locator('[data-muxi-stop="circuit"]').click();
   await tourControl(page, "circuit-editor-details").click();
-  await tourControl(page, "circuit-expand").click();
+  await tourControl(page, "circuit-fullscreen").click();
   await page.locator("dialog:modal [data-muxi-coach]").getByRole("button", { name: "יציאה ושמירת המקום", exact: true }).click();
-  check(await page.locator("dialog:modal").count() === 0, "Exiting an expanded tour circuit releases the native modal");
+  check(await page.locator("dialog:modal").count() === 0, "Exiting a full-screen tour circuit releases the native modal");
   check(writes.length === 1 && writes[0] === "/v1/me/goal", "Replaying, keeping an existing goal and trying examples do not create extra practice records");
   page.off("request", captureWrite);
   const desktopEditor = await checkDashboard(page, { width: 1440, height: 1000 });

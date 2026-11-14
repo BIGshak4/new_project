@@ -196,7 +196,7 @@ try {
   check(await circuit.locator('[data-muxi-control="circuit-simulate"]').count() === 0, "A combinational circuit correctly has no clocked simulation button");
   await circuit.locator('[data-muxi-control="circuit-truth-table"]').click();
   check((await circuit.innerText()).includes("טבלת אמת"), "The actual circuit tools generate a truth table");
-  await circuit.locator('[data-muxi-control="circuit-expand"]').click();
+  await circuit.locator('[data-muxi-control="circuit-fullscreen"]').click();
   await page.locator('dialog[open][data-layout="inline"]').waitFor();
   check(await coach().count() === 1 && await page.locator("dialog:modal").count() === 0, "Returning to inline drawing restores the same global guide");
 

@@ -192,7 +192,7 @@ export function GuestHardwareDemo({ lang, onAction, guide }: {
         <ul>
           <li>{t("הוסיפו רכיב מספריית השערים וגררו אותו למקום. לחצו עליו כדי לערוך את שמו, מספר הכניסות או רוחב הנתונים, לפי סוג הרכיב.", "Add a part from the palette and drag it into place. Select it to edit its label, input count or bus width when supported.")}</li>
           <li>{t("בחרו חוט ולחצו על כפתור המחיקה כדי לחבר אותו מחדש. „ביטול שינוי” מחזיר את הפעולה האחרונה.", "Select a wire and use Delete to reconnect it. Undo restores the previous drawing.")}</li>
-          <li>{t("„כל המעגל” מכניס את השרטוט לתצוגה. „הרחבת הלוח” ו„מסך מלא” נותנים יותר מקום לעבודה.", "Whole circuit fits the drawing to the view. Expand drawing and Full screen provide more workspace.")}</li>
+          <li>{t("לחצו על ״כל המעגל״ כדי לראות את כל הרכיבים, או על ״מסך מלא״ כדי לשרטט על פני המסך כולו.", "Select Whole circuit to bring all components into view, or Full screen to draw across the entire screen.")}</li>
           <li>{t("בתרגיל הזה הפלט מתעדכן מיד. כשמוסיפים פליפ־פלופ, רגיסטר או מונה, מופיעה „הרצת סימולציה”. אחריה אפשר לקדם את השעון ולבדוק שינויי מצב.", "Here the output updates live. Add a flip-flop, register or counter to enable Run simulation, then step the clock to inspect changes of state.")}</li>
         </ul>
       </details>
