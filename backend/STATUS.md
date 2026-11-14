@@ -7,7 +7,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-11-14 (job types bring their own skills §5zzf; scale, security and cost §5zzg) · **Tests:** 4,510 offline (one known failure, Harel's client contract) + 22 live (one time-limit failure, §5zzh) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg)
+**Last updated:** 2026-11-14 (job types bring their own skills §5zzf; scale, security and cost §5zzg) · **Tests:** 4,510 offline (one known failure, Harel's client contract) + 22 live (one time-limit failure, §5zzh) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
 
 ---
 
@@ -2372,6 +2372,15 @@ inside transactions that are rolled back, with a scripted grader: **21 of 22 pas
   closes the "not verified on the real database" note of §5zzg.
 
 **Verified this evening:** offline suite 4,510 passed / 13 skipped / 1 failed (the known client-contract test).
+
+**On the live site since 19:00 (Shaked: "i want you to work on this one"; "why not submiting it now?").** `master`
+was merged into `production` (merge commit `e43cff2`, no conflicts), the merged code's offline suite ran first
+(5,051 passed / 13 skipped / 1 failed, the same client-contract test), and the push started Harel's publish run,
+which succeeded in 7 min 39 s. Checked afterwards: `api.muxijobrun.com/health` reports `source_revision e43cff2`
+with a 6 ms database round trip, and `muxijobrun.com` answers 200. So the job types of §5zzf, the fixes and the
+₪15 budget of §5zzg and the coin rule above are live for users. Not checked by me: a signed-in walk through the
+site (a software goal should now open on data structures and arrays), and `/health.request_budget` on the live
+server, which needs its health key (Harel). `production` now holds everything `master` has except this note.
 
 ## 6. Known gaps and open items
 
