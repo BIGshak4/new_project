@@ -224,10 +224,23 @@ jobs:
               repository="ghcr.io/bigshak4/jobrun-$service"
               image="$repository:$SOURCE_REVISION"
             fi
-            docker push "$image"
-            manifest="$(docker buildx imagetools inspect "$image" --format '{{json .Manifest}}')"
-            digest="$(printf '%s' "$manifest" | python3 -c 'import json,sys; print(json.load(sys.stdin)["digest"])')"
+            push_log="$RUNNER_TEMP/selfhost-push-$service.log"
+            docker push "$image" | tee "$push_log"
+            digest="$(sed -nE 's/^.*: digest: (sha256:[0-9a-f]{64}) size: [0-9]+$/\1/p' "$push_log")"
             [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+            # GHCR may acknowledge a push before a fresh reader can resolve the tag.
+            visible_digest=""
+            for delay in 0 2 4 8 15 30; do
+              if (( delay > 0 )); then sleep "$delay"; fi
+              if manifest="$(docker buildx imagetools inspect "$image" --format '{{json .Manifest}}')"; then
+                visible_digest="$(python3 -c 'import json,sys; print(json.load(sys.stdin)["digest"])' <<< "$manifest")"
+                if [[ "$visible_digest" == "$digest" ]]; then break; fi
+              fi
+            done
+            if [[ "$visible_digest" != "$digest" ]]; then
+              echo "Registry did not confirm the pushed digest for $service" >&2
+              exit 1
+            fi
             printf '%s\t%s@%s\n' "$service" "$repository" "$digest" >> "$refs_file"
           done
           python3 - "$refs_file" <<'PY'
