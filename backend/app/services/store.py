@@ -104,6 +104,7 @@ class Tx(Protocol):
                        duel_id: uuid.UUID | None = None, meta: dict | None = None) -> bool: ...
     async def coin_sum_since(self, user_id: uuid.UUID, *, kinds: tuple[str, ...], since: datetime,
                              meta_key: str | None = None) -> int: ...
+    async def coin_earns_on(self, user_id: uuid.UUID, reference: str) -> tuple[int, datetime | None]: ...
     # duels (app.repo.duels): one row per duel, optimistic version
     async def duels_available(self) -> bool: ...
     async def create_duel(self, duel: Duel) -> None: ...
@@ -138,6 +139,8 @@ class Tx(Protocol):
     async def seen_question_keys(self, user_id: uuid.UUID) -> set[str]: ...
     async def reference_exposed(self, user_id: uuid.UUID, question_id: uuid.UUID, *,
                                 except_attempt: uuid.UUID | None = None) -> bool: ...
+    async def answered_before(self, user_id: uuid.UUID, question_id: uuid.UUID, *,
+                              except_attempt: uuid.UUID | None = None) -> bool: ...
     async def load_profile(self, user_id: uuid.UUID) -> LoadedProfile: ...
     async def save_profile(self, loaded: LoadedProfile, states: dict[str, SkillState], *,
                            attempt_id: uuid.UUID | None = None) -> dict[str, int]: ...
@@ -319,6 +322,9 @@ class DbTx:
     async def coin_sum_since(self, user_id, *, kinds, since, meta_key=None):
         return await coins.sum_since(self.connection, user_id, kinds=kinds, since=since, meta_key=meta_key)
 
+    async def coin_earns_on(self, user_id, reference):
+        return await coins.earns_on(self.connection, user_id, reference)
+
     async def duels_available(self):
         return await duels.available()
 
@@ -423,6 +429,9 @@ class DbTx:
 
     async def reference_exposed(self, user_id, question_id, *, except_attempt=None):
         return await attempts.reference_exposed(self.connection, user_id, question_id, except_attempt=except_attempt)
+
+    async def answered_before(self, user_id, question_id, *, except_attempt=None):
+        return await attempts.answered_before(self.connection, user_id, question_id, except_attempt=except_attempt)
 
     async def load_profile(self, user_id):
         return await profiles.load(self.connection, user_id)

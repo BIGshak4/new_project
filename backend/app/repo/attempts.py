@@ -213,6 +213,19 @@ async def reference_exposed(connection: AsyncConnection, user_id: uuid.UUID, que
     return (await connection.execute(query)).first() is not None
 
 
+async def answered_before(connection: AsyncConnection, user_id: uuid.UUID, question_id: uuid.UUID, *,
+                          except_attempt: uuid.UUID | None = None) -> bool:
+    """Whether this user already has a scored main answer on this question in another attempt, whatever its band:
+    a strong answer after that is not a first try, and earns the smaller amount (Shaked, 2026-11-14)."""
+    attempt = await db.table("attempt")
+    question_id = question_id if isinstance(question_id, uuid.UUID) else uuid.UUID(str(question_id))
+    query = select(attempt.c.id).where(attempt.c.user_id == user_id, attempt.c.question_id == question_id,
+                                       attempt.c.band.is_not(None)).limit(1)
+    if except_attempt is not None:
+        query = query.where(attempt.c.id != except_attempt)
+    return (await connection.execute(query)).first() is not None
+
+
 async def seen_question_ids(connection: AsyncConnection, user_id: uuid.UUID, *, days: int = 30) -> set[uuid.UUID]:
     attempt = await db.table("attempt")
     since = datetime.now(UTC) - timedelta(days=days)

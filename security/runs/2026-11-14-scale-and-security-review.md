@@ -17,9 +17,11 @@ weaknesses in the system (cyber and hacking ones) and fix them so we will keep t
   model. Every fix was then written and tested separately from the review that found it.
 - **Not done:** nothing was tested against production; no real model was attacked; hosted settings (Supabase Auth,
   GitHub branch protection, package visibility, the Render and DigitalOcean environments) could not be read.
-- **Not verified on the real database:** two new reads (`attempts.reference_exposed` and
-  `events.model_cost_since`) are covered by the in-memory tests only. Both run inside savepoints and fail safe (a
-  failed lookup pays the coins; a failed budget read refuses nobody). The live suite was not run in this pass.
+- **On the real database:** the new reads (`attempts.reference_exposed`, `events.model_cost_since`, and the two
+  the coin rule added the same evening) were first covered by the in-memory tests only. Later on 14 November the
+  live suite was run with Shaked's word, with a new test that compares each read with a direct count on the real
+  tables and walks the coin rule and the monthly budget on the real schema: passed. Both rules also run inside
+  savepoints and fail safe.
 - **Two disclosed slips, both read-only:** a reviewer's first local script, and my first load-test runs, fetched
   question figures from the production storage bucket, because the in-memory runtime still reads the storage key
   from `backend/.env` (`fetch_question_images`). No user data, no database, no model call. Both harnesses now stub

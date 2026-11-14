@@ -7,7 +7,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-11-14 (job types bring their own skills §5zzf; scale, security and cost §5zzg) · **Tests:** 4,506 offline (one known failure, Harel's client contract) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg)
+**Last updated:** 2026-11-14 (job types bring their own skills §5zzf; scale, security and cost §5zzg) · **Tests:** 4,510 offline (one known failure, Harel's client contract) + 22 live (one time-limit failure, §5zzh) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg)
 
 ---
 
@@ -2307,6 +2307,72 @@ server these are in Harel's environment file, not on Render.
   on the ₪15 ceiling in production. Nothing in this section is on the live site until `master` is merged into
   `production`.
 
+## 5zzh. Coins when it is not the first try; the drafts for the thin skills; the live suite (2026-11-14, evening)
+
+**Confirmed by Shaked:** the ₪15 is per user per month.
+
+**Coins (Shaked: "weak attempt followed by a strong one should get less coins (maybe 2), but after a strong one
+you dont get more coins on that question until some time will pass").** This replaces "a question pays once"
+(2026-11-06). Per user and question (`CoinsService._award_on_question`, numbers in `seeds/coins.json`):
+
+| History with the question | A strong answer earns |
+|---|---|
+| Never answered it before | the full amount: 5 in practice, 10 as an interview turn |
+| Answered before, not strongly, never paid | `strong_answer_again` = 2 |
+| Paid less than `again_after_days` = 21 days ago | nothing |
+| Paid longer ago than that | `strong_answer_again` = 2 |
+
+"Some time" is 21 days here, the point at which the plan asks for a skill to be refreshed: my choice, his to
+change. Unchanged: one hint at most, on topic, and a reference revealed on any attempt of the user means no coins
+on that question, however long ago. The ledger row of the first earn keeps the reference `question:<id>`; a later
+one is `question:<id>:2`, `:3`, which is also what stops two answers finishing in the same moment from both being
+paid. Each row's `meta.tier` says which case it was. The two history reads (`repo/coins.earns_on`,
+`repo/attempts.answered_before`) sit in a savepoint; if they fail the answer is treated as a first one, which the
+plain reference still pays only once. The wallet's `rules` carry the two new numbers. An earlier weak *interview*
+turn does not count as "answered before" (only practice attempts are looked at): a small gap, noted.
+
+**Content (Shaked: "lets work on the content").** No new drafts were generated: 242 model-written drafts have waited
+in `seeds/question_drafts/generated_bank.json` since 1–2 October, and they hold 9 to 12 questions for each of the
+seven skills that have none or almost none live. `scripts/verify_drafts.py` (new) put the 78 drafts of those skills
+through the loader's rules and had today's judge grade each draft's own English reference:
+
+| Skill | Live today | Drafts | Ready |
+|---|---:|---:|---:|
+| Testbench basics | 3 | 12 | 12 |
+| HDL sequential coding | 0 | 12 | 12 |
+| Moore and Mealy machines | 0 | 12 | 12 |
+| Reset strategies | 0 | 12 | 10 |
+| FSM state encoding | 0 | 9 | 8 |
+| Blocking and non-blocking | 1 | 11 | 9 |
+| HDL combinational coding | 1 | 10 | 9 |
+
+72 ready, in both languages, difficulties 3 to 8. The six held back are ones whose own reference fails the draft's
+own check (a wrong row in a truth table, a wrong traced value): they need a fix, not a review.
+`scripts/drafts_review_page.py` (new) writes the 72 as one page to read,
+`backend/workdir/drafts-review-2026-11-14.html` (not committed: it holds the solutions). **Nothing was loaded.**
+Before they can go live: Shaked's read of the page; a decision on the code-format ones (18 of the 72 carry a code
+check, and a check in `seeds/questions` is self-tested by running its sample answers inside the API process at start:
+model-written code, so those checks are dropped on the way in unless Harel gives them runner fixtures); moving the
+approved ones into `seeds/questions` with the count-pinned tests updated; and the database load, a data write that
+needs his approval.
+
+**Pilot list:** Ophir added on Shaked's word (dry run, then applied; 20 members).
+
+**The live suite (Shaked: "do the live suit test").** Run in nine parts, one at a time, against the real database
+inside transactions that are rolled back, with a scripted grader: **21 of 22 passed** in 64 minutes.
+- The one failure is a time limit, not behaviour: `test_listing_and_loading_are_fast_enough_for_a_page` allows 3 s
+  for the cold library read and it took 4.6 s from this laptop. That read loads the whole bank, about 15 MB with
+  the preparation resources (the first finding of the scale review in §5zzg); the fix proposed there, leaving
+  `preparation_resource` out of the list query, is the fix for this test too. Not done yet.
+- The suite is slow now (it was minutes when the bank had 30 questions): every test loads all 340 questions into
+  its own transaction first, three to seven minutes from here.
+- New in the suite: `TestCoinsAndTheMonthlyBudgetOnTheRealSchema`. It compares the four reads added today
+  (`coins.earns_on`, `attempts.answered_before`, `attempts.reference_exposed`, `events.model_cost_since`) with direct
+  counts on the real tables, then walks the coin rule and the monthly budget once on the real schema. Passed. This
+  closes the "not verified on the real database" note of §5zzg.
+
+**Verified this evening:** offline suite 4,510 passed / 13 skipped / 1 failed (the known client-contract test).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -2347,6 +2413,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-14 | Evening (§5zzh): coins when it is not the first try (5 first, 2 after an earlier attempt or after 21 days, nothing in between); 72 of the 78 waiting drafts for the seven thin skills checked and ready for Shaked's read (`scripts/verify_drafts.py`, `scripts/drafts_review_page.py`), nothing loaded; live suite 21 of 22 (one time limit on the cold library read) plus a new live test of today's database reads; Ophir joins the pilot list (20 members). |
 | 2026-11-14 | Scale, security, cost (§5zzg): a 5,000-user load run (`scripts/load_test.py --ramp --goals`), five reviews, SEC-022..036 (`security/runs/2026-11-14-scale-and-security-review.md`). Fixed: a circuit that derived gigabytes, a padded answer that froze the API, picture memory, coins after a reveal elsewhere, unlimited judge retries, the duel answer key through practice rounds, unmetered warm-ups, one bank load per minute instead of one per request. Added: `MONTHLY_USER_BUDGET_ILS=15`, `/health.request_budget`, `scripts/cost_report.py`. Migration `20261114130000_scale_indexes_and_browser_write_limits.sql` dry-run, not applied. Harel's list: `docs/harel-todo-2026-11-14.md`. **The live site runs `production`, not `master`.** |
 | 2026-11-14 | A job type brings its own skills (§5zzf): `JobType.skills` + `job_selection.plan_rows`, shared by the practice plan and the mock interview; software plans arrays, data structures and code debugging, embedded leads with bit manipulation, verification with testbenches and both software and hardware skills. The 68 puzzle questions (`estimation_sanity_checks`) join every job type's plan; `seeds/question_job_types.json` gives a question its own job types (five analog questions: hardware tracks only). Seed numbers are drafts for Shaked. |
 | 2026-11-12 | Pilot list: Noa, Lahav, Gagatsis and Doron join `jr_members` (nineteen members); first names only in this file. |

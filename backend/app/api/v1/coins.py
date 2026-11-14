@@ -39,6 +39,8 @@ class CoinRulesView(BaseModel):
     hard_difficulty_from: int
     strong_interview_turn: int
     max_hints_for_coins: int
+    strong_answer_again: int = 2                # a strong answer that is not the first try on the question, or a
+    again_after_days: int = 21                  # strong one more than this many days after it was last paid
     duel_stake: int
 
 
@@ -69,7 +71,8 @@ def _view(wallet, daily_limit: int, language: str) -> WalletView:
                            price=i.price, affordable=wallet.balance >= i.price) for i in r.shop],
         rules=CoinRulesView(starting_gift=r.starting_gift, strong_answer=r.strong_answer, strong_hard_answer=r.strong_hard_answer,
                             hard_difficulty_from=r.hard_difficulty_from, strong_interview_turn=r.strong_interview_turn,
-                            max_hints_for_coins=r.max_hints_for_coins, duel_stake=r.duel_stake),
+                            max_hints_for_coins=r.max_hints_for_coins, strong_answer_again=r.strong_answer_again,
+                            again_after_days=r.again_after_days, duel_stake=r.duel_stake),
         enabled=wallet.enabled)
 
 

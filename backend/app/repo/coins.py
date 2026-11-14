@@ -11,7 +11,7 @@ import uuid
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 
-from sqlalchemy import Integer, func, select
+from sqlalchemy import Integer, func, or_, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -85,6 +85,19 @@ async def sum_since(connection: AsyncConnection, user_id: uuid.UUID, *, kinds: t
         select(func.coalesce(func.sum(column), 0)).where(table.c.user_id == user_id, table.c.kind.in_(kinds),
                                                          table.c.created_at >= since))).scalar()
     return int(value or 0)
+
+
+async def earns_on(connection: AsyncConnection, user_id: uuid.UUID, reference: str) -> tuple[int, datetime | None]:
+    """How many times this user was paid on `reference` or on its numbered repeats ("question:<id>",
+    "question:<id>:2", ...) and when the last time was: what decides whether a question pays again."""
+    if not await available():
+        return 0, None
+    table = await db.table(TABLE)
+    row = (await connection.execute(
+        select(func.count(), func.max(table.c.created_at)).where(
+            table.c.user_id == user_id, table.c.kind == "earn",
+            or_(table.c.reference == reference, table.c.reference.like(reference + ":%"))))).one()
+    return int(row[0] or 0), row[1]
 
 
 def start_of_today() -> datetime:

@@ -387,6 +387,11 @@ class _MemoryTx:
                                    "duel_id": duel_id, "meta": dict(meta or {}), "created_at": datetime.now(UTC)})
         return True
 
+    async def coin_earns_on(self, user_id, reference):
+        rows = [r for r in self.s.coin_ledger if r["user_id"] == user_id and r["kind"] == "earn" and r["reference"]
+                and (r["reference"] == reference or r["reference"].startswith(reference + ":"))]
+        return len(rows), max((r["created_at"] for r in rows), default=None)
+
     async def coin_sum_since(self, user_id, *, kinds, since, meta_key=None):
         total = 0
         for r in self.s.coin_ledger:
@@ -668,6 +673,10 @@ class _MemoryTx:
         since = datetime.now(UTC) - timedelta(days=days)                 # same window as the database version
         return {a["row"]["question_key"] for a in self.s.attempts.values()
                 if a["user_id"] == user_id and a["started_at"] >= since}
+
+    async def answered_before(self, user_id, question_id, *, except_attempt=None):
+        return any(a["user_id"] == user_id and str(a["question_id"]) == str(question_id) and a["row"]["band"]
+                   and attempt_id != except_attempt for attempt_id, a in self.s.attempts.items())
 
     async def reference_exposed(self, user_id, question_id, *, except_attempt=None):
         return any(a["user_id"] == user_id and str(a["question_id"]) == str(question_id) and a["row"]["reference_revealed"]

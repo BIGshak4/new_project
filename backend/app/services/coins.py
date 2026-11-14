@@ -13,6 +13,7 @@ import json
 import logging
 import uuid
 from dataclasses import dataclass, field
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from app.api.errors import ApiError
@@ -42,6 +43,10 @@ class CoinRules:
     hard_difficulty_from: int = 5
     strong_interview_turn: int = 10
     max_hints_for_coins: int = 1
+    # Not the first try (Shaked, 2026-11-14): a strong answer on a question the user already answered, or answered
+    # strongly more than `again_after_days` ago, earns this much; within those days a paid question pays nothing.
+    strong_answer_again: int = 2
+    again_after_days: int = 21
     # Finishing an interview is rewarded through its strong answers, never on its own (Shaked, 2026-11-07: "rewarded
     # by the ability to finish it and the ability to have strong answers; coins will become real money"): the bonus is
     # this share of what the interview's strong turns earned, paid when the interview ran to its end (not ended early)
@@ -70,6 +75,8 @@ def load_rules(path: Path) -> CoinRules:
                      hard_difficulty_from=int(data.get("hard_difficulty_from", 5)),
                      strong_interview_turn=int(data.get("strong_interview_turn", 10)),
                      max_hints_for_coins=int(data.get("max_hints_for_coins", 1)),
+                     strong_answer_again=int(data.get("strong_answer_again", 2)),
+                     again_after_days=int(data.get("again_after_days", 21)),
                      interview_finish_bonus_share=float(data.get("interview_finish_bonus_share", 1.0)),
                      interview_finished_min_turns=int(data.get("interview_finished_min_turns", 3)),
                      duel_stake=int(duel.get("stake", 5)), duel_clock_seconds=int(duel.get("clock_seconds", 180)),
@@ -176,8 +183,9 @@ class CoinsService:
 
     @staticmethod
     def question_reference(question_id) -> str:
-        """One earn per user per question (Shaked, 2026-11-06: "not if he got on the same question a strong answer"):
-        practice answers and interview turns share this reference, so whichever comes first pays, once."""
+        """The ledger reference of a user's earns on a question: practice answers and interview turns share it, so
+        whichever comes first is the first (Shaked, 2026-11-06). Later earns on the same question, after
+        `again_after_days`, are numbered from it (`_award_on_question`)."""
         return f"question:{question_id}"
 
     async def award_for_answer(self, tx, *, user_id: uuid.UUID, attempt_id: uuid.UUID, revision: int, band: str | None,
@@ -189,9 +197,43 @@ class CoinsService:
                                   reference_seen=reference_seen, related=related, turn=turn)
         if not await self.enabled(tx) or amount <= 0:        # look at the ledger first: the views promise only after
             return 0
-        reference = self.question_reference(question_id) if question_id is not None else f"answer:{attempt_id}:{revision}"
-        return await self._award(tx, user_id, amount, reference=reference,
-                                 meta={"band": band, "difficulty": difficulty, "attempt_id": str(attempt_id), "revision": revision})
+        meta = {"band": band, "difficulty": difficulty, "attempt_id": str(attempt_id), "revision": revision}
+        if question_id is None:
+            return await self._award(tx, user_id, amount, reference=f"answer:{attempt_id}:{revision}", meta=meta)
+        return await self._award_on_question(tx, user_id, question_id, amount, except_attempt=attempt_id, meta=meta)
+
+    async def _award_on_question(self, tx, user_id: uuid.UUID, question_id, first_amount: int, *,
+                                 except_attempt: uuid.UUID | None, meta: dict) -> int:
+        """What a strong answer on a bank question pays, by this user's history with the question (Shaked, 2026-11-14:
+        "weak attempt followed by a strong one should get less coins (maybe 2), but after a strong one you don't get
+        more coins on that question until some time will pass"):
+
+            never paid, first scored answer on it      -> the full amount (5 in practice, 10 in an interview)
+            never paid, answered before (not strongly) -> `strong_answer_again`
+            paid within `again_after_days`             -> nothing
+            paid longer ago than that                  -> `strong_answer_again`, as "question:<id>:<n>"
+
+        The reference is what keeps two answers finishing at once from both being paid. The two reads sit in a
+        savepoint; if they fail the answer is treated as a first one, which the plain reference still pays only once."""
+        base = self.question_reference(question_id)
+        paid, last, earlier = 0, None, False
+        try:
+            async with tx.savepoint():
+                paid, last = await tx.coin_earns_on(user_id, base)
+                earlier = paid == 0 and await tx.answered_before(user_id, question_id, except_attempt=except_attempt)
+        except Exception:                                   # noqa: BLE001 - coins must never cost an answer
+            log.exception("coins: could not read the history of %s for %s; treated as a first answer", base, user_id)
+            paid, last, earlier = 0, None, False
+        if paid == 0:
+            amount, reference, tier = (self.rules.strong_answer_again, base, "after_an_earlier_attempt") if earlier \
+                else (first_amount, base, "first")
+        elif last is not None and datetime.now(UTC) - last < timedelta(days=self.rules.again_after_days):
+            return 0
+        else:
+            amount, reference, tier = self.rules.strong_answer_again, f"{base}:{paid + 1}", "again"
+        if amount <= 0:
+            return 0
+        return await self._award(tx, user_id, amount, reference=reference, meta={**meta, "tier": tier})
 
     async def _award(self, tx, user_id: uuid.UUID, amount: int, *, reference: str, meta: dict) -> int:
         """The earn row in a savepoint: a ledger error is logged and the caller's transaction (the answer, the
@@ -214,9 +256,10 @@ class CoinsService:
                                 reference_seen=reference_seen)
         if not await self.enabled(tx) or amount <= 0:        # look at the ledger first: the views promise only after
             return 0
-        reference = self.question_reference(question_id) if question_id is not None else f"turn:{session_id}:{turn_index}"
-        return await self._award(tx, user_id, amount, reference=reference,
-                                 meta={"band": band, "interview": True, "session_id": str(session_id), "turn": turn_index})
+        meta = {"band": band, "interview": True, "session_id": str(session_id), "turn": turn_index}
+        if question_id is None:
+            return await self._award(tx, user_id, amount, reference=f"turn:{session_id}:{turn_index}", meta=meta)
+        return await self._award_on_question(tx, user_id, question_id, amount, except_attempt=None, meta=meta)
 
     async def balance(self, user_id: uuid.UUID) -> int | None:
         """The balance alone, for the header of every screen (Shaked, 2026-11-06: "coins shown all the time");
