@@ -3,7 +3,8 @@
 These are fixed operator-installed files, not scripts downloaded from `production`.
 The updater only reads the public branch SHA and signed container metadata. The
 VPS needs no GitHub token, Git credentials, registry login, inbound CI SSH, or code
-checkout. Both GHCR packages must be public. The executor stays on its isolated
+checkout. Both GHCR packages must be public; new releases contain three distinct
+images, with the Tasks tag sharing the web package. The executor stays on its isolated
 external Vercel Sandbox broker; submitted source never executes on this VPS.
 
 The fixed controller is installed on the VPS. On 12 November 2026 its 23 unit
@@ -15,21 +16,27 @@ restored and verified, and no pending/blocked state remained. Normal deployment
 of `1e01ffe` then passed at 18:59:47 UTC. The timer was enabled and active at
 19:00:30 UTC, and its first no-change invocation succeeded. See
 [the current production record](../PRODUCTION.md) before
-operating it. Unit tests mock external effects and do not replace the live gates.
+operating it. These November 12 checks predate the Tasks extension. Unit tests
+mock external effects and do not replace the live gates. A controller source
+change requires an explicit reviewed operator installation; pulling a new image
+never updates these fixed files.
 
 ## Trust and publication contract
 
 - Repository/ref: `BIGshak4/new_project`, `refs/heads/production`.
 - Images: `ghcr.io/bigshak4/jobrun-api:<full lowercase SHA>` and
-  `ghcr.io/bigshak4/jobrun-web:<same SHA>`, with runnable `linux/amd64` configs.
-- Both immutable `repo@sha256:...` references must verify with Cosign 3.1.4,
+  `ghcr.io/bigshak4/jobrun-web:<same SHA>`, plus
+  `ghcr.io/bigshak4/jobrun-web:tasks-<same SHA>`, with distinct digests and
+  runnable `linux/amd64` configs.
+- All three immutable `repo@sha256:...` references must verify with Cosign 3.1.4,
   issuer `https://token.actions.githubusercontent.com`, and exact identity
   `https://github.com/BIGshak4/new_project/.github/workflows/selfhost-publish.yml@refs/heads/production`.
 - Each signature must bind `source_revision=<full SHA>`. At least one verified
-  `release_id=<GitHub run ID>/<attempt>` must be shared by both images. Cosign's
+  `release_id=<GitHub run ID>/<attempt>` must be shared by all three images.
+  The Tasks signature must additionally bind `service=tasks`. Cosign's
   transparency/certificate checks remain enabled.
 
-The host resolves tags into digests once, verifies both, then pulls only those
+The host resolves tags into digests once, verifies all three, then pulls only those
 digests. Config bytes are checked against their manifest digest and selected
 platform. A changed tag after resolution cannot substitute another image.
 OCI indexes are supported only when exactly one runnable Linux amd64 descriptor
@@ -57,7 +64,12 @@ configuration. Make them root-owned with mode `600`; their parent must not be
 group/other writable. Do not display them, recreate credentials from examples,
 or change the execution signing identity. `public-selfhost.env` supplies
 `APP_DOMAIN`, `API_DOMAIN` and `ACME_EMAIL`; its old `SOURCE_REVISION` is ignored.
-New release snapshots bind the verified SHA and both immutable image references.
+New release snapshots bind the verified SHA and all three immutable image references.
+The Tasks hostname is derived as `tasks.` plus `APP_DOMAIN`; do not add an
+independent `TASKS_DOMAIN` setting to the shared file. Its exact derived value is
+stored inside each three-service snapshot. Tasks needs no backend secret or
+separate runtime environment file: its two public Supabase values are baked into
+its image by CI.
 Backend environment bytes are copied without shell parsing. Each snapshot is
 private, root-owned, and includes its fixed Compose/Caddy configuration.
 
@@ -107,24 +119,33 @@ registry credentials. Logs contain static result categories and public SHAs.
 
 ## Release transaction, retry and recovery
 
-Both images are pulled and validated before the public entry point is touched.
+All three images are pulled and validated before the public entry point is touched.
 The production ref is rechecked immediately before mutation. A superseded
 candidate is skipped. Fixed templates and protected private environment copies
 are used; no Compose file, entry-point script or environment is fetched from Git.
 
-The transaction writes an on-disk recovery journal, stops **Caddy**, stops both
-old app services, and starts both candidate services. Caddy stays stopped until
-both internal SHA checks and the API database round trip pass. It then restarts
-and both public HTTPS health checks must pass. Only then is `current.json`
+The transaction writes an on-disk recovery journal, stops **Caddy**, stops the
+enabled old app services, and starts the candidate's web/API/Tasks services.
+Caddy stays stopped until all internal SHA checks and the API database round
+trip pass. It then restarts and all three public HTTPS health checks must pass;
+Tasks must also identify itself as `jobrun-tasks`. Only then is `current.json`
 atomically replaced. This intentionally causes a short maintenance window.
 Existing browser tabs may still need a refresh after a content revision changes.
 
-A failure replaces **both** services with the previous image/config snapshots.
-The entry point reopens only after the previous pair passes the same gates. If
+A failure replaces the services with the exact previous image/config snapshot.
+Historical web/API-only state is supported without manufacturing a Tasks image:
+its generation identity and old configuration remain valid. Restoring such a
+pair removes the Tasks orphan container before reopening Caddy, and the old
+snapshot has no Tasks Caddy route. The canonical Tasks hostname will therefore
+be unavailable during this fallback; use the retained Netlify Tasks URL. Supabase
+accounts, tasks, comments and storage are unchanged. Never seed or restore the
+database as part of an application rollback.
+
+The entry point reopens only after the previous snapshot passes its own enabled-service gates. If
 rollback fails, Caddy is stopped and `blocked.json` prevents future automation.
 An interrupted transaction is recovered before any new branch candidate is
 considered. Root review is required to resolve a blocked journal; do not simply
-delete it and restart automation without confirming the actual running pair.
+delete it and restart automation without confirming the actual running snapshot.
 
 A branch SHA can exist while CI is still building. Unavailable images, missing
 or invalid signatures, network errors and other preflight failures stay pending,
@@ -163,5 +184,9 @@ python3 -m unittest discover -s deploy/selfhost/autodeploy -p 'test_*.py' -v
 
 Run that from the repository root. Tests cover reference allowlists, signature
 identity/revision/cohort binding, config-digest integrity, redirect credential
-stripping, platform rejection, stopped-entry paired replacement, atomic state,
+stripping, platform rejection, stopped-entry coordinated replacement, atomic state,
 rollback failure, crash recovery, quarantine, superseded releases and ref budgets.
+The Tasks extension also requires tests for three-image cohort/service binding,
+distinct digests, hostname rendering, Tasks health, and rollback/recovery to an
+unchanged historical pair. Keep dated test counts in the production record;
+passing unit tests alone do not establish a live Tasks cutover.

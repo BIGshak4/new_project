@@ -1,5 +1,11 @@
 # Vercel setup status
 
+> Historical initial-preview record, not the current website deployment guide.
+> The practice site, API and Tasks use the signed VPS deployment described in
+> [PRODUCTION.md](../deploy/selfhost/PRODUCTION.md), with its explicit cutover
+> status. The isolated code-execution broker remains a separate Vercel service;
+> migrating the website does not move learner execution onto the VPS.
+
 Working project name: `jobruner` (not a final product name).
 
 ## Resources created

@@ -1,8 +1,10 @@
 # JobRun Admin
 
-Private Hebrew founder workspace: https://jobrun-tasks.netlify.app. The existing URL and task data remain unchanged.
+Private Hebrew founder workspace: https://tasks.muxijobrun.com. The previous https://jobrun-tasks.netlify.app remains a transition fallback. See the [production record](../../deploy/selfhost/PRODUCTION.md) for cutover verification status; the November 14 extension must pass its own live checks before the old hosting is retired.
 
-Use Node.js 24. Copy `.env.example` to `.env.local`, run `npm ci`, then `npm run dev -- --port 3001`. `npm run build` validates TypeScript and produces the production application.
+Use Node.js 24. Copy `.env.example` to `.env.local`, run `npm ci`, then `npm run dev -- --port 3001`. Run `npm run typecheck` and `npm run build` before release. A regular Next.js build starts with `npm start`; the self-hosted Docker image builds with `JOBRUN_SELF_HOSTED=1` and starts the standalone `server.js` on internal port 3000.
+
+Only `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` are required public application configuration. They are embedded at build time. `SOURCE_REVISION` embeds the full reviewed SHA in `/api/health`, whose marker is `service: jobrun-tasks` and whose revision field is `revision`. No founder allowlist environment variable, service-role key, model key or separate API origin is needed. Access still comes from the same Supabase policies and membership rows.
 
 From the repository root, run `node --test tools/qa/admin-reply-concurrency.test.mjs` for the public-reply lost-response/concurrent-edit regressions. The tests execute the actual production reconciliation helper without browser credentials or a database connection.
 
@@ -27,4 +29,8 @@ Public reply submissions use an explicit UUID idempotency key and the expected r
 
 Tasks save individually with an expected version. Conflicts preserve the local draft instead of silently overwriting another person's work. Drafts are tab-local, not a cross-device backup. Files are private and downloaded with short-lived signed URLs. Task JSON export contains task rows only; comments, events and uploaded files are not included.
 
-See [operations guide](../../docs/netlify-and-supabase.md) for deployment and access setup.
+Changing the website origin does not copy or recreate database rows or storage objects. Use the existing account and founder grant, and sign in separately on the new domain. Supabase signup confirmation returns to `window.location.origin`, so its Auth redirect allowlist must include `https://tasks.muxijobrun.com`; keep the old origin during transition. The production Site URL remains `https://muxijobrun.com`. Login sessions, unsaved task drafts and pending public-reply recovery stored only in the old origin's browser storage do not move. Save/copy them first; saved tasks, comments, history and files remain in Supabase.
+
+Ordinary releases publish three distinct immutable images for one SHA and cohort through the dedicated `production` branch. Tasks uses `ghcr.io/bigshak4/jobrun-web:tasks-<SHA>` with an additional signed `service=tasks` annotation. It has a separate container and HTTPS hostname, while using the existing VPS and Supabase project. See the [current operations guide](../../deploy/selfhost/PRODUCTION.md) and [publication contract](../../deploy/selfhost/AUTODEPLOY.md). The [Netlify guide](../../docs/netlify-and-supabase.md) describes retained historical hosting only.
+
+Validate exact-SHA health, JavaScript loading, approved founder sign-in and authenticated reads in tasks/users/support/updates. For a write check use one clearly marked owned QA task; verify save/reload and archive it after testing. Use only synthetic attachments and owned test support reports. Do not publish test announcements to real users or change their entitlements. The public health route is a runtime/revision check, not proof that Supabase access works. `tools/qa/admin-support-smoke.mjs` creates disposable accounts/files and requires coordinated privileged SQL; it is not a read-only check.

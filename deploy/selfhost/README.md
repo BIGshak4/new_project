@@ -16,14 +16,24 @@ The approved Recovery ISO maintenance operation restored operator SSH access on
 and existing login key were verified; website/API c3 and database health passed.
 The production runbook records the current availability and access state.
 
-The instructions below are the manual build/transfer and recovery route.
+The canonical Tasks hostname is [tasks.muxijobrun.com](https://tasks.muxijobrun.com).
+The November 14 extension publishes three signed application images for one SHA;
+the dated web/API checks above do not prove that Tasks cutover has passed. See
+the production record for its explicit live-verification status. Accounts,
+founder access, tasks and private files stay in the existing Supabase project;
+the new browser origin needs its own sign-in and does not inherit local drafts.
+
+The instructions below are the historical manual build/transfer and recovery route.
 Ordinary production releases use the dedicated `production` branch and signed
 image route. The production runbook labels the dated verified release and checks
 the latest branch head dynamically. Do not
 use these manual Compose files concurrently with the installed updater.
 
-The stack is Caddy (HTTPS), the practice app and the existing FastAPI image.
-`compose.tasks.yaml` optionally adds the task board. Supabase remains the existing
+The automated stack is Caddy (HTTPS), the practice app, existing FastAPI image
+and Tasks. The manual files below predate that three-image controller;
+`compose.tasks.yaml` optionally adds Tasks only for this manual recovery route.
+Do not mix that overlay or manual image tags with the fixed installed controller.
+Supabase remains the existing
 database, authentication and private storage service. The isolated Vercel Sandbox
 execution broker remains external: never run submitted learner code on this VPS.
 
@@ -49,9 +59,10 @@ IPv6 SSH blocked. Future operator IP changes use the provider's
 **Networking → Firewalls** rules UI; the steps are
 in [PRODUCTION.md](PRODUCTION.md). Do not open SSH to all sources at the provider.
 
-Use a fresh checkout of a reviewed release. Preserve the current coordinated
-question-copy release: do not merge it into `master` just to obtain files, seed
-the live database, or update Render while the compatible frontend is not ready.
+Use a fresh checkout of a reviewed release. Keep the dedicated `production`
+branch separate from the retained `master` hosting route; do not merge into
+`master` merely to obtain deployment files. Do not seed the live database or
+update one service while its compatible frontend/API release is not ready.
 
 From `deploy/selfhost` on that checkout:
 
@@ -135,7 +146,13 @@ Extract the artifact in a separate directory, run `sha256sum -c SHA256SUMS`,
 compare `manifest.json` and `SOURCE_REVISION` with the selected reviewed release,
 then transfer the archive securely and run
 `docker load --input images-linux-amd64.tar.gz` on the server. Verify loaded image
-IDs against the manifest and keep the prior successful images for rollback.
+metadata against the archive/manifest and keep the prior successful images for
+rollback. Docker 29's containerd image store can expose an OCI manifest digest
+as `.Id`, while a classic saved-image manifest records its config digest; raw
+string equality between those identifiers is not sufficient verification. Check
+the selected Linux amd64 manifest, its config digest, layer chain and source
+revision before using the loaded immutable reference. Never waive an unexplained
+metadata mismatch.
 Continue with the server-side Compose and release checks above. This is a manual
 staging builder; it does not publish or promote a production release. The
 separate production publisher and host puller are documented in
@@ -185,8 +202,8 @@ The new domain can go live independently of Netlify. Redirecting the old Netlify
 hostname requires a successful Netlify publication of that redirect; exhausted
 deployment credits can still block that separate step.
 
-For the held question-copy release, the VPS frontend and API must come from the
-same reviewed commit. Announce or redirect to the new site only after the revision
+For any release, all enabled app images must come from the same reviewed commit.
+Announce or redirect to the new site only after the revision
 gate and authenticated functional checks pass. Update payment webhook targets
 when moving the API, preserving the provider's verification secret/procedure.
 
@@ -203,7 +220,11 @@ tests/previews before publishing production.
 Record each successful SHA and keep its local app images plus the release's
 configuration snapshot. To roll back, restore that reviewed release's public
 configuration and `SOURCE_REVISION`, then run the same `up -d --no-build --wait`
-command and verification. Roll back web/API/optional tasks together. Do not
+command and verification. Roll back the exact enabled service set together. An
+old web/API-only controller snapshot has no Tasks route: its rollback removes
+the newer Tasks container, so retain the old Netlify Tasks site until this
+fallback is no longer required. Do not retrofit a Tasks digest into old state.
+Do not
 rebuild an old SHA from a different checkout, discard live database changes or
 restore a database as part of an ordinary application rollback.
 

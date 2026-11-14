@@ -5,7 +5,7 @@ Interview preparation and a private founders' workspace, built with Next.js, Typ
 | App | Source | Live pilot |
 | --- | --- | --- |
 | Practice | `apps/web` | [muxijobrun.com](https://muxijobrun.com) |
-| Founder tasks | `apps/tasks` | [jobrun-tasks.netlify.app](https://jobrun-tasks.netlify.app) |
+| Founder tasks | `apps/tasks` | [tasks.muxijobrun.com](https://tasks.muxijobrun.com) |
 
 Both apps require Supabase authentication and an approved email. Task access additionally requires founder permission. The practice database now contains 340 bilingual question records (335 unique families). Practice includes written answers, hints, reference solutions, bookmarks and progress. The new domain has passed authenticated question loading, saving, isolated Python execution and real OpenAI grading/feedback checks; see the [production record](deploy/selfhost/PRODUCTION.md) for their scope.
 
@@ -35,9 +35,9 @@ Use Node.js 24. In either app run `npm ci`, copy `.env.example` to `.env.local`,
 
 For the current implementation summary and remaining backend/model work before founder testing, start with [the handoff to Shaked for real-feedback human review](docs/shaked-human-review-handoff.md).
 
-The practice website and API run together on a DigitalOcean VPS at [muxijobrun.com](https://muxijobrun.com) and [api.muxijobrun.com](https://api.muxijobrun.com). Supabase and the isolated code-execution broker remain the existing services. Start with the [current production runbook](deploy/selfhost/PRODUCTION.md); the [publishing guide](deploy/selfhost/AUTODEPLOY.md) describes the dedicated `production` branch and signed images. Signed publication, a supervised rollback drill, normal deployment and real OpenAI grading/feedback have passed. The host update timer is enabled and the publisher is configured to verify the live revision after future pushes. Operator SSH uses key-only authentication and a provider-managed source allowlist.
+The canonical URLs are [muxijobrun.com](https://muxijobrun.com), [api.muxijobrun.com](https://api.muxijobrun.com) and [tasks.muxijobrun.com](https://tasks.muxijobrun.com). Production builds run on GitHub, and the DigitalOcean VPS runs the signed `web`, `api` and `tasks` images behind Caddy. Supabase and the isolated code-execution broker remain the existing services. Start with the [current production runbook](deploy/selfhost/PRODUCTION.md); the [publishing guide](deploy/selfhost/AUTODEPLOY.md) describes the dedicated `production` branch, the three-image release contract and live checks. The runbook distinguishes the verified November 12 web/API deployment from the November 14 Tasks extension and its remaining cutover checks. Operator SSH uses key-only authentication and a provider-managed source allowlist.
 
-Founder tasks remain on Netlify. The old practice Netlify site and Render API are retained during the transition, and the Netlify subscription has not been cancelled. The [earlier Netlify and Supabase guide](docs/netlify-and-supabase.md) remains relevant to that retained hosting.
+The old [Tasks URL](https://jobrun-tasks.netlify.app), practice Netlify site and Render API are retained during the transition. Netlify cancellation is a separate billing action and is not performed by a domain or deployment change. The [earlier Netlify and Supabase guide](docs/netlify-and-supabase.md) is historical guidance for that retained hosting, not the current release procedure. Existing Supabase accounts, founder permissions, tasks, comments and private files continue in the same project; sign in again on the new origin and save/copy browser-only drafts before switching. See the runbook for dated costs and rollback behavior, including old web/API-only snapshots.
 
 Supabase's canonical schema lives in `supabase/migrations`. The founder additions use `jr_` tables and preserve the existing product/AI schema. Seed generation is in `scripts/seed-example-questions.mjs`; it writes `supabase/seed-example-questions.sql` from the original example question bank. Seeding is an explicit database operation, never part of application startup.
 
