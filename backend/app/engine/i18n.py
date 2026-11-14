@@ -15,10 +15,14 @@ PROMPT_DIR = Path(__file__).parent / "prompts"
 # Shaked): after a strong answer the follow-up is an edge case of the same problem; v1 and v2 kept.
 # evaluator v2 (2026-10-03, Shaked): worked examples are confirmation, not substance; a correct method is strong
 # without them; v1 kept.
+# evaluator v3 (2026-11-14, Shaked: "if the user is able to give a correct answer even though he didnt give the full
+# truth table and he misses easy technical things he can get a good answer"): correctness measures whether the
+# result is right, not how much of the rubric the text covers; what was asked for and left out lowers depth and is
+# listed as missed, never correctness; v2 kept.
 # report v2 (2026-11-02, Shaked: "fitted to the person, never feel bad, try more"): what held up first, gaps as the
 # next thing to learn, the next interview proposed, the change since last time; v1 kept.
 # report v3: keep question ratings private in candidate-facing narratives.
-PROMPT_VERSIONS = {"evaluator": "v2", "generator": "v3", "feedback": "v1", "tip": "v1", "report": "v3"}
+PROMPT_VERSIONS = {"evaluator": "v3", "generator": "v3", "feedback": "v1", "tip": "v1", "report": "v3"}
 LANGUAGE_NAMES = {"en": "English", "he": "Hebrew"}
 
 

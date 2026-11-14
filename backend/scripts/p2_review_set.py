@@ -31,7 +31,8 @@ CASES = [
      "sensor high the output is 0 (000, 001, 010, 100); with two or three high it is 1 (011, 101, 110, 111). Any pair of "
      "sensors being high is sufficient, so the alarm is the OR of the three pairwise ANDs: A and B, or A and C, or B and C. "
      "Three-input XOR would be wrong here because it computes odd parity: it is 1 for a single high sensor and 0 for exactly two.", False),
-    ("example-sensor-majority", "en", "PARTIAL", "code only, correct, no explanation",
+    # STRONG since evaluator v3 (2026-11-14, Shaked: a correct answer is not marked down for what it left out); PARTIAL before
+    ("example-sensor-majority", "en", "STRONG", "code only, correct, no explanation",
      "```verilog\nassign alarm = (A & B) | (A & C) | (B & C);\n```", False),
     ("example-sensor-majority", "en", "STRONG", "different valid approach (product of sums via K-map)",
      "K-map on the zeros: output 0 for 000, 001, 010, 100. Grouping the zeros gives the product-of-sums form "

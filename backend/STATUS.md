@@ -2382,6 +2382,63 @@ with a 6 ms database round trip, and `muxijobrun.com` answers 200. So the job ty
 site (a software goal should now open on data structures and arrays), and `/health.request_budget` on the live
 server, which needs its health key (Harel). `production` now holds everything `master` has except this note.
 
+## 5zzi. A right answer is a strong answer (2026-11-14, Shaked: "if the user is able to give a correct answer even though he didnt give the full truth tavle and he misses easy technical things he can get a good answer ... we dont need him to be upset if he secceds the question and gets bas answer from the site"; "ok go for it")
+
+**What was measured first** (the real judge, each answer twice): a correct answer was PARTIAL whenever the
+explanation the question asks for was missing. The correct majority expression alone, or with the full truth table;
+correct bit-counting code alone; all three timing numbers right, even with the right one-line conclusion. The
+missing truth table was not the cause (that was fixed on 3 October); the cause was that correctness was scored as
+rubric coverage, the strong line also needed depth, and a passed check only guaranteed 0.6.
+
+**What changed (the judge changed: Shaked's decision).**
+- `prompts/evaluator.v3.md` (v1 and v2 kept): the judge first lists the *results* the question asks to be worked out
+  or built (each expression, function, number, design), then scores `correctness` on those only. Every result
+  present and right: 0.85 to 1.0, whatever was left unexplained. One result of several missing or wrong: 0.5 to 0.7.
+  Code or a design that fails for some valid input: at most 0.65. Half or more missing, or the central idea wrong:
+  below 0.45. Explanations, justifications, complexity, verification, table rows and attached conceptual
+  sub-questions are *support*: left out, they are listed in `key_points_missed` and lower `depth`, never
+  `correctness`; written and wrong, they count against `correctness` like any wrong claim. A passed check says only
+  that what it checked is right.
+- The band: the lean-strong rule of 5 October now covers every correct answer (`lean_strong_correctness` 0.8 → 0.75,
+  `lean_strong_depth` 0.35 → 0). So a correct answer with little or no reasoning is STRONG with 0.8 of the evidence
+  and a follow-up that asks for the reasoning; a correct and reasoned one is STRONG as before.
+- A passed check that covers the whole result (`truth_table`, `code_tests`) now guarantees 0.80 instead of 0.60. A
+  numeric check confirms one named value of what may be several and keeps 0.60: otherwise one right number would
+  promote an answer whose other numbers are missing. (Narrower than what was first proposed to Shaked; told to him.)
+
+**Measured after** (the real judge, five gradings each; `scripts/grade_both_sides.py` reproduces it):
+
+| Answer | Before | Now |
+|---|---|---|
+| Majority: the correct expression only | PARTIAL | STRONG 5/5 |
+| Majority: expression and full table, no XOR line | PARTIAL | STRONG 5/5 |
+| Count set bits: correct code only | PARTIAL | STRONG 5/5 |
+| Setup and hold: the three numbers only | PARTIAL | STRONG 5/5 |
+| Setup and hold: the numbers and the one-line conclusion | PARTIAL | STRONG 5/5 |
+| NAND-only: the correct gates only | STRONG | STRONG 5/5 |
+| Right period, hold slack with the wrong sign | | PARTIAL 5/5 |
+| One of the three requested numbers | | PARTIAL 5/5 |
+| Numbers right, wrong conclusion on hold | | WEAK 5/5 |
+| Majority with one pair missing | | WEAK 5/5 |
+| Right expression, then "XOR works too" | | WEAK 5/5 |
+| Code that misses the top bit | | PARTIAL 4/5, WEAK 1/5 |
+| An inverter and an OR gate where only NAND is allowed | | WEAK 5/5 |
+
+It took three rounds: the first wording made buggy code and "one number of three" STRONG once each, and the
+sentence about a passed check made the judge treat one confirmed number as the whole answer. The 13-answer review
+set (`scripts/p2_review_set.py`): 12 as labelled; the one change is the intended one ("correct code only, no
+explanation", PARTIAL → STRONG; its label is updated). Every WEAK label is still WEAK, the injection case included.
+
+**Open for Shaked:** an attached conceptual sub-question left unanswered (setup and hold: "does a slower clock fix
+a hold violation?") no longer holds a correct answer at PARTIAL; it goes to the feedback and the follow-up. One
+paragraph in the prompt reverses that if he wants it.
+
+**Verified:** offline suite 4,515 passed / 13 skipped / 1 failed (the known client-contract test). Committed to `master`; **not on the live site** until Shaked says so.
+
+**What it moves besides the band:** more STRONG answers, so more coins and faster levels (at 0.8 evidence when the
+reasoning is thin). Past answers are not re-graded. The recorded scenario of `test_grade_first` is leaf for leaf the
+same under the new thresholds (rewritten and compared, then put back); only its version string differed.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.

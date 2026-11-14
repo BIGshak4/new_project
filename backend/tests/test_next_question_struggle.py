@@ -101,7 +101,9 @@ class TestThroughTheService:
         await svc.save_goal(user, job_type="digital_design", interview_date=None, minutes_per_day=30, seniority="student")
         view = await svc.start(user, question_key=MAJORITY, mode="deep", language="en", self_confidence=3)
         aid = uuid.UUID(view.id)
-        sub, view = await svc.submit(user, aid, "alarm = AB + BC + AC", idempotency_key="k1")
+        # in words, so the truth-table check has nothing to confirm: a confirmed expression is a strong answer
+        # since 2026-11-14, and this test needs a partial one
+        sub, view = await svc.submit(user, aid, "the alarm goes on when two of the sensors agree", idempotency_key="k1")
         assert sub.band == "PARTIAL" and view.pending_follow_up is not None
         assert view.next_question is not None and view.next_question.why == "consolidate"      # one answer: stay
         fsub, view = await svc.submit(user, aid, "the table has 1 in rows 011, 101, 110, 111", idempotency_key="f1",

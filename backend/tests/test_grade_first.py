@@ -233,7 +233,10 @@ async def test_the_scenario_reproduces_the_record_written_before_the_split(catal
     from app.engine import i18n
     # the record pins the grade-first split, not the grader's prompt version: a new prompt version is recorded on
     # every metrics row and must not make the record stale (evaluator v2, 2026-10-03)
-    golden = json.loads(GOLDEN.read_text(encoding="utf-8").replace('"evaluator.v1"', f'"{i18n.prompt_version("evaluator")}"'))
+    # (v2, 2026-10-03; v3, 2026-11-14: the record was last written under v2, and under v3's thresholds this
+    # scenario's results are the same leaf for leaf, checked by rewriting it and comparing)
+    golden = json.loads(re.sub(r'"evaluator\.v\d+"', f'"{i18n.prompt_version("evaluator")}"',
+                               GOLDEN.read_text(encoding="utf-8")))
     got = json.loads(json.dumps(got, sort_keys=True, ensure_ascii=False))
     assert _strip_new_fields(got, golden) == golden
 

@@ -38,14 +38,23 @@ class ScoreParams:
     strong_depth: float = 0.55
     partial_correctness: float = 0.45
     # a correct answer whose written reasoning is thin is STRONG, lean (Shaked, 2026-10-05): the band is STRONG, its
-    # evidence counts at 0.8 of a full strong answer, and the follow-up asks for the reasoning instead of escalating
-    lean_strong_correctness: float = 0.8
-    lean_strong_depth: float = 0.35
+    # evidence counts at 0.8 of a full strong answer, and the follow-up asks for the reasoning instead of escalating.
+    # Since 2026-11-14 (Shaked: a correct answer must not get a bad grade for what it left out) that covers every
+    # correct answer, however little reasoning is written: the correctness line is the strong line itself and there
+    # is no depth floor. Until then it took correctness 0.8 and depth 0.35, so a right result with a one-line
+    # conclusion was PARTIAL.
+    lean_strong_correctness: float = 0.75
+    lean_strong_depth: float = 0.0
     lean_strong_evidence: float = 0.8
 
-    # §2.3 deterministic check authority
+    # §2.3 deterministic check authority. A passed check that covers the whole result (a truth table: the function
+    # itself; code tests: the function on its cases) means code confirmed the answer: since 2026-11-14 that is a
+    # correct answer (0.80, above the strong line), not merely "at least 0.60". A numeric check confirms one named
+    # value of what may be several, so it keeps the old floor and the judge decides the rest.
     check_fail_correctness_cap: float = 0.40
-    check_pass_correctness_floor: float = 0.60
+    check_pass_correctness_floor: float = 0.80
+    check_pass_partial_floor: float = 0.60
+    whole_result_checks: tuple[str, ...] = ("truth_table", "code_tests")
 
     # §2.5 priors
     seniority_prior_k: dict[str, float] = field(default_factory=lambda: {

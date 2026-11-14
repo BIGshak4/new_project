@@ -257,13 +257,16 @@ class TestFollowUpsAskForUnderstanding:
         assert "Ask for understanding, never for busywork" in block and "answer_covered" in block
         assert "as an edge case of the same problem" in block                     # after a strong answer (Shaked)
 
-    def test_evaluator_v2_is_active_and_v1_is_kept(self):
+    def test_evaluator_v3_is_active_and_the_earlier_versions_are_kept(self):
         from app.engine import i18n
-        assert i18n.prompt_version("evaluator") == "evaluator.v2"
-        assert (i18n.PROMPT_DIR / "evaluator.v1.md").exists() and (i18n.PROMPT_DIR / "evaluator.v2.md").exists()
+        assert i18n.prompt_version("evaluator") == "evaluator.v3"
+        assert all((i18n.PROMPT_DIR / f"evaluator.{v}.md").exists() for v in ("v1", "v2", "v3"))
         block = i18n.stable_system_block("evaluator", "en")
-        assert "Worked examples are confirmation, not substance" in block
+        assert "Worked examples are confirmation, not substance" in block                  # v2's rule stays
         assert "Never penalize an answer for not matching the reference solution's method" in block   # v1's rules stay
+        # v3 (Shaked, 2026-11-14): correctness is whether the result is right; what was left out lowers depth only
+        assert "A right answer is a right answer" in block and "It never lowers `correctness`" in block
+        assert "One result of several missing or wrong" in block and "fails for some valid input: at most 0.65" in block
 
     def test_example_values_are_whole_tokens_in_one_canonical_form(self):
         values = generator.example_values
@@ -523,12 +526,16 @@ class TestFollowUpsAskForUnderstanding:
 
 
 class TestLeanStrong:
-    """A correct design with thin written reasoning is STRONG, with lighter evidence and a reasoning follow-up."""
+    """A correct design with thin written reasoning is STRONG, with lighter evidence and a reasoning follow-up.
+    Since 2026-11-14 (Shaked: a correct answer must not get a bad grade for what it left out) that is every correct
+    answer: correctness at the strong line, whatever the depth. Until then 0.79 / 0.5 and 0.9 / 0.3 were PARTIAL."""
 
     @pytest.mark.parametrize("correctness, depth, core, expected, lean", [
         (0.85, 0.45, False, Band.STRONG, True), (0.8, 0.35, False, Band.STRONG, True), (0.9, 0.54, False, Band.STRONG, True),
         (0.9, 0.6, False, Band.STRONG, False), (0.75, 0.55, False, Band.STRONG, False),
-        (0.79, 0.5, False, Band.PARTIAL, False), (0.9, 0.3, False, Band.PARTIAL, False), (0.85, 0.45, True, Band.WEAK, False),
+        (0.79, 0.5, False, Band.STRONG, True), (0.9, 0.3, False, Band.STRONG, True), (1.0, 0.0, False, Band.STRONG, True),
+        (0.74, 0.9, False, Band.PARTIAL, False), (0.6, 0.2, False, Band.PARTIAL, False), (0.44, 0.9, False, Band.WEAK, False),
+        (0.85, 0.45, True, Band.WEAK, False),
     ])
     def test_the_band_rule(self, correctness, depth, core, expected, lean):
         from app.engine import scores
@@ -608,8 +615,9 @@ class TestDeepPractice:
                              evaluation_json(correctness=0.9, depth=0.8), evaluation_json(correctness=0.9, depth=0.8)])
         attempt = PracticeAttempt(context(catalog, provider), question, {})
         outcome = await attempt.submit("Rows 011,101,110,111.\nalarm = AB + AC + BC\nXOR is parity.")
-        assert outcome.check.passed and outcome.evaluation.correctness == 0.6           # floor, never 1.0
-        assert outcome.band == Band.PARTIAL and outcome.decision.action == Action.HOLD
+        # code confirmed the function: a correct answer whatever the judge thought (floor 0.8 since 2026-11-14, never 1.0)
+        assert outcome.check.passed and outcome.evaluation.correctness == 0.8
+        assert outcome.band == Band.STRONG and outcome.decision.action == Action.ESCALATE
         second = await attempt.submit_follow_up("deeper answer")
         assert second.band == Band.STRONG
         third_question = second.follow_up
