@@ -8,12 +8,18 @@ nothing here touches production code paths) and each walks the real flow:
     list questions -> start an attempt -> a hint -> submit -> poll until the words are in -> the follow-up ->
     progress -> program -> start a mock interview -> answer two turns
 
+With --goals each user first saves a goal (the six job types and one pair, in turn), reads readiness, starts the
+plan's first item and answers it, and the run checks what only shows with many users: that the question the plan
+opened belongs to that user's job type and that nobody's count of today's attempts includes someone else's.
+
 A third of the users answer a Python question, so the code-test runner (a child interpreter per answer) is exercised.
 Meanwhile /health is probed every 250 ms (is the event loop still answering?) and the server reports its own
 event-loop lag, thread-pool queue and memory (/_load/stats, added in the server process only).
 
     uv run python scripts/load_test.py                         # 10, 50, 100 users
     uv run python scripts/load_test.py --users 50 --rate-limit 0.3   # 30% of evaluator calls answer 429
+    uv run python scripts/load_test.py --users 5000 --ramp 600 --goals --eval-latency 5 --prose-latency 4
+                                                               # 5,000 users arriving over ten minutes
 """
 
 from __future__ import annotations
@@ -38,6 +44,10 @@ CODE_ANSWER = "def count_set_bits(x):\n    n = 0\n    while x:\n        x &= x -
 PROFILE_SPLIT = "\n--- by cumulative time, app code only\n"
 APP_CODE = r"[\\/]app[\\/]"
 SLOW_CODE = False
+RAMP = 2.0                                   # seconds over which the users arrive
+GOALS = False
+JOB_SELECTIONS = (["digital_design"], ["verification"], ["fpga"], ["embedded_firmware"], ["software"], ["student_general"],
+                  ["software", "fpga"])
 SLOW_CODE_ANSWER = "def count_set_bits(x):\n    while True:\n        pass\n"
 QUESTIONS = [("example-sensor-majority", WEAK_ANSWER), ("example-nand-only-enable", "A NAND-only answer: invert with a "
              "NAND whose inputs are tied, then NAND the enable with the data."), ("example-count-set-bits", CODE_ANSWER)]
@@ -95,7 +105,8 @@ def serve(args) -> None:
     catalog = load_catalog(ROOT / "seeds")
     settings = Settings(_env_file=None, llm_provider="scripted", allow_in_review_content=True, suggest_reviewed_only=False,
                         interview_reviewed_only=False, interview_daily_limit=10_000, daily_attempt_limit=10_000,
-                        feedback_in_background=not args.inline)
+                        feedback_in_background=not args.inline, assess_unreviewed_questions=True,   # as production
+                        code_execution_enabled=False)                                             # never the real broker
     provider = ScriptedProvider(respond)
     app.state.verifier = make_verifier()
 
@@ -104,6 +115,28 @@ def serve(args) -> None:
     app.state.access_resolver = everyone
     app.state.runtime = build_runtime(settings, catalog=catalog, provider=provider, store=InMemoryStore(catalog))
     app.state.runtime.practice.config.polish_tips = True      # production polishes the tip: one more model call
+
+    # Every virtual user comes from 127.0.0.1, so the per-address budget (1,800 requests a minute, there to stop one
+    # machine rotating tokens) would refuse the whole run. The per-token budget (600 a minute for each user) stays on.
+    import app.main as api
+    api.NETWORK_RATE_LIMIT_PER_MINUTE = 0
+
+    async def no_figures(_question):                          # never the real storage bucket: the figures are not under test
+        return []
+    app.state.runtime.practice.question_image_fetcher = no_figures
+
+    # The database store builds the library's summaries once a minute per language (repo/questions.list_questions);
+    # the in-memory store builds all of them on every call, which is the test double's cost, not the product's, and
+    # at a few hundred users it is most of the server's work. Give the double the same minute here.
+    from app.services import memory_store
+    plain_list, kept = memory_store._MemoryTx.list_questions, {}
+
+    async def listed_once_a_minute(self, *, language, subject=None):
+        hit = kept.get(language)
+        if hit is None or hit[0] < time.monotonic():
+            hit = kept[language] = (time.monotonic() + 60, await plain_list(self, language=language))
+        return [s for s in hit[1] if subject is None or s.subject == subject]
+    memory_store._MemoryTx.list_questions = listed_once_a_minute
     if args.legacy_threads:
         # before 2026-09-26: code tests in the default thread pool, and a thread hop per request for the signing key
         from app.auth import TokenVerifier
@@ -120,6 +153,9 @@ def serve(args) -> None:
             return await cached(self, token, kid)
         TokenVerifier._signing_key = every_time
     provider.requests = _Discard()                            # the scripted provider keeps every request: not here
+    if not args.access_log:
+        import logging
+        logging.getLogger("app.access").setLevel(logging.WARNING)   # a line per request through a pipe distorts the timing
 
     lag = {"max_ms": 0.0, "samples": []}
 
@@ -157,6 +193,7 @@ def serve(args) -> None:
                 "threads": len(getattr(executor, "_threads", ())) if executor else 0,
                 "thread_queue": executor._work_queue.qsize() if executor else 0,
                 "feedback_tasks": len(getattr(app.state.runtime.practice, "_feedback_tasks", {})),
+                "cpu_s": round(time.process_time(), 1),             # the server process's own CPU, all threads
                 "model_calls": dict(calls),
                 "tasks": len(asyncio.all_tasks()), "profile": profile_text}
 
@@ -232,8 +269,11 @@ async def one_user(client, rec: Recorder, index: int, language: str) -> None:
     key, answer = QUESTIONS[index % len(QUESTIONS)]
     if key == "example-count-set-bits" and SLOW_CODE:
         answer = SLOW_CODE_ANSWER                              # runs into the runner's 5 s timeout
-    await asyncio.sleep(random.random() * 2)                   # people do not click on the same millisecond
+    await asyncio.sleep(random.random() * RAMP)                # people do not click on the same millisecond
     started = time.perf_counter()
+    opened = 1                                                 # attempts this user starts: the count progress must show
+    if GOALS:
+        opened += await goal_and_plan(client, rec, h, index, language)
     await rec.call(client, "GET questions", "GET", f"/v1/questions?language={language}", headers=h)
     attempt = await rec.call(client, "POST attempt", "POST", "/v1/practice/attempts", headers=h,
                              json={"question_key": key, "mode": "deep", "language": language})
@@ -260,7 +300,9 @@ async def one_user(client, rec: Recorder, index: int, language: str) -> None:
                        headers=h, json={"answer": {"text": "maybe an AND of each pair"}, "idempotency_key": f"{aid}-f"},
                        ok=(200, 202, 409))
         await poll(client, rec, h, aid)
-    await rec.call(client, "GET progress", "GET", f"/v1/me/progress?language={language}", headers=h)
+    progress = await rec.call(client, "GET progress", "GET", f"/v1/me/progress?language={language}", headers=h)
+    if progress.get("attempts_today") != opened:
+        rec.notes[f"WRONG: attempts_today {progress.get('attempts_today')} for a user who opened {opened}"] += 1
     await rec.call(client, "GET program", "GET", f"/v1/me/program?language={language}", headers=h)
     interview = await rec.call(client, "POST interview", "POST", "/v1/interviews", headers=h,
                                json={"duration_min": 20, "language": language})
@@ -276,6 +318,33 @@ async def one_user(client, rec: Recorder, index: int, language: str) -> None:
             rec.notes["interview answers not scored after a model failure (kept; the turn can be answered again)"] += 1
         interview = interview["interview"]
     rec.flows.append((time.perf_counter() - started) * 1000)
+
+
+async def goal_and_plan(client, rec: Recorder, h: dict, index: int, language: str) -> int:
+    """Save a goal, read readiness, start the plan's first item and answer it. Returns the attempts opened (0 or 1)."""
+    selection = JOB_SELECTIONS[index % len(JOB_SELECTIONS)]
+    goal = await rec.call(client, "POST goal", "POST", "/v1/me/goal", headers=h,
+                          json={"job_types": selection, "minutes_per_day": 30, "seniority": "student", "language": language})
+    if goal.get("job_types") != selection:
+        rec.notes["WRONG: the saved goal is not the one sent"] += 1
+    readiness = await rec.call(client, "GET readiness", "GET", f"/v1/me/readiness?language={language}", headers=h)
+    if not readiness.get("skills"):
+        rec.notes["WRONG: readiness lists no skills"] += 1
+    started = await rec.call(client, "POST program/start", "POST", "/v1/me/program/start", headers=h,
+                             json={"language": language})
+    rec.notes[f"plan start: {started['kind']}"] += 1
+    if started["kind"] != "attempt":
+        return 0
+    attempt = started["attempt"]
+    detail = await rec.call(client, "GET question", "GET", f"/v1/questions/{attempt['question']['key']}?language={language}",
+                            headers=h)
+    if not set(selection) & set(detail.get("job_types") or []):
+        rec.notes[f"WRONG: the plan of {'+'.join(selection)} opened a question outside it"] += 1
+    await rec.call(client, "POST submit (plan item)", "POST", f"/v1/practice/attempts/{attempt['id']}/submissions", headers=h,
+                   json={"answer": {"text": "A careful answer, reasoned step by step."},
+                         "idempotency_key": f"{attempt['id']}-p"})
+    await poll(client, rec, h, attempt["id"])
+    return 1
 
 
 async def poll(client, rec: Recorder, h: dict, aid: str) -> dict:
@@ -352,7 +421,9 @@ async def run_level(args, users: int) -> dict:
             server.kill()
     failures = [repr(r)[:160] for r in results if isinstance(r, BaseException)]
     return {"users": users, "wall_s": round(wall, 1), "completed": users - len(failures), "failures": failures[:5],
-            "rss_before_mb": before.get("rss_mb"), "server": after, "times": rec.times, "errors": rec.errors,
+            "rss_before_mb": before.get("rss_mb"), "cpu_s": round(after.get("cpu_s", 0) - before.get("cpu_s", 0), 1),
+            "requests": sum(len(v) for name, v in rec.times.items() if name.split()[0] in ("GET", "POST")),
+            "server": after, "times": rec.times, "errors": rec.errors,
             "flows": rec.flows, "notes": dict(rec.notes)}
 
 
@@ -363,11 +434,16 @@ def pct(values: list[float], p: float) -> float:
 
 def report(result: dict) -> str:
     s = result["server"]
-    lines = [f"### {result['users']} users at once: {result['completed']}/{result['users']} flows completed in {result['wall_s']} s",
+    lines = [f"### {result['users']} users arriving over {RAMP:g} s: {result['completed']}/{result['users']} flows completed "
+             f"in {result['wall_s']} s",
              "",
              f"server: memory {result['rss_before_mb']} -> {s.get('rss_mb')} MB, event-loop lag p50 {s['loop_lag_p50_ms']} ms / "
              f"p99 {s['loop_lag_p99_ms']} ms / max {s['loop_lag_max_ms']} ms, default thread pool {s['threads']} threads, "
-             f"model calls {s['model_calls']}", ""]
+             f"model calls {s['model_calls']}", "",
+             f"server CPU {result['cpu_s']} s for {result['requests']} requests: "
+             f"{result['cpu_s'] * 1000 / max(1, result['requests']):.1f} ms a request, "
+             f"{result['cpu_s'] / max(1, result['completed']):.2f} s a user flow; "
+             f"{result['requests'] / max(0.1, result['wall_s']):.0f} requests a second over the run", ""]
     if result["notes"]:
         lines.append("notes: " + "; ".join(f"{k}: {v}" for k, v in result["notes"].items()))
         lines.append("")
@@ -402,10 +478,14 @@ def main() -> None:
     parser.add_argument("--legacy-threads", action="store_true",
                         help="the thread use before 2026-09-26 (code tests and key lookups in the default pool)")
     parser.add_argument("--default-threads", type=int, default=0, help="size the default thread pool like a small host")
+    parser.add_argument("--ramp", type=float, default=2.0, help="seconds over which the users arrive (default: at once)")
+    parser.add_argument("--goals", action="store_true",
+                        help="each user saves a job-type goal, reads readiness and answers the plan's first item")
+    parser.add_argument("--access-log", action="store_true", help="keep the server's line per request (off by default)")
     parser.add_argument("--json", type=Path)
     args = parser.parse_args()
-    global SLOW_CODE
-    SLOW_CODE = args.slow_code
+    global SLOW_CODE, RAMP, GOALS
+    SLOW_CODE, RAMP, GOALS = args.slow_code, args.ramp, args.goals
     if args.serve:
         serve(args)
         return

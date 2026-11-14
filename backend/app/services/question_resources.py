@@ -119,7 +119,7 @@ async def fetch_question_images(question) -> list[tuple[str, bytes]] | None:
     """Only curated prompt images, never a user's URL. None means do not guess an assessment. The pictures go to the
     model bounded to 1024 px on their long side, and a question's set is cached for ten minutes."""
     from app.config import get_settings
-    from app.services.storage_images import shrink_image
+    from app.services.storage_images import shrink_image_async
 
     media = [m for m in question.assets.get("bank_media", []) if m.get("role") == "prompt" and m.get("kind") == "image"]
     if not media:
@@ -134,7 +134,7 @@ async def fetch_question_images(question) -> list[tuple[str, bytes]] | None:
     images = await _download(settings, media)
     if not all(image is not None for image in images):
         return None
-    shrunk = [await asyncio.to_thread(shrink_image, mime, data) for mime, data in images]
+    shrunk = [await shrink_image_async(mime, data) for mime, data in images]
     if any(image is None for image in shrunk):                 # a figure above the pixel cap: do not guess (SEC-017)
         return None
     if len(_image_cache) >= IMAGE_CACHE_MAX:

@@ -97,13 +97,15 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                            default_language=settings.default_language, daily_attempt_limit=settings.daily_attempt_limit,
                            polish_tips=settings.llm_provider in REAL_PROVIDERS,
                            suggest_reviewed_only=settings.suggest_reviewed_only,
-                           feedback_in_background=settings.feedback_in_background)
+                           feedback_in_background=settings.feedback_in_background,
+                           monthly_budget_usd=settings.monthly_user_budget_usd)
     fetcher = make_image_fetcher(settings)
     interview_config = InterviewConfig(role=settings.default_role, company=settings.default_company,
                                        default_language=settings.default_language,
                                        daily_limit=settings.interview_daily_limit,
                                        reviewed_only=settings.interview_reviewed_only,
-                                       narrative=settings.llm_provider in REAL_PROVIDERS)
+                                       narrative=settings.llm_provider in REAL_PROVIDERS,
+                                       monthly_budget_usd=settings.monthly_user_budget_usd)
     plans = load_plans(settings.seeds_dir / "billing_plans.json",
                        {"stripe_price_regular": settings.stripe_price_regular, "stripe_price_premium": settings.stripe_price_premium})
     configured = bool(settings.stripe_secret_key)

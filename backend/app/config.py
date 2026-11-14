@@ -62,6 +62,11 @@ class Settings(BaseSettings):
     allowed_origins: Annotated[list[str], NoDecode] = []      # plain comma-separated, not JSON
     # Attempts a user may start per UTC day. Fails gracefully with 429, never silently.
     daily_attempt_limit: int = 30
+    # What one user's model calls may cost us in a calendar month, in shekels (Shaked, 2026-11-14: "no more than
+    # 10 - 15 shekels"); at the ceiling no new attempt or interview opens until the 1st. 0 = no ceiling. Measured
+    # from usage_event, so it holds whatever the models cost. USD_TO_ILS turns the recorded dollars into shekels.
+    monthly_user_budget_ils: float = 15.0
+    usd_to_ils: float = 3.7
 
     # scripted  = instant fake evaluations, for building and demoing the web app without a key (the default here,
     #             so tests and a fresh checkout need no key; a deployment sets LLM_PROVIDER explicitly).
@@ -202,8 +207,15 @@ class Settings(BaseSettings):
         return self._pairs(self.openai_role_service_tier) if self.llm_provider == "openai" else {}
 
     @property
+    def monthly_user_budget_usd(self) -> float:
+        """The monthly budget in the currency the usage table records; 0 when there is no ceiling."""
+        if self.monthly_user_budget_ils <= 0 or self.usd_to_ils <= 0:
+            return 0.0
+        return self.monthly_user_budget_ils / self.usd_to_ils
+
+    @property
     def is_production(self) -> bool:
-        return self.env == "production"
+        return self.env.lower() == "production"        # "Production" must not skip the start guard
 
     @property
     def database_host_kind(self) -> str | None:

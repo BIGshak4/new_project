@@ -179,6 +179,71 @@ class TestPracticeEarns:
         assert turn.coins_earned == expected
         assert sum(r[1] for r in ledger(store) if r[0] == "earn") == 5 + expected
 
+    async def test_a_strong_answer_after_a_weak_attempt_on_the_same_question_earns_less(self, catalog):
+        """Shaked, 2026-11-14: "weak attempt followed by a strong one should get less coins (maybe 2)"."""
+        svc, store = practice(catalog, [WEAK, GOOD, GOOD])
+        first = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        weak, _ = await svc.submit(USER, uuid.UUID(first.id), {"text": "alarm = A ^ B ^ C"}, idempotency_key="a")
+        assert weak.band == "WEAK" and weak.coins_earned == 0
+        second = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        strong, _ = await svc.submit(USER, uuid.UUID(second.id), {"text": "(A&B)|(B&C)|(A&C)"}, idempotency_key="b")
+        assert strong.band == "STRONG" and strong.coins_earned == RULES.strong_answer_again == 2
+        earn = [r for r in store.coin_ledger if r["kind"] == "earn"]
+        assert [(r["delta"], r["meta"]["tier"]) for r in earn] == [(2, "after_an_earlier_attempt")]
+        third = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        again, _ = await svc.submit(USER, uuid.UUID(third.id), {"text": "(A&B)|(B&C)|(A&C)"}, idempotency_key="c")
+        assert again.band == "STRONG" and again.coins_earned == 0                           # paid: nothing more for now
+
+    async def test_a_paid_question_pays_again_only_after_the_days_and_then_the_smaller_amount(self, catalog):
+        """... "but after a strong one you dont get more coins on that question until some time will pass"."""
+        svc, store = practice(catalog, [GOOD] * 4)
+        svc.config.daily_attempt_limit = 10
+        key = "example-sensor-majority"
+        base = f"question:{store.question_id(key)}"
+
+        async def strong_answer(n):
+            view = await svc.start(USER, question_key=key, mode="quick", language="en")
+            sub, _ = await svc.submit(USER, uuid.UUID(view.id), {"text": "(A&B)|(B&C)|(A&C)"}, idempotency_key=f"k{n}")
+            return sub.coins_earned
+        assert await strong_answer(1) == 5                                                  # the first answer, strong
+        paid = next(r for r in store.coin_ledger if r["reference"] == base)
+        paid["created_at"] = datetime.now(UTC) - timedelta(days=RULES.again_after_days - 1)
+        assert await strong_answer(2) == 0                                                  # twenty days later: not yet
+        paid["created_at"] = datetime.now(UTC) - timedelta(days=RULES.again_after_days + 1)
+        assert await strong_answer(3) == 2                                                  # after three weeks: again, less
+        assert await strong_answer(4) == 0                                                  # and the days start over
+        assert [(r["reference"], r["delta"], r["meta"]["tier"]) for r in store.coin_ledger if r["kind"] == "earn"] == [
+            (base, 5, "first"), (base + ":2", 2, "again")]
+        assert (await svc.coins.wallet(USER)).balance == 57
+
+    async def test_a_strong_interview_turn_after_a_weak_practice_attempt_earns_less_too(self, catalog):
+        from tests.test_interview_service import service as interview_service
+        svc, store = practice(catalog, [WEAK])
+        interview, _ = interview_service(catalog, interviewer([GOOD]))
+        interview.store, interview.coins = store, svc.coins
+        session = await interview.start(USER, duration_min=20, language="en")
+        asked = session.current_turn.question_key
+        tried = await svc.start(USER, question_key=asked, mode="quick", language="en")
+        await svc.submit(USER, uuid.UUID(tried.id), {"text": "a first, weak try"}, idempotency_key="a")
+        interview.clock.advance()
+        await interview.answer(USER, uuid.UUID(session.id), 0, "a strong answer", idempotency_key="i0")
+        ended = await interview.end(USER, uuid.UUID(session.id))
+        turn = next(t for t in ended.turns if t.band)
+        assert turn.band == "STRONG" and turn.coins_earned == 2
+
+    async def test_a_history_that_cannot_be_read_pays_like_a_first_answer_and_only_once(self, catalog, monkeypatch):
+        from app.services.memory_store import _MemoryTx
+
+        async def broken(self, user_id, reference):
+            raise RuntimeError("the ledger could not be read")
+        monkeypatch.setattr(_MemoryTx, "coin_earns_on", broken)
+        svc, store = practice(catalog, [GOOD, GOOD])
+        first = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        one, _ = await svc.submit(USER, uuid.UUID(first.id), {"text": "(A&B)|(B&C)|(A&C)"}, idempotency_key="a")
+        second = await svc.start(USER, question_key="example-sensor-majority", mode="quick", language="en")
+        two, _ = await svc.submit(USER, uuid.UUID(second.id), {"text": "(A&B)|(B&C)|(A&C)"}, idempotency_key="b")
+        assert (one.status, one.coins_earned, two.status, two.coins_earned) == ("done", 5, "done", 0)
+
     async def test_a_weak_answer_and_a_follow_up_earn_nothing(self, catalog):
         svc, store = practice(catalog, [WEAK, GOOD, GOOD])
         view = await svc.start(USER, question_key="example-sensor-majority", mode="deep", language="en", self_confidence=3)

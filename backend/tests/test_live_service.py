@@ -520,3 +520,64 @@ class TestOverHttp:
             for name in ("verifier", "access_resolver", "runtime"):
                 if hasattr(app.state, name):
                     delattr(app.state, name)
+
+
+class TestCoinsAndTheMonthlyBudgetOnTheRealSchema:
+    """The reads added on 2026-11-14 (a user's earns on a question, an earlier answer, a revealed reference, the
+    month's model spend) had only met the in-memory store. Here each is compared with a direct count on the real
+    tables, and the two rules built on them are walked once. The member is a real one, so what the first answer
+    earns depends on that member's history: the expectation is computed from the same facts, not assumed."""
+
+    async def test_the_new_reads_agree_with_the_tables_and_the_rules_follow_them(self, case):
+        from datetime import UTC, datetime
+
+        from app.repo.events import month_start
+        from app.services.coins import CoinsService, load_rules
+        conn, user = case["connection"], case["user_id"]
+        store = RollbackStore(conn)
+        svc = PracticeService(store, case["catalog"], provider_always(GOOD),
+                              ServiceConfig(daily_attempt_limit=1000, monthly_budget_usd=10_000.0))
+        rules = load_rules(SEEDS / "coins.json")
+        svc.coins = CoinsService(store, rules)
+        key, answer = "example-sensor-majority", {"text": "alarm = (A&B)|(B&C)|(A&C)"}
+        question_id = (await conn.execute(text("select id from public.question where key = :k"), {"k": key})).scalar_one()
+        base = f"question:{question_id}"
+        view = await svc.start(user, question_key=key, language="en", mode="quick")       # the budget is read here
+        mine = uuid.UUID(view.id)
+        async with store.transaction() as tx:
+            paid, last = await tx.coin_earns_on(user, base)
+            answered = await tx.answered_before(user, question_id, except_attempt=mine)
+            revealed = await tx.reference_exposed(user, str(question_id), except_attempt=mine)   # turn rows carry text
+            spent = await tx.model_cost_since(user, month_start())
+        assert paid == await count(conn, "select count(*) from public.coin_ledger where user_id = :u and kind = 'earn' "
+                                         "and (reference = :r or reference like :p)", u=user, r=base, p=base + ":%")
+        assert answered == bool(await count(conn, "select count(*) from public.attempt where user_id = :u and "
+                                                  "question_id = :q and band is not null and id <> :a", u=user, q=question_id, a=mine))
+        assert revealed == bool(await count(conn, "select count(*) from public.attempt where user_id = :u and "
+                                                  "question_id = :q and reference_revealed and id <> :a", u=user, q=question_id, a=mine))
+        direct = (await conn.execute(text("select coalesce(sum(cost_usd), 0) from public.usage_event where user_id = :u "
+                                          "and created_at >= :s"), {"u": user, "s": month_start()})).scalar_one()
+        assert abs(spent - float(direct)) < 1e-9
+
+        sub, _ = await svc.submit(user, mine, answer, idempotency_key="live-coins-1")
+        assert sub.status == "done" and sub.band == "STRONG", sub.flags
+        recent = last is not None and (datetime.now(UTC) - last).days < rules.again_after_days
+        expected = (0 if revealed or (paid and recent) else rules.strong_answer_again if (paid or answered)
+                    else rules.strong_answer)
+        assert sub.coins_earned == expected
+        second = await svc.start(user, question_key=key, language="en", mode="quick")
+        again, _ = await svc.submit(user, uuid.UUID(second.id), answer, idempotency_key="live-coins-2")
+        assert again.band == "STRONG" and again.coins_earned == 0          # paid a moment ago, or never payable
+
+        third = await svc.start(user, question_key=key, language="en", mode="quick")
+        await svc.reveal_reference(user, uuid.UUID(third.id))
+        async with store.transaction() as tx:
+            assert await tx.reference_exposed(user, question_id) is True
+            await tx.record_usage(user_id=user, attempt_id=uuid.UUID(third.id), usage_rows=[
+                {"mode": "quick", "action": "evaluate", "model": "live-test", "tokens_in": 1, "tokens_out": 1,
+                 "cache_read_tokens": 0, "cache_write_tokens": 0, "cost_usd": 0.02, "latency_ms": 1, "meta": {}}])
+            assert await tx.model_cost_since(user, month_start()) >= spent + 0.02 - 1e-9
+        svc.config.monthly_budget_usd = 0.01                              # below what this month already cost
+        with pytest.raises(ApiError) as refused:
+            await svc.start(user, question_key=key, language="en", mode="quick")
+        assert refused.value.code == "usage_limit" and "month" in refused.value.message

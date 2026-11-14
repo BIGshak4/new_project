@@ -111,9 +111,9 @@ class TestTheLibrary:
         svc, _ = practice(catalog)
         everything = await svc.list_questions(language="en")
         expected_hidden = {'digital_design': 81, 'verification': 0, 'fpga': 81,
-                           'embedded_firmware': 18, 'software': 81, 'student_general': 0}
+                           'embedded_firmware': 18, 'software': 86, 'student_general': 0}
         for key, job in catalog.job_types.items():
-            hidden = {r.key for r in everything if job.excludes(catalog.questions[r.key].primary_skill)}
+            hidden = {r.key for r in everything if not job.fits(catalog.questions[r.key])}
             rows = await svc.list_questions(language="en", job=key)
             assert len(rows) == len(everything) - len(hidden), key
             assert not ({r.key for r in rows} & hidden), key
@@ -137,8 +137,9 @@ class TestThePlanAndTheProgram:
         _, base, ceiling, base_plan = svc._plan("student")
         _, weights, ceiling2, plan = svc._plan("student", "embedded_firmware")
         excluded = set(catalog.job_types["embedded_firmware"].excluded_skills)
+        own = {row.skill for row in catalog.job_types["embedded_firmware"].skills}     # its own skills join (2026-11-14)
         assert ceiling == ceiling2
-        assert {p.key for p in plan} == {p.key for p in base_plan} - excluded
+        assert {p.key for p in plan} == ({p.key for p in base_plan} | own) - excluded
         assert not (set(weights) & excluded)
         assert abs(sum(weights.values()) - sum(base.values())) < 1e-3          # weights are rounded to 4 places
         assert "hdl_sequential_coding" in {p.key for p in svc._plan("student", "digital_design")[3]}

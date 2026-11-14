@@ -104,6 +104,7 @@ class Tx(Protocol):
                        duel_id: uuid.UUID | None = None, meta: dict | None = None) -> bool: ...
     async def coin_sum_since(self, user_id: uuid.UUID, *, kinds: tuple[str, ...], since: datetime,
                              meta_key: str | None = None) -> int: ...
+    async def coin_earns_on(self, user_id: uuid.UUID, reference: str) -> tuple[int, datetime | None]: ...
     # duels (app.repo.duels): one row per duel, optimistic version
     async def duels_available(self) -> bool: ...
     async def create_duel(self, duel: Duel) -> None: ...
@@ -136,6 +137,10 @@ class Tx(Protocol):
     async def recent_attempts(self, user_id: uuid.UUID, *, limit: int = 20) -> list[dict]: ...
     async def band_counts(self, user_id: uuid.UUID) -> dict[str, dict[str, int]]: ...
     async def seen_question_keys(self, user_id: uuid.UUID) -> set[str]: ...
+    async def reference_exposed(self, user_id: uuid.UUID, question_id: uuid.UUID, *,
+                                except_attempt: uuid.UUID | None = None) -> bool: ...
+    async def answered_before(self, user_id: uuid.UUID, question_id: uuid.UUID, *,
+                              except_attempt: uuid.UUID | None = None) -> bool: ...
     async def load_profile(self, user_id: uuid.UUID) -> LoadedProfile: ...
     async def save_profile(self, loaded: LoadedProfile, states: dict[str, SkillState], *,
                            attempt_id: uuid.UUID | None = None) -> dict[str, int]: ...
@@ -143,6 +148,7 @@ class Tx(Protocol):
     async def record_metrics(self, *, user_id: uuid.UUID, attempt_id: uuid.UUID, metrics: list[dict],
                              seniority: str | None) -> int: ...
     async def record_usage(self, *, user_id: uuid.UUID, attempt_id: uuid.UUID, usage_rows: list[dict]) -> int: ...
+    async def model_cost_since(self, user_id: uuid.UUID, since: datetime) -> float: ...
     async def record_tip(self, *, attempt_id: uuid.UUID, tip_key: str, skill_key: str | None, text: str) -> None: ...
     # mock interviews
     async def load_session(self, session_id: uuid.UUID, *, user_id: uuid.UUID) -> StoredSession | None: ...
@@ -316,6 +322,9 @@ class DbTx:
     async def coin_sum_since(self, user_id, *, kinds, since, meta_key=None):
         return await coins.sum_since(self.connection, user_id, kinds=kinds, since=since, meta_key=meta_key)
 
+    async def coin_earns_on(self, user_id, reference):
+        return await coins.earns_on(self.connection, user_id, reference)
+
     async def duels_available(self):
         return await duels.available()
 
@@ -418,6 +427,12 @@ class DbTx:
     async def seen_question_keys(self, user_id):
         return await attempts.seen_question_keys(self.connection, user_id)
 
+    async def reference_exposed(self, user_id, question_id, *, except_attempt=None):
+        return await attempts.reference_exposed(self.connection, user_id, question_id, except_attempt=except_attempt)
+
+    async def answered_before(self, user_id, question_id, *, except_attempt=None):
+        return await attempts.answered_before(self.connection, user_id, question_id, except_attempt=except_attempt)
+
     async def load_profile(self, user_id):
         return await profiles.load(self.connection, user_id)
 
@@ -437,6 +452,9 @@ class DbTx:
 
     async def record_usage(self, *, user_id, attempt_id, usage_rows):
         return await events.record_usage(self.connection, user_id=user_id, attempt_id=attempt_id, usage_rows=usage_rows)
+
+    async def model_cost_since(self, user_id, since):
+        return await events.model_cost_since(self.connection, user_id, since)
 
     async def load_session(self, session_id, *, user_id):
         return await sessions.load(self.connection, session_id, user_id=user_id)

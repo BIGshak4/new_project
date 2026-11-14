@@ -14,6 +14,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ValidationError
 
 from app.engine import checks
+from app.engine.job_selection import plan_rows
 from app.schemas.bank import LANGUAGES, BankQuestion, JobType, Tip
 from app.schemas.engine import CatalogSkill, CompanySkillRow, RoleSkillRow
 
@@ -147,10 +148,43 @@ def load_catalog(seeds_dir: Path, *, strict: bool = True) -> Catalog:
                         problems.append(f"job_types.json:{job.key}: unknown skill {skill_key!r}")
                     if not (value == 0 or 0.2 <= value <= 2.5):     # 0 = not part of this job type
                         problems.append(f"job_types.json:{job.key}: emphasis for {skill_key} out of range ({value})")
-                for slug, role in catalog.roles.items():              # a job type that excludes every role skill plans nothing
-                    if role.skill_set and all(job.excludes(row.skill) for row in role.skill_set):
+                listed: set[str] = set()
+                for row in job.skills:                                # its own rows: checked like a role's
+                    where = f"job_types.json:{job.key}/{row.skill}"
+                    if row.skill not in catalog.leaf_skills:
+                        problems.append(f"{where}: not a leaf skill in the catalog")
+                    if row.skill in listed:
+                        problems.append(f"{where}: listed twice")
+                    listed.add(row.skill)
+                    if not 0 < row.weight <= 0.2:                     # on the role's scale, where weights sum to 1.0
+                        problems.append(f"{where}: weight out of range ({row.weight})")
+                    if job.excludes(row.skill):
+                        problems.append(f"{where}: its own skill is excluded by its emphasis")
+                    for seniority, level in row.required_level.items():
+                        if seniority not in SENIORITIES or not 1 <= level <= 5:
+                            problems.append(f"{where}: bad required level {seniority}={level}")
+                    for slug, role in catalog.roles.items():
+                        missing = set(role.seniority_profiles) - set(row.required_level)
+                        if missing:
+                            problems.append(f"{where}: no required level for {sorted(missing)} of role {slug!r}")
+                for slug, role in catalog.roles.items():              # a job type that leaves no skill plans nothing
+                    if role.skill_set and not plan_rows(role.skill_set, {job.key: job}, job.key):
                         problems.append(f"job_types.json:{job.key}: excludes every skill of role {slug!r}")
                 catalog.job_types[job.key] = job
+    listing_path = seeds_dir / "question_job_types.json"           # question key -> the job types it belongs to
+    if listing_path.exists():
+        for key, listed in _load_json(listing_path).items():
+            where = f"question_job_types.json:{key}"
+            if key not in catalog.questions:
+                problems.append(f"{where}: unknown question")
+            if not isinstance(listed, list) or not listed:
+                problems.append(f"{where}: needs a list with at least one job type")
+                continue
+            unknown = sorted(set(listed) - set(catalog.job_types))
+            if unknown:
+                problems.append(f"{where}: unknown job type {unknown}")
+            for job in catalog.job_types.values():                # every job type gets its answer: in the list or not
+                job.questions[key] = job.key in listed
 
     problems.extend(validate(catalog))
     if problems and strict:

@@ -28,7 +28,7 @@ from datetime import UTC, date, datetime, timedelta
 from app.api.errors import ApiError
 from app.engine import activity, bank, next_question, plan_router, scorecards, scores, soft_skills, xp
 from app.engine.catalog import Catalog
-from app.engine.job_selection import JobSelection, combined_job
+from app.engine.job_selection import JobSelection, combined_job, plan_rows
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import (
     FEEDBACK_PENDING,
@@ -78,7 +78,8 @@ from app.schemas.api import (
 )
 from app.schemas.bank import BankQuestion, JobType
 from app.schemas.engine import Archetype, Band, Evaluation, EvidenceStatus, PlanSkill, SkillState
-from app.services.coins import coins_for_answer
+from app.services.budget import monthly_budget_left
+from app.services.coins import coins_for_answer, reference_seen_elsewhere
 from app.services.store import Store
 
 log = logging.getLogger("app.practice")
@@ -134,6 +135,9 @@ class ServiceConfig:
     # tip and the follow-up's wording are written right after in a background task and saved into the same
     # revision. Results are identical either way (tests/test_grade_first.py); only the time the words arrive moves.
     feedback_in_background: bool = False
+    # What one user's model calls may cost in a calendar month, in USD; 0 = no ceiling. At the ceiling no new attempt
+    # opens until the 1st (Shaked, 2026-11-14: "i want it to cost us no more than 10 - 15 shekels so set the amount").
+    monthly_budget_usd: float = 0.0
 
 
 # A revision whose words are still missing this long after it was scored, with no task writing them in this
@@ -381,6 +385,7 @@ class PracticeService:
                     if started >= limit:
                         raise ApiError("usage_limit", f"you have started {started} attempts today; the daily limit is "
                                                       f"{limit}. Come back tomorrow.")
+                    await monthly_budget_left(tx, user_id, self.config.monthly_budget_usd)
                     loaded = await tx.load_question(key=question_key, question_id=question_id)
                     if loaded is None:
                         raise ApiError("not_found", "this question does not exist or is not available")
@@ -440,7 +445,10 @@ class PracticeService:
             else:
                 raise ApiError("conflict", "your profile was updated by another request; try again")
             hint = HintView(level=result[0], text=result[1]) if result else None
-            self._warm(attempt.question, stored.row["practice_language"])       # still reading: keep the prefix warm
+            # still reading: keep the prefix warm. Only when a hint was really given: the call with no hint left can
+            # be repeated for ever, and each warm-up is a model call outside every allowance (review, 2026-11-14)
+            if result is not None:
+                self._warm(attempt.question, stored.row["practice_language"])
             return hint, self._view(attempt, stored, loaded, stored.row["practice_language"])
 
     async def reveal_reference(self, user_id: uuid.UUID, attempt_id: uuid.UUID) -> tuple[str, AttemptView]:
@@ -452,7 +460,8 @@ class PracticeService:
                 async with self.store.transaction() as tx:
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                           revisions=set())
-            self._warm(attempt.question, stored.row["practice_language"])
+                if attempt.main_submission is None:              # the first reveal, with the answer still to come
+                    self._warm(attempt.question, stored.row["practice_language"])
             return text, self._view(attempt, stored, loaded, stored.row["practice_language"])
 
     async def submit(self, user_id: uuid.UUID, attempt_id: uuid.UUID, answer, *, idempotency_key: str | None,
@@ -644,11 +653,18 @@ class PracticeService:
                     if (self.coins is not None and sub.status == EvaluationStatus.DONE and sub.band is not None
                             and "content_review_pending" not in sub.flags and sub.coins_awarded is None):
                         # before the attempt row is saved, so the answer records what it really earned: one earn per
-                        # user per question (a replay or a later attempt on it writes nothing; Shaked, 2026-11-06)
+                        # user per question (a replay or a later attempt on it writes nothing; Shaked, 2026-11-06).
+                        # The reference counts as seen when any other attempt of this user on the question revealed
+                        # it: a reveal there and a fresh attempt here paid in full (security review, 2026-11-14).
+                        # Looked up only for an answer that could earn.
+                        seen = sub.reference_seen or (
+                            sub.band.value == "STRONG" and sub.turn == 0
+                            and await reference_seen_elsewhere(tx, user_id, stored.question_id,
+                                                               except_attempt=attempt.attempt_id_uuid))
                         sub.coins_awarded = await self.coins.award_for_answer(
                             tx, user_id=user_id, attempt_id=attempt.attempt_id_uuid, revision=sub.revision,
                             band=sub.band.value, difficulty=attempt.question.difficulty, hints_seen=sub.hints_seen,
-                            reference_seen=sub.reference_seen, related=scores.OFF_TOPIC_FLAG not in sub.flags,
+                            reference_seen=seen, related=scores.OFF_TOPIC_FLAG not in sub.flags,
                             turn=sub.turn, question_id=stored.question_id)
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                           revisions=changed, known_revisions=len(attempt.submissions))
@@ -1551,11 +1567,12 @@ class PracticeService:
               ) -> tuple[dict[str, int], dict[str, float], int, list[PlanSkill]]:
         """(required levels, skill weights, difficulty ceiling, plan rows) for a seniority and a job type.
 
-        The job type does not add skills: it multiplies the role's skill weights (verification leans on testbenches
-        and debugging, embedded on bit manipulation ...), so the plan, the next-question suggestion and the weekly
-        plan lean the same way. A skill the job type excludes (emphasis 0) leaves the plan altogether: an embedded
-        plan has no HDL coding, a software plan no flip-flops (Harel's task 8, 2026-10-15). An unknown job type is
-        ignored, never an error here."""
+        The job type multiplies the role's skill weights (verification leans on testbenches and debugging, embedded
+        on bit manipulation ...), so the plan, the next-question suggestion and the weekly plan lean the same way. A
+        skill the job type excludes (emphasis 0) leaves the plan altogether: an embedded plan has no HDL coding, a
+        software plan no flip-flops (Harel's task 8, 2026-10-15). Its own skills join the plan: a software plan has
+        arrays and data structures, which the hardware role does not list (Shaked, 2026-11-14; `plan_rows`). An
+        unknown job type is ignored, never an error here."""
         job = combined_job(self.catalog.job_types, job_type)
         role = self.catalog.roles[self.config.role]
         if seniority not in role.seniority_profiles:                  # normalised before the key: one entry per real profile
@@ -1563,10 +1580,7 @@ class PracticeService:
         key = (seniority, job.key if job else None)
         if key not in self._plans:
             company = self.catalog.companies[self.config.company]
-            rows = role.skill_set
-            if job is not None:
-                rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows
-                        if not job.excludes(row.skill)]
+            rows = plan_rows(role.skill_set, self.catalog.job_types, job_type)
             plan = merge_skill_sets(role_rows=rows, company_rows=company.skill_set, focus_skill_keys=[],
                                     company_weight_share=company.company_weight_share, seniority=seniority,
                                     planned_duration_min=45, catalog=self.catalog.leaf_skills)

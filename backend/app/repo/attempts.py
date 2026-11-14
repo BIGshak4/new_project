@@ -199,6 +199,33 @@ async def started_today(connection: AsyncConnection, user_id: uuid.UUID, *, now:
         select(func.count()).select_from(attempt).where(attempt.c.user_id == user_id, attempt.c.started_at >= day_start))).scalar_one()
 
 
+async def reference_exposed(connection: AsyncConnection, user_id: uuid.UUID, question_id: uuid.UUID, *,
+                            except_attempt: uuid.UUID | None = None) -> bool:
+    """Whether this user was shown this question's reference solution on any (other) attempt: an answer after that
+    earns no coins, whichever attempt, interview turn or duel it is given in (security review, 2026-11-14: a
+    reveal on one attempt followed by a new attempt on the same question paid in full)."""
+    attempt = await db.table("attempt")
+    question_id = question_id if isinstance(question_id, uuid.UUID) else uuid.UUID(str(question_id))   # turn rows carry text
+    query = select(attempt.c.id).where(attempt.c.user_id == user_id, attempt.c.question_id == question_id,
+                                       attempt.c.reference_revealed.is_(True)).limit(1)
+    if except_attempt is not None:
+        query = query.where(attempt.c.id != except_attempt)
+    return (await connection.execute(query)).first() is not None
+
+
+async def answered_before(connection: AsyncConnection, user_id: uuid.UUID, question_id: uuid.UUID, *,
+                          except_attempt: uuid.UUID | None = None) -> bool:
+    """Whether this user already has a scored main answer on this question in another attempt, whatever its band:
+    a strong answer after that is not a first try, and earns the smaller amount (Shaked, 2026-11-14)."""
+    attempt = await db.table("attempt")
+    question_id = question_id if isinstance(question_id, uuid.UUID) else uuid.UUID(str(question_id))
+    query = select(attempt.c.id).where(attempt.c.user_id == user_id, attempt.c.question_id == question_id,
+                                       attempt.c.band.is_not(None)).limit(1)
+    if except_attempt is not None:
+        query = query.where(attempt.c.id != except_attempt)
+    return (await connection.execute(query)).first() is not None
+
+
 async def seen_question_ids(connection: AsyncConnection, user_id: uuid.UUID, *, days: int = 30) -> set[uuid.UUID]:
     attempt = await db.table("attempt")
     since = datetime.now(UTC) - timedelta(days=days)

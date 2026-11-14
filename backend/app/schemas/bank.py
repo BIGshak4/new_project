@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
-from app.schemas.engine import Archetype
+from app.schemas.engine import Archetype, RoleSkillRow
 
 LANGUAGES = ("en", "he")
 
@@ -140,19 +140,32 @@ class BankQuestion(BaseModel):
 
 
 class JobType(BaseModel):
-    """A kind of job a candidate interviews for (verification, FPGA, embedded ...). It does not add skills:
-    it re-weights the role's skills, so the plan, the next-question suggestion and the mock interview lean
-    toward what that job asks about. Skills not listed keep emphasis 1.0.
+    """A kind of job a candidate interviews for (verification, FPGA, embedded ...). It re-weights the role's
+    skills, so the plan, the next-question suggestion and the mock interview lean toward what that job asks
+    about. Skills not listed keep emphasis 1.0.
 
     An emphasis of exactly 0 means the skill is **not part of this job type** (Harel's task 8, Shaked's
     "hidden", 2026-10-15): the skill leaves the plan, and every question whose primary skill is 0 is hidden
     from the job-filtered library, the suggestions, the program, readiness and the interview pool. Anything
-    above 0 stays visible and is only weighted."""
+    above 0 stays visible and is only weighted.
+
+    `skills` are the job type's own rows (Shaked, 2026-11-14: a software plan had no arrays or data structures,
+    because the hardware role does not list them and a multiplier has nothing to multiply): a skill the role
+    lacks joins the plan, and a row for a skill the role has replaces the role's row for this job type (its
+    weight, importance and required levels). Weights are on the role's scale; emphasis multiplies them like any
+    other row. `engine.job_selection.plan_rows` applies both.
+
+    `questions` is the per-question answer where the skill rule is too coarse (Shaked, 2026-11-14: "a question
+    can have multiple job types"): `seeds/question_job_types.json` lists the job types of a question, and the
+    loader records here, for every job type, whether that question belongs. A listed question follows its list;
+    every other question follows its primary skill."""
 
     key: str
     label: dict[str, str]                      # language -> label
     description: dict[str, str] = Field(default_factory=dict)
     emphasis: dict[str, float] = Field(default_factory=dict)   # skill key -> multiplier (0.2 .. 2.5), or 0 = excluded
+    skills: list[RoleSkillRow] = Field(default_factory=list)   # own rows: added to the role's, or replacing one
+    questions: dict[str, bool] = Field(default_factory=dict)   # question key -> belongs or not, whatever its skill says
 
     @field_validator("emphasis", mode="before")
     @classmethod
@@ -172,8 +185,10 @@ class JobType(BaseModel):
 
     def fits(self, question: BankQuestion) -> bool:
         """A question belongs to this job type unless its primary skill is excluded (the primary skill is what
-        the question is about and what the grader scores; a secondary link never hides a question)."""
-        return not self.excludes(question.primary_skill)
+        the question is about and what the grader scores; a secondary link never hides a question). A question
+        with its own list of job types follows that list instead."""
+        listed = self.questions.get(question.key)
+        return listed if listed is not None else not self.excludes(question.primary_skill)
 
     @property
     def excluded_skills(self) -> list[str]:
