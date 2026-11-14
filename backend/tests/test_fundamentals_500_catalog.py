@@ -35,7 +35,7 @@ def test_prior400_bytes_ids_and_revision_hashes_are_frozen():
         assert hashlib.sha256(before_current_fundamentals_bytes(name, (CONTENT / name).read_bytes())).hexdigest() == expected, name
     web = read(CONTENT / "fundamentals-revisions.json")
     backend = read(SEEDS / "fundamentals_catalog.json")["questions"]
-    assert web == backend and len(web) == 500
+    assert web == backend and len(web) == 700
     web = before_current_fundamentals_manifest({'questions': web})['questions']
     previous = {key: value for key, value in web.items() if prior(key)}
     assert len(previous) == 400
@@ -43,7 +43,8 @@ def test_prior400_bytes_ids_and_revision_hashes_are_frozen():
 
 
 def test_all2040_previous_quiz_objects_and1950_release_entries_are_frozen():
-    quiz = before_current_copy("quiz", "duel_quiz.json", read(SEEDS / "duel_quiz.json"))["questions"]
+    current = read(SEEDS / "duel_quiz.json")
+    quiz = before_current_copy("quiz", "duel_quiz.json", current)["questions"]
     previous = sorted([q for q in quiz if not q.get("source_key") or prior(q["source_key"])], key=lambda q: q["key"])
     assert len(previous) == 2040
     assert digest(previous) == "49d2826adfb07c0a20ab999821dbdce40b239c4f274eed036aac48afd998b776"
@@ -51,9 +52,10 @@ def test_all2040_previous_quiz_objects_and1950_release_entries_are_frozen():
     entries = [row for row in manifest["questions"] if prior(row["key"].rsplit("-v", 1)[0])]
     assert len(entries) == 1950
     assert digest(entries) == "15c66237482dc8b94c9d4d5a65ea1344a562a4edd626a125fab2c2a227571401"
-    additions = [q for q in quiz if q.get("source_key") and not prior(q["source_key"])]
+    additions = [q for q in quiz if q.get("source_key") and not prior(q["source_key"]) and int(q["source_key"].rsplit("-", 1)[1]) <= 250]
     assert len(quiz) == 2540 and len(additions) == 500
-    assert sum(q["status"] == "approved" for q in quiz) == 2500
+    assert len(current["questions"]) == 3540
+    assert sum(q["status"] == "approved" for q in current["questions"]) == 3500
     assert all(q["release_approval"]["on"] == "2026-10-31" and
                q["release_approval"]["professional_review"] == "pending" for q in additions)
 

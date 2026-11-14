@@ -28,8 +28,8 @@ test("the full topic pool participates, and repeat rendering can reuse fixed IDs
   const topics = quickTopics.map(topic => topic.id);
   assert.deepEqual(selectQuickQuiz(topics, 72), selectQuickQuiz(topics, 72));
   assert.notDeepEqual(selectQuickQuiz(topics, 72)!.questionIds, selectQuickQuiz(topics, 73)!.questionIds);
-  const allSeen = new Set(Array.from({ length: 500 }, (_, seed) => selectQuickQuiz(topics, seed)!.questionIds).flat());
-  assert.equal(allSeen.size, 500);
+  const allSeen = new Set(Array.from({ length: 1500 }, (_, seed) => selectQuickQuiz(topics, seed)!.questionIds).flat());
+  assert.equal(allSeen.size, 700);
 });
 
 test("empty or undersized pools cannot produce a partial or duplicate quiz", () => {

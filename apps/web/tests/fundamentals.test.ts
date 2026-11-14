@@ -19,15 +19,15 @@ const api: QuickProgressApi = {
   resetFundamental: async () => { throw new Error("Unexpected SSR mutation"); },
 };
 
-test("500 distinct concise cards keep the exact topic mix and every code answer fits five lines", () => {
-  assert.equal(quickQuestions.length, 500);
-  assert.equal(new Set(quickQuestions.map(q => q.id)).size, 500);
-  assert.equal(quickQuestions.filter(q => q.id.startsWith("quick-hw-")).length, 250);
-  assert.equal(quickQuestions.filter(q => q.topic === "reasoning").length, 175);
-  assert.equal(quickQuestions.filter(q => ["python", "algorithms"].includes(q.topic)).length, 75);
+test("700 distinct concise cards keep the exact topic mix and every code answer fits five lines", () => {
+  assert.equal(quickQuestions.length, 700);
+  assert.equal(new Set(quickQuestions.map(q => q.id)).size, 700);
+  assert.equal(quickQuestions.filter(q => q.id.startsWith("quick-hw-")).length, 350);
+  assert.equal(quickQuestions.filter(q => q.topic === "reasoning").length, 245);
+  assert.equal(quickQuestions.filter(q => ["python", "algorithms"].includes(q.topic)).length, 105);
   for (const lang of ["he", "en"] as const) {
-    assert.equal(new Set(quickQuestions.map(q => q.title[lang].trim().toLocaleLowerCase())).size, 500);
-    assert.equal(new Set(quickQuestions.map(q => q.prompt[lang].trim().toLocaleLowerCase())).size, 500);
+    assert.equal(new Set(quickQuestions.map(q => q.title[lang].trim().toLocaleLowerCase())).size, 700);
+    assert.equal(new Set(quickQuestions.map(q => q.prompt[lang].trim().toLocaleLowerCase())).size, 700);
   }
   for (const topic of quickTopics) assert.ok(quickQuestions.some(q => q.topic === topic.id));
   for (const question of quickQuestions) {
@@ -51,7 +51,7 @@ test("topic and bilingual search compose; empty results remain empty", () => {
 });
 
 test("switching the display language preserves a searched card and its ordering", () => {
-  for (const id of ["quick-hw-126", "quick-sw-148", "quick-sw-190", "quick-hw-250", "quick-sw-235", "quick-sw-250"]) {
+  for (const id of ["quick-hw-126", "quick-sw-148", "quick-sw-190", "quick-hw-250", "quick-sw-235", "quick-sw-250", "quick-hw-350", "quick-sw-320", "quick-sw-350"]) {
     const card = quickQuestions.find(q => q.id === id)!;
     for (const queryLanguage of ["he", "en"] as const) {
       const query = card.title[queryLanguage];

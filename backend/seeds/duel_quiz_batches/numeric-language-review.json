@@ -590,5 +590,705 @@
     "review": "AI bilingual equivalence review; not human approval",
     "reason": "Hebrew spells a one-bit operand as ביט אחד; English uses 1 bit. All bit-width operands and register counts are identical.",
     "wording_updated_on": "2026-11-12"
+  },
+  {
+    "key": "quick-hw-254-v1",
+    "field": "explanation",
+    "text_sha256": "57e8e29c023bdfe35e25d5aaf7a1fff6499621ea3d194efafcd6aeddc43696b8",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 2 as a digit; English says \"two\" in the same modulus, two raised to the word width. The displayed result and truncation rule agree."
+  },
+  {
+    "key": "quick-hw-254-v2",
+    "field": "explanation",
+    "text_sha256": "dccbaed85769f40729634b0c91aa7a2d3f4afb0c607a9c122d60f85904cfd91d",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 2 as a digit; English says \"two\" in the same modulus, two raised to the word width. The displayed result and truncation rule agree."
+  },
+  {
+    "key": "quick-hw-254-v3",
+    "field": "explanation",
+    "text_sha256": "d209e1b1ed9af55e1cbcf40b96f19b4e437f049e99d688873cd953c798405017",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 2 as a digit; English says \"two\" in the same modulus, two raised to the word width. The displayed result and truncation rule agree."
+  },
+  {
+    "key": "quick-hw-254-v4",
+    "field": "explanation",
+    "text_sha256": "a569e71484e8c1a0c4747b4556a20475a0cfb4fc5f6cd6e9f92b6534140b67d8",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 2 as a digit; English says \"two\" in the same modulus, two raised to the word width. The displayed result and truncation rule agree."
+  },
+  {
+    "key": "quick-hw-254-v5",
+    "field": "explanation",
+    "text_sha256": "dccbaed85769f40729634b0c91aa7a2d3f4afb0c607a9c122d60f85904cfd91d",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 2 as a digit; English says \"two\" in the same modulus, two raised to the word width. The displayed result and truncation rule agree."
+  },
+  {
+    "key": "quick-hw-265-v1",
+    "field": "explanation",
+    "text_sha256": "f2d23e3e81826a8fb85d45ff55780d1dc3836d231cfe445ed028dc3ee0861f1d",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the false implication as 1 implying 0; English spells the same values \"one implying zero\". Both give the identical three-entry result vector and transitivity condition."
+  },
+  {
+    "key": "quick-hw-265-v2",
+    "field": "explanation",
+    "text_sha256": "728d7af4571de36f59bbede0fe0567c447cfcf493f959c050ab4a8b3513a3094",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the false implication as 1 implying 0; English spells the same values \"one implying zero\". Both give the identical three-entry result vector and transitivity condition."
+  },
+  {
+    "key": "quick-hw-265-v3",
+    "field": "explanation",
+    "text_sha256": "4b49a653a9f9711519a0bc6a5d109b15262c7b329946254d141f9fe96a6b4d8d",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the false implication as 1 implying 0; English spells the same values \"one implying zero\". Both give the identical three-entry result vector and transitivity condition."
+  },
+  {
+    "key": "quick-hw-265-v4",
+    "field": "explanation",
+    "text_sha256": "20c83c047684bc2ac04c7ce77e813ed6ba1e4886f586a4fcbe2bba968fec6ef1",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the false implication as 1 implying 0; English spells the same values \"one implying zero\". Both give the identical three-entry result vector and transitivity condition."
+  },
+  {
+    "key": "quick-hw-265-v5",
+    "field": "explanation",
+    "text_sha256": "20c83c047684bc2ac04c7ce77e813ed6ba1e4886f586a4fcbe2bba968fec6ef1",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the false implication as 1 implying 0; English spells the same values \"one implying zero\". Both give the identical three-entry result vector and transitivity condition."
+  },
+  {
+    "key": "quick-hw-273-v1",
+    "field": "explanation",
+    "text_sha256": "7e309be37c14081daf83791ad5da98bb0720f50406027343a89b3350e5b6929e",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 16 as digits; English spells \"base sixteen\". Both describe the same nibble quotient/remainder and preserve the identical result pair."
+  },
+  {
+    "key": "quick-hw-273-v2",
+    "field": "explanation",
+    "text_sha256": "d4bf10225199b9d1d63293e17e7f1ad36920eac7fd402eb99b535005fe0bb6ee",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 16 as digits; English spells \"base sixteen\". Both describe the same nibble quotient/remainder and preserve the identical result pair."
+  },
+  {
+    "key": "quick-hw-273-v3",
+    "field": "explanation",
+    "text_sha256": "d12072338151de9bd28fea06836f605c7c5bc7e885611cf56109a0d8eee14de0",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 16 as digits; English spells \"base sixteen\". Both describe the same nibble quotient/remainder and preserve the identical result pair."
+  },
+  {
+    "key": "quick-hw-273-v4",
+    "field": "explanation",
+    "text_sha256": "061a536a2bd7df2445e75865f61cb6dc59624cbe47355cb8f553ec890fba9276",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 16 as digits; English spells \"base sixteen\". Both describe the same nibble quotient/remainder and preserve the identical result pair."
+  },
+  {
+    "key": "quick-hw-273-v5",
+    "field": "explanation",
+    "text_sha256": "4262dc17a0587a5c07c38e808ff917ea00d6b207dcc7078dbb998b20e1c57c41",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes base 16 as digits; English spells \"base sixteen\". Both describe the same nibble quotient/remainder and preserve the identical result pair."
+  },
+  {
+    "key": "quick-hw-277-v1",
+    "field": "prompt",
+    "text_sha256": "144013b0d74dabf88c23ba2a9bab9f91e79cdddaa562d1aaec909b638942514e",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the permitted occupancy lower bound as 0; English spells \"zero\". Depth, pointer modulus, write/read values, and the upper depth bound are identical."
+  },
+  {
+    "key": "quick-hw-277-v2",
+    "field": "prompt",
+    "text_sha256": "00e20851ffd1364b7f70661595b19eb43143d552d0388508853a8c7f4aae9ce4",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the permitted occupancy lower bound as 0; English spells \"zero\". Depth, pointer modulus, write/read values, and the upper depth bound are identical."
+  },
+  {
+    "key": "quick-hw-277-v3",
+    "field": "prompt",
+    "text_sha256": "377838677bd19e4f4f581eb0284dc6d5db31306e3ed87f53deff29ec21fd195a",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the permitted occupancy lower bound as 0; English spells \"zero\". Depth, pointer modulus, write/read values, and the upper depth bound are identical."
+  },
+  {
+    "key": "quick-hw-277-v4",
+    "field": "prompt",
+    "text_sha256": "c7cf35071421fcc47a6746eca4c2c87e99dd73d2acb14e80453a5f5c76870293",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the permitted occupancy lower bound as 0; English spells \"zero\". Depth, pointer modulus, write/read values, and the upper depth bound are identical."
+  },
+  {
+    "key": "quick-hw-277-v5",
+    "field": "prompt",
+    "text_sha256": "9aa3b64ea3ecd8ebe8745613b96ca32c262b5099821ffc257aa225bd4449b12c",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the permitted occupancy lower bound as 0; English spells \"zero\". Depth, pointer modulus, write/read values, and the upper depth bound are identical."
+  },
+  {
+    "key": "quick-hw-291-v1",
+    "field": "prompt",
+    "text_sha256": "78a38b50ed6f5019bc7ee558e06bf2ec1508ac85f3b773058751ff5d9466aec1",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output value 1 in the state description; English calls the same states \"output-one states\". The cycle 0,1,2,1, predecessor values, and ordered up/down cases are identical."
+  },
+  {
+    "key": "quick-hw-291-v1",
+    "field": "explanation",
+    "text_sha256": "ca87b1c858feb9791f3a6db7c9d484adb0558682f0558fb245f64a7544592b5a",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew uses digits for ascending state 1 going to 2 and descending state 1 going to 0; English spells \"one\", \"two\", and \"zero\" in those same transitions. Result vectors agree."
+  },
+  {
+    "key": "quick-hw-291-v2",
+    "field": "prompt",
+    "text_sha256": "caa12e0dcfd2ed9243468611ac81bcfb6666f0227bb77c059dccb0b2fc6e8320",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output value 1 in the state description; English calls the same states \"output-one states\". The cycle 0,1,2,1, predecessor values, and ordered up/down cases are identical."
+  },
+  {
+    "key": "quick-hw-291-v2",
+    "field": "explanation",
+    "text_sha256": "d15bc7a39ff75fff823514b24186332be65971c802668834eadde09f81f62aa5",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew uses digits for ascending state 1 going to 2 and descending state 1 going to 0; English spells \"one\", \"two\", and \"zero\" in those same transitions. Result vectors agree."
+  },
+  {
+    "key": "quick-hw-291-v3",
+    "field": "prompt",
+    "text_sha256": "5910a3232fd51cfa816d0819f6e861390a170a46a16efbce6ecb4da723e33273",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output value 1 in the state description; English calls the same states \"output-one states\". The cycle 0,1,2,1, predecessor values, and ordered up/down cases are identical."
+  },
+  {
+    "key": "quick-hw-291-v3",
+    "field": "explanation",
+    "text_sha256": "3050d02f72810a3e48da1aa415f32c705e84941c01882559a67a1ab167bcccd0",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew uses digits for ascending state 1 going to 2 and descending state 1 going to 0; English spells \"one\", \"two\", and \"zero\" in those same transitions. Result vectors agree."
+  },
+  {
+    "key": "quick-hw-291-v4",
+    "field": "prompt",
+    "text_sha256": "b6e5d694a65a1db1dff8e25109b2c2091499b6cdea64e62afdbe3455c71325cf",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output value 1 in the state description; English calls the same states \"output-one states\". The cycle 0,1,2,1, predecessor values, and ordered up/down cases are identical."
+  },
+  {
+    "key": "quick-hw-291-v4",
+    "field": "explanation",
+    "text_sha256": "5e7a171b1bd98090a134c775a3cc93198030676bcaef22bce5334dbeba63753a",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew uses digits for ascending state 1 going to 2 and descending state 1 going to 0; English spells \"one\", \"two\", and \"zero\" in those same transitions. Result vectors agree."
+  },
+  {
+    "key": "quick-hw-291-v5",
+    "field": "prompt",
+    "text_sha256": "8bc57c1d4e04994bd1719508794a7fa15bf90d3b9ce0f4b06f2c19034941f8c0",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output value 1 in the state description; English calls the same states \"output-one states\". The cycle 0,1,2,1, predecessor values, and ordered up/down cases are identical."
+  },
+  {
+    "key": "quick-hw-291-v5",
+    "field": "explanation",
+    "text_sha256": "1fdf50a6c2a2c29bbc3b76306abef3a72a9ce0c853754ec8a12de7583938d663",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew uses digits for ascending state 1 going to 2 and descending state 1 going to 0; English spells \"one\", \"two\", and \"zero\" in those same transitions. Result vectors agree."
+  },
+  {
+    "key": "quick-hw-292-v1",
+    "field": "explanation",
+    "text_sha256": "c3ce9685d92e9907eb63752b0ad63fc40f41fa26295b9456d7041cc09af33909",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both advance phase modulo four and explain that output one alone does not identify the phase."
+  },
+  {
+    "key": "quick-hw-292-v2",
+    "field": "explanation",
+    "text_sha256": "252d13c21b1f5db1e48508b452d894a30e4d5f4339898f2f2196818688e8b285",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both advance phase modulo four and explain that output one alone does not identify the phase."
+  },
+  {
+    "key": "quick-hw-292-v3",
+    "field": "explanation",
+    "text_sha256": "252d13c21b1f5db1e48508b452d894a30e4d5f4339898f2f2196818688e8b285",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both advance phase modulo four and explain that output one alone does not identify the phase."
+  },
+  {
+    "key": "quick-hw-292-v4",
+    "field": "explanation",
+    "text_sha256": "c3ce9685d92e9907eb63752b0ad63fc40f41fa26295b9456d7041cc09af33909",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both advance phase modulo four and explain that output one alone does not identify the phase."
+  },
+  {
+    "key": "quick-hw-292-v5",
+    "field": "explanation",
+    "text_sha256": "e95b70db42e81a9ae45d34a07f13d6eef0a74340f943c0b856bc407a1917c567",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both advance phase modulo four and explain that output one alone does not identify the phase."
+  },
+  {
+    "key": "quick-hw-293-v1",
+    "field": "explanation",
+    "text_sha256": "ccfd8d0c1bf4385ae240157334458c781178488889b3627491dfe58e55cb894c",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both place it after odd-numbered edges and retain the identical count result."
+  },
+  {
+    "key": "quick-hw-293-v2",
+    "field": "explanation",
+    "text_sha256": "9c03936590a3f146934264ea6d6fa77995957feea802a3531d811cfae99ee510",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both place it after odd-numbered edges and retain the identical count result."
+  },
+  {
+    "key": "quick-hw-293-v3",
+    "field": "explanation",
+    "text_sha256": "06cc26790ab676f87f417b42f4b9f747af708463983f85017d43126fe6595923",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both place it after odd-numbered edges and retain the identical count result."
+  },
+  {
+    "key": "quick-hw-293-v4",
+    "field": "explanation",
+    "text_sha256": "e03bc4f3a6090940b882b2e57243bc2a60e90481fd50f1e93d7ce9dfb9075f90",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both place it after odd-numbered edges and retain the identical count result."
+  },
+  {
+    "key": "quick-hw-293-v5",
+    "field": "explanation",
+    "text_sha256": "237bbe2219b463f0d6f65772f831717cafa2e8860c032e94c2d63a8e817e6811",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes output 1 as a digit; English spells \"Output one\". Both place it after odd-numbered edges and retain the identical count result."
+  },
+  {
+    "key": "quick-hw-295-v1",
+    "field": "prompt",
+    "text_sha256": "fdbaa20b11f75bbbbf636ac56e29a28daf239c332d802422d4554c2b8e89d6ac",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew repeats the lower occupancy numerically in \"when [lower] is smaller\"; English refers to that same first occupancy as \"the former smaller\". Both actual occupancy values and the allowance for zero exits match."
+  },
+  {
+    "key": "quick-hw-295-v2",
+    "field": "prompt",
+    "text_sha256": "840c51f41d03d211bcc3beb819140fc9e349620f6fcd7ae159de499f9d39c132",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew repeats the lower occupancy numerically in \"when [lower] is smaller\"; English refers to that same first occupancy as \"the former smaller\". Both actual occupancy values and the allowance for zero exits match."
+  },
+  {
+    "key": "quick-hw-295-v3",
+    "field": "prompt",
+    "text_sha256": "6d37138aaab2f0839eb9aabf227448e4a10cb9797878ad1ee24449766992b0a3",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew repeats the lower occupancy numerically in \"when [lower] is smaller\"; English refers to that same first occupancy as \"the former smaller\". Both actual occupancy values and the allowance for zero exits match."
+  },
+  {
+    "key": "quick-hw-295-v4",
+    "field": "prompt",
+    "text_sha256": "5cea10d8773b8beab33a829d3e9a26c9dc0d3360a3247f04e3ad20146d7a9d97",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew repeats the lower occupancy numerically in \"when [lower] is smaller\"; English refers to that same first occupancy as \"the former smaller\". Both actual occupancy values and the allowance for zero exits match."
+  },
+  {
+    "key": "quick-hw-295-v5",
+    "field": "prompt",
+    "text_sha256": "25d10b636f3bf0238fcd0aff696edde07e816f65a04338d65c5bc27b921e14d2",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew repeats the lower occupancy numerically in \"when [lower] is smaller\"; English refers to that same first occupancy as \"the former smaller\". Both actual occupancy values and the allowance for zero exits match."
+  },
+  {
+    "key": "quick-hw-297-v1",
+    "field": "explanation",
+    "text_sha256": "17a97b705e161f6d93cf3d88b7f69220fa00762d64aa587228b2ae9e2c289030",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the post-truncation multiplication factor as 16; English spells \"sixteen\". The 3x intermediate, register-width truncation, and resulting value are identical."
+  },
+  {
+    "key": "quick-hw-297-v2",
+    "field": "explanation",
+    "text_sha256": "dd4f85a3f08edb9989e81ca05c7a09b40367b5126dacc167d3d87b734def4a5d",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the post-truncation multiplication factor as 16; English spells \"sixteen\". The 3x intermediate, register-width truncation, and resulting value are identical."
+  },
+  {
+    "key": "quick-hw-297-v3",
+    "field": "explanation",
+    "text_sha256": "2b7a8e6c454ac3158fa68999b62641cc5428dfcf0b1e7aff556072ec6c3c858f",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the post-truncation multiplication factor as 16; English spells \"sixteen\". The 3x intermediate, register-width truncation, and resulting value are identical."
+  },
+  {
+    "key": "quick-hw-297-v4",
+    "field": "explanation",
+    "text_sha256": "6284206c837feca5e4b2bf776205f6fc552d3bdfd11088c7bbc6ae7017060a01",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the post-truncation multiplication factor as 16; English spells \"sixteen\". The 3x intermediate, register-width truncation, and resulting value are identical."
+  },
+  {
+    "key": "quick-hw-297-v5",
+    "field": "explanation",
+    "text_sha256": "bd401940f13641e2f4bcc38e0a90ba9f3acbe2d9c9f6b36407943d95d995ce9b",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the post-truncation multiplication factor as 16; English spells \"sixteen\". The 3x intermediate, register-width truncation, and resulting value are identical."
+  },
+  {
+    "key": "quick-hw-298-v1",
+    "field": "explanation",
+    "text_sha256": "2faff898d27ae7fc6113ea7a267830816d211be99d074a3b79ccad2916717b46",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 16k+1; Hebrew additionally writes the division factor as 16 while English spells \"sixteen\". Both subtract one then divide by sixteen."
+  },
+  {
+    "key": "quick-hw-298-v2",
+    "field": "explanation",
+    "text_sha256": "4ff4da32cf636992bb0f92d8c4b97ffaaf5b169b361bec078fb689fb4128b2a6",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 16k+1; Hebrew additionally writes the division factor as 16 while English spells \"sixteen\". Both subtract one then divide by sixteen."
+  },
+  {
+    "key": "quick-hw-298-v3",
+    "field": "explanation",
+    "text_sha256": "4f543da1ad9af6769de300aa04151db4891aec966d90069f9ede50c1fc832117",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 16k+1; Hebrew additionally writes the division factor as 16 while English spells \"sixteen\". Both subtract one then divide by sixteen."
+  },
+  {
+    "key": "quick-hw-298-v4",
+    "field": "explanation",
+    "text_sha256": "c253c5e0c412d7e85a12a48cdea78e1d47fb379d981641a562bd88f77b4249d0",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 16k+1; Hebrew additionally writes the division factor as 16 while English spells \"sixteen\". Both subtract one then divide by sixteen."
+  },
+  {
+    "key": "quick-hw-298-v5",
+    "field": "explanation",
+    "text_sha256": "dcbaa3ad1607cdeb36ca4eb6ff532dba69b30eae05421652d1930e55d7fe74d5",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 16k+1; Hebrew additionally writes the division factor as 16 while English spells \"sixteen\". Both subtract one then divide by sixteen."
+  },
+  {
+    "key": "quick-hw-299-v1",
+    "field": "explanation",
+    "text_sha256": "d72b018cb5bff0b34bbd4bfcacee6c1aa02e336b40e844171977ace233b8cb9b",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 49=3*16+1 using the same multiplication symbol. Hebrew writes the subsequent modulus as 16 while English spells \"sixteen\"; both preserve the identical low-nibble result."
+  },
+  {
+    "key": "quick-hw-299-v2",
+    "field": "explanation",
+    "text_sha256": "b6df3a02a68c4d2196cb06885c5a3dc01fc96b7596f4ce1ceb3b18eab6ad8bc4",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 49=3*16+1 using the same multiplication symbol. Hebrew writes the subsequent modulus as 16 while English spells \"sixteen\"; both preserve the identical low-nibble result."
+  },
+  {
+    "key": "quick-hw-299-v3",
+    "field": "explanation",
+    "text_sha256": "b6df3a02a68c4d2196cb06885c5a3dc01fc96b7596f4ce1ceb3b18eab6ad8bc4",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 49=3*16+1 using the same multiplication symbol. Hebrew writes the subsequent modulus as 16 while English spells \"sixteen\"; both preserve the identical low-nibble result."
+  },
+  {
+    "key": "quick-hw-299-v4",
+    "field": "explanation",
+    "text_sha256": "36560085309bd8e21be4e2bf71540bc645d8eef623f4a2d53ccae74cdd01c55b",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 49=3*16+1 using the same multiplication symbol. Hebrew writes the subsequent modulus as 16 while English spells \"sixteen\"; both preserve the identical low-nibble result."
+  },
+  {
+    "key": "quick-hw-299-v5",
+    "field": "explanation",
+    "text_sha256": "36560085309bd8e21be4e2bf71540bc645d8eef623f4a2d53ccae74cdd01c55b",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Both languages show 49=3*16+1 using the same multiplication symbol. Hebrew writes the subsequent modulus as 16 while English spells \"sixteen\"; both preserve the identical low-nibble result."
+  },
+  {
+    "key": "quick-hw-300-v1",
+    "field": "explanation",
+    "text_sha256": "8c0ac7670bf4b705477dc29f92b282b74ae962663d6269e3f5d95d74ce6e0a69",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes division by 2 raised to the width with digit 2; English spells \"two to the width\". Both describe integer division and the same upper-part result."
+  },
+  {
+    "key": "quick-hw-300-v2",
+    "field": "explanation",
+    "text_sha256": "39ecccc102ce88f90067f5758ac4c8c7f152350b764c89dbb36326af9d2e0c67",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes division by 2 raised to the width with digit 2; English spells \"two to the width\". Both describe integer division and the same upper-part result."
+  },
+  {
+    "key": "quick-hw-300-v3",
+    "field": "explanation",
+    "text_sha256": "a0ebf9218ff6a52637bba20d0f223a2f1bc0fce77b873a95fb177c324a570311",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes division by 2 raised to the width with digit 2; English spells \"two to the width\". Both describe integer division and the same upper-part result."
+  },
+  {
+    "key": "quick-hw-300-v4",
+    "field": "explanation",
+    "text_sha256": "b2627a0ca62761396c05e63d74958a631468df5ace90cb4b332965e7b4d29016",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes division by 2 raised to the width with digit 2; English spells \"two to the width\". Both describe integer division and the same upper-part result."
+  },
+  {
+    "key": "quick-hw-300-v5",
+    "field": "explanation",
+    "text_sha256": "39ecccc102ce88f90067f5758ac4c8c7f152350b764c89dbb36326af9d2e0c67",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes division by 2 raised to the width with digit 2; English spells \"two to the width\". Both describe integer division and the same upper-part result."
+  },
+  {
+    "key": "quick-hw-314-v1",
+    "field": "explanation",
+    "text_sha256": "3192702614109910990072756d04b294a1aad00a045efbca4273204cd7440b52",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the exponential base as digit 2; English spells \"two to power k\". Both then subtract one, give the same signed integer/fraction result, and agree about zero and negative bias."
+  },
+  {
+    "key": "quick-hw-314-v2",
+    "field": "explanation",
+    "text_sha256": "06ae4e3cd3d90c4948b4cbd14663af8b8d43690c3c9e052c23159c571668e918",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the exponential base as digit 2; English spells \"two to power k\". Both then subtract one, give the same signed integer/fraction result, and agree about zero and negative bias."
+  },
+  {
+    "key": "quick-hw-314-v3",
+    "field": "explanation",
+    "text_sha256": "eb1acf571b0544be73c13858d57cfb964f2ed5969b178dbd668479617fcd4518",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the exponential base as digit 2; English spells \"two to power k\". Both then subtract one, give the same signed integer/fraction result, and agree about zero and negative bias."
+  },
+  {
+    "key": "quick-hw-314-v4",
+    "field": "explanation",
+    "text_sha256": "7c87c17f1043560ddc85e4b2f47d13986bc1478726646279c9f207ddecdb6f54",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the exponential base as digit 2; English spells \"two to power k\". Both then subtract one, give the same signed integer/fraction result, and agree about zero and negative bias."
+  },
+  {
+    "key": "quick-hw-314-v5",
+    "field": "explanation",
+    "text_sha256": "8724a1f85e6cbe6b701d502efc5d349a2779f7c060abaae3270f8d1378721a7f",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the exponential base as digit 2; English spells \"two to power k\". Both then subtract one, give the same signed integer/fraction result, and agree about zero and negative bias."
+  },
+  {
+    "key": "quick-hw-319-v5",
+    "field": "explanation",
+    "text_sha256": "a75db5f6811a76be73c6ffa362c97f97503da647c897e64fab4f685dbf968a85",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "In variant 5, Hebrew writes 17 halvings as digits while English spells \"Seventeen\". Both specify 2ln(2)ns per halving and the identical coefficient 34."
+  },
+  {
+    "key": "quick-hw-321-v2",
+    "field": "prompt",
+    "text_sha256": "e651a97a020861d8515c30c6f41895589caee91e867d98448ee44abf42fbc431",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the table length as 4; English spells \"four-sample\". Both give 1000kS/s and ask for the same cycle frequency in kHz."
+  },
+  {
+    "key": "quick-hw-321-v4",
+    "field": "prompt",
+    "text_sha256": "7780f0440f130fbc1506c0acc1462d137547846d458422a45567f93da91ae890",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the word width as 12 bits; English spells \"twelve-bit\". Both specify 1000 words and exclude control logic from data-bit storage."
+  },
+  {
+    "key": "quick-hw-321-v5",
+    "field": "prompt",
+    "text_sha256": "f5594cc38e727e63252c5c2a5ce6334f0e6a60f88112764b38382c653e2ec184",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes eight words as digit 8; English spells \"eight words\". Both start addresses at zero and ask for the last address before wrap."
+  },
+  {
+    "key": "quick-hw-325-v2",
+    "field": "prompt",
+    "text_sha256": "a7af0f13fe642e1a4787c568ccb42d27831191590000ece6638ca26e3f63b562",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the period length as 4; English spells \"four-sample period\". Both retain the quarter-wave peak and generate the zero sample by wiring instead of storage."
+  },
+  {
+    "key": "quick-hw-325-v3",
+    "field": "prompt",
+    "text_sha256": "9d1e5e58182e5c292ea7f011259b77ebbd1e69c1dddd53a98b9b3e247eaebc13",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the period length as 8; English spells \"eight-sample period\". Both retain the same inclusive 0..N/4 address range and ask for intervals, not point count."
+  },
+  {
+    "key": "quick-hw-325-v4",
+    "field": "prompt",
+    "text_sha256": "a121296cace9c381083a04f5554bb76eae08c96db7c943f7f44ba764beb78ecf",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the storage word width as 10; English spells \"ten bits per word\". Both give N=16 and the inclusive 0..N/4 phase range."
+  },
+  {
+    "key": "quick-hw-338-v1",
+    "field": "prompt",
+    "text_sha256": "959b96d20d7f8a1c94691ec24e011be9a34710ffce0516b8d1ee656960ceb708",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes launch time as 0; English spells \"time zero\". Both give the same one-way delay and ask for the earliest load reflection returning to the source."
+  },
+  {
+    "key": "quick-hw-338-v2",
+    "field": "prompt",
+    "text_sha256": "3ccacd2718f61d6f6372d8964e804c353b83c0b8946f5decc6670701e3f679b3",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes launch time as 0; English spells \"zero\". Both give a one-way delay of 1ns and ask for the first load response, not a round trip."
+  },
+  {
+    "key": "quick-hw-338-v4",
+    "field": "prompt",
+    "text_sha256": "49b382c6ba8378eec13fd2bc8f982e17b2748e6e00fed9767a66357aa1705bce",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes launch time as 0; English spells \"zero\". Both give 12ns one-way and the same source-to-load, load-to-source, source-to-load reflection sequence."
+  },
+  {
+    "key": "quick-hw-341-v1",
+    "field": "prompt",
+    "text_sha256": "bb3ffe016ded5ff79e59224b243d949466c296a0f7d655d2e4e1f69f51aa838f",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes an isolated-cell chain length as 1; English spells \"length one\". The vertex range, complete edge list, and request for cell count are identical."
+  },
+  {
+    "key": "quick-hw-341-v2",
+    "field": "prompt",
+    "text_sha256": "017b84d74ae3a8208f05e9d5651d80668408d0e62b51e37d3d6f07e4120d93ef",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes an isolated-cell chain length as 1; English spells \"length one\". The vertex range, complete edge list, and request for cell count are identical."
+  },
+  {
+    "key": "quick-hw-341-v3",
+    "field": "prompt",
+    "text_sha256": "fb6f462bedb5925d64cb235890fc7dc8b13d81fed2eafe8eedc182a993048076",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes an isolated-cell chain length as 1; English spells \"length one\". The vertex range, complete edge list, and request for cell count are identical."
+  },
+  {
+    "key": "quick-hw-341-v4",
+    "field": "prompt",
+    "text_sha256": "6cf84f36bee239abbd953d8af38411731ccb7f0e4b454cb77013f79a6f2d5342",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes an isolated-cell chain length as 1; English spells \"length one\". The vertex range, complete edge list, and request for cell count are identical."
+  },
+  {
+    "key": "quick-hw-341-v5",
+    "field": "prompt",
+    "text_sha256": "19f0ebfbe6c71d9b4a9b3dc84b2eb7b565f3a9fd7e6f2e18fd3c5a505e1d7b1e",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes an isolated-cell chain length as 1; English spells \"length one\". The vertex range, complete edge list, and request for cell count are identical."
+  },
+  {
+    "key": "quick-hw-346-v1",
+    "field": "prompt",
+    "text_sha256": "b82bfaa54f981487108e9f57404f922a7420016674b4d44365755e54866c647c",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes initial counter 0 and saturation threshold 3 as digits; English spells \"zero\" and \"three\". Input bits and the single-pass, no-subtraction contract agree."
+  },
+  {
+    "key": "quick-hw-346-v2",
+    "field": "prompt",
+    "text_sha256": "e81322a7b002ec8c44a4c095264d5e0c1476b702c59fa4a9b80a6bd033d507e0",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes initial counter 0 and saturation threshold 3 as digits; English spells \"zero\" and \"three\". Input bits and the single-pass, no-subtraction contract agree."
+  },
+  {
+    "key": "quick-hw-346-v3",
+    "field": "prompt",
+    "text_sha256": "5036e0d5cd5a81566ac78dd9968cc7f66f2c3c5c33313570acf56907b338852e",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes initial counter 0 and saturation threshold 3 as digits; English spells \"zero\" and \"three\". Input bits and the single-pass, no-subtraction contract agree."
+  },
+  {
+    "key": "quick-hw-346-v4",
+    "field": "prompt",
+    "text_sha256": "ade50991601d037aa100af39c40cc39536223daccf445dd8eaf36d5c83464a9e",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes initial counter 0 and saturation threshold 3 as digits; English spells \"zero\" and \"three\". Input bits and the single-pass, no-subtraction contract agree."
+  },
+  {
+    "key": "quick-hw-346-v5",
+    "field": "prompt",
+    "text_sha256": "dea6f8ba03318a2b311f469740b46918e5ac6fa9fff381111d6ebbaa9eb24051",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes initial counter 0 and saturation threshold 3 as digits; English spells \"zero\" and \"three\". Input bits and the single-pass, no-subtraction contract agree."
+  },
+  {
+    "key": "quick-hw-347-v1",
+    "field": "prompt",
+    "text_sha256": "1d2e309dd1a6b234eeae3150130217f613a5f202ce4953eb7f6fb1b85452931c",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the already-satisfied return value as 0; English spells \"Return zero\". The bit list, strict more-than-two threshold, and minimum-zero-flip question agree."
+  },
+  {
+    "key": "quick-hw-347-v2",
+    "field": "prompt",
+    "text_sha256": "7c2cb36cb376ffc4a33f34dc8f98e30240093e304433a3ae872dae53a692c823",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the already-satisfied return value as 0; English spells \"Return zero\". The bit list, strict more-than-two threshold, and minimum-zero-flip question agree."
+  },
+  {
+    "key": "quick-hw-347-v3",
+    "field": "prompt",
+    "text_sha256": "4ce8f96264afb91f5be86bf81a2ce18ddfa632cb10fc4763b60cf676185d7bd3",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the already-satisfied return value as 0; English spells \"Return zero\". The bit list, strict more-than-two threshold, and minimum-zero-flip question agree."
+  },
+  {
+    "key": "quick-hw-347-v4",
+    "field": "prompt",
+    "text_sha256": "a61cc5cb96e3cbaf0fc59883fe7c3bee306a153217c4301bf9d0ad56b548bad9",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the already-satisfied return value as 0; English spells \"Return zero\". The bit list, strict more-than-two threshold, and minimum-zero-flip question agree."
+  },
+  {
+    "key": "quick-hw-347-v5",
+    "field": "prompt",
+    "text_sha256": "ed9ed74a72a91e86555cb4a7d576d29ccf5d06a80802fd67b7e95d83c158b3c1",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the already-satisfied return value as 0; English spells \"Return zero\". The bit list, strict more-than-two threshold, and minimum-zero-flip question agree."
+  },
+  {
+    "key": "quick-hw-350-v1",
+    "field": "prompt",
+    "text_sha256": "1798b68340ab241b3db4decfe7c44d3d58c3acbd42b3cf8beda9c1202a6b6642",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the no-factor sentinel as 0; English spells \"Return zero\". The starting divisors, input n, inclusive square-root boundary, and first-factor requirement agree."
+  },
+  {
+    "key": "quick-hw-350-v2",
+    "field": "prompt",
+    "text_sha256": "26fde96451d33b12f105477a0d8a3901ea1bc499459cab809c9847107e2772ab",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the no-factor sentinel as 0; English spells \"Return zero\". The starting divisors, input n, inclusive square-root boundary, and first-factor requirement agree."
+  },
+  {
+    "key": "quick-hw-350-v3",
+    "field": "prompt",
+    "text_sha256": "f55a74aaefb2ce46b67c2c1fd3b50f1f2fc100a754453a7a84348f1a186440e8",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the no-factor sentinel as 0; English spells \"Return zero\". The starting divisors, input n, inclusive square-root boundary, and first-factor requirement agree."
+  },
+  {
+    "key": "quick-hw-350-v4",
+    "field": "prompt",
+    "text_sha256": "de57730fc6726ad11b26cc4cc3ffe290410233f017517f06a698f6bcdaa007c9",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the no-factor sentinel as 0; English spells \"Return zero\". The starting divisors, input n, inclusive square-root boundary, and first-factor requirement agree."
+  },
+  {
+    "key": "quick-hw-350-v5",
+    "field": "prompt",
+    "text_sha256": "0a5ad953cce881c284f31051c1ef6cc1b36bf5fff1e3491e46f7759b4ed46a62",
+    "review": "AI bilingual equivalence review; not human approval",
+    "reason": "Hebrew writes the no-factor sentinel as 0; English spells \"Return zero\". The starting divisors, input n, inclusive square-root boundary, and first-factor requirement agree."
   }
 ]

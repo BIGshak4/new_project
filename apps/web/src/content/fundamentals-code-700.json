@@ -1,0 +1,728 @@
+[
+  {
+    "id": "quick-sw-321",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-224"
+    ],
+    "title": {
+      "he": "חזית המיזוג חושפת יורש אחד",
+      "en": "A merge frontier reveals one successor"
+    },
+    "prompt": {
+      "he": "ממזגים רשימות ממוינות [1,8],[2,3],[4]. החזית מכילה רק את הראש שטרם נצרך מכל רשימה. אחרי הוצאת 1, מה החזית החדשה ומדוע לא מוסיפים את כל הרשימה?",
+      "en": "Merge sorted lists [1,8],[2,3],[4]. The frontier holds only each list's first unconsumed item. After removing 1, what is the new frontier, and why not add the entire list?"
+    },
+    "answer": {
+      "he": "החזית היא [2,4,8] בסדר ערכים. מוסיפים רק את יורשו של האיבר שנשלף. כל איבר אחר באותה רשימה אינו קטן מן היורש, ולכן עדיין אינו דרוש להחלטה הבאה. רשימה שמוצתה אינה תורמת נציג.",
+      "en": "The value-sorted frontier is [2,4,8]. Add only the removed item's successor. Later items in that list cannot be smaller than its successor, so they are unnecessary for the next decision. An exhausted list contributes no representative."
+    },
+    "takeaway": {
+      "he": "במיזוג ממויין מספיק נציג אחד לכל מקור שטרם מוצה.",
+      "en": "Sorted merging needs one representative per unexhausted source."
+    }
+  },
+  {
+    "id": "quick-sw-322",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-226"
+    ],
+    "title": {
+      "he": "מנרמלים אותיות לפני השוואת אנגרמות",
+      "en": "Normalize case before comparing anagrams"
+    },
+    "prompt": {
+      "he": "מילים מכילות אותיות ASCII בלבד, והחוזה מתעלם מהבדל בין אות גדולה לקטנה. האם Silent ו־LISTEN אנגרמות? באיזה שלב מנרמלים את האותיות?",
+      "en": "Words contain ASCII letters only, and the contract ignores letter case. Are Silent and LISTEN anagrams? At which stage should case be normalized?"
+    },
+    "answer": {
+      "he": "כן. ממירים את שתי המילים לאותיות קטנות לפני יצירת חתימה ממוינת או ספירת שכיחויות. החתימות בשתיהן eilnst. מיון התווים המקוריים לפני השוואה אינו מקיים את חוזה ההתעלמות מגודל האות. נרמול אינו מסיר מופעים חוזרים.",
+      "en": "Yes. Convert both words to lowercase before building sorted signatures or frequency counts. Both signatures become eilnst. Comparing sorted original characters would violate the case-insensitive contract. Normalization does not remove repeated occurrences."
+    },
+    "takeaway": {
+      "he": "כלל השקילות קובע איזה נרמול נדרש לפני ההשוואה.",
+      "en": "The equivalence rule determines normalization before comparison."
+    },
+    "code": {
+      "language": "python",
+      "text": "def anagram(a, b):\n    return sorted(a.lower()) == sorted(b.lower())"
+    }
+  },
+  {
+    "id": "quick-sw-323",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-229"
+    ],
+    "title": {
+      "he": "גבול הכתיבה מתקדם רק עבור ערך שנשמר",
+      "en": "The write boundary advances only for retained values"
+    },
+    "prompt": {
+      "he": "מעבירים אפסים לסוף [0,5,0,2] ושומרים על סדר הערכים האחרים. מה התוצאה, ומה מייצג גבול הכתיבה במהלך הסריקה?",
+      "en": "Move zeros to the end of [0,5,0,2], preserving other values' order. What is returned, and what does the write boundary represent during scanning?"
+    },
+    "answer": {
+      "he": "מתקבל [5,2,0,0]. לפני גבול הכתיבה נמצאים בדיוק הערכים הלא־אפסיים שכבר נצפו, בסדרם המקורי. כל ערך כזה מקדם את הגבול פעם אחת. בסוף ממלאים באפס את יתר המערך.",
+      "en": "The result is [5,2,0,0]. Before the write boundary are exactly the nonzero values seen so far, in their original order. Each such value advances the boundary once. Finally fill the remaining suffix with zeros."
+    },
+    "takeaway": {
+      "he": "סריקה וכתיבה נפרדות מאפשרות דחיסה יציבה.",
+      "en": "Separate scan and write positions enable stable compaction."
+    },
+    "code": {
+      "language": "python",
+      "text": "def compact(a):\n    w = 0\n    for x in a:\n        if x != 0: a[w] = x; w += 1\n    a[w:] = [0] * (len(a)-w); return a"
+    }
+  },
+  {
+    "id": "quick-sw-324",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-238"
+    ],
+    "title": {
+      "he": "שומרים את ההמשך לפני היפוך הקישור",
+      "en": "Save the successor before reversing a link"
+    },
+    "prompt": {
+      "he": "ברשימה A→B→C, ההיפוך כבר טיפל ב־A וכעת current=B, previous=A. אחרי הפיכת B.next ל־A, לאיזו חוליה צריך להתקדם וכיצד שומרים אותה?",
+      "en": "In A→B→C, reversal has processed A and now current=B, previous=A. After setting B.next to A, which node should become current, and how is it preserved?"
+    },
+    "answer": {
+      "he": "מתקדמים ל־C. שומרים את B.next הישן לפני כתיבה אליו; אחרת קריאה חוזרת תוביל ל־A, שכבר טופלה. אחרי השמירה הופכים את הקישור, מעדכנים previous ל־B ומתקדמים ליורש שנשמר.",
+      "en": "Advance to C. Save the old B.next before overwriting it; reading it afterward would lead back to already processed A. Then reverse the link, set previous to B, and advance to the saved successor."
+    },
+    "takeaway": {
+      "he": "לפני דריסת קישור שומרים כל מידע שעוד דרוש לסריקה.",
+      "en": "Preserve future traversal information before overwriting a link."
+    }
+  },
+  {
+    "id": "quick-sw-325",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-239"
+    ],
+    "title": {
+      "he": "מרכאות ב־CSV משנות את משמעות הפסיק",
+      "en": "CSV quotes change what a comma means"
+    },
+    "prompt": {
+      "he": "ברשומת CSV תקינה, פסיק בתוך שדה מצוטט הוא תוכן וזוג מרכאות כפולות מייצג מרכאה אחת. אילו שדות מפיקה הרשומה \"a,b\",\"c\"\"d\",?",
+      "en": "In valid CSV, a comma inside quotes is content and doubled quotes encode one quote. What fields does the record \"a,b\",\"c\"\"d\", produce?"
+    },
+    "answer": {
+      "he": "שלושת השדות הם a,b ואז c\"d ואז מחרוזת ריקה. הפסיק האחרון פותח שדה ריק; אין להשמיטו. פיצול פשוט על כל פסיק שובר את השדה הראשון ואינו מפענח מרכאות כפולות.",
+      "en": "The three fields are a,b, then c\"d, then an empty string. The final comma introduces an empty field and must be preserved. Splitting on every comma breaks the first field and does not decode doubled quotes."
+    },
+    "takeaway": {
+      "he": "מפריד הוא משמעות של מצב הפענוח, לא רק תו.",
+      "en": "A delimiter's meaning depends on parser state."
+    }
+  },
+  {
+    "id": "quick-sw-326",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-237"
+    ],
+    "title": {
+      "he": "בעלות על מפתח מונעת תלות במאגר הקורא",
+      "en": "Owning a key removes dependence on caller storage"
+    },
+    "prompt": {
+      "he": "מילון ב־C מעתיק את תוכן מפתח הקורא בזמן הוספה. המפתח cat נוסף, ואז הקורא משנה את המאגר שלו ל־bat. תחת החוזה הזה, איזה מפתח נשמר במילון?",
+      "en": "A C dictionary copies the caller's key bytes during insertion. After inserting cat, the caller changes its buffer to bat. Under this contract, which key remains in the dictionary?"
+    },
+    "answer": {
+      "he": "cat נשאר. עותק בבעלות המילון אינו משתנה כשמאגר הקורא משתנה. שמירת מצביע בלבד הייתה יוצרת תלות בחיי המאגר ובשינויים בו. יש לשחרר את עותק המפתח בדיוק כשבעלות המילון עליו מסתיימת.",
+      "en": "cat remains. The dictionary-owned copy is unaffected by caller-buffer changes. Keeping only a pointer would depend on that buffer's lifetime and later mutations. Release the copied key when the dictionary's ownership ends."
+    },
+    "takeaway": {
+      "he": "העתקת כתובת והעתקת תוכן יוצרות חוזי בעלות שונים.",
+      "en": "Copying an address and copying contents establish different ownership contracts."
+    }
+  },
+  {
+    "id": "quick-sw-327",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-245"
+    ],
+    "title": {
+      "he": "מועמד בסודוקו חייב לעבור שלושה אילוצים",
+      "en": "A Sudoku candidate must pass three constraints"
+    },
+    "prompt": {
+      "he": "בסודוקו רגיל מותרות הספרות 1..9. לשדה ריק יש בשורה {1,2}, בעמודה {3,4} ובתיבה {5,6,7}. אילו מועמדים נשארים?",
+      "en": "Standard Sudoku allows digits 1..9. An empty cell sees {1,2} in its row, {3,4} in its column and {5,6,7} in its box. Which candidates remain?"
+    },
+    "answer": {
+      "he": "{8,9}. ספרה מותרת רק אם היא חסרה בכל שלושת האזורים. מחסרים מטווח הספרות את איחוד הספרות שכבר מופיעות. קבוצת מועמדים ריקה מצביעה על סתירה בענף הנוכחי, לא בהכרח על היעדר פתרון ללוח המקורי.",
+      "en": "{8,9}. A digit is permitted only when absent from all three regions. Subtract their union from the digit domain. An empty candidate set signals a contradiction in the current branch, not necessarily an unsolvable original board."
+    },
+    "takeaway": {
+      "he": "אילוצים מצטברים מסירים את איחוד הערכים האסורים.",
+      "en": "Combined constraints exclude the union of forbidden values."
+    },
+    "code": {
+      "language": "python",
+      "text": "def candidates(row, col, box):\n    return sorted(set(range(1,10)) - set(row) - set(col) - set(box))"
+    }
+  },
+  {
+    "id": "quick-sw-328",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-246"
+    ],
+    "title": {
+      "he": "בין שני חציונים עשוי להיות מישור של מינימום",
+      "en": "Two middle positions can bound many optima"
+    },
+    "prompt": {
+      "he": "אנשים נמצאים במיקומים 0,2,8,10 על רחוב ישר. נקודת המפגש היא מספר שלם וממזערת את סכום מרחקי ההליכה. האם רק נקודת האמצע 5 אופטימלית?",
+      "en": "People stand at 0,2,8,10 on a straight street. The integer meeting position minimizes total walking distance. Is only midpoint 5 optimal?"
+    },
+    "answer": {
+      "he": "לא. כל מספר שלם מ־2 עד 8 כולל נותן סכום 16. בתחום שבין שני האיברים האמצעיים, הזזה ביחידה מקרבת לשני אנשים ומרחיקה משניים. עבור כמות אי־זוגית, המיקום האמצעי הוא חציון אופטימלי.",
+      "en": "No. Every integer from 2 through 8 gives total distance 16. Between the two middle positions, moving one unit approaches two people and moves away from two. For an odd count, the middle position is an optimal median."
+    },
+    "takeaway": {
+      "he": "סכום מרחקים מוחלטים מתמזער בחציון, ולעיתים בתחום שלם.",
+      "en": "Absolute-distance sums are minimized at medians, sometimes across an interval."
+    }
+  },
+  {
+    "id": "quick-sw-329",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-247"
+    ],
+    "title": {
+      "he": "החיובי הראשון שחסר חסום באורך ועוד אחד",
+      "en": "The first missing positive is bounded by length plus one"
+    },
+    "prompt": {
+      "he": "במערך [3,4,-1,1] מחפשים את המספר החיובי הקטן ביותר שאינו מופיע. למה אפשר להתעלם משליליים ומערכים הגדולים מאורך המערך בזמן סימון המועמדים?",
+      "en": "Find the smallest missing positive in [3,4,-1,1]. Why can candidate marking ignore negatives and values greater than the array length?"
+    },
+    "answer": {
+      "he": "התשובה היא 2. במערך באורך n, אם כל 1..n מופיעים התשובה n+1; אחרת חסר מספר בתחום הזה. לכן ערכים מחוץ ל־1..n אינם מסמנים מועמד נחוץ. כפילויות מסמנות אותו מועמד שוב ואינן ממלאות חוסר אחר.",
+      "en": "The answer is 2. For length n, either every value 1..n appears and the answer is n+1, or one is missing in that range. Values outside 1..n mark no needed candidate. Duplicates mark the same candidate again and cannot fill another gap."
+    },
+    "takeaway": {
+      "he": "חסם על התשובה מצמצם את תחום הערכים שצריך לייצג.",
+      "en": "Bounding the answer narrows the values that need representation."
+    },
+    "code": {
+      "language": "python",
+      "text": "def missing(a):\n    return next(x for x in range(1,len(a)+2) if x not in set(a))"
+    }
+  },
+  {
+    "id": "quick-sw-330",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-305"
+    ],
+    "title": {
+      "he": "מעבירים לתור היוצא רק כשהוא ריק",
+      "en": "Transfer only when the outgoing stack is empty"
+    },
+    "prompt": {
+      "he": "תור משתמש בשתי מחסניות. בראש מחסנית היציאה נמצא 1 ומחסנית הכניסה מכילה את הערכים החדשים 2,3, כשהחדש בראש. מדוע אין להעביר את הכניסה לפני הוצאת 1?",
+      "en": "A queue uses two stacks. The outgoing stack has 1 on top; the incoming stack holds newer values 2,3, newest on top. Why must incoming items not transfer before removing 1?"
+    },
+    "answer": {
+      "he": "העברה כעת תניח את 2 מעל 1 ותוציא ערך חדש לפני הישן. מרוקנים את מחסנית היציאה לפני היפוך כל הכניסה לתוכה. כל איבר נכנס, מועבר ויוצא לכל היותר פעם אחת, ולכן העלות הממוצעת לפעולה קבועה.",
+      "en": "Transferring now puts 2 above 1 and removes a newer value first. Empty the outgoing stack before reversing all incoming items into it. Each item is pushed, transferred and removed at most once, giving constant amortized work per operation."
+    },
+    "takeaway": {
+      "he": "גבול ההעברה משמר את סדר ההגעה בין קבוצות.",
+      "en": "The transfer boundary preserves arrival order between batches."
+    }
+  },
+  {
+    "id": "quick-sw-331",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-304"
+    ],
+    "title": {
+      "he": "סביב סמן נשמרים שני סדרים הפוכים",
+      "en": "A cursor has two oppositely ordered sides"
+    },
+    "prompt": {
+      "he": "סמן נמצא בין תווים. מחסנית L משמאלו בסדר תחתית־לראש [a,b], ומחסנית R מימינו [d,c]. מה הטקסט, ומה משתנה כשהסמן זז ימינה פעם אחת?",
+      "en": "A cursor lies between characters. Left stack L is [a,b] bottom-to-top and right stack R is [d,c] bottom-to-top. What is the text, and what changes after moving right once?"
+    },
+    "answer": {
+      "he": "הטקסט abcd. התו הקרוב מימין הוא c שבראש R; מעבירים אותו לראש L. נקבל L=[a,b,c],R=[d]. הטקסט נשמר, ורק נקודת הפיצול משתנה. אם R ריקה, תנועה ימינה אינה עושה דבר.",
+      "en": "The text is abcd. The nearest right character is c at R's top; move it to L's top. Then L=[a,b,c],R=[d]. Text stays unchanged while the split moves. When R is empty, moving right does nothing."
+    },
+    "takeaway": {
+      "he": "קרבת איבר לסמן מתורגמת לראש מחסנית.",
+      "en": "Proximity to a cursor is represented by a stack top."
+    }
+  },
+  {
+    "id": "quick-sw-332",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-285"
+    ],
+    "title": {
+      "he": "היפוך ספרות אינו מבטיח תוצאה ניתנת לייצוג",
+      "en": "Reversed digits may exceed the result type"
+    },
+    "prompt": {
+      "he": "הופכים ספרות של signed int32 ושומרים סימן. החוזה מחזיר None בגלישה. מה מחזירים עבור ‎-120 ועבור 1534236469?",
+      "en": "Reverse decimal digits of signed int32 while preserving sign. Return None on overflow. What is returned for -120 and 1534236469?"
+    },
+    "answer": {
+      "he": "עבור ‎-120 מתקבל ‎-21; האפס המוביל בתוצאה אינו נשמר כמקום מספרי. עבור 1534236469 ההיפוך 9646324351 חורג מ־2147483647, ולכן מוחזר None. בודקים את התוצאה מול שני גבולות הטיפוס לפני המרה אליו.",
+      "en": "-120 gives -21; a leading result zero has no numeric place value. Reversing 1534236469 gives 9646324351, exceeding 2147483647, so return None. Check both type bounds before converting to the destination type."
+    },
+    "takeaway": {
+      "he": "קלט חוקי אינו מבטיח שפלט טרנספורמציה ייכנס לאותו טיפוס.",
+      "en": "A valid input does not guarantee its transformation fits the same type."
+    },
+    "code": {
+      "language": "python",
+      "text": "def reverse32(n):\n    r = int(str(abs(n))[::-1]) * (-1 if n < 0 else 1)\n    return r if -(2**31) <= r < 2**31 else None"
+    }
+  },
+  {
+    "id": "quick-sw-333",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-287"
+    ],
+    "title": {
+      "he": "מיון יחסי מחלק את הערכים למועדפים ולשאר",
+      "en": "Relative sorting separates priorities from the remainder"
+    },
+    "prompt": {
+      "he": "ממיינים A=[3,1,3,2,4] לפי סדר העדיפות B=[3,2]. כפילויות נשמרות; ערכים שאינם ב־B באים אחרונים בסדר עולה. מה התוצאה?",
+      "en": "Sort A=[3,1,3,2,4] using priority order B=[3,2]. Preserve duplicates; values absent from B follow in ascending order. What is returned?"
+    },
+    "answer": {
+      "he": "[3,3,2,1,4]. תחילה מוציאים את כל מופעי 3, אחריהם את מופעי 2. לבסוף ממיינים את 1 ו־4. מפתח מיון יכול להכיל תחילה האם הערך בעדיפות, ואחר כך את דירוגו או את ערכו.",
+      "en": "[3,3,2,1,4]. Emit every 3 first, then every 2, then sort remaining 1 and 4. A sort key can first distinguish priority membership, then use priority rank or the value itself."
+    },
+    "takeaway": {
+      "he": "מפתח מורכב מגדיר במפורש גם את סדר קבוצת השאר.",
+      "en": "A composite key explicitly orders the remainder too."
+    }
+  },
+  {
+    "id": "quick-sw-334",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-289"
+    ],
+    "title": {
+      "he": "רצף מסתיים גם בגבול המערך",
+      "en": "A run can end at the array boundary"
+    },
+    "prompt": {
+      "he": "מחפשים רצף אחדות ארוך ביותר ב־[0,1,0,1,1]. מחזירים [התחלה,סוף] כולל, ובתיקו את המוקדם. מדוע עדכון תשובה רק כשרואים אפס עלול להיכשל?",
+      "en": "Find the longest run of ones in [0,1,0,1,1], returning inclusive [start,end] and choosing the earliest tie. Why can updating the answer only upon seeing zero fail?"
+    },
+    "answer": {
+      "he": "הרצף הזוכה [3,4] מגיע לסוף בלי אפס שסוגר אותו. אפשר לעדכן את הטוב ביותר בכל אחד, או לבצע סגירה נוספת אחרי הלולאה. מעדכנים בתיקו רק אם המדיניות דורשת זאת; כאן שומרים את המוקדם.",
+      "en": "Winning run [3,4] reaches the end without a closing zero. Update the best result on every one, or finalize once after the loop. Update ties only as the policy requires; here retain the earlier run."
+    },
+    "takeaway": {
+      "he": "תנאי סיום חיצוני חייב לטפל גם בקבוצה האחרונה.",
+      "en": "Termination must handle the final group as well."
+    }
+  },
+  {
+    "id": "quick-sw-335",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-296"
+    ],
+    "title": {
+      "he": "קישור אלכסוני תלוי בהגדרת השכנות",
+      "en": "Diagonal connectivity depends on the neighborhood"
+    },
+    "prompt": {
+      "he": "בתמונה [[1,0],[0,1]], אחד הוא שחור. כמה רכיבים שחורים יש בשכנות ארבעה וכמה בשכנות שמונה?",
+      "en": "In image [[1,0],[0,1]], one is black. How many black components exist with four-neighbor connectivity and with eight-neighbor connectivity?"
+    },
+    "answer": {
+      "he": "בשכנות ארבעה יש שני רכיבים: האלכסון אינו קישור. בשכנות שמונה יש רכיב אחד. לכן בחירת שכנות משנה גם את מספר המלבנים החוסמים, ויש לקבוע אותה לפני סריקת התמונה.",
+      "en": "Four-neighbor connectivity gives two components because diagonals do not connect. Eight-neighbor connectivity gives one. The neighborhood therefore changes the number of bounding boxes and must be specified before scanning the image."
+    },
+    "takeaway": {
+      "he": "הגדרת הקשתות קודמת לחיפוש רכיבים.",
+      "en": "Define adjacency before searching for components."
+    }
+  },
+  {
+    "id": "quick-sw-336",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "title": {
+      "he": "תא חסום אינו מעביר מסלולים הלאה",
+      "en": "A blocked cell propagates no paths"
+    },
+    "prompt": {
+      "he": "ברשת 3×3 נעים רק ימינה ולמטה מהפינה השמאלית העליונה לימנית התחתונה. התא המרכזי חסום. כמה מסלולים נשארים, ואיזה ערך מקבל תא חסום בטבלת הספירה?",
+      "en": "In a 3-by-3 grid, move only right and down from top-left to bottom-right. The center cell is blocked. How many paths remain, and what count does a blocked cell receive?"
+    },
+    "answer": {
+      "he": "נשארים שני מסלולים. תא חסום מקבל אפס; תא מותר מקבל את סכום הספירות שמעליו ומשמאלו. תא ההתחלה מקבל אחד רק אם הוא מותר. חסימה בהתחלה או ביעד מבטלת את כל המסלולים.",
+      "en": "Two paths remain. A blocked cell receives zero; an open cell sums counts from above and left. The start receives one only when open. Blocking the start or destination eliminates every path."
+    },
+    "takeaway": {
+      "he": "מקרי הבסיס חייבים לכבד את אותם אילוצים כמו המעבר.",
+      "en": "Base cases must obey the same constraints as transitions."
+    }
+  },
+  {
+    "id": "quick-sw-337",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-303"
+    ],
+    "title": {
+      "he": "רווח ASCII אינו כל תו לבן",
+      "en": "An ASCII space is not every whitespace character"
+    },
+    "prompt": {
+      "he": "החוזה מסיר רק U+0020 ושומר על שאר התווים. מה נשאר במחרוזת \" a\\tb \"? ‎\\t מייצג טאב אחד.",
+      "en": "Remove only U+0020 and preserve every other character. What remains from \" a\\tb \"? \\t represents one tab."
+    },
+    "answer": {
+      "he": "מתקבל a ואז טאב ואז b. רווחי ASCII נמחקים, אך הטאב נשמר. פונקציה כללית לפיצול על תווים לבנים עלולה למחוק יותר מן המותר ולשנות את התוכן.",
+      "en": "The result is a, then a tab, then b. ASCII spaces disappear but the tab remains. Generic whitespace splitting may remove more than the contract permits and change the content."
+    },
+    "takeaway": {
+      "he": "בוחרים תנאי סינון לפי החוזה המדויק של התו.",
+      "en": "Choose character filtering according to the exact contract."
+    },
+    "code": {
+      "language": "python",
+      "text": "def remove_spaces(text):\n    return ''.join(c for c in text if c != ' ')"
+    }
+  },
+  {
+    "id": "quick-sw-338",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-295"
+    ],
+    "title": {
+      "he": "פענוח מספר נעצר בסוף הקידומת",
+      "en": "Integer parsing stops at the end of the prefix"
+    },
+    "prompt": {
+      "he": "מפענח מדלג על רווחי ASCII בתחילה, קורא סימן אחד ואז ספרות ASCII רצופות. הוא עוצר בתו אחר, מחזיר אפס ללא ספרות ומרווה ל־int32. מה מתקבל מ־\" -12x34\"?",
+      "en": "A parser skips leading ASCII spaces, reads one sign and consecutive ASCII digits, stops at another character, returns zero without digits, and saturates to int32. What does \" -12x34\" produce?"
+    },
+    "answer": {
+      "he": "‎-12. האות x מסיימת את קידומת הספרות; אין לדלג עליה כדי לצרף 34. הסימן חל רק על הספרות שנקראו. מחרוזת עם סימן בלבד מחזירה אפס לפי החוזה.",
+      "en": "-12. The x ends the numeric prefix; do not skip it and append 34. The sign applies only to the consumed digits. A sign-only string returns zero under this contract."
+    },
+    "takeaway": {
+      "he": "פענוח קידומת שונה מאיסוף כל הספרות במחרוזת.",
+      "en": "Parsing a prefix differs from collecting every digit in a string."
+    }
+  },
+  {
+    "id": "quick-sw-339",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-278"
+    ],
+    "title": {
+      "he": "הזזה מעגלית יציבה מסיטה רק את התחום",
+      "en": "A stable circular move shifts only its traversed range"
+    },
+    "prompt": {
+      "he": "במערך המעגלי [A,B,C,D], מעבירים את אינדקס 3 שני צעדים קדימה. מסירים את ערכו, וכל ערך בדרך זז תא אחורה; שאר הערכים נשמרים. מה התוצאה?",
+      "en": "In circular array [A,B,C,D], move index 3 forward two steps. Remove its value, shift each traversed value back one slot, and keep all others. What is the result?"
+    },
+    "answer": {
+      "he": "[B,D,C,A]. המסלול הוא 3→0→1. A עובר לאינדקס 3, B עובר ל־0 ו־D נכנס ל־1. זה אינו סיבוב של כל המערך. לפני הפעולה מצמצמים את מספר הצעדים מודולו האורך.",
+      "en": "[B,D,C,A]. The path is 3→0→1: A moves to index 3, B to 0 and D to 1. This is not rotation of the entire array. Normalize the step count modulo array length first."
+    },
+    "takeaway": {
+      "he": "מודולו קובע את המסלול; יציבות קובעת אילו שכנים יזוזו.",
+      "en": "Modulo defines the path; stability determines how neighboring values shift."
+    }
+  },
+  {
+    "id": "quick-sw-340",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-311"
+    ],
+    "title": {
+      "he": "השארית מגדירה מתי החילוק נגמר",
+      "en": "The remainder determines when division stops"
+    },
+    "prompt": {
+      "he": "מחלקים 17 ב־5 בחיסור חוזר: מתחילים במנה 0 ובשארית 17; כל עוד השארית לפחות 5, מחסרים 5 ומגדילים מנה. מה המנה והשארית, ולמה המחלק חייב להיות חיובי?",
+      "en": "Divide 17 by 5 through repeated subtraction: start with quotient 0 and remainder 17; while the remainder is at least 5, subtract 5 and increment the quotient. What are quotient and remainder, and why must the divisor be positive?"
+    },
+    "answer": {
+      "he": "המנה 3 והשארית 2. לאורך התהליך 17=מנה×5+שארית, ובסיום 0≤שארית<5. מחלק חיובי מקטין את השארית ומבטיח עצירה. במחלק אפס החיסור אינו מקדם; בחוזה כאן מחזירים None לפני הלולאה. המחולק חייב להיות לא־שלילי.",
+      "en": "The quotient is 3 and remainder 2. Throughout, 17=quotient×5+remainder; on exit, 0≤remainder<5. A positive divisor decreases the remainder and guarantees termination. Subtracting zero makes no progress; this contract returns None before looping. The dividend must be nonnegative."
+    },
+    "takeaway": {
+      "he": "אינווריאנט משמר את הערך ותנאי העצירה קובע שארית חוקית.",
+      "en": "The invariant preserves value and the stopping condition establishes a valid remainder."
+    },
+    "code": {
+      "language": "python",
+      "text": "def divide(n, d):\n    if d <= 0: return None\n    q = 0\n    while n >= d: n -= d; q += 1\n    return [q, n]"
+    }
+  },
+  {
+    "id": "quick-sw-341",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-252"
+    ],
+    "title": {
+      "he": "עותק חיצוני עדיין עשוי לשתף משאב פנימי",
+      "en": "An outer copy can still share inner storage"
+    },
+    "prompt": {
+      "he": "במודל Python, A=[[4],[7]]. יוצרים B כהעתק רדוד של הרשימה החיצונית, ואז מציבים B[0][0]=9. מה מכיל A? כיצד העתקה עמוקה הייתה משנה את התוצאה?",
+      "en": "In a Python model, A=[[4],[7]]. Create B as a shallow copy of the outer list, then set B[0][0]=9. What does A contain? How would a deep copy change the result?"
+    },
+    "answer": {
+      "he": "בהעתק רדוד A נעשה [[9],[7]]: הרשימות החיצוניות נפרדות אך מפנות לאותן רשימות פנימיות. בהעתק עמוק A נשאר [[4],[7]]. לעומת זאת, החלפת B[0] ברשימה חדשה משנה רק את הרשימה החיצונית של B, גם בהעתק רדוד.",
+      "en": "With a shallow copy A becomes [[9],[7]]: the separate outer lists reference the same inner lists. With a deep copy A stays [[4],[7]]. Replacing B[0] with a new list instead changes only B's outer list, even after shallow copying."
+    },
+    "takeaway": {
+      "he": "עומק ההעתקה קובע אילו רמות אחסון נשארות משותפות.",
+      "en": "Copy depth determines which storage levels remain shared."
+    }
+  },
+  {
+    "id": "quick-sw-342",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-281"
+    ],
+    "title": {
+      "he": "TestAndSet מחזיר את הערך הישן",
+      "en": "TestAndSet returns the old value"
+    },
+    "prompt": {
+      "he": "מנעול מתחיל ב־0. שתי פעולות TestAndSet אטומיות מתבצעות בזו אחר זו, וכל אחת כותבת 1 ומחזירה את הערך הישן. מה מוחזר ומי זוכה?",
+      "en": "A lock starts at 0. Two atomic TestAndSet operations occur in sequence; each writes 1 and returns the old value. What is returned and who acquires the lock?"
+    },
+    "answer": {
+      "he": "מוחזרים 0 ואז 1. הראשון רואה שהיה פנוי וזוכה; השני רואה שכבר תפוס. האטומיות מונעת משניהם לקרוא אפס לפני הכתיבה. זו הדגמה לסדר פעולות אטומי בלבד, לא הוכחה להוגנות או למודל זיכרון מלא.",
+      "en": "The returns are 0 then 1. The first sees an unlocked state and acquires; the second sees it occupied. Atomicity prevents both reading zero before writing. This demonstrates atomic ordering only, not fairness or a complete memory model."
+    },
+    "takeaway": {
+      "he": "הערך המוחזר מתאר את המצב לפני השינוי האטומי.",
+      "en": "The return value describes the state before the atomic update."
+    }
+  },
+  {
+    "id": "quick-sw-343",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-241"
+    ],
+    "title": {
+      "he": "אתחול מקומי סטטי מתרחש פעם אחת",
+      "en": "A static local initializes once"
+    },
+    "prompt": {
+      "he": "פונקציה מתחילה עם static int n=0 ומחזירה ++n בכל קריאה. ללא מקביליות, מה מחזירות שלוש קריאות, ומה היה משתנה אם n היה אוטומטי?",
+      "en": "A function has static int n=0 and returns ++n per call. Without concurrency, what do three calls return, and how would an automatic local differ?"
+    },
+    "answer": {
+      "he": "משתנה סטטי נשמר בין הקריאות ולכן מתקבל 1,2,3. משתנה אוטומטי שמאותחל לאפס בכל כניסה נותן 1,1,1. תחום השם המקומי אינו קובע לבדו את משך החיים.",
+      "en": "The static variable persists, producing 1,2,3. An automatic local initialized to zero on each entry produces 1,1,1. Local name scope alone does not determine storage lifetime."
+    },
+    "takeaway": {
+      "he": "תחום שם ומשך חיים הם שני מאפיינים נפרדים.",
+      "en": "Name scope and storage lifetime are separate properties."
+    }
+  },
+  {
+    "id": "quick-sw-344",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-266"
+    ],
+    "title": {
+      "he": "ערוץ התוצר וסטטוס התהליך הם מידע שונה",
+      "en": "Product output and process status are different signals"
+    },
+    "prompt": {
+      "he": "חוזה CLI דורש קוד יציאה 0 וגם תוצר stdout שאינו ריק. stderr מיועד לאבחון. תהליך יצא בקוד 0 אך stdout ריק. האם הוא עומד בחוזה?",
+      "en": "A CLI contract requires exit code 0 and nonempty stdout product data. stderr is diagnostic. A process exits with code 0 but empty stdout. Does it satisfy the contract?"
+    },
+    "answer": {
+      "he": "לא. קוד אפס לבדו אינו מוכיח שהתוצר נוצר. בודקים בנפרד את קוד היציאה ואת תנאי התוצר. הודעת אבחון ב־stderr אינה בהכרח כישלון; השפעתה נקבעת בחוזה.",
+      "en": "No. A zero status alone does not prove the product exists. Check exit status and product requirements separately. A diagnostic on stderr is not automatically failure; its meaning depends on the contract."
+    },
+    "takeaway": {
+      "he": "הצלחה נמדדת לפי כל תנאי החוזה, לא לפי אות יחיד.",
+      "en": "Success requires every contractual condition, not a single signal."
+    }
+  },
+  {
+    "id": "quick-sw-345",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-267"
+    ],
+    "title": {
+      "he": "JSON תקין אינו מבטיח שדה במבנה הצפוי",
+      "en": "Valid JSON does not guarantee the expected field"
+    },
+    "prompt": {
+      "he": "לאחר HTTP מוצלח ופענוח JSON, החוזה דורש אובייקט עם value מסוג מחרוזת. האם {\"value\":null} תקין, ואיך בודקים בלי להפוך null לטקסט?",
+      "en": "After successful HTTP and JSON decoding, require an object whose value field is a string. Is {\"value\":null} valid, and how can it be checked without converting null to text?"
+    },
+    "answer": {
+      "he": "לא. בודקים שהשורש מילון ושהערך הוא str לפני שמחזירים אותו. מפתח חסר, null ומספר אינם מחרוזת. מחרוזת ריקה מותרת לפי חוזה זה. הבדיקה כאן עוסקת בסכמה לאחר הפענוח, בלי לבצע בקשת רשת.",
+      "en": "No. Verify a dictionary root and a str field before returning it. Missing keys, null and numbers are not strings. An empty string is allowed by this contract. This checks the decoded schema without making a network request."
+    },
+    "takeaway": {
+      "he": "אימות תחביר ואימות סכמה הם שלבים שונים.",
+      "en": "Syntax validation and schema validation are different stages."
+    },
+    "code": {
+      "language": "python",
+      "text": "def extract(data):\n    v = data.get('value') if isinstance(data, dict) else None\n    return v if isinstance(v, str) else None"
+    }
+  },
+  {
+    "id": "quick-sw-346",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-269"
+    ],
+    "title": {
+      "he": "רוויה אחרי כל פעולה אינה רוויה רק בסוף",
+      "en": "Saturating each step differs from saturating the final sum"
+    },
+    "prompt": {
+      "he": "מהירות מתחילה ב־10, גז מוסיף 1 וברקס מחסיר 1. אחרי כל פעולה מרווים לטווח 0..10. מה התוצאה אחרי גז ואז ברקס, ומדוע סכימת השינויים קודם מטעה?",
+      "en": "Speed starts at 10; gas adds 1 and brake subtracts 1. Saturate to 0..10 after every action. What follows gas then brake, and why is summing changes first misleading?"
+    },
+    "answer": {
+      "he": "מתקבל 9: הגז נשאר ב־10, ואז הברקס יורד ל־9. סכימת ‎+1 ו־‎-1 קודם הייתה מחזירה 10. פעולה שנבלמה בגבול אינה נשמרת כחוב לפעולה הבאה.",
+      "en": "The result is 9: gas stays at 10, then brake reduces it to 9. Summing +1 and -1 before clamping would return 10. A change discarded at a boundary is not retained for the next action."
+    },
+    "takeaway": {
+      "he": "בפעולות רוויות גם סדר הפעולות משפיע על התוצאה.",
+      "en": "With saturation, operation order affects the result."
+    },
+    "code": {
+      "language": "python",
+      "text": "def speed(v, actions):\n    for delta in actions:\n        v = min(10, max(0, v + delta))\n    return v"
+    }
+  },
+  {
+    "id": "quick-sw-347",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-270"
+    ],
+    "title": {
+      "he": "תקרת ציון ידועה יכולה להצדיק עצירה מוקדמת",
+      "en": "A known score ceiling can certify early stopping"
+    },
+    "prompt": {
+      "he": "ציוני פוקוס יציבים נמצאים תמיד בטווח 0..100, בלי הנחת צורה. שתי מדידות נתנו [20,100], ועוד שמונה מיקומים לא נמדדו. האם אפשר להחזיר ערך מקסימלי מובטח כבר עכשיו? אין דרישה למצוא את כל המיקומים הזוכים.",
+      "en": "Stable focus scores always lie in 0..100 with no shape assumption. Two measurements give [20,100] and eight positions remain unmeasured. Can a guaranteed maximum value already be returned? Finding every maximizing position is not required."
+    },
+    "answer": {
+      "he": "כן, 100 מגיע לתקרה הידועה, ולכן שום מיקום לא נמדד אינו יכול לעבור אותו. ייתכנו זוכים נוספים, אבל ערך המקסימום מוכח. אם התוצאה הטובה ביותר נמוכה מהתקרה, דגימה מקומית לבדה אינה מספקת אותה הבטחה.",
+      "en": "Yes. 100 reaches the known ceiling, so no unmeasured position can exceed it. Other maximizing positions may exist, but the maximum value is certified. If the best observation is below the ceiling, local sampling alone cannot provide that guarantee."
+    },
+    "takeaway": {
+      "he": "חסם ערכים מאפשר עצירה מוקדמת גם בלי הנחת צורת פונקציה.",
+      "en": "A value bound can justify early stopping without a function-shape assumption."
+    }
+  },
+  {
+    "id": "quick-sw-348",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-245"
+    ],
+    "title": {
+      "he": "חזרה לאחור משחזרת רק את ניסיונות הענף",
+      "en": "Backtracking restores branch-local assignments"
+    },
+    "prompt": {
+      "he": "לוח מיוצג כ־[5,0,0], כאשר 5 נתון ו־0 ריק. ענף מציב 2 ואז 7 בשני הריקים ונכשל. לאיזה מצב צריך לחזור לפני ניסיון חדש באותו עומק התחלתי?",
+      "en": "A board is [5,0,0], where 5 is fixed and 0 is empty. A branch assigns 2 then 7 to the empty cells and fails. What state must be restored before a new attempt at the original depth?"
+    },
+    "answer": {
+      "he": "[5,0,0]. מבטלים את ההשמות שהענף יצר, בסדר הפוך, ושומרים את הנתון 5. אם חוזרים רק עומק אחד, מבטלים רק את ההשמה האחרונה. גבול השחזור חייב להתאים לגבול הבחירה.",
+      "en": "Restore [5,0,0]. Undo the assignments created by the branch in reverse order and preserve given 5. Returning only one depth undoes only the last assignment. The restoration boundary must match the choice boundary."
+    },
+    "takeaway": {
+      "he": "לכל בחירה זמנית יש פעולת ביטול באותו היקף.",
+      "en": "Every temporary choice needs an undo with matching scope."
+    }
+  },
+  {
+    "id": "quick-sw-349",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-273"
+    ],
+    "title": {
+      "he": "מעבר מיזוג מכפיל את אורך הריצות",
+      "en": "A merge pass doubles the sorted run length"
+    },
+    "prompt": {
+      "he": "במיון מיזוג מלמטה, [4,1,3,2,5] מתחיל בריצות באורך 1. מה המערך אחרי מעבר אחד הממזג זוגות ריצות סמוכות, ומה עושים לריצה האחרונה ללא בת זוג?",
+      "en": "In bottom-up merge sort, [4,1,3,2,5] starts with runs of length 1. What follows one pass merging adjacent run pairs, and what happens to the final unpaired run?"
+    },
+    "answer": {
+      "he": "מתקבל [1,4,2,3,5]. כל זוג הופך לריצה ממוינת באורך עד 2; הריצה [5] מועתקת ללא שינוי. המערך כולו עדיין אינו בהכרח ממוין. במעבר הבא ממזגים ריצות באורך 2.",
+      "en": "The result is [1,4,2,3,5]. Each pair becomes a sorted run of at most length 2; unpaired [5] stays unchanged. The full array need not yet be sorted. The next pass merges runs of length 2."
+    },
+    "takeaway": {
+      "he": "מיון מקומי של ריצות אינו עדיין מיון גלובלי.",
+      "en": "Sorted local runs do not yet imply a globally sorted array."
+    }
+  },
+  {
+    "id": "quick-sw-350",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-230"
+    ],
+    "title": {
+      "he": "סדר כתיבה וקריאה משנה את קבלת הבקשה",
+      "en": "Write-read ordering changes whether a request is accepted"
+    },
+    "prompt": {
+      "he": "תור בקיבולת 2 מכיל [4,5], הישן ראשון. בכל קריאה מבצעים כתיבה לפני קריאה, וכתיבה לתור מלא נדחית. מבוקש לכתוב 9 ולקרוא יחד. מה נקרא ומה נשאר?",
+      "en": "A capacity-2 queue contains [4,5], oldest first. Each call processes write before read, rejecting writes when full. A call requests writing 9 and reading. What is read and what remains?"
+    },
+    "answer": {
+      "he": "הכתיבה נדחית כי התור מלא בזמן בדיקתה. אחר כך נקרא 4 ונשאר [5]. אין לחזור ולקבל את הכתיבה בגלל המקום שהתפנה מאוחר יותר, אלא אם החוזה מגדיר במפורש התנהגות כזאת.",
+      "en": "The write is rejected because the queue is full when checked. Then 4 is read and [5] remains. Do not retroactively accept the write because a later read frees space unless the contract explicitly requires that behavior."
+    },
+    "takeaway": {
+      "he": "מצב הקיבולת נבחן בזמן הפעולה לפי הסדר המוגדר.",
+      "en": "Evaluate capacity at the operation's specified point in the sequence."
+    }
+  }
+]

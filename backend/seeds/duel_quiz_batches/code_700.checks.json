@@ -1,0 +1,7123 @@
+[
+  {
+    "key": "quick-sw-321-v1",
+    "task": "merge_frontier",
+    "inputs": {
+      "lists": [
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ],
+      "consumed": 1
+    },
+    "options": [
+      [
+        2,
+        4,
+        8
+      ],
+      [
+        2,
+        3,
+        4,
+        8
+      ],
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        3,
+        4,
+        8
+      ]
+    ],
+    "expected": [
+      2,
+      4,
+      8
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Only the list supplying a removed item advances its representative; equal representatives from different lists remain separate.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted merging needs one representative per unexhausted source.",
+    "source_content_sha256": "c5fd228eb164038f3748bc0c44c7c46e2612b09cad2eccd49c267fa9a6e5b848",
+    "provenance": {
+      "interview_ids": [
+        "PREP-224"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-321-v2",
+    "task": "merge_frontier",
+    "inputs": {
+      "lists": [
+        [],
+        [
+          2
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "consumed": 1
+    },
+    "options": [
+      [],
+      [
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        5
+      ]
+    ],
+    "expected": [
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Only the list supplying a removed item advances its representative; equal representatives from different lists remain separate.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted merging needs one representative per unexhausted source.",
+    "source_content_sha256": "c5fd228eb164038f3748bc0c44c7c46e2612b09cad2eccd49c267fa9a6e5b848",
+    "provenance": {
+      "interview_ids": [
+        "PREP-224"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-321-v3",
+    "task": "merge_frontier",
+    "inputs": {
+      "lists": [
+        [
+          1,
+          1,
+          9
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "consumed": 1
+    },
+    "options": [
+      [
+        1,
+        9
+      ],
+      [
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        4
+      ]
+    ],
+    "expected": [
+      1,
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Only the list supplying a removed item advances its representative; equal representatives from different lists remain separate.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted merging needs one representative per unexhausted source.",
+    "source_content_sha256": "c5fd228eb164038f3748bc0c44c7c46e2612b09cad2eccd49c267fa9a6e5b848",
+    "provenance": {
+      "interview_ids": [
+        "PREP-224"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-321-v4",
+    "task": "merge_frontier",
+    "inputs": {
+      "lists": [
+        [
+          7
+        ]
+      ],
+      "consumed": 1
+    },
+    "options": [
+      [
+        7
+      ],
+      [
+        0
+      ],
+      [
+        null
+      ],
+      []
+    ],
+    "expected": [],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Only the list supplying a removed item advances its representative; equal representatives from different lists remain separate.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted merging needs one representative per unexhausted source.",
+    "source_content_sha256": "c5fd228eb164038f3748bc0c44c7c46e2612b09cad2eccd49c267fa9a6e5b848",
+    "provenance": {
+      "interview_ids": [
+        "PREP-224"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-321-v5",
+    "task": "merge_frontier",
+    "inputs": {
+      "lists": [
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "consumed": 3
+    },
+    "options": [
+      [
+        4,
+        5,
+        6
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        3,
+        5,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "expected": [
+      4,
+      5,
+      6
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Only the list supplying a removed item advances its representative; equal representatives from different lists remain separate.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted merging needs one representative per unexhausted source.",
+    "source_content_sha256": "c5fd228eb164038f3748bc0c44c7c46e2612b09cad2eccd49c267fa9a6e5b848",
+    "provenance": {
+      "interview_ids": [
+        "PREP-224"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-322-v1",
+    "task": "anagram_verdict",
+    "inputs": {
+      "a": "AaB",
+      "b": "abB"
+    },
+    "options": [
+      "length",
+      "multiplicity",
+      "illegal",
+      "same_counts"
+    ],
+    "expected": "multiplicity",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Normalize both words to lowercase, then compare counts; changing case does not change multiplicity or length.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The equivalence rule determines normalization before comparison.",
+    "source_content_sha256": "d1d11004c34a3ca944103d2c20fffd11731eb0be9c1ac30ab5cf29f4dbd5163c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-226"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-322-v2",
+    "task": "anagram_verdict",
+    "inputs": {
+      "a": "Silent",
+      "b": "LISTEN"
+    },
+    "options": [
+      "multiplicity",
+      "illegal",
+      "same_counts",
+      "length"
+    ],
+    "expected": "same_counts",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Normalize both words to lowercase, then compare counts; changing case does not change multiplicity or length.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The equivalence rule determines normalization before comparison.",
+    "source_content_sha256": "d1d11004c34a3ca944103d2c20fffd11731eb0be9c1ac30ab5cf29f4dbd5163c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-226"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-322-v3",
+    "task": "anagram_verdict",
+    "inputs": {
+      "a": "",
+      "b": ""
+    },
+    "options": [
+      "length",
+      "multiplicity",
+      "illegal",
+      "same_counts"
+    ],
+    "expected": "same_counts",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Normalize both words to lowercase, then compare counts; changing case does not change multiplicity or length.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The equivalence rule determines normalization before comparison.",
+    "source_content_sha256": "d1d11004c34a3ca944103d2c20fffd11731eb0be9c1ac30ab5cf29f4dbd5163c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-226"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-322-v4",
+    "task": "anagram_verdict",
+    "inputs": {
+      "a": "AB",
+      "b": "aaB"
+    },
+    "options": [
+      "length",
+      "multiplicity",
+      "illegal",
+      "same_counts"
+    ],
+    "expected": "length",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Normalize both words to lowercase, then compare counts; changing case does not change multiplicity or length.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The equivalence rule determines normalization before comparison.",
+    "source_content_sha256": "d1d11004c34a3ca944103d2c20fffd11731eb0be9c1ac30ab5cf29f4dbd5163c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-226"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-322-v5",
+    "task": "anagram_verdict",
+    "inputs": {
+      "a": "aAbB",
+      "b": "BaBA"
+    },
+    "options": [
+      "illegal",
+      "same_counts",
+      "length",
+      "multiplicity"
+    ],
+    "expected": "same_counts",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Normalize both words to lowercase, then compare counts; changing case does not change multiplicity or length.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The equivalence rule determines normalization before comparison.",
+    "source_content_sha256": "d1d11004c34a3ca944103d2c20fffd11731eb0be9c1ac30ab5cf29f4dbd5163c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-226"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-323-v1",
+    "task": "compact",
+    "inputs": {
+      "values": [
+        0,
+        5,
+        0,
+        2
+      ]
+    },
+    "options": [
+      [
+        0,
+        0,
+        5,
+        2
+      ],
+      [
+        5,
+        0,
+        2,
+        0
+      ],
+      [
+        5,
+        2,
+        0,
+        0
+      ],
+      [
+        2,
+        5,
+        0,
+        0
+      ]
+    ],
+    "expected": [
+      5,
+      2,
+      0,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Keep every nonzero occurrence in scan order, then append the original number of zeros.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Separate scan and write positions enable stable compaction.",
+    "source_content_sha256": "4dbba7a7aec63fe5b28d9187117a0eda5137fdb33e6b52d55169ab48182ca24e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-229"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-323-v2",
+    "task": "compact",
+    "inputs": {
+      "values": [
+        0,
+        0
+      ]
+    },
+    "options": [
+      [],
+      [
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Keep every nonzero occurrence in scan order, then append the original number of zeros.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Separate scan and write positions enable stable compaction.",
+    "source_content_sha256": "4dbba7a7aec63fe5b28d9187117a0eda5137fdb33e6b52d55169ab48182ca24e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-229"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-323-v3",
+    "task": "compact",
+    "inputs": {
+      "values": [
+        -2,
+        0,
+        -2,
+        1
+      ]
+    },
+    "options": [
+      [
+        -2,
+        -2,
+        1,
+        0
+      ],
+      [
+        -2,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        -2,
+        -2,
+        0
+      ],
+      [
+        -2,
+        0,
+        -2,
+        1
+      ]
+    ],
+    "expected": [
+      -2,
+      -2,
+      1,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Keep every nonzero occurrence in scan order, then append the original number of zeros.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Separate scan and write positions enable stable compaction.",
+    "source_content_sha256": "4dbba7a7aec63fe5b28d9187117a0eda5137fdb33e6b52d55169ab48182ca24e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-229"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-323-v4",
+    "task": "compact",
+    "inputs": {
+      "values": [
+        3,
+        1
+      ]
+    },
+    "options": [
+      [],
+      [
+        3,
+        1
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        3,
+        1,
+        0
+      ]
+    ],
+    "expected": [
+      3,
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Keep every nonzero occurrence in scan order, then append the original number of zeros.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Separate scan and write positions enable stable compaction.",
+    "source_content_sha256": "4dbba7a7aec63fe5b28d9187117a0eda5137fdb33e6b52d55169ab48182ca24e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-229"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-323-v5",
+    "task": "compact",
+    "inputs": {
+      "values": []
+    },
+    "options": [
+      null,
+      [
+        0,
+        0
+      ],
+      [],
+      [
+        0
+      ]
+    ],
+    "expected": [],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Keep every nonzero occurrence in scan order, then append the original number of zeros.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Separate scan and write positions enable stable compaction.",
+    "source_content_sha256": "4dbba7a7aec63fe5b28d9187117a0eda5137fdb33e6b52d55169ab48182ca24e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-229"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-324-v1",
+    "task": "reverse_step",
+    "inputs": {
+      "links": {
+        "A": "B",
+        "B": "C",
+        "C": null
+      },
+      "previous": null,
+      "current": "A"
+    },
+    "options": [
+      [
+        null,
+        "A",
+        "B"
+      ],
+      [
+        "A",
+        null,
+        "B"
+      ],
+      [
+        "B",
+        "C",
+        "A"
+      ],
+      [
+        "A",
+        "B",
+        null
+      ]
+    ],
+    "expected": [
+      "A",
+      "B",
+      null
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The successor comes from the old link; the new link targets old previous, and the processed node becomes new previous.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Preserve future traversal information before overwriting a link.",
+    "source_content_sha256": "afc92fbd4d58a8e44d7a74508482b5c250f35fc8ffe341d9ec25fc72ad296a78",
+    "provenance": {
+      "interview_ids": [
+        "PREP-238"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-324-v2",
+    "task": "reverse_step",
+    "inputs": {
+      "links": {
+        "A": null,
+        "B": "C",
+        "C": null
+      },
+      "previous": "A",
+      "current": "B"
+    },
+    "options": [
+      [
+        "B",
+        "C",
+        "A"
+      ],
+      [
+        "B",
+        "A",
+        "A"
+      ],
+      [
+        "A",
+        "C",
+        "B"
+      ],
+      [
+        "C",
+        null,
+        "B"
+      ]
+    ],
+    "expected": [
+      "B",
+      "C",
+      "A"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The successor comes from the old link; the new link targets old previous, and the processed node becomes new previous.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Preserve future traversal information before overwriting a link.",
+    "source_content_sha256": "afc92fbd4d58a8e44d7a74508482b5c250f35fc8ffe341d9ec25fc72ad296a78",
+    "provenance": {
+      "interview_ids": [
+        "PREP-238"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-324-v3",
+    "task": "reverse_step",
+    "inputs": {
+      "links": {
+        "A": null,
+        "B": "A",
+        "C": null
+      },
+      "previous": "B",
+      "current": "C"
+    },
+    "options": [
+      [
+        null,
+        "C",
+        "B"
+      ],
+      [
+        "C",
+        null,
+        "B"
+      ],
+      [
+        "C",
+        "B",
+        null
+      ],
+      [
+        "B",
+        null,
+        "C"
+      ]
+    ],
+    "expected": [
+      "C",
+      null,
+      "B"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The successor comes from the old link; the new link targets old previous, and the processed node becomes new previous.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Preserve future traversal information before overwriting a link.",
+    "source_content_sha256": "afc92fbd4d58a8e44d7a74508482b5c250f35fc8ffe341d9ec25fc72ad296a78",
+    "provenance": {
+      "interview_ids": [
+        "PREP-238"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-324-v4",
+    "task": "reverse_step",
+    "inputs": {
+      "links": {
+        "X": null
+      },
+      "previous": null,
+      "current": "X"
+    },
+    "options": [
+      [
+        "X",
+        "X",
+        null
+      ],
+      [
+        null,
+        null,
+        "X"
+      ],
+      [
+        "X",
+        null,
+        null
+      ],
+      [
+        null,
+        "X",
+        null
+      ]
+    ],
+    "expected": [
+      "X",
+      null,
+      null
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The successor comes from the old link; the new link targets old previous, and the processed node becomes new previous.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Preserve future traversal information before overwriting a link.",
+    "source_content_sha256": "afc92fbd4d58a8e44d7a74508482b5c250f35fc8ffe341d9ec25fc72ad296a78",
+    "provenance": {
+      "interview_ids": [
+        "PREP-238"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-324-v5",
+    "task": "reverse_step",
+    "inputs": {
+      "links": {
+        "P": null,
+        "Q": "R",
+        "R": "S",
+        "S": null
+      },
+      "previous": "P",
+      "current": "Q"
+    },
+    "options": [
+      [
+        "Q",
+        "S",
+        "P"
+      ],
+      [
+        "P",
+        "R",
+        "Q"
+      ],
+      [
+        "Q",
+        "P",
+        "R"
+      ],
+      [
+        "Q",
+        "R",
+        "P"
+      ]
+    ],
+    "expected": [
+      "Q",
+      "R",
+      "P"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The successor comes from the old link; the new link targets old previous, and the processed node becomes new previous.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Preserve future traversal information before overwriting a link.",
+    "source_content_sha256": "afc92fbd4d58a8e44d7a74508482b5c250f35fc8ffe341d9ec25fc72ad296a78",
+    "provenance": {
+      "interview_ids": [
+        "PREP-238"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-325-v1",
+    "task": "csv_record",
+    "inputs": {
+      "record": "\"a,b\",c"
+    },
+    "options": [
+      [
+        "a,b",
+        "c"
+      ],
+      [
+        "a",
+        "b",
+        "c"
+      ],
+      [
+        "\"a,b\"",
+        "c"
+      ],
+      [
+        "a,b,c"
+      ]
+    ],
+    "expected": [
+      "a,b",
+      "c"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Inside quotes retain commas and newlines as content, decode doubled quotes, and preserve a trailing empty field.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A delimiter's meaning depends on parser state.",
+    "source_content_sha256": "96a79ac1e9850067644aa7fa465d28f60af815a2decd1b40dc297456376f9012",
+    "provenance": {
+      "interview_ids": [
+        "PREP-239"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-325-v2",
+    "task": "csv_record",
+    "inputs": {
+      "record": "\"a\"\"b\",c"
+    },
+    "options": [
+      [
+        "a",
+        "b",
+        "c"
+      ],
+      [
+        "a\"b",
+        "c"
+      ],
+      [
+        "ab",
+        "c"
+      ],
+      [
+        "a\"\"b",
+        "c"
+      ]
+    ],
+    "expected": [
+      "a\"b",
+      "c"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Inside quotes retain commas and newlines as content, decode doubled quotes, and preserve a trailing empty field.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A delimiter's meaning depends on parser state.",
+    "source_content_sha256": "96a79ac1e9850067644aa7fa465d28f60af815a2decd1b40dc297456376f9012",
+    "provenance": {
+      "interview_ids": [
+        "PREP-239"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-325-v3",
+    "task": "csv_record",
+    "inputs": {
+      "record": "a,b,"
+    },
+    "options": [
+      [
+        "a,b",
+        ""
+      ],
+      [
+        "a",
+        "b",
+        null
+      ],
+      [
+        "a",
+        "b",
+        ""
+      ],
+      [
+        "a",
+        "b"
+      ]
+    ],
+    "expected": [
+      "a",
+      "b",
+      ""
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Inside quotes retain commas and newlines as content, decode doubled quotes, and preserve a trailing empty field.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A delimiter's meaning depends on parser state.",
+    "source_content_sha256": "96a79ac1e9850067644aa7fa465d28f60af815a2decd1b40dc297456376f9012",
+    "provenance": {
+      "interview_ids": [
+        "PREP-239"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-325-v4",
+    "task": "csv_record",
+    "inputs": {
+      "record": ",,"
+    },
+    "options": [
+      [
+        "",
+        ""
+      ],
+      [],
+      [
+        ",,"
+      ],
+      [
+        "",
+        "",
+        ""
+      ]
+    ],
+    "expected": [
+      "",
+      "",
+      ""
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Inside quotes retain commas and newlines as content, decode doubled quotes, and preserve a trailing empty field.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A delimiter's meaning depends on parser state.",
+    "source_content_sha256": "96a79ac1e9850067644aa7fa465d28f60af815a2decd1b40dc297456376f9012",
+    "provenance": {
+      "interview_ids": [
+        "PREP-239"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-325-v5",
+    "task": "csv_record",
+    "inputs": {
+      "record": "\"a\nb\",c"
+    },
+    "options": [
+      [
+        "a\nb",
+        "c"
+      ],
+      [
+        "a",
+        "b",
+        "c"
+      ],
+      [
+        "ab",
+        "c"
+      ],
+      [
+        "a\nb,c"
+      ]
+    ],
+    "expected": [
+      "a\nb",
+      "c"
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Inside quotes retain commas and newlines as content, decode doubled quotes, and preserve a trailing empty field.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A delimiter's meaning depends on parser state.",
+    "source_content_sha256": "96a79ac1e9850067644aa7fa465d28f60af815a2decd1b40dc297456376f9012",
+    "provenance": {
+      "interview_ids": [
+        "PREP-239"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-326-v1",
+    "task": "key_storage",
+    "inputs": {
+      "mode": "owned",
+      "original": "cat",
+      "edited": "bat"
+    },
+    "options": [
+      "unchanged-buffer",
+      "cat",
+      "bat",
+      "lost"
+    ],
+    "expected": "cat",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "A private copy retains insertion-time contents; a reference to a live buffer observes its current contents.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copying an address and copying contents establish different ownership contracts.",
+    "source_content_sha256": "22f43ab9e0cad93e880d859b741926ac0eacebcaf49515eef9ce49d0c0560d64",
+    "provenance": {
+      "interview_ids": [
+        "PREP-237"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-326-v2",
+    "task": "key_storage",
+    "inputs": {
+      "mode": "borrowed",
+      "original": "cat",
+      "edited": "bat"
+    },
+    "options": [
+      "lost",
+      "unchanged-buffer",
+      "bat",
+      "cat"
+    ],
+    "expected": "bat",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "A private copy retains insertion-time contents; a reference to a live buffer observes its current contents.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copying an address and copying contents establish different ownership contracts.",
+    "source_content_sha256": "22f43ab9e0cad93e880d859b741926ac0eacebcaf49515eef9ce49d0c0560d64",
+    "provenance": {
+      "interview_ids": [
+        "PREP-237"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-326-v3",
+    "task": "key_storage",
+    "inputs": {
+      "mode": "owned",
+      "original": "",
+      "edited": "x"
+    },
+    "options": [
+      "x",
+      "lost",
+      "unchanged-buffer",
+      ""
+    ],
+    "expected": "",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "A private copy retains insertion-time contents; a reference to a live buffer observes its current contents.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copying an address and copying contents establish different ownership contracts.",
+    "source_content_sha256": "22f43ab9e0cad93e880d859b741926ac0eacebcaf49515eef9ce49d0c0560d64",
+    "provenance": {
+      "interview_ids": [
+        "PREP-237"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-326-v4",
+    "task": "key_storage",
+    "inputs": {
+      "mode": "owned",
+      "original": "same",
+      "edited": "same"
+    },
+    "options": [
+      "same",
+      "lost",
+      "unchanged-buffer",
+      "error"
+    ],
+    "expected": "same",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "A private copy retains insertion-time contents; a reference to a live buffer observes its current contents.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copying an address and copying contents establish different ownership contracts.",
+    "source_content_sha256": "22f43ab9e0cad93e880d859b741926ac0eacebcaf49515eef9ce49d0c0560d64",
+    "provenance": {
+      "interview_ids": [
+        "PREP-237"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-326-v5",
+    "task": "key_storage",
+    "inputs": {
+      "mode": "borrowed",
+      "original": "key",
+      "edited": ""
+    },
+    "options": [
+      "unchanged-buffer",
+      "",
+      "key",
+      "lost"
+    ],
+    "expected": "",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "A private copy retains insertion-time contents; a reference to a live buffer observes its current contents.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copying an address and copying contents establish different ownership contracts.",
+    "source_content_sha256": "22f43ab9e0cad93e880d859b741926ac0eacebcaf49515eef9ce49d0c0560d64",
+    "provenance": {
+      "interview_ids": [
+        "PREP-237"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-327-v1",
+    "task": "sudoku_candidates",
+    "inputs": {
+      "row": [
+        1,
+        2
+      ],
+      "col": [
+        3,
+        4
+      ],
+      "box": [
+        5,
+        6,
+        7
+      ]
+    },
+    "options": [
+      [
+        7,
+        8,
+        9
+      ],
+      [],
+      [
+        8,
+        9
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "expected": [
+      8,
+      9
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Exclude each digit present in any of the three regions; appearing in multiple regions does not exclude another digit.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Combined constraints exclude the union of forbidden values.",
+    "source_content_sha256": "f7a0c44ad6c485d9abc3116c68ded37124d503200a9540de5bfde2c2f92a8b32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-327-v2",
+    "task": "sudoku_candidates",
+    "inputs": {
+      "row": [
+        1,
+        2,
+        3
+      ],
+      "col": [
+        4,
+        5,
+        6
+      ],
+      "box": [
+        7,
+        8,
+        9
+      ]
+    },
+    "options": [
+      [
+        9
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      []
+    ],
+    "expected": [],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Exclude each digit present in any of the three regions; appearing in multiple regions does not exclude another digit.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Combined constraints exclude the union of forbidden values.",
+    "source_content_sha256": "f7a0c44ad6c485d9abc3116c68ded37124d503200a9540de5bfde2c2f92a8b32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-327-v3",
+    "task": "sudoku_candidates",
+    "inputs": {
+      "row": [
+        1,
+        2
+      ],
+      "col": [
+        2,
+        3
+      ],
+      "box": [
+        3,
+        4
+      ]
+    },
+    "options": [
+      [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        7,
+        8,
+        9
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "expected": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Exclude each digit present in any of the three regions; appearing in multiple regions does not exclude another digit.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Combined constraints exclude the union of forbidden values.",
+    "source_content_sha256": "f7a0c44ad6c485d9abc3116c68ded37124d503200a9540de5bfde2c2f92a8b32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-327-v4",
+    "task": "sudoku_candidates",
+    "inputs": {
+      "row": [],
+      "col": [],
+      "box": []
+    },
+    "options": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      [],
+      [
+        0
+      ]
+    ],
+    "expected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Exclude each digit present in any of the three regions; appearing in multiple regions does not exclude another digit.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Combined constraints exclude the union of forbidden values.",
+    "source_content_sha256": "f7a0c44ad6c485d9abc3116c68ded37124d503200a9540de5bfde2c2f92a8b32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-327-v5",
+    "task": "sudoku_candidates",
+    "inputs": {
+      "row": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "col": [
+        5,
+        6
+      ],
+      "box": [
+        7,
+        8
+      ]
+    },
+    "options": [
+      [
+        8,
+        9
+      ],
+      [],
+      [
+        9
+      ],
+      [
+        0
+      ]
+    ],
+    "expected": [
+      9
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Exclude each digit present in any of the three regions; appearing in multiple regions does not exclude another digit.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Combined constraints exclude the union of forbidden values.",
+    "source_content_sha256": "f7a0c44ad6c485d9abc3116c68ded37124d503200a9540de5bfde2c2f92a8b32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-328-v1",
+    "task": "median_interval",
+    "inputs": {
+      "positions": [
+        0,
+        2,
+        8,
+        10
+      ]
+    },
+    "options": [
+      [
+        5,
+        5
+      ],
+      [
+        0,
+        10
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        8
+      ]
+    ],
+    "expected": [
+      2,
+      8
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Sort the positions; the optimum lies between the two middle entries, which coincide for an odd count.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Absolute-distance sums are minimized at medians, sometimes across an interval.",
+    "source_content_sha256": "c987cd0d4f4e36211759215d7fb6f967d148823784a1ceaa55976d10882b4086",
+    "provenance": {
+      "interview_ids": [
+        "PREP-246"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-328-v2",
+    "task": "median_interval",
+    "inputs": {
+      "positions": [
+        1,
+        3,
+        9
+      ]
+    },
+    "options": [
+      [
+        3,
+        3
+      ],
+      [
+        1,
+        9
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "expected": [
+      3,
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Sort the positions; the optimum lies between the two middle entries, which coincide for an odd count.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Absolute-distance sums are minimized at medians, sometimes across an interval.",
+    "source_content_sha256": "c987cd0d4f4e36211759215d7fb6f967d148823784a1ceaa55976d10882b4086",
+    "provenance": {
+      "interview_ids": [
+        "PREP-246"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-328-v3",
+    "task": "median_interval",
+    "inputs": {
+      "positions": [
+        4,
+        4,
+        4,
+        10
+      ]
+    },
+    "options": [
+      [
+        7,
+        7
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        10
+      ],
+      [
+        5,
+        5
+      ]
+    ],
+    "expected": [
+      4,
+      4
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Sort the positions; the optimum lies between the two middle entries, which coincide for an odd count.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Absolute-distance sums are minimized at medians, sometimes across an interval.",
+    "source_content_sha256": "c987cd0d4f4e36211759215d7fb6f967d148823784a1ceaa55976d10882b4086",
+    "provenance": {
+      "interview_ids": [
+        "PREP-246"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-328-v4",
+    "task": "median_interval",
+    "inputs": {
+      "positions": [
+        -5,
+        -1
+      ]
+    },
+    "options": [
+      [
+        -5,
+        -5
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -5,
+        -1
+      ],
+      [
+        -3,
+        -3
+      ]
+    ],
+    "expected": [
+      -5,
+      -1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Sort the positions; the optimum lies between the two middle entries, which coincide for an odd count.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Absolute-distance sums are minimized at medians, sometimes across an interval.",
+    "source_content_sha256": "c987cd0d4f4e36211759215d7fb6f967d148823784a1ceaa55976d10882b4086",
+    "provenance": {
+      "interview_ids": [
+        "PREP-246"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-328-v5",
+    "task": "median_interval",
+    "inputs": {
+      "positions": [
+        7
+      ]
+    },
+    "options": [
+      [
+        0,
+        7
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        6,
+        8
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "expected": [
+      7,
+      7
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Sort the positions; the optimum lies between the two middle entries, which coincide for an odd count.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Absolute-distance sums are minimized at medians, sometimes across an interval.",
+    "source_content_sha256": "c987cd0d4f4e36211759215d7fb6f967d148823784a1ceaa55976d10882b4086",
+    "provenance": {
+      "interview_ids": [
+        "PREP-246"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-329-v1",
+    "task": "missing_positive",
+    "inputs": {
+      "values": [
+        3,
+        4,
+        -1,
+        1
+      ]
+    },
+    "options": [
+      2,
+      0,
+      5,
+      1
+    ],
+    "expected": 2,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check positives from 1 until the first absent value; a duplicate cannot fill another value's place.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Bounding the answer narrows the values that need representation.",
+    "source_content_sha256": "caa86b8fe8e504baec2b55fbad50c207f8546f324dffa9cc7fb090e7b0fcc5ed",
+    "provenance": {
+      "interview_ids": [
+        "PREP-247"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-329-v2",
+    "task": "missing_positive",
+    "inputs": {
+      "values": [
+        1,
+        2,
+        3
+      ]
+    },
+    "options": [
+      2,
+      4,
+      0,
+      1
+    ],
+    "expected": 4,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check positives from 1 until the first absent value; a duplicate cannot fill another value's place.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Bounding the answer narrows the values that need representation.",
+    "source_content_sha256": "caa86b8fe8e504baec2b55fbad50c207f8546f324dffa9cc7fb090e7b0fcc5ed",
+    "provenance": {
+      "interview_ids": [
+        "PREP-247"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-329-v3",
+    "task": "missing_positive",
+    "inputs": {
+      "values": [
+        1,
+        1,
+        0,
+        -3
+      ]
+    },
+    "options": [
+      5,
+      1,
+      2,
+      0
+    ],
+    "expected": 2,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check positives from 1 until the first absent value; a duplicate cannot fill another value's place.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Bounding the answer narrows the values that need representation.",
+    "source_content_sha256": "caa86b8fe8e504baec2b55fbad50c207f8546f324dffa9cc7fb090e7b0fcc5ed",
+    "provenance": {
+      "interview_ids": [
+        "PREP-247"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-329-v4",
+    "task": "missing_positive",
+    "inputs": {
+      "values": []
+    },
+    "options": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check positives from 1 until the first absent value; a duplicate cannot fill another value's place.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Bounding the answer narrows the values that need representation.",
+    "source_content_sha256": "caa86b8fe8e504baec2b55fbad50c207f8546f324dffa9cc7fb090e7b0fcc5ed",
+    "provenance": {
+      "interview_ids": [
+        "PREP-247"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-329-v5",
+    "task": "missing_positive",
+    "inputs": {
+      "values": [
+        100,
+        2,
+        3
+      ]
+    },
+    "options": [
+      1,
+      0,
+      4,
+      2
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check positives from 1 until the first absent value; a duplicate cannot fill another value's place.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Bounding the answer narrows the values that need representation.",
+    "source_content_sha256": "caa86b8fe8e504baec2b55fbad50c207f8546f324dffa9cc7fb090e7b0fcc5ed",
+    "provenance": {
+      "interview_ids": [
+        "PREP-247"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-330-v1",
+    "task": "two_stack_queue",
+    "inputs": {
+      "events": [
+        [
+          "put",
+          1
+        ],
+        [
+          "put",
+          2
+        ],
+        [
+          "get",
+          null
+        ],
+        [
+          "put",
+          3
+        ],
+        [
+          "get",
+          null
+        ],
+        [
+          "get",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [
+        3,
+        2,
+        1
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        3,
+        2
+      ],
+      [
+        2,
+        1,
+        3
+      ]
+    ],
+    "expected": [
+      1,
+      2,
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Reverse incoming only after exhausting older outgoing values, so get preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The transfer boundary preserves arrival order between batches.",
+    "source_content_sha256": "d71db648331fdeb4d05cf9ab58d73614ef798c1d02f0be016fec4a7fb53e9d20",
+    "provenance": {
+      "interview_ids": [
+        "PREP-305"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-330-v2",
+    "task": "two_stack_queue",
+    "inputs": {
+      "events": [
+        [
+          "get",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [
+        0
+      ],
+      [
+        false
+      ],
+      [
+        null
+      ],
+      []
+    ],
+    "expected": [
+      null
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Reverse incoming only after exhausting older outgoing values, so get preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The transfer boundary preserves arrival order between batches.",
+    "source_content_sha256": "d71db648331fdeb4d05cf9ab58d73614ef798c1d02f0be016fec4a7fb53e9d20",
+    "provenance": {
+      "interview_ids": [
+        "PREP-305"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-330-v3",
+    "task": "two_stack_queue",
+    "inputs": {
+      "events": [
+        [
+          "put",
+          5
+        ],
+        [
+          "put",
+          5
+        ],
+        [
+          "get",
+          null
+        ],
+        [
+          "get",
+          null
+        ],
+        [
+          "get",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [
+        5,
+        null,
+        null
+      ],
+      [
+        null,
+        5,
+        5
+      ],
+      [
+        5,
+        5,
+        5
+      ],
+      [
+        5,
+        5,
+        null
+      ]
+    ],
+    "expected": [
+      5,
+      5,
+      null
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Reverse incoming only after exhausting older outgoing values, so get preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The transfer boundary preserves arrival order between batches.",
+    "source_content_sha256": "d71db648331fdeb4d05cf9ab58d73614ef798c1d02f0be016fec4a7fb53e9d20",
+    "provenance": {
+      "interview_ids": [
+        "PREP-305"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-330-v4",
+    "task": "two_stack_queue",
+    "inputs": {
+      "events": [
+        [
+          "put",
+          4
+        ],
+        [
+          "get",
+          null
+        ],
+        [
+          "put",
+          8
+        ],
+        [
+          "get",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [
+        4,
+        8
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        null,
+        8
+      ]
+    ],
+    "expected": [
+      4,
+      8
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Reverse incoming only after exhausting older outgoing values, so get preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The transfer boundary preserves arrival order between batches.",
+    "source_content_sha256": "d71db648331fdeb4d05cf9ab58d73614ef798c1d02f0be016fec4a7fb53e9d20",
+    "provenance": {
+      "interview_ids": [
+        "PREP-305"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-330-v5",
+    "task": "two_stack_queue",
+    "inputs": {
+      "events": [
+        [
+          "put",
+          1
+        ],
+        [
+          "put",
+          2
+        ],
+        [
+          "put",
+          3
+        ],
+        [
+          "get",
+          null
+        ],
+        [
+          "put",
+          4
+        ],
+        [
+          "get",
+          null
+        ]
+      ]
+    },
+    "options": [
+      [
+        2,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "expected": [
+      1,
+      2
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Reverse incoming only after exhausting older outgoing values, so get preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The transfer boundary preserves arrival order between batches.",
+    "source_content_sha256": "d71db648331fdeb4d05cf9ab58d73614ef798c1d02f0be016fec4a7fb53e9d20",
+    "provenance": {
+      "interview_ids": [
+        "PREP-305"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-331-v1",
+    "task": "cursor",
+    "inputs": {
+      "left": [
+        "a",
+        "b"
+      ],
+      "right": [
+        "d",
+        "c"
+      ],
+      "operation": "right",
+      "value": null
+    },
+    "options": [
+      [
+        [
+          "a"
+        ],
+        [
+          "d",
+          "c",
+          "b"
+        ]
+      ],
+      [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "d",
+          "c"
+        ]
+      ],
+      [
+        [
+          "a",
+          "b",
+          "c"
+        ],
+        [
+          "d"
+        ]
+      ],
+      [
+        [
+          "a",
+          "b",
+          "d"
+        ],
+        [
+          "c"
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        "a",
+        "b",
+        "c"
+      ],
+      [
+        "d"
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The adjacent character is the appropriate stack top. Transfer moves the cursor boundary, deletion removes a character, and insertion pushes onto L.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Proximity to a cursor is represented by a stack top.",
+    "source_content_sha256": "2a138b214644cc70566fcd24e8d077790727a9d60d1850db9675f967303ded11",
+    "provenance": {
+      "interview_ids": [
+        "PREP-304"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-331-v2",
+    "task": "cursor",
+    "inputs": {
+      "left": [
+        "a",
+        "b"
+      ],
+      "right": [
+        "c"
+      ],
+      "operation": "left",
+      "value": null
+    },
+    "options": [
+      [
+        [
+          "a"
+        ],
+        [
+          "b",
+          "c"
+        ]
+      ],
+      [
+        [],
+        [
+          "c",
+          "b",
+          "a"
+        ]
+      ],
+      [
+        [
+          "a",
+          "b",
+          "c"
+        ],
+        []
+      ],
+      [
+        [
+          "a"
+        ],
+        [
+          "c",
+          "b"
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        "a"
+      ],
+      [
+        "c",
+        "b"
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The adjacent character is the appropriate stack top. Transfer moves the cursor boundary, deletion removes a character, and insertion pushes onto L.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Proximity to a cursor is represented by a stack top.",
+    "source_content_sha256": "2a138b214644cc70566fcd24e8d077790727a9d60d1850db9675f967303ded11",
+    "provenance": {
+      "interview_ids": [
+        "PREP-304"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-331-v3",
+    "task": "cursor",
+    "inputs": {
+      "left": [
+        "x"
+      ],
+      "right": [],
+      "operation": "right",
+      "value": null
+    },
+    "options": [
+      [
+        [
+          "x"
+        ],
+        []
+      ],
+      [
+        [],
+        [
+          "x"
+        ]
+      ],
+      [
+        [],
+        []
+      ],
+      [
+        [
+          "x",
+          "x"
+        ],
+        []
+      ]
+    ],
+    "expected": [
+      [
+        "x"
+      ],
+      []
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The adjacent character is the appropriate stack top. Transfer moves the cursor boundary, deletion removes a character, and insertion pushes onto L.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Proximity to a cursor is represented by a stack top.",
+    "source_content_sha256": "2a138b214644cc70566fcd24e8d077790727a9d60d1850db9675f967303ded11",
+    "provenance": {
+      "interview_ids": [
+        "PREP-304"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-331-v4",
+    "task": "cursor",
+    "inputs": {
+      "left": [
+        "a",
+        "b"
+      ],
+      "right": [
+        "c"
+      ],
+      "operation": "backspace",
+      "value": null
+    },
+    "options": [
+      [
+        [],
+        [
+          "c"
+        ]
+      ],
+      [
+        [
+          "a"
+        ],
+        [
+          "c"
+        ]
+      ],
+      [
+        [
+          "b"
+        ],
+        [
+          "c"
+        ]
+      ],
+      [
+        [
+          "a",
+          "b"
+        ],
+        []
+      ]
+    ],
+    "expected": [
+      [
+        "a"
+      ],
+      [
+        "c"
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The adjacent character is the appropriate stack top. Transfer moves the cursor boundary, deletion removes a character, and insertion pushes onto L.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Proximity to a cursor is represented by a stack top.",
+    "source_content_sha256": "2a138b214644cc70566fcd24e8d077790727a9d60d1850db9675f967303ded11",
+    "provenance": {
+      "interview_ids": [
+        "PREP-304"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-331-v5",
+    "task": "cursor",
+    "inputs": {
+      "left": [],
+      "right": [
+        "b",
+        "a"
+      ],
+      "operation": "insert",
+      "value": "x"
+    },
+    "options": [
+      [
+        [
+          "a",
+          "x"
+        ],
+        [
+          "b"
+        ]
+      ],
+      [
+        [
+          "x"
+        ],
+        [
+          "a",
+          "b"
+        ]
+      ],
+      [
+        [
+          "x"
+        ],
+        [
+          "b",
+          "a"
+        ]
+      ],
+      [
+        [],
+        [
+          "b",
+          "a",
+          "x"
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        "x"
+      ],
+      [
+        "b",
+        "a"
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "The adjacent character is the appropriate stack top. Transfer moves the cursor boundary, deletion removes a character, and insertion pushes onto L.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Proximity to a cursor is represented by a stack top.",
+    "source_content_sha256": "2a138b214644cc70566fcd24e8d077790727a9d60d1850db9675f967303ded11",
+    "provenance": {
+      "interview_ids": [
+        "PREP-304"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-332-v1",
+    "task": "reverse32",
+    "inputs": {
+      "number": -120
+    },
+    "options": [
+      21,
+      -210,
+      -120,
+      -21
+    ],
+    "expected": -21,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Reverse the magnitude's digits, restore the sign, and check both int32 bounds before returning.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A valid input does not guarantee its transformation fits the same type.",
+    "source_content_sha256": "6b8b185cf9fc871f9284b930ba1c3b9f588bb06ac2ddd35fc6106d0d4bb3b4f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-285"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-332-v2",
+    "task": "reverse32",
+    "inputs": {
+      "number": 0
+    },
+    "options": [
+      0,
+      null,
+      1,
+      -1
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Reverse the magnitude's digits, restore the sign, and check both int32 bounds before returning.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A valid input does not guarantee its transformation fits the same type.",
+    "source_content_sha256": "6b8b185cf9fc871f9284b930ba1c3b9f588bb06ac2ddd35fc6106d0d4bb3b4f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-285"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-332-v3",
+    "task": "reverse32",
+    "inputs": {
+      "number": 1534236469
+    },
+    "options": [
+      2147483647,
+      null,
+      9646324351,
+      1534236469
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Reverse the magnitude's digits, restore the sign, and check both int32 bounds before returning.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A valid input does not guarantee its transformation fits the same type.",
+    "source_content_sha256": "6b8b185cf9fc871f9284b930ba1c3b9f588bb06ac2ddd35fc6106d0d4bb3b4f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-285"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-332-v4",
+    "task": "reverse32",
+    "inputs": {
+      "number": -2147483648
+    },
+    "options": [
+      -2147483648,
+      0,
+      null,
+      -8463847412
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Reverse the magnitude's digits, restore the sign, and check both int32 bounds before returning.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A valid input does not guarantee its transformation fits the same type.",
+    "source_content_sha256": "6b8b185cf9fc871f9284b930ba1c3b9f588bb06ac2ddd35fc6106d0d4bb3b4f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-285"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-332-v5",
+    "task": "reverse32",
+    "inputs": {
+      "number": 1463847412
+    },
+    "options": [
+      null,
+      2147483647,
+      1463847412,
+      2147483641
+    ],
+    "expected": 2147483641,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Reverse the magnitude's digits, restore the sign, and check both int32 bounds before returning.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A valid input does not guarantee its transformation fits the same type.",
+    "source_content_sha256": "6b8b185cf9fc871f9284b930ba1c3b9f588bb06ac2ddd35fc6106d0d4bb3b4f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-285"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-333-v1",
+    "task": "relative_sort",
+    "inputs": {
+      "values": [
+        3,
+        1,
+        3,
+        2,
+        4
+      ],
+      "priority": [
+        3,
+        2
+      ]
+    },
+    "options": [
+      [
+        3,
+        3,
+        2,
+        1,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        4
+      ],
+      [
+        3,
+        2,
+        1,
+        4
+      ],
+      [
+        3,
+        3,
+        2,
+        4,
+        1
+      ]
+    ],
+    "expected": [
+      3,
+      3,
+      2,
+      1,
+      4
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Priority applies only to present values; retain counts and sort the remainder numerically.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A composite key explicitly orders the remainder too.",
+    "source_content_sha256": "73c179b0a0c7ed8d25e947f318863fa8f7e1b5d202c497711e4fbad4c913aeff",
+    "provenance": {
+      "interview_ids": [
+        "PREP-287"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-333-v2",
+    "task": "relative_sort",
+    "inputs": {
+      "values": [
+        4,
+        1,
+        4
+      ],
+      "priority": []
+    },
+    "options": [
+      [],
+      [
+        1,
+        4,
+        4
+      ],
+      [
+        4,
+        1,
+        4
+      ],
+      [
+        4,
+        4,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      4,
+      4
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Priority applies only to present values; retain counts and sort the remainder numerically.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A composite key explicitly orders the remainder too.",
+    "source_content_sha256": "73c179b0a0c7ed8d25e947f318863fa8f7e1b5d202c497711e4fbad4c913aeff",
+    "provenance": {
+      "interview_ids": [
+        "PREP-287"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-333-v3",
+    "task": "relative_sort",
+    "inputs": {
+      "values": [
+        2,
+        1,
+        2
+      ],
+      "priority": [
+        9,
+        2
+      ]
+    },
+    "options": [
+      [
+        2,
+        1
+      ],
+      [
+        1,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        1
+      ],
+      [
+        9,
+        2,
+        2,
+        1
+      ]
+    ],
+    "expected": [
+      2,
+      2,
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Priority applies only to present values; retain counts and sort the remainder numerically.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A composite key explicitly orders the remainder too.",
+    "source_content_sha256": "73c179b0a0c7ed8d25e947f318863fa8f7e1b5d202c497711e4fbad4c913aeff",
+    "provenance": {
+      "interview_ids": [
+        "PREP-287"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-333-v4",
+    "task": "relative_sort",
+    "inputs": {
+      "values": [
+        -1,
+        0,
+        -2,
+        -1
+      ],
+      "priority": [
+        0,
+        -1
+      ]
+    },
+    "options": [
+      [
+        -2,
+        -1,
+        -1,
+        0
+      ],
+      [
+        0,
+        -1,
+        -2
+      ],
+      [
+        0,
+        -2,
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1,
+        -1,
+        -2
+      ]
+    ],
+    "expected": [
+      0,
+      -1,
+      -1,
+      -2
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Priority applies only to present values; retain counts and sort the remainder numerically.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A composite key explicitly orders the remainder too.",
+    "source_content_sha256": "73c179b0a0c7ed8d25e947f318863fa8f7e1b5d202c497711e4fbad4c913aeff",
+    "provenance": {
+      "interview_ids": [
+        "PREP-287"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-333-v5",
+    "task": "relative_sort",
+    "inputs": {
+      "values": [],
+      "priority": [
+        2,
+        1
+      ]
+    },
+    "options": [
+      [],
+      [
+        2,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      null
+    ],
+    "expected": [],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Priority applies only to present values; retain counts and sort the remainder numerically.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A composite key explicitly orders the remainder too.",
+    "source_content_sha256": "73c179b0a0c7ed8d25e947f318863fa8f7e1b5d202c497711e4fbad4c913aeff",
+    "provenance": {
+      "interview_ids": [
+        "PREP-287"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-334-v1",
+    "task": "longest_ones",
+    "inputs": {
+      "bits": [
+        0,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    "options": [
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        3,
+        5
+      ]
+    ],
+    "expected": [
+      3,
+      4
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Count contiguous ones only; zero ends a run, and the final run is checked too. Keep the first tie.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Termination must handle the final group as well.",
+    "source_content_sha256": "471bf154a7902f7d3939dce143c98738ba6772bdee74a6bb413e026162973e6c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-289"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-334-v2",
+    "task": "longest_ones",
+    "inputs": {
+      "bits": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    "options": [
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "expected": [
+      0,
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Count contiguous ones only; zero ends a run, and the final run is checked too. Keep the first tie.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Termination must handle the final group as well.",
+    "source_content_sha256": "471bf154a7902f7d3939dce143c98738ba6772bdee74a6bb413e026162973e6c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-289"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-334-v3",
+    "task": "longest_ones",
+    "inputs": {
+      "bits": [
+        0,
+        0
+      ]
+    },
+    "options": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [],
+      null
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Count contiguous ones only; zero ends a run, and the final run is checked too. Keep the first tie.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Termination must handle the final group as well.",
+    "source_content_sha256": "471bf154a7902f7d3939dce143c98738ba6772bdee74a6bb413e026162973e6c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-289"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-334-v4",
+    "task": "longest_ones",
+    "inputs": {
+      "bits": [
+        1,
+        1,
+        1
+      ]
+    },
+    "options": [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      null
+    ],
+    "expected": [
+      0,
+      2
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Count contiguous ones only; zero ends a run, and the final run is checked too. Keep the first tie.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Termination must handle the final group as well.",
+    "source_content_sha256": "471bf154a7902f7d3939dce143c98738ba6772bdee74a6bb413e026162973e6c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-289"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-334-v5",
+    "task": "longest_ones",
+    "inputs": {
+      "bits": []
+    },
+    "options": [
+      [],
+      null,
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Count contiguous ones only; zero ends a run, and the final run is checked too. Keep the first tie.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Termination must handle the final group as well.",
+    "source_content_sha256": "471bf154a7902f7d3939dce143c98738ba6772bdee74a6bb413e026162973e6c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-289"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-335-v1",
+    "task": "components",
+    "inputs": {
+      "grid": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "neighbors": 4
+    },
+    "options": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "expected": 2,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Group black pixels connected by paths of permitted neighbors; white space contributes no black component.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Define adjacency before searching for components.",
+    "source_content_sha256": "6cc47c4f462887732b18acd2b04dc691d145daf7c8b75cbdcf898977cfa22e51",
+    "provenance": {
+      "interview_ids": [
+        "PREP-296"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-335-v2",
+    "task": "components",
+    "inputs": {
+      "grid": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "neighbors": 8
+    },
+    "options": [
+      2,
+      4,
+      0,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Group black pixels connected by paths of permitted neighbors; white space contributes no black component.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Define adjacency before searching for components.",
+    "source_content_sha256": "6cc47c4f462887732b18acd2b04dc691d145daf7c8b75cbdcf898977cfa22e51",
+    "provenance": {
+      "interview_ids": [
+        "PREP-296"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-335-v3",
+    "task": "components",
+    "inputs": {
+      "grid": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "neighbors": 4
+    },
+    "options": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Group black pixels connected by paths of permitted neighbors; white space contributes no black component.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Define adjacency before searching for components.",
+    "source_content_sha256": "6cc47c4f462887732b18acd2b04dc691d145daf7c8b75cbdcf898977cfa22e51",
+    "provenance": {
+      "interview_ids": [
+        "PREP-296"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-335-v4",
+    "task": "components",
+    "inputs": {
+      "grid": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "neighbors": 8
+    },
+    "options": [
+      4,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Group black pixels connected by paths of permitted neighbors; white space contributes no black component.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Define adjacency before searching for components.",
+    "source_content_sha256": "6cc47c4f462887732b18acd2b04dc691d145daf7c8b75cbdcf898977cfa22e51",
+    "provenance": {
+      "interview_ids": [
+        "PREP-296"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-335-v5",
+    "task": "components",
+    "inputs": {
+      "grid": [
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "neighbors": 8
+    },
+    "options": [
+      2,
+      3,
+      4,
+      1
+    ],
+    "expected": 4,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Group black pixels connected by paths of permitted neighbors; white space contributes no black component.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Define adjacency before searching for components.",
+    "source_content_sha256": "6cc47c4f462887732b18acd2b04dc691d145daf7c8b75cbdcf898977cfa22e51",
+    "provenance": {
+      "interview_ids": [
+        "PREP-296"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-336-v1",
+    "task": "grid_paths",
+    "inputs": {
+      "height": 3,
+      "width": 3,
+      "blocked": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "options": [
+      4,
+      6,
+      0,
+      2
+    ],
+    "expected": 2,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Count paths whose every cell is open; the start and destination obey blocking too.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Base cases must obey the same constraints as transitions.",
+    "source_content_sha256": "d8d76d893becc72f8c719bd6a9f344b679dfbf21b5a5ab7ca095f7bb78326518",
+    "provenance": {
+      "interview_ids": [
+        "PREP-300"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-336-v2",
+    "task": "grid_paths",
+    "inputs": {
+      "height": 1,
+      "width": 1,
+      "blocked": []
+    },
+    "options": [
+      1,
+      2,
+      4,
+      0
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Count paths whose every cell is open; the start and destination obey blocking too.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Base cases must obey the same constraints as transitions.",
+    "source_content_sha256": "d8d76d893becc72f8c719bd6a9f344b679dfbf21b5a5ab7ca095f7bb78326518",
+    "provenance": {
+      "interview_ids": [
+        "PREP-300"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-336-v3",
+    "task": "grid_paths",
+    "inputs": {
+      "height": 2,
+      "width": 3,
+      "blocked": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "options": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Count paths whose every cell is open; the start and destination obey blocking too.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Base cases must obey the same constraints as transitions.",
+    "source_content_sha256": "d8d76d893becc72f8c719bd6a9f344b679dfbf21b5a5ab7ca095f7bb78326518",
+    "provenance": {
+      "interview_ids": [
+        "PREP-300"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-336-v4",
+    "task": "grid_paths",
+    "inputs": {
+      "height": 2,
+      "width": 3,
+      "blocked": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Count paths whose every cell is open; the start and destination obey blocking too.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Base cases must obey the same constraints as transitions.",
+    "source_content_sha256": "d8d76d893becc72f8c719bd6a9f344b679dfbf21b5a5ab7ca095f7bb78326518",
+    "provenance": {
+      "interview_ids": [
+        "PREP-300"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-336-v5",
+    "task": "grid_paths",
+    "inputs": {
+      "height": 2,
+      "width": 3,
+      "blocked": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "options": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Count paths whose every cell is open; the start and destination obey blocking too.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Base cases must obey the same constraints as transitions.",
+    "source_content_sha256": "d8d76d893becc72f8c719bd6a9f344b679dfbf21b5a5ab7ca095f7bb78326518",
+    "provenance": {
+      "interview_ids": [
+        "PREP-300"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-337-v1",
+    "task": "remove_spaces",
+    "inputs": {
+      "text": " a\tb "
+    },
+    "options": [
+      "a\tb",
+      "ab",
+      " a\tb ",
+      "a b"
+    ],
+    "expected": "a\tb",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Filter a character only when it is U+0020; preserve every other character and its order.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Choose character filtering according to the exact contract.",
+    "source_content_sha256": "f6b30033483d621a04d15eb834642f882fb21cc6618d3ebbf3a888fe16bdd7be",
+    "provenance": {
+      "interview_ids": [
+        "PREP-303"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-337-v2",
+    "task": "remove_spaces",
+    "inputs": {
+      "text": "a\nb c"
+    },
+    "options": [
+      "a bc",
+      "a\nbc",
+      "abc",
+      "a\nb c"
+    ],
+    "expected": "a\nbc",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Filter a character only when it is U+0020; preserve every other character and its order.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Choose character filtering according to the exact contract.",
+    "source_content_sha256": "f6b30033483d621a04d15eb834642f882fb21cc6618d3ebbf3a888fe16bdd7be",
+    "provenance": {
+      "interview_ids": [
+        "PREP-303"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-337-v3",
+    "task": "remove_spaces",
+    "inputs": {
+      "text": "   "
+    },
+    "options": [
+      "   ",
+      null,
+      "",
+      " "
+    ],
+    "expected": "",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Filter a character only when it is U+0020; preserve every other character and its order.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Choose character filtering according to the exact contract.",
+    "source_content_sha256": "f6b30033483d621a04d15eb834642f882fb21cc6618d3ebbf3a888fe16bdd7be",
+    "provenance": {
+      "interview_ids": [
+        "PREP-303"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-337-v4",
+    "task": "remove_spaces",
+    "inputs": {
+      "text": "a  b"
+    },
+    "options": [
+      "ab",
+      "a b",
+      "a  b",
+      "a b"
+    ],
+    "expected": "a b",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Filter a character only when it is U+0020; preserve every other character and its order.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Choose character filtering according to the exact contract.",
+    "source_content_sha256": "f6b30033483d621a04d15eb834642f882fb21cc6618d3ebbf3a888fe16bdd7be",
+    "provenance": {
+      "interview_ids": [
+        "PREP-303"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-337-v5",
+    "task": "remove_spaces",
+    "inputs": {
+      "text": "abc"
+    },
+    "options": [
+      "abc",
+      "cba",
+      "",
+      null
+    ],
+    "expected": "abc",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Filter a character only when it is U+0020; preserve every other character and its order.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Choose character filtering according to the exact contract.",
+    "source_content_sha256": "f6b30033483d621a04d15eb834642f882fb21cc6618d3ebbf3a888fe16bdd7be",
+    "provenance": {
+      "interview_ids": [
+        "PREP-303"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-338-v1",
+    "task": "atoi_prefix",
+    "inputs": {
+      "text": " -12x34"
+    },
+    "options": [
+      0,
+      -12,
+      -1234,
+      12
+    ],
+    "expected": -12,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Consume only the grammatical prefix without skipping an interrupting character; apply sign, then clamp to the range.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Parsing a prefix differs from collecting every digit in a string.",
+    "source_content_sha256": "c4a362068064ca9a3ed6281bda4661955a4e9ca798ad43f33dbbe84c553a7feb",
+    "provenance": {
+      "interview_ids": [
+        "PREP-295"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-338-v2",
+    "task": "atoi_prefix",
+    "inputs": {
+      "text": "+-7"
+    },
+    "options": [
+      7,
+      null,
+      0,
+      -7
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Consume only the grammatical prefix without skipping an interrupting character; apply sign, then clamp to the range.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Parsing a prefix differs from collecting every digit in a string.",
+    "source_content_sha256": "c4a362068064ca9a3ed6281bda4661955a4e9ca798ad43f33dbbe84c553a7feb",
+    "provenance": {
+      "interview_ids": [
+        "PREP-295"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-338-v3",
+    "task": "atoi_prefix",
+    "inputs": {
+      "text": "2147483648"
+    },
+    "options": [
+      2147483648,
+      -2147483648,
+      0,
+      2147483647
+    ],
+    "expected": 2147483647,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Consume only the grammatical prefix without skipping an interrupting character; apply sign, then clamp to the range.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Parsing a prefix differs from collecting every digit in a string.",
+    "source_content_sha256": "c4a362068064ca9a3ed6281bda4661955a4e9ca798ad43f33dbbe84c553a7feb",
+    "provenance": {
+      "interview_ids": [
+        "PREP-295"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-338-v4",
+    "task": "atoi_prefix",
+    "inputs": {
+      "text": "-9999999999"
+    },
+    "options": [
+      -2147483648,
+      -9999999999,
+      2147483647,
+      0
+    ],
+    "expected": -2147483648,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Consume only the grammatical prefix without skipping an interrupting character; apply sign, then clamp to the range.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Parsing a prefix differs from collecting every digit in a string.",
+    "source_content_sha256": "c4a362068064ca9a3ed6281bda4661955a4e9ca798ad43f33dbbe84c553a7feb",
+    "provenance": {
+      "interview_ids": [
+        "PREP-295"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-338-v5",
+    "task": "atoi_prefix",
+    "inputs": {
+      "text": "\t12"
+    },
+    "options": [
+      -12,
+      0,
+      12,
+      null
+    ],
+    "expected": 0,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Consume only the grammatical prefix without skipping an interrupting character; apply sign, then clamp to the range.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Parsing a prefix differs from collecting every digit in a string.",
+    "source_content_sha256": "c4a362068064ca9a3ed6281bda4661955a4e9ca798ad43f33dbbe84c553a7feb",
+    "provenance": {
+      "interview_ids": [
+        "PREP-295"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-339-v1",
+    "task": "circular_move",
+    "inputs": {
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "start": 3,
+      "steps": 2
+    },
+    "options": [
+      [
+        0,
+        3,
+        1,
+        2
+      ],
+      [
+        3,
+        0,
+        1,
+        2
+      ],
+      [
+        1,
+        3,
+        2,
+        0
+      ],
+      [
+        2,
+        3,
+        0,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      3,
+      2,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Form the circular index path, copy each successor into its predecessor, then place the saved value at the destination.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Modulo defines the path; stability determines how neighboring values shift.",
+    "source_content_sha256": "1803d0c69eecf5d87f65b958509a340a650d496e5f5780f9a6c15fd95675802c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-278"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-339-v2",
+    "task": "circular_move",
+    "inputs": {
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "start": 1,
+      "steps": 0
+    },
+    "options": [
+      [
+        1,
+        0,
+        2,
+        3
+      ],
+      [
+        0,
+        2,
+        3,
+        1
+      ],
+      [
+        3,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        2,
+        3
+      ]
+    ],
+    "expected": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Form the circular index path, copy each successor into its predecessor, then place the saved value at the destination.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Modulo defines the path; stability determines how neighboring values shift.",
+    "source_content_sha256": "1803d0c69eecf5d87f65b958509a340a650d496e5f5780f9a6c15fd95675802c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-278"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-339-v3",
+    "task": "circular_move",
+    "inputs": {
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "start": 1,
+      "steps": 4
+    },
+    "options": [
+      [
+        0,
+        1,
+        2,
+        3
+      ],
+      [
+        0,
+        2,
+        3,
+        1
+      ],
+      [
+        1,
+        2,
+        3,
+        0
+      ],
+      [
+        3,
+        0,
+        1,
+        2
+      ]
+    ],
+    "expected": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Form the circular index path, copy each successor into its predecessor, then place the saved value at the destination.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Modulo defines the path; stability determines how neighboring values shift.",
+    "source_content_sha256": "1803d0c69eecf5d87f65b958509a340a650d496e5f5780f9a6c15fd95675802c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-278"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-339-v4",
+    "task": "circular_move",
+    "inputs": {
+      "values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "start": 0,
+      "steps": 3
+    },
+    "options": [
+      [
+        1,
+        0,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        0
+      ],
+      [
+        3,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        3,
+        2,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Form the circular index path, copy each successor into its predecessor, then place the saved value at the destination.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Modulo defines the path; stability determines how neighboring values shift.",
+    "source_content_sha256": "1803d0c69eecf5d87f65b958509a340a650d496e5f5780f9a6c15fd95675802c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-278"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-339-v5",
+    "task": "circular_move",
+    "inputs": {
+      "values": [
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "start": 4,
+      "steps": 2
+    },
+    "options": [
+      [
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        0,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      1,
+      0,
+      1,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Form the circular index path, copy each successor into its predecessor, then place the saved value at the destination.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Modulo defines the path; stability determines how neighboring values shift.",
+    "source_content_sha256": "1803d0c69eecf5d87f65b958509a340a650d496e5f5780f9a6c15fd95675802c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-278"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-340-v1",
+    "task": "division",
+    "inputs": {
+      "dividend": 17,
+      "divisor": 5
+    },
+    "options": [
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        -3
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "expected": [
+      3,
+      2
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Valid division preserves dividend=quotient×divisor+remainder and ends with remainder below divisor. Reject zero to avoid a loop with no progress.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The invariant preserves value and the stopping condition establishes a valid remainder.",
+    "source_content_sha256": "029d50a1be6e38ec419d2885ae3e6d0c726e7b5b7f2797b7950d5807180da91b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-311"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-340-v2",
+    "task": "division",
+    "inputs": {
+      "dividend": 3,
+      "divisor": 5
+    },
+    "options": [
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        -2
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "expected": [
+      0,
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Valid division preserves dividend=quotient×divisor+remainder and ends with remainder below divisor. Reject zero to avoid a loop with no progress.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The invariant preserves value and the stopping condition establishes a valid remainder.",
+    "source_content_sha256": "029d50a1be6e38ec419d2885ae3e6d0c726e7b5b7f2797b7950d5807180da91b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-311"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-340-v3",
+    "task": "division",
+    "inputs": {
+      "dividend": 15,
+      "divisor": 5
+    },
+    "options": [
+      [
+        4,
+        -5
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "expected": [
+      3,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Valid division preserves dividend=quotient×divisor+remainder and ends with remainder below divisor. Reject zero to avoid a loop with no progress.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The invariant preserves value and the stopping condition establishes a valid remainder.",
+    "source_content_sha256": "029d50a1be6e38ec419d2885ae3e6d0c726e7b5b7f2797b7950d5807180da91b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-311"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-340-v4",
+    "task": "division",
+    "inputs": {
+      "dividend": 0,
+      "divisor": 7
+    },
+    "options": [
+      [
+        0,
+        7
+      ],
+      null,
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Valid division preserves dividend=quotient×divisor+remainder and ends with remainder below divisor. Reject zero to avoid a loop with no progress.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The invariant preserves value and the stopping condition establishes a valid remainder.",
+    "source_content_sha256": "029d50a1be6e38ec419d2885ae3e6d0c726e7b5b7f2797b7950d5807180da91b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-311"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-340-v5",
+    "task": "division",
+    "inputs": {
+      "dividend": 5,
+      "divisor": 0
+    },
+    "options": [
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      null
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Valid division preserves dividend=quotient×divisor+remainder and ends with remainder below divisor. Reject zero to avoid a loop with no progress.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The invariant preserves value and the stopping condition establishes a valid remainder.",
+    "source_content_sha256": "029d50a1be6e38ec419d2885ae3e6d0c726e7b5b7f2797b7950d5807180da91b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-311"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-341-v1",
+    "task": "copy_mutation",
+    "inputs": {
+      "values": [
+        [
+          4
+        ],
+        [
+          7
+        ]
+      ],
+      "mode": "shallow",
+      "operation": "inner_set",
+      "index": 0,
+      "value": 9
+    },
+    "options": [
+      [
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        [
+          9
+        ],
+        [
+          7
+        ]
+      ],
+      [
+        [
+          9
+        ],
+        [
+          7
+        ]
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "A shallow copy shares inner lists but separates the outer list. A deep copy separates both; identify which storage level the operation changes.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copy depth determines which storage levels remain shared.",
+    "source_content_sha256": "6182d4b38aef089447b6f07a31f85df9ac85be15ac0efd15ad7d5ce2a0dbad08",
+    "provenance": {
+      "interview_ids": [
+        "PREP-252"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-341-v2",
+    "task": "copy_mutation",
+    "inputs": {
+      "values": [
+        [
+          4
+        ],
+        [
+          7
+        ]
+      ],
+      "mode": "deep",
+      "operation": "inner_set",
+      "index": 0,
+      "value": 9
+    },
+    "options": [
+      [
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        [
+          4
+        ],
+        [
+          7
+        ]
+      ],
+      [
+        [
+          9
+        ],
+        [
+          7
+        ]
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "A shallow copy shares inner lists but separates the outer list. A deep copy separates both; identify which storage level the operation changes.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copy depth determines which storage levels remain shared.",
+    "source_content_sha256": "6182d4b38aef089447b6f07a31f85df9ac85be15ac0efd15ad7d5ce2a0dbad08",
+    "provenance": {
+      "interview_ids": [
+        "PREP-252"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-341-v3",
+    "task": "copy_mutation",
+    "inputs": {
+      "values": [
+        [
+          4
+        ],
+        [
+          7
+        ]
+      ],
+      "mode": "shallow",
+      "operation": "outer_replace",
+      "index": 0,
+      "value": [
+        9
+      ]
+    },
+    "options": [
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            7
+          ],
+          [
+            9
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            9
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            9
+          ],
+          [
+            7
+          ]
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        [
+          4
+        ],
+        [
+          7
+        ]
+      ],
+      [
+        [
+          9
+        ],
+        [
+          7
+        ]
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "A shallow copy shares inner lists but separates the outer list. A deep copy separates both; identify which storage level the operation changes.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copy depth determines which storage levels remain shared.",
+    "source_content_sha256": "6182d4b38aef089447b6f07a31f85df9ac85be15ac0efd15ad7d5ce2a0dbad08",
+    "provenance": {
+      "interview_ids": [
+        "PREP-252"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-341-v4",
+    "task": "copy_mutation",
+    "inputs": {
+      "values": [
+        [
+          4
+        ],
+        [
+          7
+        ]
+      ],
+      "mode": "shallow",
+      "operation": "outer_append",
+      "index": null,
+      "value": [
+        8
+      ]
+    },
+    "options": [
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            8
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            4
+          ],
+          [
+            7
+          ]
+        ],
+        [
+          [
+            4
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ]
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        [
+          4
+        ],
+        [
+          7
+        ]
+      ],
+      [
+        [
+          4
+        ],
+        [
+          7
+        ],
+        [
+          8
+        ]
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "A shallow copy shares inner lists but separates the outer list. A deep copy separates both; identify which storage level the operation changes.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copy depth determines which storage levels remain shared.",
+    "source_content_sha256": "6182d4b38aef089447b6f07a31f85df9ac85be15ac0efd15ad7d5ce2a0dbad08",
+    "provenance": {
+      "interview_ids": [
+        "PREP-252"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-341-v5",
+    "task": "copy_mutation",
+    "inputs": {
+      "values": [
+        [
+          1,
+          2
+        ],
+        []
+      ],
+      "mode": "deep",
+      "operation": "inner_append",
+      "index": 1,
+      "value": 5
+    },
+    "options": [
+      [
+        [
+          [
+            1,
+            2
+          ],
+          []
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            5
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            5
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            5
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            1,
+            2
+          ],
+          []
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [],
+          [
+            5
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            1,
+            2
+          ],
+          []
+        ],
+        [
+          [
+            1,
+            2,
+            5
+          ],
+          []
+        ]
+      ]
+    ],
+    "expected": [
+      [
+        [
+          1,
+          2
+        ],
+        []
+      ],
+      [
+        [
+          1,
+          2
+        ],
+        [
+          5
+        ]
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "A shallow copy shares inner lists but separates the outer list. A deep copy separates both; identify which storage level the operation changes.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Copy depth determines which storage levels remain shared.",
+    "source_content_sha256": "6182d4b38aef089447b6f07a31f85df9ac85be15ac0efd15ad7d5ce2a0dbad08",
+    "provenance": {
+      "interview_ids": [
+        "PREP-252"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-342-v1",
+    "task": "test_and_set",
+    "inputs": {
+      "initial": 0,
+      "events": [
+        "tas",
+        "tas"
+      ]
+    },
+    "options": [
+      [
+        [
+          0,
+          1
+        ],
+        0
+      ],
+      [
+        [
+          0,
+          1
+        ],
+        1
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        1
+      ],
+      [
+        [
+          1,
+          1
+        ],
+        1
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        1
+      ],
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Follow the stated atomic order; each tas reports the state before its write, and each release clears the lock.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The return value describes the state before the atomic update.",
+    "source_content_sha256": "4f1be3019277855936ce40173d7a2497f16258769b61619c8d4ee97024b093e8",
+    "provenance": {
+      "interview_ids": [
+        "PREP-281"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-342-v2",
+    "task": "test_and_set",
+    "inputs": {
+      "initial": 1,
+      "events": [
+        "tas"
+      ]
+    },
+    "options": [
+      [
+        [
+          1
+        ],
+        0
+      ],
+      [
+        [],
+        1
+      ],
+      [
+        [
+          1
+        ],
+        1
+      ],
+      [
+        [
+          0
+        ],
+        1
+      ]
+    ],
+    "expected": [
+      [
+        1
+      ],
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Follow the stated atomic order; each tas reports the state before its write, and each release clears the lock.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The return value describes the state before the atomic update.",
+    "source_content_sha256": "4f1be3019277855936ce40173d7a2497f16258769b61619c8d4ee97024b093e8",
+    "provenance": {
+      "interview_ids": [
+        "PREP-281"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-342-v3",
+    "task": "test_and_set",
+    "inputs": {
+      "initial": 0,
+      "events": [
+        "tas",
+        "release",
+        "tas"
+      ]
+    },
+    "options": [
+      [
+        [
+          0,
+          1
+        ],
+        1
+      ],
+      [
+        [
+          1,
+          0
+        ],
+        1
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        0
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        1
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0
+      ],
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Follow the stated atomic order; each tas reports the state before its write, and each release clears the lock.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The return value describes the state before the atomic update.",
+    "source_content_sha256": "4f1be3019277855936ce40173d7a2497f16258769b61619c8d4ee97024b093e8",
+    "provenance": {
+      "interview_ids": [
+        "PREP-281"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-342-v4",
+    "task": "test_and_set",
+    "inputs": {
+      "initial": 0,
+      "events": [
+        "tas",
+        "release"
+      ]
+    },
+    "options": [
+      [
+        [
+          0
+        ],
+        0
+      ],
+      [
+        [
+          0
+        ],
+        1
+      ],
+      [
+        [
+          1
+        ],
+        0
+      ],
+      [
+        [],
+        0
+      ]
+    ],
+    "expected": [
+      [
+        0
+      ],
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Follow the stated atomic order; each tas reports the state before its write, and each release clears the lock.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The return value describes the state before the atomic update.",
+    "source_content_sha256": "4f1be3019277855936ce40173d7a2497f16258769b61619c8d4ee97024b093e8",
+    "provenance": {
+      "interview_ids": [
+        "PREP-281"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-342-v5",
+    "task": "test_and_set",
+    "inputs": {
+      "initial": 1,
+      "events": [
+        "tas",
+        "tas",
+        "release",
+        "tas"
+      ]
+    },
+    "options": [
+      [
+        [
+          1,
+          0,
+          0
+        ],
+        0
+      ],
+      [
+        [
+          1,
+          1,
+          0
+        ],
+        1
+      ],
+      [
+        [
+          1,
+          1,
+          1
+        ],
+        1
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        1
+      ]
+    ],
+    "expected": [
+      [
+        1,
+        1,
+        0
+      ],
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Follow the stated atomic order; each tas reports the state before its write, and each release clears the lock.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The return value describes the state before the atomic update.",
+    "source_content_sha256": "4f1be3019277855936ce40173d7a2497f16258769b61619c8d4ee97024b093e8",
+    "provenance": {
+      "interview_ids": [
+        "PREP-281"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-343-v1",
+    "task": "local_lifetime",
+    "inputs": {
+      "initial": 0,
+      "deltas": [
+        1,
+        1,
+        1
+      ],
+      "mode": "static"
+    },
+    "options": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        3,
+        3,
+        3
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      2,
+      3
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "In static mode each addition starts from the previous result; in automatic mode it starts from the initializer.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Name scope and storage lifetime are separate properties.",
+    "source_content_sha256": "afcb8c08a941999d2e76d0968bf5c49fb623d005646958dfb562b940219e82e0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-241"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-343-v2",
+    "task": "local_lifetime",
+    "inputs": {
+      "initial": 0,
+      "deltas": [
+        1,
+        1,
+        1
+      ],
+      "mode": "automatic"
+    },
+    "options": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        2,
+        1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "expected": [
+      1,
+      1,
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "In static mode each addition starts from the previous result; in automatic mode it starts from the initializer.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Name scope and storage lifetime are separate properties.",
+    "source_content_sha256": "afcb8c08a941999d2e76d0968bf5c49fb623d005646958dfb562b940219e82e0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-241"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-343-v3",
+    "task": "local_lifetime",
+    "inputs": {
+      "initial": 5,
+      "deltas": [
+        2,
+        -1,
+        0
+      ],
+      "mode": "static"
+    },
+    "options": [
+      [
+        7,
+        6,
+        6
+      ],
+      [
+        7,
+        4,
+        5
+      ],
+      [
+        5,
+        7,
+        6
+      ],
+      [
+        7,
+        6,
+        5
+      ]
+    ],
+    "expected": [
+      7,
+      6,
+      6
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "In static mode each addition starts from the previous result; in automatic mode it starts from the initializer.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Name scope and storage lifetime are separate properties.",
+    "source_content_sha256": "afcb8c08a941999d2e76d0968bf5c49fb623d005646958dfb562b940219e82e0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-241"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-343-v4",
+    "task": "local_lifetime",
+    "inputs": {
+      "initial": 5,
+      "deltas": [
+        2,
+        -1,
+        0
+      ],
+      "mode": "automatic"
+    },
+    "options": [
+      [
+        2,
+        -1,
+        0
+      ],
+      [
+        7,
+        4,
+        5
+      ],
+      [
+        7,
+        6,
+        6
+      ],
+      [
+        5,
+        5,
+        5
+      ]
+    ],
+    "expected": [
+      7,
+      4,
+      5
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "In static mode each addition starts from the previous result; in automatic mode it starts from the initializer.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Name scope and storage lifetime are separate properties.",
+    "source_content_sha256": "afcb8c08a941999d2e76d0968bf5c49fb623d005646958dfb562b940219e82e0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-241"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-343-v5",
+    "task": "local_lifetime",
+    "inputs": {
+      "initial": 0,
+      "deltas": [],
+      "mode": "static"
+    },
+    "options": [
+      [
+        1
+      ],
+      null,
+      [],
+      [
+        0
+      ]
+    ],
+    "expected": [],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "In static mode each addition starts from the previous result; in automatic mode it starts from the initializer.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Name scope and storage lifetime are separate properties.",
+    "source_content_sha256": "afcb8c08a941999d2e76d0968bf5c49fb623d005646958dfb562b940219e82e0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-241"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-344-v1",
+    "task": "cli_contract",
+    "inputs": {
+      "status": 0,
+      "stdout": "data",
+      "stderr": ""
+    },
+    "options": [
+      "status",
+      "output",
+      "stderr",
+      "success"
+    ],
+    "expected": "success",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check the conjunction of zero status and positive product length. Under this contract stderr contents do not change those conditions.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Success requires every contractual condition, not a single signal.",
+    "source_content_sha256": "3977ad17508e42172939c91466339d9cb008628eab1f66e6a7955649297e729f",
+    "provenance": {
+      "interview_ids": [
+        "PREP-266"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-344-v2",
+    "task": "cli_contract",
+    "inputs": {
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "options": [
+      "output",
+      "stderr",
+      "success",
+      "status"
+    ],
+    "expected": "output",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check the conjunction of zero status and positive product length. Under this contract stderr contents do not change those conditions.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Success requires every contractual condition, not a single signal.",
+    "source_content_sha256": "3977ad17508e42172939c91466339d9cb008628eab1f66e6a7955649297e729f",
+    "provenance": {
+      "interview_ids": [
+        "PREP-266"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-344-v3",
+    "task": "cli_contract",
+    "inputs": {
+      "status": 2,
+      "stdout": "data",
+      "stderr": "failure"
+    },
+    "options": [
+      "success",
+      "status",
+      "output",
+      "stderr"
+    ],
+    "expected": "status",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check the conjunction of zero status and positive product length. Under this contract stderr contents do not change those conditions.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Success requires every contractual condition, not a single signal.",
+    "source_content_sha256": "3977ad17508e42172939c91466339d9cb008628eab1f66e6a7955649297e729f",
+    "provenance": {
+      "interview_ids": [
+        "PREP-266"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-344-v4",
+    "task": "cli_contract",
+    "inputs": {
+      "status": 0,
+      "stdout": "data",
+      "stderr": "warning"
+    },
+    "options": [
+      "output",
+      "stderr",
+      "success",
+      "status"
+    ],
+    "expected": "success",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check the conjunction of zero status and positive product length. Under this contract stderr contents do not change those conditions.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Success requires every contractual condition, not a single signal.",
+    "source_content_sha256": "3977ad17508e42172939c91466339d9cb008628eab1f66e6a7955649297e729f",
+    "provenance": {
+      "interview_ids": [
+        "PREP-266"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-344-v5",
+    "task": "cli_contract",
+    "inputs": {
+      "status": 0,
+      "stdout": " ",
+      "stderr": ""
+    },
+    "options": [
+      "status",
+      "output",
+      "stderr",
+      "success"
+    ],
+    "expected": "success",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Check the conjunction of zero status and positive product length. Under this contract stderr contents do not change those conditions.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Success requires every contractual condition, not a single signal.",
+    "source_content_sha256": "3977ad17508e42172939c91466339d9cb008628eab1f66e6a7955649297e729f",
+    "provenance": {
+      "interview_ids": [
+        "PREP-266"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-345-v1",
+    "task": "extract_field",
+    "inputs": {
+      "data": {
+        "value": "hi",
+        "id": 7
+      }
+    },
+    "options": [
+      "hi",
+      null,
+      7,
+      "{\"value\":\"hi\"}"
+    ],
+    "expected": "hi",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Validate both root and field types; a missing or null field is not a string, whereas an empty string is.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Syntax validation and schema validation are different stages.",
+    "source_content_sha256": "e872e4c6d9da5f377c1b74f981f733a58bca8c0d5408daab0c480dc1e55b3b10",
+    "provenance": {
+      "interview_ids": [
+        "PREP-267"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-345-v2",
+    "task": "extract_field",
+    "inputs": {
+      "data": {
+        "value": null
+      }
+    },
+    "options": [
+      "",
+      null,
+      "null",
+      "None"
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Validate both root and field types; a missing or null field is not a string, whereas an empty string is.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Syntax validation and schema validation are different stages.",
+    "source_content_sha256": "e872e4c6d9da5f377c1b74f981f733a58bca8c0d5408daab0c480dc1e55b3b10",
+    "provenance": {
+      "interview_ids": [
+        "PREP-267"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-345-v3",
+    "task": "extract_field",
+    "inputs": {
+      "data": {
+        "id": 7
+      }
+    },
+    "options": [
+      "id",
+      "",
+      null,
+      7
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Validate both root and field types; a missing or null field is not a string, whereas an empty string is.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Syntax validation and schema validation are different stages.",
+    "source_content_sha256": "e872e4c6d9da5f377c1b74f981f733a58bca8c0d5408daab0c480dc1e55b3b10",
+    "provenance": {
+      "interview_ids": [
+        "PREP-267"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-345-v4",
+    "task": "extract_field",
+    "inputs": {
+      "data": {
+        "value": ""
+      }
+    },
+    "options": [
+      null,
+      "value",
+      "null",
+      ""
+    ],
+    "expected": "",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Validate both root and field types; a missing or null field is not a string, whereas an empty string is.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Syntax validation and schema validation are different stages.",
+    "source_content_sha256": "e872e4c6d9da5f377c1b74f981f733a58bca8c0d5408daab0c480dc1e55b3b10",
+    "provenance": {
+      "interview_ids": [
+        "PREP-267"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-345-v5",
+    "task": "extract_field",
+    "inputs": {
+      "data": [
+        {
+          "value": "hi"
+        }
+      ]
+    },
+    "options": [
+      null,
+      "hi",
+      "value",
+      ""
+    ],
+    "expected": null,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Validate both root and field types; a missing or null field is not a string, whereas an empty string is.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Syntax validation and schema validation are different stages.",
+    "source_content_sha256": "e872e4c6d9da5f377c1b74f981f733a58bca8c0d5408daab0c480dc1e55b3b10",
+    "provenance": {
+      "interview_ids": [
+        "PREP-267"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-346-v1",
+    "task": "speed",
+    "inputs": {
+      "initial": 10,
+      "actions": [
+        1,
+        -1
+      ]
+    },
+    "options": [
+      8,
+      9,
+      10,
+      11
+    ],
+    "expected": 9,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Add and clamp at each step in order; a change discarded at a boundary is not retained for a later step.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "With saturation, operation order affects the result.",
+    "source_content_sha256": "0a4b9ca39c69bc16f7d333d41efadaf8c6a9aab8b59300e1243d792fee6d95cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-269"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-346-v2",
+    "task": "speed",
+    "inputs": {
+      "initial": 0,
+      "actions": [
+        -1,
+        1
+      ]
+    },
+    "options": [
+      2,
+      0,
+      1,
+      -1
+    ],
+    "expected": 1,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Add and clamp at each step in order; a change discarded at a boundary is not retained for a later step.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "With saturation, operation order affects the result.",
+    "source_content_sha256": "0a4b9ca39c69bc16f7d333d41efadaf8c6a9aab8b59300e1243d792fee6d95cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-269"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-346-v3",
+    "task": "speed",
+    "inputs": {
+      "initial": 9,
+      "actions": [
+        1,
+        1,
+        -1
+      ]
+    },
+    "options": [
+      10,
+      11,
+      8,
+      9
+    ],
+    "expected": 9,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Add and clamp at each step in order; a change discarded at a boundary is not retained for a later step.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "With saturation, operation order affects the result.",
+    "source_content_sha256": "0a4b9ca39c69bc16f7d333d41efadaf8c6a9aab8b59300e1243d792fee6d95cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-269"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-346-v4",
+    "task": "speed",
+    "inputs": {
+      "initial": 5,
+      "actions": []
+    },
+    "options": [
+      5,
+      6,
+      10,
+      0
+    ],
+    "expected": 5,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Add and clamp at each step in order; a change discarded at a boundary is not retained for a later step.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "With saturation, operation order affects the result.",
+    "source_content_sha256": "0a4b9ca39c69bc16f7d333d41efadaf8c6a9aab8b59300e1243d792fee6d95cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-269"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-346-v5",
+    "task": "speed",
+    "inputs": {
+      "initial": 1,
+      "actions": [
+        -1,
+        -1,
+        1,
+        1
+      ]
+    },
+    "options": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "expected": 2,
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 2,
+    "difficulty_rationale": "Add and clamp at each step in order; a change discarded at a boundary is not retained for a later step.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "With saturation, operation order affects the result.",
+    "source_content_sha256": "0a4b9ca39c69bc16f7d333d41efadaf8c6a9aab8b59300e1243d792fee6d95cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-269"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-347-v1",
+    "task": "maximum_certainty",
+    "inputs": {
+      "observed": [
+        20,
+        30,
+        25
+      ],
+      "unknown": 1,
+      "upper": 100
+    },
+    "options": [
+      "complete",
+      "local",
+      "unknown",
+      "upper"
+    ],
+    "expected": "unknown",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Guarantee holds when all positions are measured or the known upper bound is reached; otherwise an unknown score could be greater.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A value bound can justify early stopping without a function-shape assumption.",
+    "source_content_sha256": "ae57bb9988026cdf23e945e0e7001c459eb7f8a1e97a736f08c834389beb7a85",
+    "provenance": {
+      "interview_ids": [
+        "PREP-270"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-347-v2",
+    "task": "maximum_certainty",
+    "inputs": {
+      "observed": [
+        20,
+        100
+      ],
+      "unknown": 8,
+      "upper": 100
+    },
+    "options": [
+      "complete",
+      "local",
+      "unknown",
+      "upper"
+    ],
+    "expected": "upper",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Guarantee holds when all positions are measured or the known upper bound is reached; otherwise an unknown score could be greater.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A value bound can justify early stopping without a function-shape assumption.",
+    "source_content_sha256": "ae57bb9988026cdf23e945e0e7001c459eb7f8a1e97a736f08c834389beb7a85",
+    "provenance": {
+      "interview_ids": [
+        "PREP-270"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-347-v3",
+    "task": "maximum_certainty",
+    "inputs": {
+      "observed": [
+        5,
+        2,
+        4
+      ],
+      "unknown": 0,
+      "upper": 100
+    },
+    "options": [
+      "complete",
+      "local",
+      "unknown",
+      "upper"
+    ],
+    "expected": "complete",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Guarantee holds when all positions are measured or the known upper bound is reached; otherwise an unknown score could be greater.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A value bound can justify early stopping without a function-shape assumption.",
+    "source_content_sha256": "ae57bb9988026cdf23e945e0e7001c459eb7f8a1e97a736f08c834389beb7a85",
+    "provenance": {
+      "interview_ids": [
+        "PREP-270"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-347-v4",
+    "task": "maximum_certainty",
+    "inputs": {
+      "observed": [
+        9,
+        8
+      ],
+      "unknown": 2,
+      "upper": 10
+    },
+    "options": [
+      "local",
+      "unknown",
+      "upper",
+      "complete"
+    ],
+    "expected": "unknown",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Guarantee holds when all positions are measured or the known upper bound is reached; otherwise an unknown score could be greater.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A value bound can justify early stopping without a function-shape assumption.",
+    "source_content_sha256": "ae57bb9988026cdf23e945e0e7001c459eb7f8a1e97a736f08c834389beb7a85",
+    "provenance": {
+      "interview_ids": [
+        "PREP-270"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-347-v5",
+    "task": "maximum_certainty",
+    "inputs": {
+      "observed": [
+        0
+      ],
+      "unknown": 5,
+      "upper": 0
+    },
+    "options": [
+      "local",
+      "unknown",
+      "upper",
+      "complete"
+    ],
+    "expected": "upper",
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Guarantee holds when all positions are measured or the known upper bound is reached; otherwise an unknown score could be greater.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "A value bound can justify early stopping without a function-shape assumption.",
+    "source_content_sha256": "ae57bb9988026cdf23e945e0e7001c459eb7f8a1e97a736f08c834389beb7a85",
+    "provenance": {
+      "interview_ids": [
+        "PREP-270"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-348-v1",
+    "task": "undo_branch",
+    "inputs": {
+      "board": [
+        5,
+        0,
+        0
+      ],
+      "assignments": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "undo": 2
+    },
+    "options": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        5,
+        2,
+        0
+      ],
+      [
+        5,
+        2,
+        7
+      ],
+      [
+        5,
+        0,
+        0
+      ]
+    ],
+    "expected": [
+      5,
+      0,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Undo from the end only assignments within the rollback scope; preserve fixed givens and earlier-depth choices.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Every temporary choice needs an undo with matching scope.",
+    "source_content_sha256": "685f1456e6bad81b4ab054a7acb84009b5c48f356c867bd26a6cfe084a4b49e7",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-348-v2",
+    "task": "undo_branch",
+    "inputs": {
+      "board": [
+        5,
+        0,
+        0
+      ],
+      "assignments": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "undo": 1
+    },
+    "options": [
+      [
+        5,
+        2,
+        0
+      ],
+      [
+        5,
+        0,
+        0
+      ],
+      [
+        5,
+        0,
+        7
+      ],
+      [
+        5,
+        2,
+        7
+      ]
+    ],
+    "expected": [
+      5,
+      2,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Undo from the end only assignments within the rollback scope; preserve fixed givens and earlier-depth choices.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Every temporary choice needs an undo with matching scope.",
+    "source_content_sha256": "685f1456e6bad81b4ab054a7acb84009b5c48f356c867bd26a6cfe084a4b49e7",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-348-v3",
+    "task": "undo_branch",
+    "inputs": {
+      "board": [
+        0,
+        4
+      ],
+      "assignments": [
+        [
+          0,
+          3
+        ]
+      ],
+      "undo": 0
+    },
+    "options": [
+      [
+        0,
+        0
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        3,
+        0
+      ]
+    ],
+    "expected": [
+      3,
+      4
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Undo from the end only assignments within the rollback scope; preserve fixed givens and earlier-depth choices.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Every temporary choice needs an undo with matching scope.",
+    "source_content_sha256": "685f1456e6bad81b4ab054a7acb84009b5c48f356c867bd26a6cfe084a4b49e7",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-348-v4",
+    "task": "undo_branch",
+    "inputs": {
+      "board": [
+        8,
+        0
+      ],
+      "assignments": [],
+      "undo": 0
+    },
+    "options": [
+      [
+        8,
+        8
+      ],
+      [
+        0,
+        8
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "expected": [
+      8,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Undo from the end only assignments within the rollback scope; preserve fixed givens and earlier-depth choices.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Every temporary choice needs an undo with matching scope.",
+    "source_content_sha256": "685f1456e6bad81b4ab054a7acb84009b5c48f356c867bd26a6cfe084a4b49e7",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-348-v5",
+    "task": "undo_branch",
+    "inputs": {
+      "board": [
+        0,
+        0,
+        6,
+        0
+      ],
+      "assignments": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "undo": 2
+    },
+    "options": [
+      [
+        0,
+        0,
+        6,
+        0
+      ],
+      [
+        1,
+        2,
+        6,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        3
+      ],
+      [
+        1,
+        0,
+        6,
+        0
+      ]
+    ],
+    "expected": [
+      1,
+      0,
+      6,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Undo from the end only assignments within the rollback scope; preserve fixed givens and earlier-depth choices.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Every temporary choice needs an undo with matching scope.",
+    "source_content_sha256": "685f1456e6bad81b4ab054a7acb84009b5c48f356c867bd26a6cfe084a4b49e7",
+    "provenance": {
+      "interview_ids": [
+        "PREP-245"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-349-v1",
+    "task": "merge_pass",
+    "inputs": {
+      "values": [
+        4,
+        1,
+        3,
+        2,
+        5
+      ],
+      "width": 1
+    },
+    "options": [
+      [
+        1,
+        4,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        4,
+        1,
+        3,
+        2,
+        5
+      ],
+      [
+        1,
+        4,
+        2,
+        5,
+        3
+      ]
+    ],
+    "expected": [
+      1,
+      4,
+      2,
+      3,
+      5
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Merge within chunks of at most twice the run length; do not combine chunks that this pass has not yet brought together.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted local runs do not yet imply a globally sorted array.",
+    "source_content_sha256": "57d02ab3257ce0a6ef00c8e5636b27809d77249083c724f65a08bf186889a5cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-273"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-349-v2",
+    "task": "merge_pass",
+    "inputs": {
+      "values": [
+        1,
+        4,
+        2,
+        3,
+        5
+      ],
+      "width": 2
+    },
+    "options": [
+      [
+        1,
+        2,
+        4,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        4,
+        2,
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        1,
+        4,
+        5
+      ]
+    ],
+    "expected": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Merge within chunks of at most twice the run length; do not combine chunks that this pass has not yet brought together.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted local runs do not yet imply a globally sorted array.",
+    "source_content_sha256": "57d02ab3257ce0a6ef00c8e5636b27809d77249083c724f65a08bf186889a5cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-273"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-349-v3",
+    "task": "merge_pass",
+    "inputs": {
+      "values": [
+        2,
+        2,
+        1,
+        1
+      ],
+      "width": 1
+    },
+    "options": [
+      [
+        2,
+        1,
+        2,
+        1
+      ],
+      [
+        1,
+        2,
+        1,
+        2
+      ],
+      [
+        2,
+        2,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        2,
+        2
+      ]
+    ],
+    "expected": [
+      2,
+      2,
+      1,
+      1
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Merge within chunks of at most twice the run length; do not combine chunks that this pass has not yet brought together.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted local runs do not yet imply a globally sorted array.",
+    "source_content_sha256": "57d02ab3257ce0a6ef00c8e5636b27809d77249083c724f65a08bf186889a5cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-273"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-349-v4",
+    "task": "merge_pass",
+    "inputs": {
+      "values": [
+        1,
+        5,
+        2,
+        4,
+        0
+      ],
+      "width": 2
+    },
+    "options": [
+      [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        5,
+        0,
+        2,
+        4
+      ],
+      [
+        1,
+        2,
+        4,
+        0,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5,
+        0
+      ]
+    ],
+    "expected": [
+      1,
+      2,
+      4,
+      5,
+      0
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Merge within chunks of at most twice the run length; do not combine chunks that this pass has not yet brought together.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted local runs do not yet imply a globally sorted array.",
+    "source_content_sha256": "57d02ab3257ce0a6ef00c8e5636b27809d77249083c724f65a08bf186889a5cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-273"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-349-v5",
+    "task": "merge_pass",
+    "inputs": {
+      "values": [],
+      "width": 1
+    },
+    "options": [
+      [],
+      [
+        0
+      ],
+      null,
+      [
+        1
+      ]
+    ],
+    "expected": [],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Merge within chunks of at most twice the run length; do not combine chunks that this pass has not yet brought together.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Sorted local runs do not yet imply a globally sorted array.",
+    "source_content_sha256": "57d02ab3257ce0a6ef00c8e5636b27809d77249083c724f65a08bf186889a5cf",
+    "provenance": {
+      "interview_ids": [
+        "PREP-273"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-350-v1",
+    "task": "queue_call",
+    "inputs": {
+      "capacity": 2,
+      "queue": [
+        4,
+        5
+      ],
+      "write": 9,
+      "read": true
+    },
+    "options": [
+      [
+        false,
+        5,
+        [
+          4
+        ]
+      ],
+      [
+        false,
+        4,
+        [
+          5
+        ]
+      ],
+      [
+        true,
+        4,
+        [
+          5,
+          9
+        ]
+      ],
+      [
+        true,
+        9,
+        [
+          4,
+          5
+        ]
+      ]
+    ],
+    "expected": [
+      false,
+      4,
+      [
+        5
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Check space before writing, then process the read. An absent write is not accepted, and removal preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Evaluate capacity at the operation's specified point in the sequence.",
+    "source_content_sha256": "5e295297aff1154af917d451da9caebc173f0c5221287ad1804acd485a570d40",
+    "provenance": {
+      "interview_ids": [
+        "PREP-230"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-350-v2",
+    "task": "queue_call",
+    "inputs": {
+      "capacity": 2,
+      "queue": [],
+      "write": 9,
+      "read": true
+    },
+    "options": [
+      [
+        false,
+        null,
+        []
+      ],
+      [
+        true,
+        null,
+        []
+      ],
+      [
+        true,
+        9,
+        []
+      ],
+      [
+        true,
+        null,
+        [
+          9
+        ]
+      ]
+    ],
+    "expected": [
+      true,
+      9,
+      []
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Check space before writing, then process the read. An absent write is not accepted, and removal preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Evaluate capacity at the operation's specified point in the sequence.",
+    "source_content_sha256": "5e295297aff1154af917d451da9caebc173f0c5221287ad1804acd485a570d40",
+    "provenance": {
+      "interview_ids": [
+        "PREP-230"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-350-v3",
+    "task": "queue_call",
+    "inputs": {
+      "capacity": 1,
+      "queue": [
+        4
+      ],
+      "write": 9,
+      "read": true
+    },
+    "options": [
+      [
+        true,
+        4,
+        [
+          9
+        ]
+      ],
+      [
+        true,
+        9,
+        []
+      ],
+      [
+        false,
+        null,
+        [
+          4
+        ]
+      ],
+      [
+        false,
+        4,
+        []
+      ]
+    ],
+    "expected": [
+      false,
+      4,
+      []
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Check space before writing, then process the read. An absent write is not accepted, and removal preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Evaluate capacity at the operation's specified point in the sequence.",
+    "source_content_sha256": "5e295297aff1154af917d451da9caebc173f0c5221287ad1804acd485a570d40",
+    "provenance": {
+      "interview_ids": [
+        "PREP-230"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-350-v4",
+    "task": "queue_call",
+    "inputs": {
+      "capacity": 2,
+      "queue": [],
+      "write": null,
+      "read": true
+    },
+    "options": [
+      [
+        false,
+        null,
+        []
+      ],
+      [
+        true,
+        null,
+        []
+      ],
+      [
+        false,
+        0,
+        []
+      ],
+      [
+        false,
+        null,
+        [
+          0
+        ]
+      ]
+    ],
+    "expected": [
+      false,
+      null,
+      []
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Check space before writing, then process the read. An absent write is not accepted, and removal preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Evaluate capacity at the operation's specified point in the sequence.",
+    "source_content_sha256": "5e295297aff1154af917d451da9caebc173f0c5221287ad1804acd485a570d40",
+    "provenance": {
+      "interview_ids": [
+        "PREP-230"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-350-v5",
+    "task": "queue_call",
+    "inputs": {
+      "capacity": 3,
+      "queue": [
+        4
+      ],
+      "write": 9,
+      "read": false
+    },
+    "options": [
+      [
+        true,
+        null,
+        [
+          9,
+          4
+        ]
+      ],
+      [
+        true,
+        null,
+        [
+          4,
+          9
+        ]
+      ],
+      [
+        true,
+        4,
+        [
+          9
+        ]
+      ],
+      [
+        false,
+        null,
+        [
+          4
+        ]
+      ]
+    ],
+    "expected": [
+      true,
+      null,
+      [
+        4,
+        9
+      ]
+    ],
+    "method": "Independent input-derived oracle in backend/tests/test_fundamentals_code_700.py",
+    "difficulty": 3,
+    "difficulty_rationale": "Check space before writing, then process the read. An absent write is not accepted, and removal preserves FIFO order.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Evaluate capacity at the operation's specified point in the sequence.",
+    "source_content_sha256": "5e295297aff1154af917d451da9caebc173f0c5221287ad1804acd485a570d40",
+    "provenance": {
+      "interview_ids": [
+        "PREP-230"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  }
+]
