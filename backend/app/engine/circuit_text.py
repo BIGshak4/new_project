@@ -55,6 +55,9 @@ def _name(part: CircuitPart) -> str:
     return label or part.kind.upper()
 
 
+MAX_DERIVED_CHARS = 2000          # checks.MAX_EXPRESSION_LENGTH: a longer expression could not be checked anyway
+
+
 class _Deriver:
     def __init__(self, circuit: Circuit):
         self.parts = {p.id: p for p in circuit.parts}
@@ -74,6 +77,12 @@ class _Deriver:
             value = self._compute(self.parts[part_id], port)
         finally:
             self.active.discard(key)
+        # A chain of gates whose inputs are all wired to the previous gate multiplies the expression at every
+        # stage: 22 gates in a 6 KB drawing derived 25 million characters, 30 gates about 6 GB (security review,
+        # 2026-11-14). Past the length the checker reads, the signal is "not derived", like any other circuit the
+        # deriver cannot follow, and nothing downstream is built from it.
+        if value is not None and len(value) > MAX_DERIVED_CHARS:
+            value = None
         self.memo[key] = value
         return value
 
@@ -115,6 +124,8 @@ class _Deriver:
         if kind == "full-adder" and port in ("S", "Cout"):
             a, b, c = (self.incoming(part.id, p) for p in ("A", "B", "Cin"))
             if a is None or b is None:
+                return None
+            if c is None and (part.id, "Cin") in self.driver:   # wired, but not derivable: not the same as unconnected
                 return None
             c = c or "0"
             if port == "S":

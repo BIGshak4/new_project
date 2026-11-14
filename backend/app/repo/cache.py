@@ -9,9 +9,14 @@ Instances are per process. `clear()` is for tests and for the seed loader.
 
 from __future__ import annotations
 
+import asyncio
 import time
 from collections import OrderedDict
 from collections.abc import Awaitable, Callable
+
+
+class _LoadAbandoned(Exception):
+    """The request that was loading a key failed or was cancelled; whoever waited for it loads for itself."""
 
 
 class TTLCache[T]:
@@ -22,6 +27,7 @@ class TTLCache[T]:
         self.max_entries = max_entries
         self._entries: OrderedDict[object, tuple[float, T]] = OrderedDict()
         self._generation = 0                 # bumped by invalidate(): a load that started before it must not store
+        self._loading: dict[object, asyncio.Future] = {}     # key -> the one load in flight
 
     async def get(self, key: object, load: Callable[[], Awaitable[T]]) -> T:
         entry = self._entries.get(key)
@@ -29,8 +35,31 @@ class TTLCache[T]:
         if entry is not None and now - entry[0] < self.seconds:
             self._entries.move_to_end(key)
             return entry[1]
+        # One load per key, however many requests find it expired in the same moment. Without this every request
+        # in flight reloaded the whole question bank (about 15 MB decoded on the event loop) each time its minute
+        # ran out: with ten connections, ten loads at once (scale review, 2026-11-14). While that one load runs
+        # the others are served the value it replaces; with none to serve, they wait for it.
+        pending = self._loading.get(key)
+        if pending is not None:
+            if entry is not None:
+                return entry[1]
+            try:
+                return await asyncio.shield(pending)
+            except _LoadAbandoned:
+                pass
+        future: asyncio.Future = asyncio.get_running_loop().create_future()
+        self._loading[key] = future
         generation = self._generation
-        value = await load()
+        try:
+            value = await load()
+        except BaseException:
+            future.set_exception(_LoadAbandoned())
+            future.exception()                # read here, so a load nobody waited for is not reported as unretrieved
+            raise
+        finally:
+            if self._loading.get(key) is future:
+                del self._loading[key]
+        future.set_result(value)
         if generation != self._generation:   # invalidated while loading (a member added, a question reloaded): serve, don't keep
             return value
         # A question ID is caller-controlled, including IDs that do not exist.
@@ -57,10 +86,12 @@ class TTLCache[T]:
 
     def invalidate(self, key: object | None = None) -> None:
         self._generation += 1
-        if key is None:
+        if key is None:                      # a load in flight predates this: later callers start their own
             self._entries.clear()
+            self._loading.clear()
         else:
             self._entries.pop(key, None)
+            self._loading.pop(key, None)
 
 
 # skill and tip ids never change once loaded; question content changes only on a content load

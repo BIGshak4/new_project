@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import hmac
+import ipaddress
 import json
 import logging
 import os
@@ -137,6 +139,32 @@ class StreamLimits:
     def __init__(self, app):
         self.app = app
         self._buckets: OrderedDict[str, deque[float]] = OrderedDict()
+        self.refused = {"address": 0, "caller": 0}
+        self._summary: tuple[float, dict] = (0.0, {})
+
+    def summary(self) -> dict:
+        """What the budgets saw in the last minute, without naming anyone. The one question it answers: does the
+        hosting proxy hand us each client's own address, or one shared address? With real users on and only
+        private addresses here, every user is drawing on one 1,800-a-minute budget (scale review, 2026-11-14).
+        Kept for five seconds: it walks every bucket, and /health is the one path no budget slows down."""
+        if self._summary[0] > time.monotonic():
+            return self._summary[1]
+        self._summary = (time.monotonic() + 5, self._count())
+        return self._summary[1]
+
+    def _count(self) -> dict:
+        cutoff = time.monotonic() - 60
+        seen = {key[2:]: len(stamps) for key, stamps in self._buckets.items()
+                if key.startswith("n:") and stamps and stamps[-1] >= cutoff}
+        private = 0
+        for address in seen:
+            try:
+                private += not ipaddress.ip_address(address).is_global    # private, loopback, carrier-shared ...
+            except ValueError:
+                private += 1                          # not an address at all: certainly not a client's own
+        return {"addresses_last_minute": len(seen), "private_addresses": private, "public_addresses": len(seen) - private,
+                "busiest_address_requests": max(seen.values(), default=0), "address_limit_per_minute": NETWORK_RATE_LIMIT_PER_MINUTE,
+                "refused_by_address": self.refused["address"], "refused_by_caller": self.refused["caller"]}
 
     @staticmethod
     def _network(scope) -> str:
@@ -193,11 +221,15 @@ class StreamLimits:
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http":
             return await self.app(scope, receive, send)
+        scope["jobrun.limits"] = self                 # /health reads the budgets of the instance that served it
         cheap_health = (scope.get("path") == "/health" and scope.get("method") in ("GET", "HEAD")
                         and not scope.get("query_string"))
-        if not cheap_health and (
-                self._over_limit("n:" + self._network(scope), NETWORK_RATE_LIMIT_PER_MINUTE)
-                or self._over_limit(self._caller(scope))):
+        over = None
+        if not cheap_health:
+            over = ("address" if self._over_limit("n:" + self._network(scope), NETWORK_RATE_LIMIT_PER_MINUTE)
+                    else "caller" if self._over_limit(self._caller(scope)) else None)
+        if over is not None:
+            self.refused[over] += 1
             # the peer address is logged on a refusal only: it is what tells whether the hosting proxy hands us real
             # client addresses or one shared one (every user in one 1,800/min bucket), which no other line records
             logging.getLogger("app").warning("rate limit: peer=%s caller=%s path=%s", self._network(scope),
@@ -319,7 +351,9 @@ async def _database_round_trip() -> dict:
 
 def health_detail_allowed(settings, header_value: str | None) -> bool:
     """Without a configured key everyone sees the detail (as before); with one, only a caller who sends it."""
-    return not settings.health_key or header_value == settings.health_key
+    if not settings.health_key:
+        return True
+    return hmac.compare_digest((header_value or "").encode(), settings.health_key.encode())   # constant time
 
 
 @app.get("/health", tags=["ops"])
@@ -354,9 +388,16 @@ async def health(request: Request, db_check: bool = False) -> dict:
             # the code runner (Harel, 2026-10-31): wired = enabled with a URL and a signing key; last_probe = what the
             # broker said when it was last asked (None = not asked yet); nothing here calls the broker
             "code_execution": _code_execution_health(runtime),
-            "assess_unreviewed_questions": settings.assess_unreviewed_questions}
+            "assess_unreviewed_questions": settings.assess_unreviewed_questions,
+            # one user's model spend a month, in shekels; 0 = no ceiling (2026-11-14)
+            "monthly_user_budget_ils": settings.monthly_user_budget_ils}
     if not detailed:
         body = {k: body[k] for k in ("status", "engine_version", "source_revision", "llm_provider") if k in body}
+    else:
+        # the request budgets (2026-11-14): how many addresses the server sees, and how many of them are private.
+        # Only for a caller allowed the detail, so an anonymous flood of /health never pays for the count.
+        limits = getattr(request, "scope", {}).get("jobrun.limits")
+        body["request_budget"] = limits.summary() if limits is not None else None
     if db_check and runtime is not None and runtime.store_kind == "database":
         try:
             body["database"] = await _database_round_trip()

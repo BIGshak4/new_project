@@ -79,7 +79,11 @@ PROTOCOL_TAGS = ("candidate_answer", "candidate_circuit", "candidate_images", "c
                  "reference_solution", "accepted_approaches",
                  "common_errors", "skill", "proficiency_rubric", "expected_answer_outline", "language", "difficulty",
                  "hint_level_given", "evaluation", "band", "tone", "tip", "prompt", "requirements")
-_PROTOCOL_TAG_RE = re.compile(r"<(\s*/?\s*)(" + "|".join(PROTOCOL_TAGS) + r")\b", re.IGNORECASE)
+# The blanks around the slash are matched possessively (`\s*+`: taken once, never given back). With plain `\s*` on
+# both sides, "<" followed by a few thousand blanks was tried every possible way (4,000 blanks: 3.3 s; the
+# 20,000-character cap: about a minute), on the event loop, twice per answer, so one padded answer froze the whole
+# API (security review, 2026-11-14). Any amount of padding is still neutralised.
+_PROTOCOL_TAG_RE = re.compile(r"<(\s*+/?\s*+)(" + "|".join(PROTOCOL_TAGS) + r")\b", re.IGNORECASE)
 
 
 def neutralize(answer: str) -> str:

@@ -46,5 +46,7 @@ services:
         value: "true"                  # generated questions act like normal ones; the review stamp is their status (Shaked, 2026-11-02)
       - key: DAILY_ATTEMPT_LIMIT
         value: "30"
+      - key: MONTHLY_USER_BUDGET_ILS
+        value: "15"                    # one user's model calls a month, in shekels; at the ceiling nothing new opens until the 1st; 0 = no ceiling (Shaked, 2026-11-14). USD_TO_ILS (default 3.7) converts the recorded dollars
       - key: DEFAULT_LANGUAGE
         value: en

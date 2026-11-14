@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from concurrent.futures import ThreadPoolExecutor
+from functools import partial
 
 import httpx
 
@@ -57,7 +59,7 @@ class StorageImageFetcher:
         if mime is None:
             log.warning("image rejected path=%s reason=not an image", path)
             return None
-        shrunk = await asyncio.to_thread(shrink_image, mime, data)     # bounded size for the model (2026-11-02)
+        shrunk = await shrink_image_async(mime, data)                  # bounded size for the model (2026-11-02)
         if shrunk is None:
             log.warning("image rejected path=%s reason=too many pixels", path)
         return shrunk
@@ -73,13 +75,28 @@ MAX_IMAGE_SIDE = 1024
 JPEG_QUALITY = 85
 # A 5 MB flat PNG can declare 13,000 x 13,000 pixels and decode to 700 MB; Pillow only refuses above twice its own
 # default (~179 Mpx). The header is read before any decode and a picture above this is dropped, never sent as is
-# (security review SEC-017, 2026-11-08). Phone photos are 12-50 Mpx.
-MAX_IMAGE_PIXELS = 60_000_000
+# (security review SEC-017, 2026-11-08). The first cap, 60 Mpx, still cost about 600 MB for a 22 KB flat PNG and
+# 490 MB for a JPEG (measured 2026-11-14: roughly 8-10 MB a megapixel), more than the whole server had. Now: a JPEG
+# up to 24 Mpx, decoded at reduced size (`draft`), anything else up to 12 Mpx (those are converted to RGBA at full
+# size), and one decode at a time (`_decoder`). The browser already sends answer photos re-encoded and small;
+# question figures are far below both.
+MAX_IMAGE_PIXELS = 24_000_000
+MAX_IMAGE_PIXELS_NOT_JPEG = 12_000_000
+# A picture that is small in pixels can still be 5 MB of padding; above this it is re-encoded, which drops it
+SEND_AS_IS_BYTES = 1024 * 1024
+# One picture is decoded at a time, on a thread of its own: memory for one, not many, and a queue of pictures never
+# takes the shared default pool's threads away from the checks and the key lookups that also use it.
+_decoder = ThreadPoolExecutor(max_workers=1, thread_name_prefix="image-decode")
+
+
+async def shrink_image_async(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> tuple[str, bytes] | None:
+    """`shrink_image` off the event loop, one picture at a time."""
+    return await asyncio.get_running_loop().run_in_executor(_decoder, partial(shrink_image, mime, data, max_side=max_side))
 
 
 def shrink_image(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> tuple[str, bytes] | None:
-    """The same picture bounded to `max_side` pixels on its long side; unchanged when already small enough or when
-    it cannot be decoded (the original bytes then go to the model as before). Never raises."""
+    """The same picture bounded to `max_side` pixels on its long side; unchanged when already small enough (in pixels
+    and in bytes). None when it is above the pixel cap, or too large to send undecoded. Never raises."""
     try:
         import io
 
@@ -88,19 +105,40 @@ def shrink_image(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> t
         Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS                 # Pillow refuses above twice this at open()
         with Image.open(io.BytesIO(data)) as image:
             declared_w, declared_h = image.size                # the header only; nothing is decoded yet
-            if declared_w * declared_h > MAX_IMAGE_PIXELS:
+            cap = MAX_IMAGE_PIXELS if image.format == "JPEG" else MAX_IMAGE_PIXELS_NOT_JPEG
+            if declared_w * declared_h > cap:
                 log.warning("image dropped: %dx%d px declared, above %d (%s, %d bytes)",
-                            declared_w, declared_h, MAX_IMAGE_PIXELS, mime, len(data))
+                            declared_w, declared_h, cap, mime, len(data))
                 return None
+            declared_longest = max(declared_w, declared_h)
+            if image.format == "JPEG" and declared_longest > 2 * max_side:
+                # the decoder itself scales down (by 2, 4 or 8) to the smallest size still at least this one. The
+                # request keeps the picture's own proportions: a square box left a 4000x3000 photo at full size.
+                image.draft("RGB", (max(1, max_side * declared_w // declared_longest),
+                                    max(1, max_side * declared_h // declared_longest)))
             image = ImageOps.exif_transpose(image)            # phone photos carry their rotation in EXIF
             width, height = image.size
             longest = max(width, height)
-            if longest <= max_side:
+            if longest <= max_side and len(data) <= SEND_AS_IS_BYTES:
                 return mime, data
+            out = io.BytesIO()
+            if longest <= max_side:
+                # small in pixels, large in bytes: written again as it is (padding does not survive that), without
+                # touching its colours; a photograph saved as PNG that is still large goes as a JPEG
+                plain = image.convert("RGBA") if image.mode in ("P", "1", "LA", "PA") else image
+                if mime != "image/jpeg":
+                    plain.save(out, format="PNG", optimize=True)
+                    if out.tell() <= SEND_AS_IS_BYTES:
+                        return "image/png", out.getvalue()
+                    out = io.BytesIO()
+                if "A" in plain.mode:
+                    white = Image.new("RGBA", plain.size, (255, 255, 255, 255))
+                    plain = Image.alpha_composite(white, plain.convert("RGBA"))
+                plain.convert("RGB").save(out, format="JPEG", quality=JPEG_QUALITY, optimize=True)
+                return "image/jpeg", out.getvalue()
             scale = max_side / longest
             work = image.convert("RGBA") if image.mode in ("P", "1", "LA", "PA") else image
             resized = work.resize((max(1, round(width * scale)), max(1, round(height * scale))), Image.LANCZOS)
-            out = io.BytesIO()
             if mime == "image/jpeg":
                 if resized.mode not in ("RGB", "L"):
                     resized = resized.convert("RGB")
@@ -118,6 +156,9 @@ def shrink_image(mime: str, data: bytes, *, max_side: int = MAX_IMAGE_SIDE) -> t
     except Exception as exc:                                   # noqa: BLE001 - a picture must never cost an answer
         if type(exc).__name__ == "DecompressionBombError":     # Pillow's own refusal, raised inside open()
             log.warning("image dropped: %s (%s, %d bytes)", exc, mime, len(data))
+            return None
+        if len(data) > SEND_AS_IS_BYTES:                       # megabytes nobody could decode do not go to the model
+            log.warning("image dropped: could not be decoded (%s, %d bytes)", mime, len(data))
             return None
         log.warning("image could not be shrunk; sent as is (%s, %d bytes)", mime, len(data))
         return mime, data

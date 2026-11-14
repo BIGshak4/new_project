@@ -10,7 +10,7 @@ from app.engine.practice import assessed_by
 def activity_summary(events: list[dict], timezone: str = "UTC", *, now: datetime | None = None) -> dict:
     try:
         zone = ZoneInfo(timezone)
-    except (ZoneInfoNotFoundError, ValueError, TypeError):
+    except (ZoneInfoNotFoundError, ValueError, TypeError, OSError):    # OSError: a key naming a folder ("America")
         zone = UTC
     today = (now or datetime.now(UTC)).astimezone(zone).date()
     by_day: dict[date, set[str]] = defaultdict(set)

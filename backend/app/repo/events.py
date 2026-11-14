@@ -9,7 +9,7 @@ from __future__ import annotations
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -63,6 +63,22 @@ async def record_usage(connection: AsyncConnection, *, user_id: uuid.UUID, attem
         await connection.execute(insert(table), _same_columns([{"user_id": user_id, "attempt_id": attempt_id, **row}
                                                                for row in usage_rows]))
     return len(usage_rows)
+
+
+def month_start(now: datetime | None = None) -> datetime:
+    """00:00 UTC on the first of this month: where a user's monthly model budget starts counting."""
+    now = now or datetime.now(UTC)
+    return datetime(now.year, now.month, 1, tzinfo=UTC)
+
+
+async def model_cost_since(connection: AsyncConnection, user_id: uuid.UUID, since: datetime) -> float:
+    """What this user's model calls cost (USD) since `since`: practice and interviews alike, as recorded per call.
+    Reads through usage_event_user_created_idx."""
+    table = await db.table("usage_event")
+    total = (await connection.execute(
+        select(func.coalesce(func.sum(table.c.cost_usd), 0)).where(table.c.user_id == user_id, table.c.created_at >= since)
+    )).scalar_one()
+    return float(total)
 
 
 async def record_tip(connection: AsyncConnection, *, attempt_id: uuid.UUID, tip_key: str, skill_key: str | None,

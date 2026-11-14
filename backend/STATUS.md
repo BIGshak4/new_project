@@ -7,11 +7,16 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-10-20 (paying for the site, not mandatory yet §5zr) · **Tests:** 933 offline + 17 live + `scripts/smoke_http.py` against Render (29 routes) · **Latest commit:** see changelog
+**Last updated:** 2026-11-14 (job types bring their own skills §5zzf; scale, security and cost §5zzg) · **Tests:** 4,510 offline (one known failure, Harel's client contract) + 22 live (one time-limit failure, §5zzh) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg)
 
 ---
 
 ## Harel's front-end queue (updated 2026-10-22, in the order Shaked wants them; the short list with the bracket fix spelled out is `docs/harel-todo-2026-10-18.md`)
+
+**Newest first: `docs/harel-todo-2026-11-14.md` (rows 27 to 42).** The merge of `master` into `production` so the
+site gets the job-type fix and the security fixes; the public container images; the migration to confirm; the web
+app's security items; and three new 429 messages the screens should show (monthly allowance, an answer the model
+could not evaluate, practice rounds used up).
 
 The backend side of every item below is live on Render. Each one is a screen change in `apps/web`; the backend is
 not touched again for them. When an item is done, remove its entry from `PENDING_IN_CLIENT` or
@@ -1953,7 +1958,8 @@ was already paid; `completion_coins` on the report is the finishing bonus actual
 
 **Pilot list.** (e-mail withheld) joined `jr_members` as 'Tal' on 2026-11-07 (Shaked: "add"; dry run, then
 applied): fourteen members. (e-mail withheld) joined as 'Yaron' later the same day (Shaked: "add him"; dry run,
-then applied): fifteen members.
+then applied): fifteen members. Four more joined on 2026-11-12 as 'Noa', 'Lahav', 'Gagatsis' and 'Doron' (Shaked: "add";
+one dry run for all four, then applied; e-mails withheld): nineteen members.
 
 ## 5zzc. Cutting expenses: the background prose on flex with no reasoning (2026-11-07, Shaked: "lets check how can we cut expenses even more"; "run 1 and 2")
 
@@ -2069,6 +2075,304 @@ turns the two CPU findings from a slowdown into an outage. **Harel's list**: row
 **Verified.** New regression file 12 passed; billing, checks, isolated execution, auth, provider, warm-up and the
 2026-11-01 review suites green; full offline suite **4,365 passed / 13 skipped** (28 min); ruff clean but for Harel's four known findings; `pip-audit` clean after the bump.
 
+## 5zzf. A job type brings its own skills (2026-11-14, Shaked: "check why when we choose a specific work type the backend doesnt give the correct workflow untill the interview according to the skills needed"; "go")
+
+**What was wrong.** A job type could only multiply the rows of the one hardware role (27 skills), so:
+- its own skills were never planned: `arrays_and_search` (43 questions), `basic_data_structures` (35) and
+  `code_debugging` (9) are not role rows, so software's 1.6 / 1.6 / 1.5 multiplied nothing. A software candidate's
+  plan and mock interview were debugging methodology, binary arithmetic, FSM tables and Boolean algebra;
+- the multipliers (0.2–2.5) could not reorder base weights six times apart: verification's `testbench_basics` was
+  0.01 × 1.8 and never reached the first week; embedded's first three days were the general hardware plan.
+
+**What changed.** `JobType.skills` (`seeds/job_types.json`): the job type's own rows, in the role's row format. A
+skill the role lacks joins the plan; a row for a skill the role has replaces the role's row for that job type
+(weight, importance, required levels). Emphasis multiplies own rows like any other, 0 still excludes.
+`engine/job_selection.plan_rows` is the one place that applies it; `PracticeService._plan` and
+`InterviewService._plan` both start from it (they each had their own copy of the multiply-and-drop loop). Several
+selected job types: union of rows, weight averaged over the selection (absent = 0), highest importance and required
+level. The loader checks own rows like a role's (leaf skill, no duplicate, weight 0–0.2, levels for every seniority
+profile, not excluded by its own emphasis). No API change, no database change; a saved program is rebuilt on its
+normal daily rebuild or when the goal is saved, and an interview keeps the plan it started with.
+
+**The numbers (drafts, Shaked's to change in the seed file).**
+
+| Job type | Own rows (weight on the role's scale, importance) |
+|---|---|
+| software | arrays and search 0.06 core, basic data structures 0.06 core, code debugging 0.05 core; Boolean algebra, FSM state tables, sequence detectors, Moore/Mealy stay at the role's weight but become nice-to-have (a hardware leftover must not cap a software fit or outrank an unmeasured software skill) |
+| embedded_firmware | bit manipulation 0.06 core (was 0.03 important), code debugging 0.05 core, basic data structures 0.04 important, arrays and search 0.04 important |
+| verification | testbench basics 0.06 core (was 0.01 nice-to-have), code debugging 0.04 important, basic data structures 0.03 important, arrays and search 0.03 important, risk awareness 0.015 nice-to-have (observed): Shaked, "verification needs software and hardware questions" |
+| all six | `estimation_sanity_checks` 0.04 important (below) |
+
+First day of a new candidate, 30 minutes: software = data structures (quick + deep), arrays; embedded = bit
+manipulation (quick + deep), code debugging; verification = testbenches (quick + deep), FSM state tables.
+
+**The 68 questions nobody was given (Shaked: "check the 68 questions job type and set it").** The skill
+`estimation_sanity_checks` was in no role and no job type, so no plan scheduled its 68 questions. Read one by one:
+60 are the classic interview puzzles (25 horses, 12 coins, prisoners and hats, two crystal balls), which every
+track is asked; 3 more are puzzles filed under "hardware" (wire around a cylinder, four hidden switches, a packet
+timer); 5 are analog and signals questions (MOSFET structure, two on sampling, capacitor into inductor, decibels).
+So the skill is now an own row of **every** job type, and the five analog questions belong to the five hardware
+tracks and not to software.
+
+**A question with its own job types (Shaked: "a question can have multiple job types so add that too").**
+`seeds/question_job_types.json` maps a question key to the job types it belongs to. A listed question follows its
+list (it can be kept out of a job type its skill allows, or brought into one its skill excludes); every other
+question keeps following its primary skill, which already puts most questions in several job types. The loader
+records the answer on each job type (`JobType.questions`), so `JobType.fits` stays the one rule the library tags,
+the job filter, the plan's pool, the suggestions, readiness and the interview pool use; with several job types
+selected a listed question belongs when any of them has it. Unknown question, unknown job type and an empty list
+are refused at load. The file is separate from the question bank on purpose: `preparation_bank.json` is rebuilt
+by Harel's intake script.
+
+**Left as it is by Shaked's decision:** explore mode (no job type) plans the hardware role only ("explore mode is
+good it just fits the user").
+
+**Still open (content, not code).** Verification leans on 3 testbench questions. `hdl_sequential_coding`,
+`fsm_moore_mealy`, `reset_strategies`, `fsm_state_encoding` and `project_walkthrough` have no questions, so digital
+design and FPGA still open like the general plan. The puzzles skill is still labelled "Estimation and Sanity
+Checks" (a rename is a catalog and database change).
+
+**Verified.** `tests/test_job_own_skills.py` (22): the rows, the union, each track's signature skills heaviest and on
+day one, a software plan start and a software mock interview asking software questions, readiness, the puzzles in
+every plan, verification's two sides, a question's own list in `fits`, the union, the library tags and filter and
+the question page, the loader's refusals. The two tests that pinned "never adds skills" now pin "adds only its
+own"; the library count test expects software to hide 82 (77 by skill + the 5 analog). Full offline suite **4,468
+passed / 13 skipped / 1 failed** (7 min); the failure is `test_ts_client_contract` (`GET /v1/duels/practice` has no
+function in the web client), which reads only the routes and `apps/web`, neither touched here: Harel's to close.
+Ruff clean.
+
+## 5zzg. Scale to 5,000 users, a security pass, cost and answer time (2026-11-14, Shaked: "a full verification ... for a large scale of users at least 5000 ... check what are the weaknesses in the system (cyber and hacking ones) and fix them ... check what is the cost and the answer time ... i want it to cost us no more than 10 - 15 shekels so set the amount")
+
+**Read this first: the live site is not on `master`.** Since 12 November the site people use
+(`muxijobrun.com`, API `api.muxijobrun.com`) runs the branch `production` on Harel's DigitalOcean server (one
+virtual CPU, 2 GB); its `/health` showed `source_revision 01ef984` today. Render and Netlify still run `master`
+against the same database. Everything in §5zzf and in this section was pushed to `master`, so it is live on Render
+and **not yet on the site**. `production` has seven commits `master` lacks; `master` has the commits of today.
+I did not push to `production`: a push there deploys to the live server on its own, and that pipeline is Harel's
+(his list, row 27, with the result of a local trial merge).
+
+### 1. Does it work for 5,000 users
+
+**What was run.** `scripts/load_test.py`, extended: users arrive over a chosen time (`--ramp`), each one saves a
+goal with one of the six job types (or a pair), reads readiness, starts the plan's first item and answers it, then
+walks the older flow (library, an attempt with a hint and a follow-up, progress, program, a mock interview with two
+answers): about 25 requests and 7 judged answers a user. The API is the real app in its own process, one worker as
+in production, with the in-memory store and a scripted model that takes the real model's time (5 s a verdict, 4 s
+the prose). Two checks run on every user: the question the plan opened belongs to that user's job type, and the
+count of today's attempts is that user's own. Nothing touches the production database and no model is paid.
+
+**Results** (one laptop running both the server and all the users; times are therefore upper bounds):
+
+| Run | Flows completed | Wrong data | Server CPU a request | Notes |
+|---|---|---|---|---|
+| 300 users arriving over 30 s | 296 / 300 | none | 7.2 ms | event-loop lag p99 83 ms |
+| 1,000 users over 2 min | 697 / 1,000 | none | 11.7 ms | the losses are refused connections: the laptop was saturated, see below |
+| 5,000 users over 35 min | 3,305 / 5,000 | none | 24.7 ms | 86,588 requests, 18,596 judged answers; saturated for most of the run (event-loop lag median 0.8 s); the losses are refused connections; memory 143 → 688 MB |
+
+**What it means.**
+- *Correctness holds.* No user ever saw another user's count, and no plan opened a question outside its job type,
+  at any size.
+- *One process is the ceiling, not the database pool.* A user's whole visit costs the server about 0.2 to 0.3
+  CPU-seconds. One CPU therefore carries a few visits a second: comfortably the realistic load of 5,000 registered
+  users (a few hundred a day, tens at the same moment), and not 1,000 people who all arrive in the same two
+  minutes, nor 5,000 inside 35 minutes: in that run a third of the visits were lost to refused connections once
+  the one process was saturated. The live server has one CPU. More than that needs a second process or a bigger
+  machine, and the code is ready for it (see "two instances" below).
+- *The 5,000 run overstates the cost.* The cost per request and the memory grew with the number of users (7 ms,
+  12 ms, 25 ms; 143 to 688 MB) because the test's in-memory store keeps every attempt and interview and scans all
+  of them for one user's count, which the database does with an index. That is the most likely reason; it was
+  not profiled at that size. So the real ceiling is better than this run shows, and only a test against a real
+  database of that size would say by how much.
+- *Three things in the test double had to be set aside to see this*, and are now in the script: the in-memory
+  store rebuilt all 340 question summaries on every library read (the database store keeps them a minute); every
+  virtual user shares one address, so the per-address budget refused them; and the first runs read question figures
+  from the real storage bucket (read-only; now stubbed).
+
+**What the load test cannot see, reviewed separately (the database layer at the assumed size: 5,000 users with
+months of history).** Ranked by how soon it bites:
+
+| # | What | State |
+|---|---|---|
+| 1 | The question bank (about 15 MB decoded) was reloaded by every request in flight each time its minute ran out: ten at once with ten connections | **Fixed**: `repo/cache.TTLCache` loads once per key; the others get the previous value meanwhile |
+| 2 | The per-address request budget (1,800 a minute) is shared by every user if the hosting proxy presents one address | **Made checkable**: `/health.request_budget` counts private and public addresses seen. On Render, read after the deploy of `c71d5ce`: a request from outside showed 1 address, public, none private, so Render hands the API each client's own address and the budget is per client. The live server's `/health` detail is behind its key: Harel can read it |
+| 3 | `SkillState.history` grows with every answer for ever and is decoded on almost every request (about 87 ms of CPU a request at 4,000 answers) | **Open, Shaked's decision**: bounding it changes what the level is averaged over. An alternative keeps today's numbers (running sums and a short tail) |
+| 4 | Progress reads a user's whole scored history to compute a streak; activity reads every answer ever | Open: code only, a date window and a distinct-day query |
+| 5 | The coin balance is a sum over the user's whole ledger on every screen; three reads on `attempt` are not index-only; the per-user sighting count has no index | **Migration written, dry-run, not applied** (`20261114130000_...sql`, part 4) |
+| 6 | Every access-cache miss inserts into `user_profile`, whose trigger takes one lock shared by all users; code runs take one global lock | Open: code only, small |
+| 7 | Plans are written daily and never pruned (10 item rows a user a day) | Open: fine at 5,000, a concern later |
+
+Pool arithmetic with ten connections and a 4 ms round trip: about 55 answers a second or 120 progress reads a
+second before the pool queues; 500 users active in one minute need about 1.5 connections. *Two instances*: nothing
+corrupts (idempotency keys, row versions and the one-active-plan index are in the database); rate limits and caches
+are then per instance, and a double click on Start could open two attempts on one plan item.
+
+### 2. Security
+
+Five independent reviews; the record is `security/runs/2026-11-14-scale-and-security-review.md` (SEC-022 to
+SEC-036). **Fixed in backend code** (regression tests in `tests/test_scale_and_security_2026_11_14.py`):
+
+- SEC-022 (high): a 6 KB drawn circuit made the server derive gigabytes of text and die. A derived signal over 2,000
+  characters is now "not derived".
+- SEC-023 (high): `<` followed by blanks in an answer froze the whole API for up to a minute (a quadratic pattern
+  on the event loop, twice per answer). The blanks are now matched without backtracking: a few milliseconds on
+  the worst input, and any amount of padding is still neutralised.
+- SEC-024 (high on a small server): one 22 KB picture cost about 600 MB to decode. JPEG up to 24 Mpx decoded at
+  reduced size, other formats up to 12 Mpx, one decode at a time; padded or undecodable megabytes are not sent.
+- SEC-025 (medium): coins were paid on a question whose reference the member had revealed on another attempt, or
+  in practice for the question an interview was asking. Now nothing is paid.
+- SEC-026 (medium, cost): an answer the model keeps failing on could be retried without limit. Eight judge calls a
+  practice attempt, five an interview turn.
+- SEC-027 (medium): the duel quiz's answer key could be collected through the practice rounds in about an hour.
+  150 rounds a member a day.
+- SEC-028 (cost): judge warm-up calls could be re-fired for ever on finished attempts. Only when a hint is really
+  given, and on the first reveal before the answer.
+- Smaller: a timezone naming a folder answered 500; the health key is compared in constant time; `ENV=Production`
+  counts as production.
+
+**Open, with an owner** (details in the run report and in Harel's list):
+
+| What | Who |
+|---|---|
+| SEC-030 (high): the container images are public and carry the solution bank; making the repository private would break the updater unless done in the right order | Harel, then Shaked |
+| SEC-031: the browser can write rows without limit to three tables. Migration `20261114130000_scale_indexes_and_browser_write_limits.sql` dry-run OK (and verified afterwards that nothing changed), **not applied** | Shaked approves, Harel confirms parts 1 and 3 |
+| SEC-032: founder rights on the shared mailbox's row in the pilot list | Shaked and Harel |
+| SEC-033, SEC-034: two live backends on two branches; remove the Netlify addresses from the login allow-list before deleting the sites | Shaked and Harel |
+| SEC-035: the numeric and truth-table checkers can hold a CPU for tens of seconds on a crafted answer (worker thread, the API keeps answering). The fix bounds what the checker reads, which is a grading path | Shaked decides |
+| Coins before they carry money: a throw-away weak attempt, whose feedback shows what was missing, then a new attempt on the same question still pays; the starting gift can be moved between two accounts through duel forfeits | Shaked decides the rule |
+| SEC-036 and the five items of 8 November in the web app | Harel |
+| Still on the operator list: Supabase "Confirm email" and leaked-password protection, database password rotation, repository visibility | Shaked |
+
+What held up is in the run report: token verification, ownership on every route, the ledger, row-level security on
+all 53 tables, no browser access to solutions, no secrets in history, no submitted code on the API host.
+
+### 3. Cost and answer time
+
+**Measured.** `scripts/cost_report.py` (new, read-only) on the real usage table: 117 model calls in the last 45
+days, $1.60 in all; the heaviest user in any month cost ₪2.62. Today on the real model, three attempts with their
+follow-ups (`scripts/e2e_real_flow.py`, nothing saved): 14 calls, $0.032.
+
+| Call | Each | Time | Tier |
+|---|---|---|---|
+| The verdict (judge, `gpt-6.1-terra`) | $0.0037 | 4.8 s mean (5 to 11 s) | default |
+| The follow-up question | $0.0017 | 3.5 s | flex |
+| The feedback card | $0.0013 | 4.5 s | flex |
+| The tip | $0.0004 | 3.2 s | flex |
+
+So an attempt with its follow-up costs about **$0.011, four agorot**; a question with figures, judged cold, up to
+about $0.02 (the cold verdict with figures measured $0.0116 on 2 November). The user waits for the verdict only (5 to 11 s); the words arrive after.
+
+**The amount (Shaked: "no more than 10 - 15 shekels").** Read as: one user must not cost more than ₪15 a month in
+model calls. Before today nothing guaranteed that: at the daily limits (30 attempts and 5 interviews every day) one
+user could cost roughly ₪40 to ₪75 a month (900 attempts at 4 to 7 agorot, plus the interviews). Now `MONTHLY_USER_BUDGET_ILS=15` (`services/budget.py`, `render.yaml`): when a
+user's recorded spend since the first of the month reaches it, no new attempt and no new interview opens until the
+month turns (429 with a sentence); what is open is finished. ₪15 buys about 370 attempts a month, twelve a day
+every day; an ordinary user (about 110 answers a month) costs ₪4 to ₪7 and never meets it. `0` switches it off;
+`USD_TO_ILS` (3.7) is the rate. **If the ₪10–15 was meant as the whole monthly bill, say so:** that is a different
+switch (and at today's traffic the whole bill is about ₪4 a month).
+
+**Also cheaper since today:** the retry ceilings and the warm-up fix above remove calls nobody benefited from.
+
+**To make the answer faster, Shaked's switches (not changed):** `OPENAI_SERVICE_TIER=priority` for the judge brings
+the verdict to about 2 s at roughly twice the judge's price (an attempt about $0.018 instead of $0.011: ₪15 then
+buys about 220 attempts); describing a question's figures in words once, so the judge reads text. On the live
+server these are in Harel's environment file, not on Render.
+
+### 4. Verified
+
+- `tests/test_scale_and_security_2026_11_14.py`: 38 tests, at least one per fix (one load per cache key, the budgets
+  on `/health`, the monthly budget and its fail-open read, coins after a reveal elsewhere, the judge-call
+  ceilings, warm-ups, practice rounds a day, the gate chain, the padded answer, pictures).
+- An independent review of the fixes themselves, before the commit, found eight defects in them; all eight are
+  fixed and tested: a re-sent follow-up answer slipped past the judge-call ceiling; the interview counted tries
+  that never reached the model; the picture decoder's size reduction did nothing for 4:3 photos; waiting decodes
+  could occupy the shared thread pool (now their own one-thread pool); the bounded tag pattern let a closing tag
+  with nine blanks through (now any amount, matched possessively); an over-long carry-in was read as 0; a small
+  photograph saved as PNG lost its colours; and `/health` computed the budgets for anonymous callers.
+- Full offline suite on the final code: **4,506 passed / 13 skipped / 1 failed** (6 min). The one failure is
+  `test_ts_client_contract` (`GET /v1/duels/practice` has no function in the web client): it failed before this
+  work and reads only the routes and `apps/web`. Ruff clean.
+- The real model: `scripts/e2e_real_flow.py`, three attempts, 14 calls (the numbers in part 3).
+- The migration: dry-run only, and a read-only query afterwards showed the old index and the three policies still
+  in place and nothing new created.
+- Render after the push: `/health` shows `source_revision c71d5ce`, `monthly_user_budget_ils 15`, a 3 ms database
+  round trip.
+- A trial merge of `master` into `production` in a scratch copy (not pushed): no conflicts. Its offline suite:
+  5,024 passed; the failures were the known contract test and 21 Anthropic-provider tests, and the one I opened
+  failed on a module missing from the `anthropic` package as installed under the scratch copy's long Windows path,
+  not on the merged code.
+- **Not verified:** the live suite was not run. Two new database reads (`attempts.reference_exposed`,
+  `events.model_cost_since`) have run only against the in-memory store; both sit in savepoints and fail safe (a
+  failed lookup pays the coins, a failed budget read refuses nobody). A read-only check of them on the real
+  database was refused by this session's permission rules; run the live suite, or allow that check, before relying
+  on the ₪15 ceiling in production. Nothing in this section is on the live site until `master` is merged into
+  `production`.
+
+## 5zzh. Coins when it is not the first try; the drafts for the thin skills; the live suite (2026-11-14, evening)
+
+**Confirmed by Shaked:** the ₪15 is per user per month.
+
+**Coins (Shaked: "weak attempt followed by a strong one should get less coins (maybe 2), but after a strong one
+you dont get more coins on that question until some time will pass").** This replaces "a question pays once"
+(2026-11-06). Per user and question (`CoinsService._award_on_question`, numbers in `seeds/coins.json`):
+
+| History with the question | A strong answer earns |
+|---|---|
+| Never answered it before | the full amount: 5 in practice, 10 as an interview turn |
+| Answered before, not strongly, never paid | `strong_answer_again` = 2 |
+| Paid less than `again_after_days` = 21 days ago | nothing |
+| Paid longer ago than that | `strong_answer_again` = 2 |
+
+"Some time" is 21 days here, the point at which the plan asks for a skill to be refreshed: my choice, his to
+change. Unchanged: one hint at most, on topic, and a reference revealed on any attempt of the user means no coins
+on that question, however long ago. The ledger row of the first earn keeps the reference `question:<id>`; a later
+one is `question:<id>:2`, `:3`, which is also what stops two answers finishing in the same moment from both being
+paid. Each row's `meta.tier` says which case it was. The two history reads (`repo/coins.earns_on`,
+`repo/attempts.answered_before`) sit in a savepoint; if they fail the answer is treated as a first one, which the
+plain reference still pays only once. The wallet's `rules` carry the two new numbers. An earlier weak *interview*
+turn does not count as "answered before" (only practice attempts are looked at): a small gap, noted.
+
+**Content (Shaked: "lets work on the content").** No new drafts were generated: 242 model-written drafts have waited
+in `seeds/question_drafts/generated_bank.json` since 1–2 October, and they hold 9 to 12 questions for each of the
+seven skills that have none or almost none live. `scripts/verify_drafts.py` (new) put the 78 drafts of those skills
+through the loader's rules and had today's judge grade each draft's own English reference:
+
+| Skill | Live today | Drafts | Ready |
+|---|---:|---:|---:|
+| Testbench basics | 3 | 12 | 12 |
+| HDL sequential coding | 0 | 12 | 12 |
+| Moore and Mealy machines | 0 | 12 | 12 |
+| Reset strategies | 0 | 12 | 10 |
+| FSM state encoding | 0 | 9 | 8 |
+| Blocking and non-blocking | 1 | 11 | 9 |
+| HDL combinational coding | 1 | 10 | 9 |
+
+72 ready, in both languages, difficulties 3 to 8. The six held back are ones whose own reference fails the draft's
+own check (a wrong row in a truth table, a wrong traced value): they need a fix, not a review.
+`scripts/drafts_review_page.py` (new) writes the 72 as one page to read,
+`backend/workdir/drafts-review-2026-11-14.html` (not committed: it holds the solutions). **Nothing was loaded.**
+Before they can go live: Shaked's read of the page; a decision on the code-format ones (18 of the 72 carry a code
+check, and a check in `seeds/questions` is self-tested by running its sample answers inside the API process at start:
+model-written code, so those checks are dropped on the way in unless Harel gives them runner fixtures); moving the
+approved ones into `seeds/questions` with the count-pinned tests updated; and the database load, a data write that
+needs his approval.
+
+**Pilot list:** Ophir added on Shaked's word (dry run, then applied; 20 members).
+
+**The live suite (Shaked: "do the live suit test").** Run in nine parts, one at a time, against the real database
+inside transactions that are rolled back, with a scripted grader: **21 of 22 passed** in 64 minutes.
+- The one failure is a time limit, not behaviour: `test_listing_and_loading_are_fast_enough_for_a_page` allows 3 s
+  for the cold library read and it took 4.6 s from this laptop. That read loads the whole bank, about 15 MB with
+  the preparation resources (the first finding of the scale review in §5zzg); the fix proposed there, leaving
+  `preparation_resource` out of the list query, is the fix for this test too. Not done yet.
+- The suite is slow now (it was minutes when the bank had 30 questions): every test loads all 340 questions into
+  its own transaction first, three to seven minutes from here.
+- New in the suite: `TestCoinsAndTheMonthlyBudgetOnTheRealSchema`. It compares the four reads added today
+  (`coins.earns_on`, `attempts.answered_before`, `attempts.reference_exposed`, `events.model_cost_since`) with direct
+  counts on the real tables, then walks the coin rule and the monthly budget once on the real schema. Passed. This
+  closes the "not verified on the real database" note of §5zzg.
+
+**Verified this evening:** offline suite 4,510 passed / 13 skipped / 1 failed (the known client-contract test).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -2109,6 +2413,10 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-14 | Evening (§5zzh): coins when it is not the first try (5 first, 2 after an earlier attempt or after 21 days, nothing in between); 72 of the 78 waiting drafts for the seven thin skills checked and ready for Shaked's read (`scripts/verify_drafts.py`, `scripts/drafts_review_page.py`), nothing loaded; live suite 21 of 22 (one time limit on the cold library read) plus a new live test of today's database reads; Ophir joins the pilot list (20 members). |
+| 2026-11-14 | Scale, security, cost (§5zzg): a 5,000-user load run (`scripts/load_test.py --ramp --goals`), five reviews, SEC-022..036 (`security/runs/2026-11-14-scale-and-security-review.md`). Fixed: a circuit that derived gigabytes, a padded answer that froze the API, picture memory, coins after a reveal elsewhere, unlimited judge retries, the duel answer key through practice rounds, unmetered warm-ups, one bank load per minute instead of one per request. Added: `MONTHLY_USER_BUDGET_ILS=15`, `/health.request_budget`, `scripts/cost_report.py`. Migration `20261114130000_scale_indexes_and_browser_write_limits.sql` dry-run, not applied. Harel's list: `docs/harel-todo-2026-11-14.md`. **The live site runs `production`, not `master`.** |
+| 2026-11-14 | A job type brings its own skills (§5zzf): `JobType.skills` + `job_selection.plan_rows`, shared by the practice plan and the mock interview; software plans arrays, data structures and code debugging, embedded leads with bit manipulation, verification with testbenches and both software and hardware skills. The 68 puzzle questions (`estimation_sanity_checks`) join every job type's plan; `seeds/question_job_types.json` gives a question its own job types (five analog questions: hardware tracks only). Seed numbers are drafts for Shaked. |
+| 2026-11-12 | Pilot list: Noa, Lahav, Gagatsis and Doron join `jr_members` (nineteen members); first names only in this file. |
 | 2026-11-08 | Full security review (§5zze; `security/runs/2026-11-08-full-review.md`, SEC-015..021): the key-less payment webhook closed, the padded-answer CPU sink in the numeric checker fixed, a pixel cap on pictures, `ENV=production` with warnings separated from refusals, certifi bumped, code-runner slots per member, API security headers, tester e-mails scrubbed; operator items for Shaked (repository private, Auth settings, HEALTH_KEY, Starter) and rows 25-26 for Harel. |
 | 2026-11-08 | The judge moves to gpt-6.1-terra (§5zzd): same six bands as Sol on the real flow at −46 % on the judge, a scored answer about half a cent all-in; the report stays on Sol (`report=gpt-6.1-sol` in the role models); `render.yaml`, `.env.example`, settings test. Yaron on the pilot list (fifteen members); `pricing.py` capacity line honours `--cost`. |
 | 2026-11-07 | Expense cuts (§5zzc): the background prose (feedback, tip, follow-up) runs on OpenAI's flex tier at half price with a once-only fallback to standard, and the card and tip run with no reasoning (fallback to low); `OPENAI_ROLE_SERVICE_TIER` per role, `/health.speed.role_service_tier` and `fallbacks`; `e2e_real_flow.py` prints cost per role. Finishing bonus rule (§5zzb) and Tal on the pilot list the same day. |
