@@ -13,7 +13,8 @@
 .shell ~ :global(button[aria-haspopup="dialog"]) { display:none; }
 .controls { display:flex; gap:7px; }
 .controls button { padding:8px; }
-.main { width:min(1180px,90%); margin-inline:auto; padding-block:25px; }
+.main { width:min(1180px,90%); margin-inline:auto; padding-block:25px; -webkit-user-select:none; user-select:none; }
+.main :is(input,textarea,[contenteditable="true"]) { -webkit-user-select:text; user-select:text; }
 @media(max-width:780px) { .main { padding-block-end:calc(var(--tabbar-height,72px) + 32px); } }
 .topline { display:flex; justify-content:space-between; align-items:center; gap:15px; margin-block-end:26px; font-size:14px; }
 .topline a,.wallet { display:inline-flex; align-items:center; gap:7px; text-decoration:none; }

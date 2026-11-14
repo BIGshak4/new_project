@@ -523,6 +523,7 @@ export function PracticeSession({
     title: question.title,
     content: <>
       <RichText text={question.prompt} lang={lang} />
+      {question.starter_code && <pre className="code-block" dir="ltr"><code>{question.starter_code}</code></pre>}
       {question.has_media && (resources.data
         ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
         : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
@@ -795,6 +796,7 @@ export function PracticeSession({
                           disabled={disabled || !!pending}
                           codeLanguage={question.code_language}
                           starterCode={question.starter_code}
+                          question={drawingQuestion}
                           execution={executionEnabled ? { attemptId: attempt.id, api } : undefined}
                         />
                         <VisualAnswer

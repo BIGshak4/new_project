@@ -1179,7 +1179,14 @@ function Practice({
                 </div>
               </>
             ) : draft.tab === "code" ? (
-              <CodeWorkspace lang={lang}>
+              <CodeWorkspace lang={lang} question={{
+                title: t(...q.title),
+                content: <>
+                  <p className={s.prompt}>{t(...q.prompt)}</p>
+                  <pre className="code-block" dir="ltr"><code>{q.code}</code></pre>
+                  {q.id === "xor" && <CircuitMoment t={t} />}
+                </>,
+              }}>
                 <div className={s.codeToolbar}>
                   <label htmlFor="code-lang">{t("שפת קוד", "Language")}</label>
                   <select

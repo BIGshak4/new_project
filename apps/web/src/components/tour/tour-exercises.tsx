@@ -111,7 +111,8 @@ function CodeDemo({ lang, onAction }: DemoProps) {
     <AnswerEditor value={answer} onChange={value => {
       setAnswer(value);
       if (stopsBeforeEnd(parseTechnicalAnswer(value).code)) onAction("code-edited");
-    }} lang={lang} disabled={false} codeLanguage="c" starterCode={buggyCode} />
+    }} lang={lang} disabled={false} codeLanguage="c" starterCode={buggyCode}
+      question={{ title: examples[1].title[lang], content: <><p><BidiText>{examples[1].prompt[lang]}</BidiText></p><pre className="code-block" dir="ltr"><code>{buggyCode}</code></pre></> }} />
   </>;
 }
 

@@ -113,7 +113,9 @@ export function Wardrobe({ client, lang, controls, demo = false, draftKey }: { c
       <div className={`topnav-actions ${headerStyles.toolbar} ${styles.controls}`}><button type="button" aria-haspopup="dialog" aria-label={t("דיווח על בעיה", "Report a problem")} title={t("דיווח על בעיה", "Report a problem")} onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={18} aria-hidden="true"/></button>{controls}</div>
     </header>
     <FeatureNav className="tabbar" variant="bottom" lang={lang} demo={demo} current="shop" />
-    <main className={styles.main}>
+    <main className={styles.main} onDragStart={event => {
+      if (event.target instanceof Element && event.target.closest("img,svg")) event.preventDefault();
+    }}>
       <div className={styles.topline}><span className={styles.wallet}><Coins size={20} aria-hidden="true"/>{data ? data.balance : "—"} {t(demo ? "מטבעות הדגמה" : "מטבעות", demo ? "demo coins" : "coins")}</span></div>
       {demo && <aside className={styles.demo}><strong>{t("חנות לדוגמה", "Shop preview")}</strong><span>{t("מודדים וקונים במטבעות הדגמה בלבד. החשבון שלכם אינו משתנה.", "Try and buy with demo coins only. Your account is unchanged.")}</span><a href="/games/shop">{t("לחנות האמיתית", "Open your real shop")}</a></aside>}
       {!!error && <div className={styles.error} role="alert"><span>{errorText(error, lang)}</span><button disabled={!!busy} onClick={() => void refresh()}><RefreshCw size={16} aria-hidden="true"/>{t("רענון החנות", "Refresh shop")}</button></div>}
