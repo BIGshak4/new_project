@@ -1,0 +1,595 @@
+{
+  "received_on": "2026-11-14",
+  "screenshot_count": 30,
+  "source_count": 30,
+  "new_question_count": 18,
+  "technical_extension_count": 2,
+  "provenance_only_count": 11,
+  "affected_question_count": 31,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-01.png"
+      ],
+      "sha256": "c3810f5343eb832c98b7b2f3264be5249293ff0b1f9185b68cddd2f59b8efc86",
+      "original_prompt": "יש 4 מקלות וכדור באמצע כמו בתמונה. יש להזיז רק 2 מקלות בלי לגעת בכדור ככה שהכדור יהיה מחוץ לצורה והצורה תשמר כמו שהייתה. איזה מקלות נזיז ואיך?",
+      "reported_companies": [],
+      "source_tags": [
+        "marvell",
+        "logic",
+        "actelis-networks"
+      ],
+      "question_ids": [
+        "PREP-312"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-02.png"
+      ],
+      "sha256": "ab7f57382c050d7cf98a6d1d964fd2248f9d143d7e3ee316af25d2cd35bf3561",
+      "original_prompt": "בנה פונקציה שמזהה פולינדרום (מילה שאפשר לקרוא אותה ישר וגם הפוך)",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "software",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-116"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-03.png"
+      ],
+      "sha256": "6f0a009ed62d81551c7546b3971d59a6f6b625c06144fc9d3a7a9c7e8e03d564",
+      "original_prompt": "ממש גוזר עליית שעון",
+      "reported_companies": [
+        "Samsung"
+      ],
+      "source_tags": [
+        "amazon",
+        "asocs",
+        "altair",
+        "hardware",
+        "samsung"
+      ],
+      "question_ids": [
+        "PREP-042"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-04.png"
+      ],
+      "sha256": "e52f90a160295bb6088313703a5752a336f1b0a191621896ec5316013ef32d74",
+      "original_prompt": "יש לנו חבל שכרוך סביב כדור הארץ. נניח לשם דיוק שרדיוס כדור הארץ הוא R. אחרי שעטפנו את כדור הארץ כך שאין שום רווח אנו לוקחים את אותו חבל ומיישרים אותו, כעת נוסיף לו 10מ׳ לאורכו. נעטוף את כדוה״א כך שהחבל מקיף את כדוה״א במידה שווה (משמע אין יתרות חבל בשום מקום או התחכמות כזו או אחרת). האם אדם בגובה 1 מטר יכול לעבור מתחת לחבל (לאחר הוספת ה10 מ׳)",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "hardware",
+        "logic",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-090"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-05.png"
+      ],
+      "sha256": "1d88490b7b8bc27fe7afa26e10710cb08686b3ed53ccc6d209b28219af1923f5",
+      "original_prompt": "ממש בעזרת שפת C פונקציה המקבלת מספר int בלבד ומדפיסה את המספר בבינארי.",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "verification",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-138"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-06.png"
+      ],
+      "sha256": "a47fda61fae90fa25692e76d567f292322e0807c92a086cd43c652843515dcc0",
+      "original_prompt": "1. לממש שער XOR מMUX והקבועים 0 ו-1. 2. לממש MUX:4->1 באמצעות MUX:2->1. 3. לממש MUX:8->1 באמצעות הרכיבים הקודמים 4. לממש מכונה המבצעת הזזה של עד 7 ביט בהתאם לקלט של 3 ביט המורה על מספר ההזזות שיש לבצע",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-320"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-07.png"
+      ],
+      "sha256": "8bc506b7e6ae36c1e7c9c136c127f4cd393d734da4b75fdb953467e3a3635cd2",
+      "original_prompt": "עליך לתכנן מערכת לוגית המורכבת משערים לוגיים המוצאת את ה 1 שמאלי ביותר במספר בינארי נתון. לאחר מכן התבקשתי לתכנן מערכת המוצאת את ה 1 הימני ביותר במספר בינארי נתון",
+      "reported_companies": [
+        "Elbit"
+      ],
+      "source_tags": [
+        "hardware",
+        "elbit"
+      ],
+      "question_ids": [
+        "PREP-014",
+        "PREP-107"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-08.png"
+      ],
+      "sha256": "661ed8f17da9ef6f0619c038e4e75b46b3111b4e7c4819100952a456b7abf496",
+      "original_prompt": "בניין עם 3 קומות ומעלית. צריך לתכנן מכונת מצבים למעלית (כך שיש 3 כפתורים בתוך המעלית, כפתור להזמנת מעלית בכל קומה, ולהתחשב גם בפתיחת וסגירת הדלתות של המעלית).",
+      "reported_companies": [
+        "Marvell"
+      ],
+      "source_tags": [
+        "hardware",
+        "marvell"
+      ],
+      "question_ids": [
+        "PREP-321"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-09.png"
+      ],
+      "sha256": "99358093ab96245ddf44d768b6ac7f347d2d254015df831917988fde17269ac7",
+      "original_prompt": "נתון רכיב שמקבל זרם מידע (8 סיביות) כל 5X שניות, והמערכת שאליה הוא צריך להעביר את המידע יכולה לקלוט מידע רק בקצב של X שניות. תכנן את הרכיב (רכיבים לוגיים, טרנזיסטורים וכו׳)",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "logic",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-322"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-10.png"
+      ],
+      "sha256": "8fe8c78680f18149614210e82f09bbbad0df81b0390d5bef9311c3b300798040",
+      "original_prompt": "ברשותך n נתונים ומחסנית. למחסנית 3 פעולות: push(x), pop(x), top(x) וכולן מבוצעות ב O(1). עליך לממש את הכנסת הנתונים למחסנית כך שתוכל לבצע פעולת max(s) - כלומר החזרת הערך המקסימלי המצוי במחסנית - בסיבוכיות זמן O(1). אין הגבלה על סיבוכיות מקום, לא ניתן למיין את האיברים לפני ההכנסה למחסנית (ייתכן ואיברים ייכנסו וייצאו מהמחסנית בכל זמן). המימוש צריך כמובן להתייחס גם למקרה שבו מוציאים איברים מהמחסנית, ועדיין פעולת max תחזיר את הערך הנוכחי המקסימלי בזמן O(1).",
+      "reported_companies": [
+        "Amazon"
+      ],
+      "source_tags": [
+        "amazon",
+        "software",
+        "google"
+      ],
+      "question_ids": [
+        "PREP-131"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-11.png"
+      ],
+      "sha256": "71da6c8f46676318c8cfade2898a135c18ea4293a7250b4044a9384a394ec2b2",
+      "original_prompt": "קופסא סגורה שיש לה כניסה אחת (אפשר עוד כניסה במידה הצורך) ושלוש יציאות, היציאות הן rise, fall, toggle, כלומר אם יש לנו כניסה כלשהי (סדרת ביטים), אז ברגע שיש עליה קו ה-rise דולק, כשיש ירידה קו ה-fall דולק וכשיש או עליה או ירידה אז קו ה-toggle דולק.",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel",
+        "software",
+        "actelis-networks"
+      ],
+      "question_ids": [
+        "PREP-323"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-12.png"
+      ],
+      "sha256": "1d432dc8bee2ab32b26c8778bf97f24f84e008ea0f56c4a7298a9d3521e3ffd4",
+      "original_prompt": "נתון המעגל [שני דלגלגים, נקודה A במוצא הראשון, לוגיקה tCL=12ps, נקודה B בכניסה לשני, שעון הדלגלג השני מעוכב ב־5ps, T=15ps ו־tsetup=2ps]. האם יש בעיית Setup במעגל? רשום משוואה כללית. צייר את האותות.",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "hardware",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-326"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-13.png"
+      ],
+      "sha256": "259bf26d892e627f83521db31b742c798a53b5b4ac78d8ee89461e563582414c",
+      "original_prompt": "what are the differences between list and dynamic array (vector) functions (insert, append, insert to place)",
+      "reported_companies": [
+        "Sisense"
+      ],
+      "source_tags": [
+        "amdocs",
+        "mobileye",
+        "software",
+        "sisense"
+      ],
+      "question_ids": [
+        "PREP-313"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-14.png"
+      ],
+      "sha256": "8a0472eae6b6c93ba3c2521c872dfc44189646e68083f1cf5d1c2d5b88a22867",
+      "original_prompt": "Given a sorted array of N elements, with the number 1 to N, suggest an algorithm to scramble it in such a way that the i-th element will have an equal probability to be in each index.",
+      "reported_companies": [
+        "Check Point"
+      ],
+      "source_tags": [
+        "software",
+        "checkpoint"
+      ],
+      "question_ids": [
+        "PREP-022"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-15.png"
+      ],
+      "sha256": "f80b5acf34595b9133c16caceaed8fa0670e9da816a8c838d13e4d0dbb4e86e9",
+      "original_prompt": "נתון לך מחסן מילים ואתה צריך באמצעות פונקציות של STRING לוודא שבמחרוזת שנתונה לך לא מופיעה אף אחת מהמילים הנ״ל",
+      "reported_companies": [
+        "Check Point"
+      ],
+      "source_tags": [
+        "qa",
+        "software",
+        "checkpoint"
+      ],
+      "question_ids": [
+        "PREP-314"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-16.png"
+      ],
+      "sha256": "ee91aac5e9840fbf97dcda4c71a4e4822b6844b23f9acbf0675b7b56d6349034",
+      "original_prompt": "כתוב פונקציה שמחזירה סדר רנדומלי של מערך כל פעם. Software",
+      "reported_companies": [
+        "Check Point"
+      ],
+      "source_tags": [
+        "software",
+        "checkpoint"
+      ],
+      "question_ids": [
+        "PREP-022"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-17.png"
+      ],
+      "sha256": "c2ce5bb8c31615f5771ba544c76408c2e26a0ed30efd7dce2178b0925892cc43",
+      "original_prompt": "בנה מערכת המקבלת כקלט מספר, ומוציאה את תוצאת חילוק המספר ב-6.",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "logic",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-324"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-18.png"
+      ],
+      "sha256": "d2c71d4c95063d19aca9140d7cddf036a06ce88527107371c8e5f074599ffb29",
+      "original_prompt": "שני רובוטים נוחתים על קו ישר עליהם למצוא חפץ שמונח על הקו, הפעולות היחידות שהם יכולים לעשות, זה לנוע שמאלה או ימינה ביחד ולבדוק האם החפץ נמצא במקום בו הם דורכים. מצא אלגוריתם יעיל למציאת החפץ.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-315"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-19.png"
+      ],
+      "sha256": "b5bb5d1ba8cfaa35dfe52e81c5edf493ed1218f91b4e8b5b3903ea70483dda2a",
+      "original_prompt": "נתון מעגל RC טורי המורכב ממקור מתח sin(250t) נגד בטור ואז קבל בטור, מתח המוצא נמצא בין הנגד לקבל. מצא את מתח המוצא כפונקציה של הזמן החלף את מתח הכניסה בגל ריבועי בעל תדירות של 250 הרץ, מה יהיה מתח המוצא?",
+      "reported_companies": [
+        "SolarEdge"
+      ],
+      "source_tags": [
+        "hardware",
+        "solaredge"
+      ],
+      "question_ids": [
+        "PREP-327"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-20.png"
+      ],
+      "sha256": "3150325fde9e40cb7f8ec36e2ed17bc61c027e626cc8298de4e7781f4f3c4d60",
+      "original_prompt": "ממש מעגל המחשב את ערך הביטוי 2*(A+B+C+D). יש מחברים ושערים בסיסיים. גודל כל מספר 3 ביט. מתוך השאלה נדרש היה לממש מחבר של 3 ביט. לנתח את השהיים במחבר שבנה ולומר מה המסלול הקריטי בו. לתת את תדר השעון המקסימלי בו ניתן לעבוד (כל אחד מהמספרים A B C D מוזן למעגל מתוך FF). הכוונה הייתה להשתמש בתנאי setup, את הזמנים שצריך היה לצורך החישוב ביקשתי מהמראיין. נוסף skew לשעון, כיצד משפיע על התדר? איך ניתן לשפר את תדר העבודה של המעגל? נשאלה שאלה על פייפליין, שיפרנו את תדר המעגל אך עכשיו לכל חישוב נדרשים כמה מחזורים אז בעצם לא הרווחנו כלום, אז למה בכלל השתמשנו?",
+      "reported_companies": [
+        "Marvell"
+      ],
+      "source_tags": [
+        "hardware",
+        "marvell"
+      ],
+      "question_ids": [
+        "PREP-328"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 21,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-21.png"
+      ],
+      "sha256": "ac88a49c1ae05502c05eaee0f0fbc38f4b3844b91ad39fa32b5e8b73290b31a6",
+      "original_prompt": "יש מנורה בחדר. יש גלאים לכניסה לחדר. לתכנן טבלת מצבים מתי להדליק כשהאנשים מגיעים ומתי לכבות אותה",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-301"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 22,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-22.png"
+      ],
+      "sha256": "80681cb9795ea20519da36f2be9669f1507d27a6266958a327878a8ab315ef45",
+      "original_prompt": "בנה מכונת מצבים הבודקת האם מספר מתחלק ב 3. כאשר יש כניסה טורית שמכניסה מספר בינארי ספרה אחר ספרה (1 או 0) והמספר נוסף לlsb",
+      "reported_companies": [
+        "Marvell"
+      ],
+      "source_tags": [
+        "apple",
+        "hardware",
+        "marvell"
+      ],
+      "question_ids": [
+        "PREP-036"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 23,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-23.png"
+      ],
+      "sha256": "03a83216ead0c0fcfdf7090f2e7702506ec63afa425403e87a2571c966bc9bca",
+      "original_prompt": "מה יותר גדול בלי שימוש במחשבון: 16 בחזקת 18 או 18 בחזקת 16",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "logic",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-316"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 24,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-24.png"
+      ],
+      "sha256": "25a71c49fd0d9351b8db99c24914a0d8a668bbd29b481dbb78095ab3bea1d86e",
+      "original_prompt": "שאלה לוגית של לדעת מה רוחב פולס כשיש כניסת שעון ופולס. איך לדעת מה רוחב הפולס ביציאה.",
+      "reported_companies": [
+        "Elbit"
+      ],
+      "source_tags": [
+        "hardware",
+        "elbit"
+      ],
+      "question_ids": [
+        "PREP-325"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 25,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-25.png"
+      ],
+      "sha256": "70545bab4d8fc3f59e5c84e37c150d1c425241fa44953ba362ff5dd695cbb9ff",
+      "original_prompt": "ישנו טורניר פינג פונג עם 125 משתתפים, בכל סיבוב מנצח יחיד (בהנחה ויש מספר אי זוגי של משתתפים בשלב, אחד עולה לשלב הבא). אם בכל משחק משחקים 2 אנשים כמה משחקים ישוחקו בכל הטורניר עד להכרזת המנצח?",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "logic",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-317"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 26,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-26.png"
+      ],
+      "sha256": "c14ecab12e2f33797aacaa12bddc74c0dab479a384c90801552ccc188aea5036",
+      "original_prompt": "כתוב פונקציה שמקבלת מטריצה ריבועית של מספרים ואת גודלה של המטריצה, והופכת אותה (Transpose) ללא שימוש נוסף בזיכרון נוסף.",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "software",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-318"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 27,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-27.png"
+      ],
+      "sha256": "7ff744f9b999a2f8e735704dadbfe88cf3d1518d163ce92392d8dea495e85d3e",
+      "original_prompt": "כתוב פונקציה ההופכת מחרוזת",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "software",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-187"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 28,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-28.png"
+      ],
+      "sha256": "736f57eb883019a90852bc9bac2890c6f79d91edea0c0597751877b4e5d5b760",
+      "original_prompt": "א. כמה אפסים יש ב100!? ב. וב200!?",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "logic",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-319"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 29,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-29.png"
+      ],
+      "sha256": "68ab41a590d158da746ed7af1fc71df3dcaea07d02d262a695fc2982f62d4bdc",
+      "original_prompt": "1) יש לנו אות חשמלי המיוצג ע״י 3 ביטים, בין המתחים 0-1, צייר את היסטוגרמת האות ואת גרף השגיאה המייצג? (באמצעות שיטה של אומדן). 2) כתוב קוד עבור מסנן LPF באמצעות MATLAB.",
+      "reported_companies": [
+        "Mellanox"
+      ],
+      "source_tags": [
+        "intel",
+        "hardware",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-329"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 30,
+      "archive_paths": [
+        "sources/2026-11-14-batch30-30.png"
+      ],
+      "sha256": "5559d0ca99c684e10fe65c9abb2481d7bd80f5c5f8d17f1713668febd07f8536",
+      "original_prompt": "1) כתוב פונקציה הבודקת האם שני רשימות מקושרות נפגשות ואם כן, מהו התא בו הן נפגשות? 2) כתוב פונקציה המקבלת מספר ובודקת האם קיימים במערך 2 מספרים שסכומם שווה למספר שנקלט - בסיבוכיות הכי יעילה.",
+      "reported_companies": [
+        "Elbit"
+      ],
+      "source_tags": [
+        "software",
+        "elbit"
+      ],
+      "question_ids": [
+        "PREP-032",
+        "PREP-040"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ]
+}

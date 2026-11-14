@@ -1,0 +1,182 @@
+{
+  "prep-forbidden-words-in-text": {
+    "contract": {
+      "he": "החזירו ערך בוליאני עבור מילים שלמות המופרדות ברווח לבן.",
+      "en": "Return a Boolean for exact whitespace-separated tokens."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "contains_no_forbidden_words",
+        "starter": "def contains_no_forbidden_words(text, forbidden):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              "",
+              [
+                "cat"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "scatter",
+              [
+                "cat"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "cat",
+              [
+                "cat"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "Cat",
+              [
+                "cat"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "a\tb",
+              [
+                "b"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "cat,",
+              [
+                "cat"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "Hello",
+              []
+            ]
+          },
+          {
+            "args": [
+              "  a   b ",
+              [
+                "b",
+                "b"
+              ]
+            ]
+          },
+          {
+            "args": [
+              " red\nblue",
+              [
+                "red"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-square-matrix-transpose-in-place": {
+    "contract": {
+      "he": "שנו את המטריצה במקום והחזירו אותה; הבדיקות האוטומטיות משוות את הערכים המוחזרים.",
+      "en": "Mutate the matrix and return it; automated runner cases compare returned values."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "transpose_in_place",
+        "starter": "def transpose_in_place(matrix):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              []
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  7
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  1,
+                  2
+                ],
+                [
+                  3,
+                  4
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  -1,
+                  2
+                ],
+                [
+                  4,
+                  4,
+                  6
+                ],
+                [
+                  7,
+                  8,
+                  9
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  1,
+                  2,
+                  3,
+                  4
+                ],
+                [
+                  5,
+                  6,
+                  7,
+                  8
+                ],
+                [
+                  9,
+                  10,
+                  11,
+                  12
+                ],
+                [
+                  13,
+                  14,
+                  15,
+                  16
+                ]
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

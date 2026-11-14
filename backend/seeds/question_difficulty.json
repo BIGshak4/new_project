@@ -232,7 +232,7 @@
   "prep-ascii-letter-palindrome-two-pointers": {
     "difficulty": 3,
     "reason": "Compare opposing indices up to the midpoint and handle empty or odd-length strings.",
-    "content_sha256": "1bad0972f978706a2ca7fc3e5d3adb30ab1a456dc5abde186523b75a1d894e18"
+    "content_sha256": "09c15e45517f9873aec94e23bbca2234f4e55bfa60346125eb6ccee0d7c35c10"
   },
   "prep-ascii-word-anagrams": {
     "difficulty": 3,
@@ -557,7 +557,7 @@
   "prep-earth-rope-uniform-clearance": {
     "difficulty": 2,
     "reason": "Subtracting the two circumferences cancels the Earth's radius and gives a single height comparison.",
-    "content_sha256": "f9075341b84e201fe99173c0b04a14a31f78d7145fd03c531a27090de2319a8f"
+    "content_sha256": "0c945f02ce2bb8cf457baa929a65fc0d549aea4f6e1e6ac7906c5cf9e8f8a562"
   },
   "prep-eight-bit-popcount-adders": {
     "difficulty": 5,
@@ -822,12 +822,12 @@
   "prep-isolate-highest-one-eight-bits": {
     "difficulty": 4,
     "reason": "Each bit combines its own value with a mask indicating whether any higher bit has already won.",
-    "content_sha256": "c96e194486b4a80147c5985f98e20b1b86e590b9654aadc02d43bc312b5f0fb2"
+    "content_sha256": "18089f3e17890e5267dcb6a8ffc9dc721bed7cad76392c14703f133ab549424e"
   },
   "prep-isolate-lowest-set-bit-basic-gates": {
     "difficulty": 4,
     "reason": "An OR prefix from the LSB blocks higher bits and provides a scalable gate count and correctness argument.",
-    "content_sha256": "bb0465387dbcbd44c49ca34bad9d1d76dff0cb80f15dfb24fbffef2689c9759e"
+    "content_sha256": "ecca5a11a7026dada6d5155af81d510ffba4195a0fbeaba69476c69480408534"
   },
   "prep-josephus-forty-three": {
     "difficulty": 5,
@@ -857,7 +857,7 @@
   "prep-linked-lists-first-shared-node": {
     "difficulty": 5,
     "reason": "Length alignment or switched-head walks compare node identity despite unequal private prefixes, including disjoint lists.",
-    "content_sha256": "ddacf57241c9d5fe5fcc0e5c3d653f2f5b017d144156514a26f2c17119aa7d8d"
+    "content_sha256": "8f53e2c00ed6d1850f29205ef147dcaa647aefe57cf16d2b4d25ec23ab6356d6"
   },
   "prep-longest-contiguous-sum-divisible-by-three": {
     "difficulty": 5,
@@ -1072,7 +1072,7 @@
   "prep-pair-sum-existence-and-optimization": {
     "difficulty": 4,
     "reason": "Checking each complement against previously seen values gives expected linear time without reusing one array position.",
-    "content_sha256": "98a2cb31f086d27d7dd65c40dcdca73087451248510d916d9ddb7e1e60bf9ba3"
+    "content_sha256": "61d5d25664c16384e26bfcb8947f4670b72e3fe5cb69f62b67a0b3d3f19f36df"
   },
   "prep-pairwise-minimum-maximum-comparisons": {
     "difficulty": 7,
@@ -1152,7 +1152,7 @@
   "prep-random-permutation-fisher-yates": {
     "difficulty": 6,
     "reason": "State persists across calls; range conversion needs rejection sampling and a conditional-uniformity argument.",
-    "content_sha256": "b9f4152e04144ea4bbb537b0d0cc88503db7a0c63632ebec2fea0e296b546e4f"
+    "content_sha256": "e152882d0ea2b6d889f46f6d2471d25c86895745ab00562b2102981dbcd3e28a"
   },
   "prep-rational-lions-cow-survival-parity": {
     "difficulty": 5,
@@ -1207,12 +1207,12 @@
   "prep-reverse-words-using-character-reversal": {
     "difficulty": 4,
     "reason": "Reuse one interval reversal twice and preserve the specified order of space runs.",
-    "content_sha256": "ccbccc88cf59286edf3e570e78a9279e1cd875582d4aada830d3ad6709087685"
+    "content_sha256": "0c27820b419127c11cd79855fb73611dfb69d363826b899b665c504dc4b51714"
   },
   "prep-rising-edge-single-clock-pulse": {
     "difficulty": 3,
     "reason": "One delayed sample detects the rise; reset and the registered output determine the trace.",
-    "content_sha256": "415d7bddaf969fb57a2b20af4519805e5236966eb5bd20a78acf7a8b983611d5"
+    "content_sha256": "f8404511963afb42f8a75cd814de9f60d9cd7999910d4b06db1e794ac39ec12d"
   },
   "prep-room-occupancy-balance-lights": {
     "difficulty": 6,
@@ -1232,7 +1232,7 @@
   "prep-serial-binary-divisibility-by-three-fsm": {
     "difficulty": 5,
     "reason": "Use remainder transitions while retaining enough history to distinguish zero from a positive multiple.",
-    "content_sha256": "df485b0b7d7f28cde989e91801b0d555f1be7432dbdd6800beb4abd2e0fc6ee4"
+    "content_sha256": "2757e262f9cf5c993fd516511a86c5c8b021fbf98573850895c53a996e129672"
   },
   "prep-serial-binary-quotient-by-five": {
     "difficulty": 6,
@@ -1351,8 +1351,8 @@
   },
   "prep-stack-with-prefix-minimum": {
     "difficulty": 4,
-    "reason": "Store the minimum per depth so constant-time pops recover the previous minimum even with ties.",
-    "content_sha256": "f632403f9c24c4378d7dd399728e9ca294e8bf2c24199ac2bf6846bd55db74e3"
+    "reason": "Store a prefix extremum at every depth so both tied extrema and prior extrema survive arbitrary push/pop operations.",
+    "content_sha256": "f073b5de26d4b7b0aa9e0144baf5bf4a5067240ce93e421bf995c9aa090db1a7"
   },
   "prep-static-cmos-two-input-nand": {
     "difficulty": 4,
@@ -1477,7 +1477,7 @@
   "prep-three-person-room-lamp-four-state-fsm": {
     "difficulty": 5,
     "reason": "Design a bounded occupancy Moore machine, then distinguish the four states to prove the bound is necessary.",
-    "content_sha256": "ff055f5001626e7d11ae77786d87a99471d621ecaaa725d99bb1f8795af19ad9"
+    "content_sha256": "a43b902f3e5fe901ee23381ff695fea69c5d85604e061a62cc3beeb05a38dea7"
   },
   "prep-three-stage-pipeline-early-late-timing-diagnosis": {
     "difficulty": 7,
@@ -1596,8 +1596,8 @@
   },
   "prep-unsigned-integer-binary-text-c": {
     "difficulty": 4,
-    "reason": "Determine required buffer size before any write, handling zero, unsigned width and the NUL terminator.",
-    "content_sha256": "5b139ce1a1136813b1f525338b6746ae4db2061fdb0c620180fa7e37db84624d"
+    "reason": "The original output-buffer contract and the signed one-argument extension require correct zero, capacity and minimum-int handling.",
+    "content_sha256": "b65fd843ff1c0d3ca1ee842c8775a2e5130511244a15ab554da6a3fa71e26e32"
   },
   "prep-unsigned-two-bit-combinational-square": {
     "difficulty": 2,
@@ -1698,5 +1698,95 @@
     "difficulty": 8,
     "reason": "Synthesize zero-safe flag control and preserve/restore the divisor under a three-opcode exact-division contract.",
     "content_sha256": "26c807f4cd1ee6325d184d51d7b40ae333d6a8952380098812c326365b0efabf"
+  },
+  "prep-four-stick-scoop-stationary-ball": {
+    "difficulty": 5,
+    "reason": "Find a congruent rearrangement while reassigning the roles of both stationary sticks and protecting the ball.",
+    "content_sha256": "837487c2e5379bd30c32d713aa3d2a39494abf58484f100b0613b9f6cc4c97f9"
+  },
+  "prep-linked-list-versus-vector-insertion": {
+    "difficulty": 3,
+    "reason": "Distinguish finding a position, relinking nodes, shifting the suffix and occasional growth.",
+    "content_sha256": "0f8e7949e3b2959901f67cc4ef7954cb9d2cfa0bfb4a47206dd7a750fcb648fd"
+  },
+  "prep-forbidden-words-in-text": {
+    "difficulty": 3,
+    "reason": "Define token boundaries and compare complete tokens before reporting that all are allowed.",
+    "content_sha256": "4379a455eac366396a47383e02ce37c557352d790b8e70deb1986427727e65fb"
+  },
+  "prep-two-robots-lockstep-line-search": {
+    "difficulty": 6,
+    "reason": "Resolve the movement model, construct alternating geometric sweeps, and prove a distance-sensitive competitive bound.",
+    "content_sha256": "cf1d16bf291ee9f4149fe602c1c3062596a886ff6c5da519a00d90d2e6abc263"
+  },
+  "prep-compare-sixteen-to-eighteen-powers": {
+    "difficulty": 3,
+    "reason": "Find a common outer exponent and compare exact small powers without a calculator.",
+    "content_sha256": "db365089f5a4d49a2527a56adbecd41fc50421dd0d2cd67a9044b237cf35f22a"
+  },
+  "prep-single-elimination-tournament-match-count": {
+    "difficulty": 2,
+    "reason": "Count the eliminated players to bypass round and bye bookkeeping.",
+    "content_sha256": "940e887cc9094ec030903bd7d45233a86100a6ab82b875c3a12379b90d35e150"
+  },
+  "prep-square-matrix-transpose-in-place": {
+    "difficulty": 3,
+    "reason": "Recognize each off-diagonal pair and traverse one triangle while preserving storage.",
+    "content_sha256": "149acecaeadfc597238bf14857e6b3622225d09b34df97a388befd0a56aee51a"
+  },
+  "prep-trailing-zeroes-of-a-factorial": {
+    "difficulty": 3,
+    "reason": "Count factors of five with multiplicity and account for contributions from 25 and 125.",
+    "content_sha256": "20e3feddfd8eb5ced12aca009686ddadb59c22c620493ea87be0367b1d71f233"
+  },
+  "prep-mux-hierarchy-logical-barrel-shifter": {
+    "difficulty": 5,
+    "reason": "Requires composing selection trees, then reusing controlled shifts with the correct zero-fill boundary.",
+    "content_sha256": "361c863917db7de780defedfa2023a9e5535d28bde84081d84eb051037bea31b"
+  },
+  "prep-three-floor-elevator-with-door-states": {
+    "difficulty": 6,
+    "reason": "Requires a concrete door and motor control FSM, concurrent request arbitration and a fairness argument.",
+    "content_sha256": "2730dd59acb04a81062d4873348eb16465546e80bb04fec4a62e4b34a78ae683"
+  },
+  "prep-byte-stream-rate-width-adapter": {
+    "difficulty": 5,
+    "reason": "Requires distinguishing word cadence from bit throughput, proving a link-width bound and scheduling a lossless adapter.",
+    "content_sha256": "05832b9839963ddf959ca446eb1a26372fdc36531af22ee06ec7bd7790459ed8"
+  },
+  "prep-registered-rise-fall-toggle-detector": {
+    "difficulty": 3,
+    "reason": "Compares consecutive samples and handles output timing, consecutive transitions and reset.",
+    "content_sha256": "1070a900d27ae0290ad6a1b80c4811c03cafd62e28cf67c180b16990a0ca9125"
+  },
+  "prep-unsigned-word-quotient-by-six": {
+    "difficulty": 5,
+    "reason": "Derives a constant-divisor quotient datapath, uses the remainder invariant and sizes intermediate registers.",
+    "content_sha256": "54f3e88fb2663c3833f412b2dccf0d62b1c5346272a66172695ac02777b60e11"
+  },
+  "prep-sampled-pulse-width-counter": {
+    "difficulty": 4,
+    "reason": "Needs an exact edge convention, valid timing, counter overflow handling and a sampling-resolution argument.",
+    "content_sha256": "7998d2336bc987c7bedf2cae22afb0e54fa65fde8a6a0bc7478e0fdde9c80f82"
+  },
+  "prep-setup-budget-delayed-capture-clock": {
+    "difficulty": 5,
+    "reason": "Identifying the intended capture edge, budgeting an unspecified launch delay and tracing two clocks require combined timing analysis.",
+    "content_sha256": "4b437d481b07244fc789e63511a94f917235534a07d3f7a7a371e89f4fe7008c"
+  },
+  "prep-rc-sinusoid-and-square-steady-state": {
+    "difficulty": 6,
+    "reason": "Requires converting an angular frequency, separating transient and steady state, and imposing periodic continuity on both square-wave half cycles.",
+    "content_sha256": "f758859646979644840123fda7048e5c723a98d9b8f6d87aea5642437e45d6d8"
+  },
+  "prep-four-operand-adder-tree-pipeline": {
+    "difficulty": 7,
+    "reason": "Combines gate-level adder design, nonuniform arrival-time propagation, correct width growth and latency versus throughput under setup/skew constraints.",
+    "content_sha256": "dbef3eddb936e526214985bfc34113f8c1bafa172fd6e7f66e7bbc6fef4209d3"
+  },
+  "prep-three-bit-quantization-error-matlab-lpf": {
+    "difficulty": 6,
+    "reason": "Requires an explicit source distribution and estimator convention, error statistics, and constructing and checking a digital low-pass filter at its intended cutoff.",
+    "content_sha256": "34760d5056ef4ad453814c8f577b1dcaeb48155ffb74e858b2a8e1a2416dd3c2"
   }
 }

@@ -14,6 +14,8 @@ import re
 from functools import cache
 from pathlib import Path
 
+from tests.preparation_november14_history import before_nov14
+
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -66,6 +68,8 @@ def before_current_copy(kind, key, actual):
     catalog = fixture(kind)
     records = catalog["files"] if kind == "fundamentals" else catalog["entries"]
     record = records.get(key)
+    if kind == "preparation":
+        actual = before_nov14(key, actual)
     restored = before_700_quiz_additions(key, actual) if kind == "quiz" else copy.deepcopy(actual)
     if record is None:
         return restored  # The caller's unchanged historical hash still applies.

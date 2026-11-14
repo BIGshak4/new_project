@@ -455,6 +455,16 @@
       "question_key": "prep-fifo-queue-using-two-stacks",
       "language": "python",
       "source": "\"\"\"Two stacks, enqueue O(1), dequeue/peek amortized O(1).\"\"\"\n\n\nclass _Node:\n    __slots__ = (\"next\", \"value\")\n\n    def __init__(self, value, next_node):\n        self.value = value\n        self.next = next_node\n\n\nclass _Stack:\n    def __init__(self):\n        self.head = None\n\n    def empty(self):\n        return self.head is None\n\n    def push(self, value):\n        self.head = _Node(value, self.head)\n\n    def pop(self):\n        value = self.top()\n        self.head = self.head.next\n        return value\n\n    def top(self):\n        if self.empty():\n            raise IndexError(\"empty queue\")\n        return self.head.value\n\n\nclass TwoStackQueue:\n    def __init__(self):\n        self.incoming = _Stack()\n        self.outgoing = _Stack()\n\n    def enqueue(self, value):\n        if type(value) is not int:\n            raise TypeError(\"integer value required\")\n        self.incoming.push(value)\n\n    def _prepare(self):\n        if self.outgoing.empty():\n            while not self.incoming.empty():\n                self.outgoing.push(self.incoming.pop())\n\n    def dequeue(self):\n        self._prepare()\n        return self.outgoing.pop()\n\n    def peek(self):\n        self._prepare()\n        return self.outgoing.top()\n\n    def is_empty(self):\n        return self.incoming.empty() and self.outgoing.empty()\n\n\ndef queue_trace(operations):\n    \"\"\"Pure transcript adapter; errors do not change the abstract queue.\"\"\"\n    queue = TwoStackQueue()\n    output = []\n    allowed = {\"enqueue\", \"dequeue\", \"peek\", \"is_empty\"}\n    for operation in operations:\n        name, *args = operation\n        if name not in allowed or len(args) != int(name == \"enqueue\"):\n            raise ValueError(\"invalid operation\")\n        try:\n            output.append({\"ok\": True, \"value\": getattr(queue, name)(*args)})\n        except IndexError:\n            output.append({\"ok\": False, \"error\": \"empty\"})\n    return output\n"
+    },
+    {
+      "question_key": "prep-forbidden-words-in-text",
+      "language": "python",
+      "source": "def contains_no_forbidden_words(text, forbidden):\n    \"\"\"Compare complete, case-sensitive tokens separated by whitespace.\"\"\"\n    vocabulary = set(forbidden)\n    return all(word not in vocabulary for word in text.split())\n"
+    },
+    {
+      "question_key": "prep-square-matrix-transpose-in-place",
+      "language": "python",
+      "source": "def transpose_in_place(matrix):\n    \"\"\"Transpose a square list of distinct mutable rows and return it.\"\"\"\n    size = len(matrix)\n    for row in range(size):\n        for col in range(row + 1, size):\n            matrix[row][col], matrix[col][row] = matrix[col][row], matrix[row][col]\n    return matrix\n"
     }
   ]
 }

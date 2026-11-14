@@ -79,6 +79,13 @@ PRIMARY = [
     "basic_data_structures", "basic_data_structures", "bit_manipulation", "registers_shifters", "setup_hold_timing", "code_debugging", "truth_tables", "boolean_algebra", "basic_data_structures", "bit_manipulation", "universal_gates", "basic_data_structures", "fsm_sequence_detectors",
     "bit_manipulation", "tradeoff_reasoning", "testbench_basics", "counters", "binary_arithmetic", "tradeoff_reasoning", "code_debugging", "basic_data_structures", "tradeoff_reasoning", "estimation_sanity_checks", "number_representation", "basic_data_structures", "fsm_controllers", "universal_gates",
     "code_debugging", "basic_data_structures", "basic_data_structures", "setup_hold_timing", "tradeoff_reasoning", "estimation_sanity_checks", "basic_data_structures", "tradeoff_reasoning", "code_debugging",
+    # PREP-312 through PREP-329, in archive order.
+    "estimation_sanity_checks", "basic_data_structures", "arrays_and_search",
+    "tradeoff_reasoning", "estimation_sanity_checks", "estimation_sanity_checks",
+    "arrays_and_search", "estimation_sanity_checks", "registers_shifters",
+    "fsm_controllers", "tradeoff_reasoning", "edge_detection", "binary_arithmetic",
+    "counters", "setup_hold_timing", "tradeoff_reasoning", "binary_arithmetic",
+    "number_representation",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.
@@ -96,7 +103,7 @@ def strip_personal(value):
 
 def paths_in(value):
     if isinstance(value, str):
-        yield from re.findall(r"(?:sources|diagrams|solutions)/[\w./-]+\.(?:png|sv|py|cpp|java|asm|c|h)\b", value)
+        yield from re.findall(r"(?:sources|diagrams|solutions)/[\w./-]+\.(?:png|sv|py|cpp|java|asm|c|h|m)\b", value)
     elif isinstance(value, dict):
         for v in value.values():
             yield from paths_in(v)

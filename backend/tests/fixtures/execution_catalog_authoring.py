@@ -534,6 +534,29 @@ BATCH1108B20_ORACLES = runpy.run_path(
 ORACLES.update(BATCH1108B20_ORACLES)
 
 
+BATCH1114_SOURCES = {
+    "prep-forbidden-words-in-text": "prep_314_forbidden_words.py",
+    "prep-square-matrix-transpose-in-place": "prep_318_square_transpose.py",
+}
+ORACLES.update({
+    "prep-forbidden-words-in-text": lambda text, denied: not any(
+        token == word for token in text.split() for word in denied),
+    "prep-square-matrix-transpose-in-place": lambda matrix: [list(column) for column in zip(*matrix)],
+})
+
+
+def build_batch1114_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1114_inputs.json").read_text(encoding="utf-8"))
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1114_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1114_SOURCES[key]).read_text(encoding="utf-8")
+
+
 def build_batch1108b20_contracts():
     inputs = json.loads((BACKEND / "tests/fixtures/execution_batch1108b20_inputs.json").read_text(encoding="utf-8"))
     for key, question in inputs.items():
@@ -843,6 +866,7 @@ endmodule
     questions.update(build_batch1107b20_contracts())
     questions.update(build_night1107n30_contracts())
     questions.update(build_batch1108b20_contracts())
+    questions.update(build_batch1114_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -945,6 +969,14 @@ def build_smoke():
         cases.append({"question_key": key, "language": "python", "correct": batch1108b20_source(key),
                       "wrong": f"def {entry}(*args):\n    return None\n",
                       "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1114_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = ("def contains_no_forbidden_words(text, forbidden):\n"
+                 "    return all(word not in text for word in forbidden)\n"
+                 if entry == "contains_no_forbidden_words"
+                 else "def transpose_in_place(matrix):\n    return matrix\n")
+        cases.append({"question_key": key, "language": "python", "correct": batch1114_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
 
@@ -1483,6 +1515,8 @@ end architecture;
         (c if filename.endswith(".cpp") else python)[key] = night1107n30_source(key)
     for key in BATCH1108B20_SOURCES:
         python[key] = batch1108b20_source(key)
+    for key in BATCH1114_SOURCES:
+        python[key] = batch1114_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:
