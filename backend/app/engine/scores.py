@@ -34,13 +34,15 @@ def round_half_up(value: float) -> int:
 
 def apply_check_result(evaluation: Evaluation, check: CheckResult | None,
                        params: EngineParams = DEFAULT_PARAMS) -> Evaluation:
-    """A failed check caps correctness at 0.4; a pass raises the floor to 0.6, never to 1.0."""
+    """A failed check caps correctness at 0.4; a pass raises the floor, never to 1.0: to 0.8 when the check covers
+    the whole result (a truth table, code tests), to 0.6 when it confirms one value of several (numeric)."""
     if check is None or check.passed is None:
         return evaluation
     p = params.scores
     correctness = evaluation.correctness
     if check.passed:
-        correctness = max(correctness, p.check_pass_correctness_floor)
+        whole = check.type in p.whole_result_checks
+        correctness = max(correctness, p.check_pass_correctness_floor if whole else p.check_pass_partial_floor)
     else:
         correctness = min(correctness, p.check_fail_correctness_cap)
     return evaluation.model_copy(update={"correctness": correctness})
@@ -77,8 +79,9 @@ def apply_company_modifiers(evaluation: Evaluation, emphasis: dict[str, float] |
 
 def lean_strong(evaluation: Evaluation, core_misconception: bool = False,
                 params: EngineParams = DEFAULT_PARAMS) -> bool:
-    """A correct answer whose written reasoning is thin: STRONG by band, lighter evidence, a reasoning follow-up
-    (Shaked, 2026-10-05). A failed check never gets here: it caps correctness at 0.4."""
+    """A correct answer whose written reasoning is thin or absent: STRONG by band, lighter evidence, a reasoning
+    follow-up (Shaked, 2026-10-05; since 2026-11-14 with no depth floor: a right answer is never PARTIAL for what
+    it left out). A failed check never gets here: it caps correctness at 0.4."""
     p = params.scores
     return (not core_misconception and evaluation.correctness >= p.lean_strong_correctness
             and p.lean_strong_depth <= evaluation.depth < p.strong_depth)

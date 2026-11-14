@@ -20,16 +20,27 @@ class TestBands:
 
 
 class TestCheckAuthority:
-    """§2.3: a failed check caps correctness at 0.4; a pass raises the floor to 0.6 but never sets 1.0."""
+    """§2.3: a failed check caps correctness at 0.4; a pass raises the floor but never sets 1.0. Since 2026-11-14
+    the floor is 0.8 for a check that covers the whole result (a truth table, code tests: code confirmed the answer,
+    so it is a correct one) and stays 0.6 for a numeric check, which confirms one value of what may be several."""
 
     def test_fail_caps(self):
-        out = scores.apply_check_result(make_evaluation(correctness=0.9), CheckResult(type="truth_table", passed=False))
-        assert out.correctness == 0.4
+        for kind in ("truth_table", "numeric", "code_tests"):
+            out = scores.apply_check_result(make_evaluation(correctness=0.9), CheckResult(type=kind, passed=False))
+            assert out.correctness == 0.4
 
     def test_pass_floors_but_keeps_higher(self):
-        passed = CheckResult(type="truth_table", passed=True)
-        assert scores.apply_check_result(make_evaluation(correctness=0.3), passed).correctness == 0.6
-        assert scores.apply_check_result(make_evaluation(correctness=0.85), passed).correctness == 0.85
+        for kind, floor in (("truth_table", 0.8), ("code_tests", 0.8), ("numeric", 0.6)):
+            passed = CheckResult(type=kind, passed=True)
+            assert scores.apply_check_result(make_evaluation(correctness=0.3), passed).correctness == floor
+            assert scores.apply_check_result(make_evaluation(correctness=0.85), passed).correctness == 0.85
+
+    def test_a_whole_result_check_that_passed_makes_the_answer_strong_and_one_value_does_not(self):
+        thin = make_evaluation(correctness=0.5, depth=0.2)              # the judge was unsure; code confirmed the function
+        whole = scores.apply_check_result(thin, CheckResult(type="truth_table", passed=True))
+        one_value = scores.apply_check_result(thin, CheckResult(type="numeric", passed=True))
+        assert scores.classify_band(whole) == Band.STRONG and scores.lean_strong(whole)
+        assert scores.classify_band(one_value) == Band.PARTIAL
 
     def test_unrunnable_check_changes_nothing(self):
         out = scores.apply_check_result(make_evaluation(correctness=0.3), CheckResult(type="sim", passed=None))
