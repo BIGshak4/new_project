@@ -8,6 +8,10 @@
 > old hosting. The Free-plan/billing statements below are historical and do not
 > establish the current subscription or cancellation state. Supabase data and
 > access policies continue in the same project.
+> On 14 November, builds were stopped on both sites and the legacy deployment
+> workflows were disabled. Copies remain pending the user's new Tasks login
+> confirmation; neither runtime nor rollback depends on Netlify. Do not run the
+> historical deployment commands below as the ordinary release procedure.
 
 Updated: 20 September 2026.
 
