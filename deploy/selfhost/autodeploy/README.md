@@ -137,9 +137,11 @@ Historical web/API-only state is supported without manufacturing a Tasks image:
 its generation identity and old configuration remain valid. Restoring such a
 pair removes the Tasks orphan container before reopening Caddy, and the old
 snapshot has no Tasks Caddy route. The canonical Tasks hostname will therefore
-be unavailable during this fallback; use the retained Netlify Tasks URL. Supabase
-accounts, tasks, comments and storage are unchanged. Never seed or restore the
-database as part of an application rollback.
+be unavailable during this historical fallback. To keep Tasks available, retain
+and restore a prior three-image snapshot. Neither runtime nor rollback depends
+on Netlify; both old sites have builds stopped and the legacy deployment
+workflows are disabled. Supabase accounts, tasks, comments and storage are
+unchanged. Never seed or restore the database as part of an application rollback.
 
 The entry point reopens only after the previous snapshot passes its own enabled-service gates. If
 rollback fails, Caddy is stopped and `blocked.json` prevents future automation.

@@ -18,8 +18,9 @@ The production runbook records the current availability and access state.
 
 The canonical Tasks hostname is [tasks.muxijobrun.com](https://tasks.muxijobrun.com).
 The November 14 extension publishes three signed application images for one SHA;
-the dated web/API checks above do not prove that Tasks cutover has passed. See
-the production record for its explicit live-verification status. Accounts,
+all three services passed live revision, DNS/TLS/assets and database checks on
+November 14. The user's own Tasks login confirmation remains pending. See
+the production record for the exact evidence. Accounts,
 founder access, tasks and private files stay in the existing Supabase project;
 the new browser origin needs its own sign-in and does not inherit local drafts.
 
@@ -125,8 +126,8 @@ After this workflow is reviewed and available on the repository's default branch
 choose **Actions → Build self-hosted release images → Run workflow** and supply
 the full reviewed release SHA. It checks out that exact commit, which must include
 the Docker/Compose preparation. Introducing the builder to the default branch is
-separate from promoting the held application release: bootstrap with an isolated
-workflow-only commit, preserving the existing frontend/backend release hold.
+separate from approving a runtime release: use a reviewed workflow-only commit
+if needed, without inadvertently promoting application changes to old hosting.
 
 Supply website/API hostnames and the **public** Supabase URL/publishable (or legacy
 anon) key as inputs, or configure repository variables `SELFHOST_APP_DOMAIN`,
@@ -189,10 +190,12 @@ operator procedure without printing `HEALTH_KEY`.
 
 ## Cut over and subsequent releases
 
-Keep the existing Netlify and Render deployments available while testing the new
-origins. Add the new root/`www`/optional tasks origins to Supabase Auth redirect
-URLs, retaining the old URLs during the transition. Change its production Site
-URL when the candidate is ready. Test account login, a new confirmation email,
+The November 14 cutover is live. Builds are stopped on both old Netlify sites,
+and legacy deployment workflows are disabled. Old copies remain temporarily
+pending the user's login confirmation; runtime and rollback do not depend on
+Netlify. Supabase's Site URL is the canonical main origin and its redirect
+allowlist has been cleaned of old Netlify URLs. For a future migration, review
+these settings explicitly rather than restoring historical origins. Test account login, a new confirmation email,
 question loading, saving, Fundamentals completion, a duel link and isolated code
 execution; test billing returns/webhooks in the appropriate test environment if
 configured. A new origin requires sign-in again and does not transfer browser-only
@@ -222,15 +225,17 @@ configuration snapshot. To roll back, restore that reviewed release's public
 configuration and `SOURCE_REVISION`, then run the same `up -d --no-build --wait`
 command and verification. Roll back the exact enabled service set together. An
 old web/API-only controller snapshot has no Tasks route: its rollback removes
-the newer Tasks container, so retain the old Netlify Tasks site until this
-fallback is no longer required. Do not retrofit a Tasks digest into old state.
+the newer Tasks container. Preserve a prior three-image snapshot when Tasks
+must remain available; a pre-Tasks pair is only a historical fallback without
+Tasks. No rollback depends on Netlify. Do not retrofit a Tasks digest into old state.
 Do not
 rebuild an old SHA from a different checkout, discard live database changes or
 restore a database as part of an ordinary application rollback.
 
-If initial cutover fails, continue using the retained old hosting URLs and
-restore prior Supabase/backend Site URLs as needed. Remove old hosting only after
-the new host, automatic deployment and restore procedure have been verified.
+If a release fails, use the verified prior VPS snapshot and its protected
+configuration. Do not restore old hosting URLs or Supabase settings merely to
+roll back application code. Retiring old copies and changing billing remain
+separate actions; a billing-plan change has not been confirmed.
 
 Back up deployment configuration and Caddy volumes securely off this server.
 Continue the existing Supabase database/storage backup policy. Schedule OS,

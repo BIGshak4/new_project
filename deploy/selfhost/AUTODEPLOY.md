@@ -24,16 +24,20 @@ check in [PRODUCTION.md](PRODUCTION.md) after later releases.
 The 14 November extension makes new releases a **three-image cohort**: practice
 web, API and founder Tasks. The canonical Tasks origin is
 `https://tasks.muxijobrun.com`, derived from `tasks.` plus `SELFHOST_APP_DOMAIN`.
-Installing this source does not itself update the fixed host controller. Review
-and install its matching templates before the first three-image deployment, add
-the Tasks DNS record and Supabase Auth redirect origin, then record successful
-live and authenticated checks in [PRODUCTION.md](PRODUCTION.md). The old Netlify
-Tasks site remains a fallback until that cutover is verified.
+The matching fixed host controller/templates and DNS are installed. All three
+services reported `6231df36b5d6c645d00cc836df20810b0c951854` during the
+14 November 19:02 UTC external check; TLS/assets and the API database probe
+passed. Supabase URL cleanup is complete. A rolled-back synthetic-founder task
+test passed; the user's own login handoff remains pending. Both old Netlify
+sites have builds stopped and legacy deployment workflows are disabled. Copies
+are retained temporarily, but runtime and rollback do not depend on them. No
+billing-plan change is confirmed. See [PRODUCTION.md](PRODUCTION.md).
 
 ## Release authority
 
 Use the dedicated `production` branch of `BIGshak4/new_project`. The existing
-`master` branch and its Netlify/Render pair remain separate during the transition.
+`master` branch is historical and separate; old Netlify builds are stopped and
+legacy deployment workflows are disabled.
 Changes approved for the new site land on `production`; do not force-push it.
 Protect/review that branch where repository permissions allow.
 
@@ -57,7 +61,7 @@ credential. Database, model and server authentication credentials stay on the VP
 
 Push-triggered publication works from `production`. To expose GitHub's manual
 dispatch control, the workflow also needs a reviewed workflow-only copy on the
-default branch; that copy does not promote the held application runtime.
+default branch; that copy does not promote an application runtime to old hosting.
 
 Required public repository variables:
 
@@ -155,8 +159,10 @@ the prior successful image digests/configuration and verify all enabled live rev
 A failed candidate restores the exact previous snapshot. If it contains only
 web/API, rollback removes the Tasks container and its Caddy site; the new Tasks
 hostname is then unavailable until a valid three-image release is restored.
-Use the retained Netlify Tasks origin during that fallback. Database rows and
-private storage stay in the existing Supabase project throughout. This single-VPS arrangement can
+For a rollback that must preserve Tasks, select a retained three-image snapshot.
+A pre-Tasks pair is a historical web/API-only fallback, not a Netlify-dependent
+recovery route. Database rows and private storage stay in the existing Supabase
+project throughout. This single-VPS arrangement can
 have a short interruption while containers restart. Disk/memory/uptime monitoring
 and OS/container security updates remain operational responsibilities.
 
