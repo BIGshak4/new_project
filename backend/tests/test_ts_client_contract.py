@@ -105,10 +105,10 @@ def test_every_v1_route_is_called_by_the_client(spec, source):
         normalized = re.sub(r"\$\{q\([^)]*\)\}", "", path)          # drop the query-string helper
         normalized = re.sub(r"\$\{[^}]+\}", "{}", normalized)
         called.add((method, normalized))
-    # The game client infers HTTP method from an optional JSON body, with named GET operations.
+    # The game client sends POST when call(path, body) includes the body argument.
     game = GAME_CLIENT.read_text(encoding="utf-8")
-    for name, path in re.findall(r'(\w+):[^\n]+?call<[^>]+>\(\s*["`]([^"`]+)["`]', game):
-        method = "GET" if name in {"list", "wallet", "get"} else "POST"
+    for path, delimiter in re.findall(r'call<[^>]+>\(\s*["`]([^"`]+)["`]\s*([,)])', game):
+        method = "POST" if delimiter == "," else "GET"
         normalized = re.sub(r"\$\{[^}]+\}", "{}", path).split("?")[0]
         called.add((method, normalized))
     avatar = AVATAR_CLIENT.read_text(encoding="utf-8")

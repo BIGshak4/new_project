@@ -590,8 +590,8 @@
       "en": "Valid JSON does not guarantee the expected field"
     },
     "prompt": {
-      "he": "לאחר HTTP מוצלח ופענוח JSON, החוזה דורש אובייקט עם value מסוג מחרוזת. האם {\"value\":null} תקין, ואיך בודקים בלי להפוך null לטקסט?",
-      "en": "After successful HTTP and JSON decoding, require an object whose value field is a string. Is {\"value\":null} valid, and how can it be checked without converting null to text?"
+      "he": "לאחר HTTP מוצלח ופענוח JSON, החוזה דורש אובייקט עם value מסוג מחרוזת. האם `{\"value\":null}` תקין, ואיך בודקים בלי להפוך null לטקסט?",
+      "en": "After successful HTTP and JSON decoding, require an object whose value field is a string. Is `{\"value\":null}` valid, and how can it be checked without converting null to text?"
     },
     "answer": {
       "he": "לא. בודקים שהשורש מילון ושהערך הוא str לפני שמחזירים אותו. מפתח חסר, null ומספר אינם מחרוזת. מחרוזת ריקה מותרת לפי חוזה זה. הבדיקה כאן עוסקת בסכמה לאחר הפענוח, בלי לבצע בקשת רשת.",
