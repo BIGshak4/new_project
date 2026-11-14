@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, CodeXml, MessageSquareText, Table2 } from "luci
 import type { Lang } from "./auth";
 import { DictationControls } from "./dictation-controls";
 import { CodeWorkspace } from "./code-workspace";
+import type { CircuitQuestionReference } from "./circuit-editor";
 import { dictationExplanationLimit } from "../lib/speech-dictation";
 import type { CodeExecutionContext } from "./code-execution-panel";
 import {
@@ -29,6 +30,7 @@ export function AnswerEditor({
   starterCode,
   initiallyShowCode,
   execution,
+  question,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -38,6 +40,7 @@ export function AnswerEditor({
   starterCode: string | null;
   initiallyShowCode?: boolean;
   execution?: CodeExecutionContext;
+  question?: CircuitQuestionReference;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const id = useId();
@@ -130,7 +133,7 @@ export function AnswerEditor({
       </div>
       <div id={`${id}-code`} hidden={!showCode}>
         {codeMounted && (
-          <CodeWorkspace lang={lang}>
+          <CodeWorkspace lang={lang} question={question}>
             <div className="code-toolbar">
               <label>
                 {t("קוד / תוכן טכני", "Code / technical content")}

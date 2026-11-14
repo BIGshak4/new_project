@@ -2005,8 +2005,17 @@ summary {
   align-items: center;
   gap: 8px;
 }
+.visual-answer-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
 .visual-answer-actions button {
-  flex: 1 1 180px;
+  min-width: 0;
+}
+.visual-answer-actions button > svg {
+  flex: none;
 }
 .visual-review-note {
   margin-block: 18px 0;

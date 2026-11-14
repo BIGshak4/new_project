@@ -457,7 +457,8 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
                   "Write your answer below. You can add code, a diagram, or a photo of your work.",
                 )}
               </p>
-              <AnswerEditor key={`answer-${turn.index}`} value={answer} onChange={setAnswer} lang={lang} disabled={busy} codeLanguage={null} starterCode={null} />
+              <AnswerEditor key={`answer-${turn.index}`} value={answer} onChange={setAnswer} lang={lang} disabled={busy} codeLanguage={null} starterCode={null}
+                question={{ title: turn.skill_label, content: <InterviewQuestionText text={turn.question} /> }} />
               <VisualAnswer
                 key={`visual-${turn.index}`}
                 value={visual}
