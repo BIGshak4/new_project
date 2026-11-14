@@ -28,7 +28,7 @@ from datetime import UTC, date, datetime, timedelta
 from app.api.errors import ApiError
 from app.engine import activity, bank, next_question, plan_router, scorecards, scores, soft_skills, xp
 from app.engine.catalog import Catalog
-from app.engine.job_selection import JobSelection, combined_job
+from app.engine.job_selection import JobSelection, combined_job, plan_rows
 from app.engine.plan import merge_skill_sets
 from app.engine.practice import (
     FEEDBACK_PENDING,
@@ -1551,11 +1551,12 @@ class PracticeService:
               ) -> tuple[dict[str, int], dict[str, float], int, list[PlanSkill]]:
         """(required levels, skill weights, difficulty ceiling, plan rows) for a seniority and a job type.
 
-        The job type does not add skills: it multiplies the role's skill weights (verification leans on testbenches
-        and debugging, embedded on bit manipulation ...), so the plan, the next-question suggestion and the weekly
-        plan lean the same way. A skill the job type excludes (emphasis 0) leaves the plan altogether: an embedded
-        plan has no HDL coding, a software plan no flip-flops (Harel's task 8, 2026-10-15). An unknown job type is
-        ignored, never an error here."""
+        The job type multiplies the role's skill weights (verification leans on testbenches and debugging, embedded
+        on bit manipulation ...), so the plan, the next-question suggestion and the weekly plan lean the same way. A
+        skill the job type excludes (emphasis 0) leaves the plan altogether: an embedded plan has no HDL coding, a
+        software plan no flip-flops (Harel's task 8, 2026-10-15). Its own skills join the plan: a software plan has
+        arrays and data structures, which the hardware role does not list (Shaked, 2026-11-14; `plan_rows`). An
+        unknown job type is ignored, never an error here."""
         job = combined_job(self.catalog.job_types, job_type)
         role = self.catalog.roles[self.config.role]
         if seniority not in role.seniority_profiles:                  # normalised before the key: one entry per real profile
@@ -1563,10 +1564,7 @@ class PracticeService:
         key = (seniority, job.key if job else None)
         if key not in self._plans:
             company = self.catalog.companies[self.config.company]
-            rows = role.skill_set
-            if job is not None:
-                rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows
-                        if not job.excludes(row.skill)]
+            rows = plan_rows(role.skill_set, self.catalog.job_types, job_type)
             plan = merge_skill_sets(role_rows=rows, company_rows=company.skill_set, focus_skill_keys=[],
                                     company_weight_share=company.company_weight_share, seniority=seniority,
                                     planned_duration_min=45, catalog=self.catalog.leaf_skills)

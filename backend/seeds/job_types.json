@@ -12,7 +12,10 @@
       "fsm_state_encoding": 1.3, "hdl_blocking_nonblocking": 1.4, "hdl_combinational_coding": 1.4,
       "hdl_sequential_coding": 1.4, "testbench_basics": 0.8, "bit_manipulation": 0.7, "arrays_and_search": 0,
       "basic_data_structures": 0, "code_debugging": 0.7
-    }
+    },
+    "skills": [
+      {"skill": "estimation_sanity_checks", "weight": 0.04, "importance": "important", "required_level": {"student": 2, "junior": 2}}
+    ]
   },
   {
     "key": "verification",
@@ -25,7 +28,15 @@
       "fsm_sequence_detectors": 1.1, "fsm_controllers": 1.1, "basic_data_structures": 1.1, "bit_manipulation": 1.2,
       "reset_strategies": 1.1, "setup_hold_timing": 0.8, "universal_gates": 0.5, "fsm_state_encoding": 0.8,
       "tradeoff_reasoning": 1.1, "risk_awareness": 1.2
-    }
+    },
+    "skills": [
+      {"skill": "testbench_basics",      "weight": 0.06,  "importance": "core",         "required_level": {"student": 2, "junior": 3}},
+      {"skill": "code_debugging",        "weight": 0.04,  "importance": "important",    "required_level": {"student": 2, "junior": 2}},
+      {"skill": "basic_data_structures", "weight": 0.03,  "importance": "important",    "required_level": {"student": 2, "junior": 2}},
+      {"skill": "arrays_and_search",     "weight": 0.03,  "importance": "important",    "required_level": {"student": 2, "junior": 2}},
+      {"skill": "risk_awareness",        "weight": 0.015, "importance": "nice_to_have", "required_level": {"student": 2, "junior": 2}, "assessment_mode": "observed"},
+      {"skill": "estimation_sanity_checks", "weight": 0.04, "importance": "important",  "required_level": {"student": 2, "junior": 2}}
+    ]
   },
   {
     "key": "fpga",
@@ -38,7 +49,10 @@
       "fsm_state_tables": 1.3, "fsm_sequence_detectors": 1.2, "fsm_controllers": 1.3, "fsm_state_encoding": 1.2,
       "counters": 1.2, "registers_shifters": 1.2, "combinational_blocks": 1.1, "testbench_basics": 1.1,
       "debugging_methodology": 1.2, "arrays_and_search": 0, "basic_data_structures": 0
-    }
+    },
+    "skills": [
+      {"skill": "estimation_sanity_checks", "weight": 0.04, "importance": "important", "required_level": {"student": 2, "junior": 2}}
+    ]
   },
   {
     "key": "embedded_firmware",
@@ -51,7 +65,14 @@
       "registers_shifters": 1.0, "counters": 0.9, "edge_detection": 0.9, "setup_hold_timing": 0,
       "clock_domain_crossing": 0.6, "hdl_blocking_nonblocking": 0, "hdl_combinational_coding": 0,
       "hdl_sequential_coding": 0, "testbench_basics": 0, "universal_gates": 0
-    }
+    },
+    "skills": [
+      {"skill": "bit_manipulation",      "weight": 0.06, "importance": "core",      "required_level": {"student": 2, "junior": 3}},
+      {"skill": "code_debugging",        "weight": 0.05, "importance": "core",      "required_level": {"student": 2, "junior": 3}},
+      {"skill": "basic_data_structures", "weight": 0.04, "importance": "important", "required_level": {"student": 2, "junior": 2}},
+      {"skill": "arrays_and_search",     "weight": 0.04, "importance": "important", "required_level": {"student": 2, "junior": 2}},
+      {"skill": "estimation_sanity_checks", "weight": 0.04, "importance": "important", "required_level": {"student": 2, "junior": 2}}
+    ]
   },
   {
     "key": "software",
@@ -67,13 +88,26 @@
       "fsm_state_tables": 0.6, "fsm_sequence_detectors": 0.5, "fsm_controllers": 0.8, "fsm_state_encoding": 0,
       "hdl_blocking_nonblocking": 0, "hdl_combinational_coding": 0, "hdl_sequential_coding": 0,
       "testbench_basics": 0
-    }
+    },
+    "skills": [
+      {"skill": "arrays_and_search",      "weight": 0.06, "importance": "core",         "required_level": {"student": 2, "junior": 3}},
+      {"skill": "basic_data_structures",  "weight": 0.06, "importance": "core",         "required_level": {"student": 2, "junior": 3}},
+      {"skill": "code_debugging",         "weight": 0.05, "importance": "core",         "required_level": {"student": 2, "junior": 3}},
+      {"skill": "boolean_algebra",        "weight": 0.06, "importance": "nice_to_have", "required_level": {"student": 2, "junior": 2}},
+      {"skill": "fsm_state_tables",       "weight": 0.06, "importance": "nice_to_have", "required_level": {"student": 2, "junior": 2}},
+      {"skill": "fsm_sequence_detectors", "weight": 0.05, "importance": "nice_to_have", "required_level": {"student": 2, "junior": 2}},
+      {"skill": "fsm_moore_mealy",        "weight": 0.05, "importance": "nice_to_have", "required_level": {"student": 2, "junior": 2}},
+      {"skill": "estimation_sanity_checks", "weight": 0.04, "importance": "important",  "required_level": {"student": 2, "junior": 2}}
+    ]
   },
   {
     "key": "student_general",
     "label": {"en": "Student position, general hardware", "he": "משרת סטודנט, חומרה כללית"},
     "description": {"en": "A first hardware role: the fundamentals in balance, nothing emphasised over the rest.",
                     "he": "תפקיד חומרה ראשון: יסודות באיזון, בלי הדגשה של תחום אחד."},
-    "emphasis": {}
+    "emphasis": {},
+    "skills": [
+      {"skill": "estimation_sanity_checks", "weight": 0.04, "importance": "important", "required_level": {"student": 2, "junior": 2}}
+    ]
   }
 ]

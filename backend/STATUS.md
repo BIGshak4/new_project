@@ -2070,6 +2070,72 @@ turns the two CPU findings from a slowdown into an outage. **Harel's list**: row
 **Verified.** New regression file 12 passed; billing, checks, isolated execution, auth, provider, warm-up and the
 2026-11-01 review suites green; full offline suite **4,365 passed / 13 skipped** (28 min); ruff clean but for Harel's four known findings; `pip-audit` clean after the bump.
 
+## 5zzf. A job type brings its own skills (2026-11-14, Shaked: "check why when we choose a specific work type the backend doesnt give the correct workflow untill the interview according to the skills needed"; "go")
+
+**What was wrong.** A job type could only multiply the rows of the one hardware role (27 skills), so:
+- its own skills were never planned: `arrays_and_search` (43 questions), `basic_data_structures` (35) and
+  `code_debugging` (9) are not role rows, so software's 1.6 / 1.6 / 1.5 multiplied nothing. A software candidate's
+  plan and mock interview were debugging methodology, binary arithmetic, FSM tables and Boolean algebra;
+- the multipliers (0.2–2.5) could not reorder base weights six times apart: verification's `testbench_basics` was
+  0.01 × 1.8 and never reached the first week; embedded's first three days were the general hardware plan.
+
+**What changed.** `JobType.skills` (`seeds/job_types.json`): the job type's own rows, in the role's row format. A
+skill the role lacks joins the plan; a row for a skill the role has replaces the role's row for that job type
+(weight, importance, required levels). Emphasis multiplies own rows like any other, 0 still excludes.
+`engine/job_selection.plan_rows` is the one place that applies it; `PracticeService._plan` and
+`InterviewService._plan` both start from it (they each had their own copy of the multiply-and-drop loop). Several
+selected job types: union of rows, weight averaged over the selection (absent = 0), highest importance and required
+level. The loader checks own rows like a role's (leaf skill, no duplicate, weight 0–0.2, levels for every seniority
+profile, not excluded by its own emphasis). No API change, no database change; a saved program is rebuilt on its
+normal daily rebuild or when the goal is saved, and an interview keeps the plan it started with.
+
+**The numbers (drafts, Shaked's to change in the seed file).**
+
+| Job type | Own rows (weight on the role's scale, importance) |
+|---|---|
+| software | arrays and search 0.06 core, basic data structures 0.06 core, code debugging 0.05 core; Boolean algebra, FSM state tables, sequence detectors, Moore/Mealy stay at the role's weight but become nice-to-have (a hardware leftover must not cap a software fit or outrank an unmeasured software skill) |
+| embedded_firmware | bit manipulation 0.06 core (was 0.03 important), code debugging 0.05 core, basic data structures 0.04 important, arrays and search 0.04 important |
+| verification | testbench basics 0.06 core (was 0.01 nice-to-have), code debugging 0.04 important, basic data structures 0.03 important, arrays and search 0.03 important, risk awareness 0.015 nice-to-have (observed): Shaked, "verification needs software and hardware questions" |
+| all six | `estimation_sanity_checks` 0.04 important (below) |
+
+First day of a new candidate, 30 minutes: software = data structures (quick + deep), arrays; embedded = bit
+manipulation (quick + deep), code debugging; verification = testbenches (quick + deep), FSM state tables.
+
+**The 68 questions nobody was given (Shaked: "check the 68 questions job type and set it").** The skill
+`estimation_sanity_checks` was in no role and no job type, so no plan scheduled its 68 questions. Read one by one:
+60 are the classic interview puzzles (25 horses, 12 coins, prisoners and hats, two crystal balls), which every
+track is asked; 3 more are puzzles filed under "hardware" (wire around a cylinder, four hidden switches, a packet
+timer); 5 are analog and signals questions (MOSFET structure, two on sampling, capacitor into inductor, decibels).
+So the skill is now an own row of **every** job type, and the five analog questions belong to the five hardware
+tracks and not to software.
+
+**A question with its own job types (Shaked: "a question can have multiple job types so add that too").**
+`seeds/question_job_types.json` maps a question key to the job types it belongs to. A listed question follows its
+list (it can be kept out of a job type its skill allows, or brought into one its skill excludes); every other
+question keeps following its primary skill, which already puts most questions in several job types. The loader
+records the answer on each job type (`JobType.questions`), so `JobType.fits` stays the one rule the library tags,
+the job filter, the plan's pool, the suggestions, readiness and the interview pool use; with several job types
+selected a listed question belongs when any of them has it. Unknown question, unknown job type and an empty list
+are refused at load. The file is separate from the question bank on purpose: `preparation_bank.json` is rebuilt
+by Harel's intake script.
+
+**Left as it is by Shaked's decision:** explore mode (no job type) plans the hardware role only ("explore mode is
+good it just fits the user").
+
+**Still open (content, not code).** Verification leans on 3 testbench questions. `hdl_sequential_coding`,
+`fsm_moore_mealy`, `reset_strategies`, `fsm_state_encoding` and `project_walkthrough` have no questions, so digital
+design and FPGA still open like the general plan. The puzzles skill is still labelled "Estimation and Sanity
+Checks" (a rename is a catalog and database change).
+
+**Verified.** `tests/test_job_own_skills.py` (22): the rows, the union, each track's signature skills heaviest and on
+day one, a software plan start and a software mock interview asking software questions, readiness, the puzzles in
+every plan, verification's two sides, a question's own list in `fits`, the union, the library tags and filter and
+the question page, the loader's refusals. The two tests that pinned "never adds skills" now pin "adds only its
+own"; the library count test expects software to hide 82 (77 by skill + the 5 analog). Full offline suite **4,468
+passed / 13 skipped / 1 failed** (7 min); the failure is `test_ts_client_contract` (`GET /v1/duels/practice` has no
+function in the web client), which reads only the routes and `apps/web`, neither touched here: Harel's to close.
+Ruff clean.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -2110,6 +2176,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-14 | A job type brings its own skills (§5zzf): `JobType.skills` + `job_selection.plan_rows`, shared by the practice plan and the mock interview; software plans arrays, data structures and code debugging, embedded leads with bit manipulation, verification with testbenches and both software and hardware skills. The 68 puzzle questions (`estimation_sanity_checks`) join every job type's plan; `seeds/question_job_types.json` gives a question its own job types (five analog questions: hardware tracks only). Seed numbers are drafts for Shaked. |
 | 2026-11-12 | Pilot list: Noa, Lahav, Gagatsis and Doron join `jr_members` (nineteen members); first names only in this file. |
 | 2026-11-08 | Full security review (§5zze; `security/runs/2026-11-08-full-review.md`, SEC-015..021): the key-less payment webhook closed, the padded-answer CPU sink in the numeric checker fixed, a pixel cap on pictures, `ENV=production` with warnings separated from refusals, certifi bumped, code-runner slots per member, API security headers, tester e-mails scrubbed; operator items for Shaked (repository private, Auth settings, HEALTH_KEY, Starter) and rows 25-26 for Harel. |
 | 2026-11-08 | The judge moves to gpt-6.1-terra (§5zzd): same six bands as Sol on the real flow at −46 % on the judge, a scored answer about half a cent all-in; the report stays on Sol (`report=gpt-6.1-sol` in the role models); `render.yaml`, `.env.example`, settings test. Yaron on the pilot list (fifteen members); `pricing.py` capacity line honours `--cost`. |

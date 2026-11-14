@@ -37,7 +37,7 @@ from app.engine import (
     visual_evidence,
 )
 from app.engine.catalog import Catalog
-from app.engine.job_selection import JobSelection, combined_job
+from app.engine.job_selection import JobSelection, combined_job, plan_rows
 from app.engine.plan import merge_skill_sets
 from app.engine.plan_router import SIMULATION_DURATIONS
 from app.engine.practice import UsageEvent
@@ -446,7 +446,8 @@ class InterviewService:
         return visual if visual.has_content else None
 
     def _plan(self, seniority: str, duration_min: int, job_type: JobSelection = None) -> tuple[list[PlanSkill], int, int]:
-        """The interview plan for a seniority, a length and the user's job type (which re-weights the role's skills)."""
+        """The interview plan for a seniority, a length and the user's job type (which re-weights the role's skills,
+        never asks an excluded one, and brings its own; `plan_rows`, the same rows the practice plan starts from)."""
         job = combined_job(self.catalog.job_types, job_type)
         key = (seniority, duration_min, job.key if job else None)
         if key not in self._plans:
@@ -455,10 +456,7 @@ class InterviewService:
             if seniority not in role.seniority_profiles:
                 seniority = next(iter(role.seniority_profiles))
             profile = role.seniority_profiles[seniority]
-            rows = role.skill_set
-            if job is not None:                                      # re-weighted; an excluded skill (0) is never asked
-                rows = [row.model_copy(update={"weight": row.weight * job.weight(row.skill)}) for row in rows
-                        if not job.excludes(row.skill)]
+            rows = plan_rows(role.skill_set, self.catalog.job_types, job_type)
             plan = merge_skill_sets(role_rows=rows, company_rows=company.skill_set, focus_skill_keys=[],
                                     company_weight_share=company.company_weight_share, seniority=seniority,
                                     planned_duration_min=duration_min, catalog=self.catalog.leaf_skills)

@@ -52,12 +52,15 @@ class TestJobTypes:
             assert all(skill in catalog.skills for skill in job.emphasis)
             assert job.weight("no_such_skill") == 1.0
 
-    def test_a_job_type_reweights_the_plan_without_adding_skills(self, catalog):
+    def test_a_job_type_reweights_the_plan_and_adds_only_its_own_skills(self, catalog):
         svc, _ = practice(catalog)
         _, base, ceiling, base_plan = svc._plan("student")
         _, verification, ceiling2, plan = svc._plan("student", "verification")
-        assert ceiling == ceiling2 and {p.key for p in plan} == {p.key for p in base_plan}
-        assert verification["testbench_basics"] > base["testbench_basics"]          # emphasised 1.8x
+        own = {row.skill for row in catalog.job_types["verification"].skills}
+        assert ceiling == ceiling2 and {p.key for p in plan} == {p.key for p in base_plan} | own
+        general = {row.skill for row in catalog.job_types["student_general"].skills}   # the reasoning puzzles
+        assert {p.key for p in svc._plan("student", "student_general")[3]} == {p.key for p in base_plan} | general
+        assert verification["testbench_basics"] > base["testbench_basics"]          # its own core row, emphasised 1.8x
         assert verification["universal_gates"] < base["universal_gates"]            # played down 0.5x
         assert abs(sum(verification.values()) - sum(base.values())) < 1e-6           # still a normalised plan
         assert svc._plan("student", "no-such-job") == svc._plan("student")           # unknown: ignored, not an error
