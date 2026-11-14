@@ -2439,6 +2439,45 @@ paragraph in the prompt reverses that if he wants it.
 reasoning is thin). Past answers are not re-graded. The recorded scenario of `test_grade_first` is leaf for leaf the
 same under the new thresholds (rewritten and compared, then put back); only its version string differed.
 
+## 5zzj. The grader release, and the two languages verified (2026-11-14, night)
+
+**Grader v3 is live (Shaked: "realese").** `master` merged into `production` on top of Harel's latest; the merged
+code's offline suite: **6,310 passed / 13 skipped / 0 failed** (Harel's newest work also closed the client-contract
+test). One web-only commit landed on `production` during the run and was merged in (backend byte-identical to the
+tested merge). Two minutes after the push Harel pushed two more commits; GitHub cancelled my publish run in favour
+of his, which succeeded. The live API reports `6231df3`, which contains the release merge `8d0a66b`; checked on
+that revision: `PROMPT_VERSIONS` evaluator `v3`, `lean_strong_depth 0.0`, `check_pass_correctness_floor 0.80`.
+
+**Two conversations, one folder.** Shaked typed a follow-up into a second open Claude conversation during the
+release; that one stayed read-only. A release in progress takes instructions in the conversation that runs it.
+
+**The two languages (Shaked: "run a full verification on the site language, passing from english and hebrew").**
+Three checks on the live code (`production`, `8d0a66b`):
+
+1. *The backend, every language-taking call in both languages* (in memory, 609 text values each): in English, no
+   Hebrew anywhere. In Hebrew, three leaks: **skill names exist in English only** (41 skills; they appear as labels
+   and inside Hebrew sentences such as the plan's and the next question's reasons); **the automatic check's detail
+   and the code-run texts are English only**; the plain interview report writes "20 min". Error messages are
+   English only, and the web app maps them by code (below).
+2. *The web app's code, read end to end by an independent reviewer:* switching works everywhere and almost every
+   string the web app writes has both languages (700 short questions, the tours, the helper, the shop and the demo
+   are fully paired; no raw backend message is ever shown; code and formulas stay left-to-right). What a user can
+   still meet: every `usage_limit` (five different situations) shown as "daily limit, come back tomorrow"; raw skill
+   keys in the interview report's core gaps; no notice when a mock interview is in the other language; a Hebrew
+   right-to-left first paint and tab title for English users; Next's English 404 and error pages; plurals for a
+   count of 1; error strings that stay in the old language after a switch; a few arrows, "a / b" counters and small
+   one-language strings. All with file and line in `docs/harel-todo-2026-11-14.md`, rows 44 to 54.
+3. *The screens, photographed* (the harness, both languages, 1280 and 390 px): home, library, an open topic, the
+   interview lobby, the language menu and progress are right in both languages, with no horizontal overflow and no
+   console error. **Eight of the fourteen screens were not reached** (sign-in, a question, the answered attempt, the
+   follow-up, the interview room, the interview report, hint help, the report dialog): the harness's selectors no
+   longer match the current pages, so those were verified by reading the code only.
+
+**Backend work this opens (not started; Shaked's go):** Hebrew names for the 41 skills, used wherever a label or a
+reason sentence is built; a reason on every `usage_limit` so the screen can say which limit it was; the check and
+code-run texts in the attempt's language; the plan's reasons rendered in the language of the request instead of
+the language of the day's first build. Not verified: a signed-in browser on the live site, and a real phone.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -2479,6 +2518,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-14 | Grader v3 released to the live site (`6231df3` contains the merge; merged suite 6,310 passed, none failed). The two languages verified (§5zzj): English clean; in Hebrew the backend still names the 41 skills, the check results and the code-run texts in English; the web app's items are rows 44 to 54 of `docs/harel-todo-2026-11-14.md`; eight of fourteen screens could not be photographed because the harness is behind the current pages. |
 | 2026-11-14 | A right answer is a strong answer (§5zzi): evaluator v3 scores correctness on the results the question asks for, never on what was left unexplained; every correct answer is STRONG (lean, 0.8 evidence, when the reasoning is thin); a passed truth-table or code check floors correctness at 0.80. Measured on the real judge with `scripts/grade_both_sides.py` and the review set. On `master`; not on the live site until Shaked says so. |
 | 2026-11-14 | Evening (§5zzh): coins when it is not the first try (5 first, 2 after an earlier attempt or after 21 days, nothing in between); 72 of the 78 waiting drafts for the seven thin skills checked and ready for Shaked's read (`scripts/verify_drafts.py`, `scripts/drafts_review_page.py`), nothing loaded; live suite 21 of 22 (one time limit on the cold library read) plus a new live test of today's database reads; Ophir joins the pilot list (20 members). |
 | 2026-11-14 | Scale, security, cost (§5zzg): a 5,000-user load run (`scripts/load_test.py --ramp --goals`), five reviews, SEC-022..036 (`security/runs/2026-11-14-scale-and-security-review.md`). Fixed: a circuit that derived gigabytes, a padded answer that froze the API, picture memory, coins after a reveal elsewhere, unlimited judge retries, the duel answer key through practice rounds, unmetered warm-ups, one bank load per minute instead of one per request. Added: `MONTHLY_USER_BUDGET_ILS=15`, `/health.request_budget`, `scripts/cost_report.py`. Migration `20261114130000_scale_indexes_and_browser_write_limits.sql` dry-run, not applied. Harel's list: `docs/harel-todo-2026-11-14.md`. **The live site runs `production`, not `master`.** |
