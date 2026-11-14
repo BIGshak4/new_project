@@ -11,7 +11,7 @@ export async function runInboxBrowserChecks({root,url,founder,learner,reportId,d
   const arg=name=>{const index=process.argv.indexOf(name);return index<0?null:process.argv[index+1];};
   const practiceOrigin=arg('--practice-origin') || 'http://localhost:3225';
   const adminOrigin=arg('--admin-origin') || 'http://localhost:3226';
-  for(const origin of [practiceOrigin,adminOrigin]) assert.ok(['localhost','127.0.0.1','jobrun-practice.netlify.app','jobrun-tasks.netlify.app'].includes(new URL(origin).hostname));
+  for(const origin of [practiceOrigin,adminOrigin]) assert.ok(['localhost','127.0.0.1','muxijobrun.com','tasks.muxijobrun.com'].includes(new URL(origin).hostname));
   const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
   const errors=[]; let lastPage;
   async function context(account,width=1440) {

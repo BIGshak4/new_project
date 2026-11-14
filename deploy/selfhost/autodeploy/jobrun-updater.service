@@ -1,5 +1,5 @@
 [Unit]
-Description=Verify and publish a signed JobRun image pair
+Description=Verify and publish a signed JobRun release
 Wants=network-online.target docker.service
 After=network-online.target docker.service
 

@@ -164,7 +164,7 @@ class BillingConfig:
     plans: list[Plan]
     require_payment: bool = False
     free_option_visible: bool = True          # the "continue for free for now" choice on the payment screen
-    site_url: str = "https://jobrun-practice.netlify.app"
+    site_url: str = "https://muxijobrun.com"
     configured: bool = False                  # real Stripe keys present
 
 

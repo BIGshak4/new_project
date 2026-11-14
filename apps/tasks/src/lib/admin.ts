@@ -154,5 +154,5 @@ export function fileSize(bytes: number) {
 }
 
 export function practiceLink(questionKey: string) {
-  return `https://jobrun-practice.netlify.app/?question=${encodeURIComponent(questionKey)}`;
+  return `https://muxijobrun.com/?from=tasks&view=library&question=${encodeURIComponent(questionKey)}`;
 }

@@ -56,9 +56,9 @@ class Settings(BaseSettings):
     stripe_price_premium: str | None = None            # ... and "premium" (50 a day)
     require_payment: bool = False
     billing_free_option_visible: bool = True
-    site_url: str = "https://jobrun-practice.netlify.app"   # where Stripe sends the user back
+    site_url: str = "https://muxijobrun.com"   # where Stripe sends the user back
 
-    # Browser origins allowed to call the API directly (the Netlify sites). Comma-separated.
+    # Browser origins allowed to call the API directly. Comma-separated.
     allowed_origins: Annotated[list[str], NoDecode] = []      # plain comma-separated, not JSON
     # Attempts a user may start per UTC day. Fails gracefully with 429, never silently.
     daily_attempt_limit: int = 30

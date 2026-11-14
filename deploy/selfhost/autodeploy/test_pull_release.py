@@ -14,16 +14,17 @@ OLD = 'a'*40
 NEW = 'b'*40
 
 
-def release(revision, cohort='12/1'):
+def release(revision, cohort='12/1', tasks=True):
     return updater.release_record(revision, {
-        role: updater.REGISTRIES[role]+'@sha256:'+('1' if role == 'api' else '2')*64
-        for role in updater.ROLES
+        role: updater.REGISTRIES[role]+'@sha256:'+str(index+1)*64
+        for index, role in enumerate(updater.ROLES if tasks else updater.PAIR_ROLES)
     }, cohort)
 
 
-def signature(image, revision, cohort):
+def signature(image, revision, cohort, service=None):
     return {'critical': {'image': {'docker-manifest-digest': image.split('@')[1]}},
-            'optional': {'source_revision': revision, 'release_id': cohort}}
+            'optional': {'source_revision': revision, 'release_id': cohort,
+                         **({'service': service} if service is not None else {})}}
 
 
 class ReferenceTests(unittest.TestCase):
@@ -49,7 +50,7 @@ class ReferenceTests(unittest.TestCase):
 
 
 class SignatureTests(unittest.TestCase):
-    def candidate(self, cohorts=('12/1', '12/1'), signature_revision=NEW):
+    def candidate(self, cohorts=('12/1', '12/1', '12/1'), signature_revision=NEW, tasks_service='tasks'):
         class Remote:
             def resolve(self, role, revision):
                 return release(revision)[role+'_image']
@@ -59,7 +60,8 @@ class SignatureTests(unittest.TestCase):
             def command(self, arguments, label, timeout):
                 self.calls.append(arguments)
                 role_index = len(self.calls)-1
-                return json.dumps([signature(arguments[-1], signature_revision, cohorts[role_index])]).encode()
+                return json.dumps([signature(arguments[-1], signature_revision, cohorts[role_index],
+                                             tasks_service if role_index == 2 else None)]).encode()
         runner = Runner()
         return Remote(), runner
 
@@ -67,15 +69,18 @@ class SignatureTests(unittest.TestCase):
         remote, runner = self.candidate()
         result = updater.verify_candidate(remote, runner, NEW)
         self.assertEqual(result['revision'], NEW)
-        self.assertEqual(len(runner.calls), 2)
+        self.assertEqual(len(runner.calls), 3)
         for args in runner.calls:
             self.assertEqual(args[args.index('--certificate-identity')+1], updater.IDENTITY)
             self.assertEqual(args[args.index('--certificate-oidc-issuer')+1], updater.ISSUER)
             self.assertEqual(args[args.index('-a')+1], 'source_revision='+NEW)
             self.assertNotIn('--insecure-ignore-tlog', args)
+        self.assertIn('service=tasks', runner.calls[2])
+        self.assertNotIn('service=tasks', runner.calls[0])
+        self.assertNotIn('service=tasks', runner.calls[1])
 
     def test_mismatched_release_cohort_fails(self):
-        remote, runner = self.candidate(('12/1', '13/1'))
+        remote, runner = self.candidate(('12/1', '13/1', '12/1'))
         with self.assertRaises(updater.DeployError):
             updater.verify_candidate(remote, runner, NEW)
 
@@ -150,7 +155,7 @@ class RolloutTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.deployer = updater.Deployer(root=Path(self.temporary.name))
         self.deployer.state.mkdir()
-        self.previous, self.candidate = release(OLD), release(NEW)
+        self.previous, self.candidate = release(OLD, tasks=False), release(NEW)
         self.writes = []
         self.atomic = patch.object(updater, 'atomic_json', side_effect=lambda path, value: self.writes.append((path.name, value)))
         self.atomic.start()
@@ -166,7 +171,8 @@ class RolloutTests(unittest.TestCase):
         self.deployer.public_health = lambda current: events.append(('public-health', ()))
         self.deployer.replace_pair(self.candidate)
         self.assertEqual(events[0], ('compose', ('stop', 'caddy')))
-        self.assertEqual(events[1], ('compose', ('stop', 'api', 'web')))
+        self.assertEqual(events[1], ('compose', ('stop', 'api', 'web', 'tasks')))
+        self.assertIn('--remove-orphans', events[2][1])
         self.assertLess(events.index(('internal-health', ())),
                         next(index for index, event in enumerate(events) if event[0] == 'compose' and event[1][-1] == 'caddy' and event[1][0] == 'up'))
         self.assertEqual(events[-1][0], 'public-health')

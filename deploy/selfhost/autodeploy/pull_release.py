@@ -35,8 +35,11 @@ REPOSITORY = 'BIGshak4/new_project'
 BRANCH = 'production'
 IDENTITY = 'https://github.com/BIGshak4/new_project/.github/workflows/selfhost-publish.yml@refs/heads/production'
 ISSUER = 'https://token.actions.githubusercontent.com'
-ROLES = ('api', 'web')
-REGISTRIES = {role: 'ghcr.io/bigshak4/jobrun-' + role for role in ROLES}
+PAIR_ROLES = ('api', 'web')
+ROLES = (*PAIR_ROLES, 'tasks')
+# Tasks shares the existing public web package, but has a separate tag, digest
+# and signed service annotation. No new package visibility bootstrap is needed.
+REGISTRIES = {role: 'ghcr.io/bigshak4/jobrun-' + ('web' if role == 'tasks' else role) for role in ROLES}
 SHA = re.compile(r'[0-9a-f]{40}\Z')
 DIGEST = re.compile(r'sha256:[0-9a-f]{64}\Z')
 COHORT = re.compile(r'[1-9][0-9]*/[1-9][0-9]*\Z')
@@ -87,20 +90,60 @@ def immutable_image(value, role, bootstrap=False):
     return value
 
 
+def release_roles(release):
+    """Historical pair records remain valid and keep their snapshot identity."""
+    return ROLES if 'tasks_image' in release else PAIR_ROLES
+
+
+def generation_name(revision, images):
+    roles = ROLES if 'tasks' in images else PAIR_ROLES
+    return revision + ''.join('-' + images[role].split(':')[-1][:12] for role in roles)
+
+
 def validate_release(release, bootstrap=False):
     require(isinstance(release, dict) and SHA.fullmatch(release.get('revision', '')), 'invalid-release-state')
-    for role in ROLES:
+    roles = release_roles(release)
+    for role in roles:
         immutable_image(release.get(role + '_image'), role, bootstrap=bootstrap)
-    generation = release['revision'] + '-' + release['api_image'].split(':')[-1][:12] + '-' + release['web_image'].split(':')[-1][:12]
+    if 'tasks' in roles:
+        require(all(release['tasks_image'].split('@')[1] != release[role+'_image'].split('@')[1]
+                    for role in PAIR_ROLES), 'tasks-image-must-have-distinct-digest')
+    generation = generation_name(release['revision'], {role: release[role+'_image'] for role in roles})
     require(release.get('generation') == generation, 'invalid-release-generation')
     return release
 
 
 def release_record(revision, images, cohort='bootstrap'):
     require(SHA.fullmatch(revision) is not None, 'invalid-revision')
-    record = {'revision': revision, **{role+'_image': images[role] for role in ROLES}, 'release_id': cohort}
-    record['generation'] = revision + '-' + images['api'].split(':')[-1][:12] + '-' + images['web'].split(':')[-1][:12]
+    require(isinstance(images, dict) and set(images) in (set(PAIR_ROLES), set(ROLES)), 'invalid-release-services')
+    for role, image in images.items():
+        immutable_image(image, role, bootstrap=cohort == 'bootstrap')
+    record = {'revision': revision, **{role+'_image': image for role, image in images.items()}, 'release_id': cohort}
+    record['generation'] = generation_name(revision, images)
     return validate_release(record, bootstrap=cohort == 'bootstrap')
+
+
+def tasks_hostname(settings):
+    hostname = 'tasks.' + settings['APP_DOMAIN']
+    require(len(hostname) <= 253 and hostname != settings['API_DOMAIN'], 'invalid-tasks-hostname')
+    return hostname
+
+
+def render_tasks_sections(template, enabled):
+    """Render fixed administrator-owned optional blocks, never branch content."""
+    output, inside, found = [], False, False
+    for line in template.splitlines(keepends=True):
+        marker = line.strip()
+        if marker == '# BEGIN TASKS':
+            require(not inside, 'invalid-tasks-template')
+            inside, found = True, True
+        elif marker == '# END TASKS':
+            require(inside, 'invalid-tasks-template')
+            inside = False
+        elif not inside or enabled:
+            output.append(line)
+    require(not inside and (found or not enabled), 'tasks-template-not-installed')
+    return ''.join(output)
 
 
 def secure_path(path, private=False, directory=False):
@@ -208,7 +251,7 @@ class Remote:
 
     def registry_get(self, role, path):
         require(role in ROLES and not path.startswith('/') and '..' not in path, 'invalid-registry-request')
-        repository = 'bigshak4/jobrun-' + role
+        repository = REGISTRIES[role].removeprefix('ghcr.io/')
         if role not in self.tokens:
             query = urllib.parse.urlencode({'service': 'ghcr.io', 'scope': 'repository:'+repository+':pull'})
             payload = json.loads(self.get('https://ghcr.io/token?'+query, limit=65536))
@@ -223,7 +266,7 @@ class Remote:
     def resolve(self, role, revision):
         require(SHA.fullmatch(revision) is not None, 'invalid-registry-tag')
         try:
-            raw = self.registry_get(role, 'manifests/'+revision)
+            raw = self.registry_get(role, 'manifests/'+('tasks-' if role == 'tasks' else '')+revision)
         except RemoteHTTPError as error:
             if error.status == 404:
                 raise NotPublished('images-not-published-yet') from None
@@ -247,9 +290,10 @@ class Remote:
         require(config.get('os') == 'linux' and config.get('architecture') == 'amd64', 'unsupported-image-platform')
         return REGISTRIES[role]+'@'+digest
 
-    def health(self, origin, path, field, revision, database=False):
+    def health(self, origin, path, field, revision, database=False, service=None):
         data = json.loads(self.get(origin+path, limit=65536))
         require(data.get('status') == 'ok' and data.get(field) == revision, 'public-health-revision-mismatch')
+        require(service is None or data.get('service') == service, 'public-health-service-mismatch')
         if database:
             require(isinstance(data.get('database'), dict) and 'error' not in data['database']
                     and isinstance(data['database'].get('round_trip_ms'), (int, float)), 'database-health-failure')
@@ -265,14 +309,15 @@ class Runner:
         return result.stdout
 
 
-def signature_cohorts(payload, image, revision):
+def signature_cohorts(payload, image, revision, role=None):
     require(isinstance(payload, list), 'invalid-signature-response')
     matches = set()
     for signature in payload:
         optional = signature.get('optional', {})
         actual_digest = signature.get('critical', {}).get('image', {}).get('docker-manifest-digest')
         cohort = optional.get('release_id', '')
-        if optional.get('source_revision') == revision and actual_digest == image.split('@')[1] and COHORT.fullmatch(cohort):
+        if (optional.get('source_revision') == revision and actual_digest == image.split('@')[1]
+                and COHORT.fullmatch(cohort) and (role != 'tasks' or optional.get('service') == 'tasks')):
             matches.add(cohort)
     require(matches, 'signed-release-annotations-missing')
     return matches
@@ -283,11 +328,13 @@ def verify_candidate(remote, runner, revision):
     for role in ROLES:
         images[role] = remote.resolve(role, revision)
         immutable_image(images[role], role)
+        service_annotation = ['-a', 'service=tasks'] if role == 'tasks' else []
         output = runner.command([COSIGN, 'verify', '--certificate-identity', IDENTITY,
                                  '--certificate-oidc-issuer', ISSUER, '-a', 'source_revision='+revision,
-                                 '--output', 'json', images[role]], 'signature-verification-failure', timeout=120)
-        cohorts.append(signature_cohorts(json.loads(output), images[role], revision))
-    common = cohorts[0] & cohorts[1]
+                                 *service_annotation, '--output', 'json', images[role]],
+                                'signature-verification-failure', timeout=120)
+        cohorts.append(signature_cohorts(json.loads(output), images[role], revision, role))
+    common = set.intersection(*cohorts)
     require(common, 'signed-images-have-different-release-cohorts')
     cohort = max(common, key=lambda value: tuple(int(part) for part in value.split('/')))
     return release_record(revision, images, cohort)
@@ -323,6 +370,7 @@ class Deployer:
 
     def snapshot(self, release):
         directory = self.release_path(release)
+        has_tasks = 'tasks' in release_roles(release)
         if directory.exists():
             secure_path(directory, private=True, directory=True)
             for name in ('compose.yaml', 'Caddyfile', '.env', 'backend.env'):
@@ -332,26 +380,33 @@ class Deployer:
             require(identity.get('SOURCE_REVISION') == release['revision']
                     and identity.get('API_IMAGE') == release['api_image']
                     and identity.get('WEB_IMAGE') == release['web_image'], 'snapshot-identity-mismatch')
+            require(identity.get('TASKS_IMAGE') == release.get('tasks_image'), 'snapshot-tasks-identity-mismatch')
+            if has_tasks:
+                require(identity.get('TASKS_DOMAIN') == tasks_hostname(public_settings(directory/'.env')),
+                        'snapshot-tasks-hostname-mismatch')
             return
         settings = public_settings(self.shared/'public-selfhost.env')
         secure_path(self.shared/'backend.env', private=True)
         for name in ('compose.yaml', 'Caddyfile'):
             secure_path(self.root/name)
-        directory.mkdir(mode=0o700)
-        for source, destination in ((self.root/'compose.yaml', directory/'compose.yaml'),
-                                    (self.root/'Caddyfile', directory/'Caddyfile'),
-                                    (self.shared/'backend.env', directory/'backend.env')):
-            with destination.open('xb') as output:
-                os.fchmod(output.fileno(), 0o600)
-                output.write(source.read_bytes())
+        templates = {name: render_tasks_sections((self.root/name).read_text(), has_tasks)
+                     for name in ('compose.yaml', 'Caddyfile')}
         values = {**settings, 'SOURCE_REVISION': release['revision'],
                   'API_IMAGE': release['api_image'], 'WEB_IMAGE': release['web_image']}
+        if has_tasks:
+            values.update(TASKS_IMAGE=release['tasks_image'], TASKS_DOMAIN=tasks_hostname(settings))
+        directory.mkdir(mode=0o700)
+        for name, contents in {**{name: text.encode() for name, text in templates.items()},
+                               'backend.env': (self.shared/'backend.env').read_bytes()}.items():
+            with (directory/name).open('xb') as output:
+                os.fchmod(output.fileno(), 0o600)
+                output.write(contents)
         with (directory/'.env').open('x') as output:
             os.fchmod(output.fileno(), 0o600)
             output.write(''.join(key+'='+value+'\n' for key, value in values.items()))
 
     def pull(self, release):
-        for role in ROLES:
+        for role in release_roles(release):
             reference = immutable_image(release[role+'_image'], role)
             self.runner.command([DOCKER, 'pull', '--platform', 'linux/amd64', reference], 'image-pull-failure', timeout=420)
             platform = self.runner.command([DOCKER, 'image', 'inspect', '--format', '{{.Os}}/{{.Architecture}}', reference],
@@ -359,10 +414,12 @@ class Deployer:
             require(platform == 'linux/amd64', 'loaded-image-platform-mismatch')
 
     def internal_health(self, release):
-        node = "fetch('http://127.0.0.1:3000/api/health',{signal:AbortSignal.timeout(6000)}).then(async r=>{const j=await r.json();if(!r.ok||j.status!=='ok'||j.revision!==process.argv[1])process.exit(1)}).catch(()=>process.exit(1))"
+        node = "fetch('http://127.0.0.1:3000/api/health',{signal:AbortSignal.timeout(6000)}).then(async r=>{const j=await r.json();if(!r.ok||j.status!=='ok'||j.revision!==process.argv[1]||(process.argv[2]&&j.service!==process.argv[2]))process.exit(1)}).catch(()=>process.exit(1))"
         python = "import json,sys,urllib.request; r=urllib.request.urlopen('http://127.0.0.1:8000/health?db_check=true',timeout=6); j=json.load(r); d=j.get('database',{}); assert r.status==200 and j.get('status')=='ok' and j.get('source_revision')==sys.argv[1] and 'error' not in d and isinstance(d.get('round_trip_ms'),(int,float))"
         self.compose(release, 'exec', '-T', 'web', 'node', '-e', node, release['revision'])
         self.compose(release, 'exec', '-T', 'api', 'python', '-c', python, release['revision'])
+        if 'tasks' in release_roles(release):
+            self.compose(release, 'exec', '-T', 'tasks', 'node', '-e', node, release['revision'], 'jobrun-tasks')
 
     def public_health(self, release):
         values = public_settings(self.release_path(release)/'.env')
@@ -372,6 +429,9 @@ class Deployer:
                 self.remote.health('https://'+values['APP_DOMAIN'], '/api/health', 'revision', release['revision'])
                 self.remote.health('https://'+values['API_DOMAIN'], '/health?db_check=true', 'source_revision',
                                    release['revision'], database=True)
+                if 'tasks' in release_roles(release):
+                    self.remote.health('https://'+tasks_hostname(values), '/api/health', 'revision',
+                                       release['revision'], service='jobrun-tasks')
                 return
             except Exception:
                 if time.monotonic() >= deadline:
@@ -381,10 +441,14 @@ class Deployer:
     def replace_pair(self, release):
         # The public entry point remains closed until BOTH services pass the
         # internal revision gate. This deliberately trades a maintenance window
-        # for avoiding a mixed frontend/API release.
+        # for avoiding mixed revisions across the API and frontends.
         self.compose(release, 'stop', 'caddy')
-        self.compose(release, 'stop', 'api', 'web')
-        self.compose(release, 'up', '-d', '--no-build', '--pull', 'never', '--wait', '--wait-timeout', '180', 'api', 'web')
+        services = release_roles(release)
+        self.compose(release, 'stop', *services)
+        # Old pair snapshots do not declare Tasks. Remove that orphan before
+        # reopening their old Caddy route set during rollback/recovery.
+        self.compose(release, 'up', '-d', '--no-build', '--pull', 'never', '--remove-orphans',
+                     '--wait', '--wait-timeout', '180', *services)
         self.internal_health(release)
         self.compose(release, 'up', '-d', '--no-build', '--pull', 'never', '--no-deps', '--wait', 'caddy')
         self.public_health(release)
@@ -465,11 +529,11 @@ class Deployer:
         pending = read_json(self.state/'pending.json')
         if pending:
             retained.extend([pending['previous'], pending['candidate']])
-        retained_images = {item[role+'_image'] for item in retained for role in ROLES}
+        retained_images = {item[role+'_image'] for item in retained for role in release_roles(item)}
         retained_generations = {item['generation'] for item in retained}
         for release in old:
             validate_release(release, bootstrap=release.get('release_id') == 'bootstrap')
-            for role in ROLES:
+            for role in release_roles(release):
                 image = release[role+'_image']
                 # Never delete bootstrap images, arbitrary repositories, volumes,
                 # container data, or an image referenced by any container.
@@ -548,10 +612,13 @@ class Deployer:
         except Exception:
             log('retention-needs-root-review')
 
-    def adopt(self, revision, api_image, web_image):
+    def adopt(self, revision, api_image, web_image, tasks_image=None):
         require(not (self.state/'current.json').exists(), 'current-release-already-adopted')
-        release = release_record(revision, {'api': immutable_image(api_image, 'api', bootstrap=True),
-                                            'web': immutable_image(web_image, 'web', bootstrap=True)})
+        images = {'api': immutable_image(api_image, 'api', bootstrap=True),
+                  'web': immutable_image(web_image, 'web', bootstrap=True)}
+        if tasks_image is not None:
+            images['tasks'] = immutable_image(tasks_image, 'tasks', bootstrap=True)
+        release = release_record(revision, images)
         self.snapshot(release)
         self.internal_health(release)
         self.public_health(release)
@@ -587,6 +654,7 @@ def main():
     mode.add_argument('--retry', metavar='FULL_SHA')
     parser.add_argument('--api-image')
     parser.add_argument('--web-image')
+    parser.add_argument('--tasks-image', help='Only for explicit adoption of an already verified running Tasks service')
     args = parser.parse_args()
     try:
         secure_path(Path(__file__))
@@ -595,7 +663,7 @@ def main():
             if args.poll:
                 deployer.poll()
             elif args.adopt:
-                deployer.adopt(args.adopt, args.api_image, args.web_image)
+                deployer.adopt(args.adopt, args.api_image, args.web_image, args.tasks_image)
             else:
                 require(SHA.fullmatch(args.retry) is not None, 'invalid-retry-revision')
                 require(not (deployer.state/'blocked.json').exists(), 'resolve-blocked-state-manually-before-retry')

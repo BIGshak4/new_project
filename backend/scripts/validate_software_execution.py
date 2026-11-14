@@ -419,7 +419,7 @@ def main():
     parser.add_argument("--live", action="store_true", help="Explicitly authorize the chosen live QA stage.")
     parser.add_argument("--output", required=True)
     parser.add_argument("--api", default="https://jobrun-api.onrender.com")
-    parser.add_argument("--site", default="https://jobrun-practice.netlify.app")
+    parser.add_argument("--site", default="https://muxijobrun.com")
     parser.add_argument("--max-accounts", type=int, default=4, choices=range(1, 5))
     parser.add_argument("--membership-via-operator", action="store_true",
                         help="Create identities, then pause until the operator inserts exact QA memberships.")

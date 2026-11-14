@@ -13,7 +13,7 @@ export async function runBrowserChecks({root,url,founder,learner,outsider,report
   const adminOrigin=arg('--admin-origin') || 'http://localhost:3226';
   for(const origin of [practiceOrigin,adminOrigin]) {
     const parsed=new URL(origin);
-    assert.ok(['localhost','127.0.0.1','jobrun-practice.netlify.app','jobrun-tasks.netlify.app'].includes(parsed.hostname));
+    assert.ok(['localhost','127.0.0.1','muxijobrun.com','tasks.muxijobrun.com'].includes(parsed.hostname));
   }
   const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
   const errors=[];

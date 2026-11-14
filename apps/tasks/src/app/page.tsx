@@ -215,7 +215,7 @@ function Board({ user, signOut }: { user: User; signOut: () => void }) {
           </div>
           <a
             className="small"
-            href="https://jobrun-practice.netlify.app"
+            href="https://muxijobrun.com"
             target="_blank"
             rel="noreferrer"
           >

@@ -33,6 +33,14 @@ services:
     pull_policy: never
     environment: {NODE_ENV: production, HOSTNAME: 0.0.0.0, PORT: "3000"}
     expose: ["3000"]
+  # BEGIN TASKS
+  tasks:
+    <<: *runtime
+    image: ${TASKS_IMAGE:?Verified immutable Tasks image required}
+    pull_policy: never
+    environment: {NODE_ENV: production, HOSTNAME: 0.0.0.0, PORT: "3000"}
+    expose: ["3000"]
+  # END TASKS
   caddy:
     <<: *runtime
     image: caddy:2.11.9-alpine
@@ -42,6 +50,9 @@ services:
       APP_DOMAIN: ${APP_DOMAIN:?Website hostname required}
       API_DOMAIN: ${API_DOMAIN:?API hostname required}
       ACME_EMAIL: ${ACME_EMAIL:?Certificate contact required}
+      # BEGIN TASKS
+      TASKS_DOMAIN: ${TASKS_DOMAIN:?Tasks hostname required}
+      # END TASKS
     ports: ["80:80", "443:443", "443:443/udp"]
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro

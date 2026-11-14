@@ -14,3 +14,9 @@ www.{$APP_DOMAIN} {
         flush_interval -1
     }
 }
+# BEGIN TASKS
+{$TASKS_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy tasks:3000
+}
+# END TASKS
