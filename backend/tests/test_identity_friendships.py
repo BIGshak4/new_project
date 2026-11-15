@@ -3,6 +3,7 @@
 import asyncio
 import re
 import uuid
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -147,6 +148,23 @@ async def test_request_needs_own_name_and_a_real_nonself_code(runtime):
     with pytest.raises(ApiError) as required:
         await service.accept(legacy, uuid.UUID(request["outgoing"][0]["id"]))
     assert required.value.code == "username_required"
+
+
+async def test_presence_is_recent_and_visible_only_to_accepted_friends(runtime):
+    service = runtime.identities
+    alice, _ = await named(runtime, "Alice")
+    bob, bob_code = await named(runtime, "Bobby")
+    sent = await service.request(alice, bob_code)
+    await service.heartbeat(bob)
+    pending = (await service.friends(alice))["outgoing"][0]["person"]
+    assert "online" not in pending and "last_seen_at" not in pending
+    await service.accept(bob, uuid.UUID(sent["outgoing"][0]["id"]))
+    friend = (await service.friends(alice))["friends"][0]
+    assert friend["online"] is True and "last_seen_at" not in friend
+    assert (await service.friends(bob))["friends"][0]["online"] is False
+    async with runtime.store.transaction() as tx:
+        await tx.record_presence(bob, datetime.now(UTC) - timedelta(seconds=121))
+    assert (await service.friends(alice))["friends"][0]["online"] is False
 
 
 async def test_concurrent_duplicate_requests_and_name_claims_do_not_duplicate_state(runtime):

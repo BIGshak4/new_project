@@ -1,14 +1,14 @@
 /** Public game contract. Correct options exist only in settled review rows. */
 import type { AvatarConfig } from "./avatar-types";
 export type DuelLanguage = "he" | "en";
-export type DuelSide = { avatar?: AvatarConfig | null; ready: boolean; answered: boolean; answered_count: number; score: number | null; seconds: number | null; band?: string | null; summary?: string | null; submitted_at?: string | null };
+export type DuelSide = { username?: string | null; avatar?: AvatarConfig | null; ready: boolean; answered: boolean; answered_count: number; score: number | null; seconds: number | null; band?: string | null; summary?: string | null; submitted_at?: string | null };
 export type QuizItem = { index: number; key: string; source_key: string; variant: number | null; prompt: string; choices: string[] };
 export type QuizReview = QuizItem & { correct: number; explanation: string; mine: number | null; theirs: number | null; mine_correct: boolean; theirs_correct: boolean };
 export type Duel = {
   id: string; code: string; share_path: string; share_url: string;
   status: "open" | "active" | "settled" | "cancelled"; mode: "quiz" | "judged";
   role: "challenger" | "opponent"; stake: number; pot: number; language: DuelLanguage;
-  me: DuelSide; opponent: DuelSide | null;
+  me: DuelSide; opponent: DuelSide | null; invited_username?: string | null;
   question: { key: string; title: string; prompt: string; format: string } | null;
   quiz: { total: number; seconds_per_question: number; index: number; current: QuizItem | null; seconds_left: number | null; answers: { index: number; choice: number | null; correct: boolean; seconds: number }[]; score: number; finished: boolean; review: QuizReview[] } | null;
   deadline: string | null; seconds_left: number | null; started_at: string | null;
@@ -17,6 +17,7 @@ export type Duel = {
 };
 export type DuelRules = { stake: number; quiz_questions: number; quiz_seconds_per_question: number; quiz_available: boolean; quiz_source_count?: number; quiz_variant_count?: number; readiness_required?: boolean; no_monetary_value: boolean };
 export type DuelList = { duels: Duel[]; rules: DuelRules };
+export type DuelInvitation = Pick<Duel, "id" | "code" | "stake" | "created_at" | "mode"> & { username: string | null };
 export type DuelWallet = { balance: number; enabled: boolean; no_monetary_value: boolean };
 export type QuizPracticeRound = { round_token: string; language: DuelLanguage; expires_at: string; question: QuizItem };
 export type QuizPracticeResult = { question: QuizItem; choice: number; correct: boolean; correct_index: number; explanation: string };
@@ -27,7 +28,7 @@ export type QuizPracticeClient = {
 export type DuelClient = {
   practice?: QuizPracticeClient;
   list(): Promise<DuelList>; wallet(language: DuelLanguage): Promise<DuelWallet>;
-  get(id: string): Promise<Duel>; create(language: DuelLanguage): Promise<Duel>;
+  get(id: string): Promise<Duel>; create(language: DuelLanguage, friendId?: string): Promise<Duel>;
   accept(code: string): Promise<Duel>; ready(id: string): Promise<Duel>;
   answer(id: string, choice: number | null, item: number): Promise<Duel>; cancel(id: string): Promise<Duel>;
 };

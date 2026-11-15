@@ -1,12 +1,15 @@
 import { supabase } from "./supabase";
-import type { Duel, DuelClient, DuelLanguage, DuelList, DuelWallet, QuizPracticeRound, QuizPracticeResult } from "./duel-types";
+import type { Duel, DuelClient, DuelInvitation, DuelLanguage, DuelList, DuelWallet, QuizPracticeRound, QuizPracticeResult } from "./duel-types";
 
 export class DuelApiError extends Error {
   constructor(public code: string, message: string, public status = 0) { super(message); this.name = "DuelApiError"; }
 }
 
 /** Browser sessions supply a token; membership and ownership are enforced by the API. */
-export function duelApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL): DuelClient {
+export function duelApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL): DuelClient & {
+  invitations(): Promise<{ invitations: DuelInvitation[] }>;
+  presence(): Promise<void>;
+} {
   async function call<T>(path: string, body?: unknown): Promise<T> {
     if (!baseUrl) throw new DuelApiError("configuration", "The game API is not configured.");
     const { data, error } = await supabase.auth.getSession();
@@ -23,6 +26,7 @@ export function duelApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_BA
     // An old request must not become visible after the account changes.
     const current = await supabase.auth.getSession();
     if (current.data.session?.user.id !== userId) throw new DuelApiError("unauthenticated", "The account changed.", 401);
+    if (response.status === 204) return undefined as T;
     const payload = await response.json().catch(() => null);
     if (!response.ok) throw new DuelApiError(payload?.error?.code ?? "internal", payload?.error?.message ?? "The game request failed.", response.status);
     return payload as T;
@@ -35,7 +39,9 @@ export function duelApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_BA
     list: () => call<DuelList>("/v1/duels"),
     wallet: (language: DuelLanguage) => call<DuelWallet>(`/v1/me/coins?language=${language}`),
     get: (id) => call<Duel>(`/v1/duels/${encodeURIComponent(id)}`),
-    create: (language) => call<Duel>("/v1/duels", { language, mode: "quiz" }),
+    create: (language, friendId) => call<Duel>("/v1/duels", { language, mode: "quiz", friend_id: friendId }),
+    invitations: () => call<{ invitations: DuelInvitation[] }>("/v1/duels/invitations"),
+    presence: () => call<void>("/v1/me/presence", {}),
     accept: (code) => call<Duel>("/v1/duels/accept", { code }),
     ready: (id) => call<Duel>(`/v1/duels/${encodeURIComponent(id)}/ready`, {}),
     answer: (id, choice, item) => call<Duel>(`/v1/duels/${encodeURIComponent(id)}/answer`, { choice, item }),

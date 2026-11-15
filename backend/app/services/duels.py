@@ -43,6 +43,7 @@ from app.repo.duels import Duel, DuelsUnavailable, StaleDuel
 from app.repo.questions import DEVELOPMENT_STATUSES, SERVABLE_STATUSES
 from app.schemas.bank import BankQuestion
 from app.services.coins import CoinsService
+from app.services.identity import IdentityService
 from app.services.quiz_practice import QuizPractice
 
 log = logging.getLogger("app.duels")
@@ -195,7 +196,6 @@ class DuelService:
     async def _guard_player(self, tx, user_id: uuid.UUID, *, other: uuid.UUID | None = None) -> None:
         if not await self.coins.enabled(tx):
             raise ApiError("evaluation_unavailable", "duels are not enabled on this server yet", status=503)
-        await tx.lock_usage(user_id, "coins")
         await self.coins.ensure_gift(tx, user_id)
         balance = await tx.coin_balance(user_id)
         if balance < self.rules.duel_stake:
@@ -215,7 +215,8 @@ class DuelService:
 
     # ------------------------------------------------------------------ actions
 
-    async def create(self, user_id: uuid.UUID, *, language: str, mode: str | None = None) -> Duel:
+    async def create(self, user_id: uuid.UUID, *, language: str, mode: str | None = None,
+                     friend_id: uuid.UUID | None = None) -> Duel:
         mode = mode or self.rules.duel_mode_default
         if mode not in MODES:
             raise ApiError("validation", f"unknown duel mode {mode!r}")
@@ -224,15 +225,29 @@ class DuelService:
         async with self.store.transaction() as tx:
             if not await tx.duels_available():
                 raise ApiError("evaluation_unavailable", "duels are not enabled on this server yet", status=503)
-            await self._guard_player(tx, user_id)
-            mine = await tx.list_duels(user_id, limit=50)
-            if sum(1 for d in mine if d.status == "open" and d.challenger_id == user_id) >= MAX_OPEN_INVITES:
+            invitation = {}
+            if friend_id is not None:
+                relationship = await self._friendship(tx, user_id, friend_id)
+                target = await tx.load_identity(friend_id)
+                if not target:
+                    raise ApiError("friend_not_found", "this friend is no longer available", status=404)
+                invitation = {"invited_friend_id": str(friend_id), "friendship_id": str(relationship["id"]),
+                              "invited_username": target["username"]}
+            # Serialize duplicate creates before reading the open invitations, even when the first stake used the last coins.
+            await tx.lock_usage(user_id, "coins")
+            opened = await tx.open_duel_invites(user_id, self.clock() - INVITE_TTL)
+            if invitation:
+                for existing in opened:
+                    if existing.meta.get("friendship_id") == invitation["friendship_id"] and existing.mode == mode:
+                        return existing
+            await self._guard_player(tx, user_id, other=friend_id)
+            if len(opened) >= MAX_OPEN_INVITES:
                 raise ApiError("conflict", f"you already have {MAX_OPEN_INVITES} open invites; cancel one first")
             clock = (self.rules.duel_quiz_questions * self.rules.duel_quiz_seconds if mode == "quiz"
                      else self.rules.duel_clock_seconds)
             duel = Duel(id=uuid.uuid4(), code=new_code(), status="open", challenger_id=user_id, opponent_id=None,
                         language=language, stake=self.rules.duel_stake, clock_seconds=clock, mode=mode,
-                        created_at=self.clock())
+                        created_at=self.clock(), meta=invitation)
             try:
                 await tx.create_duel(duel)
             except DuelsUnavailable as exc:
@@ -242,6 +257,18 @@ class DuelService:
         log.info("duel %s (%s) opened by %s", duel.id, mode, user_id)
         return duel
 
+    async def _friendship(self, tx, user_id, friend_id):
+        if friend_id != user_id and await tx.identities_available():
+            await IdentityService._lock_pair(tx, user_id, friend_id)
+            relationship = await tx.friend_relationship(user_id, other_id=friend_id)
+            if relationship and relationship["status"] == "accepted":
+                return relationship
+        raise ApiError("friend_not_found", "choose someone from your friends list", status=404)
+
+    async def invitations(self, user_id):
+        async with self.store.transaction() as tx:
+            return await tx.duel_invitations(user_id, self.clock() - INVITE_TTL)
+
     async def accept(self, user_id: uuid.UUID, code: str) -> Duel:
         async with self.store.transaction() as tx:
             duel = await tx.duel_by_code(code.strip().lower())
@@ -249,11 +276,21 @@ class DuelService:
                 raise ApiError("not_found", "no duel with this code")
             await tx.lock_usage(duel.id, "duel")
             duel = await tx.load_duel(duel.id)
+            invited = duel.meta.get("invited_friend_id")
+            if invited and invited != str(user_id):
+                raise ApiError("not_found", "no invitation for you with this code")
+            if invited and duel.opponent_id == user_id and duel.status == "active":
+                return duel  # safe retry after a lost acceptance response
             self._expire(duel)
             if duel.status != "open":
                 raise ApiError("conflict", "this duel is no longer open")
             if duel.challenger_id == user_id:
                 raise ApiError("conflict", "you cannot accept your own duel; send the link to someone else")
+            if invited:
+                friendship = await self._friendship(tx, user_id, duel.challenger_id)
+                if str(friendship["id"]) != duel.meta["friendship_id"]:
+                    raise ApiError("not_found", "this invitation is no longer available")
+            await tx.lock_usage(user_id, "coins")
             await self._guard_player(tx, user_id, other=duel.challenger_id)
             now = self.clock()
             if duel.mode == "quiz":
@@ -299,6 +336,8 @@ class DuelService:
     async def cancel(self, user_id: uuid.UUID, duel_id: uuid.UUID) -> Duel:
         async with self.store.transaction() as tx:
             duel = await self._own(tx, user_id, duel_id, lock=True)
+            if duel.status == "cancelled":
+                return duel
             lobby = duel.status == "active" and duel.mode == "quiz" and duel.deadline is None
             if not lobby and (duel.status != "open" or duel.challenger_id != user_id):
                 raise ApiError("conflict", "only an open invite or a waiting room can be cancelled")

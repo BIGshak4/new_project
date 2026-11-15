@@ -1,6 +1,7 @@
 """Permanent account identities and explicit, owner-scoped friendship requests."""
 
 import re
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy.exc import IntegrityError
 
@@ -72,11 +73,18 @@ class IdentityService:
             await self._available(tx)
             return await self._friends(tx, user_id)
 
+    async def heartbeat(self, user_id):
+        async with self.store.transaction() as tx:
+            await tx.record_presence(user_id, datetime.now(UTC))
+
     async def _friends(self, tx, user_id):
         rows = await tx.friend_relationships(user_id)
         peer_ids = list({row["recipient_id"] if row["requester_id"] == user_id else row["requester_id"] for row in rows})
         people = await tx.load_identities(peer_ids)
         avatars = await tx.load_avatars(peer_ids) if await tx.avatars_available() else {}
+        approved = [row["recipient_id"] if row["requester_id"] == user_id else row["requester_id"]
+                    for row in rows if row["status"] == "accepted"]
+        online = await tx.online_users(approved, datetime.now(UTC) - timedelta(minutes=2))
         result = {"friends": [], "incoming": [], "outgoing": []}
         for row in rows:
             peer = row["recipient_id"] if row["requester_id"] == user_id else row["requester_id"]
@@ -87,6 +95,7 @@ class IdentityService:
             person = {"user_id": str(peer), "username": identity["username"], "friend_code": identity["friend_code"],
                       "avatar": self.avatars._state(avatar)[0] if avatar else None}
             if row["status"] == "accepted":
+                person["online"] = peer in online
                 result["friends"].append(person)
             else:
                 key = "outgoing" if row["requester_id"] == user_id else "incoming"

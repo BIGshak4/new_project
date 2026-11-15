@@ -21,7 +21,7 @@ import { isRealEvaluationProvider } from "../lib/evaluation-readiness";
 import { companyNames, companyReportNote, matchesCompany } from "../lib/question-discovery";
 import { QuestionMetadata } from "../components/question-metadata";
 import { QuestionStatusControl } from "../components/question-status-control";
-import { buildQuestionStates } from "../lib/question-personal-state";
+import { buildQuestionStates, readQuestionEntries } from "../lib/question-personal-state";
 import { matchesLibraryFilters, matchesLibraryStatuses, type LibraryStatus } from "../lib/library-filters";
 import { BidiText } from "../components/bidi-text";
 import { QuestionTitle } from "../components/question-title";
@@ -50,7 +50,6 @@ import { ResumeQuestion } from "../components/resume-question";
 import { AccountIdentity } from "../components/account-identity";
 import { DashboardAvatarSetup } from "../components/wardrobe/avatar-onboarding";
 import { InterviewSession } from "../components/interview-session";
-import { supabase } from "../lib/supabase";
 import {
   practiceApi,
   type Company,
@@ -224,14 +223,9 @@ function Workspace({
   }, [api, lang, user.id]);
   const readEntries = useCallback(async (questionId?: string) => {
     const version = generation.current;
-    let query = supabase.from("jr_practice_entries")
-      .select("id,user_id,question_id,answer,self_rating,bookmarked,completed,hidden,version")
-      .eq("user_id", user.id);
-    if (questionId) query = query.eq("question_id", questionId);
-    const { data, error } = await query;
+    const data = await readQuestionEntries(user.id, questionId);
     if (version !== generation.current) return;
-    if (error) throw error;
-    setEntries(previous => mergeEntries(previous, data ?? []));
+    setEntries(previous => mergeEntries(previous, data));
     if (!questionId) setEntriesReady(true);
   }, [user.id]);
   const refreshEntries = useCallback((questionId?: string) => {
@@ -834,7 +828,7 @@ function Workspace({
                     matchesOption={(option, search) => matchesCompany({ reported_companies: [option.label] }, search)}
                     options={companyOptions.map(name => ({ value: name, label: name }))} />
                 </div>
-                <p className="small muted library-status-note">{t("סימוני השאלות נשמרים בחשבון. המסננים מתאפסים בכניסה מחדש; ללא בחירה מוצגות כל השאלות.", "Question flags are saved to your account. Filters reset on a new visit; no selection shows every question.")}</p>
+                <p className="small muted library-status-note">{t("הסינון ״בוצעו״ כולל שאלות שסימנתם או ששלחתם בהן תשובה למשוב בכל תאריך. שאלות שהסתרתם מופיעות בסינון ״מוסתרות״.", "Done includes questions you marked or submitted for feedback on any date. To see questions you hid, select Hidden.")}</p>
                 <p className="small library-status-message" role="status" aria-live="polite">{statusMessage === "hidden"
                   ? t("השאלה סומנה כמוסתרת. אפשר לסנן שאלות לפי הסטטוס שלהן.", "Question marked as hidden. Use Question status to filter your questions.")
                   : statusMessage === "done" ? t("השאלה סומנה כבוצעה.", "Question marked as done.")

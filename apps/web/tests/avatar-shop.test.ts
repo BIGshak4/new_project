@@ -22,8 +22,8 @@ test("preview catalog and avatar colors match the server's canonical catalog", (
   assert.deepEqual(catalog, source);
   assert.deepEqual(Object.fromEntries(catalog.colors.map(color => [color.key, color.hex])), AVATAR_COLORS);
   assert.equal(catalog.skins.find(skin => skin.key === "classic")!.price, 0);
-  for (const key of ["aurora", "circuit", "cosmic", "gold"]) assert.equal(catalog.skins.find(s => s.key === key)!.price, 20);
-  assert.equal(catalog.skins.filter(s => s.price === 40).length, 6);
+  for (const key of ["aurora", "circuit", "cosmic", "gold"]) assert.equal(catalog.skins.find(s => s.key === key)!.price, 10);
+  assert.equal(catalog.skins.filter(s => s.price === 20).length, 6);
 });
 
 test("trying or saving an unowned skin cannot bypass purchase; duplicate demo buys debit once", async () => {
@@ -33,15 +33,22 @@ test("trying or saving an unowned skin cannot bypass purchase; duplicate demo bu
   await assert.rejects(() => api.save({ ...DEFAULT_AVATAR, skin: "gold" }));
   assert.deepEqual((await api.get()).avatar, DEFAULT_AVATAR);
   const after = await api.buy("gold");
-  assert.equal(after.balance, 140);
+  assert.equal(after.balance, 150);
   assert.ok(after.owned_skins.includes("gold"));
-  assert.equal((await api.buy("gold")).balance, 140);
+  assert.equal((await api.buy("gold")).balance, 150);
   await api.save({ component: "xor", color: "mint", skin: "gold" });
   assert.deepEqual(getDemoAvatar(), { component: "xor", color: "mint", skin: "gold" });
   assert.deepEqual((await demoAvatarClient().get()).avatar, getDemoAvatar());
-  for (const key of ["aurora", "circuit", "cosmic", "negative_feedback", "binary_people"]) await api.buy(key);
+});
+
+test("a returning demo shopper with too few coins cannot buy a shirt", async () => {
+  storage();
+  sessionStorage.setItem("jobrun-avatar-shop-demo-v1", JSON.stringify({ avatar: DEFAULT_AVATAR, owned_skins: ["classic"], balance: 19 }));
+  const api = demoAvatarClient();
   await assert.rejects(() => api.buy("sleep_not_found"), (error: unknown) => (error as { status: number }).status === 402);
-  assert.equal((await api.get()).balance, 0);
+  const wallet = await api.get();
+  assert.equal(wallet.balance, 19);
+  assert.deepEqual(wallet.owned_skins, ["classic"]);
 });
 
 test("real wardrobe calls bind to the account and submit catalog identifiers rather than price or ownership", async () => {
@@ -72,7 +79,7 @@ test("free onboarding persists a choice or skip without charging or resetting eq
   await api.save({component: "xor", color: "mint", skin: "negative_feedback"});
   const chosen = await api.completeOnboarding!({component: "dff", color: "sky"});
   assert.deepEqual(chosen.avatar, {component: "dff", color: "sky", skin: "negative_feedback"});
-  assert.equal(chosen.balance, 120);
+  assert.equal(chosen.balance, 140);
   assert.deepEqual((await api.completeOnboarding!()).avatar, chosen.avatar);
   assert.equal((await demoAvatarClient().get()).onboarding_completed, true);
 });

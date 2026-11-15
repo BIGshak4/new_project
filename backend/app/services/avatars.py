@@ -109,9 +109,11 @@ class AvatarsService:
                 await tx.save_avatar(user_id, avatar, owned)
             return await self._view(tx, user_id)
 
-    async def public_configs(self, user_ids):
-        """Only visible component/color/skin for authorized duel participants, never ownership or balances."""
+    async def duel_players(self, user_ids):
+        """Only a public name and outfit for each authorized participant."""
         async with self.store.transaction() as tx:
             users = list({user for user in user_ids if user})
             rows = await tx.load_avatars(users) if await tx.avatars_available() else {}
-            return {str(user): self._state(rows.get(str(user)))[0] for user in users}
+            identities = await tx.load_identities(users) if await tx.identities_available() else {}
+            return {str(user): {"avatar": self._state(rows.get(str(user)))[0],
+                                "username": identities.get(str(user), {}).get("username")} for user in users}

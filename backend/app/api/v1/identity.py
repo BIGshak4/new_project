@@ -36,6 +36,7 @@ class FriendPerson(BaseModel):
     username: str | None
     friend_code: str
     avatar: AvatarConfig | None
+    online: bool | None = None  # populated only for accepted friends
 
 
 class FriendRequestView(BaseModel):
@@ -109,6 +110,13 @@ async def claim_username(body: UsernameClaim, request: Request, access: CurrentA
 async def friends(access: CurrentAccess, identities: Identities, response: Response):
     response.headers["Cache-Control"] = "no-store"
     return await identities.friends(access.user_id)
+
+
+@router.post("/v1/me/presence", status_code=204)
+async def heartbeat(access: CurrentAccess, identities: Identities):
+    budget.check("presence", f"user:{access.user_id}", 30)
+    await identities.heartbeat(access.user_id)
+    return Response(status_code=204, headers={"Cache-Control": "no-store"})
 
 
 @router.post("/v1/me/friends/requests", response_model=FriendsView)
