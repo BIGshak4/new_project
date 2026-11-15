@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useDuelLanguage } from "./games-navigation";
 import { Auth } from "../auth";
 import { LanguageMenu } from "../ui/language-menu";
 import { ThemeToggle } from "../ui/theme-toggle";
@@ -11,13 +12,6 @@ import type { DuelLanguage } from "../../lib/duel-types";
 import { DuelWorkspace } from "./duel-workspace";
 import { FriendsPanel } from "../friends-panel";
 import { useFriendInvitations } from "./friend-duel-activity";
-
-export function useDuelLanguage() {
-  const [lang, setLang] = useState<DuelLanguage>("he");
-  useEffect(() => { try { if (localStorage.getItem("jobrun-language") === "en") setLang("en"); } catch {} }, []);
-  useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = lang === "he" ? "rtl" : "ltr"; try { localStorage.setItem("jobrun-language", lang); } catch {} }, [lang]);
-  return [lang, setLang] as const;
-}
 
 function LiveWorkspace({ userId, lang, invite, controls }: { userId: string; lang: DuelLanguage; invite: string; controls: React.ReactNode }) {
   const client = useMemo(() => duelApi(userId), [userId]);

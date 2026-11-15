@@ -55,7 +55,7 @@ function reachable(entry: string): Set<string> {
   return visited;
 }
 
-for (const route of ["app/games/page.tsx", "app/duel/[code]/page.tsx"]) {
+for (const route of ["app/games/page.tsx", "app/games/daily-puzzle/page.tsx", "app/duel/[code]/page.tsx"]) {
   test(`${route} cannot ship demo answers or backend seeds through its import graph`, () => {
     const graph = reachable(path.join(src, route));
     assert.ok(graph.has(path.join(src, "lib/duel-api.ts")), "the real route must retain the authenticated game API");

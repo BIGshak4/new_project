@@ -1,3 +1,4 @@
+import type { DailyPuzzleClient, DailyPuzzle, DailyPuzzleSolution } from "./daily-puzzle";
 import { supabase } from "./supabase";
 import type { Duel, DuelClient, DuelInvitation, DuelLanguage, DuelList, DuelWallet, QuizPracticeRound, QuizPracticeResult } from "./duel-types";
 
@@ -7,6 +8,7 @@ export class DuelApiError extends Error {
 
 /** Browser sessions supply a token; membership and ownership are enforced by the API. */
 export function duelApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL): DuelClient & {
+  daily: DailyPuzzleClient;
   invitations(): Promise<{ invitations: DuelInvitation[] }>;
   presence(): Promise<void>;
 } {
@@ -32,6 +34,10 @@ export function duelApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_BA
     return payload as T;
   }
   return {
+    daily: {
+      get: language => call<DailyPuzzle>(`/v1/games/daily-puzzle?language=${language}`),
+      reveal: (language, day, id) => call<DailyPuzzleSolution>(`/v1/games/daily-puzzle/reveal?language=${language}`, { day, id }),
+    },
     practice: {
       start: (language) => call<QuizPracticeRound>(`/v1/duels/practice?language=${language}`),
       answer: (round_token, choice) => call<QuizPracticeResult>("/v1/duels/practice/answer", { round_token, choice }),
