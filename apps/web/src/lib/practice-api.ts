@@ -117,6 +117,7 @@ export type GoalRequest = {
 
 export type QuestionDetail = QuestionSummary & {
   prompt: string;
+  additional_wordings?: string[];
   requirements: string;
   choices: string[] | null;
   starter_code: string | null;
@@ -433,6 +434,7 @@ export type InterviewTurn = {
   subject: string;
   archetype: string;
   question: string;
+  additional_wordings?: string[];
   question_key: string | null;
   /** the question is "on trial": being checked live before publication */
   trial: boolean;

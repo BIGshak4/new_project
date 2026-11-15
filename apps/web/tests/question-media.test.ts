@@ -1,8 +1,16 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { visibleQuestionMedia } from "../src/lib/question-media";
+import { figureCaption, visibleQuestionMedia } from "../src/lib/question-media";
 import type { ResourceMedia } from "../src/lib/practice-api";
+
+test("given diagrams describe the exercise in the selected language", () => {
+  assert.equal(figureCaption("Redrawn source timing", "he", 2), "תרשים התזמון");
+  assert.equal(figureCaption("תזמון המקור בשרטוט מחודש", "en", 2), "Timing diagram");
+  assert.equal(figureCaption("Two switch positions: source charging and inductor connection", "en", 2),
+    "Two switch positions: source charging and inductor connection");
+  assert.equal(figureCaption("", "he", 2), "שרטוט 2");
+});
 
 test("withholds every archived screenshot, including ones classified as solutions", () => {
   const questions = JSON.parse(readFileSync(new URL("../../../backend/seeds/questions/preparation_bank.json", import.meta.url), "utf8"));

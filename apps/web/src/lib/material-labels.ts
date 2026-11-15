@@ -153,7 +153,7 @@ const additionalLabels: Record<string, Record<"he" | "en", string>> = {
   fairness: { he: "הנחת ההוגנות", en: "Fairness assumption" },
   variant: { he: "וריאציה נוספת", en: "Additional variant" },
   reference_solution: { he: "פתרון מוצע", en: "Proposed solution" },
-  preserved: { he: "תוכן שנשמר", en: "Preserved material" },
+  preserved: { he: "ניסוחים נוספים", en: "Alternative wordings" },
   Q_before: { he: "Q לפני ההתייצבות", en: "Q before settling" },
   Q_after_settling: { he: "Q לאחר ההתייצבות", en: "Q after settling" },
   time: { he: "זמן", en: "Time" },

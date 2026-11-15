@@ -10,6 +10,8 @@ import { SubmittedAnswerContent } from "../submitted-answer-content";
 import { BidiText } from "../bidi-text";
 import { QuestionActions } from "../question-actions";
 import { StudyText } from "../question-materials";
+import { QuestionPrompt } from "../question-prompt";
+import { learnerCopy } from "../../lib/learner-copy";
 import { LanguageMenu } from "../ui/language-menu";
 import { ThemeToggle } from "../ui/theme-toggle";
 import { lockBodyScroll } from "../../lib/body-scroll-lock";
@@ -87,7 +89,7 @@ function PuzzleSession({ userId, lang, initial, client, onExpired }: Player & {
   const feedback = useRef<HTMLHeadingElement>(null);
   const questionHeading = useRef<HTMLHeadingElement>(null);
   const shouldFocusFeedback = useRef(initial.status === "evaluating");
-  const question = { title: puzzle.title, content: <StudyText text={puzzle.prompt} lang={lang} /> };
+  const question = { title: puzzle.title, content: <QuestionPrompt text={puzzle.prompt} questionKey={puzzle.id} lang={lang} /> };
   const { id, day, status, submission } = puzzle;
 
   useEffect(() => {
@@ -217,7 +219,7 @@ function PuzzleSession({ userId, lang, initial, client, onExpired }: Player & {
     <article className={styles.sheet} aria-labelledby="daily-question-title">
       <p className={styles.subject}><BidiText>{subjectLabel(puzzle.subject === "relevant_programming" ? "programming" : puzzle.subject, lang)}</BidiText></p>
       <h2 id="daily-question-title" tabIndex={-1} ref={questionHeading}><BidiText>{puzzle.title}</BidiText></h2>
-      <StudyText text={puzzle.prompt} lang={lang} />
+      {question.content}
       {status === "open" ? <section className={styles.answer}>
         <h3>{he ? "הפתרון שלכם" : "Your solution"}</h3>
         <AnswerEditor value={draft.answer} onChange={answer => setDraft(previous => ({ ...previous, answer }))} lang={lang}
@@ -254,7 +256,7 @@ function PuzzleSession({ userId, lang, initial, client, onExpired }: Player & {
       <EvaluationPanel submission={submission} lang={lang} />
       <MonthlyBalance puzzle={puzzle} lang={lang} />
       {solution ? <section className={styles.solution}><h3>{he ? "הפתרון המוצע" : "Suggested solution"}</h3>
-        <StudyText text={solution} solution lang={lang} /></section>
+        <StudyText text={learnerCopy(solution)} solution lang={lang} /></section>
         : <button type="button" disabled={busy} className={styles.reveal} onClick={() => void revealSolution()}>
           {he ? "השוואה לפתרון המוצע" : "Compare with the suggested solution"}</button>}
     </section>}

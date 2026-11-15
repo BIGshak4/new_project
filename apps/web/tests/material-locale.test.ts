@@ -5,6 +5,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { ApiLang, QuestionResources } from "../src/lib/practice-api";
 import { materialInLanguage, referenceInLanguage } from "../src/lib/material-locale";
+import { learnerMaterialSections, studyDownload } from "../src/lib/learner-material";
 import { materialLabel, materialStatus } from "../src/lib/material-labels";
 import { TechnicalMaterial } from "../src/components/question-materials";
 
@@ -410,6 +411,23 @@ test("all 357 preparation resources pair every visible technical field and rende
     }
     const english = renderToStaticMarkup(createElement(TechnicalMaterial, { material, lang: "en" }));
     assert.doesNotMatch(english, /\p{Script=Hebrew}/u, question.key);
-    assert.equal([...english.matchAll(/<summary>/g)].length, visible.length, question.key);
+    const nonempty = Object.keys(learnerMaterialSections(material, visible, "en"));
+    assert.equal([...english.matchAll(/<summary>/g)].length, nonempty.length, question.key);
   }
+});
+
+test("material views and downloads omit archive-only fields and empty disclosures", () => {
+  const material = {
+    id: "PREP", assumptions: [], translations: { en: { title: "Circuit", prompt: "Design a circuit." } },
+    verification: { source_path: "intake/private.png", expected: 0, result: false },
+    prompt_variants: [{ metadata_note: "internal intake marker" }],
+  };
+  const sections = learnerMaterialSections(material, ["assumptions", "verification", "prompt_variants"], "en");
+  assert.deepEqual(sections, { verification: { expected: 0, result: false } });
+  const html = renderToStaticMarkup(createElement(TechnicalMaterial, { material, lang: "en" }));
+  assert.equal([...html.matchAll(/<summary>/g)].length, 1);
+  assert.doesNotMatch(html, /private.png|internal intake marker/);
+  const download = studyDownload(material, sections, "en");
+  assert.equal(download.question?.main, "Design a circuit.");
+  assert.doesNotMatch(JSON.stringify(download), /private.png|internal intake marker/);
 });
