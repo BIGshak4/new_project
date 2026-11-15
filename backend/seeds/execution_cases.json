@@ -13309,6 +13309,192 @@
           ]
         }
       }
+    },
+    "prep-interesting-digital-clock-times": {
+      "contract": {
+        "he": "count_interesting_times(start,end) מחזירה את מספר השעות התקינות בטווח כולל, בעלות עד שתי ספרות שונות. קלטי HH:MM:SS חוקיים באותו יום ועם התחלה שאינה אחרי הסוף. אפסים מובילים נחשבים. python: count_interesting_times(start, end).",
+        "en": "count_interesting_times(start,end) counts inclusive same-day valid HH:MM:SS displays using at most two distinct digits. Retain leading zeroes. Start is not after end. python: count_interesting_times(start, end)."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "count_interesting_times",
+          "starter": "def count_interesting_times(start, end):\n    raise NotImplementedError\n",
+          "cases": [
+            {
+              "args": [
+                "15:15:00",
+                "15:15:12"
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                "22:22:21",
+                "22:22:23"
+              ],
+              "expected": 3
+            },
+            {
+              "args": [
+                "00:00:00",
+                "00:00:00"
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                "23:59:59",
+                "23:59:59"
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                "01:01:01",
+                "01:01:01"
+              ],
+              "expected": 1
+            },
+            {
+              "args": [
+                "00:00:00",
+                "00:01:05"
+              ],
+              "expected": 22
+            },
+            {
+              "args": [
+                "09:59:55",
+                "10:00:05"
+              ],
+              "expected": 2
+            },
+            {
+              "args": [
+                "11:11:00",
+                "11:11:59"
+              ],
+              "expected": 20
+            },
+            {
+              "args": [
+                "12:34:00",
+                "12:34:59"
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                "22:59:58",
+                "23:00:05"
+              ],
+              "expected": 0
+            },
+            {
+              "args": [
+                "00:00:00",
+                "23:59:59"
+              ],
+              "expected": 504
+            },
+            {
+              "args": [
+                "03:03:00",
+                "03:03:30"
+              ],
+              "expected": 3
+            }
+          ]
+        }
+      }
+    },
+    "prep-binary-tree-preorder-null-codec": {
+      "contract": {
+        "he": "tree_codec_round_trip(serialized) מקבלת מחרוזת JSON תקינה של preorder עם null לילד חסר וערכי int. יש לפענח לצמתים ואז לקודד למחרוזת JSON ללא רווחים, תוך שמירת צורה וערכים. אין מעגלים. כל הקלטים בחוזה תקינים.",
+        "en": "tree_codec_round_trip(serialized) decodes a valid preorder JSON token array with integer node values and null child markers, then returns its serialized JSON form with no spaces, preserving shape and values. All inputs are valid finite trees."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "tree_codec_round_trip",
+          "starter": "def tree_codec_round_trip(serialized):\n    raise NotImplementedError\n",
+          "cases": [
+            {
+              "args": [
+                "[null]"
+              ],
+              "expected": "[null]"
+            },
+            {
+              "args": [
+                "[1, null, null]"
+              ],
+              "expected": "[1,null,null]"
+            },
+            {
+              "args": [
+                "[0, null, null]"
+              ],
+              "expected": "[0,null,null]"
+            },
+            {
+              "args": [
+                "[-1, null, null]"
+              ],
+              "expected": "[-1,null,null]"
+            },
+            {
+              "args": [
+                "[7, 7, null, null, null]"
+              ],
+              "expected": "[7,7,null,null,null]"
+            },
+            {
+              "args": [
+                "[7, null, 7, null, null]"
+              ],
+              "expected": "[7,null,7,null,null]"
+            },
+            {
+              "args": [
+                "[1, 2, null, null, 3, null, null]"
+              ],
+              "expected": "[1,2,null,null,3,null,null]"
+            },
+            {
+              "args": [
+                "[0, 0, null, null, 0, null, null]"
+              ],
+              "expected": "[0,0,null,null,0,null,null]"
+            },
+            {
+              "args": [
+                "[1, 2, 3, null, null, null, null]"
+              ],
+              "expected": "[1,2,3,null,null,null,null]"
+            },
+            {
+              "args": [
+                "[1, null, 2, null, 3, null, null]"
+              ],
+              "expected": "[1,null,2,null,3,null,null]"
+            },
+            {
+              "args": [
+                "[1000000000000, null, null]"
+              ],
+              "expected": "[1000000000000,null,null]"
+            },
+            {
+              "args": [
+                "[4, 2, 1, null, null, 3, null, null, 6, 5, null, null, 7, null, null]"
+              ],
+              "expected": "[4,2,1,null,null,3,null,null,6,5,null,null,7,null,null]"
+            }
+          ]
+        }
+      }
     }
   }
 }

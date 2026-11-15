@@ -545,6 +545,57 @@ ORACLES.update({
 })
 
 
+BATCH1115_SOURCES = {
+    "prep-interesting-digital-clock-times": "prep_330_interesting_clock.py",
+    "prep-binary-tree-preorder-null-codec": "prep_333_tree_codec.py",
+}
+
+
+def oracle_clock_interval(start, end):
+    def number(value):
+        h, m, s = map(int, value.split(":"))
+        return 3600 * h + 60 * m + s
+    total = 0
+    for tick in range(number(start), number(end) + 1):
+        fields = (tick // 3600, (tick // 60) % 60, tick % 60)
+        mask = 0
+        for value in fields:
+            mask |= 1 << (value // 10)
+            mask |= 1 << (value % 10)
+        total += mask.bit_count() <= 2
+    return total
+
+
+def oracle_tree_normalize(text):
+    tokens = json.loads(text)
+    def consume(index):
+        value = tokens[index]
+        if value is None:
+            return index + 1
+        assert type(value) is int
+        return consume(consume(index + 1))
+    assert consume(0) == len(tokens)
+    return json.dumps(tokens, separators=(",", ":"))
+
+
+ORACLES.update({
+    "prep-interesting-digital-clock-times": oracle_clock_interval,
+    "prep-binary-tree-preorder-null-codec": oracle_tree_normalize,
+})
+
+
+def build_batch1115_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1115_inputs.json").read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1115_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1115_SOURCES[key]).read_text(encoding="utf8")
+
+
 def build_batch1114_contracts():
     questions = json.loads((BACKEND / "tests/fixtures/execution_batch1114_inputs.json").read_text(encoding="utf-8"))
     for key, question in questions.items():
@@ -867,6 +918,7 @@ endmodule
     questions.update(build_night1107n30_contracts())
     questions.update(build_batch1108b20_contracts())
     questions.update(build_batch1114_contracts())
+    questions.update(build_batch1115_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -976,6 +1028,13 @@ def build_smoke():
                  if entry == "contains_no_forbidden_words"
                  else "def transpose_in_place(matrix):\n    return matrix\n")
         cases.append({"question_key": key, "language": "python", "correct": batch1114_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1115_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = ("def count_interesting_times(start, end):\n    return 0\n"
+                 if entry == "count_interesting_times"
+                 else "def tree_codec_round_trip(serialized):\n    return serialized\n")
+        cases.append({"question_key": key, "language": "python", "correct": batch1115_source(key),
                       "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
@@ -1517,6 +1576,8 @@ end architecture;
         python[key] = batch1108b20_source(key)
     for key in BATCH1114_SOURCES:
         python[key] = batch1114_source(key)
+    for key in BATCH1115_SOURCES:
+        python[key] = batch1115_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

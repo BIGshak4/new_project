@@ -165,9 +165,9 @@
     "content_sha256": "b60feb381239555a07170796b4a786f25e18b7d7e72152413cc18602ccdd3d30"
   },
   "prep-abstract-classes-virtual-and-pure-virtual": {
-    "difficulty": 3,
-    "reason": "Explain instantiation and overriding across C++ and C#, then give a concrete derived implementation.",
-    "content_sha256": "d8860811e1a07435cefc6acccf5f86cacdbe16ac5e61c0373e1604a388d36202"
+    "difficulty": 4,
+    "reason": "Combine abstract/pure-virtual contracts with dynamic final-overrider selection and construction/destruction dispatch limits.",
+    "content_sha256": "5c824fde7c8ffc641638f03b9778035c6473d13604b04a81f84e913e2079cc3f"
   },
   "prep-abstract-list-head-tail-concat-reversal": {
     "difficulty": 6,
@@ -700,9 +700,9 @@
     "content_sha256": "ded52b3046778dd188fc5039f8a7fa5c9f5dee759a9e8a8a0ea32cd7f291d281"
   },
   "prep-four-input-sorter-single-crossing-fault": {
-    "difficulty": 8,
-    "reason": "Beyond sorting, tests must propagate and distinguish each unconditional-swap fault using only final outputs.",
-    "content_sha256": "f14a7ef5581e32b3bd4afcc8c25a9a77c32d766d5318c4d57b61f051db7ab941"
+    "difficulty": 6,
+    "reason": "Diagnoses eleven hypotheses under two fault modes and proves the minimum fixed test count by exhaustive order-class analysis.",
+    "content_sha256": "a9d357e6d6e50f01dbef8ffd793bdaf447cc05d76dfae7f2aaeea4fe373f9fd3"
   },
   "prep-four-to-one-mux-from-two-to-one": {
     "difficulty": 3,
@@ -1400,9 +1400,9 @@
     "content_sha256": "1882578c5d0eda6e9a6142d91d270c621c97d6ec1d69c4d416b4d58e5fcc0c73"
   },
   "prep-synchronous-clock-divider-two-and-four": {
-    "difficulty": 3,
-    "reason": "Derive the two same-clock toggle equations and trace the four repeating states.",
-    "content_sha256": "ef3a75dbd6bb62560c69c7964c88d99e4ae32f14fa70bfb5ead231873f391248"
+    "difficulty": 5,
+    "reason": "Adds a third divider stage and a controlled common-low switching protocol, distinguishing minimum counter state from mux-control storage.",
+    "content_sha256": "463d3cd2d49fe1c7428073c88a05eaaea836bb9bbde8fd010920ebc5e9aec616"
   },
   "prep-synchronous-opposing-array-pointers": {
     "difficulty": 3,
@@ -1587,7 +1587,7 @@
   "prep-unique-odd-frequency-digit": {
     "difficulty": 5,
     "reason": "Pair cancellation gives a linear scan; the nontrivial requirement is a lower bound without a precomputed summary.",
-    "content_sha256": "cf46d173b6544856edfef7061d2e3345b9dc22eb6979a79aeaa129b1a28a0a29"
+    "content_sha256": "4319530552154bcb3799c64818007b1f98158af94ab05cae61ef7f17a8f9db3f"
   },
   "prep-unknown-circular-bit-memory-length": {
     "difficulty": 5,
@@ -1788,5 +1788,85 @@
     "difficulty": 6,
     "reason": "Requires an explicit source distribution and estimator convention, error statistics, and constructing and checking a digital low-pass filter at its intended cutoff.",
     "content_sha256": "34760d5056ef4ad453814c8f577b1dcaeb48155ffb74e858b2a8e1a2416dd3c2"
+  },
+  "prep-interesting-digital-clock-times": {
+    "difficulty": 3,
+    "reason": "Enumerate a bounded day with inclusive endpoints, leading zeroes and a set of decimal digits.",
+    "content_sha256": "679f8375550bfb57a8ceda278c442601062336fe869b279993c1d7995b9b044f"
+  },
+  "prep-array-product-without-multiplication": {
+    "difficulty": 5,
+    "reason": "Combine signed magnitude arithmetic, overflow-safe shift/add multiplication and zero handling without the multiplication operator.",
+    "content_sha256": "d223e93d992048d91727275d40a00b5e1e6b2eb8cf3efd1b0506114bdc35c053"
+  },
+  "prep-checked-c-string-copy-contract": {
+    "difficulty": 4,
+    "reason": "Identify pointer lifetime, capacity, NUL termination and overlap, then preserve the target on validation failure.",
+    "content_sha256": "7f01524076170e0fd752025d4021026ae3493ad573461a6be8a5dbd195461bfe"
+  },
+  "prep-binary-tree-preorder-null-codec": {
+    "difficulty": 5,
+    "reason": "Preserve arbitrary binary-tree shape with duplicate values, reject incomplete encodings, and avoid call-stack dependence.",
+    "content_sha256": "b51909431233048387913b95027c93dd008670c7011f718b67e325a6ef0ab9db"
+  },
+  "prep-mutex-versus-counting-semaphore": {
+    "difficulty": 3,
+    "reason": "Distinguish lock ownership and exclusive access from permit counting and signaling, including binary-semaphore limits.",
+    "content_sha256": "edeecfa2c61c2df3c124ac87438b2ad95a9c3a1dc9c518aed3c3d853267cbac6"
+  },
+  "prep-three-single-character-loop-repairs": {
+    "difficulty": 4,
+    "reason": "Reason about control expressions and side effects to produce exactly twenty iterations with three distinct legal single-character edits.",
+    "content_sha256": "7b5897921f3245830caed28278d571a14193ba5e96054736301eea7d782f5fac"
+  },
+  "prep-c-variadic-arguments-and-promotions": {
+    "difficulty": 4,
+    "reason": "Use stdarg with a caller-defined count and exact promoted types, while managing va_list lifetime and copies.",
+    "content_sha256": "989dbf5001ec732a54b13daf2bdbbaa64f14d4a713a0bd40b873f93e64beae48"
+  },
+  "prep-two-thread-reusable-generation-barrier": {
+    "difficulty": 6,
+    "reason": "Use an arrival count and generation predicate to prevent missed wakeups, spurious-wakeup errors and overlap between barrier rounds.",
+    "content_sha256": "fe1e38c19911fa9bdfbb0bb4851a309cc277871ccf4ed559d3088b0850d7eafc"
+  },
+  "prep-mod-eight-blackbox-one-through-five": {
+    "difficulty": 5,
+    "reason": "Requires black-box interface reasoning, a complete state table, safe synchronous feedback and the distinction between legal-cycle minimization and recovery.",
+    "content_sha256": "6136c0ca233a5ae0a5e6501233b2654a398491d0b2bdb3988e64db0e0a446c3b"
+  },
+  "prep-three-bit-xor-feedback-sequence": {
+    "difficulty": 3,
+    "reason": "Requires simultaneous state updates, careful tap orientation and a short cycle proof.",
+    "content_sha256": "e0eba5def23f789ace16738ad86fc80905fc8c04b2ca5a852945cc53c922dc7a"
+  },
+  "prep-sixteen-two-bit-maximum-gates": {
+    "difficulty": 4,
+    "reason": "Exploit the four-value domain to derive direct presence equations and distinguish a gate depth estimate from comparator-cell depth.",
+    "content_sha256": "7bafb2f6913bc16205e169d4de9b907ad515d4d7db1539159a73be377c1722fa"
+  },
+  "prep-bounded-distinct-word-stream-machine": {
+    "difficulty": 6,
+    "reason": "Requires word-boundary control plus exact set memory, a finite hardware contract and an information lower bound for unbounded input.",
+    "content_sha256": "7fd4d3afb3798b1f66f021da4612a9f2e5e9816833c3595fc24efc1b0ee8cfd8"
+  },
+  "prep-dynamic-tristate-xor-feedback-analysis": {
+    "difficulty": 6,
+    "reason": "Requires interpreting incomplete tri-state symbols with an explicit netlist, recognizing history dependence and separating ideal charge storage from a verified physical cell.",
+    "content_sha256": "323281f64da958135455672de6a89bc967e1187a8d47ec6a012e2f3347620d8e"
+  },
+  "prep-public-silence-unfaithful-spouses-fourth-night": {
+    "difficulty": 6,
+    "reason": "Requires induction over nested knowledge and public silent rounds, distinguishing individual observation from common knowledge.",
+    "content_sha256": "2a288a426488554fb1d3720e60cff56830e357e17569cf1cb8504ab7139cd8f0"
+  },
+  "prep-ten-coin-bags-one-weighing-known-deviation": {
+    "difficulty": 4,
+    "reason": "Encode each candidate bag with a different sample count, subtract the baseline mass, and decode a known signed deviation from one exact scale reading.",
+    "content_sha256": "d7d4f86bb2e4b0b2412f61b565f0eeb537a9bf3c0c9efcfb7f6217a1529b1c14"
+  },
+  "prep-two-resistor-divider-maximum-load-power": {
+    "difficulty": 5,
+    "reason": "Translate a two-resistor network into its Thevenin equivalent, optimize load power, and distinguish dissipated resistor power from ideal-capacitor energy storage.",
+    "content_sha256": "5da88ac70b4f1e9b4cbf988271cd44cc4184c40c6416200de8abe0aff7e320a4"
   }
 }

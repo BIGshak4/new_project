@@ -1,0 +1,269 @@
+{
+  "result": "passed",
+  "scope": "Python logical and finite enumeration models",
+  "questions": {
+    "PREP-338": {
+      "complete_states": 8,
+      "reset_checks": 8,
+      "decoder_checks": 8,
+      "legal_dontcare_checks": 5
+    },
+    "PREP-339": {
+      "all_states": 8,
+      "trace_samples": 71,
+      "nonzero_period": 7
+    },
+    "PREP-340": {
+      "all_value_histograms": 969,
+      "position_checks": 4096,
+      "deterministic_random_checks": 1000,
+      "coverage_basis": "Every count vector plus position checks; the equation is symmetric under word permutation."
+    },
+    "PREP-341": {
+      "valid_streams": 2958,
+      "invalid_streams": 7,
+      "word_universe": 14,
+      "stalls_and_reset_checked": true
+    },
+    "PREP-342": {
+      "retained_state_combinations": 16,
+      "valid_acquisition_traces": 4,
+      "physical_charge_verified": false
+    },
+    "PREP-216": {
+      "selector_request_traces": 19683,
+      "trace_source_cycles": 8,
+      "all_counter_states": 8,
+      "selector_updates_preserve_output": true
+    },
+    "PREP-030": {
+      "healthy_sort_inputs": 256,
+      "hypotheses": 11,
+      "strict_order_probes": 24,
+      "fixed_probe_pairs": 276,
+      "minimum_nonadaptive_probes": 3,
+      "signatures": {
+        "None": [
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ],
+        "(0, 'straight')": [
+          [
+            4,
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ],
+        "(0, 'cross')": [
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            3,
+            4,
+            2,
+            1
+          ]
+        ],
+        "(1, 'straight')": [
+          [
+            3,
+            4,
+            2,
+            1
+          ],
+          [
+            3,
+            4,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ],
+        "(1, 'cross')": [
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            1,
+            2
+          ]
+        ],
+        "(2, 'straight')": [
+          [
+            2,
+            4,
+            3,
+            1
+          ],
+          [
+            3,
+            4,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ],
+        "(2, 'cross')": [
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            2,
+            4,
+            3,
+            1
+          ]
+        ],
+        "(3, 'straight')": [
+          [
+            4,
+            2,
+            1,
+            3
+          ],
+          [
+            4,
+            3,
+            1,
+            2
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ],
+        "(3, 'cross')": [
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            2,
+            1,
+            3
+          ]
+        ],
+        "(4, 'straight')": [
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            2,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ],
+        "(4, 'cross')": [
+          [
+            4,
+            2,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            2,
+            3,
+            1
+          ]
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "scope": "Offline backend tests, production frontend tests and build, local study renderer",
+  "backend": {
+    "unique_tests_passed": 6317,
+    "skipped": 13,
+    "partition": "6306 tests passed in broad run; the 11 failures passed after exact count and history projection fixes. Both new intake tests passed again after the revision-once guard was added.",
+    "excluded_live_files": [
+      "test_live_db.py",
+      "test_live_service.py",
+      "test_live_interview.py",
+      "test_admin_support_security.py",
+      "test_user_inbox_security.py"
+    ]
+  },
+  "frontend": {
+    "tests_passed": 463,
+    "typecheck": "passed",
+    "production_build": "passed"
+  },
+  "figures": {
+    "authored_png_files": 40,
+    "render_cases": 80,
+    "loaded_images_across_cases": 100,
+    "viewport_widths": [
+      390,
+      1280
+    ],
+    "languages": [
+      "he",
+      "en"
+    ],
+    "revealed_solution_and_hidden_source_checks": "passed"
+  },
+  "limitations": [
+    "Headless Edge uses simulated viewport widths.",
+    "Hardware checks use Python models.",
+    "The Java and C11 mutex examples were reviewed as source; they were not compiled in this environment."
+  ]
+}

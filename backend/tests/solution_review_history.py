@@ -71,6 +71,7 @@ NOVEMBER12_COPY_INVALIDATED_KEYS = frozenset({
     "example-credit-dispenser",
     "example-request-acknowledge",
 })
+NOVEMBER15_INVALIDATED_KEYS = frozenset({"prep-four-input-sorter-single-crossing-fault"})
 
 
 def expected_reviewed_keys():
@@ -93,4 +94,6 @@ def expected_reviewed_keys():
     expected = after_first_intake - NOVEMBER7_BATCH10_INVALIDATED_KEYS
     assert len(expected) == 42
     assert NOVEMBER12_COPY_INVALIDATED_KEYS.issubset(expected)
-    return expected - NOVEMBER12_COPY_INVALIDATED_KEYS
+    after_copy = expected - NOVEMBER12_COPY_INVALIDATED_KEYS
+    assert NOVEMBER15_INVALIDATED_KEYS.issubset(after_copy)
+    return after_copy - NOVEMBER15_INVALIDATED_KEYS

@@ -238,6 +238,20 @@
       "correct": "def transpose_in_place(matrix):\n    \"\"\"Transpose a square list of distinct mutable rows and return it.\"\"\"\n    size = len(matrix)\n    for row in range(size):\n        for col in range(row + 1, size):\n            matrix[row][col], matrix[col][row] = matrix[col][row], matrix[row][col]\n    return matrix\n",
       "wrong": "def transpose_in_place(matrix):\n    return matrix\n",
       "syntax_error": "def transpose_in_place(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-interesting-digital-clock-times",
+      "language": "python",
+      "correct": "\"\"\"Count inclusive same-day timestamps with at most two decimal digits.\"\"\"\ndef clock_seconds(value):\n    if not isinstance(value, str) or len(value) != 8 or value[2] != \":\" or value[5] != \":\":\n        raise ValueError(\"HH:MM:SS required\")\n    digits = value[:2] + value[3:5] + value[6:]\n    if not all(\"0\" <= c <= \"9\" for c in digits):\n        raise ValueError(\"ASCII decimal digits required\")\n    h, m, s = int(value[:2]), int(value[3:5]), int(value[6:])\n    if h >= 24 or m >= 60 or s >= 60:\n        raise ValueError(\"Invalid time\")\n    return h * 3600 + m * 60 + s\n\n\ndef count_interesting_times(start, end):\n    first, last = clock_seconds(start), clock_seconds(end)\n    if first > last:\n        raise ValueError(\"Same-day ordered interval required\")\n    count = 0\n    for second in range(first, last + 1):\n        h, remainder = divmod(second, 3600)\n        m, s = divmod(remainder, 60)\n        text = f\"{h:02d}{m:02d}{s:02d}\"\n        if len(set(text)) <= 2:\n            count += 1\n    return count\n",
+      "wrong": "def count_interesting_times(start, end):\n    return 0\n",
+      "syntax_error": "def count_interesting_times(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-binary-tree-preorder-null-codec",
+      "language": "python",
+      "correct": "\"\"\"A flat preorder JSON array, with null marking each empty child.\"\"\"\nimport json\nfrom dataclasses import dataclass\n\n\n@dataclass\nclass Node:\n    value: int\n    left: object = None\n    right: object = None\n\n\ndef serialize(root):\n    tokens, pending = [], [root]\n    while pending:\n        node = pending.pop()\n        if node is None:\n            tokens.append(None)\n        else:\n            if type(node.value) is not int:\n                raise ValueError(\"Integer values required\")\n            tokens.append(node.value)\n            pending.extend((node.right, node.left))\n    return json.dumps(tokens, separators=(\",\", \":\"))\n\n\ndef deserialize(text):\n    tokens = json.loads(text)\n    if not isinstance(tokens, list):\n        raise ValueError(\"Token array required\")\n    root, slots = None, [(None, None)]\n    for token in tokens:\n        if not slots:\n            raise ValueError(\"Extra token\")\n        parent, side = slots.pop()\n        if token is not None and type(token) is not int:\n            raise ValueError(\"Integer or null required\")\n        node = None if token is None else Node(token)\n        if parent is None:\n            root = node\n        else:\n            setattr(parent, side, node)\n        if node is not None:\n            slots.extend(((node, \"right\"), (node, \"left\")))\n    if slots:\n        raise ValueError(\"Incomplete encoding\")\n    return root\n\n\ndef tree_codec_round_trip(serialized):\n    return serialize(deserialize(serialized))\n",
+      "wrong": "def tree_codec_round_trip(serialized):\n    return serialized\n",
+      "syntax_error": "def tree_codec_round_trip(*args)\n    return None\n"
     }
   ]
 }

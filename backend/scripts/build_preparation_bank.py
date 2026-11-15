@@ -86,6 +86,23 @@ PRIMARY = [
     "fsm_controllers", "tradeoff_reasoning", "edge_detection", "binary_arithmetic",
     "counters", "setup_hold_timing", "tradeoff_reasoning", "binary_arithmetic",
     "number_representation",
+    # PREP-330 through PREP-345, in archive order.
+    "arrays_and_search",
+    "bit_manipulation",
+    "code_debugging",
+    "basic_data_structures",
+    "basic_data_structures",
+    "code_debugging",
+    "code_debugging",
+    "basic_data_structures",
+    "counters",
+    "registers_shifters",
+    "combinational_blocks",
+    "fsm_state_tables",
+    "latches_flip_flops",
+    "estimation_sanity_checks",
+    "estimation_sanity_checks",
+    "tradeoff_reasoning",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

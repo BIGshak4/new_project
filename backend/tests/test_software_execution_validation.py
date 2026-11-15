@@ -60,7 +60,7 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
         allocate(questions, positives, maximum=1)
 
 
-def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_110_membership():
+def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_118_membership():
     scope = json.loads((BACKEND / 'tests/fixtures/software_question_scope.json').read_bytes())
     seeds = {q['key']: q for name in ('example_bank.json', 'preparation_bank.json')
              for q in json.loads((BACKEND / 'seeds/questions' / name).read_bytes())}
@@ -98,7 +98,13 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_110
         "prep-linked-list-versus-vector-insertion", "prep-forbidden-words-in-text",
         "prep-square-matrix-transpose-in-place",
     }
-    assert len(expected) == 110 and november14_additions <= expected
+    november15_additions = {
+        'prep-interesting-digital-clock-times', 'prep-array-product-without-multiplication',
+        'prep-checked-c-string-copy-contract', 'prep-binary-tree-preorder-null-codec',
+        'prep-mutex-versus-counting-semaphore', 'prep-three-single-character-loop-repairs',
+        'prep-c-variadic-arguments-and-promotions', 'prep-two-thread-reusable-generation-barrier',
+    }
+    assert len(expected) == 118 and november15_additions | november14_additions <= expected
     assert november1_endpoint - october_endpoint == {
         'prep-c-linked-list-dictionary-ownership', 'prep-reverse-singly-linked-list-in-place',
         'prep-streaming-csv-parser-without-library', 'prep-networking-basics-and-interview-answer-prompts',
@@ -131,7 +137,7 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_110
         'prep-longest-ones-interval', 'prep-cpp-atoi-style-parser',
         'prep-black-component-bounding-boxes', 'prep-monotone-grid-paths-dp',
     }
-    assert expected - november14_additions - november7_night_endpoint == {'prep-remove-all-ascii-spaces', 'prep-java-fixed-capacity-integer-stack', 'prep-fifo-queue-using-two-stacks', 'prep-cursor-list-using-two-stacks', 'prep-exact-integer-division-unit-instructions'}
+    assert expected - november15_additions - november14_additions - november7_night_endpoint == {'prep-remove-all-ascii-spaces', 'prep-java-fixed-capacity-integer-stack', 'prep-fifo-queue-using-two-stacks', 'prep-cursor-list-using-two-stacks', 'prep-exact-integer-division-unit-instructions'}
     assert october_endpoint - rows.keys() == {
         'prep-merge-k-sorted-linked-lists', 'prep-most-frequent-word-list',
         'prep-ascii-word-anagrams', 'prep-stack-adt-and-call-stack-uses',

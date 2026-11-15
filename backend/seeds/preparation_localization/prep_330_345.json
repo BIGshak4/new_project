@@ -1,0 +1,1028 @@
+{
+  "PREP-330": {
+    "assumptions": {
+      "he": [
+        "זמני הקלט חוקיים באותו יום, בפורמט ASCII קבוע. השעות כוללות אפסים מובילים."
+      ],
+      "en": [
+        "Valid fixed-width ASCII times on the same day, including leading zeroes."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(K) זמן ו־O(1) זיכרון נוסף לסריקה הראשית. K≤86400 תחת חוזה של יום אחד.",
+      "en": "Θ(K) scan time and O(1) extra space. K≤86400 under the same-day contract."
+    },
+    "verification": {
+      "he": [
+        "סריקת כל היום והשוואת תנאי המסכה לבדיקה בלתי תלויה באמצעות קבוצת ספרות. נבדקו גם שני קצוות זהים והדוגמאות."
+      ],
+      "en": [
+        "Every second of the day was compared using independent mask and digit-set predicates, together with both examples and singleton boundaries."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "00:00:00 עד אותה שעה מחזיר 1; גבול דקה, גבול שעה ו־23:59:59 נכללים כרגיל."
+      ],
+      "en": [
+        "A singleton interval 00:00:00 returns 1. Minute/hour boundaries and 23:59:59 remain valid endpoints."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ספירת הנקודתיים, השמטת אפסים מובילים או עצירה לפני T משנים את התנאי."
+      ],
+      "en": [
+        "Counting colons, dropping leading zeroes or excluding T changes the stated test."
+      ]
+    },
+    "interview_answer": {
+      "he": "אעבור על השניות בטווח ואספור רק זמנים בעלי לכל היותר שתי ספרות שונות.",
+      "en": "Visit each second and count exactly those six-digit displays containing at most two distinct digits."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד תענו על מיליון שאילתות לאותו יום?",
+          "answer_direction": "בנו prefix[second+1] כסכום האינדיקטורים. תשובת [a,b] היא prefix[b+1]−prefix[a].",
+          "principle": "החלפת עבודה חוזרת בהכנה מראש."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would you answer a million queries for the same day?",
+          "answer_direction": "Precompute prefix[second+1]. Then [a,b] has prefix[b+1]−prefix[a] interesting displays.",
+          "principle": "Replace repeated scanning with preprocessing."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "החוזה משמר את השעות ואת שתי הדוגמאות. הוספנו תמיכה גם בטווח בעל נקודת זמן אחת."
+      ],
+      "en": [
+        "The contract preserves the time format and both examples, and also permits a single-timestamp interval."
+      ]
+    }
+  },
+  "PREP-331": {
+    "assumptions": {
+      "he": [
+        "int32_t, int64_t ו־uint64_t קיימים. האחסון תקף והגודל ידוע."
+      ],
+      "en": [
+        "int32_t, int64_t and uint64_t exist; the declared storage extent is valid."
+      ]
+    },
+    "optimality": {
+      "he": "O(nW) זמן ו־O(1) מקום עזר עבור רוחב קבוע. אין טענת אופטימליות של מספר פעולות הביטים.",
+      "en": "O(nW) time and O(1) auxiliary space, with fixed operand width. No minimum-bit-operation claim."
+    },
+    "verification": {
+      "he": [
+        "המימוש קומפל והושווה למכפלת שלמים בלתי חסומים, כולל אפס, סימנים וגבולות טיפוס."
+      ],
+      "en": [
+        "Compiled C was compared with unbounded-integer multiplication, including zero, sign combinations and type boundaries."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "[] נותן 1. [INT32_MIN,−1] ניתן לייצוג ב־int64_t. גם אפס אחרי קידומת גדולה מחייב להחזיר 0."
+      ],
+      "en": [
+        "[] gives one. [INT32_MIN,−1] fits int64_t. Zero after a large prefix must still return zero."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "גלישה של signed int היא התנהגות לא מוגדרת. מעבר ל־unsigned לבדו מספק שארית מודולרית, שאינה המכפלה המדויקת שנדרשה."
+      ],
+      "en": [
+        "Signed overflow is undefined. Unsigned wrap alone computes a modular result and does not report an exact overflowing product."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחשב סימן ואפס תחילה, ואז אכפיל גדלים ב־shift-and-add עם בדיקת גבול לפני כל חיבור.",
+      "en": "Determine sign and zero first, then use bounded shift-and-add multiplication of magnitudes."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך תפיקו מכפלה מודולרית במילה unsigned?",
+          "answer_direction": "בחרו חוזה מודולו 2^W ותנו לחיבור unsigned להצטמצם בהתאם; זה משנה את משמעות הפלט.",
+          "principle": "התאמת חוזה מספרי."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would a fixed-width modular product differ?",
+          "answer_direction": "Choose output modulo 2^W and use unsigned arithmetic with its defined wrap behavior.",
+          "principle": "Match the numerical contract."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הוגדרו int32_t כקלט ו־int64_t כפלט, עם דיווח כשל על גלישה. מכפלת מערך ריק הוגדרה 1."
+      ],
+      "en": [
+        "The chosen bounded contract uses int32_t inputs and int64_t output, reports overflow, and defines the empty product as one."
+      ]
+    }
+  },
+  "PREP-332": {
+    "assumptions": {
+      "he": [
+        "הקיבולות מתארות בתים קריאים/כתיבים של אחסון חי. אורך המחרוזת נקבע ב־NUL הראשון."
+      ],
+      "en": [
+        "Capacities describe valid live storage, and the first NUL determines string length."
+      ]
+    },
+    "optimality": {
+      "he": "O(L+1) זמן. הממשק אינו מקצה זיכרון נוסף.",
+      "en": "O(L+1) time. The wrapper allocates no auxiliary storage."
+    },
+    "verification": {
+      "he": [
+        "קומפלו ובוצעו מקרים של מקור ויעד זהים, חפיפה לשני הצדדים, יעד קצר, מקור ללא NUL ומחרוזת ריקה."
+      ],
+      "en": [
+        "Compiled cases cover identical pointers, both overlap directions, insufficient capacity, unterminated input and the empty string."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "מחרוזת ריקה דורשת בייט יעד אחד. source=target תקין אם הקיבולות מספיקות. בדקו חפיפה לשני הכיוונים."
+      ],
+      "en": [
+        "An empty string still needs one target byte. Identical pointers are valid with enough capacity. Test both overlap directions."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בדיקת NULL אינה מאמתת lifetime או גודל הקצאה. strncpy אינה מבטיחה NUL אם המקור ארוך מדי."
+      ],
+      "en": [
+        "A NULL test does not validate lifetime or allocation size. strncpy can leave an overlong result unterminated."
+      ]
+    },
+    "interview_answer": {
+      "he": "אאמת מקור מסוים וקיבולת כולל NUL, ואז אשתמש ב־memmove להעתקה שמכבדת חפיפה.",
+      "en": "Validate a bounded source and capacity including NUL, then copy with memmove."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם אסור להשתמש בספריית ההעתקה?",
+          "answer_direction": "הגדירו מודל אחד של מערך בסיס וקיזוזים תקפים, ואז בחרו כיוון העתקה לפי הטווחים. השוואת סדר של מצביעים מאובייקטים לא קשורים אינה ניידת ב־C.",
+          "principle": "חפיפה ומודל מצביעים."
+        }
+      ],
+      "en": [
+        {
+          "question": "How could a manual overlap-safe loop be specified portably?",
+          "answer_direction": "Use one base array and valid offsets, then choose copy direction by range ordering. Relational comparisons between pointers into unrelated objects are not portable C.",
+          "principle": "Overlap and pointer models."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הוספנו חוזה קיבולות ובחרנו תמיכה בחפיפה באמצעות memmove."
+      ],
+      "en": [
+        "Added explicit readable/writable capacities and overlap support using memmove."
+      ]
+    }
+  },
+  "PREP-333": {
+    "assumptions": {
+      "he": [
+        "הקלט הוא עץ סופי ללא מעגלים או שיתוף צמתים, וערכי הצמתים הם שלמים."
+      ],
+      "en": [
+        "A finite tree with no cycles or shared nodes and integer-valued nodes."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(n) עבודה ו־2n+1 סמנים, לצד גודל הייצוג הטקסטואלי של הערכים.",
+      "en": "Θ(n) token work, 2n+1 tokens, plus the textual size of integer values."
+    },
+    "verification": {
+      "he": [
+        "נבדקו עצים קטנים מול קידוד רקורסיבי עצמאי, ערכים כפולים, קבצים פגומים ושרשרת של 5000 צמתים."
+      ],
+      "en": [
+        "Small trees were compared with an independent recursive codec. Checks include duplicates, malformed encodings and a 5000-node chain."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "עץ ריק, שרשרת עמוקה, שני ילדים באותו ערך, token מיותר ו־null חסר."
+      ],
+      "en": [
+        "Empty tree, a deep chain, equal child values, extra tokens and a missing null."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "preorder בלי סמני חסר אינו מספיק. ערכים חוזרים מונעים הסתמכות כללית על התאמה לפי ערך."
+      ],
+      "en": [
+        "Preorder values without empty markers lose structure. Duplicate values prevent general value-based reconstruction."
+      ]
+    },
+    "interview_answer": {
+      "he": "אכתוב preorder עם null לכל ילד חסר ואפענח בעזרת מחסנית מיקומים.",
+      "en": "Use preorder plus null child markers, then fill child slots from an explicit stack."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם preorder ו־inorder מספיקים כשיש ערכים חוזרים?",
+          "answer_direction": "בכלליות לא, משום שזהות הערכים אינה מבדילה בין מיקומי צמתים. נדרשים מזהים או מידע מבני נוסף.",
+          "principle": "יחידות הקידוד."
+        }
+      ],
+      "en": [
+        {
+          "question": "Do preorder and inorder uniquely identify trees with duplicates?",
+          "answer_direction": "Not generally. Equal values fail to distinguish node positions; add identities or structural information.",
+          "principle": "Uniqueness of representation."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "החוזה משתמש בערכי int ובקובץ JSON של סמני preorder. נדרשת התאמה בצורה ובערכים."
+      ],
+      "en": [
+        "The chosen format stores integer values as a JSON preorder token array. Equality means equal shape and values."
+      ]
+    }
+  },
+  "PREP-334": {
+    "assumptions": {
+      "he": [
+        "כל פעולות הפרימיטיב אטומיות לפי ה־API, והנעילה והמשאבים מאותחלים לפני הפעלת החוטים."
+      ],
+      "en": [
+        "Primitive operations are atomic under their API, and initialization occurs before workers start."
+      ]
+    },
+    "optimality": {
+      "he": "זהו ניתוח סמנטי. תזמון, fairness ועלות context switch תלויים בפלטפורמה.",
+      "en": "A semantic comparison. Scheduling, fairness and context-switch cost depend on the platform."
+    },
+    "verification": {
+      "he": [
+        "נבדק מודל הרשאות קטן עבור מכסה ואיתות. קוד mutex נכתב לפי ממשק threads.h של C11 ונבדק בקריאה; סביבת C המקומית אינה מספקת threads.h."
+      ],
+      "en": [
+        "Small permit-state models cover quotas/signaling. The C11 threads.h listing was reviewed as source; the local C toolchain does not provide threads.h."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "פרסום לפני wait יכול להישמר כהרשאה בסמפור. אין לקרוא destroy בזמן שחוטים ממתינים."
+      ],
+      "en": [
+        "A post before wait can remain as a stored permit. Do not destroy a primitive while threads are waiting."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "סמפור מאותחל ל־1 אינו יוצר אוטומטית את כללי הבעלות של mutex. sleep אינו פרימיטיב סנכרון."
+      ],
+      "en": [
+        "A semaphore initialized to one does not automatically implement mutex ownership rules. Sleeping supplies no synchronization guarantee."
+      ]
+    },
+    "interview_answer": {
+      "he": "Mutex מייצג בעלות בלעדית על אזור קריטי; סמפור מייצג הרשאות ולפיכך מתאים גם למכסה ולאיתות.",
+      "en": "A mutex expresses exclusive ownership; a semaphore expresses permits for quotas and signaling."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך תימנעו מ־deadlock בין שני mutex?",
+          "answer_direction": "קבעו סדר גלובלי לרכישתם או רכשו קבוצת נעילות באמצעות מנגנון מתאים. שחררו בכל מסלול.",
+          "principle": "סדר רכישה וחיים."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can two-mutex deadlock be prevented?",
+          "answer_direction": "Use a global acquisition order or a suitable multi-lock acquisition mechanism, and release on every path.",
+          "principle": "Acquisition ordering and lifetime."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "נבחר מודל של חוטים במרחב כתובות משותף. פרטי fairness תלויים במימוש."
+      ],
+      "en": [
+        "The primary model uses threads with shared memory; fairness depends on the implementation."
+      ]
+    }
+  },
+  "PREP-335": {
+    "assumptions": {
+      "he": [
+        "C11, משתני int, n מאותחל ל־20 בתחילת כל הרצה."
+      ],
+      "en": [
+        "C11 signed int variables, with n reset to twenty before every run."
+      ]
+    },
+    "optimality": {
+      "he": "20 איטרציות לכל גרסה ו־O(1) מקום עזר.",
+      "en": "Twenty iterations per version and O(1) extra storage."
+    },
+    "verification": {
+      "he": [
+        "קוד C קומפל והורץ. הפלט אומת כשלוש שורות שכל אחת מכילה בדיוק 20 מקפים."
+      ],
+      "en": [
+        "Compiled C output was checked as three lines of exactly twenty hyphens each."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "יש להחזיר n ל־20 לפני כל גרסה. שימוש ב־unsigned משנה את הניתוח המקורי."
+      ],
+      "en": [
+        "Reset n to twenty each time. Unsigned declarations change the original arithmetic analysis."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "פלט של 20 מקפים כשמשתמשים בשתי עריכות אינו עומד בחוזה. אין להסיק שתנאי for חייב להיות השוואה."
+      ],
+      "en": [
+        "A version using two edits fails the contract even if its output has twenty hyphens. A for condition need not be a comparison."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשנה את התנאי ל־-i<n או ל־i+n, או אקטין את n במקום i. כל גרסה עוצרת אחרי 20 הדפסות.",
+      "en": "Use -i<n, i+n, or --n as three separate one-character edits."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איזו גרסה שומרת את n?",
+          "answer_direction": "שתי הראשונות. השלישית צורכת את המונה n.",
+          "principle": "תופעות לוואי כחלק מחוזה."
+        }
+      ],
+      "en": [
+        {
+          "question": "Which versions preserve n?",
+          "answer_direction": "The first two. The third consumes it.",
+          "principle": "Side effects belong to the contract."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "קבענו int n=20 ו־int i לפני כל הרצה עצמאית. כל פתרון עורך תו אחד בלבד."
+      ],
+      "en": [
+        "Each independent run starts with int n=20 and int i. Each solution inserts or replaces one character."
+      ]
+    }
+  },
+  "PREP-336": {
+    "assumptions": {
+      "he": [
+        "כל ארגומנט משתנה נקרא כ־double אחרי promotions והכמות נכונה. overflow מספרי אינו חלק מחוזה דיוק הסכימה."
+      ],
+      "en": [
+        "Correct count and argument types after promotions. Floating-point numerical overflow is outside this summation contract."
+      ]
+    },
+    "optimality": {
+      "he": "O(count) זמן ו־O(1) זיכרון נוסף לסכימה.",
+      "en": "O(count) time and O(1) additional space."
+    },
+    "verification": {
+      "he": [
+        "קומפלו והרוצו דוגמאות נכונות, count=0 והעברת רשימה עם va_copy. בכוונה לא הורצו קריאות בעלות התנהגות לא מוגדרת."
+      ],
+      "en": [
+        "Compiled valid examples, count=0 and va_copy forwarding. Calls with undefined behavior were deliberately excluded."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "count=0, ערכי double שליליים, float שמקודם ל־double, ושתי סריקות של אותה רשימה דרך עותקים."
+      ],
+      "en": [
+        "Zero count, negative double values, a float promoted to double, and independent copied-list traversals."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שליחת int במקום double אינה המרה אוטומטית אחרי ... . גם מספר פרמטרים לא נכון אינו שגיאה שהפונקציה יכולה לאתר באופן כללי."
+      ],
+      "en": [
+        "An int is not automatically converted to double after an ellipsis. Wrong argument counts cannot generally be detected by the callee."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשתמש ב־stdarg ובחוזה שמגדיר כמות וטיפוסים. כל va_start או va_copy יקבלו va_end.",
+      "en": "Use stdarg under an explicit count/type contract, pairing va_start and va_copy with va_end."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מדוע printf יכולה לזהות חלק מאי־ההתאמות בזמן קומפילציה?",
+          "answer_direction": "מהדר יכול להכיר פונקציה ופורמט קבוע ולהתריע. זו בדיקה נוספת שאינה מוסיפה מטא־מידע כללי לכל קריאת varargs.",
+          "principle": "חוזה שפה לעומת אבחון כלי."
+        }
+      ],
+      "en": [
+        {
+          "question": "Why can a compiler diagnose some printf mismatches?",
+          "answer_direction": "It can recognize a known function and constant format. This diagnostic does not add generic runtime metadata to every variadic call.",
+          "principle": "Language contract versus tooling."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "נבחר תרגיל מסוים של סכום double עם count מפורש, לצד הסבר חוזה printf."
+      ],
+      "en": [
+        "The concrete task sums double values with an explicit count and explains printf's format contract."
+      ]
+    }
+  },
+  "PREP-337": {
+    "assumptions": {
+      "he": [
+        "בדיוק שני עובדים, קריאה אחת בכל סבב, וסנכרון זיכרון לפי חוזה mutex/condition."
+      ],
+      "en": [
+        "Exactly two workers, one wait per round, with mutex/condition memory-synchronization semantics."
+      ]
+    },
+    "optimality": {
+      "he": "O(1) מצב משותף. עבודת הניהול לכל הגעה קבועה; זמן ההמתנה תלוי בעובד השני ובמתזמן.",
+      "en": "O(1) shared state and constant bookkeeping per arrival. Wait duration depends on the peer and scheduler."
+    },
+    "verification": {
+      "he": [
+        "בדיקת שני חוטים עם עיכובים שונים אימתה שאף עובד אינו יוצא מסבב לפני ששתי הגעותיו נרשמו. נבדקו גם דורות רבים."
+      ],
+      "en": [
+        "Two workers with differing delays verified no exit before both arrivals in its round, over many generations."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "עובד מהיר, השכמה מדומה, הרבה סבבים, ושני עובדים שמגיעים כמעט יחד."
+      ],
+      "en": [
+        "A fast worker, spurious wakeups, many rounds and nearly simultaneous arrivals."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "sleep אינו מוכיח ששני החוטים הגיעו. איפוס דגל רגיל ללא דור עלול לאבד שחרור או לערבב סבבים."
+      ],
+      "en": [
+        "Sleep does not prove arrivals. Resetting an unversioned flag can lose releases or mix rounds."
+      ]
+    },
+    "interview_answer": {
+      "he": "אשתמש במונה הגעות ובמספר דור תחת Condition. השני מקדם דור, והראשון ממתין כל עוד דורו לא השתנה.",
+      "en": "Use an arrival count and generation under a Condition. The second arrival advances the generation and the first waits while its generation is unchanged."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה צריך לקרות אם עובד מתבטל לפני המחסום?",
+          "answer_direction": "הוסיפו מצב broken ושגיאה לכל הממתינים או timeout מוגדר. זו הרחבת חוזה ויש להגדיר מדיניות לכל הסבבים.",
+          "principle": "חיות תחת כשל."
+        }
+      ],
+      "en": [
+        {
+          "question": "How should worker cancellation be handled?",
+          "answer_direction": "Add a broken state and an error for all waiters, or a defined timeout policy covering subsequent rounds.",
+          "principle": "Liveness under failure."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "החוזה מניח ששני העובדים קוראים פעם אחת בכל סבב. טיפול בכשל של עובד מוצג כהמשך."
+      ],
+      "en": [
+        "Both workers call once per round; worker failure handling is a follow-up."
+      ]
+    }
+  },
+  "PREP-338": {
+    "assumptions": {
+      "he": "טעינה מקבילית סינכרונית מוגדרת במפורש; פלט ללא סימן q; כל החזיתות משותפות.",
+      "en": "Explicit synchronous parallel-load interface, unsigned q output and a single shared rising clock."
+    },
+    "optimality": {
+      "he": "חמש תוצאות שונות מחייבות לפחות שלוש סיביות מצב. אין הוכחת מינימום תאי שער.",
+      "en": "Five distinct states require at least three state bits. No global gate-count optimum is claimed."
+    },
+    "verification": {
+      "he": "כל שמונת המצבים ושתי חלופות הפענוח נבדקו במודל פייתון מול הטבלה המפורשת.",
+      "en": "All eight states and both decoder variants were checked against the explicit table in a Python logical model."
+    },
+    "edge_cases": {
+      "he": [
+        "אתחול ב־1; התאוששות מ־0,6,7; מעבר 5→1."
+      ],
+      "en": [
+        "Initialize at one, recover from 0/6/7 and check the 5→1 boundary."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הנחת כניסת reset שלא הוגדרה; שימוש ב־don’t care תוך הבטחת התאוששות; יצירת שעון משער רגיל."
+      ],
+      "en": [
+        "Assuming an unspecified reset, declaring illegal codes don’t-care while promising recovery, or creating a clock with an ordinary gate."
+      ]
+    },
+    "interview_answer": {
+      "he": "טוענים 1 אחרי 5 וב־6 או 7. מצב 0 מתקדם ל־1 ממילא. פענוח סינכרוני שומר את המחזור ואת השעון.",
+      "en": "Load one after five and from six/seven, with zero naturally incrementing to one, using synchronous feedback with the original clock."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו מפרט ממשק טעינה או כיוון reset. נבחר ממשק מפורש, ונבחנה גם הקופסה החופשית.",
+      "en": "The source omits load/reset interfaces. The exercise declares one and separately analyzes the free-running alternative."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך סופרים 0..4 ומציגים 1..5?",
+          "direction": "אפסו בסנכרון ב־4 והוסיפו 1 לפלט בשערים.",
+          "tests": "הבחנה בין קידוד מצב לבין ערך מוצג."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can internal states 0..4 display 1..5?",
+          "direction": "Clear synchronously at four and add one with combinational gates.",
+          "tests": "Separate state encoding from displayed value."
+        }
+      ]
+    }
+  },
+  "PREP-339": {
+    "assumptions": {
+      "he": "הסדר הוא S0,S1,S2 משמאל לימין; דגימה בחזית עולה ומצב התחלתי ידוע.",
+      "en": "Bit order is S0,S1,S2 left to right, with rising-edge updates and known initialization."
+    },
+    "optimality": {
+      "he": "שלושה FF ושער XOR מתארים את המימוש הנתון.",
+      "en": "Three DFFs and one XOR describe the supplied recurrence."
+    },
+    "verification": {
+      "he": "נבדקו כל שמונת המצבים ו־70 חזיתות מול סדרת המחזור.",
+      "en": "All eight transitions and seventy edges were checked against the listed cycle."
+    },
+    "edge_cases": {
+      "he": [
+        "000 ננעל; 001 חוזר אחרי שבע; y מוגדר גם לפני חזית ראשונה."
+      ],
+      "en": [
+        "000 stays zero, 001 returns after seven edges, and y is defined before the first edge."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "עדכון FF אחד לפני חישוב הבא; קריאת 001 בסדר הפוך."
+      ],
+      "en": [
+        "Updating one stage before computing the next or reversing the printed 001 order."
+      ]
+    },
+    "interview_answer": {
+      "he": "מחשבים מן המצב הישן את (S1 XOR S2,S0,S1), ומקבלים מחזור בן שבעה מצבים.",
+      "en": "Compute (S1 XOR S2,S0,S1) from the old state to obtain a seven-state cycle."
+    },
+    "source_ambiguities": {
+      "he": "נוסח כתב היד תומלל כבקשה למצב ולמוצא אחרי חזיתות שעון; שבע חזיתות מאפשרות לראות מחזור שלם.",
+      "en": "The handwritten request is completed as state/output tracing over seven edges to expose one full cycle."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם נוסיף איפוס לאפס?",
+          "direction": "האוגר יישאר ב־000; יש לבחור seed לא־אפס.",
+          "tests": "בחירת אתחול לאוגר משוב לינארי."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if reset initializes every bit to zero?",
+          "direction": "It remains 000; choose a nonzero seed.",
+          "tests": "Initialization of a linear feedback register."
+        }
+      ]
+    }
+  },
+  "PREP-340": {
+    "assumptions": {
+      "he": "16 מילים unsigned מקבילות; פלט הערך בלבד; שערים דו־כניסתיים לניתוח עלות.",
+      "en": "Sixteen parallel unsigned words, value-only output, and two-input gates for cost analysis."
+    },
+    "optimality": {
+      "he": "מימוש מפורש עם 46 OR, ‏17 AND ו־NOT אחד לפי הספירה שבפתרון. אין הוכחת מינימום פיזי.",
+      "en": "The explicit layout uses 46 OR, 17 AND and one NOT under the stated gate-count metric, without a physical minimum claim."
+    },
+    "verification": {
+      "he": "נבדקו כל 969 ההיסטוגרמות של 16 ערכים בתחום 0..3, עוד 4,096 תרחישי מיקומים של זוגות ו־1,000 וקטורים פסאודו־אקראיים מול max. המשוואות סימטריות תחת החלפת מילים.",
+      "en": "All 969 histograms of sixteen values in 0..3, 4,096 paired-value position patterns and 1,000 deterministic pseudorandom vectors were checked against max. The equations are symmetric under word permutation."
+    },
+    "edge_cases": {
+      "he": [
+        "כל האפסים; 1 יחד עם 2; הופעה יחידה של 3."
+      ],
+      "en": [
+        "All zeroes, one together with two, and one isolated three."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "OR של כל 32 הסיביות מפיק לפעמים ערך שלא נכנס."
+      ],
+      "en": [
+        "Bitwise OR can return a value absent from the input."
+      ]
+    },
+    "interview_answer": {
+      "he": "מזהים אם יש לפחות 2, אם יש 1 או 3, ואם יש 3; מחברים את שלוש עובדות הקיום לשתי סיביות פלט.",
+      "en": "Combine the presence of a high bit, a low bit and the value three into two output equations."
+    },
+    "source_ambiguities": {
+      "he": "הקלט נבחר כ־unsigned והיציאה היא ערך המקסימום, בהתאם לציור.",
+      "en": "Unsigned inputs and value-only output follow the pictured two-bit interface."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מוסיפים אינדקס של המקסימום הראשון?",
+          "direction": "בנו מסכת שוויון למקסימום ומקודד עדיפות.",
+          "tests": "ערך ותיקו לעומת בחירת מיקום."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can the first maximal index be returned?",
+          "direction": "Compare each word with the result and priority-encode the equality mask.",
+          "tests": "Value selection versus tie-broken location."
+        }
+      ]
+    }
+  },
+  "PREP-341": {
+    "assumptions": {
+      "he": "אלפבית a,b, אורך עד 3, זרם תווים סינכרוני ו־14 סיביות seen.",
+      "en": "Alphabet a,b, length at most three, a synchronous character stream and fourteen seen bits."
+    },
+    "optimality": {
+      "he": "הקידוד משתמש במפת ביטים ישירה. גודל הזיכרון נקבע ממספר המילים המותרות.",
+      "en": "A direct bitmap realizes exact membership. Its size is determined by the finite word universe."
+    },
+    "verification": {
+      "he": "מודל הזרם הושווה ל־set של מילים במאות תרחישי חזרות, רווחים ו־newline, עם שגיאות ו־valid.",
+      "en": "The streaming model was compared with a word-set oracle over repeated words, spaces, newline, errors and valid stalls."
+    },
+    "edge_cases": {
+      "he": [
+        "מילה אחרונה ללא רווח; רווחים חוזרים; כל 14 המילים; אות רביעית."
+      ],
+      "en": [
+        "Final word without a space, repeated spaces, all fourteen words, and a fourth letter."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ספירת מעברי רווח בלבד; אי־שמירת אורך בקידוד; השמטת מילה לפני newline."
+      ],
+      "en": [
+        "Counting space transitions alone, omitting prefix length, or dropping the final word at newline."
+      ]
+    },
+    "interview_answer": {
+      "he": "שומרים מילה נוכחית ומפת seen; בגבול מילה מגדילים רק אם המילה חדשה.",
+      "en": "Retain a current-word code and seen bitmap, incrementing at word boundaries only for a new word."
+    },
+    "source_ambiguities": {
+      "he": "המקור אינו חוסם את האלפבית או אורך המילה. נבחר תחום סופי, והפתרון מסביר את גבול המימוש הכללי.",
+      "en": "The source omits alphabet and word-length bounds. A finite exercise is declared and the general implementation limit is explained."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה מחיר מימוש עבור ASCII ואורך 8?",
+          "direction": "השוו מפה ישירה עצומה למילון RAM עם השוואת מילים מלאות.",
+          "tests": "מכונת בקרה לעומת זיכרון נתונים והימנעות מהתנגשויות."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes for ASCII words of length eight?",
+          "direction": "Compare a huge direct bitmap with a RAM dictionary retaining complete words.",
+          "tests": "Control FSM versus data memory and collision-free equality."
+        }
+      ]
+    }
+  },
+  "PREP-342": {
+    "assumptions": {
+      "he": "חוצצים תלת־מצביים פעילים בגבוה; n ו־y מחזיקים מטען אידאלי לזמן הניסוי; b יציב סביב העלייה בתרחיש הדגימה.",
+      "en": "Active-high tri-state buffers, ideal finite-experiment retention on n/y, and b stable around the sampling rise."
+    },
+    "optimality": {
+      "he": "השרטוט מנתח רשת מוגדרת, ללא טענת מינימום או signoff לתא דינמי.",
+      "en": "The exercise analyzes the declared network, without a cell-minimum or physical signoff claim."
+    },
+    "verification": {
+      "he": "כל 16 צירופי a,b,n,y ותרחישי דגימה קצרים נבדקו במודל שימור ערכים אידאלי.",
+      "en": "All sixteen a/b/n/y combinations and short acquisition traces were checked in an ideal retained-value model."
+    },
+    "edge_cases": {
+      "he": [
+        "ערך y התחלתי לא ידוע; n אינו שווה ל־b במהלך השלב הגבוה; צומת כבוי."
+      ],
+      "en": [
+        "Unknown initial y, n differing from b during the high phase, and undriven nodes."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "השוואת Z לאפס; בניית טבלת אמת ללא מצב קודם; הכרזה על FF סטטי משערי משוב בלבד."
+      ],
+      "en": [
+        "Equating Z with zero, omitting prior state from a truth table, or declaring static FF behavior from a feedback sketch alone."
+      ]
+    },
+    "interview_answer": {
+      "he": "T1 דוגם בשלב הנמוך, ו־T2 מעביר את הדגימה בעלייה כשיש צורך בשינוי. ההחזקה היא הנחת מודל דינמית.",
+      "en": "T1 acquires during the low phase and T2 transfers the sample at a rise when an update is needed, under an explicit dynamic-retention model."
+    },
+    "source_ambiguities": {
+      "he": "פירוש החוצצים והחיבורים הושלם כרשת ערוכה עצמאית. הוא אינו תמלול ודאי של סמלי המקור.",
+      "en": "The buffers and connections were completed as an explicit edited netlist; this is a chosen interpretation of incomplete source symbols."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם a יישאר גבוה זמן בלתי מוגבל?",
+          "direction": "במעגל דינמי המטען על n עלול לדלוף; המודל הבינארי אינו נותן הבטחת זמן כזו.",
+          "tests": "אחסון דינמי לעומת החזקה סטטית."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if a remains high indefinitely?",
+          "direction": "A dynamic n node can lose charge; the retained-bit model gives no indefinite timing guarantee.",
+          "tests": "Dynamic retention versus static storage."
+        }
+      ]
+    }
+  },
+  "PREP-343": {
+    "assumptions": {
+      "he": [
+        "לפחות אישה אחת בוגדת; המידע על האחרות נכון ומלא.",
+        "ההודעה, ההיגיון המושלם, חצות וכללי הפעולה הם ידיעה משותפת. אין תקשורת נוספת ואין עיכוב מכוון אחרי הסקה ודאית."
+      ],
+      "en": [
+        "There is at least one unfaithful wife, and information about all other wives is accurate and complete.",
+        "Perfect reasoning, simultaneous midnights, the public announcement and the rule to act immediately after certain deduction are common knowledge. There is no other communication."
+      ]
+    },
+    "optimality": {
+      "he": "ההוכחה היא אינדוקציה במספר הנשים הבוגדות. מספר הלילה מזהה את המספר בדיוק במסגרת המודל.",
+      "en": "An induction on the number of unfaithful wives proves that the first action night identifies that count under this model."
+    },
+    "verification": {
+      "he": [
+        "מודל ידיעה סופי בודק את כל 63 המצבים הלא־ריקים של שישה זוגות, ומעדכן את קבוצת המצבים האפשריים לאחר כל לילה שקט."
+      ],
+      "en": [
+        "A finite epistemic model checks all 63 nonempty worlds of six couples, updating possible worlds after each silent night."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "בוגדת אחת מובילה לפעולה בלילה הראשון. כפר ללא בוגדות סותר את ההכרזה.",
+        "אם אנשים יכולים לפעול באיחור, שתיקה אינה ראיה מספקת והמספר אינו נקבע כך."
+      ],
+      "en": [
+        "One unfaithful wife causes action on night one. Zero contradicts the announcement.",
+        "If people may delay an action arbitrarily, silence no longer justifies the deduction."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחשוב שההכרזה מיותרת משום שכולם רואים לפחות בוגדת אחת.",
+        "להסיק שכמות היריות היא מספר הלילה בלי להסביר את האינדוקציה ואת הסימולטניות."
+      ],
+      "en": [
+        "Treating the announcement as redundant just because everyone sees at least one unfaithful wife.",
+        "Equating the night number with the count without proving the induction and simultaneous decisions."
+      ]
+    },
+    "interview_answer": {
+      "he": "ארבע. עם k בוגדות כל אחד מבעליהן מחכה לשלול את האפשרות שיש רק k−1; השקט בלילה ה־k−1 גורם לכולם להסיק בו־זמנית ולפעול בלילה ה־k.",
+      "en": "Four. With k unfaithful wives, each affected husband must exclude a world with only k−1; silence on night k−1 lets all of them deduce the answer and act on night k."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם מודיעים בפומבי שיש לפחות m בוגדות, ובפועל יש k≥m?",
+          "answer_direction": "מקרה הבסיס הוא k=m, ולכן הפעולה הראשונה תהיה בלילה k−m+1.",
+          "principle": "מיקום מקרה הבסיס באינדוקציה של ידיעה משותפת"
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the public announcement guarantees at least m unfaithful wives and there are actually k≥m?",
+          "answer_direction": "The base case moves to k=m, so the first action occurs on night k−m+1.",
+          "principle": "Changing the induction base for common knowledge"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור משתמש ביריות לתיאור הפעולות. החידה כאן מגדירה במפורש שלושה לילות שקטים, הכרזה ציבורית והחלטות סימולטניות כדי לאפשר הוכחת ידיעה."
+      ],
+      "en": [
+        "The source describes the actions as shots. This edition explicitly states three silent nights, a public announcement and simultaneous decisions so that the knowledge argument is well defined."
+      ]
+    }
+  },
+  "PREP-344": {
+    "assumptions": {
+      "he": [
+        "בדיוק שק אחד חריג, וכל עשרת מטבעותיו בעלי אותה סטיית משקל ידועה δ.",
+        "הכלי הוא משקל דיגיטלי מדויק בעל קיבולת מספקת. מאפסים את משקל המכל. δ יכול להיות שלילי כל עוד w+δ>0."
+      ],
+      "en": [
+        "Exactly one bag is unusual and all its coins have the same known deviation δ.",
+        "An exact digital scale has enough capacity, its container is tared, and negative δ is allowed while w+δ remains positive."
+      ]
+    },
+    "optimality": {
+      "he": "שקילה אחת הכרחית ומספיקה. הכנת הדגימה דורשת 55 מטבעות לפי הבחירה 1–10; בחירה 0–9 מצמצמת ל־45.",
+      "en": "One weighing is necessary and sufficient. Counts 1–10 use 55 coins; counts 0–9 use only 45."
+    },
+    "verification": {
+      "he": [
+        "חישוב מדויק בודק כל אחד מעשרת השקים עבור סטיות חיוביות ושליליות שונות, וגם את גרסת 0–9."
+      ],
+      "en": [
+        "Exact arithmetic checks all ten possible bags for several positive and negative deviations and for both sample-count schemes."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אם δ=0 אי אפשר לזהות חריגה במשקל.",
+        "עם שגיאת מדידה בעלת חסם ε, מרווח של |δ| בין קריאות סמוכות מספיק לפענוח חד־ערכי רק אם ε<|δ|/2.",
+        "אם גם גודל הסטייה אינו ידוע, הקריאה לבדה עלולה להתאים ליותר משק אחד."
+      ],
+      "en": [
+        "If δ=0 the bag cannot be distinguished by mass.",
+        "With absolute measurement error at most ε, adjacent readings separated by |δ| are unambiguous only when ε<|δ|/2.",
+        "An unknown deviation magnitude may make one reading compatible with several bags."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לקחת אותו מספר מטבעות מכל שק ולצפות לזהות את המקור.",
+        "להשתמש במאזני כפות שמחזירים רק קל/שווה/כבד כאילו הם מחזירים מסה.",
+        "להשמיט את סימן δ כשמטבעות השק החריג קלים יותר."
+      ],
+      "en": [
+        "Selecting equal counts from every bag and expecting the reading to identify a source.",
+        "Confusing an exact digital scale with a balance that returns only lighter, equal or heavier.",
+        "Dropping the sign of δ for lighter unusual coins."
+      ]
+    },
+    "interview_answer": {
+      "he": "אקח i מטבעות משק i ואשקול 55 מטבעות יחד. אפחית 55w ואחלק בסטיית המטבע הידועה δ. המנה היא מספר השק החריג.",
+      "en": "Take i coins from bag i and weigh all 55 together. Subtract 55w and divide by the known per-coin deviation δ. The quotient identifies the unusual bag."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתמשים במספר המטבעות הקטן ביותר בשקילה אחת, כשהבחירה מכל שק קבועה מראש?",
+          "answer_direction": "בחרו עשרה מקדמים שלמים לא־שליליים שונים, 0 עד 9. סכומם 45, וזה המינימום לעשרה מקדמים כאלה. שק 1 מיוצג בקריאת הבסיס.",
+          "principle": "קידוד חד־חד־ערכי ומזעור סכום המקדמים"
+        }
+      ],
+      "en": [
+        {
+          "question": "How can a fixed sampling plan minimize the total number of selected coins?",
+          "answer_direction": "Choose ten distinct nonnegative integer counts 0 through 9. Their sum is 45, the minimum for ten such counts. The baseline reading represents bag 1.",
+          "principle": "Injective encoding with minimum total coefficients"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מציין את סוג כלי השקילה. נבחר משקל דיגיטלי שמחזיר מסה מדויקת, והפער הידוע בין המשקלים מסומן δ."
+      ],
+      "en": [
+        "The source leaves the scale type unspecified. This edition uses an exact digital scale and denotes the known signed mass difference by δ."
+      ]
+    }
+  },
+  "PREP-345": {
+    "assumptions": {
+      "he": [
+        "מקור ישר אידאלי, נגדים חיוביים ורכיב עומס המחובר במקביל ל־R2.",
+        "לנגד העומס אין אילוץ נוסף; הקבל אידאלי ופרוק בתחילת ניסוי הטעינה."
+      ],
+      "en": [
+        "The source is ideal DC, both resistors are positive, and the extra load is connected in parallel with R2.",
+        "There is no further resistor-load constraint. The ideal capacitor begins discharged for the charging experiment."
+      ]
+    },
+    "optimality": {
+      "he": "הנגזרת מוכיחה מקסימום גלובלי יחיד לנגד עומס. לקבל אידאלי אין פיזור הספק ממוצע במצב מתמיד; קבוע הזמן והאנרגיה תלויים בקיבול.",
+      "en": "The derivative proves a unique global maximum for a resistive load. An ideal capacitor dissipates zero steady-state average power; capacitance determines its time scale and stored energy."
+    },
+    "verification": {
+      "he": [
+        "נבדקו חישובי תבנין באמצעות פתרון צומתי בלתי תלוי, סריקת עומסים משני צדי ההתאמה ושימור הספק.",
+        "אינטגרציה נומרית של הספק הקבל נבדקה מול ½CV² בשלושה קיבולים."
+      ],
+      "en": [
+        "An independent nodal solution checks the Thevenin calculation, load sweeps on both sides of the optimum, and power balance.",
+        "Numerical integration of capacitor input power checks ½CV² for three capacitances."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "RL→0 או RL→∞ נותנים הספק עומס ששואף לאפס.",
+        "Vs=0 נותן אפס הספק לכל עומס.",
+        "במקור חילופין ועומס כללי מרוכב נדרשת בעיית התאמת עכבות ותדר מוגדרים; הנתונים הישרים כאן אינם מגדירים אותה."
+      ],
+      "en": [
+        "RL approaching zero or infinity makes load power approach zero.",
+        "Vs=0 gives zero power for every load.",
+        "AC matching of a general complex load requires a specified frequency and impedance problem beyond this DC contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבחור RL=R1 או RL=R2 בלי לחשב את ההתנגדות שרואים במוצא.",
+        "להשאיר מקור מתח אידאלי פעיל בזמן חישוב Rth.",
+        "לטעון לנצילות כוללת של 50% במחלק המתח.",
+        "להציג קבל כאילו הוא נגד שמפזר הספק מתמיד."
+      ],
+      "en": [
+        "Choosing RL=R1 or RL=R2 without finding the resistance seen from the output.",
+        "Leaving the ideal voltage source active while finding Rth.",
+        "Claiming that the physical divider has 50% overall efficiency.",
+        "Treating a capacitor as a resistor dissipating steady power."
+      ]
+    },
+    "interview_answer": {
+      "he": "לנגד עומס מחשבים תבנין ומקבלים RL=R1∥R2. כאן RL≈666.7 Ω וההספק 24 mW. קבל אידאלי במצב ישר מתמיד אינו צורך הספק; C משנה את הטעינה ואת האנרגיה.",
+      "en": "For a resistor, compute the Thevenin network and choose RL=R1∥R2. Here RL≈666.7 Ω delivers 24 mW. An ideal capacitor takes no DC steady-state power; C determines charging time and stored energy."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם מקור המתח עצמו כולל התנגדות טורית Rs?",
+          "answer_direction": "חשבו Vth=Vs·R2/(Rs+R1+R2) ו־Rth=(Rs+R1)∥R2, והתאימו אל Rth החדש.",
+          "principle": "חישוב התנגדות המקור המלאה לפני התאמת העומס"
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if the voltage source has a series resistance Rs?",
+          "answer_direction": "Use Vth=Vs·R2/(Rs+R1+R2) and Rth=(Rs+R1)∥R2, then match the load to the new Rth.",
+          "principle": "Include the complete source resistance before matching"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אומר 'קבל המוצא' ואינו מציג שרטוט, ערכי רכיבים, צורת מקור או הגדרה של ההספק. נבחר מחלק מתח ישר מפורש עם 12 וולט ונגדים של 1 ושל 2 קילו־אוהם. התרגיל בוחן בנפרד נגד עומס וקבל אידאלי ושומר את אי־הבהירות המקורית."
+      ],
+      "en": [
+        "The source says 'output capacitor' and provides no schematic, values, waveform or power definition. This edition chooses an explicit 12 V DC divider with 1 kΩ and 2 kΩ resistors and separately analyzes a resistive load and an ideal capacitor."
+      ]
+    }
+  }
+}

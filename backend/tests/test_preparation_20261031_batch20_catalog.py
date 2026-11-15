@@ -137,7 +137,7 @@ def test_twenty_exact_sources_keep_full_tags_companies_and_nineteen_identities(a
 
 
 def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
-    assert len(archive['questions']) == archive['question_count'] == 328
+    assert len(archive['questions']) == archive['question_count'] == 344
     raw = {q['id']: q for q in archive['questions']}
     historical_ids = raw.keys() & BATCH22_BASELINE['records'].keys()
     assert len(historical_ids) == 219
@@ -163,7 +163,7 @@ def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
     assert historical_localization - BATCH20_BASELINE['localized_material'].keys() == NEW_IDS
     assert_pre_batch20_localization(localization)
     compiled = read(SEEDS / 'questions/preparation_bank.json')
-    assert len(compiled) == 328
+    assert len(compiled) == 344
     for question in compiled:
         if question['assets']['preparation_id'] not in BATCH22_BASELINE['records']:
             continue
@@ -189,7 +189,7 @@ def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
 def test_all_nineteen_questions_are_bilingual_and_eleven_new_records_are_rated_pending(catalog, archive):
     questions = selected(catalog)
     raw = {q['id']: q for q in archive['questions']}
-    assert len(catalog.questions) == 358 and set(questions) == AFFECTED_IDS
+    assert len(catalog.questions) == 374 and set(questions) == AFFECTED_IDS
     for ident, question in questions.items():
         source = raw[ident]
         resource = question.assets['preparation_resource']
@@ -263,7 +263,7 @@ def test_new_private_media_has_exact_paths_hashes_png_bytes_and_protected_code(c
         for filename in ('prep_216_220_sequential.sv', 'prep_216_220_sequential_tb.sv'):
             assert files[filename]['kind'] == 'file' and files[filename]['role'] == 'solution'
     sources = [entry['local_path'] for entry in uploads.values() if entry['local_path'].startswith('sources/')]
-    assert len(sources) == 557 and len(set(sources)) == 553
+    assert len(sources) == 578 and len(set(sources)) == 573
     assert set(read(ROOT / 'apps/web/src/lib/source-screenshots.json')) == {Path(path).name for path in sources}
 
 
