@@ -46,3 +46,5 @@
 [מיפוי הצילומים](../interview_preparation/intakes/2026-11-15-batch20-sources.json) · [פרוטוקול פרסום](question-publication-protocol.md)
 
 נוצרו 40 קובצי שרטוט מקוריים. בדיקות הדפדפן המקומיות כיסו 80 תצוגות של 20 המזהים, בשתי שפות ובשני רוחבים, כולל חשיפת הפתרון וטעינת השרטוטים. אלו רוחבים מדומים בדפדפן. בדיקות החומרה הן מודלים. מימושי C למכפלה, העתקה, varargs ושלוש עריכות לולאה הורצו, וכן דוגמת dispatch ב־C++. דוגמאות Java ו־mutex עברו סקירת מקור. [היקף הבדיקות](../interview_preparation/checks/batch1115-test-verification.json) · [ראיות הרצה](../interview_preparation/checks/nov15-software-native-verification.json).
+
+אומת הפרסום החי של הגרסה 2a214c6 באתר, ב־API ובלוח המשימות. הקטלוג הפעיל מחזיר 374 רשומות ריאיון, 700 מקורות שאלות קצרות ו־3,500 גרסאות משחק. [אימות הפריסה](../interview_preparation/checks/batch1115-deployment-verification.json).
