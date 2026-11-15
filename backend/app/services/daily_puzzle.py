@@ -55,7 +55,9 @@ class DailyPuzzleService:
         raise ApiError("temporarily_unavailable", "No daily puzzle is available yet.")
 
     def today(self, language: str) -> dict:
-        day = self.clock().astimezone(ISRAEL).date()
+        return self.puzzle_on(self.clock().astimezone(ISRAEL).date(), language)
+
+    def puzzle_on(self, day: date, language: str) -> dict:
         entry = self.for_day(day)
         return {
             "day": day,

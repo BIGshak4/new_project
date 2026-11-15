@@ -171,7 +171,7 @@ export function DuelWorkspace({ client, lang, demo = false, invite = "", control
         {!demo && <a className={puzzleStyles.entry} data-member-tour="daily-puzzle" href="/games/daily-puzzle">
           <CalendarDays className={puzzleStyles.entryIcon} size={32} aria-hidden="true" />
           <span><strong>{t("החידה היומית", "Daily puzzle")}</strong>
-            <span>{t("בכל יום, שאלת ראיון בניסוח אחר. נסו לפתור אותה והשוו את הדרך שלכם לפתרון.", "A different take on an interview question each day. Try it and compare your reasoning with the solution.")}</span>
+            <span>{t("שאלת ריאיון אחת ביום, בניסוח חדש. שלחו פתרון וקבלו ציון ומשוב אישי.", "One interview question each day with a new twist. Submit your solution for a score and personal feedback.")}</span>
           </span>
           <span className={puzzleStyles.entryAction}>{t("לחידה של היום", "Open today’s puzzle")}{lang === "he" ? <ArrowLeft size={18} aria-hidden="true" /> : <ArrowRight size={18} aria-hidden="true" />}</span>
         </a>}

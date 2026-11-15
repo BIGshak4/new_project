@@ -7,7 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Annotated
 
-from pydantic import field_validator
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
@@ -62,6 +62,7 @@ class Settings(BaseSettings):
     allowed_origins: Annotated[list[str], NoDecode] = []      # plain comma-separated, not JSON
     # Attempts a user may start per UTC day. Fails gracefully with 429, never silently.
     daily_attempt_limit: int = 30
+    monthly_feedback_limit: int = Field(default=200, ge=0)
     # What one user's model calls may cost us in a calendar month, in shekels (Shaked, 2026-11-14: "no more than
     # 10 - 15 shekels"); at the ceiling no new attempt or interview opens until the 1st. 0 = no ceiling. Measured
     # from usage_event, so it holds whatever the models cost. USD_TO_ILS turns the recorded dollars into shekels.

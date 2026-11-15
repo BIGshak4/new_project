@@ -35,7 +35,9 @@ export function duelApi(userId: string, baseUrl = process.env.NEXT_PUBLIC_API_BA
   }
   return {
     daily: {
-      get: language => call<DailyPuzzle>(`/v1/games/daily-puzzle?language=${language}`),
+      get: (language, day) => call<DailyPuzzle>(`/v1/games/daily-puzzle?language=${language}${day ? `&day=${encodeURIComponent(day)}` : ""}`),
+      submit: (language, day, id, answer) => call<DailyPuzzle>(`/v1/games/daily-puzzle/submit?language=${language}`, { day, id, answer }),
+      retry: (language, day, id) => call<DailyPuzzle>(`/v1/games/daily-puzzle/retry?language=${language}`, { day, id }),
       reveal: (language, day, id) => call<DailyPuzzleSolution>(`/v1/games/daily-puzzle/reveal?language=${language}`, { day, id }),
     },
     practice: {

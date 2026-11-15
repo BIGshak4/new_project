@@ -581,6 +581,7 @@ export type ApiErrorCode =
   | "follow_up_not_ready"
   | "no_reviewed_questions"
   | "usage_limit"
+  | "monthly_feedback_limit"
   | "evaluation_unavailable"
   | "temporarily_unavailable"
   | "payload_too_large"

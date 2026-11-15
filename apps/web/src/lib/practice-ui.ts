@@ -81,6 +81,10 @@ export function apiMessage(error: unknown, lang: ApiLang) {
       "הגעתם למכסת התרגולים היומית. אפשר לחזור לתרגולים קיימים ולנסות שוב מחר.",
       "Daily attempt limit reached. You can revisit existing attempts and start again tomorrow.",
     ],
+    monthly_feedback_limit: [
+      "ניצלתם את כל המשובים לחודש הזה. המכסה מתחדשת בתחילת החודש הבא.",
+      "You’ve used this month’s feedback allowance. It renews at the start of next month.",
+    ],
     not_found: [
       "התרגול אינו זמין לחשבון הזה, או שהשאלה אינה זמינה כרגע.",
       "This attempt is unavailable to this account, or the question is currently unavailable.",
