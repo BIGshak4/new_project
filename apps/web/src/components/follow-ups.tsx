@@ -7,6 +7,7 @@ import { Pop, Reveal } from "./ui/motion";
 import type { Attempt } from "../lib/practice-api";
 import { bandLabel } from "../lib/practice-ui";
 import { BidiText } from "./bidi-text";
+import { QuestionPrompt } from "./question-prompt";
 import { proseDirection } from "../lib/bidi-segments";
 import { DictationControls } from "./dictation-controls";
 
@@ -75,7 +76,8 @@ export function FollowUps({
           <li key={f.turn} className="follow-up done">
             <span className="follow-up-kind">{actionLabel(f.action)}</span>
             {f.question && (
-              <p className="follow-up-question" dir={proseDirection(f.question)}><BidiText>{f.question}</BidiText></p>
+              <QuestionPrompt text={f.question} lang={lang} contentLang={attempt.language} compact
+                questionKey={`${attempt.id}:${f.turn}`} mainClassName="follow-up-question" />
             )}
             {f.skipped ? (
               <p>
@@ -132,9 +134,8 @@ export function FollowUps({
                 {t("כותבים את שאלת ההמשך…", "Writing your follow-up question…")}
               </p>
             ) : (
-              <p className="follow-up-question" dir={proseDirection(pending.question)}>
-                <BidiText>{pending.question}</BidiText>
-              </p>
+              <QuestionPrompt text={pending.question} lang={lang} contentLang={attempt.language} compact
+                questionKey={`${attempt.id}:${pending.turn}`} mainClassName="follow-up-question" />
             )}
             <FollowUpAnswer
               key={`${attempt.id}:${pending.turn}`}

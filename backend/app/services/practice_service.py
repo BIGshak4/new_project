@@ -79,6 +79,7 @@ from app.schemas.api import (
 from app.schemas.bank import BankQuestion, JobType
 from app.schemas.engine import Archetype, Band, Evaluation, EvidenceStatus, PlanSkill, SkillState
 from app.services.budget import monthly_budget_left
+from app.services.feedback_quota import release_monthly_feedback, reserve_monthly_feedback
 from app.services.coins import coins_for_answer, reference_seen_elsewhere
 from app.services.store import Store
 
@@ -138,6 +139,7 @@ class ServiceConfig:
     # What one user's model calls may cost in a calendar month, in USD; 0 = no ceiling. At the ceiling no new attempt
     # opens until the 1st (Shaked, 2026-11-14: "i want it to cost us no more than 10 - 15 shekels so set the amount").
     monthly_budget_usd: float = 0.0
+    monthly_feedback_limit: int = 200
 
 
 # A revision whose words are still missing this long after it was scored, with no task writing them in this
@@ -497,6 +499,7 @@ class PracticeService:
                                           revisions={submission.revision, *self._superseded_by(attempt, submission)},
                                           known_revisions=known)
                     if submission.turn == 0:
+                        await reserve_monthly_feedback(tx, user_id, attempt_id, self.config.monthly_feedback_limit)
                         await tx.mark_question_completed(user_id=user_id, question_id=stored.question_id)
             except DuplicateSubmissionKey:
                 # another process accepted a revision first: answer with what it stored, or say so
@@ -573,6 +576,11 @@ class PracticeService:
         async with self._lock(attempt_id):
             attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
             try:
+                retryable = [s for s in attempt.submissions if s.status == EvaluationStatus.FAILED and "superseded" not in s.flags]
+                if retryable and retryable[-1].turn == 0:
+                    attempt._within_judge_calls()
+                    async with self.store.transaction() as tx:
+                        await reserve_monthly_feedback(tx, user_id, attempt_id, self.config.monthly_feedback_limit)
                 outcome = await attempt.retry_evaluation(defer_prose=self.config.feedback_in_background)
             except PracticeError as exc:
                 raise ApiError(exc.code, str(exc)) from exc
@@ -668,6 +676,8 @@ class PracticeService:
                             turn=sub.turn, question_id=stored.question_id)
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                           revisions=changed, known_revisions=len(attempt.submissions))
+                    if sub.turn == 0 and (sub.status == EvaluationStatus.FAILED or sub.evaluation is None):
+                        await release_monthly_feedback(tx, user_id, attempt.attempt_id_uuid)
                     if (outcome.status == EvaluationStatus.DONE and outcome.band is not None and outcome.submission.turn == 0
                             and attempt.question.assets.get("assessment_ready") is not False):
                         primary = attempt.question.primary_skill
@@ -708,6 +718,8 @@ class PracticeService:
                                       usage_rows=[u.as_row(attempt.mode) for u in outcome.usage])
             await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
                                   revisions=changed, known_revisions=len(attempt.submissions))
+            if submission.turn == 0:
+                await release_monthly_feedback(tx, user_id, attempt.attempt_id_uuid)
         return attempt, stored, loaded, outcome
 
     async def _suggest_next(self, user_id: uuid.UUID, attempt: PracticeAttempt, outcome: PracticeOutcome, *, tx) -> None:

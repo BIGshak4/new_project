@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Element, ElementContent } from "hast";
 import { Download, ExternalLink, RotateCcw } from "lucide-react";
 import type { Lang } from "./auth";
 import type { PracticeApi, QuestionResources, ResourceMedia } from "../lib/practice-api";
-import { visibleQuestionMedia } from "../lib/question-media";
+import { figureCaption, visibleQuestionMedia } from "../lib/question-media";
 import { solutionMarkdown } from "../lib/solution-markdown";
-import { materialInLanguage } from "../lib/material-locale";
+import { learnerMaterialSections, studyDownload } from "../lib/learner-material";
 import { materialLabel, materialStatus } from "../lib/material-labels";
 import { BidiText } from "./bidi-text";
 import { proseDirection, textDirection } from "../lib/bidi-segments";
@@ -98,16 +98,19 @@ export function QuestionFigures({ media, lang, role, onRefresh }: {
       <button className="text-button" onClick={onRefresh} aria-label={lang === "he" ? "רענון קישורי הקבצים" : "Refresh file links"}>
         <RotateCcw size={16} /></button></div>
     <p className="small muted">{lang === "he" ? "לחצו על שרטוט לצפייה בגודל מלא." : "Open any diagram at full size."}</p>
-    <div className="question-figures">{images.map((m, i) => <figure key={m.id}>
-      <a href={m.url} target="_blank" rel="noreferrer" aria-label={`${lang === "he" ? "פתיחת שרטוט" : "Open diagram"} ${i + 1}`}>
-        {/* Signed private URLs must not be persisted by an image-optimization cache. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={m.url} alt={m.caption || `${lang === "he" ? "שרטוט" : "Diagram"} ${i + 1}: ${m.filename}`} loading="lazy" referrerPolicy="no-referrer"
-          onError={() => setFailed(old => old.includes(m.url) ? old : [...old, m.url])} />
-      </a>
-      {failed.includes(m.url) && <ResourceStatus error retry={onRefresh} lang={lang} />}
-      <figcaption><span dir={proseDirection(m.caption || m.filename)}><BidiText>{m.caption || m.filename}</BidiText></span><ExternalLink size={14} aria-hidden="true" /></figcaption>
-    </figure>)}</div>
+    <div className="question-figures">{images.map((m, i) => {
+      const caption = figureCaption(m.caption ?? "", lang, i + 1);
+      return <figure key={m.id}>
+        <a href={m.url} target="_blank" rel="noreferrer" aria-label={`${lang === "he" ? "פתיחת שרטוט" : "Open diagram"} ${i + 1}`}>
+          {/* Signed private URLs must not be persisted by an image-optimization cache. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={m.url} alt={caption} loading="lazy" referrerPolicy="no-referrer"
+            onError={() => setFailed(old => old.includes(m.url) ? old : [...old, m.url])} />
+        </a>
+        {failed.includes(m.url) && <ResourceStatus error retry={onRefresh} lang={lang} />}
+        <figcaption><span dir={proseDirection(caption)}><BidiText>{caption}</BidiText></span><ExternalLink size={14} aria-hidden="true" /></figcaption>
+      </figure>;
+    })}</div>
     {files.some(m => m.kind === "file") && <ul className="resource-files">{files.filter(m => m.kind === "file").map(m => <li key={m.id}>
       <a href={m.url} target="_blank" rel="noreferrer"><Download size={16} /><bdi>{m.filename}</bdi></a>
     </li>)}</ul>}
@@ -121,7 +124,7 @@ const labels: Record<string, [string, string]> = {
   solution_extensions: ["הרחבות הפתרון", "Solution extensions"], prompt_variants: ["גרסאות נוספות של השאלה", "Question variants"],
   transition_tables: ["טבלאות מעברים", "Transition tables"], truth_table: ["טבלת אמת", "Truth table"],
   waveform_observations: ["קריאת תרשים התזמון", "Waveform observations"], fsm: ["מכונת המצבים", "State machine"],
-  strategy: ["דרך הפתרון", "Strategy"], source_ambiguities: ["עמימות בנוסח המקורי", "Source ambiguities"],
+  strategy: ["דרך הפתרון", "Strategy"], source_ambiguities: ["הבהרות והנחות", "Notes on assumptions"],
   ambiguities: ["הבהרות לנוסח", "Ambiguities"], solution_networks: ["רשתות הפתרון", "Solution networks"],
   area_optimization: ["שיפור שטח", "Area optimization"], technical_references: ["מקורות טכניים", "Technical references"],
   component_truth_table: ["טבלת אמת של הרכיב", "Component truth table"], circuit_interpretation: ["פירוש המעגל", "Circuit interpretation"],
@@ -148,7 +151,7 @@ const labels: Record<string, [string, string]> = {
   solution_references: ["מקורות הפתרון", "Solution references"],
   solution_schematic_verification: ["אימות השרטוט", "Schematic verification"],
   solution_gate_schematic_verification: ["אימות מימוש השערים", "Gate schematic verification"],
-  editorial_notes: ["הערות עריכה", "Editorial notes"],
+  editorial_notes: ["הערות נוספות", "Additional notes"],
 };
 
 function Value({ value, lang, field }: { value: unknown; lang: Lang; field?: string }) {
@@ -168,19 +171,20 @@ export function TechnicalMaterial({ material, lang, openSections, onSectionToggl
   openSections?: Readonly<Record<string, boolean>>;
   onSectionToggle?: (section: string, open: boolean) => void;
 }) {
-  const technicalKeys = Object.keys(material).filter(k => labels[k]);
+  const sections = useMemo(() => learnerMaterialSections(material,
+    Object.keys(material).filter(key => Object.hasOwn(labels, key)), lang), [material, lang]);
   function download() {
-    const url = URL.createObjectURL(new Blob([JSON.stringify(material, null, 2)], { type: "application/json" }));
+    const url = URL.createObjectURL(new Blob([JSON.stringify(studyDownload(material, sections, lang), null, 2)], { type: "application/json" }));
     const a = document.createElement("a"); a.href = url; a.download = `${String(material.id ?? "question")}-material.json`; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   return <section className="technical-material">
     <h3>{lang === "he" ? "הסברים נוספים ובדיקות" : "Further explanations and verification"}</h3>
-    {technicalKeys.filter(k => material[k] != null).map(key => <details key={key}
+    {Object.entries(sections).map(([key, value]) => <details key={key}
       open={openSections ? !!openSections[key] : undefined}
       onToggle={onSectionToggle ? event => onSectionToggle(key, event.currentTarget.open) : undefined}>
-      <summary>{labels[key][lang === "he" ? 0 : 1]}</summary><Value value={materialInLanguage(material, key, lang)} lang={lang} />
+      <summary>{labels[key][lang === "he" ? 0 : 1]}</summary><Value value={value} lang={lang} />
     </details>)}
-    <button onClick={download}><Download size={16} />{lang === "he" ? "הורדת כל חומר השאלה" : "Download all question material"}</button>
+    <button onClick={download}><Download size={16} />{lang === "he" ? "הורדת חומר הלימוד" : "Download study material"}</button>
   </section>;
 }

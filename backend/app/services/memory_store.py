@@ -13,6 +13,7 @@ from contextlib import asynccontextmanager
 from datetime import UTC, datetime, timedelta
 
 from app.engine.catalog import Catalog
+from app.services.feedback_quota import feedback_month
 from app.repo.attempts import AlreadyEvaluated, DuplicateSubmissionKey, StoredAttempt
 from app.repo.billing import Subscription
 from app.repo.plans import PlanItemRow, StoredPlan
@@ -36,6 +37,7 @@ class InMemoryStore:
         self.profiles: dict[tuple[uuid.UUID, str], dict] = {}     # (user, skill) -> {state, version, history, ...}
         self.metrics: list[dict] = []
         self.usage: list[dict] = []
+        self.feedback_allowance = {}
         self.tips: list[dict] = []
         self.sessions: dict[uuid.UUID, dict] = {}                 # interview id -> {user_id, row, turns, plan, created_at}
         self.seniority: dict[uuid.UUID, str] = {}
@@ -46,6 +48,7 @@ class InMemoryStore:
         self.sightings_enabled = True                              # False imitates a database without the table
         self.reports: list[dict] = []                              # {question_id, user_id, reason, note, language, context}
         self.reports_enabled = True
+        self.daily_attempts: dict[tuple[uuid.UUID, date], dict] = {}
         self.answer_images: dict[str, dict] = {}                 # storage fixture metadata
         self.subscriptions: dict[uuid.UUID, Subscription] = {}     # paid access per user (billing)
         self.billing_events: dict[str, dict] = {}                  # Stripe event id -> summary
@@ -71,19 +74,19 @@ class InMemoryStore:
         # shallow copies suffice: saved rows are deep-copied on the way in and never mutated in place,
         # so rolling back means restoring the containers, not the rows (a full deepcopy per action
         # made every action slower as the store grew)
-        snapshot = (dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
+        snapshot = (dict(self.daily_attempts), dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
                     dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links),
                     list(self.reports), list(self.coin_ledger), dict(self.duels), dict(self.avatars),
-                    dict(self.identities), dict(self.friendships), dict(self.practice_entries))
+                    dict(self.identities), dict(self.friendships), dict(self.practice_entries), dict(self.feedback_allowance))
         commits_before = self._commits
         tx = _MemoryTx(self)
         try:
             yield tx
         except BaseException:
             if self._commits == commits_before:
-                (self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
+                (self.daily_attempts, self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
                  self.sightings, self.plans, self.plan_links, self.reports, self.coin_ledger, self.duels, self.avatars,
-                 self.identities, self.friendships, self.practice_entries) = snapshot
+                 self.identities, self.friendships, self.practice_entries, self.feedback_allowance) = snapshot
             raise
         else:
             self._commits += 1
@@ -96,6 +99,26 @@ class InMemoryStore:
 
 
 class _MemoryTx:
+    async def feedback_uses(self, user_id, month):
+        used = sum(owner == user_id and period == month for (owner, _), period in self.s.feedback_allowance.items())
+        for reference, row in self.s.attempts.items():
+            if row["user_id"] != user_id or (user_id, reference) in self.s.feedback_allowance:
+                continue
+            if any(sub["turn"] == 0 and sub["status"] == "done" and sub.get("evaluation") is not None
+                   and feedback_month(datetime.fromisoformat(sub["accepted_at"])) == month
+                   for sub in row["row"]["submissions"]):
+                used += 1
+        return used
+
+    async def has_feedback_use(self, user_id, reference):
+        return (user_id, reference) in self.s.feedback_allowance
+
+    async def add_feedback_use(self, user_id, reference, month):
+        self.s.feedback_allowance[user_id, reference] = month
+
+    async def delete_feedback_use(self, user_id, reference):
+        self.s.feedback_allowance.pop((user_id, reference), None)
+
     def __init__(self, store: InMemoryStore):
         self.s = store
         self._held_usage_locks: dict[tuple[uuid.UUID, str], asyncio.Lock] = {}
@@ -114,6 +137,26 @@ class _MemoryTx:
             if not getattr(lock, "_waiters", None) and self.s._usage_locks.get(key) is lock:
                 del self.s._usage_locks[key]
         self._held_usage_locks.clear()
+
+    async def daily_attempt(self, user_id, day, puzzle_key, *, for_update=False):
+        if for_update:
+            await self.lock_usage(user_id, "daily-puzzle")
+        key = (user_id, day)
+        if key not in self.s.daily_attempts:
+            if puzzle_key is None:
+                return None
+            self.s.daily_attempts[key] = dict(id=uuid.uuid4(), user_id=user_id, puzzle_day=day, puzzle_key=puzzle_key,
+                                              status="open", language=None, submission=None, score=None,
+                                              lease_id=None, claimed_at=None)
+        return copy.deepcopy(self.s.daily_attempts[key])
+
+    async def save_daily_attempt(self, row):
+        self.s.daily_attempts[(row["user_id"], row["puzzle_day"])] = copy.deepcopy(row)
+
+    async def expired_daily_attempts(self, user_id, cutoff):
+        await self.lock_usage(user_id, "daily-puzzle")
+        return [copy.deepcopy(row) for (owner, _), row in self.s.daily_attempts.items()
+                if owner == user_id and row["status"] == "evaluating" and row["claimed_at"] < cutoff]
 
     async def identities_available(self):
         return self.s.identities_enabled

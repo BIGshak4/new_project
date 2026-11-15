@@ -31,6 +31,25 @@ def resources_service(monkeypatch):
     return service, store, provider, signed
 
 
+async def test_alternative_wordings_expose_only_localized_questions_before_reveal(resources_service):
+    service, _, _, _ = resources_service
+    question = service.catalog.questions["prep-josephus-forty-three"]
+    variants = question.assets["preparation_resource"]["learner_material"]["prompt_variants"]
+    for lang in ("he", "en"):
+        attempt = await service.start(uuid.uuid4(), question_key=question.key, language=lang)
+        assert attempt.reference is None
+        assert attempt.question.additional_wordings == [variants[lang][0]["translation_en"]]
+        assert "100" in attempt.question.additional_wordings[0]
+    assert variants["he"][0]["translation_en"] != variants["en"][0]["translation_en"]
+
+    encoder = service.catalog.questions["prep-sixteen-input-interrupt-controller"]
+    assert encoder.additional_wordings("en") == [
+        encoder.assets["preparation_resource"]["learner_material"]["prompt_variants"]["en"]["preserved"][0]["prompt"]
+    ]
+    for legacy_assets in ({}, {"preparation_resource": {"learner_material": []}}):
+        assert question.model_copy(update={"assets": legacy_assets}).additional_wordings("he") == []
+
+
 async def test_localized_reference_works_for_every_bank_question_without_changing_attempts(resources_service, monkeypatch):
     service, store, provider, _ = resources_service
     user = uuid.uuid4()

@@ -6,7 +6,9 @@ import { quickAnswerMarkdown, quickQuestions, quickTopics, type QuickTopic } fro
 import { QUICK_QUIZ_SIZE, readQuickQuizRun, selectQuickQuiz, type QuickQuizRun } from "../lib/quick-quiz";
 import { lockBodyScroll } from "../lib/body-scroll-lock";
 import { BidiText } from "./bidi-text";
+import { learnerCopy } from "../lib/learner-copy";
 import { StudyText } from "./question-materials";
+import { QuestionPrompt } from "./question-prompt";
 import { QuestionActions } from "./question-actions";
 import { QuickDiagramView } from "./quick-diagram";
 import styles from "./quick-quiz.module.css";
@@ -126,17 +128,17 @@ export function QuickQuiz({ run, lang, onBack, onNew, preview = false }: { run: 
       const answerId = `quiz-${run.id}-${questionId}-answer`;
       return <article className="quick-sheet" key={questionId} data-quiz-question={questionId}>
         <h2><span className={styles.number}>{index + 1}.</span> <BidiText>{question.title[lang]}</BidiText></h2>
-        <StudyText text={question.prompt[lang]} lang={lang} />
+        <QuestionPrompt text={question.prompt[lang]} questionKey={question.id} lang={lang} compact />
         {!preview && <QuestionActions lang={lang} questionKey={question.id} questionTitle={question.title[lang]} context="quick" />}
         <button className={open ? "text-button quick-reveal" : "primary quick-reveal"} type="button" aria-expanded={open} aria-controls={answerId}
           onClick={() => setRevealed(previous => { const next = new Set(previous); if (next.has(questionId)) next.delete(questionId); else next.add(questionId); return next; })}>
           {open ? t("הסתרת הפתרון", "Hide solution") : t("הצגת פתרון קצר", "Show short solution")}</button>
         {open && <section id={answerId} className="quick-answer" aria-label={t(`פתרון לשאלה ${index + 1}`, `Solution to question ${index + 1}`)}>
           <h3>{t("הפתרון בקצרה", "The short solution")}</h3>
-          <StudyText text={quickAnswerMarkdown(question.answer[lang])} lang={lang} />
+          <StudyText text={quickAnswerMarkdown(learnerCopy(question.answer[lang]))} lang={lang} />
           {question.code && <pre className="code-block" dir="ltr" aria-label={`${question.code.language} ${t("קוד הפתרון", "solution code")}`}><code>{question.code.text}</code></pre>}
           {question.diagram && <QuickDiagramView diagram={question.diagram} lang={lang} />}
-          <p className="quick-takeaway"><strong>{t("מה לוקחים הלאה?", "What carries over?")}</strong> <BidiText>{question.takeaway[lang]}</BidiText></p>
+          <p className="quick-takeaway"><strong>{t("מה לוקחים הלאה?", "What carries over?")}</strong> <BidiText>{learnerCopy(question.takeaway[lang])}</BidiText></p>
         </section>}
       </article>;
     })}</div>

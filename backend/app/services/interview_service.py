@@ -849,10 +849,15 @@ class InterviewService:
         skill = turn["skill_key"]
         catalog_skill = self.catalog.skills.get(skill)
         check = turn.get("check_result")
+        question = self.catalog.questions.get(turn.get("question_key"))
+        wordings = []
+        if question and question.prompt_with_code(language) == turn["question_text"]:
+            wordings = question.additional_wordings(language)
         return InterviewTurnView(
             index=turn["turn_index"], skill=skill, skill_label=catalog_skill.label if catalog_skill else skill,
             subject=(catalog_skill.subject if catalog_skill else None) or "",
             archetype=turn["question_archetype"], question=turn["question_text"], question_key=turn.get("question_key"),
+            additional_wordings=wordings,
             trial=bool(meta.get("trial", False)),
             status=self._effective_status(meta), hints=[HintView(**h) for h in meta.get("hints", [])],
             answer=turn.get("answer_text"), asked_at=turn.get("asked_at") or turn.get("created_at"),

@@ -1,9 +1,11 @@
 import json
+from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
 
 from app.engine.catalog import load_catalog
+from app.services.daily_puzzle import DailyPuzzleService
 from app.services.daily_puzzle_bank import load_daily_bank
 
 
@@ -17,6 +19,8 @@ def interview_catalog():
 
 def test_every_daily_puzzle_has_its_own_bilingual_question_and_answer(interview_catalog):
     bank = load_daily_bank(interview_catalog, SEEDS)
+    assert len(bank) >= 100
+    assert len({p.source_question_key for p in bank}) >= 60
     for entry in bank:
         source = interview_catalog.questions[entry.source_question_key]
         for lang in ("he", "en"):
@@ -27,6 +31,18 @@ def test_every_daily_puzzle_has_its_own_bilingual_question_and_answer(interview_
     sample = next(entry for entry in bank if entry.id == "coins-in-the-dark")
     assert "30" in sample.prompt["he"] and "Thirty" in sample.prompt["en"]
     assert all("3-k" in sample.solution[lang] for lang in ("he", "en"))
+
+
+def test_expanded_pool_retains_launch_day_and_reaches_every_bilingual_variant(interview_catalog):
+    bank = load_daily_bank(interview_catalog, SEEDS)
+    game = DailyPuzzleService(lambda: bank)
+    launch = date(2026, 11, 15)
+    assert game.for_day(launch).id == "binary-partition"
+    dates = (launch + timedelta(days=i) for i in range(366))
+    assert {game.for_day(day).id for day in dates} == {entry.id for entry in bank}
+    for lang in ("he", "en"):
+        assert len({entry.title[lang] for entry in bank}) == len(bank)
+        assert len({entry.prompt[lang] for entry in bank}) == len(bank)
 
 
 @pytest.mark.parametrize("error", ["missing_variant", "missing_translation", "primary_prompt", "duplicate_variant"])
