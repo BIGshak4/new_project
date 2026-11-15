@@ -23,6 +23,13 @@
 .shell .textButton { display: inline-flex; justify-content: flex-start; gap: 7px; padding: 5px 0; color: var(--link); background: transparent; border: 0; font-size: 14px; text-decoration: none; }
 .shell .textButton:hover:not(:disabled) { background: transparent; text-decoration: underline; }
 .wallet { display: inline-flex; gap: 7px; align-items: center; font-size: 14px; font-variant-numeric: tabular-nums; }
+.invitationNotice { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 5px 12px; padding: 6px 16px; background: var(--surface-2); color: var(--ink); border-block-end: 1px solid var(--line); font-size: 15px; }
+.invitationNotice a { display: inline-flex; align-items: center; min-height: 44px; color: var(--link); font-weight: 700; }
+.incoming { margin-block: 16px 20px; padding: 20px; border: 1px solid var(--link); border-radius: 12px; background: var(--surface); scroll-margin-block-start: 90px; }
+.incoming h2 { margin: 0 0 8px; font-size: 20px; }
+.incoming ul { list-style: none; margin: 0; padding: 0; }
+.incoming li { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; padding-block: 6px; }
+.incoming li + li { border-block-start: 1px solid var(--line); }
 .intro { padding-block: 48px 22px; max-width: 760px; }
 .intro > svg { color: var(--link); margin-block-end: 10px; }
 .intro h1 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.2; letter-spacing: -.025em; margin: 0 0 16px; font-weight: 900; }
@@ -67,6 +74,7 @@
 .invite small { color: var(--muted); text-align: center; }
 .players { display: flex; gap: 24px; justify-content: center; align-items: center; margin-block: 28px; }
 .players > div { display: grid; gap: 10px; min-width: 120px; }
+.players > div > strong { min-width: 0; overflow-wrap: anywhere; }
 .players > div > span { display: flex; align-items: center; justify-content: center; gap: 7px; color: var(--muted); font-size: 14px; }
 .players > div > b { font-size: 30px; font-variant-numeric: tabular-nums; }
 .players > svg { color: var(--muted); }

@@ -7,6 +7,28 @@ export type QuestionPersonalState = { completed: boolean; hidden: boolean };
 export type QuestionStatusFilter = "visible" | "not_done" | "done" | "hidden";
 export const emptyQuestionState: QuestionPersonalState = { completed: false, hidden: false };
 
+/** Read the owner's whole history, including when PostgREST caps a page below our requested size. */
+export async function readQuestionEntries(userId: string, questionId?: string): Promise<Entry[]> {
+  const rows: Entry[] = [];
+  let after: string | undefined;
+  const pageSize = 250;
+  for (;;) {
+    let query = supabase.from("jr_practice_entries")
+      .select("id,user_id,question_id,answer,self_rating,bookmarked,completed,hidden,version", { count: "exact" })
+      .eq("user_id", userId)
+      .order("question_id")
+      .limit(pageSize);
+    if (questionId) query = query.eq("question_id", questionId);
+    if (after) query = query.gt("question_id", after);
+    const { data, error, count } = await query;
+    if (error) throw error;
+    const page = data ?? [];
+    rows.push(...page);
+    if (questionId || !page.length || (count === null ? page.length < pageSize : page.length >= count)) return rows;
+    after = page[page.length - 1].question_id;
+  }
+}
+
 /** A legacy alias must not resurrect a hidden question or lose a past completion. */
 export function buildQuestionStates(questions: QuestionSummary[], entries: Entry[]) {
   const byId = new Map(questions.map(q => [q.id, questionFamily(q.key)]));

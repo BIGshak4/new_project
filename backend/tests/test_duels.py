@@ -197,8 +197,8 @@ class TestTheClock:
         assert await balance(svc, A) == 45
         cancelled = await svc.cancel(A, invite.id)
         assert cancelled.status == "cancelled" and cancelled.outcome == "cancelled" and await balance(svc, A) == 50
-        with pytest.raises(ApiError):
-            await svc.cancel(A, invite.id)
+        assert (await svc.cancel(A, invite.id)).status == "cancelled"
+        assert await balance(svc, A) == 50
 
 
 class TestTheGuards:
@@ -322,6 +322,60 @@ async def client(catalog, monkeypatch):
 
 
 class TestOverHttp:
+    async def test_targeted_friend_challenge_is_private_retryable_and_shows_both_usernames(self, client):
+        _, token_a = make_token(email="a@example.com")
+        bob_id, token_b = make_token(email="b@example.com")
+        _, token_c = make_token(email="c@example.com")
+        ha, hb, hc = [{"Authorization": f"Bearer {token}"} for token in (token_a, token_b, token_c)]
+        await client.put("/v1/me/identity/username", json={"username": "Alice"}, headers=ha)
+        bob = (await client.put("/v1/me/identity/username", json={"username": "Bobby"}, headers=hb)).json()
+        body = {"mode": "quiz", "friend_id": str(bob_id), "language": "he"}
+        sent = (await client.post("/v1/me/friends/requests", json={"friend_code": bob["friend_code"]}, headers=ha)).json()
+        request_id = sent["outgoing"][0]["id"]
+        assert (await client.post("/v1/duels", json=body, headers=ha)).status_code == 404
+        await client.post(f"/v1/me/friends/requests/{request_id}/accept", headers=hb)
+        response = await client.post("/v1/duels", json=body, headers=ha)
+        assert response.status_code == 201, response.text
+        opened = response.json()
+        assert opened["invited_username"] == "Bobby" and opened["me"]["username"] == "Alice"
+        repeat = (await client.post("/v1/duels", json=body, headers=ha)).json()
+        assert repeat["id"] == opened["id"]
+        assert (await client.get("/v1/me/coins", headers=ha)).json()["balance"] == 45
+        for headers in (ha, hc):
+            assert (await client.get("/v1/duels/invitations", headers=headers)).json() == {"invitations": []}
+        incoming = (await client.get("/v1/duels/invitations", headers=hb)).json()["invitations"]
+        assert len(incoming) == 1 and incoming[0]["username"] == "Alice" and incoming[0]["stake"] == 5
+        code = {"code": incoming[0]["code"]}
+        assert (await client.post("/v1/duels/accept", json=code, headers=hc)).status_code == 404
+        accepted = (await client.post("/v1/duels/accept", json=code, headers=hb)).json()
+        assert accepted["me"]["username"] == "Bobby" and accepted["opponent"]["username"] == "Alice"
+        assert (await client.get("/v1/duels/invitations", headers=hb)).json() == {"invitations": []}
+        path = f"/v1/duels/{opened['id']}"
+        assert (await client.get(path, headers=ha)).json()["opponent"]["username"] == "Bobby"
+        assert (await client.post(path + "/cancel", headers=ha)).status_code == 200
+        assert (await client.post(path + "/cancel", headers=ha)).status_code == 200
+        for headers in (ha, hb):
+            assert (await client.get("/v1/me/coins", headers=headers)).json()["balance"] == 50
+
+    async def test_removing_friend_before_acceptance_invalidates_old_challenge(self, client):
+        _, token_a = make_token(email="a@example.com")
+        b, token_b = make_token(email="b@example.com")
+        ha, hb = [{"Authorization": f"Bearer {token}"} for token in (token_a, token_b)]
+        await client.put("/v1/me/identity/username", json={"username": "Alice"}, headers=ha)
+        bob = (await client.put("/v1/me/identity/username", json={"username": "Bobby"}, headers=hb)).json()
+        async def befriend():
+            request = (await client.post("/v1/me/friends/requests", json={"friend_code": bob["friend_code"]}, headers=ha)).json()
+            await client.post(f"/v1/me/friends/requests/{request['outgoing'][0]['id']}/accept", headers=hb)
+        await befriend()
+        opened = (await client.post("/v1/duels", json={"friend_id": str(b)}, headers=ha)).json()
+        await client.delete(f"/v1/me/friends/{b}", headers=ha)
+        assert (await client.get("/v1/duels/invitations", headers=hb)).json()["invitations"] == []
+        await befriend()
+        assert (await client.get("/v1/duels/invitations", headers=hb)).json()["invitations"] == []
+        assert (await client.post("/v1/duels/accept", json={"code": opened["code"]}, headers=hb)).status_code == 404
+        assert (await client.post(f"/v1/duels/{opened['id']}/cancel", headers=ha)).status_code == 200
+        assert (await client.get("/v1/me/coins", headers=ha)).json()["balance"] == 50
+
     async def test_two_members_duel(self, client):
         ha = {"Authorization": f"Bearer {make_token(email='a@example.com')[1]}"}
         hb = {"Authorization": f"Bearer {make_token(email='b@example.com')[1]}"}

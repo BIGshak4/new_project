@@ -118,6 +118,14 @@ class _MemoryTx:
     async def identities_available(self):
         return self.s.identities_enabled
 
+    async def record_presence(self, user_id, now):
+        identity = await self.load_identity(user_id)
+        self.s.identities[user_id] = {**identity, "last_seen_at": now}
+
+    async def online_users(self, user_ids, since):
+        return {user for user in user_ids if (stamp := self.s.identities.get(user, {}).get("last_seen_at"))
+                and stamp >= since}
+
     async def load_identity(self, user_id):
         if user_id not in self.s.identities:
             for _ in range(128):
@@ -434,6 +442,21 @@ class _MemoryTx:
         rows = [d for d in self.s.duels.values() if user_id in (d["challenger_id"], d["opponent_id"])]
         rows.sort(key=lambda d: d["created_at"], reverse=True)
         return [self._duel(d) for d in rows[:limit]]
+
+    async def duel_invitations(self, user_id, since):
+        invitations = []
+        for duel in self.s.duels.values():
+            if duel["status"] != "open" or duel["created_at"] < since or duel["meta"].get("invited_friend_id") != str(user_id):
+                continue
+            relationship = await self.friend_relationship(user_id, other_id=duel["challenger_id"])
+            if relationship and relationship["status"] == "accepted" and str(relationship["id"]) == duel["meta"]["friendship_id"]:
+                invitations.append({key: duel[key] for key in ("id", "code", "stake", "created_at", "mode")} |
+                                   {"username": self.s.identities[duel["challenger_id"]]["username"]})
+        return sorted(invitations, key=lambda row: row["created_at"], reverse=True)
+
+    async def open_duel_invites(self, user_id, since):
+        return [self._duel(row) for row in self.s.duels.values()
+                if row["challenger_id"] == user_id and row["status"] == "open" and row["created_at"] >= since]
 
     async def last_duel_between(self, a, b):
         stamps = [d["accepted_at"] for d in self.s.duels.values() if d["accepted_at"] is not None

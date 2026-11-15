@@ -44,9 +44,13 @@
 .requestActions { display: flex; gap: 8px; flex-wrap: wrap; }
 .requestActions button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 8px 11px; font-size: 13px; }
 .friendListHeading { margin-top: 3px; }
-.friendGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 20px 12px; padding: 0; margin: 0; list-style: none; }
+.friendGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); gap: 20px 12px; padding: 0; margin: 0; list-style: none; }
 .friend { display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
 .friend > strong { margin-block: 6px 0; max-width: 100%; overflow-wrap: anywhere; font-size: 14px; line-height: 1.6; }
+.presence { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; }
+.presence::before { content: ""; width: 8px; height: 8px; border: 1px solid currentColor; border-radius: 50%; }
+.presence[data-online="true"]::before { background: var(--ok); border-color: var(--ok); }
+.friend .challenge { display: inline-flex; align-items: center; gap: 6px; margin-block-start: 10px; min-height: 44px; padding-inline: 10px; color: var(--link); font-size: 14px; }
 .remove { min-height: 44px; padding: 6px 10px; border: 0; background: transparent; color: var(--muted); font-size: 12px; }
 .empty { margin: 0; }
 @media (max-width: 600px) {

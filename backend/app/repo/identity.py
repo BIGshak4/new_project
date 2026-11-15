@@ -1,8 +1,10 @@
 """Identity and friendship data. The caller's UUID always scopes relationship reads and writes."""
 
 import uuid
+from datetime import timedelta
 
 from sqlalchemy import and_, delete, or_, select, update
+from sqlalchemy.dialects.postgresql import insert
 
 from app import db
 
@@ -10,6 +12,25 @@ from app import db
 async def available() -> bool:
     profile = await db.table("user_profile")
     return {"username", "username_key", "friend_code"} <= set(profile.c.keys()) and await db.has_table("friendship")
+
+
+async def record_presence(connection, user_id, now):
+    if not await db.has_table("user_presence"):
+        return
+    table = await db.table("user_presence")
+    statement = insert(table).values(user_id=user_id, last_seen_at=now)
+    await connection.execute(statement.on_conflict_do_update(
+        index_elements=[table.c.user_id], set_={"last_seen_at": now},
+        where=table.c.last_seen_at < now - timedelta(seconds=20)))
+
+
+async def online_users(connection, user_ids, since):
+    if not user_ids or not await db.has_table("user_presence"):
+        return set()
+    table = await db.table("user_presence")
+    result = await connection.execute(select(table.c.user_id).where(
+        table.c.user_id.in_(user_ids), table.c.last_seen_at >= since))
+    return set(result.scalars())
 
 
 def _columns(profile):

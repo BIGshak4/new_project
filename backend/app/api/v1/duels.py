@@ -40,6 +40,7 @@ class DuelQuestionView(BaseModel):
 
 
 class DuelSideView(BaseModel):
+    username: str | None = None
     avatar: dict[str, str] | None = None
     ready: bool = False                         # quiz waiting room: both must be ready before the clock starts
     answered: bool = False                      # judged: sent an answer; quiz: finished every question
@@ -115,6 +116,7 @@ class QuizView(BaseModel):
 
 
 class DuelView(BaseModel):
+    invited_username: str | None = None
     id: str
     code: str                                   # the invite code; share_path is the link for the opponent
     share_path: str
@@ -148,12 +150,26 @@ class DuelListView(BaseModel):
 
 
 class CreateDuelRequest(BaseModel):
+    friend_id: uuid.UUID | None = None
     language: str = Field("he", pattern="^(en|he)$")
     mode: str | None = Field(None, pattern="^(quiz|judged)$")   # default: the seed's mode_default (quiz)
 
 
 class AcceptDuelRequest(BaseModel):
     code: str = Field(..., min_length=4, max_length=16)
+
+
+class FriendInvitation(BaseModel):
+    id: uuid.UUID
+    code: str
+    username: str | None
+    stake: int
+    created_at: datetime
+    mode: str
+
+
+class InvitationsView(BaseModel):
+    invitations: list[FriendInvitation]
 
 
 class DuelAnswerRequest(BaseModel):
@@ -238,6 +254,7 @@ def _view(svc, duel: Duel, user_id: uuid.UUID) -> DuelView:
     players = 2 if duel.opponent_id else 1
     return DuelView(id=str(duel.id), code=duel.code, share_path=svc.share_path(duel), share_url=svc.share_url(duel),
                     status=duel.status, mode=duel.mode, role="challenger" if me_id == duel.challenger_id else "opponent",
+                    invited_username=duel.meta.get("invited_username"),
                     stake=duel.stake, pot=duel.stake * players, language=duel.language, question=question,
                     quiz=_quiz_view(svc, duel, user_id, settled),
                     deadline=duel.deadline, seconds_left=seconds_left, me=side(mine, reveal=True),
@@ -249,11 +266,18 @@ def _view(svc, duel: Duel, user_id: uuid.UUID) -> DuelView:
                                       and duel.deadline is None and duel.accepted_at else None))
 
 
-def _with_avatars(view, duel, user_id, configs):
-    view.me.avatar = configs.get(str(user_id))
+def _with_players(view, duel, user_id, people):
+    me = people[str(user_id)]
+    view.me.avatar, view.me.username = me["avatar"], me["username"]
     if view.opponent is not None:
-        view.opponent.avatar = configs.get(str(duel.other(user_id)))
+        other = people[str(duel.other(user_id))]
+        view.opponent.avatar, view.opponent.username = other["avatar"], other["username"]
     return view
+
+
+async def _player_view(duels, avatars, duel, user_id):
+    people = await avatars.duel_players([duel.challenger_id, duel.opponent_id])
+    return _with_players(_view(duels, duel, user_id), duel, user_id, people)
 
 
 def _rules(svc) -> dict:
@@ -269,22 +293,27 @@ def _rules(svc) -> dict:
 @router.get("", response_model=DuelListView, summary="My duels, newest first (overdue ones are settled on the way)")
 async def list_duels(access: CurrentAccess, duels: Duels, avatars: Avatars, limit: int = Query(20, ge=1, le=50)) -> DuelListView:
     rows = await duels.list(access.user_id, limit=limit)
-    configs = await avatars.public_configs({p for d in rows for p in (d.challenger_id, d.opponent_id) if p})
-    return DuelListView(duels=[_with_avatars(_view(duels, d, access.user_id), d, access.user_id, configs) for d in rows], rules=_rules(duels))
+    people = await avatars.duel_players({p for d in rows for p in (d.challenger_id, d.opponent_id) if p})
+    return DuelListView(duels=[_with_players(_view(duels, d, access.user_id), d, access.user_id, people) for d in rows],
+                        rules=_rules(duels))
+
+
+@router.get("/invitations", response_model=InvitationsView)
+async def invitations(access: CurrentAccess, duels: Duels, response: Response):
+    response.headers["Cache-Control"] = "private, no-store"
+    return {"invitations": await duels.invitations(access.user_id)}
 
 
 @router.post("", response_model=DuelView, status_code=201, summary="Open a duel: stake 5 coins, get an invite code")
 async def create_duel(body: CreateDuelRequest, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
-    duel = await duels.create(access.user_id, language=body.language, mode=body.mode)
-    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
-    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
+    duel = await duels.create(access.user_id, language=body.language, mode=body.mode, friend_id=body.friend_id)
+    return await _player_view(duels, avatars, duel, access.user_id)
 
 
 @router.post("/accept", response_model=DuelView, summary="Accept an invite by code: stake 5, join the quiz waiting room")
 async def accept_duel(body: AcceptDuelRequest, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
     duel = await duels.accept(access.user_id, body.code)
-    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
-    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
+    return await _player_view(duels, avatars, duel, access.user_id)
 
 
 @router.get("/practice", response_model=QuizPracticeView, summary="Try one real game question without coins or an opponent")
@@ -303,27 +332,23 @@ async def practice_answer(body: QuizPracticeAnswerRequest, access: CurrentAccess
 @router.post("/{duel_id}/ready", response_model=DuelView, summary="Ready for the quiz: both ready starts the server clock")
 async def ready_duel(duel_id: uuid.UUID, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
     duel = await duels.ready(access.user_id, duel_id)
-    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
-    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
+    return await _player_view(duels, avatars, duel, access.user_id)
 
 
 @router.get("/{duel_id}", response_model=DuelView, summary="One duel as I see it")
 async def get_duel(duel_id: uuid.UUID, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
     duel = await duels.get(access.user_id, duel_id)
-    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
-    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
+    return await _player_view(duels, avatars, duel, access.user_id)
 
 
 @router.post("/{duel_id}/answer", response_model=DuelView,
              summary="Quiz: {choice, item} for the question in front of me. Judged: {text}, scored on the spot")
 async def answer_duel(duel_id: uuid.UUID, body: DuelAnswerRequest, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
     duel = await duels.answer(access.user_id, duel_id, body.text, choice=body.choice, item=body.item)
-    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
-    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
+    return await _player_view(duels, avatars, duel, access.user_id)
 
 
 @router.post("/{duel_id}/cancel", response_model=DuelView, summary="Withdraw my invite or leave the waiting room (stakes refunded)")
 async def cancel_duel(duel_id: uuid.UUID, access: CurrentAccess, duels: Duels, avatars: Avatars) -> DuelView:
     duel = await duels.cancel(access.user_id, duel_id)
-    configs = await avatars.public_configs([duel.challenger_id, duel.opponent_id])
-    return _with_avatars(_view(duels, duel, access.user_id), duel, access.user_id, configs)
+    return await _player_view(duels, avatars, duel, access.user_id)
