@@ -42,3 +42,5 @@
 [מיפוי המקורות](../interview_preparation/intakes/2026-11-15-batch20b-sources.json) · [בדיקת התצוגה](../interview_preparation/checks/batch1115b-browser-verification.json) · [קריאה חוזרת במסד](../interview_preparation/checks/batch1115b-database-verification.json) · [פרוטוקול הקליטה](question-publication-protocol.md).
 
 נוספו 36 קובצי שרטוט מקוריים. בדיקות התצוגה המקומיות כיסו 68 תצוגות של 17 הזהויות המושפעות בשתי השפות ובשני רוחבים. Icarus קימפל והריץ חמישה מימושי SystemVerilog, לרבות בדיקות NBA ואיפוס חופפים ומקרי נשיאה. [ראיות HDL](../interview_preparation/checks/digital1115b-verification.json) · [היקף בדיקות](../interview_preparation/checks/batch1115b-test-verification.json).
+
+הפרסום החי אומת לגרסה 8ed9183 באתר, ב־API ובלוח המשימות. קטלוג השרת מחזיר 381 רשומות ריאיון ו־3,500 גרסאות משחק על בסיס 700 מקורות קצרים. [אימות הפריסה](../interview_preparation/checks/batch1115b-deployment-verification.json).
