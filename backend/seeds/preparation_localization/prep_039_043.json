@@ -593,13 +593,15 @@
         "הקלט סינכרוני ועומד בזמני הכנה והחזקה; מזהים שינויים בין דגימות בחזיתות העולות, לא כל שינוי פיזי בין החזיתות.",
         "הפלט רשום ונשמר עד החזית הבאה. הדגימה הקודמת מאותחלת ל־0 ולכן דגימה ראשונה גבוהה יוצרת פולס.",
         "איפוס סינכרוני פעיל בגבוה מאפס את שני האוגרים בחזית; זהו פרט מימוש שהוספנו למקור.",
-        "קלט גבוה רצוף יוצר פולס אחד בלבד. ירידה אינה יוצרת פולס. ערכי קלט לא ידועים ב־HDL אינם חלק מהמודל הבינארי שנבדק."
+        "קלט גבוה רצוף יוצר פולס אחד בלבד. ירידה אינה יוצרת פולס. ערכי קלט לא ידועים ב־HDL אינם חלק מהמודל הבינארי שנבדק.",
+        "הארכת הדופק מוגדרת ל־N שלם חיובי עם הפעלה מחדש בכל עלייה נדגמת; המחזור המפעיל נכלל ברוחב."
       ],
       "en": [
         "Input is synchronous and meets setup/hold requirements; detection concerns samples at rising clock edges rather than every physical transition between edges.",
         "Output is registered and holds until the next edge. The previous sample initializes to zero, so a first high sample creates a pulse.",
         "Synchronous active-high reset clears both registers at an edge; this is an implementation clarification added to the source.",
-        "A held-high input creates one pulse; a fall creates none. HDL unknown-valued inputs are outside the tested binary model."
+        "A held-high input creates one pulse; a fall creates none. HDL unknown-valued inputs are outside the tested binary model.",
+        "Pulse stretching uses positive integer N, restarts on every sampled rise and includes the triggering interval."
       ]
     },
     "optimality": {
@@ -619,17 +621,17 @@
     "verification": {
       "he": {
         "status": "בדיקות מודל פייתון עברו.",
-        "method": "השוואה לאורקל עצמאי שמזהה עלייה לפי הפרש חיובי של 1 בין שתי דגימות.",
+        "method": "השוואה לאורקל עצמאי שמזהה עלייה לפי הפרש חיובי של 1 בין שתי דגימות.\n\n### בדיקות של חלון N מחזורים\nמודל החלון נבדק ב־51,480 צעדים ותקפי מעבר עבור N=1,2,3,8,16, מול אורקל המבוסס על זמן העלייה האחרונה. המודול החדש prep042_stretch קוּמפל והורץ ב־Icarus עבור N=1,3,8 על20,480 דגימות, כולל איפוס באמצע זרם. זהו אימות של מודול ההארכה החדש, ולא הרצה חדשה של קוד הגלאי המקורי; מצבי האימות הקודמים מתייחסים לקטעים הישנים. ללא סינתזה, ניתוח setup/hold או בדיקת חומרה.",
         "coverage": "16,382 רצפים בינאריים באורכים 0–12 עם שתי אפשרויות לדגימה הקודמת; 2,048 עקבות איפוס באמצע; דוגמה מפורשת וקלט גבוה במשך 100 מחזורים.",
         "script_path": "checks/check_prep_042.py",
-        "scope": "הקוד ב־SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL. לא נעשו סינתזה, בדיקת זמני הכנה/החזקה או מדידת מטא־יציבות ותזמון בחומרה."
+        "scope": "הקוד ב־SystemVerilog צורף אך לא קומפל או הורץ בסימולטור HDL. לא נעשו סינתזה, בדיקת זמני הכנה/החזקה או מדידת מטא־יציבות ותזמון בחומרה.\n\n### בדיקות של חלון N מחזורים\nמודל החלון נבדק ב־51,480 צעדים ותקפי מעבר עבור N=1,2,3,8,16, מול אורקל המבוסס על זמן העלייה האחרונה. המודול החדש prep042_stretch קוּמפל והורץ ב־Icarus עבור N=1,3,8 על20,480 דגימות, כולל איפוס באמצע זרם. זהו אימות של מודול ההארכה החדש, ולא הרצה חדשה של קוד הגלאי המקורי; מצבי האימות הקודמים מתייחסים לקטעים הישנים. ללא סינתזה, ניתוח setup/hold או בדיקת חומרה."
       },
       "en": {
         "status": "Python-model checks passed.",
-        "method": "Comparison with an independent oracle identifying a rise from a sample difference of positive one.",
+        "method": "Comparison with an independent oracle identifying a rise from a sample difference of positive one.\n\n### N-cycle-window checks\nThe window model passed 51,480 trace/transition steps for N=1,2,3,8,16 against an independent last-rise timestamp oracle. The new prep042_stretch module compiled and ran in Icarus for N=1,3,8 across 20,480 samples, including midstream resets. This validates the new stretcher module rather than rerunning the original detector listing; earlier evidence applies to the older code. No synthesis, setup/hold closure or physical hardware test was performed.",
         "coverage": "16,382 binary streams of lengths 0–12 across both initial previous states; 2,048 midstream-reset traces; one explicit example and a 100-cycle held-high trace.",
         "script_path": "checks/check_prep_042.py",
-        "scope": "SystemVerilog is supplied but has not been compiled or HDL-simulated. No synthesis, setup/hold verification, metastability measurement or physical timing checks."
+        "scope": "SystemVerilog is supplied but has not been compiled or HDL-simulated. No synthesis, setup/hold verification, metastability measurement or physical timing checks.\n\n### N-cycle-window checks\nThe window model passed 51,480 trace/transition steps for N=1,2,3,8,16 against an independent last-rise timestamp oracle. The new prep042_stretch module compiled and ran in Icarus for N=1,3,8 across 20,480 samples, including midstream resets. This validates the new stretcher module rather than rerunning the original detector listing; earlier evidence applies to the older code. No synthesis, setup/hold closure or physical hardware test was performed."
       }
     },
     "edge_cases": {
@@ -639,7 +641,8 @@
         "רצף 0,1,1,0,1 נותן פלט 0,1,0,0,1.",
         "איפוס בחזית כופה pulse=0 וגם previous=0. אם הקלט נשאר גבוה לאחר השחרור, הדגימה הראשונה ללא איפוס יוצרת פולס.",
         "פולס כניסה קצר שמופיע ונעלם בין דגימות עלול לא להיקלט; המימוש אינו מבטיח ללכוד אותו.",
-        "כל מעבר מזוהה דורש סדר דגימות 0 ואז 1. לא מייצרים פולס לירידה בלבד."
+        "כל מעבר מזוהה דורש סדר דגימות 0 ואז 1. לא מייצרים פולס לירידה בלבד.",
+        "N=1 זהה לדופק המקורי; איפוס גובר על עלייה; קלט1 מתמשך אינו מאריך מחדש; עלייה בזמן פעילות מתחילה N מחזורים חדשים."
       ],
       "en": [
         "Initial state previous=0 and pulse=0; a first high sample generates a pulse under the stated contract.",
@@ -647,7 +650,8 @@
         "Samples 0,1,1,0,1 produce 0,1,0,0,1.",
         "Reset at an edge forces pulse=0 and previous=0. If input remains high after reset is released, its first nonreset sample generates a pulse.",
         "A short input pulse entirely between samples may be missed; capture is not guaranteed.",
-        "A detected event requires low then high samples. A fall alone does not create a pulse."
+        "A detected event requires low then high samples. A fall alone does not create a pulse.",
+        "N=1 matches the original; reset wins over a rise; held high does not restart; a busy-time rise starts N fresh intervals."
       ]
     },
     "common_mistakes": {
@@ -658,7 +662,8 @@
         "טענה שקלט גבוה מתמשך צריך להשאיר את pulse גבוה או ליצור פולס בכל מחזור.",
         "השמטת מצב ההתחלה והנחה לא מוצהרת האם הדגימה הראשונה הגבוהה היא עלייה.",
         "הצגת AND עם קלט חי ואוגר אחד כאילו הוא בהכרח פולס רשום מלא למחזור שאחרי הדגימה.",
-        "הנחה שסנכרון מבטל מטא־יציבות לחלוטין או מבטיח לכידת כל פולס אסינכרוני קצר."
+        "הנחה שסנכרון מבטל מטא־יציבות לחלוטין או מבטיח לכידת כל פולס אסינכרוני קצר.",
+        "טעינה ב־N−1 או בדיקת מונה לפני החזית עלולות לקצר במחזור; עצירת היסטוריית הקלט בזמן פעילות משבשת הפעלה מחדש."
       ],
       "en": [
         "Using XOR, which detects falling as well as rising transitions.",
@@ -667,7 +672,8 @@
         "Keeping pulse high or repeating pulses throughout a held-high input.",
         "Leaving initialization and first-high behavior unspecified.",
         "Presenting live-input AND with one register as necessarily giving a registered full-cycle pulse after sampling.",
-        "Claiming synchronization eliminates metastability or guarantees capture of every short asynchronous pulse."
+        "Claiming synchronization eliminates metastability or guarantees capture of every short asynchronous pulse.",
+        "LoadingN−1 or observing the pre-edge counter can shorten by one; freezing input history while active breaks retriggering."
       ]
     },
     "interview_answer": {

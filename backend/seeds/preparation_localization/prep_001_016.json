@@ -2979,7 +2979,8 @@
         "קלט של אפסים בלבד מפיק פלט של אפסים בלבד; השאלה אינה נותנת דוגמה זו במפורש.",
         "אין צורך בהתנהגות סדרתית: מממשים לוגיקה קומבינטורית באמצעות שערי ביטים זמינים.",
         "הזזות לוגיות ימינה הן חיווט קבוע עם מילוי באפס. אם משתמשים ב־NOT לווקטור, רוחבו מוגבל להקשר בן שמונת הביטים.",
-        "השוואת העומק מניחה שערים בעלי לכל היותר שתי כניסות; אין טענה לאופטימום שטח אוניברסלי תלוי־טכנולוגיה."
+        "השוואת העומק מניחה שערים בעלי לכל היותר שתי כניסות; אין טענה לאופטימום שטח אוניברסלי תלוי־טכנולוגיה.",
+        "וריאציית הזמן: AND דו־כניסתי1τ, OR/NOT/XOR אפס, כל קלט בזמן0 וכל שער בינארי בעל לכל היותר שתי כניסות."
       ],
       "en": [
         "Eight-bit unsigned bit-vector interpretation; bit 7 is the leftmost MSB.",
@@ -2987,7 +2988,8 @@
         "All-zero input maps to all-zero output; the prompt does not explicitly give that example.",
         "No sequential behavior is required: implement combinational logic with available bitwise gates.",
         "Logical right shifts are fixed, zero-filled wiring. NOT on a vector, if used, is width-limited by its eight-bit context.",
-        "Depth comparison assumes bounded two-input gate fan-in; no universal technology-specific area optimum is claimed."
+        "Depth comparison assumes bounded two-input gate fan-in; no universal technology-specific area optimum is claimed.",
+        "Weighted variant: binary AND1τ, OR/NOT/XOR0, inputs at 0, and fan-in at most two for binary gates."
       ]
     },
     "optimality": {
@@ -3010,7 +3012,8 @@
         "11111111 -> 10000000",
         "כל קלט שכבר מכיל אחת יחידה נשאר ללא שינוי",
         "אחדות נוספות מתחת לראשונה מוסרות",
-        "הפלט הוא מסכה ולא קידוד המיקום"
+        "הפלט הוא מסכה ולא קידוד המיקום",
+        "קלט0 מחזיר0;1 בביט7 חוסם את כל שבעת הביטים האחרים."
       ],
       "en": [
         "00000000 -> 00000000",
@@ -3019,7 +3022,8 @@
         "11111111 -> 10000000",
         "Any already-one-hot input stays unchanged",
         "Multiple ones below the first are removed",
-        "Output is the mask, not the encoded position"
+        "Output is the mask, not the encoded position",
+        "Zero returns zero; a bit 7 one blocks every lower bit."
       ]
     },
     "verification": {
@@ -3027,15 +3031,15 @@
         "status": "passed",
         "checked_on": "2026-09-27",
         "script_path": "checks/check_prep_014.py",
-        "method": "כל 256 הקלטים נבדקו מול מפרט הביט הגבוה הדלוק ומול מימוש עצמאי של שרשרת עדיפות; נבדקו תכונת אפס/אחת יחידה, דוגמת המקור וכל ביט של אינווריאנט חלון בכל שלב OR. השרטוט נבדק חזותית.",
-        "scope": "מודל בוליאני סופי ממצה בפייתון. סופק SystemVerilog אך הוא לא קומפל או סומלץ; אין סינתזה, תזמון פיזי או הבטחה להיעדר גליצ'ים."
+        "method": "כל 256 הקלטים נבדקו מול מפרט הביט הגבוה הדלוק ומול מימוש עצמאי של שרשרת עדיפות; נבדקו תכונת אפס/אחת יחידה, דוגמת המקור וכל ביט של אינווריאנט חלון בכל שלב OR. השרטוט נבדק חזותית.\n\n### בדיקות של וריאציית הזמן\nכל 256 הקלטים עברו בדיקת DAG מול אורקל מספרי עצמאי; זמני ההגעה חושבו בנפרד והתקבל חסם1τ במודל המשוקלל ו־8τ באותה טופולוגיה במודל אחיד. המודול prep014_weighted_msb קוּמפל והורץ ב־Icarus לכל256 הקלטים. אין כאן אישור תזמון פיזי או הרצה חדשה של כל קטעי RTL מהווריאציות הישנות.",
+        "scope": "מודל בוליאני סופי ממצה בפייתון. סופק SystemVerilog אך הוא לא קומפל או סומלץ; אין סינתזה, תזמון פיזי או הבטחה להיעדר גליצ'ים.\n\n### בדיקות של וריאציית הזמן\nכל 256 הקלטים עברו בדיקת DAG מול אורקל מספרי עצמאי; זמני ההגעה חושבו בנפרד והתקבל חסם1τ במודל המשוקלל ו־8τ באותה טופולוגיה במודל אחיד. המודול prep014_weighted_msb קוּמפל והורץ ב־Icarus לכל256 הקלטים. אין כאן אישור תזמון פיזי או הרצה חדשה של כל קטעי RTL מהווריאציות הישנות."
       },
       "en": {
         "status": "passed",
         "checked_on": "2026-09-27",
         "script_path": "checks/check_prep_014.py",
-        "method": "All 256 inputs checked against the highest-set-bit specification and independent priority-chain implementation; zero/one-hot property, source example and every bit of each OR-stage window invariant verified. Diagram visually inspected.",
-        "scope": "Exhaustive finite Python Boolean model. SystemVerilog provided but not compiled/simulated; no synthesis, physical timing or glitch-free guarantee."
+        "method": "All 256 inputs checked against the highest-set-bit specification and independent priority-chain implementation; zero/one-hot property, source example and every bit of each OR-stage window invariant verified. Diagram visually inspected.\n\n### Weighted-variant checks\nAll 256 vectors passed an explicit DAG check against an independent integer oracle. Separate arrival-time propagation gave 1τ weighted delay and 8τ under uniform delay for that same topology. The prep014_weighted_msb module compiled and ran in Icarus on all 256 inputs. This is neither physical timing closure nor a new run of every older variant’s RTL.",
+        "scope": "Exhaustive finite Python Boolean model. SystemVerilog provided but not compiled/simulated; no synthesis, physical timing or glitch-free guarantee.\n\n### Weighted-variant checks\nAll 256 vectors passed an explicit DAG check against an independent integer oracle. Separate arrival-time propagation gave 1τ weighted delay and 8τ under uniform delay for that same topology. The prep014_weighted_msb module compiled and ran in Icarus on all 256 inputs. This is neither physical timing closure nor a new run of every older variant’s RTL."
       }
     },
     "interview_answer": {
@@ -3051,7 +3055,8 @@
         "שימוש בהזזות של x המקורי בכל שלב במקום בערכי הביניים המעודכנים",
         "שימוש בהזזה אריתמטית ימינה עם הרחבת סימן",
         "בלבול בין שלבים קומבינטוריים למחזורי שעון",
-        "טענה למינימום שטח או עומק מדויק ללא הגדרת מודל שערים"
+        "טענה למינימום שטח או עומק מדויק ללא הגדרת מודל שערים",
+        "ספירת שערי OR כשיהוי חיובי סותרת את מודל המשקלים; הצגת1τ כמינימום מתעלמת מ־De Morgan עם OR/NOT חינמיים."
       ],
       "en": [
         "Clearing the first 1 itself instead of retaining it",
@@ -3061,7 +3066,8 @@
         "Using shifts of the original x in every stage instead of updated intermediate values",
         "Using signed arithmetic right shift with sign extension",
         "Confusing combinational stages with clock cycles",
-        "Claiming exact minimum area/depth without specifying a gate model"
+        "Claiming exact minimum area/depth without specifying a gate model",
+        "Counting positive OR delay contradicts the weighted model; calling1τ optimal ignores a zero-cost De Morgan implementation."
       ]
     },
     "solution_gate_schematic_verification": {

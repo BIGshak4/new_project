@@ -31,7 +31,7 @@ def test_input_only_cases_use_independent_oracles(key):
 
 def test_prior_profiles_remain_identical_and_new_turnback_has_no_heading_requirement():
     prior=json.loads(subprocess.check_output(['git','show','ca0db56:backend/seeds/execution_cases.json'],cwd=ROOT))['questions']
-    assert len(prior)==56 and len(MANIFEST)==63
+    assert len(prior)==56 and len(MANIFEST)==66
     assert all(MANIFEST[key]==spec for key,spec in prior.items())
     spec=MANIFEST['prep-turtle-single-sequence-return-position']['languages']['python']
     examples={tuple(c['args']):c['expected'] for c in spec['cases']}

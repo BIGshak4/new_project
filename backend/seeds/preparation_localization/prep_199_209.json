@@ -486,51 +486,63 @@
       "he": [
         "אספקה וכניסה בטווח המסילות; טרנזיסטורי enhancement משלימים.",
         "חיבורי גוף הם לסכימת bulk רגילה, בכפוף לכללי התהליך.",
-        "מודל הגרף הוא השהיה ועוד פריקה מעריכית עם ערכים שנבחרו לצורך לימוד."
+        "מודל הגרף הוא השהיה ועוד פריקה מעריכית עם ערכים שנבחרו לצורך לימוד.",
+        "וריאציית רוחב: שינוי התקן אחד בכל פעם; β יחסי ל־W, ספים ואורכים קבועים. λ חיובי נבחר רק למודל DC רציף ויחיד."
       ],
       "en": [
         "Rail-bounded supply/input and complementary enhancement devices.",
         "Body connections depict a conventional bulk implementation subject to process rules.",
-        "The waveform model is a chosen transport-start delay followed by exponential discharge."
+        "The waveform model is a chosen transport-start delay followed by exponential discharge.",
+        "Width variant: change one device at a time; β scales with W at fixed thresholds/lengths. Positive λ defines a continuous, unique educational DC model."
       ]
     },
     "optimality": {
-      "he": "המהפך הבסיסי משתמש בשני טרנזיסטורים; לא מוצגים מינימום שטח, הספק או השהיה בלי ספרייה וגדלים.",
-      "en": "The basic topology uses two transistors; no area, power or delay optimum is claimed without a library and sizing."
+      "he": "המהפך הבסיסי משתמש בשני טרנזיסטורים; לא מוצגים מינימום שטח, הספק או השהיה בלי ספרייה וגדלים.\n\nאין אופטימום גודל אוניברסלי. היעד כאן הוא כיוון שינוי Vm; מהירות, רעש, שטח והספק דורשים מדדים נפרדים.",
+      "en": "The basic topology uses two transistors; no area, power or delay optimum is claimed without a library and sizing.\n\nNo universal size optimum is claimed. The target is the direction of Vm change; speed, noise, area and power need separate metrics."
     },
     "verification": {
-      "he": "שתי שורות רמת המסילה נבדקו במודל מתגים, עם דוגמת Vin=0.5 V ושני ספים של 0.3 V המציגה אפשרות הולכה של שניהם. אין חישוב VTC, SPICE או אימות חומרה. ההרחבה נבדקה מול חציות אנליטיות וגבולות מונוטוניות במודל RC. זו אינה סימולציית SPICE.",
-      "en": "Both rail-input rows were checked in an ideal switch model. A Vin=0.5 V example with 0.3 V thresholds flags possible simultaneous conduction. No quantitative VTC, SPICE or hardware validation. The extension was checked against analytic crossings and monotonic RC bounds, without SPICE simulation."
+      "he": "שתי שורות רמת המסילה נבדקו במודל מתגים, עם דוגמת Vin=0.5 V ושני ספים של 0.3 V המציגה אפשרות הולכה של שניהם. אין חישוב VTC, SPICE או אימות חומרה. ההרחבה נבדקה מול חציות אנליטיות וגבולות מונוטוניות במודל RC. זו אינה סימולציית SPICE.\n\nוריאציית VTC: נבדקו 1,005 נקודות בחמישה יחסי חוזק מול אינטגרל מטען Decimal ופתרון secant עצמאי; רציפות, KCL, מונוטוניות ונקודות המיתוג האידאליות נבדקו בנפרד. אין הרצת SPICE.",
+      "en": "Both rail-input rows were checked in an ideal switch model. A Vin=0.5 V example with 0.3 V thresholds flags possible simultaneous conduction. No quantitative VTC, SPICE or hardware validation. The extension was checked against analytic crossings and monotonic RC bounds, without SPICE simulation.\n\nVTC variant: 1,005 points at five strength ratios were compared with Decimal channel-charge integration and an independent safeguarded secant solve. Continuity, KCL, monotonicity and ideal switching points were checked separately. No SPICE was run."
     },
     "edge_cases": {
       "he": [
         "קלט באמצע התחום אינו עוד שורת אמת דיגיטלית מובטחת.",
-        "עומס קיבולי מעכב תגובה; דליפה קיימת גם במנוחה."
+        "עומס קיבולי מעכב תגובה; דליפה קיימת גם במנוחה.",
+        "VDD נמוך מסכום הספים עשוי לבטל תחום הולכה חופף; הנוסחה והמודל המספרי שנבחרו אינם מיועדים למקרה זה.",
+        "הכפלת שני החוזקים אינה מזיזה DC במודל, אך משנה קיבולים ומאמץ הנעה."
       ],
       "en": [
         "Midrail input is not another guaranteed digital truth-table row.",
-        "Capacitive loading delays switching; leakage remains in steady state."
+        "Capacitive loading delays switching; leakage remains in steady state.",
+        "VDD below the sum of thresholds can remove overlapping conduction; the chosen formula/numerical model does not cover that case.",
+        "Scaling both strengths preserves the model's DC curve but changes capacitance and drive burden."
       ]
     },
     "common_mistakes": {
       "he": [
         "להפעיל PMOS עם רמה גבוהה בשער כמו NMOS.",
         "להבטיח VDD/2 לכל יחס גדלים.",
-        "לומר שאין צריכת זרם בכלל כי אין מסלול DC אידאלי במנוחה."
+        "לומר שאין צריכת זרם בכלל כי אין מסלול DC אידאלי במנוחה.",
+        "לומר שהגדלת PMOS מורידה את Vm: משיכה חזקה למעלה דורשת Vin גבוהה יותר כדי להתגבר עליה.",
+        "לזהות Vm עם Vth, או להניח ש־Wp=Wn גורר חוזקים שווים.",
+        "לשרטט רוויה אידאלית כעקומה חלקה ויחידה בלי להתייחס לניוון באזור המעבר."
       ],
       "en": [
         "Turning PMOS on with a high gate as if it were NMOS.",
         "Promising VDD/2 for every sizing ratio.",
-        "Claiming no current consumption because ideal steady-state DC paths are absent."
+        "Claiming no current consumption because ideal steady-state DC paths are absent.",
+        "Saying a wider PMOS lowers Vm: stronger pull-up needs a larger Vin to overcome it.",
+        "Equating Vm with Vth, or equal widths with equal strengths.",
+        "Plotting ideal saturation as a smooth unique VTC without addressing transition-region degeneracy."
       ]
     },
     "interview_answer": {
-      "he": "השערים משותפים לכניסה והנקזים ליציאה; PMOS מושך מ־VDD ו־NMOS לאדמה. בכניסה נמוכה הראשון מוליך, ובגבוהה השני. בזמן מעבר יש קיבול וייתכן זרם דרך שניהם; הספים וההשהיה תלויים בתהליך ובעומס.",
-      "en": "Tie gates to input and drains to output; PMOS pulls from VDD and NMOS to ground. Low input activates PMOS, high activates NMOS. Switching involves capacitance and possible through-current; thresholds and delay depend on process and load."
+      "he": "השערים משותפים לכניסה והנקזים ליציאה; PMOS מושך מ־VDD ו־NMOS לאדמה. בכניסה נמוכה הראשון מוליך, ובגבוהה השני. בזמן מעבר יש קיבול וייתכן זרם דרך שניהם; הספים וההשהיה תלויים בתהליך ובעומס.\n\nPMOS רחב יותר מעלה את Vm ומזיז את אזור המעבר ימינה; NMOS רחב יותר עושה ההפך, כאשר יתר הפרמטרים קבועים. יחס החוזקים קובע את איזון ה־DC, בעוד גודל כולל משנה גם קיבולים והשהיה.",
+      "en": "Tie gates to input and drains to output; PMOS pulls from VDD and NMOS to ground. Low input activates PMOS, high activates NMOS. Switching involves capacitance and possible through-current; thresholds and delay depend on process and load.\n\nA wider PMOS raises Vm and moves the transition right; a wider NMOS does the reverse with other parameters fixed. The strength ratio determines DC balance, while overall size also affects capacitance and delay."
     },
     "source_ambiguities": {
-      "he": "אין מקור למספרי מתח, גדלים, קיבול או תהליך בצילום. השרטוט הוא סכימה לימודית ולא תא מוסמך. במקור החדש לא נמסרו זמן השהיה או עומס למדרגה.",
-      "en": "The screenshot supplies no voltage, sizing, capacitance or process values. The diagram is an educational schematic, not a qualified cell. The additional screenshot specifies neither delay nor load for the input step."
+      "he": "אין מקור למספרי מתח, גדלים, קיבול או תהליך בצילום. השרטוט הוא סכימה לימודית ולא תא מוסמך. במקור החדש לא נמסרו זמן השהיה או עומס למדרגה.\n\nבמקור רוחב ההתקן נשאל ללא טכנולוגיה, עומס או נתונים. תנאי DC והמספרים נוספו כדוגמה לימודית, ללא ייחוסם למקור.",
+      "en": "The screenshot supplies no voltage, sizing, capacitance or process values. The diagram is an educational schematic, not a qualified cell. The additional screenshot specifies neither delay nor load for the input step.\n\nThe width question supplies no technology, load or parameters. DC conditions and numerical values are an added teaching example, not source-supplied facts."
     },
     "solution_extensions": {
       "he": [
@@ -538,6 +550,11 @@
           "question": "כיצד הקטנת העומס משפיעה על ההשהיה?",
           "answer_direction": "באותו חוזק הנעה טעינה של קיבול קטן נוטה להסתיים מהר יותר; נדרשים מודל ותהליך לכימות, ומרווחי רעש אינם נובעים רק מהקיבול.",
           "principle": "אמת בוליאנית אינה מספיקה לניתוח תזמון."
+        },
+        {
+          "question": "איך בוחרים רוחבים כדי לקבל Vm=VDD/2 כאשר הניידויות שונות?",
+          "answer_direction": "השתמשו במשוואת הזרמים ובספים; במקרה הסימטרי בספים נדרשים βp=βn, לא בהכרח Wp=Wn.",
+          "principle": "גאומטריה, ניידות ויחס חוזקים."
         }
       ],
       "en": [
@@ -545,6 +562,27 @@
           "question": "How does reducing load affect delay?",
           "answer_direction": "With comparable drive, a smaller capacitance generally charges faster; quantitative values need a process/model, and noise margins do not follow from capacitance alone.",
           "principle": "Boolean truth does not determine timing."
+        },
+        {
+          "question": "How should widths target Vm=VDD/2 with unequal mobilities?",
+          "answer_direction": "Use current balance and thresholds; equal thresholds call for βp=βn, which does not require equal widths.",
+          "principle": "Geometry, mobility and strength ratio."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "MIT: תרגיל מהפך CMOS",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-spring-2009/resources/mit6_012s09_pset04/",
+          "scope": "מהפך CMOS וזרמי רוויה; מודל הגרף המספרי נבחר בנפרד"
+        }
+      ],
+      "en": [
+        {
+          "title": "MIT 6.012: CMOS inverter exercise",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-spring-2009/resources/mit6_012s09_pset04/",
+          "scope": "CMOS inverter and saturation-current reasoning; numerical plotted model is independently chosen"
         }
       ]
     }
@@ -565,29 +603,33 @@
       "en": "Five distinguishable Moore states need three binary bits. The FIFO alternative retains four data bits and internal fill metadata; no minimum FIFO storage or gate count is claimed."
     },
     "verification": {
-      "he": "כל 8191 הזרמים באורכים 0–12 הושוו גם ב־FSM וגם ב־FIFO לאורקל סיומות עצמאי, עם 256 תרחישי reset ועשרה זוגות מצבי Moore מובחנים. אין בדיקת FIFO IP אמיתי או RTL.",
-      "en": "All 8191 streams through length twelve matched an independent suffix oracle for both FSM and FIFO, plus 256 reset cases and ten distinguishable Moore state pairs. No actual FIFO IP or RTL execution."
+      "he": "כל 8191 הזרמים באורכים 0–12 הושוו גם ב־FSM וגם ב־FIFO לאורקל סיומות עצמאי, עם 256 תרחישי reset ועשרה זוגות מצבי Moore מובחנים. אין בדיקת FIFO IP אמיתי או RTL.\n\n### בדיקות של רצף 1010\nגלאי1010 נבדק מול השוואת סיומת עצמאית ב־90,114 דגימות מכל הזרמים באורך0..12. גם הדוגמה0101010001→0000101000 אומתה. המודול prep207_detect1010 קוּמפל והורץ ב־Icarus על20,480 דגימות באורכי10, לרבות איפוס באמצע. זו הרצה של הגלאי החדש; הווריאציות הישנות נותרות עם היקף הבדיקה המתועד שלהן.",
+      "en": "All 8191 streams through length twelve matched an independent suffix oracle for both FSM and FIFO, plus 256 reset cases and ten distinguishable Moore state pairs. No actual FIFO IP or RTL execution.\n\n### 1010-detector checks\nIndependent whole-history suffix matching checked 90,114 samples over every stream of length 0..12, including the explicit 0101010001→0000101000 example. The prep207_detect1010 module compiled and ran in Icarus on 20,480 ten-sample-stream samples, including midstream reset. This runs the new detector; older variants retain their separately documented verification scope."
     },
     "edge_cases": {
       "he": [
         "010101 מפיק 000101.",
-        "לפני ארבע דגימות אין זיהוי; reset בין חלקי הרצף מונע התאמה."
+        "לפני ארבע דגימות אין זיהוי; reset בין חלקי הרצף מונע התאמה.",
+        "לאחר איפוס 101010 נותן שתי התאמות, ב־0101010001 מתקבל 0000101000."
       ],
       "en": [
         "010101 produces 000101.",
-        "No detection before four samples; a reset within the pattern prevents a match."
+        "No detection before four samples; a reset within the pattern prevents a match.",
+        "After reset 101010 has two hits;0101010001 yields 0000101000."
       ]
     },
     "common_mistakes": {
       "he": [
         "להזין FIFO בקבוע במקום בביט x.",
         "להניח שפלט head מכיל את כל ארבעת הביטים.",
-        "לומר ש־FIFO אינו זיכרון או ששערי feedback הם צירופיים."
+        "לומר ש־FIFO אינו זיכרון או ששערי feedback הם צירופיים.",
+        "חזרה לריק אחרי התאמה מאבדת חפיפה; עדכון מצב לפני חישוב הפלט משנה את סמנטיקת הדגימה."
       ],
       "en": [
         "Writing a constant instead of current input x into the FIFO.",
         "Assuming a head-only output exposes all four samples.",
-        "Calling a FIFO memoryless or feedback storage combinational."
+        "Calling a FIFO memoryless or feedback storage combinational.",
+        "Returning to empty after a hit loses overlap; using the new state prematurely changes sampling semantics."
       ]
     },
     "interview_answer": {

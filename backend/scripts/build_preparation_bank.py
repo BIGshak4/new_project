@@ -118,6 +118,14 @@ PRIMARY = [
     "fsm_state_tables",
     "tradeoff_reasoning",
     "estimation_sanity_checks",
+    # PREP-359 through PREP-365, in archive order.
+    "arrays_and_search",
+    "tradeoff_reasoning",
+    "bit_manipulation",
+    "arrays_and_search",
+    "fsm_controllers",
+    "testbench_basics",
+    "tradeoff_reasoning",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

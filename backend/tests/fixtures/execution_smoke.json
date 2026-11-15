@@ -301,6 +301,27 @@
       "correct": "\"\"\"Largest sum at two distinct positions in a single input traversal.\n\nNatural values include zero. Exact Python integers avoid arithmetic overflow.\nReturn None when fewer than two values exist. The input iterable is not mutated.\n\"\"\"\n\n\ndef maximum_pair_sum(values):\n    largest = second = None\n    for value in values:\n        if type(value) is not int or value < 0:\n            raise ValueError(\"nonnegative exact integers required\")\n        if largest is None or value >= largest:\n            second, largest = largest, value\n        elif second is None or value > second:\n            second = value\n    return None if second is None else largest + second\n",
       "wrong": "def maximum_pair_sum(values):\n    x=sorted(set(values), reverse=True)\n    return x[0]+x[1] if len(x)>1 else None\n",
       "syntax_error": "def maximum_pair_sum(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-first-failure-exact-decimal-voltage-grid",
+      "language": "python",
+      "correct": "\"\"\"First failing point on an exact, strictly interior decimal-voltage grid.\"\"\"\nfrom decimal import Decimal, InvalidOperation\nfrom fractions import Fraction\n\n\ndef decimal_fraction(text):\n    if not isinstance(text, str):\n        raise ValueError(\"finite decimal strings required\")\n    try:\n        value = Decimal(text)\n    except InvalidOperation as exc:\n        raise ValueError(\"finite decimal strings required\") from exc\n    if not value.is_finite():\n        raise ValueError(\"finite decimal strings required\")\n    return Fraction(value)\n\n\ndef find_failure(start, stop, step, test):\n    \"\"\"test(Fraction) is True for pass and False for fail; return Fraction/None.\"\"\"\n    first, limit, increment = map(decimal_fraction, (start, stop, step))\n    if first >= limit or increment <= 0:\n        raise ValueError(\"start < stop and positive step required\")\n    index = 1\n    while (voltage := first + index * increment) < limit:\n        if not test(voltage):\n            return voltage\n        index += 1\n    return None\n\n\ndef first_failure_voltage(start, stop, step, failed_voltages):\n    \"\"\"JSON exercise adapter: only listed voltages fail, without monotonicity.\"\"\"\n    failures = {decimal_fraction(v) for v in failed_voltages}\n    result = find_failure(start, stop, step, lambda voltage: voltage not in failures)\n    if result is None:\n        return None\n    return [result.numerator, result.denominator]\n",
+      "wrong": "def first_failure_voltage(*args):\n    return None\n",
+      "syntax_error": "def first_failure_voltage(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-branch-free-uint32-different-from-two-inputs",
+      "language": "python",
+      "correct": "\"\"\"Bit witnesses make an unsigned result different from both unsigned inputs.\n\nPrecondition: exact integers 0 <= a,b < 2**32. No validation branch is part\nof this branch-free reference. Python's AND masks restrict output to 0..3.\n\"\"\"\n\n\ndef different_uint32(a, b):\n    return ((~a) & 1) | ((~b) & 2)\n",
+      "wrong": "def different_uint32(a,b):\n    return (~a) & ((1<<32)-1)\n",
+      "syntax_error": "def different_uint32(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-minimum-absolute-distance-between-two-arrays",
+      "language": "python",
+      "correct": "\"\"\"Return minimum cross-array absolute distance without changing the inputs.\"\"\"\n\n\ndef minimum_cross_distance(left, right):\n    if not left or not right:\n        return None\n    a, b = sorted(left), sorted(right)\n    i = j = 0\n    best = abs(a[0] - b[0])\n    while i < len(a) and j < len(b):\n        gap = abs(a[i] - b[j])\n        best = min(best, gap)\n        if gap == 0:\n            return 0\n        if a[i] < b[j]:\n            i += 1\n        else:\n            j += 1\n    return best\n",
+      "wrong": "def minimum_cross_distance(left,right):\n    return 0\n",
+      "syntax_error": "def minimum_cross_distance(*args)\n    return None\n"
     }
   ]
 }

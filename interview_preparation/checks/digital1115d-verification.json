@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "kind": "independent Python logical checks and native compiled SystemVerilog simulation",
+  "counts": {
+    "priority_dag_vectors": 256,
+    "priority_dag_nodes": 22,
+    "priority_logic_gates": 20,
+    "priority_weighted_max_tau": 1,
+    "priority_uniform_same_topology_max_tau": 8,
+    "sequence_model_samples": 90114,
+    "stretch_model_steps": 51480,
+    "thermal_full_transition_rows": 16,
+    "fifo_ring_model_samples": 229376,
+    "fifo_fault_mutations_rejected": [
+      "corrupt_stalled_head",
+      "wrong_out_valid",
+      "wrong_in_ready",
+      "reordered_head"
+    ],
+    "fifo_intent_vs_accepted_example": {
+      "requested_writes": 3,
+      "accepted_writes": 2
+    }
+  },
+  "native": {
+    "compile_command": [
+      "C:\\Projects\\Job_Run\\.checks\\intake-nov15b\\iverilog\\ucrt64\\bin\\iverilog.exe",
+      "-g2012",
+      "-s",
+      "digital1115d_tb",
+      "-o",
+      "C:\\Projects\\Job_Run\\.checks\\intake-nov15d\\digital\\digital1115d.vvp",
+      "C:\\Projects\\Job_Run\\intake-20261115d\\interview_preparation\\solutions\\digital1115d.sv",
+      "C:\\Projects\\Job_Run\\intake-20261115d\\interview_preparation\\checks\\digital1115d_tb.sv"
+    ],
+    "compile_output": "",
+    "simulation_output": "PASS digital1115d: assertions=102656; msb=256; seq/stretch=20480 samples; thermal=10240 samples\nC:\\Projects\\Job_Run\\intake-20261115d\\interview_preparation\\checks\\digital1115d_tb.sv:56: $finish called at 348416000 (1ps)",
+    "source_sha256": "3d7c4b738ed7ed266e6b9ca759b34dc815b67002db850bd1d7ddf82effe24e26",
+    "bench_sha256": "55547ffd9de055028527771947c555efd13d0ad770fe7b131b1a196c4d46301b",
+    "compiled_image_sha256": "eeac267ddae013dc19bf148b4886d99df3f8aa1690e938cde991e5f3d5621810",
+    "iverilog_sha256": "25e1ba02e72f58d9d484bc5457d69a6b179d22d86bdf5ba5d6f9f0d4fe620bbf",
+    "vvp_sha256": "f0775603e1f1bcf1b2dea16dff963a4b7d71b7b33d5bbe23d2b01ff5b2304e09"
+  },
+  "files": {
+    "solutions\\digital1115d.sv": "3d7c4b738ed7ed266e6b9ca759b34dc815b67002db850bd1d7ddf82effe24e26",
+    "solutions\\digital1115d_models.py": "37c89f55a3d98f0527acaaed0dec41b8f6f45f4324f96b5ae8d21b564c062e81",
+    "checks\\digital1115d_tb.sv": "55547ffd9de055028527771947c555efd13d0ad770fe7b131b1a196c4d46301b",
+    "checks\\check_digital1115d.py": "7c39573268ba457853887031846f454b65a910ccbd469d3fddce3db44074090c"
+  },
+  "limitations": [
+    "No synthesis, analog timing, physical setup/hold closure, hardware execution or UVM run.",
+    "Weighted-delay proof uses the explicitly ideal gate library; it is not silicon timing.",
+    "Source-only duplicates reuse the checked existing content and do not receive new correctness claims."
+  ]
+}

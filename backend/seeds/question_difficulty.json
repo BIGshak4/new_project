@@ -151,8 +151,8 @@
   },
   "prep-0101-overlap-and-storage-contract": {
     "difficulty": 6,
-    "reason": "Derive overlapping Moore transitions and prove why serial memoryless gates cannot distinguish histories; a FIFO needs explicit window semantics.",
-    "content_sha256": "ac186f897ceb5544d8b143474a3a37b9d80262f9852fbd3399160404d748141e"
+    "reason": "The full identity includes overlap and explicit memory/no-FF/FIFO interfaces; the 1010 suffix-state variant adds a checked output-timing example without reducing that scope.",
+    "content_sha256": "7d0c6db2678423f6f7fbb096a040c4e83a3fa79e932ded23b0d3ac5574f23e27"
   },
   "prep-a4-paper-pack-test-design": {
     "difficulty": 5,
@@ -252,7 +252,7 @@
   "prep-average-difference-two-logic-gates": {
     "difficulty": 6,
     "reason": "The complete contract now includes overflow, output-width expansion and a separate carry interface while retaining the parity-only gate solution.",
-    "content_sha256": "67e8b7eceff0368c33e1cb91db16b453eddcd07fe58e93b3b380d4661d791e63"
+    "content_sha256": "9ddf885ff3c7abc76a9dff0f3e0b97c2aeeed848e8ba371687afe20a4950c5ca"
   },
   "prep-balanced-brackets-mixed-text": {
     "difficulty": 3,
@@ -265,9 +265,9 @@
     "content_sha256": "208fd7cdbe97e042228c33f157e7c88d4d905499e9dd9e8712bb9c16f170fb6c"
   },
   "prep-binary-divisibility-by-two-four-eight": {
-    "difficulty": 2,
-    "reason": "Identify and justify the all-zero low-bit suffix for powers of two, including zero and short words.",
-    "content_sha256": "ca6ac60f3082bc1c05fff64aa1e6dd1cd7b62e55645ec7934a0c0124bd5aee01"
+    "difficulty": 6,
+    "reason": "The complete existing identity includes power-of-two suffix tests, serial modulo-seven detection in both right-append and true LSB-first orders, phase weights1/2/4, and serial modulo-four validity/reset reasoning. This full scope requires combining remainder and arrival-order invariants; rating-only audit, with no content or version change.",
+    "content_sha256": "6996eb019a83a699d1ab54a8357aa70b1d422ee7e224f3bfd57dca4339824d91"
   },
   "prep-binary-tree-vs-bst-maximum": {
     "difficulty": 3,
@@ -385,9 +385,9 @@
     "content_sha256": "8d7f43d01100c187d15ba7d710dbb79f43e63a260bb84b7538e936553674504a"
   },
   "prep-cmos-inverter-operation": {
-    "difficulty": 4,
-    "reason": "Requires CMOS operating states and a clearly specified step-response model, including delay versus fall-time measurements.",
-    "content_sha256": "d68a005a08493e9ce230f6c9f18a057927484bf0d5b6fc66f2dbd01b79e96d70"
+    "difficulty": 5,
+    "reason": "The expanded inverter question combines topology, transient RC behavior and DC current balance, requiring a distinction between device threshold and inverter switching and explicit model limits.",
+    "content_sha256": "ac01e51357e4660f2ca9090aa94872590be2c93d4e954b1b1df164d93869335d"
   },
   "prep-completed-binary-run-parity-error-fsm": {
     "difficulty": 6,
@@ -432,7 +432,7 @@
   "prep-count-unordered-index-pairs-target-sum": {
     "difficulty": 4,
     "reason": "Accumulate frequency-weighted complements from earlier indices and prove duplicates count exactly once.",
-    "content_sha256": "67d971f9af9d1b8d69d6762a1ceca7d09af772ada1024feda2277aa00d1913ba"
+    "content_sha256": "8d39afac7c2c470243018c804d2130c63d80457debb46af3d4565fcccdc29512"
   },
   "prep-cpp-atoi-style-parser": {
     "difficulty": 5,
@@ -542,7 +542,7 @@
   "prep-divide-by-three-fifty-percent-duty": {
     "difficulty": 6,
     "reason": "Use both input clock edges to obtain a one-and-a-half-period high time and trace the divider from initialization.",
-    "content_sha256": "fddca7f45da69e97785b32951a8e28ee1c293e57940fa9ba92ff792dcc55d317"
+    "content_sha256": "9be95b29a56248a6c076d81898ae1911a96ccb229a79173eff9c3c5ece09946d"
   },
   "prep-doorway-occupancy-two-sensors": {
     "difficulty": 7,
@@ -820,9 +820,9 @@
     "content_sha256": "01cfdfc2b5aff16968c1305028d36397c62330e9171828000aeb4414b859f8e2"
   },
   "prep-isolate-highest-one-eight-bits": {
-    "difficulty": 4,
-    "reason": "Each bit combines its own value with a mask indicating whether any higher bit has already won.",
-    "content_sha256": "18089f3e17890e5267dcb6a8ffc9dc721bed7cad76392c14703f133ab549424e"
+    "difficulty": 5,
+    "reason": "The complete question combines gate libraries, prefix correctness, counterexamples and topology-dependent timing. The new weighted-delay model requires separating achievable bounds from zero-cost-library degeneracy.",
+    "content_sha256": "93baa2993cc8fe938db026b8fc4c5b25dcac0ae56aef2586e61a51517636812f"
   },
   "prep-isolate-lowest-set-bit-basic-gates": {
     "difficulty": 4,
@@ -951,8 +951,8 @@
   },
   "prep-mosfet-structure-current-bias-model": {
     "difficulty": 6,
-    "reason": "Device structure and bias regions must be connected to consistent drain and transfer curves in the declared model.",
-    "content_sha256": "1d92c852863e7f95263d778cc60700d80b9164de2cb8ec8d6619840649eeff68"
+    "reason": "The full MOS question now spans cross-section, device equations, electrostatic threshold, body bias, supply connections and constrained static/dynamic power tradeoffs; the main challenge is combining models without conflating device Vth and circuit Vm.",
+    "content_sha256": "23e6883d42f2f3501e20358d8cf7bef8979574be5a29198fbd6a81eebad78bf0"
   },
   "prep-most-frequent-word-list": {
     "difficulty": 3,
@@ -977,7 +977,7 @@
   "prep-mux-latch-edge-register": {
     "difficulty": 5,
     "reason": "MUX feedback makes a transparent latch; opposite clock phases must isolate master and slave at the sampling edge.",
-    "content_sha256": "28c38320e291efe36f5e5d6004580cf2125025248712cf36d0f522590f77dbb7"
+    "content_sha256": "b494ac782e2deb1d96fdfca28b562ac8b484c04940e93e1e699ce849ef51f1cd"
   },
   "prep-mux-only-cyclic-right-rotation": {
     "difficulty": 5,
@@ -1210,9 +1210,9 @@
     "content_sha256": "0c27820b419127c11cd79855fb73611dfb69d363826b899b665c504dc4b51714"
   },
   "prep-rising-edge-single-clock-pulse": {
-    "difficulty": 3,
-    "reason": "One delayed sample detects the rise; reset and the registered output determine the trace.",
-    "content_sha256": "f8404511963afb42f8a75cd814de9f60d9cd7999910d4b06db1e794ac39ec12d"
+    "difficulty": 4,
+    "reason": "The complete edge detector now includes an exact N-interval retriggerable counter, reset priority and output-observation convention; off-by-one and history-update reasoning add several linked steps.",
+    "content_sha256": "97726b8d2cfc9e199c574ce596a65e2c40659657df4fc51d864ba70791ae65e6"
   },
   "prep-room-occupancy-balance-lights": {
     "difficulty": 6,
@@ -1367,7 +1367,7 @@
   "prep-stock-one-transaction-best-days": {
     "difficulty": 5,
     "reason": "Maintain the earliest earlier minimum and tie-breaking invariant without reversing buy/sell time order.",
-    "content_sha256": "5e5ce34e556090af4b359ce24eaa93d6058b8aa8787aee7a1fa57f1ac2dd882b"
+    "content_sha256": "011771567a626e7fa3110c245087ce753060cff979cd2d083d4eab87d445df4f"
   },
   "prep-streaming-csv-parser-without-library": {
     "difficulty": 7,
@@ -1402,7 +1402,7 @@
   "prep-synchronous-clock-divider-two-and-four": {
     "difficulty": 5,
     "reason": "Adds a third divider stage and a controlled common-low switching protocol, distinguishing minimum counter state from mux-control storage.",
-    "content_sha256": "463d3cd2d49fe1c7428073c88a05eaaea836bb9bbde8fd010920ebc5e9aec616"
+    "content_sha256": "d869e9cff29bc2a7135604bd050696509263e9035d1acf37dffa44f2c407e72b"
   },
   "prep-synchronous-opposing-array-pointers": {
     "difficulty": 3,
@@ -1933,5 +1933,40 @@
     "difficulty": 4,
     "reason": "Break demand and service capacity into quantities with compatible units, compute an order of magnitude and test sensitivity to the dominant assumptions.",
     "content_sha256": "452ba971fcd6bd474a62cbc19ec94ab1bcfa31160811ab57f5a17733ea7ede8c"
+  },
+  "prep-first-failure-exact-decimal-voltage-grid": {
+    "difficulty": 5,
+    "reason": "Requires specifying a strictly interior fractional grid, preserving exact decimal values, and proving a linear query lower bound without a monotonic predicate; binary search is only a conditional extension.",
+    "content_sha256": "977d8e532c76c22db74f351e08c4f2fed7a25f40e3a7e482b7d87b11b3304fae"
+  },
+  "prep-osi-seven-layers-routed-packet-journey": {
+    "difficulty": 5,
+    "reason": "Must relate the conceptual seven layers to a real routed TCP/IP journey, distinguishing end-to-end transport from hop-by-hop framing, next-hop resolution, MTU behavior and encryption boundaries.",
+    "content_sha256": "950a331cd502756721bd06f829101d5ed92d015b376a92a8a8049f1d122b55fd"
+  },
+  "prep-branch-free-uint32-different-from-two-inputs": {
+    "difficulty": 4,
+    "reason": "Needs a constructive bit witness against each input, explicit unsigned-width semantics and an impossibility argument for a one-bit domain; no branch or arithmetic overflow is needed.",
+    "content_sha256": "183f0dc9a2bdb4d82f0b48f6c50a8ed3b3720468b5ddb8e720db096306992710"
+  },
+  "prep-minimum-absolute-distance-between-two-arrays": {
+    "difficulty": 4,
+    "reason": "Combines copied sorting with a two-pointer elimination proof and distinguishes cross-array pairs, empty inputs, duplicates, mutation and integer-overflow semantics.",
+    "content_sha256": "c2816e3d0fc3853bc31fea0d0202fcdbaf443892c1faefea1e8c4ec50bfb473a"
+  },
+  "prep-two-threshold-cooling-fan-hysteresis": {
+    "difficulty": 3,
+    "reason": "A two-state synchronous controller requires deadband memory, an explicit fault/initialization policy and a proof that combinational logic alone is insufficient.",
+    "content_sha256": "3c227f918d4cd8860fb5e845e4af814f55389b67a1da687706936f7f7ec09a8b"
+  },
+  "prep-fifo-passive-monitor-accepted-transactions": {
+    "difficulty": 5,
+    "reason": "Requires a coherent handshake/sampling contract, separation of stimulus and observed transfers, data-order checking, backpressure/reset cases and coverage limitations with valid monitor substitutes.",
+    "content_sha256": "724b1e4f0e5557aa457eb849b1653d8688b57086cd5bf395bfe15021676ccf66"
+  },
+  "prep-cmos-cell-propagation-delay-parameters": {
+    "difficulty": 5,
+    "reason": "Requires separating delay measurement from transition time and explaining electrical, slew, sizing and PVT effects with conditional directions and a checked numerical model.",
+    "content_sha256": "bbccaf69339a652d8f34f09574a7f25399b3c159b388c0aea25b464aecfe18a0"
   }
 }

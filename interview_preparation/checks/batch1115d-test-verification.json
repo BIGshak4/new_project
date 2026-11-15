@@ -1,0 +1,82 @@
+{
+  "scope": "Fourth November15 intake of20source screenshots",
+  "archive": {
+    "new_questions": 7,
+    "extended_questions": 5,
+    "provenance_only_questions": 7,
+    "affected_questions": 19,
+    "preparation_rows": 364,
+    "raw_interview_rows": 394,
+    "visible_interview_families": 389,
+    "source_references": 629,
+    "unique_source_paths": 623
+  },
+  "backend_regression": {
+    "broad_passed": 596,
+    "broad_skipped": 3,
+    "initial_remaining_failure": "One stale current upload count2107 corrected to2176",
+    "final_targeted_passed": 6,
+    "note": "Targeted scope includes that count, all3current-intake tests and both historical-projection adaptations. Tests overlap; counts are not summed as unique."
+  },
+  "execution": {
+    "passed": 536,
+    "profiles": 66,
+    "prior_profiles_preserved": 63,
+    "positive_cases": 105,
+    "smoke_cases": 46,
+    "scope": "Local profile, oracle, fixture, signature, isolation and security regressions; no live execution-VM claim."
+  },
+  "normal_entrypoint": {
+    "passed": 48,
+    "parallel_daily_and_goal_checks_passed": 85,
+    "feedback_and_grading_passed": 15,
+    "note": "Scopes overlap with other suites; not summed."
+  },
+  "fundamentals_and_quiz_preservation": {
+    "passed": 28,
+    "source_questions": 700,
+    "quiz_variants": 3500
+  },
+  "web": {
+    "passed": 493,
+    "typecheck": "passed",
+    "production_build": "passed"
+  },
+  "local_browser": {
+    "cases": 76,
+    "figures": 188,
+    "errors": [],
+    "viewport_sizes": [
+      390,
+      1280
+    ],
+    "languages": [
+      "he",
+      "en"
+    ],
+    "scope": "Local production React study renderer, manual reveal control in an isolated fixture, headless Edge, emulated widths."
+  },
+  "authored_png_files": 32,
+  "hardware_models": {
+    "registered_rtl_assertions": 102656,
+    "python_sequence_samples": 90114,
+    "python_pulse_stretch_steps": 51480,
+    "fifo_ring_samples": 229376,
+    "rejected_fifo_fault_mutations": 4,
+    "mos_assertions": 4000,
+    "dc_points": 1005,
+    "rc_integration_steps": 144000
+  },
+  "rating_only_audit": {
+    "question_id": "PREP-206",
+    "before": 2,
+    "after": 6,
+    "question_version_unchanged": true
+  },
+  "limitations": [
+    "RTL simulation and educational RC/DC equations were checked; no physical measurements, synthesis, SPICE or signoff.",
+    "OSI is a primary-standards conceptual trace, without live packet capture.",
+    "Browser widths are emulated; production browser checks are signed-out.",
+    "Proposed solutions remain pending professional human review."
+  ]
+}

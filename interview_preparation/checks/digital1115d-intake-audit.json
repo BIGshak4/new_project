@@ -1,0 +1,184 @@
+{
+  "immutable_base": "397947d1cb08587b4f6705ff2b5f5bd33d8aebb4",
+  "banks": {
+    "interview_preparation/questions.json": 357,
+    "example_question/questions.json": 30,
+    "verify_example_questions/questions.json": 30
+  },
+  "decisions": {
+    "1": {
+      "ids": [
+        "PREP-216",
+        "PREP-010"
+      ],
+      "decision": "source_only_duplicates",
+      "basis": "216 already covers common-source divide2/4 and divide8 selection.010 covers stricter divide3 at50percent duty, with input-duty/both-edge/reset assumptions; the new source adds no duty requirement."
+    },
+    "2": {
+      "ids": [
+        "PREP-207"
+      ],
+      "decision": "append_variant",
+      "basis": "Existing0101 overlap is equivalent under input complement, but a new1010 target and exact0101010001->0000101000 post-edge trace are preserved as explicit variant, not a second canonical identity."
+    },
+    "5": {
+      "ids": [
+        "PREP-058"
+      ],
+      "decision": "source_only_duplicate",
+      "basis": "Existing parity selection explicitly uses bothX andX+2, with gate-built MUX and full-carry extension; no additional constraint."
+    },
+    "10": {
+      "ids": [
+        "PREP-014"
+      ],
+      "decision": "append_variant",
+      "basis": "Same highest-set-bit function, newly explicit AND2=1tau/all other gateszero weighted-time library and threshold<5.5tau. Gate fan-inbounded2. Includes distinction from uniform timing and freeDeMorgan formalzero possibility."
+    },
+    "11": {
+      "ids": [
+        "PREP-083"
+      ],
+      "decision": "source_only_duplicate",
+      "basis": "Already constructs transparent feedbackMUX latch, opposite-phase master/slave rising-edge bit, MUXclockcomplement and race/initialization limits. Existing diagrams exact."
+    },
+    "12": {
+      "ids": [
+        "PREP-042"
+      ],
+      "decision": "append_variant",
+      "basis": "One-cycle original extended with positiveN exactinterval/restart-on-rise policy. Different from325 inputpulse-widthmeasurement and323 both-edgeeventdetectors."
+    },
+    "15": {
+      "ids": [
+        "PREP-363"
+      ],
+      "decision": "new_identity",
+      "basis": "Two-threshold synchronouscoolingfan deadbandmemory/conflictpolicy. Related118 analogthreshold/hysteresis and106 SRstorage do not contain this state/interface/faultcontract."
+    },
+    "16": {
+      "ids": [
+        "PREP-083"
+      ],
+      "decision": "source_only_duplicate",
+      "basis": "Subset of source11 andexisting083; retain separate screenshot provenance without newidentity."
+    },
+    "17": {
+      "ids": [
+        "PREP-364"
+      ],
+      "decision": "new_identity",
+      "basis": "Verificationobservation/coverage vsdriverintent question; distinct067 FIFOimplementation,264 asyncFIFOCDC, VHW007FIFOcontrol. Concrete readyvalidreferencequeue plus mutantchecks."
+    },
+    "19": {
+      "ids": [
+        "PREP-206"
+      ],
+      "decision": "source_only_duplicate",
+      "basis": "Existing2/4/8suffixprooftable/hardwareexamplescoverexactsource. Existingfullscope also containsserialmod7/mod4; ratingreview6."
+    },
+    "20": {
+      "ids": [
+        "PREP-206"
+      ],
+      "decision": "source_only_duplicate",
+      "basis": "Exactduplicate source19 aswellasexisting206; keepbothimages, onecanonicalidentity."
+    }
+  },
+  "cross_bank_notes": [
+    "HW-013 is an existing one-cycle rise-detection practice example, not the newNcyclecontract.",
+    "VHW-016 covers latch/flip-flop structure; PREP083 is the user-source-rich MUX-only canonical preferred record.",
+    "VHW-007 covers FIFOcontrollerstates/recovery, not passive monitorabsence andobservedtrafficcoverage.",
+    "HW-005 priorityencoding is related to014 but returns anindex/valid, not aonehotmask."
+  ],
+  "records": [
+    {
+      "id": "PREP-207",
+      "base_version": 1,
+      "new_version": 2
+    },
+    {
+      "id": "PREP-014",
+      "base_version": 1,
+      "new_version": 2
+    },
+    {
+      "id": "PREP-042",
+      "base_version": 1,
+      "new_version": 2
+    },
+    {
+      "id": "PREP-363",
+      "base_version": null,
+      "new_version": 1
+    },
+    {
+      "id": "PREP-364",
+      "base_version": null,
+      "new_version": 1
+    }
+  ],
+  "ratings": {
+    "PREP-207": {
+      "score": 6,
+      "rationale": "The full identity includes overlap and explicit memory/no-FF/FIFO interfaces; the 1010 suffix-state variant adds a checked output-timing example without reducing that scope."
+    },
+    "PREP-014": {
+      "score": 5,
+      "rationale": "The complete question combines gate libraries, prefix correctness, counterexamples and topology-dependent timing. The new weighted-delay model requires separating achievable bounds from zero-cost-library degeneracy."
+    },
+    "PREP-042": {
+      "score": 4,
+      "rationale": "The complete edge detector now includes an exact N-interval retriggerable counter, reset priority and output-observation convention; off-by-one and history-update reasoning add several linked steps."
+    },
+    "PREP-363": {
+      "score": 3,
+      "rationale": "A two-state synchronous controller requires deadband memory, an explicit fault/initialization policy and a proof that combinational logic alone is insufficient."
+    },
+    "PREP-364": {
+      "score": 5,
+      "rationale": "Requires a coherent handshake/sampling contract, separation of stimulus and observed transfers, data-order checking, backpressure/reset cases and coverage limitations with valid monitor substitutes."
+    },
+    "PREP-206": {
+      "score": 6,
+      "rationale": "The complete existing identity includes power-of-two suffix tests, serial modulo-seven detection in both right-append and true LSB-first orders, phase weights1/2/4, and serial modulo-four validity/reset reasoning. This full scope requires combining remainder and arrival-order invariants; rating-only audit, with no content or version change."
+    }
+  },
+  "source_only_difficulty_reviews": {
+    "PREP-010": {
+      "score": 6,
+      "unchanged": true
+    },
+    "PREP-058": {
+      "score": 6,
+      "unchanged": true
+    },
+    "PREP-083": {
+      "score": 5,
+      "unchanged": true
+    },
+    "PREP-216": {
+      "score": 5,
+      "unchanged": true
+    },
+    "PREP-206": {
+      "score": 6,
+      "previous_score": 2,
+      "rating_only": true
+    }
+  },
+  "diagram_review": {
+    "files": 10,
+    "scope": "Clean independently drawn solution assets in both languages; full-size and375px previews, endpoint/wire/state/table checks. No screenshot exposure.",
+    "corrections": [
+      "014 separatexi inputs preventfalseANDchain; ORlabels movedinsidecells.",
+      "364 bidirectionalDUT/interfacebus."
+    ]
+  },
+  "peer_review": {
+    "software359-362": "Reviewed by digital worker; no material issues.",
+    "digital042and364": "Software worker approved exactwindowandhandshakecontracts; clarified pointercoverageisfollowup andnativechecksnewextensiononly."
+  },
+  "verification_report": "interview_preparation/checks/digital1115d-verification.json",
+  "bundle_sha256": "3fd683655e0329c29ccbc7a837a88f789d1b4e742821e9bc65d3d7bd8b9cf520"
+}

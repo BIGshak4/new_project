@@ -8,6 +8,7 @@ from app.engine.question_difficulty import difficulty_fingerprint
 from app.engine.solution_review import solution_review
 from app.services.question_resources import learner_media
 from tests.preparation_november15b_history import before_nov15b
+from tests.preparation_november15c_history import before_nov15c
 
 ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / "interview_preparation"
@@ -48,7 +49,9 @@ def test_exact_single_revision_bilingual_content_difficulty_and_media_gates():
     for ident,question in selected.items():
         q=compiled[question.key]
         previous=before_nov15b("compiled:"+question.key,q)
-        assert q["version"] == (previous["version"]+1 if ident in VARIANTS else 1)
+        at_intake=before_nov15c("compiled:"+question.key,q)
+        assert q["version"] == question.version
+        assert at_intake["version"] == (previous["version"]+1 if ident in VARIANTS else 1)
         rating=ratings[question.key]
         assert type(rating["difficulty"]) is int and 1 <= rating["difficulty"] <= 10
         assert rating["reason"].strip() and rating["content_sha256"] == difficulty_fingerprint(q)
