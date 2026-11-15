@@ -51,3 +51,5 @@
 [מיפוי המקורות](../interview_preparation/intakes/2026-11-15-batch20d-sources.json) · [בדיקת התצוגה](../interview_preparation/checks/batch1115d-browser-verification.json) · [קריאה חוזרת במסד](../interview_preparation/checks/batch1115d-database-verification.json) · [היקף הבדיקות](../interview_preparation/checks/batch1115d-test-verification.json) · [פרוטוקול הקליטה](question-publication-protocol.md).
 
 נוספו 32 קובצי שרטוט מקוריים ו־3 פרופילי הרצה; 63 הקודמים נשמרו. עברו 493 בדיקות ממשק ו־536 בדיקות הרצה, וכן בדיקות קטלוג, היסטוריה, תרגול ותאימות לשינויים המקבילים באתר. בדיקת הדפדפן המקומית כיסתה 76 תצוגות וטעינת 188 תמונות על פני אותן תצוגות. [בדיקות RTL ומודלים](../interview_preparation/checks/digital1115d-verification.json) · [בדיקות CMOS](../interview_preparation/checks/mos1115d-verification.json) · [בדיקת סריקת המתח](../interview_preparation/checks/prep-359-1115d-verification.json).
+
+אומת הפרסום החי של הגרסה 99e6cb9 באתר, ב־API ובלוח המשימות. קטלוג השרת מחזיר 394 רשומות ריאיון, 700 מקורות קצרים ו־3,500 גרסאות משחק. [אימות הפריסה](../interview_preparation/checks/batch1115d-deployment-verification.json).
