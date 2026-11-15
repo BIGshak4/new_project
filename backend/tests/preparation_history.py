@@ -149,7 +149,7 @@ def _assert_archive(archive, baseline, restore):
     by_id = {question["id"]: question for question in archive["questions"]}
     assert set(baseline["record_order"]) <= by_id.keys()
     original = {key: archive[key] for key in baseline["top_level"]}
-    assert archive["question_count"] == len(archive["questions"]) == 344
+    assert archive["question_count"] == len(archive["questions"]) == 351
     original["question_count"] = baseline["top_level"]["question_count"]
     original["questions"] = [restore(by_id[ident]) for ident in baseline["record_order"]]
     assert digest(original) == baseline["canonical_sha256"]

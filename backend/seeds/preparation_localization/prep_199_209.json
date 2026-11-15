@@ -485,11 +485,13 @@
     "assumptions": {
       "he": [
         "אספקה וכניסה בטווח המסילות; טרנזיסטורי enhancement משלימים.",
-        "חיבורי גוף הם לסכימת bulk רגילה, בכפוף לכללי התהליך."
+        "חיבורי גוף הם לסכימת bulk רגילה, בכפוף לכללי התהליך.",
+        "מודל הגרף הוא השהיה ועוד פריקה מעריכית עם ערכים שנבחרו לצורך לימוד."
       ],
       "en": [
         "Rail-bounded supply/input and complementary enhancement devices.",
-        "Body connections depict a conventional bulk implementation subject to process rules."
+        "Body connections depict a conventional bulk implementation subject to process rules.",
+        "The waveform model is a chosen transport-start delay followed by exponential discharge."
       ]
     },
     "optimality": {
@@ -497,8 +499,8 @@
       "en": "The basic topology uses two transistors; no area, power or delay optimum is claimed without a library and sizing."
     },
     "verification": {
-      "he": "שתי שורות רמת המסילה נבדקו במודל מתגים, עם דוגמת Vin=0.5 V ושני ספים של 0.3 V המציגה אפשרות הולכה של שניהם. אין חישוב VTC, SPICE או אימות חומרה.",
-      "en": "Both rail-input rows were checked in an ideal switch model. A Vin=0.5 V example with 0.3 V thresholds flags possible simultaneous conduction. No quantitative VTC, SPICE or hardware validation."
+      "he": "שתי שורות רמת המסילה נבדקו במודל מתגים, עם דוגמת Vin=0.5 V ושני ספים של 0.3 V המציגה אפשרות הולכה של שניהם. אין חישוב VTC, SPICE או אימות חומרה. ההרחבה נבדקה מול חציות אנליטיות וגבולות מונוטוניות במודל RC. זו אינה סימולציית SPICE.",
+      "en": "Both rail-input rows were checked in an ideal switch model. A Vin=0.5 V example with 0.3 V thresholds flags possible simultaneous conduction. No quantitative VTC, SPICE or hardware validation. The extension was checked against analytic crossings and monotonic RC bounds, without SPICE simulation."
     },
     "edge_cases": {
       "he": [
@@ -527,8 +529,8 @@
       "en": "Tie gates to input and drains to output; PMOS pulls from VDD and NMOS to ground. Low input activates PMOS, high activates NMOS. Switching involves capacitance and possible through-current; thresholds and delay depend on process and load."
     },
     "source_ambiguities": {
-      "he": "אין מקור למספרי מתח, גדלים, קיבול או תהליך בצילום. השרטוט הוא סכימה לימודית ולא תא מוסמך.",
-      "en": "The screenshot supplies no voltage, sizing, capacitance or process values. The diagram is an educational schematic, not a qualified cell."
+      "he": "אין מקור למספרי מתח, גדלים, קיבול או תהליך בצילום. השרטוט הוא סכימה לימודית ולא תא מוסמך. במקור החדש לא נמסרו זמן השהיה או עומס למדרגה.",
+      "en": "The screenshot supplies no voltage, sizing, capacitance or process values. The diagram is an educational schematic, not a qualified cell. The additional screenshot specifies neither delay nor load for the input step."
     },
     "solution_extensions": {
       "he": [

@@ -60,7 +60,7 @@ def test_all270_old_records1557_assets_and_bilingual_content_remain_hash_bound()
     assert not BATCH1107B10_BASELINE['source_only_ids']
     assert_pre_batch1107b10_archive(current_archive)
     assets=read(SEEDS/'preparation_uploads.json')['files']
-    assert len(assets)==1993
+    assert len(assets)==2063
     assert_pre_batch1107b10_assets(assets)
     localized={}
     for path in (SEEDS/'preparation_localization').glob('*.json'):
@@ -76,7 +76,7 @@ def test_all270_old_records1557_assets_and_bilingual_content_remain_hash_bound()
 
 def test_complete_bilingual_content_and_answer_media_are_still_gated():
     catalog=load_catalog(SEEDS)
-    assert len(catalog.questions)== 374
+    assert len(catalog.questions)== 381
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS}
     assert set(selected)==NEW|VARIANTS

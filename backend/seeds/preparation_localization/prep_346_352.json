@@ -1,0 +1,442 @@
+{
+  "PREP-346": {
+    "assumptions": {
+      "he": [
+        "לשאלה משמעות לוגית קבועה. כל אל מבין את שמות התפקידים ואת הטענות על משמעות המילה שלו."
+      ],
+      "en": [
+        "Every god understands its role and the propositions about the meaning of its own words; all questions have fixed Boolean meanings."
+      ]
+    },
+    "optimality": {
+      "he": "שלוש שאלות. חסם המידע של שש השמות מונע פתרון בשתי שאלות במודל הבינארי.",
+      "en": "Three questions. Six possible assignments cannot be separated by only two binary answers."
+    },
+    "verification": {
+      "he": [
+        "נבדקו 96 עולמות ותמלילי בחירות אקראיות, יחד עם שמונה שורות האימות של העטיפה. ההוכחה אינה תלויה בסימולציה."
+      ],
+      "en": [
+        "Checked 96 worlds and Random-choice transcripts, plus the eight wrapper rows. The proof does not depend on the finite simulation."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "האקראי יכול להשיב אותה מילה בכל פעם. אין להניח שהוא חייב לגוון או לחלק תשובות חצי־חצי."
+      ],
+      "en": [
+        "Random may repeat the same word every time. No frequency or alternation assumption is available."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "פירוש da ככן לפני שנבחר נמען בטוח. גם ספירת תשובות אמת בשאלות ישירות אינה מנטרלת את השפה."
+      ],
+      "en": [
+        "Treating da as yes before selecting a safe respondent. Direct questions also leave the unknown vocabulary unresolved."
+      ]
+    },
+    "interview_answer": {
+      "he": "שואלים את A עטיפה על B כדי לבחור נמען שאינו אקראי, שואלים אותו על A ואז מפרידים בין אמת לשקר. העטיפה מבטלת את שתי אי־הוודאויות הלשוניות.",
+      "en": "Use one wrapped question to select a non-random god, ask that god about A, then distinguish the two non-random roles. The wrapper cancels deception and vocabulary uncertainty."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם כל אל ישתמש במילון אחר?",
+          "answer_direction": "ההוכחה משתמשת במילון של הנמען עצמו בכל עטיפה. צריך להגדיר את השאלה ביחס למילון שלו ולהבטיח שהטענה מובנת; אין להסיק ישירות מידע על שפת אל אחר.",
+          "principle": "להפריד בין פירוש תשובה לבין זהות נמען."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if every god uses a different vocabulary?",
+          "answer_direction": "The wrapper must refer to the recipient's own vocabulary and remain understandable. Its answer does not directly establish another god's word meanings.",
+          "principle": "Separate response interpretation from recipient identity."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הנחת עבודה מפורשת: משמעות da/ja קבועה ומשותפת. אקראי רשאי לבחור כל מילה בכל שאלה. אין להסתמך על הסתברות, שתיקה או שאלה שאינה מוגדרת."
+      ],
+      "en": [
+        "Explicit model: da/ja have a fixed shared meaning. Random may choose either word on every question. Do not rely on probabilities, silence or undefined questions."
+      ]
+    }
+  },
+  "PREP-347": {
+    "assumptions": {
+      "he": [
+        "n הוא int חיובי אי־זוגי. אין צורך ברווחים מימין כדי להראות את הפירמידה."
+      ],
+      "en": [
+        "n is a positive odd int. Right padding is unnecessary for the required visual shape."
+      ]
+    },
+    "optimality": {
+      "he": "Θ(n²) זמן ותווי תוצאה. שתי הגרסאות עומדות בחסם גודל הפלט.",
+      "en": "Θ(n²) time and result characters. Both methods meet the output-size lower bound."
+    },
+    "verification": {
+      "he": [
+        "שתי הגרסאות הושוו לאורקל תאים עצמאי לכל רוחב אי־זוגי מ־1 עד 99 ונבדקו קלטים פסולים."
+      ],
+      "en": [
+        "Compared both methods with an independent cell oracle for every odd width from 1 through 99, and tested invalid inputs."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "n=1 מחזיר כוכב יחיד. ערך bool נדחה למרות יחסו ל־int ב־Python."
+      ],
+      "en": [
+        "n=1 returns one star. Reject bool even though Python treats it as an int subclass."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "פירוש n כגובה במקום כרוחב בסיס, או שימוש ב־n כוכבים בכל שורה."
+      ],
+      "en": [
+        "Treating n as the height instead of the base width, or printing n stars on every row."
+      ]
+    },
+    "interview_answer": {
+      "he": "גובה הפירמידה (n+1)/2. בשורה r כותבים h-r-1 רווחים ו־2r+1 כוכבים. שתי דרכי הבנייה נבדלות באופן יצירת השורה.",
+      "en": "Height is (n+1)/2. Row r has h-r-1 leading spaces and 2r+1 stars. The methods differ in how each line is produced."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מפיקים בלי להחזיק את כל הפלט?",
+          "answer_direction": "מפיקים ומדפיסים שורה בכל פעם, תוך שמירת אותה נוסחת הזחה.",
+          "principle": "להבחין בין זיכרון תוצאה לזיכרון עבודה."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can output be produced without storing it all?",
+          "answer_direction": "Build and print one row at a time using the same indentation formula.",
+          "principle": "Separate result storage from working storage."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "נבחר חוזה של מספר שלם חיובי אי־זוגי, החזרת מחרוזת ללא רווחים בסוף שורה וללא ירידת שורה סופית."
+      ],
+      "en": [
+        "Chosen contract: positive odd integer width, return a string with no trailing spaces or final newline."
+      ]
+    }
+  },
+  "PREP-348": {
+    "assumptions": {
+      "he": [
+        "המחיקה מוגדרת לפי רצף הערכים ומותר לשנות את מטען הצומת שסופק. אין מעגלים ויש יורש חי בבעלות מתאימה."
+      ],
+      "en": [
+        "Deletion is defined by the value sequence, the supplied payload may change, the list is acyclic and a live successor is owned appropriately."
+      ]
+    },
+    "optimality": {
+      "he": "O(1) לפעולת הצומת עם מטען int ובעלות מתאימה. מתאם JSON ובניית רשימה אינם חלק מחסם זה.",
+      "en": "O(1) for the node operation with int payloads and suitable ownership. JSON adaptation and list construction lie outside that bound."
+    },
+    "verification": {
+      "he": [
+        "נבדקו תוצאות מול מחיקת מיקום באורקל, זהות הצומת שסופק, עקיפת היורש, ערכים כפולים ומקרי tail. C הורץ על צמתים שהוקצו בערימה."
+      ],
+      "en": [
+        "Compared outputs against a positional-deletion oracle, checked supplied-node identity and successor bypass, duplicates and tail rejection. C ran using heap-allocated nodes."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אורך מינימלי שלוש ונתון הצומת האמצעי. ערכים כפולים תקינים. קריאה על tail או None נדחית."
+      ],
+      "en": [
+        "The smallest supplied list has three nodes with the middle node targeted. Duplicate values are valid. Reject tail and None calls."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שחרור node בלי לעדכן את הקודם משאיר קישור תלוי. טענה שהשיטה שומרת את זהות היורש שגויה."
+      ],
+      "en": [
+        "Freeing node without changing its predecessor leaves a dangling link. The trick also does not preserve the successor object's identity."
+      ]
+    },
+    "interview_answer": {
+      "he": "מעתיקים את ערך היורש ומדלגים עליו. נמחק הערך שבמיקום המבוקש, אבל פיזית מוסר היורש, ולכן צריך להגדיר בעלות וזהות צמתים.",
+      "en": "Copy the successor's value and bypass it. This deletes the target position's value while physically removing the successor, so ownership and identity conditions matter."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה נדרש כדי למחוק tail באותה עלות?",
+          "answer_direction": "ברשימה כפולה או כשמסופק גם מצביע לקודם אפשר לעדכן את הקישור הנכנס. מצביע tail לבדו אינו מספיק ברשימה חד־כיוונית.",
+          "principle": "העלות נקבעת גם לפי המידע הזמין."
+        }
+      ],
+      "en": [
+        {
+          "question": "How could tail deletion have the same cost?",
+          "answer_direction": "A doubly linked list or an explicitly supplied predecessor allows updating the incoming link. A tail pointer alone is insufficient in a singly linked list.",
+          "principle": "Cost depends on available structural information."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "מחיקה כאן מתייחסת לרצף הערכים. הצומת הנתון נשאר בזיכרון והיורש הפיזי מוסר. העתקת המטען בעלת עלות קבועה ואין הפניות חיצוניות ליורש."
+      ],
+      "en": [
+        "Deletion means removing the target position's logical value. The supplied node stays allocated and its physical successor is removed. Payload copying costs constant time and there are no external aliases to the successor."
+      ]
+    }
+  },
+  "PREP-349": {
+    "assumptions": {
+      "he": "כניסות בינאריות, לוגיקה צירופית, אינדקס גבוה מקבל עדיפות, valid נוסף מותר.",
+      "en": "Binary combinational inputs, highest-index priority, and an explicit valid output are permitted."
+    },
+    "optimality": {
+      "he": "חמישה מקודדים ובורר מקומי הם בנייה היררכית מסוימת. ספירת שערים מינימלית תלויה בספרייה.",
+      "en": "Five encoders plus local selection specify one hierarchy; minimum gate count depends on the cell library."
+    },
+    "verification": {
+      "he": "כל 65,536 קלטי המקודד הרחב נבדקו במודל Python עצמאי ובקוד SystemVerilog שקומפל והורץ ב־Icarus. אין בכך סינתזה או בדיקת חומרה פיזית.",
+      "en": "All65,536 wide-encoder inputs passed an independent Python oracle and actual compiled SystemVerilog in Icarus. Physical synthesis/hardware were not tested."
+    },
+    "edge_cases": {
+      "he": [
+        "0000 מובחן מ־0001 באמצעות valid. כמה כניסות דלוקות אינן שגיאה."
+      ],
+      "en": [
+        "valid separates0000 from0001. Multiple asserted inputs are legal."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "OR של הקודים המקומיים עשוי להפיק קוד שאינו שייך לקבוצה הזוכה."
+      ],
+      "en": [
+        "ORing local codes can create a code belonging to no winning group."
+      ]
+    },
+    "interview_answer": {
+      "he": "מקודדים כל קבוצה, מקודדים את תקפות הקבוצות ובוחרים את הקוד המקומי של הגבוהה ביותר.",
+      "en": "Encode groups, encode group validity and select the highest group’s local winner."
+    },
+    "source_ambiguities": {
+      "he": [
+        "כיוון העדיפות ומצב אפס לא הוגדרו בצילום והוגדרו כאן במפורש."
+      ],
+      "en": [
+        "The screenshot omits priority direction and all-zero behavior; both are explicitly defined here."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מרחיבים ל־64 כניסות?",
+          "answer_direction": "מוסיפים רמת קבוצה נוספת ושומרים valid בכל רמה.",
+          "principle": "הרכבה היררכית."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would this extend to64 inputs?",
+          "answer_direction": "Add another group level while retaining valid at every level.",
+          "principle": "Hierarchical composition."
+        }
+      ]
+    }
+  },
+  "PREP-350": {
+    "assumptions": {
+      "he": "כל הבקרות סינכרוניות. כיוון ההזזה ימינה, מילוי אפס ומחזור לכל הזזה הוגדרו כהשלמת המקור.",
+      "en": "Controls are synchronous. Right direction, zero fill and one cycle per shift complete the source."
+    },
+    "optimality": {
+      "he": "מימוש איטרטיבי חוזר על חיווט הזזה אחת ומשלם במחזור לכל הזזה.",
+      "en": "The iterative design reuses one-position shift wiring at one cycle per shift."
+    },
+    "verification": {
+      "he": "קוד SystemVerilog קומפל והורץ ב־Icarus עבור 2,048 פקודות ו־7,168 צעדי הזזה, עם פקודות עוינות בזמן busy, כמות אפס ואיפוס.",
+      "en": "SystemVerilog compiled and ran in Icarus for2,048 commands and7,168 shift steps, including hostile busy-time commands, zero amount and reset."
+    },
+    "edge_cases": {
+      "he": [
+        "amount=0 מסיים בטעינה. reset מבטל עבודה. busy גובר על start."
+      ],
+      "en": [
+        "Zero amount completes at load. Reset aborts work. Busy takes precedence over start."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "קריאת amount מחדש בכל מחזור; סיום לפי המונה החדש במקום הישן; זליגה של ביט במקום מילוי אפס."
+      ],
+      "en": [
+        "Rereading amount every cycle, testing the decremented value too early, or rotating instead of zero-filling."
+      ]
+    },
+    "interview_answer": {
+      "he": "לוכדים את הפקודה, סופרים הזזות שנותרו ומפיקים done בהזזה האחרונה.",
+      "en": "Latch the command, count remaining shifts and pulse done on the last shift."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע רוחב, כיוון, קצב או פרוטוקול פקודות. הנוסח בוחר אותם במפורש."
+      ],
+      "en": [
+        "The source leaves width, direction, cycle rate and command protocol unspecified; the edited exercise chooses them explicitly."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מפיקים הזזה משתנה במחזור אחד?",
+          "answer_direction": "רשת מוקסים לבחירת הזזות1,2,4.",
+          "principle": "פשרת שטח מול זמן."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can a variable shift complete in one cycle?",
+          "answer_direction": "Use MUX stages selecting shifts of1,2,4.",
+          "principle": "Area/latency tradeoff."
+        }
+      ]
+    }
+  },
+  "PREP-351": {
+    "assumptions": {
+      "he": [
+        "מדובר בדוחות מנורמלים של קבוצה מפורשת ושלמה של שאילתות. הסף הוא מדיניות רגרסיה."
+      ],
+      "en": [
+        "Reports normalize an explicit complete query set. The threshold is regression policy."
+      ]
+    },
+    "optimality": {
+      "he": "בניית מפת זהויות והשוואת ערכים אורכות O(P) בממוצע; המימוש ממיין את הפלט ולכן כולל O(P log P). זיכרון O(P).",
+      "en": "Identity maps and metric comparison take average O(P); deterministic sorting adds O(P log P). Storage is O(P)."
+    },
+    "verification": {
+      "he": "נבדקו שינוי סדר, המרת ns/ps, גבול סף, שינוי סימן קטן, שדות שמבטלים שינוי slack, חוסר/תוספת, כפילות, ערכי NaN והקשר שונה. הקלטים סינתטיים.",
+      "en": "Synthetic checks cover ordering, ns/ps equivalence, tolerance boundary, tiny sign changes, cancellation in slack, missing/added rows, duplicates, NaN and context changes."
+    },
+    "edge_cases": {
+      "he": [
+        "דוח ריק של שאילתות ריקות יכול להיות תקין רק אם הכיסוי הוצהר ואומת. top-N אינו כיסוי מלא.",
+        "אותו זוג אוגרים בשני תרחישים אינו אותה שאילתה."
+      ],
+      "en": [
+        "An empty query set is valid only with declared and verified coverage; top-N is incomplete.",
+        "The same register pair in two scenarios represents different queries."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "diff של קובצי טקסט ללא נרמול; השוואת WNS בלבד; מחיקת מסלול חסר; שינויי units; רענון אוטומטי של baseline אחרי כישלון."
+      ],
+      "en": [
+        "Raw text diffs without normalization, WNS-only comparison, discarding missing rows, unit mismatches or automatically accepting a failing baseline."
+      ]
+    },
+    "interview_answer": {
+      "he": "מקפיאים הקשר, מוכיחים כיסוי, מנרמלים זהויות ויחידות ואז משווים זמנים ו־slack לפי סף מפורש.",
+      "en": "Freeze context, establish coverage, normalize identities/units, then compare timings and slack using explicit thresholds."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר פורמט דוחות או סף. ה־JSON והסף נבחרו לתרגיל."
+      ],
+      "en": [
+        "The source specifies no report schema or tolerance; the JSON contract and threshold are explicit additions."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד משווים netlist שעבר שינוי שמות?",
+          "answer_direction": "נדרש מיפוי שמות מאומת או השוואת שאילתות פונקציונליות. אין למחוק שמות באופן שמאחד שני מסלולים.",
+          "principle": "זהות סמנטית וכיסוי"
+        }
+      ],
+      "en": [
+        {
+          "question": "How can renamed netlists be compared?",
+          "answer_direction": "Use a verified name mapping or functional query matching. Do not strip names in a way that merges distinct paths.",
+          "principle": "Semantic identity and coverage"
+        }
+      ]
+    }
+  },
+  "PREP-352": {
+    "assumptions": {
+      "he": [
+        "שתי ההרצות הסתיימו תקין. מצב התכנון, התרחיש והאילוצים עדיין דורשים השוואה."
+      ],
+      "en": [
+        "Both runs completed. Design state, scenario and constraints still need comparison."
+      ]
+    },
+    "optimality": {
+      "he": "לא נטענת אופטימליות במספר פקודות. סדר הבדיקה מצמצם חקירה יקרה כשהבעיה היא שם או פילטר.",
+      "en": "No minimum command count is claimed. Checking identity/query early can avoid expensive investigation of a reporting mismatch."
+    },
+    "verification": {
+      "he": "נמנו כל 512 צירופי תצפיות במודל ונבדקו תרחישים מוכוונים לכל גורם. המודל אינו מוכיח מצב של כלי מסחרי.",
+      "en": "All 512 observation combinations and targeted single-cause cases were checked. The model does not establish commercial-tool state."
+    },
+    "edge_cases": {
+      "he": [
+        "מסלול פיזי ללא שעון תקף; שינוי שם בלבד; דוח top-1 שבו מסלול אחר נעשה קריטי; כמה סיבות במקביל."
+      ],
+      "en": [
+        "A physical path without a valid clock, pure renaming, a different winner in a top-1 report and multiple simultaneous causes."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הנחה שהמסלול נעלם פיזית כי חסרה שורה; ביטול חריגים באופן גורף; השוואת פינות או checks שונים."
+      ],
+      "en": [
+        "Equating a missing row with physical deletion, removing exceptions globally or comparing different corners/checks."
+      ]
+    },
+    "interview_answer": {
+      "he": "בודקים זהות וכיסוי דוח, ואז חיבור פיזי, clocks,חריגים וקשתות פעילות. לכל השערה נדרשת ראיה.",
+      "en": "Check identity/report coverage, then physical connectivity, clocks, exceptions and active arcs, retaining evidence for each explanation."
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצילום אינו מספק netlist,דוחות או אילוצים, ולכן התרגיל מבקש תכנית אבחון."
+      ],
+      "en": [
+        "No netlist,reports or constraints are supplied, so the exercise requests a diagnosis plan."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "המסלול חוזר כשמגדילים את מספר השורות בדוח. מה הוכח?",
+          "answer_direction": "הדוח הישן היה מוגבל; עדיין צריך לוודא שהתאמת האובייקטים, התרחיש וסוג הבדיקה זהים.",
+          "principle": "מגבלת ראיות"
+        }
+      ],
+      "en": [
+        {
+          "question": "The path returns with a larger report limit. What does that establish?",
+          "answer_direction": "The old report was limited; still verify matching objects,scenario and check type.",
+          "principle": "Evidence limits"
+        }
+      ]
+    }
+  }
+}

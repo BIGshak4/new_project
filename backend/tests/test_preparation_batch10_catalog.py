@@ -21,6 +21,7 @@ from app.services import question_resources
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
 from tests.test_practice_hardening import scripted
+from tests.preparation_november15b_history import before_nov15b
 
 ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / "interview_preparation"
@@ -64,15 +65,15 @@ def test_ten_sources_have_exact_identity_mapping_and_permanent_matching_bytes():
 def test_source_only_questions_preserve_versions_translations_and_three_hint_sets():
     questions = {item["id"]: item for item in archive()["questions"]}
     for ident, expected_hash in SOURCE_ONLY_TECHNICAL_SHA256.items():
-        question = questions[ident]
+        question = before_nov15b("archive:" + ident, questions[ident])
         technical = {key: question.get(key) for key in ("version", "translations", "prepared_hints")}
         serialized = json.dumps(technical, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         assert hashlib.sha256(serialized.encode()).hexdigest() == expected_hash, ident
 
 
 def test_nine_new_questions_are_bilingual_pending_review_and_never_assessment_ready(catalog):
-    assert len(archive()["questions"]) == 344
-    assert len(catalog.questions) == 374
+    assert len(archive()["questions"]) == 351
+    assert len(catalog.questions) == 381
     additions = {q.assets.get("preparation_id"): q for q in catalog.questions.values()
                  if q.assets.get("preparation_id") in NEW_IDS}
     assert set(additions) == NEW_IDS

@@ -103,6 +103,14 @@ PRIMARY = [
     "estimation_sanity_checks",
     "estimation_sanity_checks",
     "tradeoff_reasoning",
+    # PREP-346 through PREP-352, in archive order.
+    "estimation_sanity_checks",
+    "code_debugging",
+    "basic_data_structures",
+    "combinational_blocks",
+    "registers_shifters",
+    "debugging_methodology",
+    "debugging_methodology",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

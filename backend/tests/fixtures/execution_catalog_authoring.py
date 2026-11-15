@@ -596,6 +596,53 @@ def batch1115_source(key):
     return (ROOT / "interview_preparation/solutions" / BATCH1115_SOURCES[key]).read_text(encoding="utf8")
 
 
+BATCH1115B_SOURCES = {
+    "prep-odd-width-centered-star-pyramid": "prep_347_star_pyramid.py",
+    "prep-delete-given-interior-list-node": "prep_348_delete_interior_node.py",
+    "prep-turtle-single-sequence-return-position": "prep_182_turtle_turnback.py",
+}
+
+
+def oracle_1115b_pyramid(width):
+    middle = width // 2
+    return "\n".join("".join("*" if abs(column-middle) <= row else " "
+                             for column in range(width)).rstrip()
+                     for row in range(middle+1))
+
+
+def oracle_1115b_delete(values, index):
+    return values[:index] + values[index+1:]
+
+
+def oracle_1115b_turtle(commands):
+    position, heading = 0j, 1j
+    for command in commands:
+        if command == "M":
+            position += heading
+        else:
+            heading *= {"R": -1j, "L": 1j, "T": -1}[command]
+    return position == 0
+
+
+ORACLES.update({
+    "prep-odd-width-centered-star-pyramid": oracle_1115b_pyramid,
+    "prep-delete-given-interior-list-node": oracle_1115b_delete,
+    "prep-turtle-single-sequence-return-position": oracle_1115b_turtle,
+})
+
+
+def build_batch1115b_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1115b_inputs.json").read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1115b_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1115B_SOURCES[key]).read_text(encoding="utf8")
+
+
 def build_batch1114_contracts():
     questions = json.loads((BACKEND / "tests/fixtures/execution_batch1114_inputs.json").read_text(encoding="utf-8"))
     for key, question in questions.items():
@@ -919,6 +966,7 @@ endmodule
     questions.update(build_batch1108b20_contracts())
     questions.update(build_batch1114_contracts())
     questions.update(build_batch1115_contracts())
+    questions.update(build_batch1115b_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -1035,6 +1083,13 @@ def build_smoke():
                  if entry == "count_interesting_times"
                  else "def tree_codec_round_trip(serialized):\n    return serialized\n")
         cases.append({"question_key": key, "language": "python", "correct": batch1115_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1115b_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = ("def pyramid(width):\n    return ''\n" if entry == "pyramid" else
+                 "def delete_interior_result(values, index):\n    return values\n" if entry == "delete_interior_result" else
+                 "def returns_to_start_with_turnback(commands):\n    return True\n")
+        cases.append({"question_key": key, "language": "python", "correct": batch1115b_source(key),
                       "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
@@ -1578,6 +1633,8 @@ end architecture;
         python[key] = batch1114_source(key)
     for key in BATCH1115_SOURCES:
         python[key] = batch1115_source(key)
+    for key in BATCH1115B_SOURCES:
+        python[key] = batch1115b_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

@@ -77,11 +77,13 @@
     "assumptions": {
       "he": [
         "אותו שעון וחזית, נתיב מחזור אחד; skew חיובי ללכידה מאוחרת.",
-        "מודל זמן מאוחד, זמני מינימום/מקסימום ו־uncertainty נפרדים."
+        "מודל זמן מאוחד, זמני מינימום/מקסימום ו־uncertainty נפרדים.",
+        "בהרחבה יש שלושה אוגרי שיגור, OR אחד ואוגר קליטה. כל ענף בר־רגישות ושעות ההגעה מוגדרות בנפרד."
       ],
       "en": [
         "Same clock/edge, one-cycle path; positive skew means later capture.",
-        "One time unit, explicit min/max delays and separate uncertainties."
+        "One time unit, explicit min/max delays and separate uncertainties.",
+        "The extension uses three launches, one OR and one capture. Every branch is sensitizable and has an explicit launch arrival."
       ]
     },
     "optimality": {
@@ -89,19 +91,21 @@
       "en": "No unique best repair without the path/library; pipelining changes latency and acceleration may hurt hold."
     },
     "verification": {
-      "he": "54 בדיקות מול לוח זמנים מוחלט; הגדלת מחזור עוזרת רק ל־setup במודל.",
-      "en": "54 absolute-schedule checks; a longer period improves only setup in this model."
+      "he": "54 בדיקות מול לוח זמנים מוחלט; הגדלת מחזור עוזרת רק ל־setup במודל. מודל שלושת הענפים נבדק מול לוח זמנים מוחלט לכל זוג skew/השהיה, כולל תוספת השהיה ושינוי מחזור.",
+      "en": "54 absolute-schedule checks; a longer period improves only setup in this model. The three-branch model was compared with absolute arrival/deadline schedules, including added delay and period changes."
     },
     "edge_cases": {
       "he": [
         "skew שלילי או חיובי.",
         "נתיב קצר מאוד מפר hold.",
-        "אפס slack הוא גבול המודל, לא מרווח הנדסי."
+        "אפס slack הוא גבול המודל, לא מרווח הנדסי.",
+        "ענף מהיר עלול להיכשל ב־hold גם כאשר ענף אחר קובע את זמן המחזור."
       ],
       "en": [
         "Negative/positive skew.",
         "A very short path can violate hold.",
-        "Zero slack is a model boundary, not engineering margin."
+        "Zero slack is a model boundary, not engineering margin.",
+        "A fast branch can fail hold even when a different branch determines the period."
       ]
     },
     "common_mistakes": {

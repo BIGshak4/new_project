@@ -933,13 +933,15 @@
         "ברוחב 2 הקלטים התקינים הם 0,2 ו־1,3.",
         "זוגי ואי־זוגי מטופלים במסלולי בחירה שונים.",
         "שרשרת אחדים בקלט a אינה דורשת חישוב נשא כי b נתון.",
-        "זוג שנוצר רק אחרי גלישה אינו מקיים את ההנחות."
+        "זוג שנוצר רק אחרי גלישה אינו מקיים את ההנחות.",
+        "בהרחבה החדשה a=2^N−1 דורש פלט2^N. a=2^N−2 עדיין מפיק ממוצע שנכנס ב־N ביטים."
       ],
       "en": [
         "At width two valid pairs are 0,2 and 1,3.",
         "Even and odd a use different upper-bit sources.",
         "A run of ones in a requires no computed carry because b is supplied.",
-        "Wrapped pairs violate the integer-relation contract."
+        "Wrapped pairs violate the integer-relation contract.",
+        "In the full-carry extension maximum a requires output2^N; a=2^N−2 still gives an N-bit mean."
       ]
     },
     "common_mistakes": {

@@ -13495,6 +13495,403 @@
           ]
         }
       }
+    },
+    "prep-odd-width-centered-star-pyramid": {
+      "contract": {
+        "he": "pyramid(width) מחזירה מחרוזת פירמידת כוכבים ממורכזת, רוחב בסיס חיובי אי־זוגי. אין רווחים בסוף שורה או ירידת שורה סופית.",
+        "en": "pyramid(width) returns a centered star pyramid for a positive odd base width, without trailing spaces or a final newline."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "pyramid",
+          "starter": "def pyramid(width):\n    raise NotImplementedError\n",
+          "cases": [
+            {
+              "args": [
+                1
+              ],
+              "expected": "*"
+            },
+            {
+              "args": [
+                3
+              ],
+              "expected": " *\n***"
+            },
+            {
+              "args": [
+                5
+              ],
+              "expected": "  *\n ***\n*****"
+            },
+            {
+              "args": [
+                7
+              ],
+              "expected": "   *\n  ***\n *****\n*******"
+            },
+            {
+              "args": [
+                9
+              ],
+              "expected": "    *\n   ***\n  *****\n *******\n*********"
+            },
+            {
+              "args": [
+                11
+              ],
+              "expected": "     *\n    ***\n   *****\n  *******\n *********\n***********"
+            },
+            {
+              "args": [
+                13
+              ],
+              "expected": "      *\n     ***\n    *****\n   *******\n  *********\n ***********\n*************"
+            },
+            {
+              "args": [
+                15
+              ],
+              "expected": "       *\n      ***\n     *****\n    *******\n   *********\n  ***********\n *************\n***************"
+            },
+            {
+              "args": [
+                17
+              ],
+              "expected": "        *\n       ***\n      *****\n     *******\n    *********\n   ***********\n  *************\n ***************\n*****************"
+            },
+            {
+              "args": [
+                21
+              ],
+              "expected": "          *\n         ***\n        *****\n       *******\n      *********\n     ***********\n    *************\n   ***************\n  *****************\n *******************\n*********************"
+            },
+            {
+              "args": [
+                31
+              ],
+              "expected": "               *\n              ***\n             *****\n            *******\n           *********\n          ***********\n         *************\n        ***************\n       *****************\n      *******************\n     *********************\n    ***********************\n   *************************\n  ***************************\n *****************************\n*******************************"
+            },
+            {
+              "args": [
+                51
+              ],
+              "expected": "                         *\n                        ***\n                       *****\n                      *******\n                     *********\n                    ***********\n                   *************\n                  ***************\n                 *****************\n                *******************\n               *********************\n              ***********************\n             *************************\n            ***************************\n           *****************************\n          *******************************\n         *********************************\n        ***********************************\n       *************************************\n      ***************************************\n     *****************************************\n    *******************************************\n   *********************************************\n  ***********************************************\n *************************************************\n***************************************************"
+            }
+          ]
+        }
+      }
+    },
+    "prep-delete-given-interior-list-node": {
+      "contract": {
+        "he": "delete_interior_result(values,index) בונה רשימה חד־כיוונית של ערכי int, מוחקת את הערך שבאינדקס הפנימי הנתון ומחזירה את רצף הערכים. מובטח 0<index<len(values)-1. פעולת הצומת נדרשת להיות O(1); הבנייה וההמרה הן מתאם בלבד. python: delete_interior_result(values, index).",
+        "en": "delete_interior_result(values,index) constructs a singly linked int list, deletes the logical value at an interior index and returns the resulting values. Promise 0<index<len(values)-1. The node operation is O(1); construction and serialization are adapters. python: delete_interior_result(values, index)."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "delete_interior_result",
+          "starter": "def delete_interior_result(values, index):\n    raise NotImplementedError\n",
+          "cases": [
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                1
+              ],
+              "expected": [
+                1,
+                3
+              ]
+            },
+            {
+              "args": [
+                [
+                  7,
+                  7,
+                  7
+                ],
+                1
+              ],
+              "expected": [
+                7,
+                7
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                1
+              ],
+              "expected": [
+                0,
+                2,
+                3
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                2
+              ],
+              "expected": [
+                0,
+                1,
+                3
+              ]
+            },
+            {
+              "args": [
+                [
+                  -1,
+                  -2,
+                  -3,
+                  -4,
+                  -5
+                ],
+                2
+              ],
+              "expected": [
+                -1,
+                -2,
+                -4,
+                -5
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  1,
+                  2,
+                  1
+                ],
+                3
+              ],
+              "expected": [
+                1,
+                2,
+                1,
+                1
+              ]
+            },
+            {
+              "args": [
+                [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                2
+              ],
+              "expected": [
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  99,
+                  -4,
+                  99,
+                  18
+                ],
+                1
+              ],
+              "expected": [
+                99,
+                99,
+                18
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ],
+                1
+              ],
+              "expected": [
+                1,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            {
+              "args": [
+                [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ],
+                5
+              ],
+              "expected": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                7
+              ]
+            },
+            {
+              "args": [
+                [
+                  2147483647,
+                  -2147483648,
+                  0
+                ],
+                1
+              ],
+              "expected": [
+                2147483647,
+                0
+              ]
+            },
+            {
+              "args": [
+                [
+                  8,
+                  5,
+                  8,
+                  5,
+                  8,
+                  5
+                ],
+                3
+              ],
+              "expected": [
+                8,
+                5,
+                8,
+                8,
+                5
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "prep-turtle-single-sequence-return-position": {
+      "contract": {
+        "he": "returns_to_start_with_turnback(commands) בודקת חזרה לנקודת ההתחלה ברצף יחיד על לוח אינסופי. M מתקדם צעד, R/L פונים 90 מעלות, T פונה 180 בלי תזוזה. הרצף ריק או כולל רק תווים אלה. הכיוון הסופי אינו נבדק.",
+        "en": "returns_to_start_with_turnback(commands) checks return to the starting position after one sequence on an infinite grid. M moves one step, R/L turn 90 degrees, T turns 180 without moving. Empty input is valid. Final heading is ignored."
+      },
+      "languages": {
+        "python": {
+          "kind": "function",
+          "entry": "returns_to_start_with_turnback",
+          "starter": "def returns_to_start_with_turnback(commands):\n    raise NotImplementedError\n",
+          "cases": [
+            {
+              "args": [
+                ""
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "M"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "T"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "MTM"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "MMTM"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "MRMRMRM"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "MLMLMLM"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "MTMT"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "TTM"
+              ],
+              "expected": false
+            },
+            {
+              "args": [
+                "RR"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "MMMMTMMMM"
+              ],
+              "expected": true
+            },
+            {
+              "args": [
+                "MRMTMLMTM"
+              ],
+              "expected": false
+            }
+          ]
+        }
+      }
     }
   }
 }

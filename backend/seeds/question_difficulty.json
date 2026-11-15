@@ -251,8 +251,8 @@
   },
   "prep-average-difference-two-logic-gates": {
     "difficulty": 6,
-    "reason": "Exploit equal parity and the supplied upper operand to route mean bits using gates without a carry adder.",
-    "content_sha256": "eb4283da27279af305bd5a9cafdd095dbc2880a9181e7dd479e1f2126dd08e55"
+    "reason": "The complete contract now includes overflow, output-width expansion and a separate carry interface while retaining the parity-only gate solution.",
+    "content_sha256": "67e8b7eceff0368c33e1cb91db16b453eddcd07fe58e93b3b380d4661d791e63"
   },
   "prep-balanced-brackets-mixed-text": {
     "difficulty": 3,
@@ -386,8 +386,8 @@
   },
   "prep-cmos-inverter-operation": {
     "difficulty": 4,
-    "reason": "Connect devices and body rails, then trace load charge, discharge and transient conduction.",
-    "content_sha256": "11d112a11f41b315068d714168513c19e06d55c776e73de2b025b005c0cf6016"
+    "reason": "Requires CMOS operating states and a clearly specified step-response model, including delay versus fall-time measurements.",
+    "content_sha256": "d68a005a08493e9ce230f6c9f18a057927484bf0d5b6fc66f2dbd01b79e96d70"
   },
   "prep-completed-binary-run-parity-error-fsm": {
     "difficulty": 6,
@@ -527,7 +527,7 @@
   "prep-dff-from-edge-triggered-srff": {
     "difficulty": 3,
     "reason": "Drive set and reset from complementary data, avoiding the forbidden pair, and distinguish edge capture from a latch.",
-    "content_sha256": "463ecec05c0d91cbec92cf2ca921228905abd25a931a04710ad15051aa278310"
+    "content_sha256": "f04723e5cffc5b97c84d028d3e186d4dd25e630189923802de8fdbfcd3c1bf22"
   },
   "prep-digit-seven-boom-and-incremental-decimal-state": {
     "difficulty": 5,
@@ -652,7 +652,7 @@
   "prep-first-missing-positive-in-place": {
     "difficulty": 6,
     "reason": "In-place value placement needs a duplicate guard and a monotone homes-filled argument to prove linear runtime.",
-    "content_sha256": "d10f88ce41533600153da52bcf5f82c362d462040fa77b10208d38e8bbbeeecc"
+    "content_sha256": "ed21d9a339064b33f58e9db2f1312e69a54805328db56ef620c8ca816817b991"
   },
   "prep-first-order-low-pass-and-unity-gain-follower": {
     "difficulty": 5,
@@ -702,7 +702,7 @@
   "prep-four-input-sorter-single-crossing-fault": {
     "difficulty": 6,
     "reason": "Diagnoses eleven hypotheses under two fault modes and proves the minimum fixed test count by exhaustive order-class analysis.",
-    "content_sha256": "a9d357e6d6e50f01dbef8ffd793bdaf447cc05d76dfae7f2aaeea4fe373f9fd3"
+    "content_sha256": "844fa49e32d2a188d0ce49cecb13e265c84299fb446c039be70da71829b6f654"
   },
   "prep-four-to-one-mux-from-two-to-one": {
     "difficulty": 3,
@@ -750,9 +750,9 @@
     "content_sha256": "7b049733156efdfa39db46f997d243ad9d3d9547a70606c5ff4349d7947650bd"
   },
   "prep-hardware-fibonacci-register-adder": {
-    "difficulty": 3,
-    "reason": "The supplied recurrence translates to two registers updated from old state, with finite-width wraparound.",
-    "content_sha256": "376eda6ab6f83f0ef9ee825abd4490fa3a1370e474c203299b3e0b3befd81236"
+    "difficulty": 6,
+    "reason": "Adds source-level HDL repair, asynchronous reset, nonblocking delay scheduling, enable stalls and a shifted finite-width output trace.",
+    "content_sha256": "e720adba9f723a480a625e82d6ab6492f3a7e4973b2255e468f80974ed0e1455"
   },
   "prep-hidden-seven-resistor-central-branch": {
     "difficulty": 7,
@@ -1035,9 +1035,9 @@
     "content_sha256": "54bfe8b263ef2dded6f127146ac803b2485efdf4c643a1c15fac5e33ee6682f6"
   },
   "prep-one-bit-and-four-bit-unsigned-comparator": {
-    "difficulty": 4,
-    "reason": "One-bit comparison cells combine only when all more significant bits are equal.",
-    "content_sha256": "d6ea9c06f26ca755a26ed30e474703dd7ef95eb4070d4d0aaaf98c40a42c63cd"
+    "difficulty": 5,
+    "reason": "Adds a MUX-only two-bit construction and distinguishes complete functional testing from netlist-dependent fault coverage.",
+    "content_sha256": "9eb1b2d15a1949cee6390f55f887ad0f39fcce969a5e200ffd294aaa4819bd87"
   },
   "prep-one-two-missing-values": {
     "difficulty": 3,
@@ -1251,8 +1251,8 @@
   },
   "prep-setup-hold-definitions-and-setup-fixes": {
     "difficulty": 6,
-    "reason": "Derive both slack equations with signed skew and evaluate repair tradeoffs that can hurt the opposite check.",
-    "content_sha256": "bb69682ae001bafc2048d10634c35287130b7a0fad6b2a124e8acddb9f468c47"
+    "reason": "The full question combines setup/hold repair with three individually skewed reconvergent launch paths and shared-delay tradeoffs.",
+    "content_sha256": "62bef878850d07474c5e51aa1bb5e473a6c23f4a24dfbc23725528b63bc8ab46"
   },
   "prep-seventeen-prisoners-two-mandatory-switches": {
     "difficulty": 8,
@@ -1442,7 +1442,7 @@
   "prep-three-bit-up-down-counter-gates": {
     "difficulty": 5,
     "reason": "Derive gate-only toggling conditions from the old lower bits for both count directions and wraparound.",
-    "content_sha256": "6b8fa34624faa2d1b79987d5b7cc003b4eebf9e736e0de77810a562491225cbe"
+    "content_sha256": "6111304bb3f1723c93cf764a4162ba387834ee6b91dd10dd9550b0608df13065"
   },
   "prep-three-color-in-place-partition": {
     "difficulty": 5,
@@ -1510,9 +1510,9 @@
     "content_sha256": "6d57814fd6c830827866ae73edec26396cfdae6defaccc193e484dd78f41afdd"
   },
   "prep-turtle-single-sequence-return-position": {
-    "difficulty": 3,
-    "reason": "Track quarter-turn heading and coordinates, then test position without requiring the initial heading.",
-    "content_sha256": "7b603a01dc5f6bed0db9bc1a659a1e2f710d76568e390477b4d45aba938e431a"
+    "difficulty": 4,
+    "reason": "Track position and heading, retain the finite-board alternative, and extend a single pass to a half-turn command without confusing final heading with final position.",
+    "content_sha256": "6f6f099162bdd524e37fa8f21a16549d42d54aac19320b511779d4f236e2b1a4"
   },
   "prep-twelve-coins-three-weighings": {
     "difficulty": 8,
@@ -1868,5 +1868,40 @@
     "difficulty": 5,
     "reason": "Translate a two-resistor network into its Thevenin equivalent, optimize load power, and distinguish dissipated resistor power from ideal-capacitor energy storage.",
     "content_sha256": "5da88ac70b4f1e9b4cbf988271cd44cc4184c40c6416200de8abe0aff7e320a4"
+  },
+  "prep-three-gods-unknown-language-three-questions": {
+    "difficulty": 8,
+    "reason": "Three adaptive questions must neutralize both deception and the unknown vocabulary, first selecting a guaranteed non-random respondent and then separating all six assignments.",
+    "content_sha256": "9f594a3748900162a6ee78576ac66977df84e187f03aa64cded66cd5717e480e"
+  },
+  "prep-odd-width-centered-star-pyramid": {
+    "difficulty": 2,
+    "reason": "Derive row count, indentation and odd star counts, then implement equivalent line-building and nested-cell approaches with exact formatting.",
+    "content_sha256": "b42df29848ae3c9a2c5fce551fd997b62304ecc834e66b14960081287e911d2c"
+  },
+  "prep-delete-given-interior-list-node": {
+    "difficulty": 5,
+    "reason": "The constant-time trick removes a logical value by copying a successor; correctness requires explicit node-identity, payload-cost and ownership conditions.",
+    "content_sha256": "d36fd9a14992a851fc15f44846cb62114d2315fb14f7c63866078956fd593972"
+  },
+  "prep-hierarchical-priority-encoder-four-to-sixteen": {
+    "difficulty": 5,
+    "reason": "Combines priority equations, zero-input validity and hierarchical selection without losing local codes.",
+    "content_sha256": "a4351551282b6e3bae6ee1e2ca89402867073bd03866890490dd4fea30733777"
+  },
+  "prep-clocked-shift-register-with-latched-count": {
+    "difficulty": 5,
+    "reason": "Requires a precise start/busy/done protocol, captured count, sequential invariant and zero-count handling.",
+    "content_sha256": "6ebcbfb4477e5122d5f1d354d078b515f99ec22051ace9a280398f899be05787"
+  },
+  "prep-sta-report-comparison-regression": {
+    "difficulty": 6,
+    "reason": "The contract combines reproducible scenario setup, path coverage, stable identities, unit normalization and independent metric/sign comparisons.",
+    "content_sha256": "ac059c6f10bcbf235dee73413534bbcdb6fc3a28121c4dc172f3ad7b97134dd4"
+  },
+  "prep-diagnose-missing-sta-path": {
+    "difficulty": 5,
+    "reason": "Requires distinguishing physical connectivity, analysis coverage and report selection, with evidence-based causal diagnosis.",
+    "content_sha256": "b530bcc73e09b8dca5ed11c2a3c04d9caf010f8a23856f1c795454e0baf773b9"
   }
 }

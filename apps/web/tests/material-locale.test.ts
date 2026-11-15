@@ -20,8 +20,8 @@ const response = (overrides: Partial<QuestionResources> = {}): QuestionResources
   media: [], technical_material: null, solution_revealed: true, ...overrides,
 });
 
-test("all 374 canonical references follow display language while attempt language stays fixed", () => {
-  assert.equal(questions.length, 374);
+test("all 381 canonical references follow display language while attempt language stays fixed", () => {
+  assert.equal(questions.length, 381);
   for (const question of questions) {
     for (const originalLanguage of ["he", "en"] as const) {
       const original = question.translations[originalLanguage].reference_solution;
@@ -391,8 +391,8 @@ test("second November 7 intake displays readable variant labels in both language
   assert.deepEqual([...new Set(leaked)], []);
 });
 
-test("all 344 preparation resources pair every visible technical field and render entirely in English", () => {
-  assert.equal(prepared.length, 344);
+test("all 351 preparation resources pair every visible technical field and render entirely in English", () => {
+  assert.equal(prepared.length, 351);
   for (const question of prepared) {
     const material = question.assets.preparation_resource!;
     const pairs = material.learner_material as Record<string, Record<ApiLang, unknown>> | undefined;

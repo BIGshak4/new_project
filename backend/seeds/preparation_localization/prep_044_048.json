@@ -50,14 +50,16 @@
         "איפוס באמצע מחזיר מיד לאחר החזית את הזוג ל־0,1 והפלט ל־0.",
         "ללא חזיתות שעון המצב אינו מתקדם; אי אפשר להניח מצב אתחול פיזי בלי לאתחל אותו.",
         "עבור W=4, הערך 21 יופיע כ־5. האוגר b עשוי לגלוש לפני שהאיבר הגולש מופיע בפלט a.",
-        "אם נדרש מספר מוגבל של איברים מדויקים, רוחב האוגרים צריך לכסות גם את האיבר הבא המאוחסן ב־b."
+        "אם נדרש מספר מוגבל של איברים מדויקים, רוחב האוגרים צריך לכסות גם את האיבר הבא המאוחסן ב־b.",
+        "בגרסת המקור החדשה rst נמוך פעיל גם בלי שעון, אך עדכון הסימולציה מתעכב1ns. enable=0 שומר את הזוג. Out מכיל16 ביטים בלבד."
       ],
       "en": [
         "W=1 is valid and produces Fibonacci modulo two.",
         "A midstream reset returns the pair to zero and one, with output zero, after the edge.",
         "Without clock edges state does not advance; physical initialization must be established.",
         "For W=4, 21 appears as 5. Register b can overflow before the overflowing term reaches a.",
-        "A bounded exact sequence needs sufficient width for the next term stored in b as well as the output."
+        "A bounded exact sequence needs sufficient width for the next term stored in b as well as the output.",
+        "In the source variant low rst acts without a clock but its simulation update waits1ns. Low enable holds the pair. Out contains only16 bits."
       ]
     },
     "common_mistakes": {

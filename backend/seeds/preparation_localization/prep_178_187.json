@@ -313,21 +313,23 @@
       "en": "O(n) time, O(1) extra words or O(log(n+1)) coordinate bits; no trail storage.\n\nO(k+rows) including shape validation; O(1) words."
     },
     "verification": {
-      "he": "כל 29,524 הרצפים עד אורך 9 ו־250,959 צעדים נבדקו מול מודל מרוכב נפרד; שלושה קלטים פגומים נדחו.\n\nכל ארבעת הכיוונים ורצפי RLM באורכים 0..7 בלוח 5×5 מול תנועה במספרים מרוכבים.",
-      "en": "All 29,524 sequences through length 9 and 250,959 steps matched an independent complex model; three invalid inputs were rejected.\n\nAll four headings and RLM strings of lengths 0..7 on a 5x5 board versus independent complex motion."
+      "he": "כל 29,524 הרצפים עד אורך 9 ו־250,959 צעדים נבדקו מול מודל מרוכב נפרד; שלושה קלטים פגומים נדחו.\n\nכל ארבעת הכיוונים ורצפי RLM באורכים 0..7 בלוח 5×5 מול תנועה במספרים מרוכבים. כל 87,381 הרצפים באורך עד 8 מעל M,R,L,T הושוו לאורקל מספרים מרוכבים.",
+      "en": "All 29,524 sequences through length 9 and 250,959 steps matched an independent complex model; three invalid inputs were rejected.\n\nAll four headings and RLM strings of lengths 0..7 on a 5x5 board versus independent complex motion. All 87,381 M,R,L,T sequences through length eight were compared with a complex-number oracle."
     },
     "edge_cases": {
       "he": [
         "רצף ריק או פניות בלבד: חוזר.",
         "חזרה למיקום עם כיוון אחר נחשבת הצלחה.",
         "M יחיד אינו חוזר; אות קטנה אינה פקודה חוקית בחוזה שנבחר.",
-        "ריק; סיבובים; גבול; מטריצה לא מלבנית; כיוון לא חוקי."
+        "ריק; סיבובים; גבול; מטריצה לא מלבנית; כיוון לא חוקי.",
+        "T לבדו אינו משנה מיקום; MTM חוזר; MMTM אינו חוזר."
       ],
       "en": [
         "Empty sequence or turns only return.",
         "Returning with another heading is success.",
         "One M does not return; lowercase is invalid under the chosen contract.",
-        "Empty commands; turns; edge; ragged matrix; invalid heading."
+        "Empty commands; turns; edge; ragged matrix; invalid heading.",
+        "T alone preserves position; MTM returns; MMTM does not."
       ]
     },
     "common_mistakes": {
@@ -371,6 +373,11 @@
           "question": "ומה אם הלוח הוא טורוס?",
           "answer_direction": "עדכון שורה ועמודה נעשה מודולו הממדים; זו גרסה נפרדת.",
           "principle": "תנאי גבול הם חלק מחוזה המעברים."
+        },
+        {
+          "question": "כיצד מוסיפים T בלי עזר?",
+          "answer_direction": "מוסיפים שתיים לאינדקס הכיוון מודולו ארבע.",
+          "principle": "שמירת אינווריאנט המיקום והכיוון."
         }
       ],
       "en": [
@@ -383,6 +390,11 @@
           "question": "What if the board is a torus?",
           "answer_direction": "Update row/column modulo dimensions as a separate variant.",
           "principle": "Boundary conditions belong to the transition contract."
+        },
+        {
+          "question": "How is T added without an auxiliary sequence?",
+          "answer_direction": "Add two to the heading modulo four.",
+          "principle": "Preserve the position/heading invariant."
         }
       ]
     },
