@@ -116,7 +116,7 @@ async def test_real_daily_routes_keep_answer_private_until_graded(client, monkey
     assert not app.state.runtime.store.feedback_allowance
 
 
-@pytest.mark.parametrize(("correctness", "won"), [(0.90, False), (0.91, True)])
+@pytest.mark.parametrize(("correctness", "won"), [(0.89, False), (0.90, True), (0.91, True)])
 async def test_one_monthly_charge_and_one_variant_verdict_on_concurrent_submits(client, monkeypatch, correctness, won):
     runtime = app.state.runtime
     monkeypatch.setattr(runtime.daily_puzzle, "clock", lambda: NOW)

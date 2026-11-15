@@ -57,7 +57,7 @@ function PuzzleIntro({ lang, puzzle, onEnter }: {
       : he ? "התשובה שלכם לחידה היומית" : "Your daily puzzle submission"}</h2>
     <ul id="daily-rules">
       <li>{he ? "יש לכם ניסיון אחד להגיש פתרון לחידה של היום." : "You can submit one solution to today’s puzzle."}</li>
-      <li>{he ? <>כדי להצליח צריך לקבל במשוב ציון <strong>מעל 90</strong> מתוך 100.</> : <>To solve the puzzle, your feedback score must be <strong>above 90</strong> out of 100.</>}</li>
+      <li>{he ? <>כדי להצליח צריך לקבל במשוב ציון <strong>90 ומעלה</strong> מתוך 100.</> : <>To solve the puzzle, your feedback score must be <strong>90 or higher</strong> out of 100.</>}</li>
       <li>{he ? <>שליחת הפתרון לבדיקה משתמשת <strong>במשוב AI אחד מהמכסה החודשית</strong>. פתיחת החידה וכתיבת טיוטה הן בחינם.</>
         : <>Submitting uses <strong>one AI feedback credit from your monthly allowance</strong>. Opening the puzzle and drafting your answer are free.</>}</li>
     </ul>
@@ -224,8 +224,8 @@ function PuzzleSession({ userId, lang, initial, client, onExpired }: Player & {
           disabled={busy || checkNeeded} codeLanguage={null} starterCode={null} question={question} />
         <VisualAnswer value={draft.visual} onChange={visual => setDraft(previous => ({ ...previous, visual }))} lang={lang}
           disabled={busy || checkNeeded} attemptId={puzzle.attempt_id} userId={userId} question={question} onUploading={setUploading} />
-        <p className={styles.allowance} id="daily-submit-rules">{he ? "השליחה מנצלת את הניסיון היומי ומשוב AI אחד מהמכסה החודשית. ציון מעל 90 מתוך 100 נחשב להצלחה."
-          : "Submitting uses your daily attempt and one monthly AI feedback credit. A score above 90 out of 100 solves the puzzle."}</p>
+        <p className={styles.allowance} id="daily-submit-rules">{he ? "השליחה מנצלת את הניסיון היומי ומשוב AI אחד מהמכסה החודשית. ציון 90 ומעלה מתוך 100 נחשב להצלחה."
+          : "Submitting uses your daily attempt and one monthly AI feedback credit. A score of 90 or higher out of 100 solves the puzzle."}</p>
         <button type="button" className="primary" onClick={() => void submit()} aria-describedby="daily-submit-rules"
           disabled={busy || uploading || checkNeeded || puzzle.feedback_remaining <= 0 || draft.answer.length > 20000 || (!draft.answer.trim() && !hasVisual(draft.visual))}>
           {busy ? he ? "שולחים את הפתרון…" : "Submitting…" : he ? "הגשת פתרון וקבלת משוב AI" : "Submit solution for AI feedback"}</button>
@@ -249,7 +249,7 @@ function PuzzleSession({ userId, lang, initial, client, onExpired }: Player & {
           ? he ? "פתרתם את החידה היומית!" : "You solved the daily puzzle!"
           : he ? "המשוב על הפתרון שלכם" : "Feedback on your solution"}</h2>
           <p>{he ? "הציון שלכם" : "Your score"} <strong><bdi dir="ltr">{puzzle.score}/100</bdi></strong>
-            {!puzzle.passed && (he ? " · הפעם החידה לא נפתרה. כדי להצליח צריך ציון מעל 90." : " · This attempt didn’t solve the puzzle. A score above 90 is required.")}</p></div>
+            {!puzzle.passed && (he ? " · הפעם החידה לא נפתרה. כדי להצליח צריך ציון 90 ומעלה." : " · This attempt didn’t solve the puzzle. A score of 90 or higher is required.")}</p></div>
       </header>
       <EvaluationPanel submission={submission} lang={lang} />
       <MonthlyBalance puzzle={puzzle} lang={lang} />

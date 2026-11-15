@@ -87,7 +87,7 @@ class DailyPuzzleGrading:
     def _view(puzzle, row, remaining, limit):
         score = row["score"]
         return {**puzzle, "attempt_id": row["id"], "status": row["status"], "submission": row["submission"],
-                "score": score, "passed": score > 90 if score is not None else None,
+                "score": score, "passed": score >= 90 if score is not None else None,
                 "feedback_limit": limit, "feedback_remaining": remaining}
 
     async def submit(self, user_id, language, day, puzzle_id, *, answer=None, retry=False):
