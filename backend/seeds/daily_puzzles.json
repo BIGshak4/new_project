@@ -1,0 +1,496 @@
+[
+  {
+    "available_from": "2026-11-15",
+    "puzzles": [
+      {
+        "id": "clock-angle",
+        "source_question_key": "prep-clock-hands-angle-six-thirty",
+        "variant_key": "general_clock_batch22",
+        "he": {
+          "title": "שני מחוגים, זווית אחת",
+          "prompt": "שעון מחוגים מראה 03:15. מהי הזווית הקטנה בין המחוגים? כתבו כלל שעובד לכל שעה ודקה, בהנחה שמחוג השעות נע ברציפות.",
+          "solution": "הזווית היא 7.5 מעלות. מחוג הדקות כבר נמצא ב־90 מעלות ומחוג השעות התקדם ל־97.5 מעלות. בשעה `h` ובדקה `m` מחשבים את ההפרש המוחלט בין `6m` לבין `30(h mod 12) + 0.5m`, ובוחרים את הקטן מבין ההפרש והשלמתו ל־360 מעלות."
+        },
+        "en": {
+          "title": "Two hands, one angle",
+          "prompt": "An analog clock reads 03:15. What is the smaller angle between the hands? Give a rule for any hour and minute, assuming the hour hand moves continuously.",
+          "solution": "The angle is 7.5 degrees. The minute hand is at 90 degrees and the hour hand has moved to 97.5 degrees. At hour `h` and minute `m`, take the absolute difference between `6m` and `30(h mod 12) + 0.5m`. Return the smaller of this difference and its complement to 360 degrees."
+        }
+      },
+      {
+        "id": "min-max",
+        "source_question_key": "prep-maximum-of-two-numbers-circuit",
+        "variant_key": "1108b20_eight_bit_minmax",
+        "he": {
+          "title": "שתי יציאות מהשוואה אחת",
+          "prompt": "למעגל נכנסים בו־זמנית שני מספרים ללא סימן ברוחב שמונה ביטים. יציאה אחת צריכה להחזיר את המינימום והשנייה את המקסימום. איך תחברו משווה יחיד ושני מוקסים? מה קורה כשהקלטים שווים?",
+          "solution": "מפיקים במשווה את `a < b` ומחברים את התוצאה לכניסת הבחירה בשני המוקסים. כשהתוצאה 1, מוקס המינימום בוחר ב־`a` ומוקס המקסימום בוחר ב־`b`. כשהתוצאה 0 הבחירות מתחלפות. אם המספרים שווים, בשתי היציאות מופיע אותו ערך."
+        },
+        "en": {
+          "title": "Two outputs from one comparison",
+          "prompt": "Two unsigned eight-bit numbers arrive together. One output must give the minimum, the other the maximum. How would you wire one comparator and two muxes? What happens on equality?",
+          "solution": "Compute `a < b` once and feed it to both mux selects. When it is 1, the minimum mux selects `a` and the maximum mux selects `b`. When it is 0, reverse the selections. Equal inputs give the same value at both outputs."
+        }
+      },
+      {
+        "id": "binary-partition",
+        "source_question_key": "prep-three-color-in-place-partition",
+        "variant_key": "Binary in-place partition",
+        "variant_key_he": "מיון אפסים ואחדים ללא מערך עזר",
+        "he": {
+          "title": "אפסים לפני אחדים",
+          "prompt": "מערך מכיל רק את הערכים 0 ו־1. סדרו אותו במקום כך שכל האפסים יופיעו לפני כל ערכי ה־1, בזמן ליניארי ובזיכרון נוסף קבוע. מה יש במערך משני צדי הגבול בזמן הסריקה?",
+          "solution": "מחזיקים אינדקס למקום הבא של אפס וסורקים משמאל לימין. כשמוצאים אפס, מחליפים אותו עם האיבר שבאינדקס ומקדמים את האינדקס. לפני הגבול יש רק אפסים, ומהגבול ועד סוף החלק שכבר נסרק יש רק ערכי 1. כל איבר נבדק פעם אחת."
+        },
+        "en": {
+          "title": "Zeros before ones",
+          "prompt": "An array contains only zeros and ones. Reorder it in place so every zero precedes every one, in linear time with constant extra space. What lies on each side of your boundary during the scan?",
+          "solution": "Keep an index for the next zero slot and scan left to right. On a zero, swap it into that slot and advance the slot index. Everything before the boundary is zero. The scanned region from the boundary onward contains only ones. Each element is examined once."
+        }
+      },
+      {
+        "id": "random-pixels",
+        "source_question_key": "prep-random-permutation-fisher-yates",
+        "variant_key": "batch110_random_pixels",
+        "he": {
+          "title": "כל פיקסל פעם אחת",
+          "prompt": "מסך מכיל `M` שורות ו־`N` עמודות. איך תפיקו את כל זוגות הקואורדינטות בסדר אקראי אחיד, בלי לפלוט פיקסל פעמיים? לרשותכם פעולה שבוחרת מספר שלם באופן אחיד מתוך טווח נתון.",
+          "solution": "ממספרים את הפיקסלים מ־0 עד `M*N-1`. בכל צעד בוחרים באחידות אינדקס בחלק שעדיין לא נבחר, פולטים את הערך שבו ומחליפים אותו באחרון בחלק הזה. מקצרים את החלק באחד. עבור מספר `k`, השורה היא `k // N` והעמודה `k % N`. אם אחד הממדים אפס, אין מה לפלוט."
+        },
+        "en": {
+          "title": "Every pixel exactly once",
+          "prompt": "A screen has `M` rows and `N` columns. How can you emit every coordinate pair in a uniformly random order without repeating a pixel? You may draw a uniform integer from a given range.",
+          "solution": "Number the pixels from 0 to `M*N-1`. At each step choose a uniform index in the remaining portion, emit that value, swap in the last remaining value, and shorten the portion by one. For value `k`, the row is `k // N` and the column is `k % N`. An empty dimension gives an empty sequence."
+        }
+      },
+      {
+        "id": "highest-safe-floor",
+        "source_question_key": "prep-two-crystal-balls-hundred-floors",
+        "variant_key": "highest_safe_batch22",
+        "he": {
+          "title": "כמה קומות מכסות שתי ביצים?",
+          "prompt": "בבניין יש 100 קומות ושתי ביצים זהות. ביצה שורדת בכל הקומות עד סף מסוים ונשברת בכל קומה מעליו. גם 0 ו־100 הן תשובות אפשריות לקומה הבטוחה הגבוהה ביותר. כמה ניסיונות דרושים במקרה הגרוע כדי למצוא את הסף?",
+          "solution": "צריך 14 ניסיונות. מתחילים בקומה 14 וממשיכים בקפיצות של 13, 12 וכן הלאה, עד קומה 100 לכל היותר. אם הביצה נשברת, בודקים ברצף עם השנייה מהקומה שאחרי האחרונה שהייתה בטוחה. ב־13 ניסיונות אפשר לכסות לכל היותר `13·14/2 = 91` קומות, וב־14 אפשר לכסות 105."
+        },
+        "en": {
+          "title": "How many floors can two eggs cover?",
+          "prompt": "A building has 100 floors and you have two identical eggs. An egg survives on every floor up to a threshold and breaks on every floor above it. The highest safe floor may be 0 or 100. How many drops are necessary and sufficient in the worst case to find the highest safe floor?",
+          "solution": "Fourteen drops suffice. Start at floor 14, then advance by 13, 12, and so on, stopping at floor 100 if necessary. Once the first egg breaks, test upward with the second from the floor after the last known safe floor. With two eggs, 13 drops cover at most `13·14/2 = 91` floors. Fourteen cover 105."
+        }
+      },
+      {
+        "id": "unpaired-integer",
+        "source_question_key": "prep-unique-odd-frequency-digit",
+        "variant_key": "General integer pairs",
+        "variant_key_he": "זוגות של מספרים שלמים",
+        "he": {
+          "title": "המספר שאין לו בן זוג",
+          "prompt": "במערך של מספרים שלמים כל ערך מופיע בדיוק פעמיים, פרט לערך אחד שמופיע פעם אחת. איך מוצאים אותו במעבר אחד ובזיכרון נוסף קבוע, גם כשהמערך אינו ממוין?",
+          "solution": "מתחילים ב־0 ומבצעים `XOR` עם כל איבר. סדר הפעולות אינו משנה, וכל זוג ערכים זהים מתאפס. לכן נשאר בדיוק הערך הבודד. זמן הריצה ליניארי ונשמר רק מצבר אחד בגודל מילה."
+        },
+        "en": {
+          "title": "The integer without a partner",
+          "prompt": "Every integer in an unsorted array occurs exactly twice except one that occurs once. How do you find the singleton in one pass with constant extra space?",
+          "solution": "Start with zero and XOR each element into an accumulator. XOR is associative and commutative, and equal values cancel in pairs. Only the singleton remains. The scan takes linear time and one machine word of extra space."
+        }
+      },
+      {
+        "id": "sorted-gap",
+        "source_question_key": "prep-one-two-missing-values",
+        "variant_key": "Missing value in a sorted consecutive sequence",
+        "variant_key_he": "מספר חסר ברצף ממוין",
+        "he": {
+          "title": "המספר החסר בסדרה ממוינת",
+          "prompt": "מערך ממוין באורך `n` מכיל את כל המספרים מ־1 עד `n+1` פרט לאחד, ללא כפילויות. איך תמצאו את המספר החסר בזמן לוגריתמי, גם אם הוא הראשון או האחרון?",
+          "solution": "באינדקסים שמתחילים ב־0, לפני החוסר מתקיים `a[i] == i+1`. אחריו מתקיים `a[i] == i+2`. מחפשים בחיפוש בינארי את האינדקס הראשון שבו השוויון הראשון נשבר ומחזירים אותו ועוד 1. אם אין כזה אינדקס, התשובה היא `n+1`. במערך ריק מתקבל 1."
+        },
+        "en": {
+          "title": "A gap in a sorted sequence",
+          "prompt": "A sorted array of length `n` contains every integer from 1 through `n+1` except one, without duplicates. Find the missing value in logarithmic time, including the cases where it is first or last.",
+          "solution": "With zero-based indices, `a[i] == i+1` before the gap and `a[i] == i+2` after it. Binary-search for the first index where the first equality fails and return that index plus one. If no such index exists, return `n+1`. An empty array returns 1."
+        }
+      },
+      {
+        "id": "single-door-sensor",
+        "source_question_key": "prep-doorway-occupancy-two-sensors",
+        "variant_key": "053_single_sensor_70",
+        "he": {
+          "title": "באיזה כיוון עברו בדלת?",
+          "prompt": "חיישן יחיד בדלת מחזיר 1 כל עוד אדם נמצא באזור שלו. בכל פעם עובר אדם אחד בלבד. האם אפשר לקבוע ממנו לבדו אם להוסיף אדם למניין הנוכחים או לגרוע אדם? איזה מידע נוסף יאפשר להכריע?",
+          "solution": "כניסה ויציאה יכולות ליצור אותו רצף מדידות, `0 → 1 → 0`. לכן אין דרך להבדיל ביניהן מהאות הזה בלבד. שני חיישנים במיקומים שונים נותנים גם סדר הפעלה. במעבר מלא שנדגם ללא החמצות, הפעלת A לפני B מציינת כיוון אחד והסדר ההפוך מציין את הכיוון השני."
+        },
+        "en": {
+          "title": "Which way did someone cross?",
+          "prompt": "A doorway sensor outputs 1 while a person occupies its sensing region. Only one person crosses at a time. Can this sensor alone tell whether to increment or decrement occupancy? What extra information would distinguish the directions?",
+          "solution": "An entry and an exit can produce identical samples, `0 → 1 → 0`, so direction cannot be inferred from that signal alone. Two sensors at distinct positions also supply activation order. For a complete crossing sampled without missed transitions, A before B signals one direction and B before A the other."
+        }
+      },
+      {
+        "id": "coins-in-the-dark",
+        "source_question_key": "prep-dark-room-ten-tails-equal-groups",
+        "variant_key": "059_thirty_coins",
+        "he": {
+          "title": "שלושה צדדים שחורים בחושך",
+          "prompt": "בחדר חשוך מונחים 30 מטבעות שלכל אחד מהם צד שחור וצד לבן. שלושה מהם עם הצד השחור כלפי מעלה ו־27 עם הצד הלבן. אינכם יכולים לזהות את הצד הפונה מעלה. איך תחלקו את המטבעות לשתי קבוצות שבהן מספר זהה של צדדים שחורים כלפי מעלה? מותר להפוך מטבעות.",
+          "solution": "בוחרים שלושה מטבעות כלשהם לקבוצה הראשונה והופכים את שלושתם. אם לפני ההפיכה היו בה `k` צדדים שחורים, בקבוצה השנייה היו `3-k`. אחרי ההפיכה גם בקבוצה הראשונה יש `3-k` צדדים שחורים."
+        },
+        "en": {
+          "title": "Three black faces in the dark",
+          "prompt": "Thirty coins lie in the dark. Each coin has one black face and one white face. Three show black and 27 show white. You cannot tell which side is up. How can you split them into two groups with equal numbers of black faces showing? You may flip coins.",
+          "solution": "Pick any three coins for the first group and flip all three. If that group originally contained `k` black faces, the other group contained `3-k`. After flipping, the first group also has `3-k` black faces."
+        }
+      },
+      {
+        "id": "timestamp-window",
+        "source_question_key": "prep-error-bit-window-monitor",
+        "variant_key": "time_window_batch21",
+        "he": {
+          "title": "חמש תקלות בעשר שניות",
+          "prompt": "בכל קריאה לפונקציה מתקבל 1 אם התרחשה תקלה חדשה ו־0 אחרת. הקצב אינו קבוע. איך תזהו את הפעם הראשונה שבה התקבלו לפחות חמש תקלות בחלון של עשר שניות? תקלה בת עשר שניות בדיוק כבר מחוץ לחלון.",
+          "solution": "שומרים את זמני חמש התקלות האחרונות לפי שעון מונוטוני. עם כל תקלה מוסיפים זמן חדש ומשמיטים את הישן ביותר אם יש יותר מחמישה. כשיש חמישה זמנים וההפרש בין החדש לישן קטן מעשר שניות, התנאי מתקיים. בין תקלות התנאי אינו יכול להפוך משקר לאמת."
+        },
+        "en": {
+          "title": "Five errors in ten seconds",
+          "prompt": "A function returns 1 for a new error and 0 otherwise. Polling frequency varies. How can you detect the first time at least five errors have been observed within a ten-second window? An error exactly ten seconds old is outside the window.",
+          "solution": "Keep the five most recent error timestamps using a monotonic clock. On each error append its time and discard the oldest if there are more than five. If five remain and the newest minus the oldest is less than ten seconds, the condition holds. Between errors it cannot change from false to true."
+        }
+      },
+      {
+        "id": "rope-clearance",
+        "source_question_key": "prep-earth-rope-uniform-clearance",
+        "variant_key": "Two added metres and a stated cat height",
+        "variant_key_he": "תוספת שני מטרים וחתול בגובה מוגדר",
+        "he": {
+          "title": "האם החתול יעבור?",
+          "prompt": "חבל מתוח סביב מעגל. מאריכים אותו בשני מטרים ומרימים אותו כך שיישאר מעגל בעל אותו מרכז ומרווח אחיד מסביב. האם חתול שצריך מרווח של 25 סנטימטרים יעבור מתחת לחבל? האם צריך לדעת את הרדיוס המקורי?",
+          "solution": "המרווח הוא ההפרש בין הרדיוסים. היקף מעגל הוא `2πr`, ולכן תוספת של שני מטרים להיקף מוסיפה `1/π` מטר לרדיוס, כ־31.8 סנטימטרים. החתול יעבור, ומידת המעגל המקורי מתבטלת בחישוב."
+        },
+        "en": {
+          "title": "Will the cat fit?",
+          "prompt": "A rope fits tightly around a circle. Add two metres and lift it into a concentric circle with uniform clearance. Can a cat that needs 25 cm of clearance fit beneath it? Do you need the original radius?",
+          "solution": "The clearance is the difference in radii. A circle has circumference `2πr`, so adding two metres increases the radius by `1/π` metres, about 31.8 cm. The cat fits. The original radius cancels out."
+        }
+      },
+      {
+        "id": "reverse-width",
+        "source_question_key": "prep-reverse-exactly-eight-bits-without-array",
+        "variant_key": "given_width",
+        "he": {
+          "title": "היפוך עם רוחב נתון",
+          "prompt": "הפכו בדיוק `W` ביטים של מספר ללא סימן, כולל אפסים מובילים, בלי מערך או מחרוזת. מה מתקבל עבור `W=7` והקלט `1100101`?",
+          "solution": "מתחילים מתוצאה אפס. בכל אחת מ־`W` החזרות מזיזים את התוצאה ביט אחד שמאלה, מוסיפים לה את הביט הימני של הקלט ומזיזים את הקלט ימינה. התוצאה בדוגמה היא `1010011`. מספר החזרות נקבע לפי הרוחב גם אם כל הביטים שנותרו הם אפסים."
+        },
+        "en": {
+          "title": "Bit reversal at a given width",
+          "prompt": "Reverse exactly `W` bits of an unsigned value, including leading zeros, without an array or string. What is the result for width seven and input `1100101`?",
+          "solution": "Start the result at zero. Repeat exactly `W` times: shift the result left, append the input’s low bit, and shift the input right. The example gives `1010011`. Use the specified width even if all remaining input bits are zero."
+        }
+      },
+      {
+        "id": "nonempty-subset",
+        "source_question_key": "prep-pair-sum-existence-and-optimization",
+        "variant_key": "A nonempty subset of any size",
+        "variant_key_he": "סכום של תת־קבוצה לא ריקה בגודל כלשהו",
+        "he": {
+          "title": "סכום בלי לבחור פעמיים",
+          "prompt": "מערך של מספרים שלמים עשוי להכיל ערכים חיוביים, שליליים ואפסים. האם יש בו תת־קבוצה לא ריקה שסכומה `K`, כשמותר לבחור כל אינדקס פעם אחת בלבד? איך תטפלו ביעד אפס בלי לקבל בטעות את הקבוצה הריקה?",
+          "solution": "מתחילים בקבוצת סכומים ריקה. עבור כל ערך `x` שומרים את הסכומים הישנים, מוסיפים את `x` לבדו ואת כל הסכומים `s+x` עבור סכום ישן `s`. עדכון מתוך עותק של המצב הקודם מונע שימוש חוזר באותו אינדקס. בסוף בודקים אם `K` נמצא בקבוצת הסכומים. כך אפס מתקבל רק מבחירה ממשית, למשל המספרים 3 ומינוס 3."
+        },
+        "en": {
+          "title": "A sum without reusing an element",
+          "prompt": "An integer array may contain positive numbers, negatives, and zeros. Does any nonempty subset sum to `K` if each index may be used at most once? How do you handle a target of zero without accidentally accepting the empty set?",
+          "solution": "Start with an empty set of reachable sums. For each value `x`, keep the old sums and add both `x` alone and `s+x` for each old sum `s`. Using a snapshot of the old set prevents reuse of the same index. Finally check whether the set contains `K`. Zero can then be reached only by an actual choice, such as 3 and −3."
+        }
+      },
+      {
+        "id": "missing-from-zero",
+        "source_question_key": "prep-one-two-missing-values",
+        "variant_key": "C",
+        "he": {
+          "title": "מספר אחד נעלם",
+          "prompt": "במערך לא ממוין באורך `n` נמצאים מספרים שלמים שונים מהטווח הסגור שבין 0 ל־`n`. אחד מהם חסר. איך תמצאו אותו במעבר אחד ובזיכרון נוסף קבוע, בלי לשנות את המערך?",
+          "solution": "מתחילים במצבר שערכו `n`. לכל אינדקס `i` מבצעים במצבר `XOR` עם `i` ועם `a[i]`. כך כל מספר שקיים במערך מופיע פעמיים ומתאפס. המספר החסר מופיע פעם אחת בלבד ונשאר במצבר."
+        },
+        "en": {
+          "title": "One number disappeared",
+          "prompt": "An unsorted array of length `n` contains distinct integers from 0 through `n`. One is missing. Find it in one pass with constant extra space and leave the array untouched.",
+          "solution": "Initialize an accumulator to `n`. For each index `i`, XOR in both `i` and `a[i]`. Every value present appears twice and cancels out. The missing value appears only once and remains in the accumulator."
+        }
+      },
+      {
+        "id": "unknown-switch",
+        "source_question_key": "prep-twenty-one-prisoners-one-light",
+        "variant_key": "hundred_prisoners",
+        "he": {
+          "title": "מה היה מצב המתג בהתחלה?",
+          "prompt": "מאה אנשים נכנסים לחדר בזה אחר זה. כל אחד נכנס אינסוף פעמים, בסדר לא ידוע. כל מבקר רואה רק מתג שמצבו ההתחלתי אינו ידוע וזוכר את ביקוריו שלו. מותר להפוך את המתג או להשאירו במצבו, ואי אפשר לתקשר עם האחרים בזמן הביקורים. איך יוכל אחד מהם להכריז בוודאות שכולם כבר נכנסו, אחרי שתיאמו אסטרטגיה מראש?",
+          "solution": "ממנים סופר אחד. כל אחד מ־99 האחרים מדליק את המתג בשתי הפעמים הראשונות שבהן הוא מוצא אותו כבוי, ומאז משאיר אותו כפי שהוא. רק הסופר מכבה מתג דולק, וסופר כל כיבוי. כשהגיע ל־198 כיבויים, כולם ביקרו. אילו אדם אחד לא ביקר, לכל היותר 98 אחרים היו תורמים 196 הדלקות, ועוד אחת לכל היותר מהמצב ההתחלתי. הביקורים החוזרים מבטיחים שבסוף כל אות ייספר."
+        },
+        "en": {
+          "title": "What if the switch started on?",
+          "prompt": "One hundred people enter a room one at a time. Each visits infinitely often in an unknown order. Each sees only a switch of unknown initial state and remembers their own visits. They may toggle the switch or leave it untouched and cannot communicate during the visits. With a strategy agreed in advance, how can one person eventually declare with certainty that all have visited?",
+          "solution": "Designate a counter. Each of the other 99 turns the switch on the first two times they find it off, then leaves it untouched. Only the counter turns it off, counting each such action. At 198 counts everyone must have visited: if someone had never visited, at most 98 others could supply 196 signals, plus at most one initially on switch. Repeated visits ensure the signals are eventually counted."
+        }
+      },
+      {
+        "id": "counter-direction",
+        "source_question_key": "prep-three-bit-up-down-counter-gates",
+        "variant_key": "two_bit_enable_direction",
+        "he": {
+          "title": "שני ביטים ושני אותות בקרה",
+          "prompt": "מונה של שני ביטים מתחיל ב־0 אחרי איפוס סינכרוני. בכל חזית עולה `Inc` מאפשר ספירה ו־`Dec` בוחר כיוון. כששניהם 1 המונה סופר לאחור. מהו המצב הבא לכל שילוב של האותות, כולל המעבר בקצות הטווח?",
+          "solution": "לאיפוס יש עדיפות והוא מעביר ל־0. אחרת, אם `Inc=0` שומרים על הערך בלי קשר לכיוון. אם `Inc=1` ו־`Dec=0` מוסיפים 1 מודולו 4, כך ש־3 הופך ל־0. אם שניהם 1 מחסרים 1 מודולו 4, כך ש־0 הופך ל־3."
+        },
+        "en": {
+          "title": "Two bits and two control signals",
+          "prompt": "A two-bit counter starts at zero on a synchronous reset. At each rising edge `Inc` enables counting and `Dec` selects direction. When both are 1 the counter counts down. Give the next state for each control combination, including wraparound.",
+          "solution": "Reset takes priority and loads zero. Otherwise, when `Inc=0` hold the value regardless of direction. With `Inc=1` and `Dec=0`, increment modulo four, so 3 becomes 0. With both high, decrement modulo four, so 0 becomes 3."
+        }
+      },
+      {
+        "id": "edge-polarity",
+        "source_question_key": "prep-async-input-change-until-next-clock",
+        "variant_key": "batch1101_polarity",
+        "he": {
+          "title": "איזה שינוי התרחש בין החזיתות?",
+          "prompt": "פליפ־פלופ שומר ב־`q` את הערך של `d` בחזית השעון העולה האחרונה. הגדירו שלוש יציאות. הראשונה נדלקת כשהערך הנוכחי גבוה מהערך שנדגם, השנייה כשהוא נמוך ממנו והשלישית בכל פעם שהם שונים. מה קורה אם הערך משתנה ואז חוזר לפני החזית הבאה?",
+          "solution": "לעלייה מחשבים `d AND NOT q`, לירידה `q AND NOT d`, ולכל הבדל `d XOR q`. כשהקלט חוזר לערך שנדגם, כל היציאות חוזרות ל־0 גם אם טרם הגיעה חזית שעון. לכן המעגל מתאר את ההבדל הנוכחי ואינו זוכר כמה מעברים היו."
+        },
+        "en": {
+          "title": "Which transition happened between edges?",
+          "prompt": "A flip-flop holds in `q` the value of `d` at the last rising clock edge. Define three outputs showing whether the current value is higher than the sampled value, lower than it, or different from it. What happens if the input changes and returns before the next edge?",
+          "solution": "Use `d AND NOT q` for a rise, `q AND NOT d` for a fall, and `d XOR q` for any difference. If the input returns to the sampled value, all outputs go low even before the next clock edge. These outputs show the current difference and do not count transitions."
+        }
+      },
+      {
+        "id": "reverse-significant",
+        "source_question_key": "prep-reverse-exactly-eight-bits-without-array",
+        "variant_key": "batch22_significant_bits",
+        "he": {
+          "title": "מה קורה לאפסים המובילים?",
+          "prompt": "הפכו רק את הביטים בייצוג הבינארי הקצר ביותר של מספר שלם ללא סימן בגודל 32 ביט. לדוגמה, לא מוסיפים אפסים לפני הייצוג של 13. מה נקבל עבור 13, ואיך מממשים זאת ללא מערך או מחרוזת? עבור 0 יש להחזיר 0.",
+          "solution": "הייצוג של 13 הוא `1101`. אחרי ההיפוך מתקבל `1011`, כלומר 11. מתחילים מתוצאה אפס, וכל עוד הקלט שונה מאפס מזיזים את התוצאה שמאלה, מוסיפים את הביט הנמוך ומזיזים את הקלט ימינה. קלט אפס אינו נכנס ללולאה."
+        },
+        "en": {
+          "title": "What happens to leading zeros?",
+          "prompt": "Reverse only the bits in the shortest binary representation of an unsigned 32-bit integer. For example, do not prepend zeros to the representation of 13. What does 13 become, and how do you implement this without an array or string? Zero should return zero.",
+          "solution": "Thirteen is `1101` and reverses to `1011`, which is 11. Start the result at zero. While the input is nonzero, shift the result left, append the low input bit, and shift the input right. A zero input never enters the loop."
+        }
+      },
+      {
+        "id": "thousand-samples",
+        "source_question_key": "prep-three-ones-ten-sample-sliding-window-checker",
+        "variant_key": "batch1107b10_window1000-any-one",
+        "he": {
+          "title": "האם היה 1 באלף הדגימות האחרונות?",
+          "prompt": "בכל חזית עולה נכנס ביט. על היציאה להיות 1 אם לפחות אחד מאלף הביטים האחרונים היה 1, כולל הנוכחית. האיפוס סינכרוני ומייצג היסטוריה של אפסים. איך תממשו זאת בלי לשמור אלף ביטים?",
+          "solution": "שומרים מונה רווי בתחום 0 עד 1000. איפוס טוען 0. ביט שערכו 1 טוען 1000, ובכל דגימת 0 מפחיתים 1 אם המונה חיובי. היציאה אחרי החזית היא 1 בדיוק כשהמונה חיובי. אחרי 999 אפסים רצופים ה־1 האחרון עדיין בחלון, ואחרי האפס האלף הוא יוצא ממנו."
+        },
+        "en": {
+          "title": "Was there a one in the last thousand samples?",
+          "prompt": "One bit arrives at every rising edge. The output must be 1 if any of the last thousand samples, including the current one, was 1. Synchronous reset represents an all-zero history. Can you do this without storing a thousand bits?",
+          "solution": "Keep a counter from 0 through 1000. Reset loads 0. A one loads 1000; on a zero decrement if positive. The post-edge output is high exactly while the count is positive. After 999 successive zeros the last one is still in the window. The thousandth zero removes it."
+        }
+      },
+      {
+        "id": "merge-reserved",
+        "source_question_key": "prep-merge-two-sorted-arrays",
+        "variant_key": "B_inplace",
+        "he": {
+          "title": "מיזוג לתוך מקום שמור",
+          "prompt": "במערך `b` יש `m` מספרים ממוינים בסדר לא יורד ואחריהם `n` מקומות פנויים. מערך נפרד `a` מכיל `n` מספרים ממוינים באותו סדר. איך תמזגו את כל האיברים לתוך `b` בלי מערך עזר ובלי לשנות את `a`? גם אפס עשוי להיות ערך אמיתי.",
+          "solution": "ממלאים מהסוף כדי לשמור על האיברים שטרם נקראו. משווים את האיבר האחרון שנותר בכל קלט, כותבים את הגדול במקום הפנוי האחרון ומזיזים את האינדקסים. אם נותרו איברים ב־`a`, מעתיקים אותם. הגבול של המידע ב־`b` נקבע לפי `m`. זמן הריצה `O(m+n)` והזיכרון הנוסף קבוע."
+        },
+        "en": {
+          "title": "Merging into reserved space",
+          "prompt": "Array `b` has `m` numbers sorted in nondecreasing order followed by `n` spare slots. A separate array `a` holds `n` numbers sorted in the same order. Merge everything into `b` without another array or changes to `a`. Zero may be a real input value.",
+          "solution": "Fill from the back to preserve unread input. Compare the last remaining value from each input, place the larger into the last free slot, and move the indices. Copy any remaining values from `a`. Use `m` to locate the end of valid data in `b`. Time is `O(m+n)` with constant extra space."
+        }
+      },
+      {
+        "id": "four-bit-adder",
+        "source_question_key": "prep-four-bit-addition-half-adders-only",
+        "variant_key": "1107n30_mixed_ha_fa",
+        "he": {
+          "title": "חיבור של ארבעה ביטים בלי נשא כניסה",
+          "prompt": "בנו מעגל שמחבר שני מספרים ללא סימן של ארבעה ביטים ומחזיר תוצאה מדויקת של חמישה ביטים. לרשותכם חצאי מחברים ומחברים מלאים. איפה אפשר לחסוך מחבר מלא, ומה יתקבל מחיבור 15 ו־1?",
+          "solution": "בביט הנמוך אין נשא כניסה, ולכן מספיק חצי מחבר. בשלושת הביטים הבאים משתמשים במחבר מלא שמקבל את שני ביטי הקלט ואת הנשא מהשלב הקודם. הנשא האחרון הוא הביט החמישי בתוצאה. חיבור `1111` ו־`0001` נותן `10000`."
+        },
+        "en": {
+          "title": "A four-bit adder without carry-in",
+          "prompt": "Build a circuit that adds two unsigned four-bit numbers and produces the exact five-bit result. You have half adders and full adders. Where can you save a full adder, and what should happen for 15 plus 1?",
+          "solution": "Use a half adder at the low bit because it has no carry-in. Use a full adder at each of the other three bits, combining both operand bits and the previous carry. The final carry is the fifth output bit. Adding `1111` and `0001` yields `10000`."
+        }
+      },
+      {
+        "id": "capacitor-step",
+        "source_question_key": "prep-rc-coupled-inverter-waveforms",
+        "variant_key": "1108b20_ground_bias",
+        "he": {
+          "title": "מדרגה בכניסה ומהפך ביציאה",
+          "prompt": "קבל טורי מחבר את הכניסה `A` לצומת `B`. נגד מחבר את `B` לאדמה, ו־`B` נכנס למהפך אידיאלי בעל סף `VM`. אחרי זמן רב שבו הכניסה הייתה 0 היא עולה ל־`VDD` ונשארת שם. כיצד ישתנו `B` ויציאת המהפך אם הסף נמצא בין 0 ל־`VDD`?",
+          "solution": "מתח הקבל אינו יכול להשתנות מיידית, ולכן גם `B` קופץ ל־`VDD`. לאחר מכן הוא דועך כ־`VDD·exp(−t/RC)` דרך הנגד. יציאת המהפך הייתה גבוהה, יורדת עם המדרגה וחוזרת להיות גבוהה כש־`B` יורד מתחת לסף, אחרי `RC·ln(VDD/VM)`."
+        },
+        "en": {
+          "title": "A step at an inverter input",
+          "prompt": "A series capacitor connects input `A` to node `B`. A resistor pulls `B` to ground, and `B` drives an ideal inverter of threshold `VM`. After a long time at zero, the input steps up to `VDD` and stays there. How do `B` and the inverter output change if the threshold is between zero and `VDD`?",
+          "solution": "The capacitor voltage cannot change instantaneously, so `B` jumps to `VDD` too. It then decays through the resistor as `VDD·exp(−t/RC)`. The inverter output starts high, goes low at the step, and returns high when `B` falls below the threshold, after `RC·ln(VDD/VM)`."
+        }
+      },
+      {
+        "id": "square-sequence",
+        "source_question_key": "prep-finite-cycle-index-and-square-recurrence",
+        "variant_key": "batch1103_n_bit_modular_squares",
+        "he": {
+          "title": "ריבוע חדש בכל פעימת שעון",
+          "prompt": "בעזרת רגיסטרים ומחברים של `n` ביטים בלבד, הפיקו את הסדרה `0, 1, 4, 9, 16, …` מודולו `2^n`. האיפוס מציג 0, ובכל פעימה מתקדמים לריבוע הבא. איך תעשו זאת בלי כפל?",
+          "solution": "ההפרש בין ריבועים עוקבים הוא `(k+1)²−k² = 2k+1`. שומרים את הריבוע הנוכחי ואת ההפרש הבא. באיפוס טוענים 0 ו־1. בכל חזית מוסיפים לריבוע את ההפרש הנוכחי ובמקביל מוסיפים 2 להפרש. שומרים את `n` הביטים הנמוכים בכל רגיסטר."
+        },
+        "en": {
+          "title": "A new square on every clock",
+          "prompt": "Using only `n`-bit registers and adders, generate `0, 1, 4, 9, 16, …` modulo `2^n`. Reset shows zero, then each clock advances to the next square. How can this work without multiplication?",
+          "solution": "Consecutive squares differ by `(k+1)²−k² = 2k+1`. Store the current square and the next odd difference. Reset them to 0 and 1. At each edge add the old difference to the square and simultaneously add two to the difference. Keep the low `n` bits in each register."
+        }
+      },
+      {
+        "id": "peak-usage",
+        "source_question_key": "prep-minimum-workers-weighted-interval-demand",
+        "variant_key": "batch110_weighted_cpu_log",
+        "he": {
+          "title": "מתי המעבד היה הכי עמוס?",
+          "prompt": "ביומן משימות, כל רשומה כוללת זמן התחלה, זמן סיום וצריכת מעבד קבועה. משימה פעילה בזמן ההתחלה וכבר אינה פעילה בזמן הסיום. איך תמצאו את הצריכה המצטברת המרבית, גם אם כמה משימות מתחילות ומסתיימות באותה שעה?",
+          "solution": "לכל התחלה מוסיפים אירוע עם משקל חיובי ולכל סיום אירוע עם המשקל הנגדי. ממיינים לפי זמן ומחברים את כל השינויים באותו זמן לפני שבודקים את הסכום המצטבר. השיא של הסכומים האלה הוא העומס המרבי. כך סיום והתחלה באותה נקודת זמן אינם יוצרים חפיפה מדומה."
+        },
+        "en": {
+          "title": "When was CPU usage highest?",
+          "prompt": "A log gives each job’s start time, end time, and constant CPU demand. A job is active at its start and inactive at its end. How can you find the peak total demand, even when jobs start and end at the same timestamp?",
+          "solution": "Add a positive demand event at each start and a negative one at each end. Sort by time and combine all changes at the same timestamp before checking the running total. Its maximum is the peak demand. This avoids counting a spurious overlap when one job ends just as another starts."
+        }
+      },
+      {
+        "id": "four-byte-counts",
+        "source_question_key": "prep-byte-popcount-parallel-and-lookup",
+        "variant_key": "Count 32 bits with four byte operations",
+        "variant_key_he": "ספירת 32 סיביות בארבע פעולות על בתים",
+        "he": {
+          "title": "ארבע קריאות לספירת ביטים",
+          "prompt": "יש פונקציה שמקבלת בית אחד ומחזירה כמה מהביטים שלו הם 1. איך תשתמשו בדיוק בארבע קריאות כדי לספור את כל ביטי ה־1 במספר של 32 ביט ללא סימן, בלי תלות בסדר הבתים בזיכרון?",
+          "solution": "עבור ההזזות 0, 8, 16 ו־24 מזיזים את המספר ימינה ומבודדים את שמונת הביטים הנמוכים בעזרת המסכה `0xFF`. מעבירים כל בית לפונקציה ומחברים את ארבע התוצאות. כל ביט שייך לבית אחד בדיוק, והחילוץ נעשה מערכו המספרי של הקלט."
+        },
+        "en": {
+          "title": "Four calls to count the bits",
+          "prompt": "A function takes one byte and returns its number of set bits. How can exactly four calls count all set bits in an unsigned 32-bit value, independently of memory byte order?",
+          "solution": "Use shifts of 0, 8, 16, and 24. After each right shift mask with `0xFF`, then call the function on that byte. Add the four results. The bytes partition the bit positions, and extracting them from the numeric value avoids any dependency on memory layout."
+        }
+      },
+      {
+        "id": "fifth-counter-bit",
+        "source_question_key": "prep-extend-mod16-black-box-to-mod32-counter",
+        "variant_key": "batch1103_loaded_five_bit_extension",
+        "he": {
+          "title": "מוסיפים ביט למונה עם טעינה",
+          "prompt": "מונה נתון של ארבעה ביטים סופר בכל חזית עולה או טוען ערך במקביל כש־`load=1`. איך מוסיפים לו ביט חמישי כדי שיספור מודולו 32 ועדיין יוכל לטעון ערך של חמישה ביטים באותה חזית?",
+          "solution": "מוסיפים פליפ־פלופ על אותו שעון. בזמן טעינה הוא דוגם את ביט הקלט החמישי. בזמן ספירה הוא מתהפך רק אם לפני החזית ארבעת הביטים הנמוכים שווים ל־`1111`, כי אז הם עומדים לעבור ל־0. בכל מצב ספירה אחר הביט החמישי נשמר."
+        },
+        "en": {
+          "title": "One more bit for a loadable counter",
+          "prompt": "A four-bit counter increments at each rising edge, or parallel-loads an input when `load=1`. How can you add a fifth bit to count modulo 32 and still parallel-load all five bits on the same edge?",
+          "solution": "Add one flip-flop clocked by the same edge. When loading, sample the fifth input bit. When counting, toggle the fifth bit only if the old four low bits are `1111`, because those bits are about to wrap to zero. Otherwise hold it."
+        }
+      },
+      {
+        "id": "sort-letters",
+        "source_question_key": "prep-cpu-thousand-sorter-two-thousand-memory-models",
+        "variant_key": "batch22_uppercase_counting",
+        "he": {
+          "title": "אלף אותיות ו־26 מונים",
+          "prompt": "קיבלתם מערך של 1,000 אותיות גדולות בין A ל־Z. איך תמיינו אותו בסדר עולה תוך שמירה על כל המופעים, בלי להשוות בין זוגות של אותיות?",
+          "solution": "סורקים פעם אחת וסופרים לכל אחת מ־26 האותיות כמה פעמים הופיעה. לאחר מכן עוברים על המונים לפי סדר האלפבית וכותבים למערך כל אות כמספר הופעותיה. זמן העבודה `O(n+26)` ונדרשים 26 מונים."
+        },
+        "en": {
+          "title": "One thousand uppercase letters",
+          "prompt": "You have an array of 1,000 uppercase letters from A through Z. Sort it in ascending order, preserving all occurrences, without comparing pairs of letters.",
+          "solution": "Scan once to count the occurrences of each of the 26 letters. Visit the counters in alphabetic order, writing each letter back as many times as its count. The work is `O(n+26)` and the method needs 26 counters."
+        }
+      },
+      {
+        "id": "recursive-string",
+        "source_question_key": "prep-abstract-list-head-tail-concat-reversal",
+        "variant_key": "Variant: recursive string reversal through four primitives",
+        "variant_key_he": "וריאציה: מחרוזת ורקורסיה באמצעות ארבע פעולות",
+        "he": {
+          "title": "להפוך מחרוזת מהרישא לסיפא",
+          "prompt": "הפעולות המותרות על מחרוזת הן קבלת התו הראשון, קבלת יתר המחרוזת, שרשור ובדיקת אורך. איך תבנו פונקציה רקורסיבית שמחזירה את המחרוזת ההפוכה? מה העלות אם החזרת הסיפא והשרשור מעתיקים תווים?",
+          "solution": "על מחרוזת ריקה מחזירים מחרוזת ריקה. אחרת הופכים רקורסיבית את הסיפא ואז משרשרים בסוף את התו הראשון. כך כל תו ראשון מגיע למיקום האחרון של תת־הבעיה שלו. במודל ההעתקה הזמן `O(n²)` ועומק הרקורסיה `O(n)`."
+        },
+        "en": {
+          "title": "Reversing a string recursively",
+          "prompt": "The string operations available are first character, remaining suffix, concatenation, and length. How can a recursive function return the reversed string? What does it cost if taking the suffix and concatenating both copy characters?",
+          "solution": "For the empty string return the empty string. Otherwise recursively reverse the suffix, then append the original first character. Each first character ends up last in its subproblem. With copying, total time is `O(n²)` and recursion depth is `O(n)`."
+        }
+      },
+      {
+        "id": "stream-div-four",
+        "source_question_key": "prep-binary-divisibility-by-two-four-eight",
+        "variant_key": "batch1107b10_serial-four-right-append",
+        "he": {
+          "title": "חלוקה בארבע בלי לשמור את המספר",
+          "prompt": "ביטים מתקבלים מהמשמעותי לפחות משמעותי. בכל פעימה תקפה הביט מצטרף מימין. איך תבדקו אחרי כל ביט אם המספר שהתקבל מתחלק ב־4, גם אם האורך אינו מוגבל? לפני הביט הראשון היציאה היא 0, והמספר 0 עצמו מתחלק ב־4.",
+          "solution": "שומרים את שני הביטים האחרונים, מאותחלים לאפס, ודגל שמציין שהתקבל ביט. בכל דגימה תקפה מזיזים פנימה את הביט החדש ומדליקים את הדגל. המספר מתחלק ב־4 אם הדגל דולק ושני הביטים השמורים הם `00`. בהפסקה בין דגימות שומרים את המצב."
+        },
+        "en": {
+          "title": "Divisible by four without storing the number",
+          "prompt": "Bits arrive most significant first. Each valid clock appends a bit on the right. How can you tell after each bit whether the number is divisible by four, even for an unbounded stream? Output zero before the first bit; the number zero itself is divisible by four.",
+          "solution": "Keep the two low bits, initialized to zero, and a flag recording whether any bit has arrived. On a valid sample shift in the new bit and set the flag. The number is divisible by four exactly when the flag is set and the two bits are `00`. Hold the state when no valid bit arrives."
+        }
+      },
+      {
+        "id": "frequent-word",
+        "source_question_key": "prep-most-frequent-word-list",
+        "variant_key": "Variant: most frequent word in raw text",
+        "variant_key_he": "וריאציה: המילה השכיחה בטקסט גולמי",
+        "he": {
+          "title": "מילה חוזרת וטיפול בתיקו",
+          "prompt": "מחרוזת מכילה מילים המופרדות ברווחים, טאבים או מעברי שורה. מצאו את המילה השכיחה ביותר. בתיקו החזירו את זו שהופיעה ראשונה, ובקלט ריק החזירו `None`. סימני פיסוק נשארים כחלק מהמילה ויש הבדל בין אות גדולה לקטנה.",
+          "solution": "מפרקים למילים וסופרים בעזרת מילון. אחרי הספירה עוברים על המילים לפי סדר הופעתן. מעדכנים את המנצחת רק אם הספירה גדולה ממש מזו של המנצחת הנוכחית. כך התיקו נשאר אצל המילה המוקדמת יותר. אם אין מילים מחזירים `None`."
+        },
+        "en": {
+          "title": "The most frequent word, including ties",
+          "prompt": "A string contains words separated by whitespace, including tabs and newlines. Return its most frequent word. Break ties by first occurrence and return `None` for empty or whitespace-only input. Keep punctuation attached and treat case as significant.",
+          "solution": "Split on whitespace and count in a dictionary. After counting, scan the words in original order. Replace the winner only for a strictly larger final count, so a tie stays with the earlier word. If there are no words, return `None`."
+        }
+      },
+      {
+        "id": "remove-list-node",
+        "source_question_key": "prep-reverse-singly-linked-list-in-place",
+        "variant_key": "Removing a node with and without the head",
+        "variant_key_he": "מחיקת צומת עם הראש ובלעדיו",
+        "he": {
+          "title": "מחיקת צומת בלי מצביע לראש",
+          "prompt": "ברשימה מקושרת חד־כיוונית עם ערכים שלמים, קיבלתם מצביע לצומת נתון בלבד. האם אפשר להסיר את ערכו מהרשימה? הסבירו מה משתנה אם הוא הזנב, ומה ההבדל בין הסרת הערך לשחרור הצומת המסוים הזה.",
+          "solution": "אם יש צומת עוקב, אפשר להעתיק ממנו את הערך, לדלג עליו בקישור ולשחרר אותו. הרצף הגלוי של הערכים משתנה כנדרש, אבל הצומת ששוחרר הוא העוקב. אם הצומת הוא הזנב, אין דרך לעדכן את הקישור אליו בלי גישה לקודמו או לראש הרשימה במקרה של איבר יחיד."
+        },
+        "en": {
+          "title": "Deleting a node without the head",
+          "prompt": "In a singly linked list of integers you are given only a pointer to one node. Can you remove its value from the list? How does the tail case differ, and does removing the value actually free the specified node?",
+          "solution": "With a successor, copy its value into the given node, link past the successor, and free the successor. This removes the desired value from the visible sequence, but the specified node still exists. For a tail, you cannot update the incoming link without its predecessor, or the head pointer in a one-node list."
+        }
+      },
+      {
+        "id": "pay-exactly",
+        "source_question_key": "prep-single-use-coin-payment-missing-denominations",
+        "variant_key": "batch1107b10_concrete_coin_inventory",
+        "he": {
+          "title": "איך משלמים בדיוק 120?",
+          "prompt": "יש לכם מטבע אחד מכל ערך ברשימה `[100, 60, 35, 25, 15, 10]`. צריך לשלם בדיוק 120, בלי עודף ובמספר המטבעות הקטן ביותר. אילו מטבעות תבחרו? האם השיטה שתמיד בוחרת קודם את הגדול ביותר שמתאים תצליח?",
+          "solution": "בוחרים `60 + 35 + 25 = 120`. אין מטבע של 120 ואין שני מטבעות שונים שסכומם 120, ולכן שלושה הם המינימום. השיטה החמדנית תיקח 100 ואחר כך 15 ותיתקע עם יתרה של 5. אי אפשר להשתמש ב־60 פעמיים כי יש רק מטבע אחד כזה."
+        },
+        "en": {
+          "title": "Exact payment from six coins",
+          "prompt": "You have exactly one coin of each value in `[100, 60, 35, 25, 15, 10]`. Pay exactly 120 with as few coins as possible and no change. Which coins should you use? Does always choosing the largest coin that fits succeed?",
+          "solution": "Choose `60 + 35 + 25 = 120`. There is no 120 coin or pair of distinct coins summing to 120, so three is minimal. Greedy takes 100 and then 15 and gets stuck with 5 remaining. Using 60 twice is impossible with this inventory."
+        }
+      }
+    ]
+  }
+]

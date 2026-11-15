@@ -1,19 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, CheckCheck, CircleHelp, Clock3, Coins, Copy, RefreshCw, Swords, Users, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, CheckCheck, CalendarDays, Clock3, Coins, Copy, RefreshCw, Swords, Users, X } from "lucide-react";
 import { BidiText } from "../bidi-text";
 import { QuestionActions } from "../question-actions";
-import { SUPPORT_OPEN_EVENT } from "../../lib/support-report";
 import type { Duel, DuelClient, DuelInvitation, DuelLanguage, DuelList, DuelWallet } from "../../lib/duel-types";
 import { inviteCode, quizSecondsLeft } from "../../lib/duel-types";
 import { DEFAULT_AVATAR, type AvatarConfig } from "../../lib/avatar-types";
 import { LogicAvatar } from "../wardrobe/logic-avatar";
-import { FeatureNav } from "../wardrobe/feature-nav";
-import headerStyles from "../wardrobe/workspace-header.module.css";
 import { DuelLooks } from "./duel-looks";
 import { DuelPractice } from "./duel-practice";
 import styles from "./duels.module.css";
+import { GamesNavigation } from "./games-navigation";
+import puzzleStyles from "./daily-puzzle.module.css";
 import avatarStyles from "./game-avatar.module.css";
 
 function errorMessage(error: unknown, lang: DuelLanguage) {
@@ -149,12 +148,7 @@ export function DuelWorkspace({ client, lang, demo = false, invite = "", control
   const statusLabel = (d: Duel) => d.status === "open" ? t("ממתינים לחבר", "Waiting for a friend") : d.status === "cancelled" ? t("בוטל · המטבעות הוחזרו", "Cancelled · coins refunded") : d.status === "settled" ? d.won === true ? t("ניצחתם", "You won") : d.won === false ? t("החבר ניצח", "Your friend won") : t("תיקו · המטבעות הוחזרו", "Draw · coins refunded") : d.deadline ? t("במשחק", "In progress") : t("בחדר ההמתנה", "In the lobby");
 
   return <div className={styles.shell} dir={lang === "he" ? "rtl" : "ltr"}>
-    <header className={`topnav ${headerStyles.header}`}>
-      <a className="wordmark" href="/" dir="ltr"><span>.</span>jobrun</a>
-      <FeatureNav className="tabs" lang={lang} demo={demo} current="games" />
-      <div className={`topnav-actions ${headerStyles.toolbar} ${styles.controls}`}><button type="button" aria-label={t("דיווח על בעיה", "Report a problem")} title={t("דיווח על בעיה", "Report a problem")} aria-haspopup="dialog" onClick={() => window.dispatchEvent(new Event(SUPPORT_OPEN_EVENT))}><CircleHelp size={18} aria-hidden="true" /></button>{controls}</div>
-    </header>
-    <FeatureNav className="tabbar" variant="bottom" lang={lang} demo={demo} current="games" />
+    <GamesNavigation lang={lang} demo={demo} controls={controls} />
     <main className={styles.main}>
       <div className={styles.topline}>
         {duel && <button className={styles.textButton} onClick={home} disabled={busy}><Back size={17} />{t("לכל המשחקים", "All games")}</button>}
@@ -174,6 +168,13 @@ export function DuelWorkspace({ client, lang, demo = false, invite = "", control
           </li>)}</ul>
           {!!wallet && wallet.balance < pendingInvitations[0].stake && <p className={styles.muted}>{t("אין מספיק מטבעות כדי להצטרף למשחק.", "You need more coins to join this game.")}</p>}
         </section>}
+        {!demo && <a className={puzzleStyles.entry} data-member-tour="daily-puzzle" href="/games/daily-puzzle">
+          <CalendarDays className={puzzleStyles.entryIcon} size={32} aria-hidden="true" />
+          <span><strong>{t("החידה היומית", "Daily puzzle")}</strong>
+            <span>{t("בכל יום, שאלת ראיון בניסוח אחר. נסו לפתור אותה והשוו את הדרך שלכם לפתרון.", "A different take on an interview question each day. Try it and compare your reasoning with the solution.")}</span>
+          </span>
+          <span className={puzzleStyles.entryAction}>{t("לחידה של היום", "Open today’s puzzle")}{lang === "he" ? <ArrowLeft size={18} aria-hidden="true" /> : <ArrowRight size={18} aria-hidden="true" />}</span>
+        </a>}
         {renderFriends?.(friendId => void act(() => client.create(lang, friendId)), busy || !available || !enough, rules?.stake ?? 5)}
         <div className={styles.intro}><Swords size={36} strokeWidth={1.5} aria-hidden="true" /><h1>{t("חמש שאלות. חבר מול חבר.", "Five questions. Friend vs friend.")}</h1><p>{t("אותן שאלות, אותו אתגר. עונים נכון, חושבים מהר ומגלים מי לקח את הסיבוב.", "The same questions, the same challenge. Answer correctly, think quickly and see who wins.")}</p></div>
         <div className={styles.rules}><span>{rules?.quiz_questions ?? 5} {t("שאלות", "questions")}</span><span>{rules?.quiz_seconds_per_question ?? 60} {t("שניות לשאלה", "seconds per question")}</span><span>{rules?.stake ?? 5} {t("מטבעות מכל צד", "coins each")}</span></div>

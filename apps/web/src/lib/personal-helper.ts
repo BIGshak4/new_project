@@ -27,6 +27,7 @@ export const helperDestinations = {
   fundamentals: "/?view=fundamentals&nav=1",
   interview: "/?view=interview&nav=1",
   games: "/games",
+  dailyPuzzle: "/games/daily-puzzle",
   shop: "/games/shop",
 } as const;
 
@@ -214,8 +215,8 @@ export const helperTopics: Readonly<Record<HelperTopicId, HelperTopic>> = {
   },
   games: {
     title: text("קופצים למשחקים", "Head to Games"),
-    messages: [text("באזור המשחקים אפשר גם לנסות לבד שאלה מהמאגר האמיתי של השאלות האמריקאיות, לבדוק את התשובה ולקבל הסבר, בלי להוציא מטבעות. בדו־קרב שני חברים עונים על אותן חמש שאלות אמריקאיות. יוצרים הזמנה או מצטרפים עם קוד משחק, והשעון מתחיל רק אחרי ששניכם מוכנים. בסיום אפשר לחזור לשאלות ולהסברים.", "In Games, you can also try a question on your own from the real multiple-choice bank, check your answer and read the explanation without spending coins. In a duel, two friends answer the same five multiple-choice questions. Create an invitation or join with a game code. The clock starts only when both players are ready. Review the questions and explanations at the end."), text("לפני יצירת המשחק או ההצטרפות, בדקו את עלות המטבעות והכללים המוצגים. ״המשחקים שלי״ מחזיר למשחקים קיימים. קוד המשחק שונה מקוד החברים האישי שלכם.", "Before creating or joining a game, review the displayed coin cost and rules. “My games” takes you back to existing games. A game invitation code is different from your personal friend code.")],
-    choices: [action("פתיחת אזור המשחקים", "Open Games", { type: "navigate", destination: "games" }), topic("להוסיף חבר לפי קוד", "Add a friend by code", "friends"), topic("לעיצוב הדמות שלי", "Customize my character", "shop")],
+    messages: [text("ב״חידה היומית״ כולם מקבלים אותה שאלת ראיון בניסוח חלופי. אפשר לנסות לפתור אותה ואז לפתוח את הפתרון להשוואה. בחצות לפי שעון ישראל מתחלפת החידה.", "The Daily Puzzle gives everyone the same interview question in an alternate wording. Try it, then open the solution to compare. A new puzzle appears at midnight in Israel."), text("אפשר גם לתרגל שאלה אמריקאית בחינם או להזמין חבר לדו־קרב של חמש שאלות. בוחרים חבר מהרשימה או שולחים קישור. עלות הכניסה מוצגת מראש והשעון מתחיל כששני השחקנים מוכנים.", "You can also try a free multiple-choice question or challenge a friend to a five-question duel. Pick a friend from your list or send an invite link. The entry cost is shown up front, and the clock starts when both players are ready.")],
+    choices: [action("לחידה היומית", "Play the Daily Puzzle", { type: "navigate", destination: "dailyPuzzle" }), action("לכל המשחקים", "All games", { type: "navigate", destination: "games" }), topic("להוסיף חבר לפי קוד", "Add a friend by code", "friends"), topic("לעיצוב הדמות שלי", "Customize my character", "shop")],
   },
   friends: {
     title: text("מוסיפים חבר לפי הקוד שלו", "Add a friend using their code"),

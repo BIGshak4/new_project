@@ -38,6 +38,7 @@ from app.api.v1 import (
     avatars,
     billing,
     coins,
+    daily_puzzle,
     duels,
     fundamentals,
     identity,
@@ -111,6 +112,7 @@ app.include_router(billing.router)
 app.include_router(fundamentals.router)
 app.include_router(coins.router)
 app.include_router(duels.router)
+app.include_router(daily_puzzle.router)
 app.include_router(avatars.router)
 app.include_router(identity.router)
 

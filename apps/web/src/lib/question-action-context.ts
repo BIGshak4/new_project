@@ -1,6 +1,6 @@
 import { supportOpenRequest, type SupportLanguage, type SupportOpenDetail } from "./support-report";
 
-export type QuestionActionContext = "practice" | "interview" | "library" | "quick" | "quiz";
+export type QuestionActionContext = "practice" | "interview" | "library" | "quick" | "quiz" | "daily";
 export type QuestionActionTarget = { questionKey: string; questionTitle?: string; context: QuestionActionContext; variant?: number | null };
 export type QuestionSupportAction = "problem" | "unclear" | "company";
 
@@ -13,6 +13,7 @@ export function questionSupportRequest(target: QuestionActionTarget, action: Que
   const title = target.questionTitle?.trim().slice(0, 240);
   const kind = target.context === "quick" ? (he ? "שאלה קצרה" : "Short question")
     : target.context === "quiz" ? (he ? "שאלה אמריקאית" : "Multiple-choice question")
+    : target.context === "daily" ? (he ? "החידה היומית" : "Daily puzzle")
     : target.context === "interview" ? (he ? "ראיון מדומה" : "Mock interview")
     : (he ? "שאלת תרגול" : "Practice question");
   const lines = [

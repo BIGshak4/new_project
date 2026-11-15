@@ -123,7 +123,7 @@ export const memberTourSteps: readonly MemberTourStep[] = [
   {
     id: "games", chapter: bi("משחקים", "Games"), href: "/games",
     title: bi("ננסה שאלה כמו במשחק", "Try a question as it appears in a game"),
-    body: bi("בדו־קרב שני שחקנים עונים על אותן חמש שאלות אמריקאיות. קודם קובע מספר התשובות הנכונות, ואחריו זמן המענה. כאן אפשר לנסות שאלה אמיתית מהמאגר בלי להמתין לחבר ובלי להוציא מטבעות.", "In a duel, two players answer the same five multiple-choice questions. Correct answers decide first, then answering time. Here you can try a real bank question without waiting for a friend or spending coins."),
+    body: bi("בכל יום מחכה כאן גם חידת ראיון בניסוח חלופי. בתחנה הזאת נתנסה בשאלה אמריקאית מהמאגר של הדו־קרב. אפשר לענות לבד, לראות את ההסבר ולהכיר את המשחק לפני שמזמינים חבר.", "There’s also a daily interview puzzle in an alternate wording. At this stop, try a multiple-choice question from the duel bank. Answer on your own and read the explanation before challenging a friend."),
     tasks: [
       { id: "start", text: bi("פתחו את ההתנסות כדי לקבל שאלה מהמאגר שמשמש במשחקים.", "Start the practice round to receive a question from the games question bank."), selector: control("game-practice-start"), optional: true },
       { id: "answer", text: bi("בחרו אחת מארבע התשובות ולחצו על ״בדיקת התשובה״ כדי לראות את ההסבר. במשחק מול חבר, לחיצה על תשובה שולחת אותה מיד.", "Choose one of the four answers, then select Check answer to read the explanation. In a game against a friend, selecting an answer submits it immediately."), selector: `${control("game-practice")}:not(:has(${control("game-practice-choice")}:checked)) ${control("game-practice-choice")}, ${control("game-practice-check")}:not(:disabled)`, event: "game-practice-answered" },
