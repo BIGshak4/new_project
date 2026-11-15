@@ -643,6 +643,27 @@ def batch1115b_source(key):
     return (ROOT / "interview_preparation/solutions" / BATCH1115B_SOURCES[key]).read_text(encoding="utf8")
 
 
+BATCH1115C_SOURCES = {
+    "prep-finite-colored-sampling-grid-validation": "prep_353_sampling_grids.py",
+    "prep-blur-subsample-pyramid-and-row-streaming": "prep_354_image_pyramid.py",
+    "prep-eight-neighbor-plateau-drainage-basins": "prep_355_plateau_basins.py",
+    "prep-top-two-distinct-and-mode": "prep_211_maximum_pair_sum_1115c.py",
+}
+ORACLES.update(runpy.run_path(str(BACKEND / "tests/fixtures/execution_1115c_oracles.py"))["ORACLES"])
+
+
+def build_batch1115c_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1115c_inputs.json").read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1115c_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1115C_SOURCES[key]).read_text(encoding="utf8")
+
+
 def build_batch1114_contracts():
     questions = json.loads((BACKEND / "tests/fixtures/execution_batch1114_inputs.json").read_text(encoding="utf-8"))
     for key, question in questions.items():
@@ -967,6 +988,7 @@ endmodule
     questions.update(build_batch1114_contracts())
     questions.update(build_batch1115_contracts())
     questions.update(build_batch1115b_contracts())
+    questions.update(build_batch1115c_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -1090,6 +1112,16 @@ def build_smoke():
                  "def delete_interior_result(values, index):\n    return values\n" if entry == "delete_interior_result" else
                  "def returns_to_start_with_turnback(commands):\n    return True\n")
         cases.append({"question_key": key, "language": "python", "correct": batch1115b_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1115c_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = {
+            "colored_grids_valid": "def colored_grids_valid(*args):\n    return True\n",
+            "image_pyramid": "def image_pyramid(image, levels):\n    return [image] * (levels + 1)\n",
+            "basin_sizes": "def basin_sizes(heights):\n    return [sum(map(len, heights))]\n",
+            "maximum_pair_sum": "def maximum_pair_sum(values):\n    x=sorted(set(values), reverse=True)\n    return x[0]+x[1] if len(x)>1 else None\n",
+        }[entry]
+        cases.append({"question_key": key, "language": "python", "correct": batch1115c_source(key),
                       "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
@@ -1635,6 +1667,8 @@ end architecture;
         python[key] = batch1115_source(key)
     for key in BATCH1115B_SOURCES:
         python[key] = batch1115b_source(key)
+    for key in BATCH1115C_SOURCES:
+        python[key] = batch1115c_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

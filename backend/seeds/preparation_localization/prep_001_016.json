@@ -115,7 +115,7 @@
     "verification": {
       "he": {
         "status": "passed",
-        "method": "סימולציה ממצה של כל 256 הקלטים בני שמונת הביטים באמצעות רשימת החיבורים של שבעת המחברים; כל פלט התאים לספירת הביטים המתמטית.",
+        "method": "סימולציה ממצה של כל 256 הקלטים בני שמונת הביטים באמצעות רשימת החיבורים של שבעת המחברים; כל פלט התאים לספירת הביטים המתמטית.\n\nוריאציית שבע סיביות נבדקה מול סכום עצמאי בכל 128 הקלטים גם בסימולטור Icarus.",
         "checked_on": "2026-09-24",
         "batch11_five_input_fa": "הווריאנט עבר 32 וקטורים, 96 משוואות עמודה, שמונה שורות FA וארבע דחיות קלט. מניית חסם תחתון מלאה בדקה 56 רשתות FA יחיד ו־6,720 רשתות שני FA, ללא פתרון. Python בלבד; לא HDL או חומרה.",
         "batch1103_three_bit_ha_only": "שמונה קלטים נבדקו מול ספירה עצמאית, ונבדק שהנשא האחרון תמיד 0. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
@@ -123,7 +123,7 @@
       },
       "en": {
         "status": "passed",
-        "method": "Exhaustive simulation of all 256 eight-bit inputs using the seven-adder netlist; every output matched the mathematical bit count.",
+        "method": "Exhaustive simulation of all 256 eight-bit inputs using the seven-adder netlist; every output matched the mathematical bit count.\n\nThe seven-bit variant was checked against an independent integer sum on all 128 vectors in Icarus.",
         "checked_on": "2026-09-24",
         "batch11_five_input_fa": "Variant passed 32 vectors, 96 column equations, eight FA rows and four rejected inputs. Complete lower-bound enumeration found no solution among 56 one-FA/6,720 two-FA networks. Python only, not HDL or hardware.",
         "batch1103_three_bit_ha_only": "All eight inputs were compared with an independent count, including zero final carry. HDL/simulation evidence is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed.",

@@ -255,3 +255,5 @@ def mode_with_count(values):
 - [solutions/prep_211_top_two_and_mode.py](../solutions/prep_211_top_two_and_mode.py)
 - [diagrams/prep-211-algorithms-batch20-he.png](../diagrams/prep-211-algorithms-batch20-he.png)
 - [diagrams/prep-211-algorithms-batch20-en.png](../diagrams/prep-211-algorithms-batch20-en.png)
+
+[הרחבה שנקלטה ב־15.11.2026 / November 15 addendum](prep-211-max-pair-sum-1115c-addendum.md)

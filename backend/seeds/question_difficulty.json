@@ -187,7 +187,7 @@
   "prep-all-distinct-string-permutations": {
     "difficulty": 5,
     "reason": "Generate permutations with multiplicity counts and restored state; relate work and space to distinct outputs.",
-    "content_sha256": "39f8f1353755b5b21d855ec408a68243d5e616d1e6052f26db6d11d11884da74"
+    "content_sha256": "25fa6d92ecdf8e69b4a2cab61fc17eeda7bb54dd4a7d1eaf380124c51a0a7e6b"
   },
   "prep-all-unique-value-triples-target-sum": {
     "difficulty": 6,
@@ -561,8 +561,8 @@
   },
   "prep-eight-bit-popcount-adders": {
     "difficulty": 5,
-    "reason": "The adder network must preserve the distinct weights of sums and carries through several compression stages.",
-    "content_sha256": "432b7ac2631be168a71be7a0d34c906892b4e64325cf1af73c1be1645ef1b3ff"
+    "reason": "The full question spans several restricted-adder libraries, signal weights, output widths and finite verification; the new seven-bit clause preserves the existing reasoning difficulty.",
+    "content_sha256": "6a4dd7f571419d33b846bc9829b42805ab29cddebc56eb3f8d676b91fe5042a1"
   },
   "prep-eight-bit-times-six-full-adders": {
     "difficulty": 4,
@@ -1367,7 +1367,7 @@
   "prep-stock-one-transaction-best-days": {
     "difficulty": 5,
     "reason": "Maintain the earliest earlier minimum and tie-breaking invariant without reversing buy/sell time order.",
-    "content_sha256": "48dff8a43b1733bb4545c2e91bcb1613f83d22b4d15fa401b99c04a3e2a158be"
+    "content_sha256": "5e5ce34e556090af4b359ce24eaa93d6058b8aa8787aee7a1fa57f1ac2dd882b"
   },
   "prep-streaming-csv-parser-without-library": {
     "difficulty": 7,
@@ -1501,8 +1501,8 @@
   },
   "prep-top-two-distinct-and-mode": {
     "difficulty": 5,
-    "reason": "Maintain counts when top ranks shift and use separate frequency state with explicit tie rules for the mode.",
-    "content_sha256": "2950736ba72193119091d2f741e2138692d316c738f1bd1c590f051c11b64863"
+    "reason": "Maintain distinct-rank counts and mode, and separately preserve the two greatest occurrences in one traversal with explicit duplicate, small-input and overflow contracts.",
+    "content_sha256": "f70a5036b2c4bad0eed5179e8610f0cb1c8877cd80c4fb9884ec354add60aadf"
   },
   "prep-truth-table-minimum-nand-nor": {
     "difficulty": 8,
@@ -1903,5 +1903,35 @@
     "difficulty": 5,
     "reason": "Requires distinguishing physical connectivity, analysis coverage and report selection, with evidence-based causal diagnosis.",
     "content_sha256": "b530bcc73e09b8dca5ed11c2a3c04d9caf010f8a23856f1c795454e0baf773b9"
+  },
+  "prep-finite-colored-sampling-grid-validation": {
+    "difficulty": 7,
+    "reason": "Requires exact finite-grid geometry and a bounded arithmetic-progression intersection argument; coincident samples must not hide other forbidden near pairs.",
+    "content_sha256": "a5ef9dd53b7925a2d1e3b6d22858679bc7cc10b90f3ad2fd4014370631b7fcdf"
+  },
+  "prep-blur-subsample-pyramid-and-row-streaming": {
+    "difficulty": 7,
+    "reason": "Combines an exact boundary/rounding contract, level dimensions, separable or fused filtering, and a multilevel streaming pipeline with end-of-frame flushing.",
+    "content_sha256": "c917cf4d0b101348232438b856a338cdeb4dd19a9bbd327bba0a76d7d9a644b7"
+  },
+  "prep-eight-neighbor-plateau-drainage-basins": {
+    "difficulty": 7,
+    "reason": "Requires resolving equal-height ambiguity, component condensation, deterministic outlets and a terminating drainage forest with nearly linear aggregation.",
+    "content_sha256": "b20942dbeaa221d857543ecf8528e639499c5a7a42e82c9b7335f0f707a753d3"
+  },
+  "prep-parking-occupancy-fifty-spaces": {
+    "difficulty": 6,
+    "reason": "The full contract combines sensing assumptions, bounded counting, simultaneous boundary events, exact decoding and a state-distinguishability argument.",
+    "content_sha256": "c04af4cd8c23ec65c5571f9a2fe97fe640ce13b2f90a0c849f8d2088ec662fab"
+  },
+  "prep-middle-inverter-sizing-chain-delay": {
+    "difficulty": 6,
+    "reason": "Requires a loading-versus-drive model, optimization under fixed neighboring cells, separate symmetric/asymmetric cases and explicit physical-model limits.",
+    "content_sha256": "4f8b7d6f7055fdd93fc8bc75c1d91065cb0085038cd73bc27386013e4ea2c41d"
+  },
+  "prep-fermi-israel-fuel-stations": {
+    "difficulty": 4,
+    "reason": "Break demand and service capacity into quantities with compatible units, compute an order of magnitude and test sensitivity to the dominant assumptions.",
+    "content_sha256": "452ba971fcd6bd474a62cbc19ec94ab1bcfa31160811ab57f5a17733ea7ede8c"
   }
 }

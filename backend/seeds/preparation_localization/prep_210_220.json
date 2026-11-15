@@ -75,29 +75,33 @@
     "assumptions": {
       "he": [
         "קלט של מספרים שלמים, לא ממוין וללא טווח ידוע; אין לשנותו.",
-        "שני ערכים גדולים שונים; תוצאה חסרה None; לשכיח בשוויון בוחרים את הערך הקטן. אין הבטחת רוב."
+        "שני ערכים גדולים שונים; תוצאה חסרה None; לשכיח בשוויון בוחרים את הערך הקטן. אין הבטחת רוב.",
+        "בהרחבה שני מיקומים שונים יכולים להכיל אותו ערך. מספרים טבעיים כוללים אפס; n<2 מחזיר None."
       ],
       "en": [
         "Unsorted integer input of unknown range; preserve the array.",
-        "Two largest distinct values; missing result=None; choose the smallest value in a mode tie. No majority promise."
+        "Two largest distinct values; missing result=None; choose the smallest value in a mode tie. No majority promise.",
+        "The extension allows equal values at two distinct positions. Natural values include zero; n<2 returnsNone."
       ]
     },
     "optimality": {
-      "he": "שני הגדולים: Θ(n) זמן ו־O(1) מקום, עם חסם תחתון של קריאת הקלט. שכיח במפה: O(n) זמן צפוי ו־O(k) רשומות; אין כאן טענה לחסם גרוע של O(n) עבור hash.",
-      "en": "Top two:Θ(n) time and O(1) space, matching an input-inspection lower bound. Map mode:expected O(n) time and O(k) entries; no worst-case linear hashing guarantee is asserted."
+      "he": "שני הגדולים: Θ(n) זמן ו־O(1) מקום, עם חסם תחתון של קריאת הקלט. שכיח במפה: O(n) זמן צפוי ו־O(k) רשומות; אין כאן טענה לחסם גרוע של O(n) עבור hash.\n\nהרחבת סכום הזוג דורשת Θ(n) זמן ו־O(1) מילות עבודה במודל המספרים הרגיל.",
+      "en": "Top two:Θ(n) time and O(1) space, matching an input-inspection lower bound. Map mode:expected O(n) time and O(k) entries; no worst-case linear hashing guarantee is asserted.\n\nThe pair-sum extension uses Θ(n) time and O(1) auxiliary words in the ordinary arithmetic model."
     },
     "verification": {
-      "he": "בוצעו 10,046 בדיקות: 9,841 מערכים ממצים באורך 0..8 מעל שלושה ערכים, 200 דגימות ו־5 גבולות. אורקל מיון וספירה עצמאי בדק ערכים, מונים, תיקו ואי־שינוי קלט.",
-      "en": "10,046 executed cases: 9,841 exhaustive arrays of length 0..8 over three values, 200 samples and 5 boundaries. Independent sorting/counting checked values, frequencies, ties and input preservation."
+      "he": "בוצעו 10,046 בדיקות: 9,841 מערכים ממצים באורך 0..8 מעל שלושה ערכים, 200 דגימות ו־5 גבולות. אורקל מיון וספירה עצמאי בדק ערכים, מונים, תיקו ואי־שינוי קלט.\n\nהרחבת הסכום נבדקה מול מניית זוגות עצמאית, כולל כפילויות, אפס, קלט חד־פעמי וערכים גדולים.",
+      "en": "10,046 executed cases: 9,841 exhaustive arrays of length 0..8 over three values, 200 samples and 5 boundaries. Independent sorting/counting checked values, frequencies, ties and input preservation.\n\nThe sum extension was checked against independent pair enumeration, including duplicates, zero, one-shot input and large values."
     },
     "edge_cases": {
       "he": [
         "מערך ריק; איבר יחיד; כל האיברים שווים; בדיוק שני ערכים שונים.",
-        "מספרים שליליים ואפס; מקסימום חדש אחרי הופעות רבות של הקודם; תיקו בין שכיחים; מספרים גדולים מאוד."
+        "מספרים שליליים ואפס; מקסימום חדש אחרי הופעות רבות של הקודם; תיקו בין שכיחים; מספרים גדולים מאוד.",
+        "[5,5] מחזיר 10. קלט ריק או יחיד מחזיר None. יש להרחיב רוחב סכום במימוש קבוע־רוחב."
       ],
       "en": [
         "Empty input; one element; all values equal; exactly two distinct values.",
-        "Negatives and zero; a new maximum after many old-maximum repeats; mode ties; very wide integers."
+        "Negatives and zero; a new maximum after many old-maximum repeats; mode ties; very wide integers.",
+        "[5,5] returns 10. Empty or singleton input returnsNone. Fixed-width arithmetic needs sufficient sum width."
       ]
     },
     "common_mistakes": {
@@ -105,38 +109,42 @@
         "להחזיר את אותו מקסימום בשני המקומות.",
         "לאבד את המונה כשהמקסימום הקודם עובר למקום שני.",
         "לאתחל מקסימום לאפס ולשבור מערך שלילי.",
-        "להניח טווח קטן למערך ספירות; לבלבל שכיח עם רוב Boyer–Moore; למיין את המקור למרות איסור שינוי."
+        "להניח טווח קטן למערך ספירות; לבלבל שכיח עם רוב Boyer–Moore; למיין את המקור למרות איסור שינוי.",
+        "דילוג על העותק השני של ערך מקסימלי מפספס זוג חוקי בהרחבת הסכום."
       ],
       "en": [
         "Returning the same maximum twice.",
         "Losing the count when promoting the previous maximum to second.",
         "Initializing a maximum to zero and failing on negative arrays.",
-        "Assuming a small range for direct counts; confusing a mode with a Boyer–Moore majority; sorting the original despite input preservation."
+        "Assuming a small range for direct counts; confusing a mode with a Boyer–Moore majority; sorting the original despite input preservation.",
+        "Discarding a second occurrence of the maximum can miss a legal optimal pair."
       ]
     },
     "interview_answer": {
-      "he": "שני ערכים שונים ומונים מספיקים לשני הגדולים במעבר יחיד. לשכיח צריך תדירויות לכל הערכים במפה; בתיקו אבחר את הקטן. אציין תוצאות חסרות ותוחלת hash.",
-      "en": "Two distinct candidates and counts suffice for the top two in one pass. A general mode needs frequencies for all values in a map; choose the smaller value in a tie. State missing results and expected hash costs."
+      "he": "שני ערכים שונים ומונים מספיקים לשני הגדולים במעבר יחיד. לשכיח צריך תדירויות לכל הערכים במפה; בתיקו אבחר את הקטן. אציין תוצאות חסרות ותוחלת hash.\n\nלהרחבת הסכום שומרים שתי הופעות גדולות, עם כפילויות, ומחברים בסיום.",
+      "en": "Two distinct candidates and counts suffice for the top two in one pass. A general mode needs frequencies for all values in a map; choose the smaller value in a tie. State missing results and expected hash costs.\n\nFor the sum extension retain the two greatest occurrences, including duplicates, then add them."
     },
     "source_ambiguities": {
       "he": [
         "המקור אינו מגדיר אם “שני הגדולים” שונים, מה קורה במערך ריק או בשוויון שכיחים. אלו הגדרות נוספות מפורשות.",
-        "המקור אינו מתיר שינוי במפורש ואינו מגביל טווח; נבחר חוזה משמר־קלט ללא מערך תדירויות ישיר."
+        "המקור אינו מתיר שינוי במפורש ואינו מגביל טווח; נבחר חוזה משמר־קלט ללא מערך תדירויות ישיר.",
+        "במקור החדש נוסח הסכום דורש זוג איברים, ולכן נבחרו מיקומים שונים עם ערכים שיכולים להיות שווים. אין בו דרישת סמיכות."
       ],
       "en": [
         "Distinctness, empty arrays and mode ties are unspecified in the source and explicitly completed editorially.",
-        "The source does not explicitly allow mutation or bound the range; the edited contract preserves input and avoids direct-address counting."
+        "The source does not explicitly allow mutation or bound the range; the edited contract preserves input and avoids direct-address counting.",
+        "The added sum source asks for a pair of elements, completed as distinct positions whose values may coincide; it imposes no adjacency requirement."
       ]
     },
     "solution_extensions": {
       "he": {
-        "question": "אם מובטח שערך אחד מופיע יותר ממחצית הפעמים, האם אפשר פחות זיכרון?",
-        "direction": "Boyer–Moore שומר מועמד ומאזן ביטולים ב־O(1) מקום. אם ההבטחה אינה אמינה, מעבר שני מאמת רוב; הוא לא מוצא שכיח כללי כשאין רוב.",
+        "question": "אם מובטח שערך אחד מופיע יותר ממחצית הפעמים, האם אפשר פחות זיכרון?\n\nבהרחבת הסכום, איך מחזירים גם את המיקומים?",
+        "direction": "Boyer–Moore שומר מועמד ומאזן ביטולים ב־O(1) מקום. אם ההבטחה אינה אמינה, מעבר שני מאמת רוב; הוא לא מוצא שכיח כללי כשאין רוב.\n\nשומרים ערך ואינדקס בכל אחד משני המקומות ומגדירים הכרעה בשוויון.",
         "integration": "מוכן בתוכן; לא מחובר לתור המשך אינטראקטיבי."
       },
       "en": {
-        "question": "Can space be reduced if one value is promised to occur more than half the time?",
-        "direction": "Boyer–Moore stores one candidate and cancellation balance in O(1) space. If the promise is uncertain, verify in a second pass; absence of a majority does not solve the general mode problem.",
+        "question": "Can space be reduced if one value is promised to occur more than half the time?\n\nIn the sum extension, how can the positions also be returned?",
+        "direction": "Boyer–Moore stores one candidate and cancellation balance in O(1) space. If the promise is uncertain, verify in a second pass; absence of a majority does not solve the general mode problem.\n\nRetain a value and index for each slot, with an explicit tie policy.",
         "integration": "Prepared in content; not connected to an interactive follow-up queue."
       }
     }

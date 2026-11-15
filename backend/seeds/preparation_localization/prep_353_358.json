@@ -1,0 +1,418 @@
+{
+  "PREP-353": {
+    "assumptions": {
+      "he": [
+        "תחום פיקסלים חצי-פתוח, קלט שלם, רווחים חיוביים ומרחק אוקלידי בין צבעים בלבד."
+      ],
+      "en": [
+        "Half-open pixel bounds, integer parameters, positive spacings and cross-color Euclidean distance."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "time": "מספר קבוע של חישובי gcd והופכים מודולריים; העלות תלויה במספר הביטים של הפרמטרים.",
+        "space": "מספר קבוע של שלמים מדויקים."
+      },
+      "en": {
+        "time": "A constant number of gcd and modular-inverse calculations; bit cost depends on parameter size.",
+        "space": "A constant number of exact integers."
+      }
+    },
+    "verification": {
+      "he": [
+        "הבדיקות משוות את חיתוך הסדרות ואת שתי הרשתות לאורקל שמייצר נקודות קטנות במפורש, ובודקות גם כמויות ענק ללא הקצאת נקודות."
+      ],
+      "en": [
+        "Checks compare progression and colored-grid decisions with explicitly generated small point sets, then exercise enormous counts without point allocation."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "גריד יחיד, רווח חיובי עם כמות אחת, קצה width−1, קצה width שאסור, חפיפה מלאה, חפיפה המלווה בזוג קרוב, הפרש אלכסוני ומספרי נקודות עצומים."
+      ],
+      "en": [
+        "Singleton grids, positive spacing with count one, the width−1 boundary, the invalid width boundary, coincidence plus a nearby forbidden pair, diagonal offsets and huge point counts."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בדיקת מרחק מינימלי אפס אינה מאשרת את יתר הזוגות. גם תנאי >2 שונה מתנאי ≥2. אין צורך להשוות נקודות מאותו צבע בתנאי ב."
+      ],
+      "en": [
+        "A minimum distance of zero says nothing about other pairs. Strictly greater than 2 differs from at least 2. Part B imposes its extra condition only across colors."
+      ]
+    },
+    "interview_answer": {
+      "he": "בודקים קצוות של כל גריד ואז שוללים את 12 הפרשי הפיקסלים האסורים באמצעות חיתוך סדרות חשבוניות סופיות.",
+      "en": "Validate endpoints, then exclude the twelve forbidden pixel displacements using exact finite-progression intersection."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה ישתנה עבור רדיוס איסור שלם r?",
+          "answer_direction": "מונים את כל הפרשי הסריג שעבורם 0<dx²+dy²≤r² ומפעילים אותו מבחן חיתוך; מספר ההפרשים הוא O(r²).",
+          "principle": "הפרדה בין גאומטריית הסף לייצוג קבוצת הנקודות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does an integer forbidden radius r change the approach?",
+          "answer_direction": "Enumerate all offsets with 0<dx²+dy²≤r² and reuse the same intersection test; there are O(r²) offsets.",
+          "principle": "Separate threshold geometry from the point-set representation."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "השלמה מפורשת: קואורדינטות פיקסלים שלמות בתחום החצי-פתוח [0,width)×[0,height). כל גריד מתואר בשישה מספרים. מרחק הוא אוקלידי, והאילוץ הנוסף חל רק בין צבעים שונים."
+      ],
+      "en": [
+        "Explicit completion: integer pixel coordinates in half-open bounds, six parameters per grid, Euclidean distance and cross-color restrictions only."
+      ]
+    }
+  },
+  "PREP-354": {
+    "assumptions": {
+      "he": [
+        "שכפול שפות, רצפה אחרי הסכום המלא, מופע דגימה (0,0), מידות מעוגלות כלפי מעלה ופלט הכולל את המקור."
+      ],
+      "en": [
+        "Edge replication, one final floor division, subsampling phase (0,0), ceiling dimensions and inclusion of level zero."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "time": "O(HW+levels) כולל קריאת המקור ורמות בגודל 1×1.",
+        "space": "פלט מלא O(HW+levels); מנוע זרימה O(W+levels) נוסף לפלט של הצרכן."
+      },
+      "en": {
+        "time": "O(HW+levels), including reading the source and repeated 1×1 levels.",
+        "space": "Full output O(HW+levels); streaming engine O(W+levels) beyond consumer output."
+      }
+    },
+    "verification": {
+      "he": [
+        "אורקל עצמאי מחשב blur מלא ואחריו subsample. המימוש המאוחד וצינור השורות מושווים אליו על מידות זוגיות ואי-זוגיות, רמות שונות ותמונות קבועות."
+      ],
+      "en": [
+        "An independent oracle builds the complete blur frame and then subsamples it. Fused and streaming implementations are compared with it across even/odd dimensions, level counts and constant images."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "levels=0, תמונת 1×1, שורה יחידה, עמודה יחידה, מידות אי-זוגיות, עיגול בתשיעיות, מסגרת קבועה, צרכן המשנה את עותק השורה."
+      ],
+      "en": [
+        "Zero levels, 1×1, a single row or column, odd dimensions, ninths and floor rounding, a constant frame, and a callback mutating its row copy."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "עיגול אחרי כל מסנן חד-ממדי משנה תוצאות. שכחת finish מאבדת מרכז תחתון במידות אי-זוגיות. איסוף כל הפלט אינו מנוע בעל זיכרון עבודה שורתי בלבד."
+      ],
+      "en": [
+        "Rounding after each separable pass changes results. Omitting finish loses the final even center for odd heights. Collecting all outputs still consumes output-sized memory."
+      ]
+    },
+    "interview_answer": {
+      "he": "מחשבים רק מרכזים שיישמרו, מסכמים תשעה ערכים ומעגלים פעם אחת. בזרם מחזיקים שלוש שורות לכל רמה ומבצעים סיום שפה מלמטה למעלה.",
+      "en": "Compute only retained centers and round once. The streaming pipeline keeps three rows per level and flushes boundary rows from low to high."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה כאשר המצלמה מוסרת שורות במאגר מתחלף שהיא משתמשת בו שוב?",
+          "answer_direction": "יש להעתיק שורה נכנסת לפני שהיצרן משתמש במאגר מחדש, או להגדיר העברת בעלות ברורה.",
+          "principle": "בעלות על זיכרון בצינור זרימה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if a camera reuses its input row buffer?",
+          "answer_direction": "Copy incoming rows before producer reuse, or define explicit ownership transfer.",
+          "principle": "Memory ownership in a streaming pipeline."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר טיפול בשפה, עיגול, מופע דגימה או גדלים אי-זוגיים. נבחרו שכפול שפה, שלמים 0..255, רצפה אחרי סכום תשעת הערכים ודגימה במיקומים הזוגיים החל מאפס."
+      ],
+      "en": [
+        "The source leaves borders, rounding, sampling phase and odd dimensions open. The completed contract replicates edges, uses integer pixels 0..255, floors the complete nine-value sum and retains even positions beginning at zero."
+      ]
+    }
+  },
+  "PREP-355": {
+    "assumptions": {
+      "he": [
+        "משטחי גובה שווה קשירים בשמונה שכנים, יציאה נמוכה לפי גובה ואז מיקום, וללא תאים חיצוניים."
+      ],
+      "en": [
+        "Equal-height eight-connected plateaus, lower outlets chosen by altitude then location, and no outside cells."
+      ]
+    },
+    "optimality": {
+      "he": {
+        "time": "O(N α(N)+B log B) עבור N תאים ו־B אגנים.",
+        "space": "O(N)."
+      },
+      "en": {
+        "time": "O(N α(N)+B log B) for N cells and B basins.",
+        "space": "O(N)."
+      }
+    },
+    "verification": {
+      "he": [
+        "אורקל עצמאי משתמש בחיפוש ברוחב לרכיבי הגובה ובהליכה פשוטה לכל תא, ללא union-find. הוא משווה גדלים ותוויות שיוך על תחומים קטנים ודוגמאות שפה."
+      ],
+      "en": [
+        "An independent oracle uses breadth-first components and plain per-cell destination walks without union-find. It compares basin sizes and grouping on small exhaustive inputs and edge examples."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "תא אחד, מטריצה שטוחה, מגע אלכסוני בלבד, שתי שקיעות שוות גובה, שבירת שוויון בין שכנים, גבהים שליליים ושורה או עמודה יחידה."
+      ],
+      "en": [
+        "A singleton, a flat frame, diagonal-only contact, equal-height distinct sinks, tied boundary outlets, negative altitudes and a single row or column."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "זרימה לשכן שווה ללא טיפול ברכיב עלולה להיתקע במחזור. צמצום לשכנות ארבעה כיוונים משנה את המשטחים. גודל השקיעה אינו בהכרח גודל כל האגן."
+      ],
+      "en": [
+        "Flowing to equal neighbors without component handling can create cycles. Four-neighbor connectivity changes the plateau definition. A sink plateau’s size may differ from its complete basin size."
+      ]
+    },
+    "interview_answer": {
+      "he": "מאחדים משטחים שווי גובה, בוחרים לכל משטח יציאה נמוכה דטרמיניסטית, מוצאים יעד שקיעה לכל רכיב ומונים את התאים לפי היעד.",
+      "en": "Condense equal plateaus, choose one deterministic lower outlet, compress destinations and aggregate cell counts at sinks."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך תייצגו מצב שבו מים ממשטח מתפצלים לכמה מוצאים?",
+          "answer_direction": "גרף עם כמה קשתות ושיעורי זרימה דורש מודל שונה של חלוקת מסה; כבר אין שיוך יחיד של תא לאגן בלי כלל נוסף.",
+          "principle": "תלות התשובה בחוזה הפיזיקלי או הבדיד."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would splitting plateau water among several outlets change the model?",
+          "answer_direction": "Multiple edges with flow fractions require a mass-splitting model; a unique cell-to-basin assignment needs an additional convention.",
+          "principle": "Answers depend on the discrete or physical flow contract."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור משלב הגדרה של מינימום מקומי חמור עם דוגמאות הכוללות גבהים שווים. נבחרו איחוד משטחים קשירים, יציאה נמוכה לפי גובה ומיקום ושקיעה למשטח ללא יציאה. הכיתוב size 4 אינו משמש מפרט של פלט אגנים."
+      ],
+      "en": [
+        "The source strict-local-minimum rule and equal-height examples leave plateau flow unspecified. Chosen completion condenses each equal-height eight-connected plateau, selects its lowest strictly lower boundary neighbor by (height,row,column), and treats a plateau with no lower neighbor as a sink. The isolated source label size 4 is not adopted as an output specification."
+      ]
+    }
+  },
+  "PREP-356": {
+    "assumptions": {
+      "he": [
+        "תפוסה התחלתית אפס; קיבולת 50; שתי בקשות סינכרוניות לכל היותר אחת לכל נתיב בכל מחזור.",
+        "אישור חצייה הוא אטומי במודל. הממשק הפיזי מחויב להשלים רק בקשות שאושרו."
+      ],
+      "en": [
+        "Initial occupancy zero, capacity 50, at most one synchronous request per lane per cycle.",
+        "A crossing is atomic on acknowledgement in the model. The physical interface must implement only acknowledged events."
+      ]
+    },
+    "optimality": {
+      "he": "51 מצבי תפוסה נבדלים דורשים לפחות שישה ביטי מצב. מספר חיישנים פיזי תלוי בגאומטריית הנתיבים ובחוזה האירועים.",
+      "en": "The 51 distinguishable occupancies require at least six state bits. Physical sensor count depends on lane geometry and the event contract."
+    },
+    "verification": {
+      "he": [
+        "כל 204 המעברים החוקיים, 52 מעברי התאוששות ו־256 צירופי איפוס נבדקים במודל וב־RTL."
+      ],
+      "en": [
+        "All 204 legal-state transitions, 52 recovery transitions and 256 reset combinations are checked in the model and RTL."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "ריק, מלא, שתי בקשות יחד, כניסה ל־50, יציאה מאפס וקוד מצב לא חוקי."
+      ],
+      "en": [
+        "Empty, full, simultaneous requests, entry at 50, exit at zero and invalid state codes."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "גלישה של מונה בן שישה ביטים, פענוח 48 במקום 50 או חיבור פולסי חיישן גולמיים ישירות לשעון."
+      ],
+      "en": [
+        "Allowing six-bit wraparound, decoding 48 instead of 50, or using raw sensor pulses as a clock."
+      ]
+    },
+    "interview_answer": {
+      "he": "שני ערוצי אירועים לשני נתיבים חד־כיווניים, מונה חסום 0..50 בן שישה ביטים ופענוח שוויון ל־110010. מגדירים במפורש את המקרה של כניסה ויציאה יחד.",
+      "en": "Use two event channels for separate one-way lanes, a bounded six-bit 0..50 counter and exact 110010 decoding. Define simultaneous entry/exit behavior explicitly."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר גאומטריית חיישנים, סינכרון, איפוס או מדיניות גבולות. אלה הושלמו בנוסח."
+      ],
+      "en": [
+        "The source omits sensor geometry, synchronization, reset and boundary policy; the exercise specifies these completions."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם חציית רכב נמשכת כמה מחזורים?",
+          "direction": "מפרידים אישור כניסה, מקום שמור ואישור סיום, ומגדירים timeout וביטול.",
+          "tests": "הבחנה בין בקשה, פעולה פיזית ואירוע שנספר."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if a crossing lasts several cycles?",
+          "direction": "Separate admission, reserved capacity and completion, then define timeout/cancellation.",
+          "tests": "Distinguishing a request, physical action and a counted event."
+        }
+      ]
+    }
+  },
+  "PREP-357": {
+    "assumptions": {
+      "he": [
+        "שלושה שלבים קבועים, שינוי רוחב האמצעי בלבד, L ו־VDD קבועים. מודל התנגדות הפוכה לגודל וקיבול יחסי לגודל."
+      ],
+      "en": [
+        "Three fixed stages, middle-width scaling only, fixed L and VDD, inverse-size resistance and proportional-size capacitance."
+      ]
+    },
+    "optimality": {
+      "he": "D קמורה ב־s>0. מינימום המודל מתקבל ב־√(B/A); כאשר s≥1 בלבד, המינימום הוא max(1,√(B/A)).",
+      "en": "D is convex for positive s, with model minimum √(B/A). With the restriction s≥1, use max(1,√(B/A))."
+    },
+    "verification": {
+      "he": [
+        "סוויפ פרמטרים, חסם AM–GM ונגזרת נומרית משווים למינימום האנליטי. לא הורץ סימולטור טרנזיסטורים."
+      ],
+      "en": [
+        "Parameter sweeps, the AM–GM bound and numerical derivatives are compared with the analytic optimum. No transistor simulator was run."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "A=B, B>A, B<A, הגבלת הגדלה בלבד וגודל גדול מאוד."
+      ],
+      "en": [
+        "A=B, B>A, B<A, upsizing-only restriction and very large scale."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להתייחס רק לזרם ההנעה של האמצעי ולהשמיט את קיבול הכניסה שהוא מעמיס על הראשון."
+      ],
+      "en": [
+        "Considering only the middle drive strength and omitting its input-capacitance load on the first cell."
+      ]
+    },
+    "interview_answer": {
+      "he": "השינוי פועל בשני כיוונים. הראשון נטען יותר, האמצעי מניע מהר יותר. במודל A·s+B/s+C השיפור תלוי במיקום ביחס ל־√(B/A); בשרשרת סימטרית בגודל יחידה, הגדלת האמצעי לבדה מאטה.",
+      "en": "There are competing effects: more load on the first cell and stronger middle drive. In A·s+B/s+C the outcome depends on √(B/A); with symmetric unit sizing, enlarging only the middle slows the chain."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מוסר עומסים, תהליך או קוטביות מעבר. המודל והמספרים נוספו במפורש."
+      ],
+      "en": [
+        "The source gives no load, process or transition polarity. The model and numerical example are explicit additions."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך בוחרים בין גדלים בדידים מהספרייה?",
+          "direction": "מחשבים את המודל לכל הגודל הזמין משני צדי s* ומשווים, ואז מאמתים במודלי התאים האמיתיים.",
+          "tests": "אופטימום רציף לעומת בחירה בדידה ומאופיינת."
+        }
+      ],
+      "en": [
+        {
+          "question": "How do discrete library sizes change the choice?",
+          "direction": "Evaluate available sizes on both sides of s*, then validate using characterized cells.",
+          "tests": "Continuous optimization versus a discrete characterized choice."
+        }
+      ]
+    }
+  },
+  "PREP-358": {
+    "assumptions": {
+      "he": [
+        "כל מספר בדוגמה הוא הנחת עבודה. תחנה היא אתר קמעונאי ציבורי אחד, והביקוש והקיבולת נמדדים באותן יחידות זמן וכמות."
+      ],
+      "en": [
+        "Every numerical input is a teaching assumption. One station is one public retail site, and numerator and denominator use matching volume and time units."
+      ]
+    },
+    "optimality": {
+      "he": "החשבון כולל מספר קבוע של גורמים. זהו אומדן מבוסס הנחות; אופטימליות אלגוריתמית או דיוק סטטיסטי אינם היעד.",
+      "en": "A constant number of factors is evaluated. This is an assumption-based estimate; algorithmic optimality and calibrated statistical accuracy are not the objective."
+    },
+    "verification": {
+      "he": [
+        "החשבון נבדק באמצעות שברים מדויקים בשני מסלולי יחידות, במונוטוניות ובקצוות כל תרחישי הטווח. זו בדיקת המודל והאריתמטיקה, ללא ספירת אתרים אמיתיים."
+      ],
+      "en": [
+        "Exact fractions checked both unit routes, monotonicity and every corner of the chosen scenario envelope. These checks validate arithmetic and the selected model, not a real-world station census."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אתר עם שש משאבות הוא עדיין תחנה אחת. אם מכלילים מתקני תדלוק פרטיים או רק תחנות ציבוריות, יש לשנות את ההגדרה ואת קיבולת השירות המתאימה."
+      ],
+      "en": [
+        "A site with six pumps is one station. Including private installations changes the population being estimated and requires matching capacity assumptions."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הצגת תוצאת חלוקה מדויקת כאילו היא מספר התחנות שנמדד, או חלוקת כלי רכב ביום בליטרים לתחנה ביום בלי להמיר יחידות."
+      ],
+      "en": [
+        "Treating the exact quotient as an observed count, or dividing vehicles per day by litres per station per day without a unit conversion."
+      ]
+    },
+    "interview_answer": {
+      "he": "הגדירו אתר ציבורי אחד, חשבו ביקוש יומי בליטרים וחלקו בתפוקה היומית לתחנה. בהנחות הדוגמה מתקבל כ־1,600 עם טווח תרחישים 750–2,500.",
+      "en": "Define one public site, estimate daily litres demanded and divide by daily litres served per station. The teaching assumptions give roughly 1,600, with a selected scenario range of 750–2,500."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איזו הנחה כדאי לבדוק תחילה כדי לצמצם את הטווח?",
+          "answer_direction": "זהו אילו גורמים נעים בטווח היחסי הגדול ביותר. אספו נתון תואם להגדרה על התפוקה האפקטיבית הממוצעת, ובדקו גם את סך הביקוש.",
+          "principle": "ניתוח רגישות מכוון את איסוף המידע."
+        }
+      ],
+      "en": [
+        {
+          "question": "Which assumption should be checked first to narrow the estimate?",
+          "answer_direction": "Identify factors with the widest relative ranges. Obtain definition-matched average effective throughput and validate total demand.",
+          "principle": "Sensitivity guides information gathering."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "התרגיל מבקש אומדן פרמי. כל המספרים המספריים בפתרון הם הנחות לימודיות ואינם ספירת תחנות או נתונים עדכניים על ישראל."
+      ],
+      "en": [
+        "This is a Fermi estimation exercise. Every numerical input in the example solution is an instructional assumption, not a station census or current Israeli statistic."
+      ]
+    }
+  }
+}

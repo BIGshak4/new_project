@@ -5,6 +5,8 @@ import json
 from functools import cache
 from pathlib import Path
 
+from tests.preparation_november15c_history import before_nov15c
+
 
 def digest(value):
     return hashlib.sha256(json.dumps(
@@ -18,6 +20,7 @@ def projections():
 
 
 def before_nov15b(key, actual):
+    actual = before_nov15c(key, actual)
     record = projections().get(key)
     if record is None:
         return actual

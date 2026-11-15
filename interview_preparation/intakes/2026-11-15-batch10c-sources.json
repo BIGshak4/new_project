@@ -1,0 +1,205 @@
+{
+  "received_on": "2026-11-15",
+  "screenshot_count": 10,
+  "source_count": 10,
+  "new_question_count": 6,
+  "technical_extension_count": 2,
+  "provenance_only_count": 2,
+  "affected_question_count": 10,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-01.png"
+      ],
+      "sha256": "d9320205beed9528088a1975764402a7cbd78350bda67311a0506f0f608a46ce",
+      "original_prompt": "נתון מערך בעל אורך n שבו האיברים מספרים טבעיים. יש לכתוב פונקציה המחזירה את הסכום הגדול ביותר של זוג מספרים במערך. יש לתת פתרון שרץ רק פעם אחת על המערך.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-211"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-02.png"
+      ],
+      "sha256": "a6fe8c7b766aab11498713db86c443d0a9f5475138ea654c91d4da61edfb39cc",
+      "original_prompt": "ממש מערכת הסופרת 7 סיביות ומוציאה את כמות ה־1. יש להשתמש רק ב-Full Adder.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-001"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-03.png"
+      ],
+      "sha256": "5f1885de55966bda1aaea372e27ad09e6c6ea895bb5ed3081ca3202441393a63",
+      "original_prompt": "כמה תחנות דלק יש במדינת ישראל?",
+      "reported_companies": [
+        "Rafael"
+      ],
+      "source_tags": [
+        "logic",
+        "rafael"
+      ],
+      "question_ids": [
+        "PREP-358"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-04.png"
+      ],
+      "sha256": "e559b738db3ceb8760b0374753af654a1944a1d268eb01a543e2ac6938ae1cd1",
+      "original_prompt": "1. פרמוטציות של 3 אותיות. 2. פרמוטציות של N אותיות בצורה רקורסיבית.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-162"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-05.png"
+      ],
+      "sha256": "6a671632f061111d7d437b7af4f9f05b5e2502df0d7092c82c279bd67f89c927",
+      "original_prompt": "מקבלים width רוחב תמונה, height גובה תמונה, Xstart ו-Ystart קואורדינטות התחלת הדגימה, Xgap ו-Ygap מרווחים בין נקודות, Xnumdots ו-Ynumdots מספר נקודות בכל ציר. width ו-height מגדירים אזור החל מ-0,0 שבו מותר למקם נקודות; ששת פרמטרי X,Y מגדירים את כל הנקודות בגריד. א. בנה פונקציה שבודקת אם הגריד תקין: יש לפחות נקודה אחת, אין נקודות מחוץ לתמונה והמרווחים חיוביים ממש; החזר TRUE או FALSE. ב. הגריד הראשון דוגם ירוק, ונוסף גריד אדום עם עוד שישה פרמטרים, 2+6+6 פרמטרים בסך הכול. בדוק מחדש בתנאי שהמרחק בין נקודות מגרידים שונים חייב להיות גדול מ-2 או שווה לאפס בדיוק. דוגמה: אדום וירוק שניהם ב-0,0 תקין.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "software",
+        "apple",
+        "verification"
+      ],
+      "question_ids": [
+        "PREP-353"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-06.png"
+      ],
+      "sha256": "4f89deb71d14e721fb11d54935eacd463336080d95f73562413307c328fdf0a7",
+      "original_prompt": "מקבלים תמונה כמטריצה ומספר levels. יש להחזיר מערך של תמונות מכווצות: תמונה 0 המקורית; בכל תמונה נוספת מבצעים blur כך שכל פיקסל הוא הממוצע שלו ושל שמונת שכניו, ואז subsample פי 2, כל פיקסל שני גם לאורך וגם לרוחב. דוגמה תמונת 8x8 ו-levels=2 מחזירה 8x8 מקורית, 4x4 אחרי טשטוש ו-SS, 2x2 אחרי טשטוש ו-SS נוסף. המשך: איך לייעל, לא בהכרח בצמצום לולאות? אם התמונה מתקבלת שורה-שורה, איך לממש גרסה יעילה יותר בזיכרון, כאשר כרגע צריך לשמור את כל התמונה?",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "software",
+        "apple",
+        "verification"
+      ],
+      "question_ids": [
+        "PREP-354"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-07.png"
+      ],
+      "sha256": "14e416eaa42ded0a8ea463c41841461f3f2a02b3e59468cec97e9925a4d44ac4",
+      "original_prompt": "ממש מכונת מצבים של חניון רכבים: רכבים נכנסים ויוצאים, וב-50 החניון מלא. א. כמה חיישנים צריך? ב. מימוש המכונה. ג. איך לממש שהגעת ל-50?",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-356"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-08.png"
+      ],
+      "sha256": "a9ed0ffd36b4fda3f771fa499b74d607170c569bdd21a3c024bb1a0dd4b7bfbb",
+      "original_prompt": "נתון מערך של ערכים שלמים חיוביים המייצגים מחיר של מוצר מסוים. כתוב קוד שמחזיר את האינדקסים שבהם צריך לקנות ולמכור כדי לקבל רווח מקסימלי.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "verification",
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-066"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-09.png"
+      ],
+      "sha256": "b7b9797976249a2ba1c97c81ce79bab64d2651188f8c9e372e0579f042023144",
+      "original_prompt": "ישנם שלושה מהפכים המשורשרים אחד אחרי השני. מגדילים את ה-sizing של המהפך האמצעי. כיצד ישתנה הטיימינג? #lookingforajob [מצורפים שרטוט לפני ואחרי, שבו המהפך האמצעי מוגדל.]",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-357"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-11-15-batch10c-10.png"
+      ],
+      "sha256": "a1edd6138155ff1ec3a5d74eaa0c64b0e03b2bdbe1dae2c6b1536115833bd1d7",
+      "original_prompt": "A group of farmers has elevation data. Represent the land as a two-dimensional array of altitudes. If a cell's eight neighboring cells all have higher altitudes, call the cell a basin. Otherwise water flows to the neighboring cell with the lowest altitude. Cells that drain to the same sink directly or indirectly are part of the same basin. Examples shown include rows [2,1,1],[7,1,1],[9,6,3] followed by 'size4', and an eight-row, six-column array: [7,7,8,9,9,9],[8,7,7,7,8,8],[7,7,7,8,8,8],[9,9,9,8,8,8],[7,7,7,8,8,8],[5,5,5,5,4,4],[7,6,6,5,5,5],[6,8,8,5,5,5].",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple",
+        "verification"
+      ],
+      "question_ids": [
+        "PREP-355"
+      ],
+      "decision": "new_question"
+    }
+  ]
+}

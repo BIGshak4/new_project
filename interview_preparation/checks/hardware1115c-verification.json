@@ -1,0 +1,20 @@
+{
+  "result": "passed",
+  "python_parking_cases": 512,
+  "exact_fifty_decode_states": 64,
+  "sizing_sweep_points": 12000,
+  "sizing_stationary_derivatives": 75,
+  "native_simulator": "Icarus Verilog 13.0, MSYS2 ucrt64 portable package",
+  "native_compile_exit_code": 0,
+  "native_run_exit_code": 0,
+  "native_stdout": "PASS popcount=128 parking=512\nC:\\Projects\\Job_Run\\intake-20261115c\\interview_preparation\\checks\\hardware1115c_tb.sv:46: $finish called at 1152000 (1ps)",
+  "native_popcount_inputs": 128,
+  "native_parking_cases": 512,
+  "sha256": {
+    "solutions/prep_001_popcount7_faonly1115c.sv": "945bd668355e49de211001630421cc1afa8b8e981c609e2efebf73d7028eae06",
+    "solutions/prep_356_parking_capacity50_1115c.sv": "94ae9469eeef7b25543031c6c97709da5fe1f6d7e2bf033c7839fccc3f21cec9",
+    "checks/hardware1115c_tb.sv": "4bf01ba10da1396c4207d10eb1c3cbb2096e0bdbc67ea5d8df9d6c5c28fa928f",
+    "solutions/hardware1115c_models.py": "4bbb91d562e550ca342b70272461e456a2ec096432eed704fbe7670fb088ffe6"
+  },
+  "scope": "Compiled two-state RTL event checks and first-order RC-model mathematics. No SPICE, synthesis or physical signoff."
+}

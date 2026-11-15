@@ -33,6 +33,7 @@ NEW = {f"PREP-{n}" for n in range(303, 312)}
 NOVEMBER14_ADDITIONS = {f"PREP-{n}" for n in range(312, 330)}
 NOVEMBER15_ADDITIONS = {f"PREP-{n}" for n in range(330, 346)}
 NOVEMBER15B_ADDITIONS = {f"PREP-{n}" for n in range(346, 353)}
+NOVEMBER15C_ADDITIONS = {f"PREP-{n}" for n in range(353, 359)}
 VARIANTS = {"PREP-018", "PREP-022", "PREP-035", "PREP-053", "PREP-132", "PREP-299"}
 SOURCE_ONLY = {"PREP-036", "PREP-037", "PREP-058", "PREP-085", "PREP-096"}
 MAP = (36,303,304,305,85,132,37,306,307,58,22,308,309,53,18,35,310,299,311,96)
@@ -60,9 +61,9 @@ def test_twenty_originals_and_exact_canonical_mapping():
 
 def test_all_301_previous_records_media_translations_and_ratings_remain_bound():
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == archive["question_count"] == 351
+    assert len(archive["questions"]) == archive["question_count"] == 357
     assert {q["id"] for q in archive["questions"]} - BATCH1108B20_BASELINE["records"].keys() == (
-        NEW | NOVEMBER14_ADDITIONS | NOVEMBER15_ADDITIONS | NOVEMBER15B_ADDITIONS
+        NEW | NOVEMBER14_ADDITIONS | NOVEMBER15_ADDITIONS | NOVEMBER15B_ADDITIONS | NOVEMBER15C_ADDITIONS
     )
     assert_pre_batch1108b20_archive(archive)
     assert_pre_batch1108b20_assets(read(SEEDS / "preparation_uploads.json")["files"])
@@ -81,7 +82,7 @@ def test_all_301_previous_records_media_translations_and_ratings_remain_bound():
 def test_current_difficulties_reach_engine_without_exposing_scores_to_learners():
     ratings = read(SEEDS / "question_difficulty.json")
     catalog = load_catalog(SEEDS)
-    assert len(catalog.questions) == len(ratings) == 381
+    assert len(catalog.questions) == len(ratings) == 387
     selected = {q.assets.get("preparation_id"): q for q in catalog.questions.values()
                 if q.assets.get("preparation_id") in NEW | VARIANTS | SOURCE_ONLY}
     assert len(selected) == 20

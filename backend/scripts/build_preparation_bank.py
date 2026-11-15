@@ -111,6 +111,13 @@ PRIMARY = [
     "registers_shifters",
     "debugging_methodology",
     "debugging_methodology",
+    # PREP-353 through PREP-358, in archive order.
+    "arrays_and_search",
+    "arrays_and_search",
+    "arrays_and_search",
+    "fsm_state_tables",
+    "tradeoff_reasoning",
+    "estimation_sanity_checks",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

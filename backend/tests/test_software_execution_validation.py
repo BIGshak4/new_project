@@ -48,10 +48,10 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
     questions = [{"key": q["question_key"]} for q in scope["questions"]]
     budgets, assignments = allocate(questions, positives, maximum=4, minimum=4)
     assert len(questions) == len(assignments) == 66
-    assert len(budgets) == 4 and sum(b["runs"] for b in budgets) == 184
+    assert len(budgets) == 4 and sum(b["runs"] for b in budgets) == 185
     assert all(b["runs"] < 60 and b["attempts"] < 30 for b in budgets)
     jobs = [job for q in questions for job in fixture_plan(q["key"], positives)]
-    assert sum(job["kind"] == "question_suite" for job in jobs) == 57
+    assert sum(job["kind"] == "question_suite" for job in jobs) == 58
     assert sum(job["kind"] == "compile_error_probe" for job in jobs) == 66
     for q in questions:
         planned = fixture_plan(q["key"], positives)
@@ -60,7 +60,7 @@ def test_exact_software_scope_plans_all_suites_and_cpp_checks_with_headroom():
         allocate(questions, positives, maximum=1)
 
 
-def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_120_membership():
+def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_123_membership():
     scope = json.loads((BACKEND / 'tests/fixtures/software_question_scope.json').read_bytes())
     seeds = {q['key']: q for name in ('example_bank.json', 'preparation_bank.json')
              for q in json.loads((BACKEND / 'seeds/questions' / name).read_bytes())}
@@ -105,7 +105,8 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_120
         'prep-c-variadic-arguments-and-promotions', 'prep-two-thread-reusable-generation-barrier',
     }
     november15_second_additions = {"prep-odd-width-centered-star-pyramid", "prep-delete-given-interior-list-node"}
-    assert len(expected) == 120 and november15_second_additions | november15_additions | november14_additions <= expected
+    november15_third_additions = {"prep-finite-colored-sampling-grid-validation", "prep-blur-subsample-pyramid-and-row-streaming", "prep-eight-neighbor-plateau-drainage-basins"}
+    assert len(expected) == 123 and november15_third_additions | november15_second_additions | november15_additions | november14_additions <= expected
     assert november1_endpoint - october_endpoint == {
         'prep-c-linked-list-dictionary-ownership', 'prep-reverse-singly-linked-list-in-place',
         'prep-streaming-csv-parser-without-library', 'prep-networking-basics-and-interview-answer-prompts',
@@ -138,7 +139,7 @@ def test_frozen_66_question_inventory_matches_its_prior_snapshot_and_current_120
         'prep-longest-ones-interval', 'prep-cpp-atoi-style-parser',
         'prep-black-component-bounding-boxes', 'prep-monotone-grid-paths-dp',
     }
-    assert expected - november15_second_additions - november15_additions - november14_additions - november7_night_endpoint == {'prep-remove-all-ascii-spaces', 'prep-java-fixed-capacity-integer-stack', 'prep-fifo-queue-using-two-stacks', 'prep-cursor-list-using-two-stacks', 'prep-exact-integer-division-unit-instructions'}
+    assert expected - november15_third_additions - november15_second_additions - november15_additions - november14_additions - november7_night_endpoint == {'prep-remove-all-ascii-spaces', 'prep-java-fixed-capacity-integer-stack', 'prep-fifo-queue-using-two-stacks', 'prep-cursor-list-using-two-stacks', 'prep-exact-integer-division-unit-instructions'}
     assert october_endpoint - rows.keys() == {
         'prep-merge-k-sorted-linked-lists', 'prep-most-frequent-word-list',
         'prep-ascii-word-anagrams', 'prep-stack-adt-and-call-stack-uses',
