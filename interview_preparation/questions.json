@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_on": "2026-09-24",
-  "question_count": 375,
+  "question_count": 385,
   "audience": "Electrical engineering students preparing for system chip validation interviews",
   "status": "review_seed_not_production_import",
   "notes": [
@@ -6482,7 +6482,8 @@
         "logic",
         "mellanox",
         "hardware",
-        "checkpoint"
+        "checkpoint",
+        "verification"
       ],
       "reported_companies": [
         "Cisco",
@@ -6497,7 +6498,8 @@
         "Google",
         "Mellanox",
         "Check Point",
-        "google"
+        "google",
+        "amazon"
       ],
       "source_company_badge": "מארוול",
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
@@ -6613,6 +6615,12 @@
         {
           "type": "user_supplied_image",
           "path": "sources/2026-11-18-batch31-03.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-08.png",
           "received_on": "2026-11-18",
           "role": "original_question_screenshot"
         }
@@ -8682,7 +8690,7 @@
     {
       "id": "PREP-031",
       "key": "xor-mux-zero-only",
-      "version": 2,
+      "version": 3,
       "created_on": "2026-09-29",
       "category": "hardware",
       "topic": "mux_boolean_synthesis",
@@ -8715,7 +8723,8 @@
       "reported_companies": [
         "NVIDIA",
         "Apple",
-        "Intel"
+        "Intel",
+        "intel"
       ],
       "source_company_badge": "אינטל",
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
@@ -8780,31 +8789,37 @@
             "hardware",
             "intel"
           ]
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-10.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
         }
       ],
       "original_prompt": "ממש XOR בעזרת MUX-ים וערך קבוע '0'.",
       "translations": {
         "he": {
           "title": "מימוש XOR באמצעות מוקסים וקבוע 0 בלבד",
-          "prompt": "ממש XOR בעזרת MUX-ים וערך קבוע '0'.\n\n### מקור נוסף: מרבבים, השהיה ותדר\nא. בנו XOR בעזרת מרבבי MUX 2:1. ב. מהו התדר המרבי אם ההשהיה היא 2 ns? ג. כיצד אפשר להעלות את התדר המרבי?\n\nהמקור הנוסף אינו קובע אילו קבועים ושערים זמינים, למה בדיוק מתייחסות שתי הננו־שניות או מהו ממשק השעון. כדי לקשר לגרסה המקורית נשמרת כאן רשת המרבבים שלה עם קבוע 0 בלבד. נתחו בנפרד: (1) 2 ns הם ההשהיה המרבית של כל הלוגיקה והחיווט בין שני דלגלגים; (2) 2 ns הם ההשהיה של כל מרבב, ובמסלול המגביל עוברים שניים בטור. תנו תחילה גבול אידאלי ללא תקורות שעון, ואחר כך נוסחה הכוללת זמן שעון־למוצא, הכנה, סטיית שעון ואי־ודאות. הניחו אותות בינאריים, דלגלגים על אותה חזית ומסלולים חד־מחזוריים. הסבירו מה ניתן לשנות בלי לשנות פונקציה ומה מחייב הסכמה על השהיה במחזורים. אין כאן נתוני ספריית תאים או תדר פיזי מובטח.",
+          "prompt": "ממש XOR בעזרת MUX-ים וערך קבוע '0'.\n\n### מקור נוסף: מרבבים, השהיה ותדר\nא. בנו XOR בעזרת מרבבי MUX 2:1. ב. מהו התדר המרבי אם ההשהיה היא 2 ns? ג. כיצד אפשר להעלות את התדר המרבי?\n\nהמקור הנוסף אינו קובע אילו קבועים ושערים זמינים, למה בדיוק מתייחסות שתי הננו־שניות או מהו ממשק השעון. כדי לקשר לגרסה המקורית נשמרת כאן רשת המרבבים שלה עם קבוע 0 בלבד. נתחו בנפרד: (1) 2 ns הם ההשהיה המרבית של כל הלוגיקה והחיווט בין שני דלגלגים; (2) 2 ns הם ההשהיה של כל מרבב, ובמסלול המגביל עוברים שניים בטור. תנו תחילה גבול אידאלי ללא תקורות שעון, ואחר כך נוסחה הכוללת זמן שעון־למוצא, הכנה, סטיית שעון ואי־ודאות. הניחו אותות בינאריים, דלגלגים על אותה חזית ומסלולים חד־מחזוריים. הסבירו מה ניתן לשנות בלי לשנות פונקציה ומה מחייב הסכמה על השהיה במחזורים. אין כאן נתוני ספריית תאים או תדר פיזי מובטח.\n\n### הרחבה: XOR עם בורר ושערי היפוך\nכעת מותר להשתמש גם בשער NOT. ממשו XOR של שני ביטים עם בורר 2:1 אחד ומהפך. תנו את חיבורי שלוש רגלי הכניסה לבורר ובדקו את ארבעת המצבים.",
           "hint": "כתוב מה הפלט צריך להיות כאשר אחת הכניסות היא 0 ומה הוא צריך להיות כאשר היא 1. זכור שלרשותך רק קבוע 0, בלי קבוע 1 או שער NOT.",
           "hints": [
             "כתוב מה הפלט צריך להיות כאשר אחת הכניסות היא 0 ומה הוא צריך להיות כאשר היא 1. זכור שלרשותך רק קבוע 0, בלי קבוע 1 או שער NOT.",
             "אין צורך לייצר את השלילה של כניסה בכל המצבים: אפשר לייצר אות שמתנהג כמו השלילה רק כאשר המוקס הבא באמת בוחר בו.",
             "בחר a כסלקטור של המוקס האחרון. כש־a=0 צריך להעביר b. כש־a=1 צריך להעביר NOT b: האם a עצמו יכול לשמש ערך 1 בענף הזה בלבד?"
           ],
-          "reference_solution": "הנחה: MUX רגיל 2:1 בעל מוצא לא מהופך, כניסות הנתונים והסלקטור יכולים להיות a,b,0 או מוצא מוקס קודם. אין קבוע 1, כניסות משלימות, שערים נוספים או משוב. סוג המוקס לא צוין במקור, ולכן יש לציין הנחה זו ולא לטעון למינימום גורף לכל גודל MUX.\n\nהצעה לפתרון: שני מוקסים. החיבורים נכתבים בנפרד מהעברית כדי למנוע היפוך כיווניות:\n\n```text\nConvention: MUX(S, I0, I1) = I0 when S=0; I1 when S=1\nMUX1: S=b, I0=a, I1=0 -> t\nMUX2: S=a, I0=b, I1=t -> Y\n```\n\nכאשר a=0, המוקס האחרון בוחר b, בדיוק כנדרש ב־XOR. כאשר a=1, המוקס הראשון מקבל בכניסות הנתונים 1 ו־0, ולכן מוציא את השלילה של b, והאחרון בוחר במוצא הזה. ה־1 אינו מקור קבוע שהוספנו; זהו ערכה של כניסת a במקרה הנדון. האות t אינו NOT b בכל המצבים: כאשר a=0 הוא 0, אבל אז המוקס האחרון אינו בוחר בו. זהו הרעיון המרכזי: לנצל תנאי שבו ענף נבחר, ולא לנסות לבנות NOT כללי שאין עבורו קבוע 1.\n\n```text\nt = a AND NOT b\nY = (NOT a AND b) OR (a AND t)\n  = (NOT a AND b) OR (a AND b') = a XOR b\n\na b | t Y\n0 0 | 0 0\n0 1 | 0 1\n1 0 | 1 1\n1 1 | 0 0\n```\n\nמינימום בשימוש במוקסי 2:1: ללא מוקסים a,b,0 אינם XOR. במוקס יחיד הסלקטור הוא 0,a או b. עם סלקטור 0 נבחר חוט גולמי בלבד. עם סלקטור a, בענף a=1 צריך NOT b, אך הנתונים הזמינים בענף הם רק 0,1,b, ואף אחד אינו NOT b עבור שני ערכי b. עם סלקטור b ההוכחה סימטרית. לכן צריך לפחות שניים, והמימוש משיג שניים.\n\nאם מותר MUX של 4:1, מספיק אחד: חבר את a ל־S1 ואת b ל־S0 ואת I0,I1,I2,I3 אל 0,b,a,0 בהתאמה. כאשר הבחירה 01, b כבר 1; כאשר 10, a כבר 1. גם כאן אין קבוע 1. לכן מספר הרכיבים האופטימלי תלוי בגודל הרכיב המותר.\n\nבלי שום קבוע, רשת של מוקסים רגילים על a,b בלבד שומרת 1: בקלט 11 כל חוט וכל מוצא יהיו 1, בעוד XOR דורש 0. לכן קבוע 0 הוא מהותי כאן. אין סתירה לחוסר האפשרות לבנות NOT כללי עם מוקסים וקבוע 0 בלבד, כי כל הרשתות האלה שומרות 0; XOR עצמו שומר 0.\n\nבדיקה: ארבע שורות טבלת האמת נבדקו בפייתון; נבדקו כל 27 החיווטים למוקס יחיד שכניסותיו נלקחות מ־0,a,b ואף אחד לא מממש XOR. נבדקה גם חלופת 4:1. אין בכך בדיקת השהיה, glitches או שערוך פיזי. תשובה קצרה לראיון: מחברים מוקס ראשון שבוחר a או 0 לפי b, ומוקס שני שבוחר b או מוצא הראשון לפי a. ההיפוך של b נדרש רק כש־a=1, ובתנאי זה a מספק את ה־1 הדרוש בלי קבוע 1.\n\n### תחילה בודקים מה בעצם נתון\nהמשפט ״השהיה של 2 ns״ אינו מספיק כדי לקבוע תדר פיזי יחיד. שער צירופי בפני עצמו אינו מקבל שעון, ולכן אין לו תדר מרבי סינכרוני בלי להגדיר מי משגר ומי דוגם. כאן נוסיף במפורש מודל של דלגלג משגר, לוגיקה וחיווט, ודלגלג קולט במחזור הבא. נפריד בין שתי משמעויות אפשריות של המספר במקור.\n\n### מימוש ה־XOR המקורי נשאר תקף\nנגדיר MUX(S,D0,D1): כאשר S=0 בוחרים D0, וכאשר S=1 בוחרים D1. נשתמש רק ב־a,b ובקבוע 0, כפי שנדרש בגרסה המקורית:\n\n```text\nt = MUX(b, a, 0)\ny = MUX(a, b, t)\n```\n\nאם a=0, המרבב האחרון מעביר b: זהו 0 XOR b. אם a=1, המרבב האחרון בוחר t, והראשון בוחר 1 כאשר b=0 או 0 כאשר b=1. לכן t מתנהג כמו NOT b בדיוק בענף שבו צריך אותו. ארבע שורות האמת הן 00→0,01→1,10→1,11→0. אין קבוע 1 ואין שער NOT שהוברח למימוש.\n\nלשתי הרמות יש מסלול סידורי אמיתי: כש־a=1 ו־b יורד מ־1 ל־0, השינוי עובר דרך המרבב הראשון ואז דרך כניסת הנתונים של השני. זמן שתי הרמות מצטבר. העובדה של־b יש גם חיבור ישיר למרבב השני אינה מבטלת את המסלול הארוך. אם מותר אות משלים מוכן, אפשר לחבר MUX(a,b,NOT b); זהו מרבב אחד בתוספת העלות וההשהיה של יצירת NOT b, ולא שער היפוך חינם תחת אילוצי המקור. הוכחת המינימום המקורית מתייחסת למספר מרבבי 2:1 תחת קבוע 0 בלבד, ולא לתדר מיטבי בכל ספרייה.\n\n### שתי תשובות מותנות למספר שתי ננו־שניות\nאם 2 ns הם כבר ההשהיה המרבית של כל המסלול הצירופי, ובמודל האידאלי כל תקורות השעון אפס ואין מסלול אחר שמגביל, אז T≥2 ns ולכן f≤1/(2×10⁻⁹)=500 MHz.\n\nאם 2 ns הם ההשהיה המרבית של כל מרבב ברשת המקורית, מתעלמים מחיווט נוסף, ושתי הרמות הן המסלול המגביל, אז T≥2+2=4 ns ולכן f≤250 MHz באותו מודל אידאלי. אין להכפיל שוב בשתיים רק משום שגל שעון כולל גם עלייה וגם ירידה: השיגור והדגימה כאן הם בחזיתות עולות עוקבות, שהמרחק ביניהן הוא מחזור שלם. במעגל חזיתות הפוכות יידרש ניתוח אחר.\n\n### מה מוסיפים במערכת אמיתית?\nנסמן s כזמן הגעת השעון לקולט פחות זמן הגעתו למשגר, ו־U כאי־ודאות שמקצרים בגינה את חלון ההכנה. עבור מסלול חד־מחזורי:\n\n```text\nT_min >= t_cq,max + d_comb,max + t_setup + U - s\nf_max <= 1 / T_min\nhold: t_cq,min + d_comb,min >= s + t_hold\n```\n\nהאי־שוויון הראשון הוא תנאי על תקופת השעון, ולא הבטחה שהתכנון כולו פועל בתדר הזה. d_comb כולל לוגיקה וחיווט; יש לבדוק את כל המסלולים והפינות הרלוונטיים. זמן ההשהיה המרבי צריך לכסות עליות וירידות ותלויות כניסה/מוצא, עומס, שיפוע כניסה ותנאי העבודה. אם 2 ns הם נתון אופייני בלבד, אין ממנו גבול בטוח. במודל זה s חיובי נותן יותר זמן להכנה אבל מקשה על החזקה; אין להסיק שסטיית שעון מועילה בלי לבדוק את שניהם. תנאי ההחזקה אינו נעשה תקין מעצם הארכת המחזור.\n\nדוגמה ערוכה: d_comb=2 ns, t_cq,max=0.2 ns, t_setup=0.3 ns, U=0.1 ns ו־s=0 נותנים T_min=2.6 ns, כלומר גבול של כ־384.6 MHz למסלול הזה. המספרים פרט לשתי הננו־שניות נוספו להמחשה, ואינם נתוני המקור.\n\n### כיצד מעלים את התדר?\nאפשר לקצר את המסלול המגביל באמצעות מימוש לוגי מתאים לאילוצים, תאים מהירים יותר, הפחתת עומס/פיצול, תכנון חיווט ומיקום טובים יותר. תא מהיר יותר עלול לעלות בשטח ובהספק; נתון 2 ns אינו כולל אוטומטית את כל השינויים האלה. הורדת השהיה במסלול שאינו מגביל אינה בהכרח משפרת את תדר המערכת.\n\nאם הממשק מתיר תוספת השהיה במחזורים, אפשר לשקול חלוקה לשלבי צינור או תזמון מחדש. הוספת אוגר באמצע רשת שני המרבבים מחייבת לשמור גם את a,b המתאימים לאותו פריט נתונים, כדי שלא לשלב t ממחזור קודם עם קלט חדש. שלבים מאוזנים יכולים לשפר קצב קבלת תוצאות, אך מוסיפים אוגרים ותקורות ומשנים את מספר המחזורים עד לתוצאה. אין הבטחה להכפלת התדר: תקורות הדלגלגים, חוסר איזון ומסלולים אחרים נשארים. אם החוזה דורש אותה תגובה צירופית או אותה השהיה במחזורים, אי אפשר להציע שלב נוסף כאילו לא שינה את החוזה.\n\n### עלות ואימות\nהמימוש נשאר שני מרבבים ברשת המקורית, ללא שינוי בפונקציה. עלות/תדר של מימוש אחר תלויים במשאבים המותרים ובספרייה. בדקנו ארבע שורות אמת, שמונה שינויי קלט יחיד במודל השהיית מעבר אידאלי שווה של 2 ns למרבב, 48 השוואות זמן הגעה מול מועד הכנה ו־36 מקרי החזקה בחשבון רציונלי מדויק. ההשהיה המרבית במודל המעבר היא 4 ns. זהו מודל פייתון והוכחה, לא הרצת HDL, סינתזה, STA או מדידה פיזית.\n\nשלושת הרמזים המקוריים והתור שלהם נשמרו. שלושה רמזים לווריאנט התזמון נשמרו בנפרד בחומר המשלים ובמסמך; התור הקיים אינו בוחר אותם אוטומטית לפי וריאנט. התוכן החדש הוא הצעה בסיוע AI, ללא אישור מקצועי חדש."
+          "reference_solution": "הנחה: MUX רגיל 2:1 בעל מוצא לא מהופך, כניסות הנתונים והסלקטור יכולים להיות a,b,0 או מוצא מוקס קודם. אין קבוע 1, כניסות משלימות, שערים נוספים או משוב. סוג המוקס לא צוין במקור, ולכן יש לציין הנחה זו ולא לטעון למינימום גורף לכל גודל MUX.\n\nהצעה לפתרון: שני מוקסים. החיבורים נכתבים בנפרד מהעברית כדי למנוע היפוך כיווניות:\n\n```text\nConvention: MUX(S, I0, I1) = I0 when S=0; I1 when S=1\nMUX1: S=b, I0=a, I1=0 -> t\nMUX2: S=a, I0=b, I1=t -> Y\n```\n\nכאשר a=0, המוקס האחרון בוחר b, בדיוק כנדרש ב־XOR. כאשר a=1, המוקס הראשון מקבל בכניסות הנתונים 1 ו־0, ולכן מוציא את השלילה של b, והאחרון בוחר במוצא הזה. ה־1 אינו מקור קבוע שהוספנו; זהו ערכה של כניסת a במקרה הנדון. האות t אינו NOT b בכל המצבים: כאשר a=0 הוא 0, אבל אז המוקס האחרון אינו בוחר בו. זהו הרעיון המרכזי: לנצל תנאי שבו ענף נבחר, ולא לנסות לבנות NOT כללי שאין עבורו קבוע 1.\n\n```text\nt = a AND NOT b\nY = (NOT a AND b) OR (a AND t)\n  = (NOT a AND b) OR (a AND b') = a XOR b\n\na b | t Y\n0 0 | 0 0\n0 1 | 0 1\n1 0 | 1 1\n1 1 | 0 0\n```\n\nמינימום בשימוש במוקסי 2:1: ללא מוקסים a,b,0 אינם XOR. במוקס יחיד הסלקטור הוא 0,a או b. עם סלקטור 0 נבחר חוט גולמי בלבד. עם סלקטור a, בענף a=1 צריך NOT b, אך הנתונים הזמינים בענף הם רק 0,1,b, ואף אחד אינו NOT b עבור שני ערכי b. עם סלקטור b ההוכחה סימטרית. לכן צריך לפחות שניים, והמימוש משיג שניים.\n\nאם מותר MUX של 4:1, מספיק אחד: חבר את a ל־S1 ואת b ל־S0 ואת I0,I1,I2,I3 אל 0,b,a,0 בהתאמה. כאשר הבחירה 01, b כבר 1; כאשר 10, a כבר 1. גם כאן אין קבוע 1. לכן מספר הרכיבים האופטימלי תלוי בגודל הרכיב המותר.\n\nבלי שום קבוע, רשת של מוקסים רגילים על a,b בלבד שומרת 1: בקלט 11 כל חוט וכל מוצא יהיו 1, בעוד XOR דורש 0. לכן קבוע 0 הוא מהותי כאן. אין סתירה לחוסר האפשרות לבנות NOT כללי עם מוקסים וקבוע 0 בלבד, כי כל הרשתות האלה שומרות 0; XOR עצמו שומר 0.\n\nבדיקה: ארבע שורות טבלת האמת נבדקו בפייתון; נבדקו כל 27 החיווטים למוקס יחיד שכניסותיו נלקחות מ־0,a,b ואף אחד לא מממש XOR. נבדקה גם חלופת 4:1. אין בכך בדיקת השהיה, glitches או שערוך פיזי. תשובה קצרה לראיון: מחברים מוקס ראשון שבוחר a או 0 לפי b, ומוקס שני שבוחר b או מוצא הראשון לפי a. ההיפוך של b נדרש רק כש־a=1, ובתנאי זה a מספק את ה־1 הדרוש בלי קבוע 1.\n\n### תחילה בודקים מה בעצם נתון\nהמשפט ״השהיה של 2 ns״ אינו מספיק כדי לקבוע תדר פיזי יחיד. שער צירופי בפני עצמו אינו מקבל שעון, ולכן אין לו תדר מרבי סינכרוני בלי להגדיר מי משגר ומי דוגם. כאן נוסיף במפורש מודל של דלגלג משגר, לוגיקה וחיווט, ודלגלג קולט במחזור הבא. נפריד בין שתי משמעויות אפשריות של המספר במקור.\n\n### מימוש ה־XOR המקורי נשאר תקף\nנגדיר MUX(S,D0,D1): כאשר S=0 בוחרים D0, וכאשר S=1 בוחרים D1. נשתמש רק ב־a,b ובקבוע 0, כפי שנדרש בגרסה המקורית:\n\n```text\nt = MUX(b, a, 0)\ny = MUX(a, b, t)\n```\n\nאם a=0, המרבב האחרון מעביר b: זהו 0 XOR b. אם a=1, המרבב האחרון בוחר t, והראשון בוחר 1 כאשר b=0 או 0 כאשר b=1. לכן t מתנהג כמו NOT b בדיוק בענף שבו צריך אותו. ארבע שורות האמת הן 00→0,01→1,10→1,11→0. אין קבוע 1 ואין שער NOT שהוברח למימוש.\n\nלשתי הרמות יש מסלול סידורי אמיתי: כש־a=1 ו־b יורד מ־1 ל־0, השינוי עובר דרך המרבב הראשון ואז דרך כניסת הנתונים של השני. זמן שתי הרמות מצטבר. העובדה של־b יש גם חיבור ישיר למרבב השני אינה מבטלת את המסלול הארוך. אם מותר אות משלים מוכן, אפשר לחבר MUX(a,b,NOT b); זהו מרבב אחד בתוספת העלות וההשהיה של יצירת NOT b, ולא שער היפוך חינם תחת אילוצי המקור. הוכחת המינימום המקורית מתייחסת למספר מרבבי 2:1 תחת קבוע 0 בלבד, ולא לתדר מיטבי בכל ספרייה.\n\n### שתי תשובות מותנות למספר שתי ננו־שניות\nאם 2 ns הם כבר ההשהיה המרבית של כל המסלול הצירופי, ובמודל האידאלי כל תקורות השעון אפס ואין מסלול אחר שמגביל, אז T≥2 ns ולכן f≤1/(2×10⁻⁹)=500 MHz.\n\nאם 2 ns הם ההשהיה המרבית של כל מרבב ברשת המקורית, מתעלמים מחיווט נוסף, ושתי הרמות הן המסלול המגביל, אז T≥2+2=4 ns ולכן f≤250 MHz באותו מודל אידאלי. אין להכפיל שוב בשתיים רק משום שגל שעון כולל גם עלייה וגם ירידה: השיגור והדגימה כאן הם בחזיתות עולות עוקבות, שהמרחק ביניהן הוא מחזור שלם. במעגל חזיתות הפוכות יידרש ניתוח אחר.\n\n### מה מוסיפים במערכת אמיתית?\nנסמן s כזמן הגעת השעון לקולט פחות זמן הגעתו למשגר, ו־U כאי־ודאות שמקצרים בגינה את חלון ההכנה. עבור מסלול חד־מחזורי:\n\n```text\nT_min >= t_cq,max + d_comb,max + t_setup + U - s\nf_max <= 1 / T_min\nhold: t_cq,min + d_comb,min >= s + t_hold\n```\n\nהאי־שוויון הראשון הוא תנאי על תקופת השעון, ולא הבטחה שהתכנון כולו פועל בתדר הזה. d_comb כולל לוגיקה וחיווט; יש לבדוק את כל המסלולים והפינות הרלוונטיים. זמן ההשהיה המרבי צריך לכסות עליות וירידות ותלויות כניסה/מוצא, עומס, שיפוע כניסה ותנאי העבודה. אם 2 ns הם נתון אופייני בלבד, אין ממנו גבול בטוח. במודל זה s חיובי נותן יותר זמן להכנה אבל מקשה על החזקה; אין להסיק שסטיית שעון מועילה בלי לבדוק את שניהם. תנאי ההחזקה אינו נעשה תקין מעצם הארכת המחזור.\n\nדוגמה ערוכה: d_comb=2 ns, t_cq,max=0.2 ns, t_setup=0.3 ns, U=0.1 ns ו־s=0 נותנים T_min=2.6 ns, כלומר גבול של כ־384.6 MHz למסלול הזה. המספרים פרט לשתי הננו־שניות נוספו להמחשה, ואינם נתוני המקור.\n\n### כיצד מעלים את התדר?\nאפשר לקצר את המסלול המגביל באמצעות מימוש לוגי מתאים לאילוצים, תאים מהירים יותר, הפחתת עומס/פיצול, תכנון חיווט ומיקום טובים יותר. תא מהיר יותר עלול לעלות בשטח ובהספק; נתון 2 ns אינו כולל אוטומטית את כל השינויים האלה. הורדת השהיה במסלול שאינו מגביל אינה בהכרח משפרת את תדר המערכת.\n\nאם הממשק מתיר תוספת השהיה במחזורים, אפשר לשקול חלוקה לשלבי צינור או תזמון מחדש. הוספת אוגר באמצע רשת שני המרבבים מחייבת לשמור גם את a,b המתאימים לאותו פריט נתונים, כדי שלא לשלב t ממחזור קודם עם קלט חדש. שלבים מאוזנים יכולים לשפר קצב קבלת תוצאות, אך מוסיפים אוגרים ותקורות ומשנים את מספר המחזורים עד לתוצאה. אין הבטחה להכפלת התדר: תקורות הדלגלגים, חוסר איזון ומסלולים אחרים נשארים. אם החוזה דורש אותה תגובה צירופית או אותה השהיה במחזורים, אי אפשר להציע שלב נוסף כאילו לא שינה את החוזה.\n\n### עלות ואימות\nהמימוש נשאר שני מרבבים ברשת המקורית, ללא שינוי בפונקציה. עלות/תדר של מימוש אחר תלויים במשאבים המותרים ובספרייה. בדקנו ארבע שורות אמת, שמונה שינויי קלט יחיד במודל השהיית מעבר אידאלי שווה של 2 ns למרבב, 48 השוואות זמן הגעה מול מועד הכנה ו־36 מקרי החזקה בחשבון רציונלי מדויק. ההשהיה המרבית במודל המעבר היא 4 ns. זהו מודל פייתון והוכחה, לא הרצת HDL, סינתזה, STA או מדידה פיזית.\n\nשלושת הרמזים המקוריים והתור שלהם נשמרו. שלושה רמזים לווריאנט התזמון נשמרו בנפרד בחומר המשלים ובמסמך; התור הקיים אינו בוחר אותם אוטומטית לפי וריאנט. התוכן החדש הוא הצעה בסיוע AI, ללא אישור מקצועי חדש.\n\n### בחירה בין B לבין היפוכו\n\n#### כיווני חשיבה להרחבה\n1. קבעו את A לאפס ובדקו מה נותר במוצא כפונקציה של B.\n2. חזרו על הבדיקה כאשר A הוא אחת.\n3. חברו את שתי הפונקציות שמצאתם ל־D0 ול־D1 לפי ערך A.\n\nקשרו את A לקו הבחירה, את B ל־D0 ואת מוצא המהפך של B ל־D1. כאשר A=0 הבורר מעביר את B. כאשר A=1 הוא מעביר את NOT B. לפיכך לצירופים 00, 01, 10, 11 מתקבלים בהתאמה 0, 1, 1, 0. הבנייה משתמשת בבורר אחד ובמהפך אחד, ללא קבועים. על הנתיב מ־B דרך ההיפוך נמצאים שני רכיבים."
         },
         "en": {
           "title": "XOR using MUXes and only constant zero",
-          "prompt": "Implement XOR using MUXes and the constant value '0'.\n\n### Additional source: MUXes, delay and frequency\n(a) Build XOR using 2:1 MUXes. (b) What is the maximum frequency if the delay is 2 ns? (c) How can the maximum frequency be increased?\n\nThis source does not specify available constants/gates, what exactly the two nanoseconds measure, or the clock interface. To link it to the original, retain the original zero-only MUX network. Analyze separately: (1) 2 ns is the maximum delay of the complete combinational logic and routing between two flip-flops; (2) each MUX has 2 ns delay and the limiting path crosses two in series. First give an ideal bound ignoring clock overheads, then a formula including clock-to-Q, setup, clock skew and uncertainty. Assume binary signals, same-edge registers and single-cycle paths. Explain changes preserving function and changes needing agreement on latency in cycles. No cell-library characterization or guaranteed physical frequency is supplied.",
+          "prompt": "Implement XOR using MUXes and the constant value '0'.\n\n### Additional source: MUXes, delay and frequency\n(a) Build XOR using 2:1 MUXes. (b) What is the maximum frequency if the delay is 2 ns? (c) How can the maximum frequency be increased?\n\nThis source does not specify available constants/gates, what exactly the two nanoseconds measure, or the clock interface. To link it to the original, retain the original zero-only MUX network. Analyze separately: (1) 2 ns is the maximum delay of the complete combinational logic and routing between two flip-flops; (2) each MUX has 2 ns delay and the limiting path crosses two in series. First give an ideal bound ignoring clock overheads, then a formula including clock-to-Q, setup, clock skew and uncertainty. Assume binary signals, same-edge registers and single-cycle paths. Explain changes preserving function and changes needing agreement on latency in cycles. No cell-library characterization or guaranteed physical frequency is supplied.\n\n### Follow-up: XOR with a selector and NOT gates\nNow a NOT gate is available. Implement two-bit XOR using one 2:1 MUX and an inverter. Give all three MUX input connections and check the four input pairs.",
           "hint": "Split the XOR truth table by one input. Only constant zero is available; no constant one or NOT gate.",
           "hints": [
             "Split the XOR truth table by one input. Only constant zero is available; no constant one or NOT gate.",
             "An intermediate signal need not equal an inverted input for every case, only when the final MUX selects it.",
             "Select the last MUX with a. At a=0 pass b; at a=1 pass NOT b. Could a itself serve as one within that selected case?"
           ],
-          "reference_solution": "Assume ordinary non-inverting 2:1 MUXes with raw a,b, constant zero and earlier MUX outputs as wires, without extra gates, complements or feedback. The source does not specify MUX size.\nWith MUX(S,I0,I1) selecting I0 at S=0, use t=MUX(b,a,0), Y=MUX(a,b,t). At a=0 the output is b. At a=1, the first MUX has data 1 and 0 and outputs NOT b, which is selected by the last MUX. No constant-one source is introduced: a is one only in the relevant case. t=a AND NOT b globally, not NOT b. Truth rows (a,b,t,Y): (0,0,0,0),(0,1,0,1),(1,0,1,1),(1,1,0,0).\nTwo 2:1 MUXes are minimal. Zero MUXes provide only raw a,b,0. One MUX has select 0,a or b: select 0 chooses a raw wire; select a requires NOT b when a=1, but available raw data reduce to 0,1,b, none equal NOT b. Select b is symmetric. Exhaustively verified all four truth rows and rejected all 27 one-MUX raw-input wirings.\nIf a 4:1 MUX is permitted, one suffices with S1=a,S0=b and data (0,b,a,0); also verified on all four rows. Without any constants, ordinary MUX networks preserve the all-one input and cannot implement XOR. With only zero, general NOT is impossible by zero preservation, but XOR is zero-preserving and this conditional inversion is possible. No HDL/timing/glitch claim. Scope optimality to the allowed MUX size and count, not general physical area/delay.\n\n### First establish what the number describes\n“A delay of 2 ns” cannot determine one physical maximum frequency. A combinational gate itself has no clock; define a launching register, logic/routing and a register capturing at the next edge. We explicitly add that model and distinguish two possible meanings of the source's number.\n\n### Retain the original XOR circuit\nLet MUX(S,D0,D1) select D0 for S=0 and D1 for S=1. Use only a,b and constant zero, as required by the original:\n\n```text\nt = MUX(b, a, 0)\ny = MUX(a, b, t)\n```\n\nWhen a=0, the last MUX forwards b, giving 0 XOR b. When a=1, it selects t; the first MUX gives one for b=0 and zero for b=1. Thus t acts as NOT b exactly in the branch needing it. The truth rows are 00→0,01→1,10→1,11→0. No constant one or hidden inverter was introduced.\n\nThere is a real serial two-level path: hold a=1 and change b from one to zero. Its effect passes through the first MUX and then the second MUX's data input. Those delays add. The direct b connection to the second MUX does not remove that longer path. If a complement is supplied, MUX(a,b,NOT b) uses one final MUX, but complement generation still has a cost and delay; it is not free under the original constraints. The original minimum-cell proof concerns 2:1 MUX count with only zero, not optimal frequency in every library.\n\n### Two conditional answers for two nanoseconds\nIf 2 ns already measures the complete combinational path, every clock overhead is ignored and no other path limits the design, T≥2 ns and f≤1/(2×10⁻⁹)=500 MHz in that ideal model.\n\nIf each original MUX has maximum delay 2 ns, extra routing is neglected and the two serial levels are limiting, T≥2+2=4 ns and f≤250 MHz under the same ideal assumptions. Do not multiply by two again just because a clock has rising and falling edges: launch and capture here use consecutive rising edges, one whole period apart. An opposite-edge design needs a different analysis.\n\n### Include register and clock effects\nDefine s as capture-clock arrival minus launch-clock arrival, and U as setup uncertainty reducing the available window. For a single-cycle path:\n\n```text\nT_min >= t_cq,max + d_comb,max + t_setup + U - s\nf_max <= 1 / T_min\nhold: t_cq,min + d_comb,min >= s + t_hold\n```\n\nThe first inequality constrains the clock period; it does not guarantee the entire design works at that frequency. d_comb includes logic and routing; check all relevant paths and operating corners. A maximum delay must cover rising/falling transitions, pin arcs, loading, input slew and operating conditions. A typical-only 2 ns number is not a guaranteed bound. Positive s helps setup but hurts hold in this model; neither conclusion replaces the other check. Simply making the clock period longer does not repair hold.\n\nEditorial example: d_comb=2 ns, t_cq,max=0.2 ns, t_setup=0.3 ns, U=0.1 ns and s=0 give T_min=2.6 ns, or a path bound of about 384.6 MHz. Numbers other than two nanoseconds are added illustrations, not supplied facts.\n\n### How can maximum frequency increase?\nShorten the limiting path using a legal logic implementation, faster cells, reduced fanout/loading or better placement/routing. Faster cells may cost area and power; the single 2 ns figure does not characterize all these choices. Improving a nonlimiting path need not improve the system clock.\n\nIf the interface permits additional latency in cycles, consider pipelining or retiming. Registering the intermediate t in this two-MUX network also requires retaining the matching a,b for that same data item, rather than combining an old t with new inputs. Balanced stages may improve output throughput while adding registers/overheads and changing latency in cycles. Frequency need not double: register overhead, imbalance and other paths remain. A contract requiring unchanged combinational response or cycle latency cannot silently accept an extra pipeline stage.\n\n### Cost and actual verification\nThe original implementation remains two MUXes with unchanged Boolean function. Other implementations' cost/frequency depends on the allowed resources and library. Checked four truth rows, eight single-input transitions in an ideal equal-2-ns transport-delay model, 48 arrival-versus-setup-deadline comparisons and 36 hold cases using exact rational arithmetic. The transition model's worst delay is 4 ns. These are Python checks plus reasoning, not HDL simulation, synthesis, static timing analysis or physical measurements.\n\nAll original hints and their queue remain. Three timing-variant hints are saved in supplementary material and the addendum, but the existing queue does not automatically select hints by variant. New content is AI-assisted proposed material without new professional approval."
+          "reference_solution": "Assume ordinary non-inverting 2:1 MUXes with raw a,b, constant zero and earlier MUX outputs as wires, without extra gates, complements or feedback. The source does not specify MUX size.\nWith MUX(S,I0,I1) selecting I0 at S=0, use t=MUX(b,a,0), Y=MUX(a,b,t). At a=0 the output is b. At a=1, the first MUX has data 1 and 0 and outputs NOT b, which is selected by the last MUX. No constant-one source is introduced: a is one only in the relevant case. t=a AND NOT b globally, not NOT b. Truth rows (a,b,t,Y): (0,0,0,0),(0,1,0,1),(1,0,1,1),(1,1,0,0).\nTwo 2:1 MUXes are minimal. Zero MUXes provide only raw a,b,0. One MUX has select 0,a or b: select 0 chooses a raw wire; select a requires NOT b when a=1, but available raw data reduce to 0,1,b, none equal NOT b. Select b is symmetric. Exhaustively verified all four truth rows and rejected all 27 one-MUX raw-input wirings.\nIf a 4:1 MUX is permitted, one suffices with S1=a,S0=b and data (0,b,a,0); also verified on all four rows. Without any constants, ordinary MUX networks preserve the all-one input and cannot implement XOR. With only zero, general NOT is impossible by zero preservation, but XOR is zero-preserving and this conditional inversion is possible. No HDL/timing/glitch claim. Scope optimality to the allowed MUX size and count, not general physical area/delay.\n\n### First establish what the number describes\n“A delay of 2 ns” cannot determine one physical maximum frequency. A combinational gate itself has no clock; define a launching register, logic/routing and a register capturing at the next edge. We explicitly add that model and distinguish two possible meanings of the source's number.\n\n### Retain the original XOR circuit\nLet MUX(S,D0,D1) select D0 for S=0 and D1 for S=1. Use only a,b and constant zero, as required by the original:\n\n```text\nt = MUX(b, a, 0)\ny = MUX(a, b, t)\n```\n\nWhen a=0, the last MUX forwards b, giving 0 XOR b. When a=1, it selects t; the first MUX gives one for b=0 and zero for b=1. Thus t acts as NOT b exactly in the branch needing it. The truth rows are 00→0,01→1,10→1,11→0. No constant one or hidden inverter was introduced.\n\nThere is a real serial two-level path: hold a=1 and change b from one to zero. Its effect passes through the first MUX and then the second MUX's data input. Those delays add. The direct b connection to the second MUX does not remove that longer path. If a complement is supplied, MUX(a,b,NOT b) uses one final MUX, but complement generation still has a cost and delay; it is not free under the original constraints. The original minimum-cell proof concerns 2:1 MUX count with only zero, not optimal frequency in every library.\n\n### Two conditional answers for two nanoseconds\nIf 2 ns already measures the complete combinational path, every clock overhead is ignored and no other path limits the design, T≥2 ns and f≤1/(2×10⁻⁹)=500 MHz in that ideal model.\n\nIf each original MUX has maximum delay 2 ns, extra routing is neglected and the two serial levels are limiting, T≥2+2=4 ns and f≤250 MHz under the same ideal assumptions. Do not multiply by two again just because a clock has rising and falling edges: launch and capture here use consecutive rising edges, one whole period apart. An opposite-edge design needs a different analysis.\n\n### Include register and clock effects\nDefine s as capture-clock arrival minus launch-clock arrival, and U as setup uncertainty reducing the available window. For a single-cycle path:\n\n```text\nT_min >= t_cq,max + d_comb,max + t_setup + U - s\nf_max <= 1 / T_min\nhold: t_cq,min + d_comb,min >= s + t_hold\n```\n\nThe first inequality constrains the clock period; it does not guarantee the entire design works at that frequency. d_comb includes logic and routing; check all relevant paths and operating corners. A maximum delay must cover rising/falling transitions, pin arcs, loading, input slew and operating conditions. A typical-only 2 ns number is not a guaranteed bound. Positive s helps setup but hurts hold in this model; neither conclusion replaces the other check. Simply making the clock period longer does not repair hold.\n\nEditorial example: d_comb=2 ns, t_cq,max=0.2 ns, t_setup=0.3 ns, U=0.1 ns and s=0 give T_min=2.6 ns, or a path bound of about 384.6 MHz. Numbers other than two nanoseconds are added illustrations, not supplied facts.\n\n### How can maximum frequency increase?\nShorten the limiting path using a legal logic implementation, faster cells, reduced fanout/loading or better placement/routing. Faster cells may cost area and power; the single 2 ns figure does not characterize all these choices. Improving a nonlimiting path need not improve the system clock.\n\nIf the interface permits additional latency in cycles, consider pipelining or retiming. Registering the intermediate t in this two-MUX network also requires retaining the matching a,b for that same data item, rather than combining an old t with new inputs. Balanced stages may improve output throughput while adding registers/overheads and changing latency in cycles. Frequency need not double: register overhead, imbalance and other paths remain. A contract requiring unchanged combinational response or cycle latency cannot silently accept an extra pipeline stage.\n\n### Cost and actual verification\nThe original implementation remains two MUXes with unchanged Boolean function. Other implementations' cost/frequency depends on the allowed resources and library. Checked four truth rows, eight single-input transitions in an ideal equal-2-ns transport-delay model, 48 arrival-versus-setup-deadline comparisons and 36 hold cases using exact rational arithmetic. The transition model's worst delay is 4 ns. These are Python checks plus reasoning, not HDL simulation, synthesis, static timing analysis or physical measurements.\n\nAll original hints and their queue remain. Three timing-variant hints are saved in supplementary material and the addendum, but the existing queue does not automatically select hints by variant. New content is AI-assisted proposed material without new professional approval.\n\n### Select between B and its complement\n\n#### Hints for the follow-up\n1. Fix A at zero and express the output in terms of B.\n2. Repeat with A set to one.\n3. Wire those two functions to D0 and D1 in the order selected by A.\n\nWire A to select, B to D0 and the inverter output NOT B to D1. At A=0 the MUX passes B. At A=1 it passes NOT B. In input order 00, 01, 10, 11 the outputs are 0, 1, 1, 0. The implementation uses one MUX and one inverter with no constants. The inverted B path crosses two components."
         }
       },
       "prepared_hints": [
@@ -8883,6 +8898,18 @@
           "path": "diagrams/prep-031-register-path-timing-en.png",
           "language": "en",
           "description": "Register path and delay interpretations"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-031-xor-mux-inverter-1118b-he.png",
+          "language": "he",
+          "description": "חיבורי הבורר ומהפך הנתון למימוש XOR"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-031-xor-mux-inverter-1118b-en.png",
+          "language": "en",
+          "description": "MUX and inverter connections for XOR"
         }
       ],
       "related_question_ids": [
@@ -8922,7 +8949,7 @@
           "integration_status": "Hints are prepared supplementary content; the current queue does not automatically select them by variant."
         }
       },
-      "revised_on": "2026-10-24",
+      "revised_on": "2026-11-18",
       "original_source_variants": [
         {
           "id": "batch30_timing-variant",
@@ -8934,11 +8961,15 @@
         }
       ],
       "solution_code_paths": [
-        "solutions/prep_031_timing_variant.py"
+        "solutions/prep_031_timing_variant.py",
+        "solutions/digital1118b.sv"
       ],
       "batch30_verification_script_path": "checks/check_prep_031_timing_variant.py",
       "batch30_verification_evidence_path": "checks/prep-031-timing-variant-verification.json",
-      "batch30_markdown_path": "questions/prep-031-timing-variant-batch30.md"
+      "batch30_markdown_path": "questions/prep-031-timing-variant-batch30.md",
+      "variant_1118b_xor-inverter_verification_script_path": "checks/check_digital1118b.py",
+      "variant_1118b_xor-inverter_verification_result_path": "checks/digital1118b-verification.json",
+      "variant_1118b_xor-inverter_markdown_path": "questions/prep-031-xor-inverter-1118b-addendum.md"
     },
     {
       "id": "PREP-032",
@@ -10231,7 +10262,11 @@
         "apple",
         "verint",
         "2312313",
-        "intel"
+        "intel",
+        "altair",
+        "hardware",
+        "verification",
+        "elbit"
       ],
       "reported_companies": [
         "Amazon",
@@ -10239,7 +10274,8 @@
         "Rafael",
         "Marvell",
         "Apple",
-        "Verint"
+        "Verint",
+        "elbit"
       ],
       "source_company_badge": "NVIDIA",
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
@@ -10323,6 +10359,12 @@
             "amazon",
             "intel"
           ]
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-01.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
         }
       ],
       "original_prompt": "בהינתן מחרוזת המכילה תווים וסוגריים מכל הסוגים: (), [], {} — בדוק שהמחרוזת תקינה מבחינת סוגריים. למשל aa)a(a לא תקין אבל aa()aa כן תקין.",
@@ -21804,11 +21846,13 @@
       "source_tags": [
         "amazon",
         "hardware",
-        "mellanox"
+        "mellanox",
+        "intel"
       ],
       "reported_companies": [
         "Mellanox",
-        "Amazon"
+        "Amazon",
+        "intel"
       ],
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
       "difficulty": null,
@@ -21840,6 +21884,12 @@
             "hardware",
             "amazon"
           ]
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-15.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
         }
       ],
       "original_prompt": "קיים שעון שמונח על מחט בדיוק באמצע השעון, כך שהוא נמצא בשיווי משקל. עליך להניח 5 אבנים על השנתות!! של המעגל כך שהשעון יישאר בשיווי משקל על המחט. ניתן להניח מספר אבנים על אותה שנת.",
@@ -28663,12 +28713,14 @@
         "hardware",
         "nvidia",
         "intel",
-        "apple"
+        "apple",
+        "kla"
       ],
       "reported_companies": [
         "NVIDIA",
         "Intel",
-        "apple"
+        "apple",
+        "kla"
       ],
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
       "difficulty": null,
@@ -28705,6 +28757,12 @@
           "type": "user_supplied_image",
           "path": "sources/2026-11-15-batch20d-08.png",
           "received_on": "2026-11-15",
+          "role": "original_question_screenshot"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-14.png",
+          "received_on": "2026-11-18",
           "role": "original_question_screenshot"
         }
       ],
@@ -29639,7 +29697,8 @@
         "Apple",
         "Intel",
         "Amazon",
-        "apple"
+        "apple",
+        "intel"
       ],
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
       "difficulty": null,
@@ -29678,6 +29737,12 @@
         {
           "type": "user_supplied_image",
           "path": "sources/2026-11-18-batch31-10.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-12.png",
           "received_on": "2026-11-18",
           "role": "original_question_screenshot"
         }
@@ -38186,12 +38251,16 @@
         "software",
         "microsoft",
         "apple",
-        "nvidia"
+        "nvidia",
+        "verification",
+        "hardware",
+        "amazon"
       ],
       "reported_companies": [
         "Microsoft",
         "Apple",
-        "Nvidia"
+        "Nvidia",
+        "amazon"
       ],
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
       "difficulty": null,
@@ -38258,6 +38327,12 @@
           "type": "user_supplied_image",
           "path": "sources/2026-11-15-batch10c-04.png",
           "received_on": "2026-11-15",
+          "role": "original_question_screenshot"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-08.png",
+          "received_on": "2026-11-18",
           "role": "original_question_screenshot"
         }
       ],
@@ -44246,7 +44321,7 @@
     {
       "id": "PREP-196",
       "key": "recursion-benefits-cost-and-termination",
-      "version": 1,
+      "version": 2,
       "created_on": "2026-10-30",
       "category": "software",
       "topic": "arrays_and_search",
@@ -44269,7 +44344,8 @@
       ],
       "reported_companies": [
         "Google",
-        "Intel"
+        "Intel",
+        "intel"
       ],
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
       "difficulty": null,
@@ -44288,31 +44364,37 @@
           "path": "sources/2026-10-30-batch110-16.png",
           "received_on": "2026-10-30",
           "role": "original_question_screenshot"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-07.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
         }
       ],
       "original_prompt": "מה היתרונות ומה החסרונות בשימוש ברקורסיה?",
       "translations": {
         "he": {
           "title": "מתי רקורסיה עוזרת ומה המחיר שלה?",
-          "prompt": "הסבירו את היתרונות והחסרונות של רקורסיה. התייחסו לקריאות הקוד, הוכחת נכונות, זמן, עומק מחסנית ומקרי עצירה. הציגו חישוב רקורסיבי ואיטרטיבי מקבילים והסבירו מדוע עצם השימוש ברקורסיה אינו קובע שהזמן אקספוננציאלי.\n\nהדוגמה היא סכום 1..n עבור n אי שלילי ב־Python. אין להניח אופטימיזציית רקורסיית זנב או מגבלת עומק מספרית קבועה לכל סביבה.",
+          "prompt": "הסבירו את היתרונות והחסרונות של רקורסיה. התייחסו לקריאות הקוד, הוכחת נכונות, זמן, עומק מחסנית ומקרי עצירה. הציגו חישוב רקורסיבי ואיטרטיבי מקבילים והסבירו מדוע עצם השימוש ברקורסיה אינו קובע שהזמן אקספוננציאלי.\n\nהדוגמה היא סכום 1..n עבור n אי שלילי ב־Python. אין להניח אופטימיזציית רקורסיית זנב או מגבלת עומק מספרית קבועה לכל סביבה.\n\n### הרחבה: איך מסבירים רקורסיה לילד?\n\nילדה פותחת קופסה ובתוכה יכולה להיות קופסה קטנה יותר. כיצד תסבירו לה איך לספור את הקופסאות, בלי להניח שהיא מכירה פונקציות? הסבירו מתי עוצרים ואיך חוזרת התשובה אם יש שלוש קופסאות.",
           "hint": "באילו מבנים הבעיה הקטנה דומה באופן טבעי לבעיה הגדולה?",
           "hints": [
             "באילו מבנים הבעיה הקטנה דומה באופן טבעי לבעיה הגדולה?",
             "הפרידו בין מספר הקריאות הכולל לבין מספר הקריאות הפעילות באותו זמן.",
             "הסכום n+sum(n−1) יוצר שרשרת אחת: זמן ליניארי ומחסנית ליניארית. פיבונאצ׳י נאיבי יוצר חישובים חוזרים, וזו בעיה אחרת."
           ],
-          "reference_solution": "### רקורסיה היא דרך לתאר את פירוק הבעיה\nעץ, חלוקה וכיבוש ו־backtracking לעיתים נכתבים באופן הקרוב להגדרה המתמטית: מגדירים בסיס, פותרים בעיות קטנות ומשלבים. כך אפשר להוכיח נכונות באינדוקציה. הקוד עשוי להיות קצר ומקומי יותר מהנהלה ידנית של מחסנית. אלה יתרונות תלויי בעיה, ולא הבטחה שרקורסיה תמיד קריאה יותר.\n\nכל קריאה יכולה לשמור פרמטרים, משתנים וכתובת חזרה. העלות הנוספת נקבעת לפי עומק הקריאות הפעילות, לא רק גודל הקלט או מספר הקריאות הכולל. עצירה נכונה מחייבת בסיס וקטינה של מדד לכיוונו; בסיס לבדו אינו מספיק אם לא מגיעים אליו. קלט עמוק עלול להגיע למגבלת מחסנית, ויש עלות של קריאות פונקציה. ב־Python אין להסתמך על ביטול קריאת זנב.\n\nבדוגמת הסכום, S(0)=0 ו־S(n)=n+S(n−1). כל רמה עושה עבודה קבועה במודל פעולות מספרים ביחידה: Θ(n) זמן ו־Θ(n) מסגרות מחסנית. לולאה שומרת סכום ומשתנה מונה, ולכן Θ(n) זמן ו־O(1) מילות עזר. בניתוח ביטים המספרים גדלים ועלות החיבור אינה קבועה; הניתוח הנ״ל הוא מודל מילים. נוסחת n(n+1)/2 היא חלופה טובה יותר לדוגמה המסוימת, אך אינה מחליפה אלגוריתם כללי לעצים.\n\nלעומת זאת פיבונאצ׳י נאיבי קורא שוב ושוב לאותם מצבים, ולכן זמןו אקספוננציאלי ועומקו ליניארי. memoization מצמצם עבודה חוזרת במחיר זיכרון. merge sort רקורסיבי הוא O(n log n), ולכן “רקורסיה=אקספוננציאלי” אינה כלל. החלפה בלולאה מתאימה לשרשרת פשוטה; ב־DFS או backtracking אפשר להשתמש במחסנית מפורשת, אבל המידע על המסלול עדיין דרוש ולא נעלם.\n\nשני מימושי הסכום נבדקו ב־300 קלטים קטנים מול הנוסחה העצמאית. אין זו בדיקת כל עומק אפשרי או הבטחה שהגרסה הרקורסיבית מתאימה ל־n גדול. בראיון כדאי לבחור לפי צורת הבעיה, עומק צפוי, מגבלות השפה וקריאות, ואז לנתח זמן ומקום בנפרד.\n\n```python\n\"\"\"Same triangular sum, recursive versus iterative; nonnegative n only.\"\"\"\n\ndef recursive_sum(n):\n    if type(n) is not int or n < 0:\n        raise ValueError('Nonnegative integer required')\n    if n == 0:\n        return 0\n    return n + recursive_sum(n-1)\n\ndef iterative_sum(n):\n    if type(n) is not int or n < 0:\n        raise ValueError('Nonnegative integer required')\n    result = 0\n    while n:\n        result += n\n        n -= 1\n    return result\n```\n"
+          "reference_solution": "### רקורסיה היא דרך לתאר את פירוק הבעיה\nעץ, חלוקה וכיבוש ו־backtracking לעיתים נכתבים באופן הקרוב להגדרה המתמטית: מגדירים בסיס, פותרים בעיות קטנות ומשלבים. כך אפשר להוכיח נכונות באינדוקציה. הקוד עשוי להיות קצר ומקומי יותר מהנהלה ידנית של מחסנית. אלה יתרונות תלויי בעיה, ולא הבטחה שרקורסיה תמיד קריאה יותר.\n\nכל קריאה יכולה לשמור פרמטרים, משתנים וכתובת חזרה. העלות הנוספת נקבעת לפי עומק הקריאות הפעילות, לא רק גודל הקלט או מספר הקריאות הכולל. עצירה נכונה מחייבת בסיס וקטינה של מדד לכיוונו; בסיס לבדו אינו מספיק אם לא מגיעים אליו. קלט עמוק עלול להגיע למגבלת מחסנית, ויש עלות של קריאות פונקציה. ב־Python אין להסתמך על ביטול קריאת זנב.\n\nבדוגמת הסכום, S(0)=0 ו־S(n)=n+S(n−1). כל רמה עושה עבודה קבועה במודל פעולות מספרים ביחידה: Θ(n) זמן ו־Θ(n) מסגרות מחסנית. לולאה שומרת סכום ומשתנה מונה, ולכן Θ(n) זמן ו־O(1) מילות עזר. בניתוח ביטים המספרים גדלים ועלות החיבור אינה קבועה; הניתוח הנ״ל הוא מודל מילים. נוסחת n(n+1)/2 היא חלופה טובה יותר לדוגמה המסוימת, אך אינה מחליפה אלגוריתם כללי לעצים.\n\nלעומת זאת פיבונאצ׳י נאיבי קורא שוב ושוב לאותם מצבים, ולכן זמןו אקספוננציאלי ועומקו ליניארי. memoization מצמצם עבודה חוזרת במחיר זיכרון. merge sort רקורסיבי הוא O(n log n), ולכן “רקורסיה=אקספוננציאלי” אינה כלל. החלפה בלולאה מתאימה לשרשרת פשוטה; ב־DFS או backtracking אפשר להשתמש במחסנית מפורשת, אבל המידע על המסלול עדיין דרוש ולא נעלם.\n\nשני מימושי הסכום נבדקו ב־300 קלטים קטנים מול הנוסחה העצמאית. אין זו בדיקת כל עומק אפשרי או הבטחה שהגרסה הרקורסיבית מתאימה ל־n גדול. בראיון כדאי לבחור לפי צורת הבעיה, עומק צפוי, מגבלות השפה וקריאות, ואז לנתח זמן ומקום בנפרד.\n\n```python\n\"\"\"Same triangular sum, recursive versus iterative; nonnegative n only.\"\"\"\n\ndef recursive_sum(n):\n    if type(n) is not int or n < 0:\n        raise ValueError('Nonnegative integer required')\n    if n == 0:\n        return 0\n    return n + recursive_sum(n-1)\n\ndef iterative_sum(n):\n    if type(n) is not int or n < 0:\n        raise ValueError('Nonnegative integer required')\n    result = 0\n    while n:\n        result += n\n        n -= 1\n    return result\n```\n\n\n### פתרון להרחבה: איך מסבירים רקורסיה לילד?\n\nאפשר לומר לה: ״אם אין לפניי קופסה, אספר אפס. אם יש, אספור אחת ואבקש ממך להשתמש באותו הכלל על מה שבפנים. כשתחזרי עם מספר, אוסיף לו אחת״. בשלוש קופסאות זו בתוך זו מגיעים בסוף למקום ריק. התשובות חוזרות בסדר 0, אחר כך 1, אחר כך 2 ולבסוף 3. כל בקשה עוסקת בקופסה אחת פחות, ולכן בסוף מגיעים למקום הריק. במחשב כל קריאה ממתינה לתשובה הפנימית ושומרת את עבודתה עד אז.\n\n```python\ndef count_boxes(box):\n    \"\"\"Each nonempty box holds one smaller box. None means no box.\"\"\"\n    if box is None:\n        return 0\n    return 1 + count_boxes(box[\"inside\"])\n```"
         },
         "en": {
           "title": "When recursion helps, and what it costs",
-          "prompt": "Explain recursion advantages and drawbacks: readability, correctness arguments, running time, stack depth and base cases. Give equivalent recursive and iterative examples and explain why recursion alone does not imply exponential time.\n\nUse summation 1..n for nonnegative n in Python. Do not assume tail-call optimization or one fixed recursion-depth limit across environments.",
+          "prompt": "Explain recursion advantages and drawbacks: readability, correctness arguments, running time, stack depth and base cases. Give equivalent recursive and iterative examples and explain why recursion alone does not imply exponential time.\n\nUse summation 1..n for nonnegative n in Python. Do not assume tail-call optimization or one fixed recursion-depth limit across environments.\n\n### Follow-up: How would you explain recursion to a child?\n\nA child opens a box that may contain one smaller box. Explain how to count the boxes without assuming the child knows what a function is. Say when to stop and how the answer comes back for three nested boxes.",
           "hint": "Which structures naturally contain smaller instances of the same problem?",
           "hints": [
             "Which structures naturally contain smaller instances of the same problem?",
             "Distinguish total calls from simultaneously active calls.",
             "n+sum(n−1) creates one chain: linear time and linear stack. Naive Fibonacci repeats subproblems, which is a different issue."
           ],
-          "reference_solution": "### Recursion describes how the problem decomposes\nTrees, divide-and-conquer and backtracking often map directly to a recursive definition: establish a base case, solve smaller instances and combine. This supports induction proofs and can be clearer than manually managing a stack. Readability depends on the problem; recursion is not automatically clearer.\n\nEach call can retain parameters, locals and a return address. Extra storage depends on simultaneously active depth, not simply input length or total calls. Correct termination requires a base case and a decreasing measure that actually reaches it. Deep inputs can hit stack limits, and function calls add overhead. Do not rely on tail-call elimination in Python.\n\nFor summation, S(0)=0 and S(n)=n+S(n−1). Each level does constant work in a unit-cost arithmetic model, so time is Θ(n) and stack depth Θ(n). A loop keeps a sum and counter: Θ(n) time and O(1) auxiliary words. In bit complexity, growing integer additions are not constant; the stated analysis is a word model. n(n+1)/2 is a better alternative for this particular example, but does not replace general tree algorithms.\n\nNaive Fibonacci repeats the same states, yielding exponential work with linear active depth. Memoization avoids repeated work at a storage cost. Recursive merge sort is O(n log n), disproving “recursion means exponential.” A simple chain can become a loop; DFS/backtracking can use an explicit stack, but required path information does not disappear.\n\nBoth summation implementations passed 300 small inputs against the independent closed form. This is not a test of arbitrary depths or a guarantee that large n is safe recursively. Choose based on problem structure, expected depth, language constraints and clarity; analyze time and space separately.\n\n```python\n\"\"\"Same triangular sum, recursive versus iterative; nonnegative n only.\"\"\"\n\ndef recursive_sum(n):\n    if type(n) is not int or n < 0:\n        raise ValueError('Nonnegative integer required')\n    if n == 0:\n        return 0\n    return n + recursive_sum(n-1)\n\ndef iterative_sum(n):\n    if type(n) is not int or n < 0:\n        raise ValueError('Nonnegative integer required')\n    result = 0\n    while n:\n        result += n\n        n -= 1\n    return result\n```\n"
+          "reference_solution": "### Recursion describes how the problem decomposes\nTrees, divide-and-conquer and backtracking often map directly to a recursive definition: establish a base case, solve smaller instances and combine. This supports induction proofs and can be clearer than manually managing a stack. Readability depends on the problem; recursion is not automatically clearer.\n\nEach call can retain parameters, locals and a return address. Extra storage depends on simultaneously active depth, not simply input length or total calls. Correct termination requires a base case and a decreasing measure that actually reaches it. Deep inputs can hit stack limits, and function calls add overhead. Do not rely on tail-call elimination in Python.\n\nFor summation, S(0)=0 and S(n)=n+S(n−1). Each level does constant work in a unit-cost arithmetic model, so time is Θ(n) and stack depth Θ(n). A loop keeps a sum and counter: Θ(n) time and O(1) auxiliary words. In bit complexity, growing integer additions are not constant; the stated analysis is a word model. n(n+1)/2 is a better alternative for this particular example, but does not replace general tree algorithms.\n\nNaive Fibonacci repeats the same states, yielding exponential work with linear active depth. Memoization avoids repeated work at a storage cost. Recursive merge sort is O(n log n), disproving “recursion means exponential.” A simple chain can become a loop; DFS/backtracking can use an explicit stack, but required path information does not disappear.\n\nBoth summation implementations passed 300 small inputs against the independent closed form. This is not a test of arbitrary depths or a guarantee that large n is safe recursively. Choose based on problem structure, expected depth, language constraints and clarity; analyze time and space separately.\n\n```python\n\"\"\"Same triangular sum, recursive versus iterative; nonnegative n only.\"\"\"\n\ndef recursive_sum(n):\n    if type(n) is not int or n < 0:\n        raise ValueError('Nonnegative integer required')\n    if n == 0:\n        return 0\n    return n + recursive_sum(n-1)\n\ndef iterative_sum(n):\n    if type(n) is not int or n < 0:\n        raise ValueError('Nonnegative integer required')\n    result = 0\n    while n:\n        result += n\n        n -= 1\n    return result\n```\n\n\n### Follow-up solution: How would you explain recursion to a child?\n\nTry saying, “If I see no box, I say zero. If I see a box, I count one and ask you to follow the same rule with what is inside it. When you come back with a number, I add one.” Three nested boxes lead to an empty space. The answers come back as 0, then 1, then 2, then 3. Every request has one fewer box to inspect, so eventually someone reaches the empty space. On a computer each call waits for the inner answer, remembering what remains to do.\n\n```python\ndef count_boxes(box):\n    \"\"\"Each nonempty box holds one smaller box. None means no box.\"\"\"\n    if box is None:\n        return 0\n    return 1 + count_boxes(box[\"inside\"])\n```"
         }
       },
       "prepared_hints": [
@@ -44355,7 +44437,8 @@
       ],
       "solution_code_path": "solutions/prep_196_recursion_tradeoffs.py",
       "solution_code_paths": [
-        "solutions/prep_196_recursion_tradeoffs.py"
+        "solutions/prep_196_recursion_tradeoffs.py",
+        "solutions/prep_196_recursion_nesting_boxes.py"
       ],
       "verification_script_path": "checks/check_batch110_root.py",
       "verification_result_path": "checks/prep-196-verification.json",
@@ -44380,23 +44463,38 @@
           "path": "diagrams/prep-196-root-batch110-en.png",
           "language": "en",
           "description": "Proposed solution principle diagram"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-196-nesting-returns-he.png",
+          "language": "he",
+          "description": "איך מסבירים רקורסיה לילד?"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-196-nesting-returns-en.png",
+          "language": "en",
+          "description": "How would you explain recursion to a child?"
         }
       ],
       "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
       "assumptions": [
-        "Python example with n≥0, finite computation; word-model analysis is distinguished from bit cost."
+        "Python example with n≥0, finite computation; word-model analysis is distinguished from bit cost.",
+        "There are finitely many boxes, each containing at most one smaller box."
       ],
       "optimality": "For summation both versions take Θ(n) time; recursive stack Θ(n), loop O(1) auxiliary words.",
-      "verification": "300 inputs versus n(n+1)/2; no unbounded-depth stack-safety claim.",
+      "verification": "300 inputs versus n(n+1)/2; no unbounded-depth stack-safety claim.\n\nVerified nested chains of every length from 0 to 99.",
       "edge_cases": [
-        "n=0; negative input rejected; large depth; repeated subproblems; unbalanced trees."
+        "n=0; negative input rejected; large depth; repeated subproblems; unbalanced trees.",
+        "An empty box counts as one. No box at all counts as zero."
       ],
       "common_mistakes": [
         "Confusing total calls with active depth.",
         "Converting to iteration does not remove required DFS state.",
-        "Never assume universal tail-call optimization."
+        "Never assume universal tail-call optimization.",
+        "Saying “do it again” leaves out the smaller input, the stopping condition and the return step."
       ],
-      "interview_answer": "Recursion fits recursive structure and induction. Calls/depth cost resources; base cases and progress are required, while time does not follow from recursion alone.",
+      "interview_answer": "Recursion fits recursive structure and induction. Calls/depth cost resources; base cases and progress are required, while time does not follow from recursion alone.\n\nCount one and ask the same question of the inside. Empty space answers zero.",
       "source_ambiguities": [
         "The source specifies no language or example; summation is an explicit illustration only."
       ],
@@ -44410,7 +44508,9 @@
           "title": "Python documentation — recursion limit",
           "url": "https://docs.python.org/3/library/sys.html#sys.getrecursionlimit"
         }
-      ]
+      ],
+      "verification_nov18b": "checks/prep-196-1118b-verification.json",
+      "variant_nov18b_markdown_path": "questions/prep-196-software1118b-addendum.md"
     },
     {
       "id": "PREP-197",
@@ -47499,7 +47599,7 @@
     {
       "id": "PREP-214",
       "key": "four-to-one-mux-from-two-to-one",
-      "version": 1,
+      "version": 2,
       "created_on": "2026-10-31",
       "category": "hardware",
       "topic": "combinational_blocks",
@@ -47523,10 +47623,13 @@
         "hardware",
         "cisco",
         "logic",
-        "verification"
+        "verification",
+        "apple",
+        "intel"
       ],
       "reported_companies": [
-        "Cisco"
+        "Cisco",
+        "intel"
       ],
       "source_company_badge": "Cisco",
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
@@ -47545,31 +47648,37 @@
           "type": "user_supplied_image",
           "path": "sources/2026-10-31-batch20-07.png",
           "received_on": "2026-10-31"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-19.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
         }
       ],
       "original_prompt": "בנה MUX 4->1 ע״י MUXים של 2->1. בתרשים המצורף Q3,Q2 מוזנים למרבב העליון, Q1,Q0 לתחתון; S0 בורר בכל אחד מהם ו-S1 בורר במרבב המוצא.",
       "translations": {
         "he": {
           "title": "מרבב 4:1 משלושה מרבבי 2:1",
-          "prompt": "בנו מרבב 4:1 בעזרת מרבבי 2:1. לכל מרבב MUX(S,D0,D1), הבחירה S=0 מחזירה D0 והבחירה S=1 מחזירה D1. הסבירו את מספר הרכיבים ועומק מסלול הנתונים.\n\nשמרו תחילה את חיווט איור המקור: במרבב העליון D0=Q3,D1=Q2; בתחתון D0=Q1,D1=Q0; שניהם נבחרים ב־S0. המרבב האחרון נבחר ב־S1 ומקבל את העליון ב־D0 ואת התחתון ב־D1. כתבו את טבלת הבחירה בפועל. לאחר מכן הראו בנפרד חיווט המתאים למוסכמה הרגילה Out=Q[2*S1+S0]. אין להחליף בשקט את סדר המקור.",
+          "prompt": "בנו מרבב 4:1 בעזרת מרבבי 2:1. לכל מרבב MUX(S,D0,D1), הבחירה S=0 מחזירה D0 והבחירה S=1 מחזירה D1. הסבירו את מספר הרכיבים ועומק מסלול הנתונים.\n\nשמרו תחילה את חיווט איור המקור: במרבב העליון D0=Q3,D1=Q2; בתחתון D0=Q1,D1=Q0; שניהם נבחרים ב־S0. המרבב האחרון נבחר ב־S1 ומקבל את העליון ב־D0 ואת התחתון ב־D1. כתבו את טבלת הבחירה בפועל. לאחר מכן הראו בנפרד חיווט המתאים למוסכמה הרגילה Out=Q[2*S1+S0]. אין להחליף בשקט את סדר המקור.\n\n### הרחבה: בניית תא הבורר בשערים ושימוש בו שלוש פעמים\nהתחילו בשערי NOT, AND ו־OR ובנו בורר 2:1. העמידו לרשותכם עותקים של התא שבניתם והרכיבו מהם בורר 4:1 בסדר הרגיל D0 עד D3. פרטו את קווי הבחירה ואת סדר הקלטים.",
           "hint": "חלקו ארבע כניסות לשני זוגות; איזה ביט בחירה יכול לבחור בתוך כל זוג?",
           "hints": [
             "חלקו ארבע כניסות לשני זוגות; איזה ביט בחירה יכול לבחור בתוך כל זוג?",
             "אחרי שלב הזוגות נשארים שני ערכים. מה יבחר ביניהם, ואיזה זוג שייך ל־D0?",
             "כתבו U=MUX(S0,Q3,Q2), L=MUX(S0,Q1,Q0), ואז Out=MUX(S1,U,L); עקבו אחר כל צירוף בחירה."
           ],
-          "reference_solution": "הצעה לפתרון: כל מרבב קטן בוחר אחת משתי אפשרויות. שני מרבבים במקביל בוחרים בתוך הזוגות, ומרבב שלישי בוחר בין התוצאות:\n\n```text\nU = MUX(S0,Q3,Q2)\nL = MUX(S0,Q1,Q0)\nOut = MUX(S1,U,L)\n```\n\n| S1 | S0 | נבחר במקור |\n|---|---|---|\n|0|0|Q3|\n|0|1|Q2|\n|1|0|Q1|\n|1|1|Q0|\n\nלמשל S1S0=10 בוחר את המרבב התחתון ואז את D0 שלו, כלומר Q1. הסדר ההפוך אינו משנה את עצם היותו מרבב 4:1; הוא משנה את הקשר בין קוד הבחירה לשמות הנתונים. לחיווט הסטנדרטי בלבד מחליפים את חיבורי הנתונים: U=MUX(S0,Q0,Q1), L=MUX(S0,Q2,Q3), Out=MUX(S1,U,L). כעת 00,01,10,11 בוחרים Q0,Q1,Q2,Q3. אין צורך להפוך את ביטי הבחירה.\n\nההוכחה היא מעקב בשתי הבחירות; כל קוד בוחר בדיוק כניסה אחת וכל ארבע הכניסות מכוסות. המימוש משתמש בשלושה מרבבים ובשני מפלסי נתונים. תחת מודל רשת MUX2 חסרת משוב, חוטים ובחירות תלויות רק ב־S1,S0, גם זה מינימום במספר הרכיבים: כדי שהפלט יוכל להיות כל אחת מארבע כניסות נתונים עצמאיות, חרוט הנתונים צריך לפחות ארבעה עלים. ברשת בעלת m צמתי MUX בינאריים מחוברים יש לכל היותר m+1 כניסות נתונים עצמאיות, כי בכל צומת מתווסף לכל היותר עלה אחד; לכן m≥3. עומק אחד יכול לבחור לכל היותר שני עלים ולכן נדרשים לפחות שני מפלסים. חסמים אלה מתייחסים למודל הזה, לא לשטח או השהיה פיזיים כלליים.\n\nנבדקו 64 צירופי נתונים ובחירות לכל חיווט בנפרד, מול אינדוקס עצמאי. אין בדיקת תקלות מעבר, השהיה אנלוגית או סינתזה."
+          "reference_solution": "הצעה לפתרון: כל מרבב קטן בוחר אחת משתי אפשרויות. שני מרבבים במקביל בוחרים בתוך הזוגות, ומרבב שלישי בוחר בין התוצאות:\n\n```text\nU = MUX(S0,Q3,Q2)\nL = MUX(S0,Q1,Q0)\nOut = MUX(S1,U,L)\n```\n\n| S1 | S0 | נבחר במקור |\n|---|---|---|\n|0|0|Q3|\n|0|1|Q2|\n|1|0|Q1|\n|1|1|Q0|\n\nלמשל S1S0=10 בוחר את המרבב התחתון ואז את D0 שלו, כלומר Q1. הסדר ההפוך אינו משנה את עצם היותו מרבב 4:1; הוא משנה את הקשר בין קוד הבחירה לשמות הנתונים. לחיווט הסטנדרטי בלבד מחליפים את חיבורי הנתונים: U=MUX(S0,Q0,Q1), L=MUX(S0,Q2,Q3), Out=MUX(S1,U,L). כעת 00,01,10,11 בוחרים Q0,Q1,Q2,Q3. אין צורך להפוך את ביטי הבחירה.\n\nההוכחה היא מעקב בשתי הבחירות; כל קוד בוחר בדיוק כניסה אחת וכל ארבע הכניסות מכוסות. המימוש משתמש בשלושה מרבבים ובשני מפלסי נתונים. תחת מודל רשת MUX2 חסרת משוב, חוטים ובחירות תלויות רק ב־S1,S0, גם זה מינימום במספר הרכיבים: כדי שהפלט יוכל להיות כל אחת מארבע כניסות נתונים עצמאיות, חרוט הנתונים צריך לפחות ארבעה עלים. ברשת בעלת m צמתי MUX בינאריים מחוברים יש לכל היותר m+1 כניסות נתונים עצמאיות, כי בכל צומת מתווסף לכל היותר עלה אחד; לכן m≥3. עומק אחד יכול לבחור לכל היותר שני עלים ולכן נדרשים לפחות שני מפלסים. חסמים אלה מתייחסים למודל הזה, לא לשטח או השהיה פיזיים כלליים.\n\nנבדקו 64 צירופי נתונים ובחירות לכל חיווט בנפרד, מול אינדוקס עצמאי. אין בדיקת תקלות מעבר, השהיה אנלוגית או סינתזה.\n\n### תא בסיס ועץ של שתי שכבות\n\n#### כיווני חשיבה להרחבה\n1. כיצד מעבירים ערך רק אם תנאי בחירה מתקיים?\n2. כתבו מכפלה אחת ל־S=0 ואחת ל־S=1. חברו את שתי התוצאות.\n3. בשלב הראשון חלקו את הכניסות לזוגות סמוכים. איזו סיבית בוחרת בין זוגות?\n\nתא יחיד מחשב `M(S,D0,D1)=(¬S∧D0)∨(S∧D1)`. נדרשים מהפך אחד, שני שערי AND ושער OR. בדיוק אחד מאיברי המכפלה יכול להעביר נתון. בשכבה הראשונה חשבו `L=M(S0,D0,D1)` ו־`H=M(S0,D2,D3)`. בשכבה השנייה חברו `Y=M(S1,L,H)`. לכן ערכי S1S0 לפי הסדר 00, 01, 10, 11 בוחרים D0, D1, D2, D3. נתיב נתון עובר בשניים מתוך שלושת התאים. אם מתייחסים לכל תא כקופסה נפרדת, שלושת התאים מכילים יחד 12 שערים בסיסיים. אפשר לשתף את ההיפוך של S0 רק כשמתירים שינוי בתוך התאים."
         },
         "en": {
           "title": "A 4:1 MUX from three 2:1 MUXes",
-          "prompt": "Build a 4:1 MUX using 2:1 MUXes, with MUX(S,D0,D1) selecting D0 for S=0 and D1 for S=1. Explain component count and data-path depth.\n\nFirst preserve the source drawing: upper MUX D0=Q3,D1=Q2; lower MUX D0=Q1,D1=Q0; both use S0. The final MUX uses S1, taking the upper result at D0 and lower result at D1. State the actual selection table. Then separately rewire for the conventional Out=Q[2*S1+S0]. Do not silently change the source ordering.",
+          "prompt": "Build a 4:1 MUX using 2:1 MUXes, with MUX(S,D0,D1) selecting D0 for S=0 and D1 for S=1. Explain component count and data-path depth.\n\nFirst preserve the source drawing: upper MUX D0=Q3,D1=Q2; lower MUX D0=Q1,D1=Q0; both use S0. The final MUX uses S1, taking the upper result at D0 and lower result at D1. State the actual selection table. Then separately rewire for the conventional Out=Q[2*S1+S0]. Do not silently change the source ordering.\n\n### Follow-up: Build the selector cell from gates, then reuse it three times\nStart from NOT, AND and OR gates to build a 2:1 MUX. Use only copies of the completed cell to build a 4:1 MUX in conventional D0 through D3 order. Specify all selectors and input ordering.",
           "hint": "Split four inputs into two pairs. Which select bit chooses within a pair?",
           "hints": [
             "Split four inputs into two pairs. Which select bit chooses within a pair?",
             "After pair selection two values remain. What selects between them, and which pair belongs at D0?",
             "Write U=MUX(S0,Q3,Q2), L=MUX(S0,Q1,Q0), then Out=MUX(S1,U,L); follow every select combination."
           ],
-          "reference_solution": "Proposed solution: a small MUX chooses between two possibilities. Two parallel MUXes choose within pairs, then a third chooses between their results:\n\n```text\nU = MUX(S0,Q3,Q2)\nL = MUX(S0,Q1,Q0)\nOut = MUX(S1,U,L)\n```\n\n| S1 | S0 | Source-selected input |\n|---|---|---|\n|0|0|Q3|\n|0|1|Q2|\n|1|0|Q1|\n|1|1|Q0|\n\nFor example 10 chooses the lower MUX and then its D0, Q1. Reversed numbering still implements a 4:1 MUX; it changes the association between select code and input name. For conventional numbering only, rewire the data: U=MUX(S0,Q0,Q1), L=MUX(S0,Q2,Q3), Out=MUX(S1,U,L). Codes 00,01,10,11 now select Q0,Q1,Q2,Q3. Select-bit inversion is unnecessary.\n\nCorrectness follows by tracing both selections: each code selects exactly one input, and all four inputs are covered. The construction uses three MUXes and two data levels. In an acyclic MUX2 network with wires and selects depending only on S1,S0, the component count is also minimal: the output data cone must reach four independent data leaves. A connected binary-MUX network with m nodes has at most m+1 independent data leaves, since each added node can introduce at most one additional leaf; hence m≥3. One data level reaches at most two leaves, so at least two levels are needed. These bounds concern this declared model, not general physical area/delay.\n\nAll 64 data/select tuples passed for each wiring separately against independent indexing. No transition hazards, analog delay or synthesis were tested."
+          "reference_solution": "Proposed solution: a small MUX chooses between two possibilities. Two parallel MUXes choose within pairs, then a third chooses between their results:\n\n```text\nU = MUX(S0,Q3,Q2)\nL = MUX(S0,Q1,Q0)\nOut = MUX(S1,U,L)\n```\n\n| S1 | S0 | Source-selected input |\n|---|---|---|\n|0|0|Q3|\n|0|1|Q2|\n|1|0|Q1|\n|1|1|Q0|\n\nFor example 10 chooses the lower MUX and then its D0, Q1. Reversed numbering still implements a 4:1 MUX; it changes the association between select code and input name. For conventional numbering only, rewire the data: U=MUX(S0,Q0,Q1), L=MUX(S0,Q2,Q3), Out=MUX(S1,U,L). Codes 00,01,10,11 now select Q0,Q1,Q2,Q3. Select-bit inversion is unnecessary.\n\nCorrectness follows by tracing both selections: each code selects exactly one input, and all four inputs are covered. The construction uses three MUXes and two data levels. In an acyclic MUX2 network with wires and selects depending only on S1,S0, the component count is also minimal: the output data cone must reach four independent data leaves. A connected binary-MUX network with m nodes has at most m+1 independent data leaves, since each added node can introduce at most one additional leaf; hence m≥3. One data level reaches at most two leaves, so at least two levels are needed. These bounds concern this declared model, not general physical area/delay.\n\nAll 64 data/select tuples passed for each wiring separately against independent indexing. No transition hazards, analog delay or synthesis were tested.\n\n### The basic cell and its two-level tree\n\n#### Hints for the follow-up\n1. How can you pass a value only if a select condition holds?\n2. Write one product term for S=0 and one for S=1. Combine their outputs.\n3. Start with adjacent input pairs. Which select bit chooses between the pairs?\n\nOne cell computes `M(S,D0,D1)=(¬S∧D0)∨(S∧D1)` using one inverter, two AND gates and one OR gate. Exactly one product term is enabled. The first stage produces `L=M(S0,D0,D1)` and `H=M(S0,D2,D3)`. The second stage gives `Y=M(S1,L,H)`. Select values S1S0 in order 00, 01, 10, 11 choose D0, D1, D2, D3. A data path crosses two of the three cells. Treating them as three separate copies gives 12 basic gates. Sharing the S0 inverter requires opening the cells."
         }
       },
       "prepared_hints": [
@@ -47612,7 +47721,8 @@
       ],
       "solution_code_path": "solutions/prep_batch20_combinational.py",
       "solution_code_paths": [
-        "solutions/prep_batch20_combinational.py"
+        "solutions/prep_batch20_combinational.py",
+        "solutions/digital1118b.sv"
       ],
       "verification_script_path": "checks/check_batch20_combinational_20261031.py",
       "verification_result_path": "checks/prep-214-batch20-verification.json",
@@ -47633,6 +47743,18 @@
           "path": "diagrams/prep-214-combinational-batch20-en.png",
           "language": "en",
           "description": "A 4:1 MUX from three 2:1 MUXes"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-214-mux-basic-gates-1118b-he.png",
+          "language": "he",
+          "description": "שני שערי AND, מהפך ושער OR בתא בורר אחד"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-214-mux-basic-gates-1118b-en.png",
+          "language": "en",
+          "description": "Two ANDs, an inverter and one OR in a selector cell"
         }
       ],
       "related_question_ids": [
@@ -47665,7 +47787,11 @@
         "question": "How do you build an 8:1 MUX in the same model, and justify the count?",
         "direction": "Use layers of four, two and one: seven components and three levels. Eight data leaves require m+1≥8; depth d reaches at most 2^d leaves.",
         "integration": "Prepared in content; not connected to an interactive follow-up queue."
-      }
+      },
+      "revised_on": "2026-11-18",
+      "variant_1118b_mux-tree-cell_verification_script_path": "checks/check_digital1118b.py",
+      "variant_1118b_mux-tree-cell_verification_result_path": "checks/digital1118b-verification.json",
+      "variant_1118b_mux-tree-cell_markdown_path": "questions/prep-214-mux-tree-cell-1118b-addendum.md"
     },
     {
       "id": "PREP-215",
@@ -49725,7 +49851,7 @@
     {
       "id": "PREP-227",
       "key": "two-register-copy-parallel-and-recirculating-serial",
-      "version": 1,
+      "version": 2,
       "created_on": "2026-10-31",
       "category": "hardware",
       "topic": "two-register-copy-parallel-and-recirculating-serial",
@@ -49741,10 +49867,12 @@
       ],
       "source_tags": [
         "hardware",
-        "apple"
+        "apple",
+        "intel"
       ],
       "reported_companies": [
-        "Apple"
+        "Apple",
+        "intel"
       ],
       "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
       "difficulty": null,
@@ -49763,31 +49891,37 @@
           "path": "sources/2026-10-31-batch22-13.png",
           "received_on": "2026-10-31",
           "role": "original_question_screenshot"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-20.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
         }
       ],
       "original_prompt": "ברשותך שני רגיסטרים בעלי n סיביות. עליך להעביר את המידע מהרגיסטר הראשון לשני ללא רגיסטר עזר. איך תבצע זאת?",
       "translations": {
         "he": {
           "title": "העתקה בין שני רגיסטרים ללא רגיסטר נתונים נוסף",
-          "prompt": "ברשותכם שני רגיסטרים A, B, כל אחד בן N ביטים, N≥1. העבירו את המידע המקורי ב־A אל B בלי רגיסטר נתונים שלישי. יש להבדיל בין העתקה לבין החלפה: המטרה היא B=A המקורי, ואין צורך לשמור את B הישן.\n\nבמימוש הראשי מותר לחבר את כל יציאות Q של A לכניסות D של B ולטעון את B בחזית שעון, בעוד A מחזיק. כהרחבה נפרדת, הניחו שרגיסטרים יכולים רק להזיז ימינה וניתן לקרוא את ביט 0 ולחברו חזרה ל־MSB. הציעו העתקה טורית שמחזירה את A למצבו המקורי. אין להוסיף מונה נסתר אם האיסור כולל גם רגיסטרי בקרה; במקרה כזה מספר חזיתות ההעברה מסופק מבחוץ.",
+          "prompt": "ברשותכם שני רגיסטרים A, B, כל אחד בן N ביטים, N≥1. העבירו את המידע המקורי ב־A אל B בלי רגיסטר נתונים שלישי. יש להבדיל בין העתקה לבין החלפה: המטרה היא B=A המקורי, ואין צורך לשמור את B הישן.\n\nבמימוש הראשי מותר לחבר את כל יציאות Q של A לכניסות D של B ולטעון את B בחזית שעון, בעוד A מחזיק. כהרחבה נפרדת, הניחו שרגיסטרים יכולים רק להזיז ימינה וניתן לקרוא את ביט 0 ולחברו חזרה ל־MSB. הציעו העתקה טורית שמחזירה את A למצבו המקורי. אין להוסיף מונה נסתר אם האיסור כולל גם רגיסטרי בקרה; במקרה כזה מספר חזיתות ההעברה מסופק מבחוץ.\n\n### הרחבה: העתקת ערך עם קבוצת פקודות מצומצמת\nהציבו ב־R2 את הערך המקורי של R1 ושמרו את R1. תנו פתרון עם MOV, פתרון בלי MOV כאשר מותרות פעולות לוגיות, ולבסוף פתרון עם INC, DEC ו־JMPZ בלבד. להשלמת המפרט נשתמש בשני אוגרים בלבד ברוחב קבוע וידוע w≥1, שמכילים בתחילה ערכים כלשהם. הפקודה JMPZ R,label בודקת ישירות אם R שווה לאפס. אפשר לפרוס קוד לפי הרוחב הידוע. ציינו אם דרך חלופית דורשת אוגר עזר או פירוש אחר לקפיצה.",
           "hint": "האם באמת צריך מקום זמני כדי להעתיק, או רק כדי להחליף שני ערכים?",
           "hints": [
             "האם באמת צריך מקום זמני כדי להעתיק, או רק כדי להחליף שני ערכים?",
             "בממשק מקביל אפשר לחבר D_B[i]=Q_A[i] ולכתוב רק ל־B בחזית אחת.",
             "בגרסה טורית שדרו את ה־LSB הישן של A גם אל MSB של B וגם בחזרה אל MSB של A. לאחר N חזיתות הסיבוב שומר את A."
           ],
-          "reference_solution": "### העתקה מקבילית היא חיבור, לא אלגוריתם החלפה\nברגיסטרים נפרדים עם כניסות D ויציאות Q מקבילות, חברו D_B[i]=Q_A[i] לכל i. שימו enable של B באחד ושל A באפס, ועמדו ב־setup/hold לפני ואחרי חזית הטעינה. אחרי החזית B מכיל את A המקורי, ו־A לא השתנה. הערך הישן של B נדרס בכוונה. אין צורך ברגיסטר זמני או בשלוש פעולות XOR. במודל רוחב קבוע נדרשים N חיבורים ואירוע לכידה אחד; חיווט ורוחב אפיק הם משאב גם כאשר סופרים רק מחזורי שעון. אין מכאן הבטחת תדר או השהיה פיזית אפסית.\n\n### אם קיים רק ממשק הזזה טורי\nלפני כל חזית קחו bit=A_old[0]. בצעו בו־זמנית A_next=(A_old>>1)|(bit<<(N−1)) ו־B_next=(B_old>>1)|(bit<<(N−1)). A מסתובב, ו־B מכניס את הביט היוצא ממנו. חובה להשתמש בערך הישן של A לשתי ההשמות; אין להזיז את A ורק אחר כך לקרוא את ביט 0 החדש.\n\nאחרי k צעדים נשלחו k הביטים הנמוכים המקוריים של A לפי סדרם. כל ביט חדש נכנס ל־MSB של B, ובהמשך מוזז ימינה. לאחר N צעדים הביט המקורי i של A מגיע בדיוק אל מיקום i ב־B, וכל N הביטים הישנים של B יצאו. A עבר סיבוב מלא ולכן חזר למילה המקורית. לדוגמה N=3, A=101, B=010: אחרי חזיתות עוקבות מתקבלים (110,101), אחר כך (011,010), ולבסוף (101,101). גם N=1, אפס, אחדות מלאות ו־A=B תקינים.\n\nהגרסה הטורית דורשת N חזיתות. אם הנתיב היחיד ל־B יכול להכניס לכל היותר ביט חדש אחד בחזית, ולא קיים ידע מוקדם על A או דחיסה נוספת, יש N ביטים בלתי תלויים להעביר ולכן N הוא חסם תחתון למקרה הגרוע במודל הזה. זו אינה הוכחת מינימום עבור ממשק מקביל, שבו מספיקה חזית אחת. מעבר עצמי בין תחומי שעון אינו נפתר על ידי חיבור חוטים: צריך חוזה סנכרון או handshake לעסקה רב־ביטית.\n\nמספר צעדי ההעברה נדרש כבקרה. מונה פנימי רגיל תופס גם הוא FF, ולכן אינו מותר אם האיסור הוא על כל רגיסטר נוסף. אפשר לקבל N חזיתות enable מבקר חיצוני, או להתיר במפורש מונה בקרה קטן, בלי להסתיר זאת. לאחר ההעתקה יש להפסיק את ה־enable; חזיתות טוריות נוספות עלולות לסובב את B שוב. המודל מאמת את שינויי המילים בלבד ואינו תחליף לסינתזה או לבדיקת תזמון.\n\n### מודל Python שנבדק\n\n```python\n\"\"\"Old-state capture models: parallel copy and LSB-first recirculating copy.\"\"\"\n\n\ndef parallel(a, b, width):\n    mask = (1 << width) - 1\n    if width < 1 or (a | b) & ~mask:\n        raise ValueError('Positive width and unsigned words required')\n    return a, a\n\n\ndef serial(a, b, width):\n    mask = (1 << width) - 1\n    if width < 1 or (a | b) & ~mask:\n        raise ValueError('Positive width and unsigned words required')\n    trace = [(a, b)]\n    for _ in range(width):\n        bit = a & 1\n        a, b = (a >> 1) | (bit << (width - 1)), (b >> 1) | (bit << (width - 1))\n        trace.append((a, b))\n    return a, b, trace\n```\n"
+          "reference_solution": "### העתקה מקבילית היא חיבור, לא אלגוריתם החלפה\nברגיסטרים נפרדים עם כניסות D ויציאות Q מקבילות, חברו D_B[i]=Q_A[i] לכל i. שימו enable של B באחד ושל A באפס, ועמדו ב־setup/hold לפני ואחרי חזית הטעינה. אחרי החזית B מכיל את A המקורי, ו־A לא השתנה. הערך הישן של B נדרס בכוונה. אין צורך ברגיסטר זמני או בשלוש פעולות XOR. במודל רוחב קבוע נדרשים N חיבורים ואירוע לכידה אחד; חיווט ורוחב אפיק הם משאב גם כאשר סופרים רק מחזורי שעון. אין מכאן הבטחת תדר או השהיה פיזית אפסית.\n\n### אם קיים רק ממשק הזזה טורי\nלפני כל חזית קחו bit=A_old[0]. בצעו בו־זמנית A_next=(A_old>>1)|(bit<<(N−1)) ו־B_next=(B_old>>1)|(bit<<(N−1)). A מסתובב, ו־B מכניס את הביט היוצא ממנו. חובה להשתמש בערך הישן של A לשתי ההשמות; אין להזיז את A ורק אחר כך לקרוא את ביט 0 החדש.\n\nאחרי k צעדים נשלחו k הביטים הנמוכים המקוריים של A לפי סדרם. כל ביט חדש נכנס ל־MSB של B, ובהמשך מוזז ימינה. לאחר N צעדים הביט המקורי i של A מגיע בדיוק אל מיקום i ב־B, וכל N הביטים הישנים של B יצאו. A עבר סיבוב מלא ולכן חזר למילה המקורית. לדוגמה N=3, A=101, B=010: אחרי חזיתות עוקבות מתקבלים (110,101), אחר כך (011,010), ולבסוף (101,101). גם N=1, אפס, אחדות מלאות ו־A=B תקינים.\n\nהגרסה הטורית דורשת N חזיתות. אם הנתיב היחיד ל־B יכול להכניס לכל היותר ביט חדש אחד בחזית, ולא קיים ידע מוקדם על A או דחיסה נוספת, יש N ביטים בלתי תלויים להעביר ולכן N הוא חסם תחתון למקרה הגרוע במודל הזה. זו אינה הוכחת מינימום עבור ממשק מקביל, שבו מספיקה חזית אחת. מעבר עצמי בין תחומי שעון אינו נפתר על ידי חיבור חוטים: צריך חוזה סנכרון או handshake לעסקה רב־ביטית.\n\nמספר צעדי ההעברה נדרש כבקרה. מונה פנימי רגיל תופס גם הוא FF, ולכן אינו מותר אם האיסור הוא על כל רגיסטר נוסף. אפשר לקבל N חזיתות enable מבקר חיצוני, או להתיר במפורש מונה בקרה קטן, בלי להסתיר זאת. לאחר ההעתקה יש להפסיק את ה־enable; חזיתות טוריות נוספות עלולות לסובב את B שוב. המודל מאמת את שינויי המילים בלבד ואינו תחליף לסינתזה או לבדיקת תזמון.\n\n### מודל Python שנבדק\n\n```python\n\"\"\"Old-state capture models: parallel copy and LSB-first recirculating copy.\"\"\"\n\n\ndef parallel(a, b, width):\n    mask = (1 << width) - 1\n    if width < 1 or (a | b) & ~mask:\n        raise ValueError('Positive width and unsigned words required')\n    return a, a\n\n\ndef serial(a, b, width):\n    mask = (1 << width) - 1\n    if width < 1 or (a | b) & ~mask:\n        raise ValueError('Positive width and unsigned words required')\n    trace = [(a, b)]\n    for _ in range(width):\n        bit = a & 1\n        a, b = (a >> 1) | (bit << (width - 1)), (b >> 1) | (bit << (width - 1))\n        trace.append((a, b))\n    return a, b, trace\n```\n\n\n### שימור המקור באמצעות תוויות התוכנית\n\n#### כיווני חשיבה להרחבה\n1. החליטו קודם אם צריך לשמר את המקור ומה בדיוק בודקת פקודת הקפיצה.\n2. ל־w סיביות יש רק 2 בחזקת w ערכים. אפשר להקטין עד אפס ברצף פקודות שגודלו ידוע מראש.\n3. כשהמקור מגיע לאפס, מיקום הפקודה יכול לזכור כמה פעמים הוקטן. קפצו לסיומת המגדילה את שני האוגרים בדיוק מספר זה של פעמים.\n\nנשתמש במוסכמת יעד תחילה. הפקודה הרגילה היא `MOV R2,R1`. ללא MOV אפשר לבצע `XOR R2,R2` ואחריה `OR R2,R1`. הראשונה מאפסת את היעד והשנייה מעתיקה אליו את סיביות המקור.\n\nבגרסה המצומצמת נסמן `K=2^w−1`. פרסו K זוגות של בדיקת אפס ב־R2 ואחריה הקטנת R2. כל בדיקה קופצת לשלב הספירה אם היעד כבר אפס. אחרי הזוג האחרון גם הערך המרבי התאפס. כעת בודקים את R1. אם הוא אפס מסיימים. אחרת מקטינים, ובכל עותק של הבדיקה קופצים לתווית אחרת כאשר מגיעים לאפס. בתווית המתאימה ל־a הקטנות מתחילה סיומת עם a זוגות של `INC R1` ו־`INC R2`. במקרה המרבי מספיק ליפול ישירות לתוך הסיומת הארוכה. לדוגמה, זו התוכנית המלאה לשני ביטים.\n\n```text\nJMPZ R2, count\nDEC R2\nJMPZ R2, count\nDEC R2\nJMPZ R2, count\nDEC R2\ncount:\nJMPZ R1, end\nDEC R1\nJMPZ R1, one\nDEC R1\nJMPZ R1, two\nDEC R1\nthree:\nINC R1\nINC R2\ntwo:\nINC R1\nINC R2\none:\nINC R1\nINC R2\nend:\n```\n\nאם בתחילה R1=2,R2=3, היעד מתאפס לאחר שלוש הקטנות. המקור מגיע לאפס לאחר שתיים. הקפיצה ל־two מפעילה שני זוגות הגדלות ומסיימת עם 2 בשני האוגרים. אין איפוס מתחת לאפס או גלישה, כולל בקלט אפס ובקלט מרבי. מונה התוכנית מובנה במעבד ומיקום התווית נושא את המידע הזמני. המחיר הוא סדר גודל של 2 בחזקת w בגודל הקוד ובזמן המקרה הגרוע. זהו מימוש אפשרי במפרט שנבחר, ללא טענת אופטימליות. במעבד עם דגל אפס של הפקודה האחרונה וחשבון מודולרי ברוחב w, החליפו כל בדיקת אוגר ב־INC R, אחריה DEC R ואחריה JMPZ label. שתי הפעולות משחזרות את הערך והדגל האחרון מעיד אם ערכו המקורי אפס. לולאה שמקטינה את המקור ומגדילה את היעד בלבד צורכת את המקור."
         },
         "en": {
           "title": "Copy between two registers without another data register",
-          "prompt": "Two N-bit registers A, B are available, with N≥1. Transfer A’s original information into B without a third data register. Distinguish copying from swapping: the target is B=original A and old B need not survive.\n\nThe main interface permits connecting every A Q output to the corresponding B D input and capturing B on a clock edge while A holds. As a separate extension, suppose registers can only shift right and expose bit 0 for feedback to the MSB. Give a serial copy that restores A. Do not hide a control counter if all additional registers are forbidden; then the N transfer edges are supplied externally.",
+          "prompt": "Two N-bit registers A, B are available, with N≥1. Transfer A’s original information into B without a third data register. Distinguish copying from swapping: the target is B=original A and old B need not survive.\n\nThe main interface permits connecting every A Q output to the corresponding B D input and capturing B on a clock edge while A holds. As a separate extension, suppose registers can only shift right and expose bit 0 for feedback to the MSB. Give a serial copy that restores A. Do not hide a control counter if all additional registers are forbidden; then the N transfer edges are supplied externally.\n\n### Follow-up: Copying a value under an instruction constraint\nAssign the original R1 value to R2 while preserving R1. Give a solution with MOV, one without MOV when logic instructions are available, and one using only INC, DEC and JMPZ. For a precise contract use just two registers of known fixed width w≥1, initially arbitrary. JMPZ R,label directly tests whether R is zero. The code may be expanded at assembly time for that fixed width. State any scratch-register or branch-semantics assumptions in an alternative.",
           "hint": "Is temporary storage needed for copying, or only for preserving two values during a swap?",
           "hints": [
             "Is temporary storage needed for copying, or only for preserving two values during a swap?",
             "With a parallel interface, connect D_B[i]=Q_A[i] and capture only B at one edge.",
             "In the serial version, send A’s old LSB both to B’s MSB and back to A’s MSB. After N edges the circulation restores A."
           ],
-          "reference_solution": "### Parallel copying is wiring, not a swap algorithm\nFor separate registers with parallel D inputs and Q outputs, connect D_B[i]=Q_A[i] for every i. Enable B, hold A, and satisfy setup/hold around the capture edge. After the edge B holds original A, while A is unchanged. Old B is intentionally overwritten. No temporary register or three-XOR exchange is needed. This fixed-width construction uses N connections and one capture event; bus width and wiring are resources even when cost is expressed in clock cycles. It implies neither a frequency guarantee nor zero physical delay.\n\n### A serial shift-only interface\nBefore each edge take bit=A_old[0]. Simultaneously set A_next=(A_old>>1)|(bit<<(N−1)) and B_next=(B_old>>1)|(bit<<(N−1)). A recirculates while its departing bit enters B. Both updates must use old A: shifting A first and then reading its new bit zero sends the wrong stream.\n\nAfter k steps, k original low bits of A have been sent in order. Every incoming bit enters B’s MSB and shifts right on later edges. After N steps original A bit i reaches B bit i, and all old B bits are gone. A has completed one full rotation, restoring its original word. For example N=3, A=101, B=010 gives successive pairs (110,101), then (011,010), then (101,101). N=1, zero, all ones and A=B also work.\n\nSerial copying takes N edges. If the only input path to B carries at most one new bit per edge, with no prior information about arbitrary A or extra compression, N independent bits must pass, so N is a worst-case lower bound in that model. It is not a bound for a parallel interface, which takes one edge. Crossing unrelated clock domains is not solved by direct wiring; a multibit synchronization or handshake contract is needed.\n\nTransfer count is control state. An internal counter also uses FFs and is forbidden if every additional register is banned. Supply N enabled edges externally or explicitly permit a small control counter. Disable shifting after completion: later serial edges can rotate B again. The model checks word-state updates only, not synthesis or physical timing.\n\n### Verified Python teaching model\n\n```python\n\"\"\"Old-state capture models: parallel copy and LSB-first recirculating copy.\"\"\"\n\n\ndef parallel(a, b, width):\n    mask = (1 << width) - 1\n    if width < 1 or (a | b) & ~mask:\n        raise ValueError('Positive width and unsigned words required')\n    return a, a\n\n\ndef serial(a, b, width):\n    mask = (1 << width) - 1\n    if width < 1 or (a | b) & ~mask:\n        raise ValueError('Positive width and unsigned words required')\n    trace = [(a, b)]\n    for _ in range(width):\n        bit = a & 1\n        a, b = (a >> 1) | (bit << (width - 1)), (b >> 1) | (bit << (width - 1))\n        trace.append((a, b))\n    return a, b, trace\n```\n"
+          "reference_solution": "### Parallel copying is wiring, not a swap algorithm\nFor separate registers with parallel D inputs and Q outputs, connect D_B[i]=Q_A[i] for every i. Enable B, hold A, and satisfy setup/hold around the capture edge. After the edge B holds original A, while A is unchanged. Old B is intentionally overwritten. No temporary register or three-XOR exchange is needed. This fixed-width construction uses N connections and one capture event; bus width and wiring are resources even when cost is expressed in clock cycles. It implies neither a frequency guarantee nor zero physical delay.\n\n### A serial shift-only interface\nBefore each edge take bit=A_old[0]. Simultaneously set A_next=(A_old>>1)|(bit<<(N−1)) and B_next=(B_old>>1)|(bit<<(N−1)). A recirculates while its departing bit enters B. Both updates must use old A: shifting A first and then reading its new bit zero sends the wrong stream.\n\nAfter k steps, k original low bits of A have been sent in order. Every incoming bit enters B’s MSB and shifts right on later edges. After N steps original A bit i reaches B bit i, and all old B bits are gone. A has completed one full rotation, restoring its original word. For example N=3, A=101, B=010 gives successive pairs (110,101), then (011,010), then (101,101). N=1, zero, all ones and A=B also work.\n\nSerial copying takes N edges. If the only input path to B carries at most one new bit per edge, with no prior information about arbitrary A or extra compression, N independent bits must pass, so N is a worst-case lower bound in that model. It is not a bound for a parallel interface, which takes one edge. Crossing unrelated clock domains is not solved by direct wiring; a multibit synchronization or handshake contract is needed.\n\nTransfer count is control state. An internal counter also uses FFs and is forbidden if every additional register is banned. Supply N enabled edges externally or explicitly permit a small control counter. Disable shifting after completion: later serial edges can rotate B again. The model checks word-state updates only, not synthesis or physical timing.\n\n### Verified Python teaching model\n\n```python\n\"\"\"Old-state capture models: parallel copy and LSB-first recirculating copy.\"\"\"\n\n\ndef parallel(a, b, width):\n    mask = (1 << width) - 1\n    if width < 1 or (a | b) & ~mask:\n        raise ValueError('Positive width and unsigned words required')\n    return a, a\n\n\ndef serial(a, b, width):\n    mask = (1 << width) - 1\n    if width < 1 or (a | b) & ~mask:\n        raise ValueError('Positive width and unsigned words required')\n    trace = [(a, b)]\n    for _ in range(width):\n        bit = a & 1\n        a, b = (a >> 1) | (bit << (width - 1)), (b >> 1) | (bit << (width - 1))\n        trace.append((a, b))\n    return a, b, trace\n```\n\n\n### Preserving the source using instruction labels\n\n#### Hints for the follow-up\n1. Decide whether the source survives and what the branch actually tests.\n2. A w-bit register has only 2 to the power w possible values. An unrolled sequence can decrement it until zero.\n3. When the source reaches zero, the instruction address can encode how many decrements occurred. Branch into a suffix with that many increments of both registers.\n\nUsing destination-first notation the usual instruction is `MOV R2,R1`. With logic instructions use `XOR R2,R2` followed by `OR R2,R1`. The first clears the destination and the second copies the source bits into it.\n\nFor the restricted machine put `K=2^w−1`. Emit K pairs testing R2 for zero then decrementing it. Each test branches to the counting stage if R2 is already zero. Even the maximum destination reaches zero after the last pair. Now test R1. Finish immediately if it is zero. Otherwise decrement it, and at each unrolled zero test branch to a different label when it reaches zero. The label for a decrements starts a suffix containing a pairs of `INC R1` and `INC R2`. The maximum case falls straight into the longest suffix. Here is the full program for two bits.\n\n```text\nJMPZ R2, count\nDEC R2\nJMPZ R2, count\nDEC R2\nJMPZ R2, count\nDEC R2\ncount:\nJMPZ R1, end\nDEC R1\nJMPZ R1, one\nDEC R1\nJMPZ R1, two\nDEC R1\nthree:\nINC R1\nINC R2\ntwo:\nINC R1\nINC R2\none:\nINC R1\nINC R2\nend:\n```\n\nStarting with R1=2,R2=3, three decrements clear the destination. Two decrements clear the source and the branch to two executes precisely two increment pairs, leaving both registers equal to 2. Neither underflow nor overflow occurs, even for zero and maximum initial values. The existing program counter temporarily records the count in the instruction address. Code size and worst-case execution time are both on the order of 2 to the power w. This is one valid implementation for the stated instruction model. If JMPZ reads only the last arithmetic zero flag and arithmetic wraps modulo 2^w, replace every register test by INC R, DEC R, JMPZ label. The pair restores R, and the final flag indicates whether the original value was zero. A loop that only decrements the source and increments the destination consumes the source."
         }
       },
       "prepared_hints": [
@@ -49830,7 +49964,8 @@
       ],
       "solution_code_path": "solutions/prep_227_register_copy.py",
       "solution_code_paths": [
-        "solutions/prep_227_register_copy.py"
+        "solutions/prep_227_register_copy.py",
+        "solutions/digital1118b_models.py"
       ],
       "verification_script_path": "checks/check_prep_227.py",
       "verification_result_path": "checks/prep-227-verification.json",
@@ -49889,7 +50024,11 @@
           "answer_direction": "That becomes swapping or preserving two values. Simple copying is insufficient; define the ALU and write controls before suggesting XOR swap.",
           "principle": "Information-preservation requirements change the problem and its resources."
         }
-      ]
+      ],
+      "revised_on": "2026-11-18",
+      "variant_1118b_two-register-instruction-copy_verification_script_path": "checks/check_digital1118b.py",
+      "variant_1118b_two-register-instruction-copy_verification_result_path": "checks/digital1118b-verification.json",
+      "variant_1118b_two-register-instruction-copy_markdown_path": "questions/prep-227-two-register-instruction-copy-1118b-addendum.md"
     },
     {
       "id": "PREP-228",
@@ -73662,6 +73801,1610 @@
       ],
       "source_ambiguities": [
         "The quantities and uncertainty are preserved. The learner version uses abstract tokens with precise divisibility as a separate assumption."
+      ]
+    },
+    {
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "ai_assisted": true,
+      "difficulty": null,
+      "estimated_minutes": null,
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "id": "PREP-377",
+      "key": "select-tests-from-failure-matrix",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "hardware",
+      "topic": "test_selection",
+      "format": "verification_design",
+      "topics": [
+        "hardware",
+        "test_selection",
+        "fault_coverage"
+      ],
+      "source_topic_tags": [],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "added_topic_tags": [
+        "test_selection",
+        "fault_coverage"
+      ],
+      "reported_companies": [
+        "intel"
+      ],
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-03.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        }
+      ],
+      "original_prompt": "כל טסט לוקח 10 מילי שניות. רוצים לחסוך זמני בדיקה על ידי הורדת חלק מהטסטים. איזה טסטים נבחר להוריד וכך לחסוך בזמן יקר ועדיין נוכל למצוא בעיות ביעילות גבוהה?",
+      "related_question_ids": [
+        "PREP-159",
+        "PREP-370"
+      ],
+      "media_assets": [
+        {
+          "type": "prompt_diagram",
+          "language": "he",
+          "description": "תוצאות הבדיקות",
+          "path": "diagrams/prep-377-matrix-1118b-he.png"
+        },
+        {
+          "type": "prompt_diagram",
+          "language": "en",
+          "description": "Test outcomes",
+          "path": "diagrams/prep-377-matrix-1118b-en.png"
+        },
+        {
+          "type": "solution_diagram",
+          "language": "he",
+          "description": "כיסוי יחידות פגומות",
+          "path": "diagrams/prep-377-coverage-1118b-he.png"
+        },
+        {
+          "type": "solution_diagram",
+          "language": "en",
+          "description": "Known-fault coverage",
+          "path": "diagrams/prep-377-coverage-1118b-en.png"
+        }
+      ],
+      "markdown_path": "questions/prep-377-select-tests-from-failure-matrix.md",
+      "solution_code_path": "solutions/prep_377_test_selection.py",
+      "solution_code_paths": [
+        "solutions/prep_377_test_selection.py"
+      ],
+      "verification_script_path": "checks/check_validation1118b.py",
+      "verification_result_path": "checks/validation1118b-verification.json",
+      "authorship": "Independently authored bilingual question, proposed solution and teaching diagrams. Human specialist review pending.",
+      "translations": {
+        "he": {
+          "title": "צמצום זמן בדיקה בעזרת מטריצת כשלים",
+          "prompt": "כל בדיקה של יחידה אורכת 10 מילישניות. בטבלה מופיע חלק מתוצאות הבדיקות ההיסטוריות. אילו בדיקות אפשר לשקול להסיר, וכיצד תחליטו אם החיסכון מצדיק זאת? התייחסו לבדיקה שמכשילה את כל היחידות המוצגות, לזיהוי יחידה פגומה וליכולת להבחין בין סוגי תקלות.",
+          "hint": "עקבו אחרי יחידה אחת לאורך הטור שלה. מה מלמדת המשמעות של כשל בבדיקה אם מצב היחידה אינו ידוע?",
+          "hints": [
+            "עקבו אחרי יחידה אחת לאורך הטור שלה. מה מלמדת המשמעות של כשל בבדיקה אם מצב היחידה אינו ידוע?",
+            "השוו את קבוצות היחידות שכל בדיקה מזהה. מה מוסיפה בדיקה שנייה אחרי שבחרתם את הראשונה?",
+            "בדקו יחידות תקינות ידועות ובחנו את הכיסוי הנבחר על אצווה נפרדת. לאבחון, בדקו אילו זוגות תקלות עדיין נותנים אותה חתימה."
+          ],
+          "reference_solution": "### מה רוצים לשמר\nלצורך סינון, קובעים קבוצת תקלות או יחידות פגומות שסומנו באופן בלתי תלוי, ואת שיעור פסילות השווא המותר. עבור בדיקה i מסמנים ב־Fᵢ את הפגומים שהיא מזהה. בחירת בדיקות שאיחוד הקבוצות שלהן מכסה את כל היעדים היא בעיית כיסוי קבוצות. אם אין תוויות אמת, אפשר לכל היותר לשחזר את הדחיות של הסדרה הישנה על המדגם הזה.\n\n### בחירת בדיקות\nשומרים תחילה בדיקות חובה. בכל צעד מוסיפים את הבדיקה שמזהה הכי הרבה יעדים שטרם כוסו, ומעדכנים את קבוצת היעדים שנותרו. קבוצה ריקה, שורה זהה או קבוצה המוכלת בבדיקה אחרת באותה עלות הן מועמדות להסרה, בתנאי שלבדיקה שנשארת אין מחיר גבוה יותר בפסילות שווא ושאין דרישות אבחון או יתירות. יעדים חיוניים מקבלים דרישה משלהם. על מטריצה קטנה אפשר לעבור על כל תתי־הקבוצות ולבחור את הקטנה הכשרה.\n\n### מה אפשר להסיק מהטבלה\nבקטע המוצג שורת X זהה לשורה 2, ושורה 7 מכשילה כל יחידה. העמודות החסרות עשויות להבדיל בין 2 ל־X. אם המטרה היא רק לשחזר את דחיות המדגם המוצג, שורה 7 מספיקה לבדה. כדי להכריע אם היא שימושית מריצים אותה על יחידות תקינות ידועות ובודקים גם את מערך הבדיקה. לאבחון, שתי תקלות מובחנות אם לפחות בדיקה אחת נותנת להן תוצאה שונה.\n\nלדוגמה, בדיקות A,B,C מזהות בהתאמה {1,2}, {2}, {3}. A ו־C מכסות את שלושת היעדים ב־20 מילישניות במקום 30. לפני הסרה בפועל משווים על אצווה נפרדת פסילות שווא, פגומים שחמקו וכיסוי של תקלות נדירות. בסדרה שרצה במלואה, הסרת k בדיקות חוסכת 10k מילישניות ליחידה."
+        },
+        "en": {
+          "title": "Choosing a shorter test suite from a failure matrix",
+          "prompt": "Each test takes 10 ms per unit. The table shows part of a historical pass/fail matrix. Which tests are candidates for removal, and how would you decide whether the saving is justified? Address the row that fails every visible unit, detecting defective units, and distinguishing fault types.",
+          "hint": "Follow a unit down one column. What does a failing test tell you if the unit's condition is unknown?",
+          "hints": [
+            "Follow a unit down one column. What does a failing test tell you if the unit's condition is unknown?",
+            "Compare the sets of units detected by each test. What does a second test add once the first has been chosen?",
+            "Include known-good controls and evaluate the subset on another lot. For diagnosis, check which fault pairs still have indistinguishable signatures."
+          ],
+          "reference_solution": "### Define what must survive pruning\nFor screening, identify independently labelled bad units or fault classes and a false-reject limit. Let Fᵢ be the targets detected by test i. Finding a subset whose union contains every required target is set cover. Without ground truth, the historical matrix can establish agreement with previous rejections only for the observed sample.\n\n### Select and validate\nStart with mandatory tests. Repeatedly add the vetted test that catches the most uncovered targets and remove those targets from the outstanding set. Empty, duplicate or dominated rows are removal candidates if a retained equal-cost test covers the same targets with acceptable false rejects, and diagnostic or redundancy requirements permit it. Protect rare critical faults explicitly. For a small matrix, enumerate subsets and choose the smallest feasible one.\n\n### Interpreting the given excerpt\nRows X and 2 agree on the visible columns. Hidden columns could distinguish them. Row 7 alone reproduces every rejection on the visible sample. Test known-good controls and check the fixture before treating universal failure as evidence of a good screen. For diagnosis, a pair of faults is distinguishable if a retained test gives different outcomes for them.\n\nFor example, tests A, B and C catch {1,2}, {2} and {3} respectively. A and C cover all three targets in 20 ms instead of 30. Replay the proposed suite on a separate lot and count escapes, false rejects and coverage of rare faults. For a sequential suite that runs to completion, removing k tests saves 10k ms per unit."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-377-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "עקבו אחרי יחידה אחת לאורך הטור שלה. מה מלמדת המשמעות של כשל בבדיקה אם מצב היחידה אינו ידוע?"
+        },
+        {
+          "id": "PREP-377-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "השוו את קבוצות היחידות שכל בדיקה מזהה. מה מוסיפה בדיקה שנייה אחרי שבחרתם את הראשונה?"
+        },
+        {
+          "id": "PREP-377-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "בדקו יחידות תקינות ידועות ובחנו את הכיסוי הנבחר על אצווה נפרדת. לאבחון, בדקו אילו זוגות תקלות עדיין נותנים אותה חתימה."
+        },
+        {
+          "id": "PREP-377-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Follow a unit down one column. What does a failing test tell you if the unit's condition is unknown?"
+        },
+        {
+          "id": "PREP-377-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Compare the sets of units detected by each test. What does a second test add once the first has been chosen?"
+        },
+        {
+          "id": "PREP-377-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Include known-good controls and evaluate the subset on another lot. For diagnosis, check which fault pairs still have indistinguishable signatures."
+        }
+      ],
+      "assumptions": [
+        "Each test has a fixed duration. The timing example runs the tests in sequence."
+      ],
+      "optimality": "Greedy selection approximates the minimum. Exhaustive subset search certifies a minimum for small suites.",
+      "verification": "The model was checked on every three-test, three-target matrix, including unreachable targets.",
+      "edge_cases": [
+        "An all-fail row, missing observations, and a mandated test with zero marginal coverage."
+      ],
+      "common_mistakes": [
+        "Ranking only by overall failure rate can drop the sole detector of a rare fault."
+      ],
+      "interview_answer": "I would measure incremental coverage per test cost and validate escapes and false rejects on a held-out lot.",
+      "source_ambiguities": [
+        "The source omits columns and does not label good units."
+      ],
+      "solution_extensions": [
+        {
+          "question": "What changes if testing stops at the first failure?",
+          "answer_direction": "Expected time depends on order and the conditional probability of reaching each test.",
+          "principle": "Expected cost versus full-suite cost."
+        }
+      ],
+      "technical_references": [
+        {
+          "title": "Greedy Set-Cover Algorithms",
+          "url": "https://www.cs.ucr.edu/~neal/publication/Young16SetCover.pdf",
+          "scope": "Greedy choice by marginal coverage."
+        }
+      ]
+    },
+    {
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "ai_assisted": true,
+      "difficulty": null,
+      "estimated_minutes": null,
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "id": "PREP-378",
+      "key": "verify-multi-client-memory-allocation",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "hardware",
+      "topic": "memory_allocation",
+      "format": "verification_design",
+      "topics": [
+        "hardware",
+        "memory_allocation",
+        "constrained_random_verification"
+      ],
+      "source_topic_tags": [],
+      "source_tags": [],
+      "added_topic_tags": [
+        "memory_allocation",
+        "constrained_random_verification"
+      ],
+      "reported_companies": [],
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-04.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-05.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_companion_diagram"
+        }
+      ],
+      "original_prompt": "השאלה חולקה לכמה רמות - מהקל אל הקשה:\nסעיף א: הצע בדיקות רלוונטיות לבדיקת תקינות הרכיב.\nסעיף ב: כתוב בשפת קוד כלשהי מימוש חוקי כלשהו לחלוקת זיכרון תקינה עבור n לקוחות [ממש את func(n,m)]. ניתן לכתוב אפילו חלוקה לגדלים זהים.\nהבהרה: הקלט הוא מספר הלקוחות n וגודל הזיכרון m, והפלט צריך להיות שני מערכים size() ו-adrs() המכילים עבור כל לקוח את גודל הזיכרון שהוקצה לו והכתובת ממנה הוא הוקצה.\nסעיף ג: בהנתן הפונק׳ randomize(a,b) שמקבלת שני פרמטרים והפלט שלה הוא מס׳ רנדומלי בין a ל-b כולל. sort - ממיינת מערך.\nבנה מימוש אחר וכמה שיותר אידיאלי לחלוקת זיכרון תקינה עבור n לקוחות. נסה לייצר את המימוש שמאפשר לבדוק את הרכיב בצורה המיטבית (שהפונק׳ תהיה עם כמה שיותר רנדומליות בלוגיקה של חלוקת הזיכרון).\nלא חובה שכולם יקבלו זיכרון, אם לקוח לא מקבל זיכרון ה-size שלו הוא אפס וה-adrs מאותחל לערך חוקי כלשהו בזיכרון.\n*סעיף ג התחלק לכמה תתי סעיפים בראיון עד להגעה למימוש האולטימטיבי, הדגש היה על זיהוי הבעיות שכל מימוש שנותנים מייצר, והתגברות עליהם עם מימוש אחר/משודרג.",
+      "related_question_ids": [
+        "PREP-102",
+        "PREP-076"
+      ],
+      "media_assets": [
+        {
+          "type": "prompt_diagram",
+          "language": "he",
+          "description": "לקוחות ורכיב הקצאת הזיכרון",
+          "path": "diagrams/prep-378-allocator-1118b-he.png"
+        },
+        {
+          "type": "prompt_diagram",
+          "language": "en",
+          "description": "Clients and memory allocator",
+          "path": "diagrams/prep-378-allocator-1118b-en.png"
+        },
+        {
+          "type": "solution_diagram",
+          "language": "he",
+          "description": "תחומי כתובות לדוגמה",
+          "path": "diagrams/prep-378-intervals-1118b-he.png"
+        },
+        {
+          "type": "solution_diagram",
+          "language": "en",
+          "description": "Example memory layout",
+          "path": "diagrams/prep-378-intervals-1118b-en.png"
+        }
+      ],
+      "markdown_path": "questions/prep-378-verify-multi-client-memory-allocation.md",
+      "solution_code_path": "solutions/prep_378_memory_partitions.py",
+      "solution_code_paths": [
+        "solutions/prep_378_memory_partitions.py"
+      ],
+      "verification_script_path": "checks/check_validation1118b.py",
+      "verification_result_path": "checks/validation1118b-verification.json",
+      "authorship": "Independently authored bilingual question, proposed solution and teaching diagrams. Human specialist review pending.",
+      "translations": {
+        "he": {
+          "title": "חלוקת זיכרון ובדיקת בידוד בין לקוחות",
+          "prompt": "רכיב מקצה ל־n לקוחות תחומים רציפים בזיכרון בעל m תאים. כל לקוח מוגדר בכתובת התחלה ובגודל ויכול לקרוא ולכתוב במקביל לאחרים. אסור לחרוג מהזיכרון או ליצור חפיפה בין אזורים מוקצים. גם לקוח שגודלו אפס מקבל כתובת חוקית. הציעו בדיקות לרכיב, ממשו func(n,m) שמחזירה את המערכים size ו־adrs, והציעו מחולל מגוון יותר בעזרת randomize(a,b) הכוללת את הקצוות ו־sort. הסבירו אילו מקרים מחמיצה חלוקה שווה ואיך תבדקו את המחולל עצמו.",
+          "hint": "כתבו את הכתובות של לקוח אחד כטווח חצי פתוח. מה קורה בגודל אפס?",
+          "hints": [
+            "כתבו את הכתובות של לקוח אחד כטווח חצי פתוח. מה קורה בגודל אפס?",
+            "מנו בנפרד גדלים, רווחים פנויים וסדר לקוחות. אילו מהם משתנים כשמחלקים שווה בשווה?",
+            "מיינו נקודות חיתוך בזוגות, ערבבו את זהויות הלקוחות ובדקו כל תוצאה בעזרת מפת בעלות בלתי תלויה."
+          ],
+          "reference_solution": "### חלוקה בסיסית\nעבור n>0 ו־m>0 מחשבים q,r = divmod(m,n). כל אחד מ־r הלקוחות הראשונים מקבל q+1 תאים והאחרים מקבלים q. כתובת ההתחלה היא סכום הגדלים הקודמים. אם הגודל אפס והסכום כבר הגיע ל־m, בוחרים למשל m−1. לדוגמה, עבור n=3 ו־m=8 אפשר להחזיר גדלים [3,3,2] ובסיסים [0,3,6]. בלי לקוחות מחזירים שני מערכים ריקים. אם יש לקוחות אבל אין אפילו כתובת חוקית אחת, מדווחים על קלט בלתי אפשרי.\n\n### חלוקה אקראית\nמגרילים 2n נקודות בתחום הסגור [0,m] וממיינים. קוראים זוגות עוקבים (s,e). כל זוג מגדיר טווח [s,e), בגודל e−s. מסדר המיון נובע שסוף כל תחום קטן או שווה להתחלת הבא. הרווחים בין הזוגות הם זיכרון פנוי. נקודות שוות יוצרות לקוח ריק, ואז מגרילים לו כתובת חוקית בין 0 ל־m−1. מערבבים את זהויות הלקוחות לפני הצמדתם לזוגות. כך אפשר ליצור גם בסיס גבוה ללקוח הראשון, רווחים בקצוות וגדלים שונים. התפלגות התצורות אינה אחידה. משלבים תצורות מכוונות כגון לקוח יחיד שתופס הכול, מגע מדויק בין תחומים וגישה לתא האחרון.\n\n### בדיקת הרכיב\nבודקים כתובת התחלה, כתובת אחרונה וגישה אחת מחוץ לטווח לפי התגובה שמוגדרת במפרט. כותבים חתימה שונה דרך כל לקוח, קוראים דרך אותו לקוח ומשווים למודל ייחוס של תאים ובעלים. מריצים במקביל קריאות וכתיבות בתחומים שונים ומוודאים שהערכים נשמרים. אם מזריקים תצורה לא חוקית, ציפיית הדחייה תלויה במפרט. בדיקת המחולל נפרדת: מסמנים כל תא בכל אזור חי ומכשילים על סימון חוזר, כתובת פסולה או אורך שאינו מתאים."
+        },
+        "en": {
+          "title": "Generating memory layouts and verifying client isolation",
+          "prompt": "A component assigns contiguous regions of an m-cell memory to n clients. Each client has a base address and a size and can read and write concurrently with other clients. Allocations must be in bounds and disjoint. Even a zero-size client needs a legal base. Propose component tests, implement func(n,m) returning size and adrs arrays, and design a more varied generator using inclusive randomize(a,b) and sort. Explain what equal partitions miss and how you will check the generator.",
+          "hint": "Write a client's addresses as a half-open interval. What does a size of zero mean?",
+          "hints": [
+            "Write a client's addresses as a half-open interval. What does a size of zero mean?",
+            "Separate region lengths, unused gaps and client ordering. Which ones does an equal split vary?",
+            "Sort sampled boundaries into pairs, permute client IDs and check each layout using an independent ownership map."
+          ],
+          "reference_solution": "### Start with a deterministic layout\nFor n>0 and m>0 compute q,r = divmod(m,n). Give q+1 cells to the first r clients and q cells to the rest. Prefix sums supply the bases. When an empty region would start at m, use a legal dummy base such as m−1. For n=3 and m=8 one result has sizes [3,3,2] and bases [0,3,6]. No clients yields two empty arrays. Clients with no addressable cells make the legal-base contract impossible.\n\n### Randomize layouts\nDraw 2n integer cuts from [0,m], sort and take consecutive pairs (s,e). The interval [s,e) has size e−s. Sorting puts every end at or before the next start, leaving all inter-pair gaps unallocated. Equal cuts create an empty region. Assign that client any random base in [0,m−1]. Shuffle the client IDs before assigning pairs. This explores different sizes, unused space and address order. Layouts do not have equal probability. Add directed cases for rare arrangements such as one client owning everything, adjacent regions and access to the last cell.\n\n### Verify the component\nExercise the first and last legal addresses and the specified response to a one-past-end access. Write distinct client signatures, read back through each owner and compare with an independent per-cell reference. Interleave concurrent writes and reads in disjoint regions and check the retained values. The expected reaction to an illegal configuration depends on the interface contract. Check the generator separately by marking every allocated cell and rejecting overlaps, invalid bases or inconsistent sizes."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-378-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "כתבו את הכתובות של לקוח אחד כטווח חצי פתוח. מה קורה בגודל אפס?"
+        },
+        {
+          "id": "PREP-378-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "מנו בנפרד גדלים, רווחים פנויים וסדר לקוחות. אילו מהם משתנים כשמחלקים שווה בשווה?"
+        },
+        {
+          "id": "PREP-378-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "מיינו נקודות חיתוך בזוגות, ערבבו את זהויות הלקוחות ובדקו כל תוצאה בעזרת מפת בעלות בלתי תלויה."
+        },
+        {
+          "id": "PREP-378-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Write a client's addresses as a half-open interval. What does a size of zero mean?"
+        },
+        {
+          "id": "PREP-378-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Separate region lengths, unused gaps and client ordering. Which ones does an equal split vary?"
+        },
+        {
+          "id": "PREP-378-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Sort sampled boundaries into pairs, permute client IDs and check each layout using an independent ownership map."
+        }
+      ],
+      "assumptions": [
+        "A legal base is an integer from 0 through m−1. The memory may contain unused cells."
+      ],
+      "optimality": "The deterministic split takes O(n) time. Sorting boundaries uses O(n log n) time and O(n) storage.",
+      "verification": "Thousands of layouts were checked against independent per-cell occupancy, including cases with more clients than cells.",
+      "edge_cases": [
+        "No clients, no legal address, empty client, adjacent regions, and trailing unused space."
+      ],
+      "common_mistakes": [
+        "Choosing each client's base and size independently does not guarantee disjoint regions."
+      ],
+      "source_ambiguities": [
+        "Specify the response to illegal accesses or configurations before asserting a particular result."
+      ],
+      "interview_answer": "I start with quotient and remainder, randomize boundaries and client ordering, and check legality and isolation with a separate cell map.",
+      "solution_extensions": [
+        {
+          "question": "How would you exercise adjacent regions more often?",
+          "answer_direction": "Generate a shared boundary explicitly and save the random seed for replay.",
+          "principle": "Directed coverage complements random variety."
+        }
+      ],
+      "technical_references": [
+        {
+          "title": "Python random",
+          "url": "https://docs.python.org/3/library/random.html",
+          "scope": "Inclusive integer draws and shuffling."
+        }
+      ]
+    },
+    {
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "id": "PREP-379",
+      "key": "median-of-unsorted-array",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topics": [
+        "software",
+        "arrays_and_search"
+      ],
+      "source_tags": [
+        "logic",
+        "intel"
+      ],
+      "source_topic_tags": [],
+      "added_topic_tags": [
+        "arrays_and_search"
+      ],
+      "reported_companies": [
+        "intel"
+      ],
+      "authorship": "Bilingual AI-assisted proposed solution and independent technical checks. Human expert review pending.",
+      "format": "code",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-06.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        }
+      ],
+      "original_prompt": "נתון מערך מספרים לא ממוין. מצאו את החציון שלו.",
+      "translations": {
+        "he": {
+          "title": "חציון של מערך לא ממוין",
+          "prompt": "נתון מערך לא ממוין של מספרים שלמים מסומנים ברוחב 32 ביט, וייתכנו חזרות. החזירו את החציון. למספר זוגי של איברים החזירו את הממוצע של שני האיברים האמצעיים בסדר הממוין, ולמערך ריק החזירו None. מותר לשנות את סדר הקלט. תנו פתרון פשוט, ואז נסו להשיג זמן ריצה ליניארי בתוחלת בלי למיין את כל המערך.",
+          "hint": "לאילו מקומות במערך הממוין יש השפעה על התשובה?",
+          "hints": [
+            "לאילו מקומות במערך הממוין יש השפעה על התשובה?",
+            "בחרו ציר באקראי וחלקו את הערכים לקטנים, שווים וגדולים ממנו. באיזה חלק נמצאת דרגת האמצע?",
+            "חפשו את הדרגה n//2. במקרה הזוגי, אחרי שהדרגה נמצאה, הערך הקודם לה בסדר הממוין הוא המקסימום בין התאים שמשמאלה."
+          ],
+          "reference_solution": "אם ממיינים, עבור n אי־זוגי התשובה היא האיבר באינדקס n//2. עבור n זוגי ממַצעים את האיברים באינדקסים n//2−1 ו־n//2. זהו פתרון בזמן O(n log n). למשל [9,1,8,2] הופך ל־[1,2,8,9] והחציון הוא 5.\n\nכדי לבחור רק דרגה אחת, מתחילים עם כל הטווח ובוחרים מתוכו ציר אחיד באקראי. מחלקים במקום לשלוש קבוצות עוקבות לפי היחס לציר. אם דרגת האמצע נופלת בקבוצת השווים יודעים מה ערכה. אחרת ממשיכים רק בצד המכיל אותה. בכל סבב האיברים שמחוץ לטווח כבר נמצאים בצד הנכון של כל דרגה שאנחנו עדיין מחפשים. לכן בסיום, כל האיברים משמאל לאינדקס שנבחר קטנים ממנו או שווים לו, וכולם מימינו גדולים ממנו או שווים לו.\n\nבמקרה הזוגי, הגדול מבין האיברים שמשמאל הוא בדיוק ערך הדרגה הקודמת, גם אם יש חזרות. ממַצעים אותו ואת הציר. סכום שני ערכי int32 נכנס בשלֵם בן 64 ביט, והחצאים שמתקבלים בתחום זה ניתנים לייצוג מדויק גם ב־binary64. הקוד משתמש בשלמים של Python בחיבור.\n\n```python\nfrom random import randrange\n\n\ndef median(values):\n    \"\"\"Find the sample median of signed 32-bit integers. May reorder values.\"\"\"\n    n = len(values)\n    if not n:\n        return None\n    middle = n // 2\n    lo, hi = 0, n\n    while True:\n        pivot = values[randrange(lo, hi)]\n        left = scan = lo\n        right = hi\n        while scan < right:\n            if values[scan] < pivot:\n                values[left], values[scan] = values[scan], values[left]\n                left += 1\n                scan += 1\n            elif values[scan] > pivot:\n                right -= 1\n                values[scan], values[right] = values[right], values[scan]\n            else:\n                scan += 1\n        if middle < left:\n            hi = left\n        elif middle >= right:\n            lo = right\n        else:\n            break\n\n    if n % 2:\n        return pivot\n    lower = max(values[i] for i in range(middle))\n    return (lower + pivot) / 2\n```"
+        },
+        "en": {
+          "title": "Median of an unsorted array",
+          "prompt": "An unsorted array contains signed 32-bit integers and may contain duplicates. Return its median. For even length return the mean of the two middle values in sorted order. For an empty array return None. You may reorder the input. Give a simple solution, then try to reach expected linear time without sorting the entire array.",
+          "hint": "Which sorted positions affect the answer?",
+          "hints": [
+            "Which sorted positions affect the answer?",
+            "Choose a random pivot and divide values into smaller, equal and larger groups. Which group contains the middle rank?",
+            "Select rank n//2. For even length, after locating this rank the preceding sorted value is the maximum over the positions to its left."
+          ],
+          "reference_solution": "Sorting gives the element at index n//2 for odd n and the mean of elements at n//2−1 and n//2 for even n. This takes O(n log n) time. For example [9,1,8,2] sorts to [1,2,8,9] and the median is 5.\n\nTo select just one rank, start with the full active interval and choose a pivot uniformly from it. Partition in place into contiguous less-than, equal and greater-than bands. If the middle rank is in the equal band, its value is known. Otherwise keep only the side containing the rank. Each discarded prefix or suffix is already on the correct side of every remaining candidate. On termination all positions left of the selected index contain values at most the pivot, and all positions to its right contain values at least the pivot.\n\nFor even length, the largest element to the left therefore has exactly the previous sorted rank, including ties. Average it with the pivot. A sum of two signed 32-bit values fits in a signed 64-bit intermediate. Halves in this range are exactly representable in binary64. The code adds Python integers before dividing.\n\n```python\nfrom random import randrange\n\n\ndef median(values):\n    \"\"\"Find the sample median of signed 32-bit integers. May reorder values.\"\"\"\n    n = len(values)\n    if not n:\n        return None\n    middle = n // 2\n    lo, hi = 0, n\n    while True:\n        pivot = values[randrange(lo, hi)]\n        left = scan = lo\n        right = hi\n        while scan < right:\n            if values[scan] < pivot:\n                values[left], values[scan] = values[scan], values[left]\n                left += 1\n                scan += 1\n            elif values[scan] > pivot:\n                right -= 1\n                values[scan], values[right] = values[right], values[scan]\n            else:\n                scan += 1\n        if middle < left:\n            hi = left\n        elif middle >= right:\n            lo = right\n        else:\n            break\n\n    if n % 2:\n        return pivot\n    lower = max(values[i] for i in range(middle))\n    return (lower + pivot) / 2\n```"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-379-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "לאילו מקומות במערך הממוין יש השפעה על התשובה?"
+        },
+        {
+          "id": "PREP-379-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "בחרו ציר באקראי וחלקו את הערכים לקטנים, שווים וגדולים ממנו. באיזה חלק נמצאת דרגת האמצע?"
+        },
+        {
+          "id": "PREP-379-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "חפשו את הדרגה n//2. במקרה הזוגי, אחרי שהדרגה נמצאה, הערך הקודם לה בסדר הממוין הוא המקסימום בין התאים שמשמאלה."
+        },
+        {
+          "id": "PREP-379-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Which sorted positions affect the answer?"
+        },
+        {
+          "id": "PREP-379-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Choose a random pivot and divide values into smaller, equal and larger groups. Which group contains the middle rank?"
+        },
+        {
+          "id": "PREP-379-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Select rank n//2. For even length, after locating this rank the preceding sorted value is the maximum over the positions to its left."
+        }
+      ],
+      "solution_code_paths": [
+        "solutions/prep_379_unsorted_median.py"
+      ],
+      "verification_script_path": "checks/check_nov18b_software.py",
+      "verification_result_path": "checks/prep-379-1118b-verification.json",
+      "related_question_ids": [
+        "PREP-211"
+      ],
+      "media_assets": [
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-379-three-way-median-he.png",
+          "language": "he",
+          "description": "חציון של מערך לא ממוין"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-379-three-way-median-en.png",
+          "language": "en",
+          "description": "Median of an unsorted array"
+        }
+      ],
+      "markdown_path": "questions/prep-379-median-of-unsorted-array.md",
+      "solution_code_path": "solutions/prep_379_unsorted_median.py",
+      "assumptions": [
+        "The input may be reordered. Values are int32, with a uniform pivot index on each pass."
+      ],
+      "optimality": "Each partition scans the active interval. A uniform pivot has roughly one-half probability of lying in its middle half, leaving at most about three quarters. Expected work sums as a geometric series to O(n). Repeated extreme pivots cost O(n²) in the worst case. Iterative selection uses O(1) working cells.",
+      "verification": [
+        "Compared exhaustive small arrays with sorted-reference medians and checked int32 extrema."
+      ],
+      "edge_cases": [
+        "With [4,4,4,4] the equal band contains both ranks. With [−2,1] the result is −0.5."
+      ],
+      "common_mistakes": [
+        "Returning only the upper middle for even length changes the median. The position immediately to its left need not hold the lower middle until the prefix is sorted."
+      ],
+      "interview_answer": "Select the middle rank with a three-way partition. For even length scan its left prefix for the other middle value and average them.",
+      "solution_extensions": [
+        {
+          "question": "What changes if the input is read-only?",
+          "answer_direction": "Copy n values and partition the copy to preserve the original.",
+          "principle": "Auxiliary storage depends on mutation rights."
+        }
+      ],
+      "source_ambiguities": [
+        "Use the conventional sample median. The input may be reordered and a sorting-based baseline is welcome."
+      ]
+    },
+    {
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "id": "PREP-380",
+      "key": "recognize-ordered-double-y-stream",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "software",
+      "topic": "basic_data_structures",
+      "topics": [
+        "software",
+        "basic_data_structures"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel",
+        "software"
+      ],
+      "source_topic_tags": [],
+      "added_topic_tags": [
+        "basic_data_structures"
+      ],
+      "reported_companies": [
+        "intel"
+      ],
+      "authorship": "Bilingual AI-assisted proposed solution and independent technical checks. Human expert review pending.",
+      "format": "code",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-11.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        }
+      ],
+      "original_prompt": "יש לנו משדר ומקלט, המשדר שולח תווים ברצף והוא מסיים כאשר שולח \"\\\". המשדר יכול לשדר תו כלשהו אבל המקלט מעוניין רק בתווים x ו-y. המקלט יש לו הפונקציות הבאות: push(), pop(), isEmpty(), whatCharIsComing(). הפונקציה האחרונה פשוט מחזירה את התו ששודר אחרון ושום דבר אחר.\nהמטרה היא להחזיר בסוף השידור האם התקבל הרצף x^n y^2n כלומר מספר ה-y-ים הוא פי 2 ממספר ה-x-ים או לא (כלומר false).\nexample1: xxyyyy -> true\nexample2: yyx -> false כי צריך קודם x-ים ואז y-ים.\nexample3: xya -> false כי יש בו תו שהוא לא x ולא y.",
+      "translations": {
+        "he": {
+          "title": "אימות רצף של x ואחריהם מספר כפול של y",
+          "prompt": "מקלט מקבל אירוע לכל תו. באירוע, whatCharIsComing() מחזירה את התו שהגיע עכשיו. לוכסן הפוך (\\) מסיים את השידור ואינו חלק מהתוכן. בעזרת push, pop ו־isEmpty בלבד על מחסנית ריקה ומספר קבוע של דגלים, קבעו בסיום אם התוכן הוא x^n ואחריו y^(2n) עבור n≥0. כל תו אחר פוסל. למשל xxyyyy מתקבל, ואילו yyx ו־xya נפסלים. בהדגמת הקוד, feed מקבלת את התו שנקרא וכל קריאה מתייחסת לאירוע יחיד.",
+          "hint": "מה צריך לזכור מכל x עד שמגיעים תווי y?",
+          "hints": [
+            "מה צריך לזכור מכל x עד שמגיעים תווי y?",
+            "כל x יוצר התחייבות לשני תווי y. איזה מידע חסר אם זוכרים רק כמה התחייבויות נותרו?",
+            "דחפו שני סמנים לכל x. אחרי ה־y הראשון, כל x פוסל את המסגרת. שלפו סמן לכל y וקבלו בסיום רק אם אין חוב ולא אירעה שגיאה."
+          ],
+          "reference_solution": "בכל אירוע קוראים פעם אחת את התו החדש. אין להסיק שתו התקבל מתוך שינוי בערך, כי x ואחריו x הם שני אירועים שונים. לפני ה־y הראשון, כל x מוסיף שני סמנים. בכל y בודקים שהמחסנית אינה ריקה, שולפים סמן אחד ועוברים לשלב ה־y. בשלב זה x פוסל. תו זר או ניסיון לשלוף בלי סמן פוסלים את המסגרת. ממשיכים לצרוך אירועים עד הלוכסן ומחזירים אמת רק אם המסגרת נשארה תקינה והמחסנית ריקה.\n\nאחרי כל קידומת תקינה גובה המחסנית הוא פעמיים מספר תווי x פחות מספר תווי y, והדגל מבטיח שכל ה־x קדמו לכל ה־y. לכן התרוקנות בסוף שקולה לשוויון המבוקש. לדוגמה ב־xxyyyy הגבהים הם 2,4,3,2,1,0. ב־xyyx היתרה זמנית אפס, אבל ה־x האחרון מפר את הסדר.\n\nהקוד מעבד מסגרת אחת. הפונקציה accepts_frame מוסיפה מתאם בדיקה לאירועי תווים ומחזירה False אם השידור נגמר בלי תו סיום.\n\n```python\nclass Receiver:\n    \"\"\"Call feed exactly once for each newly delivered character.\"\"\"\n\n    def __init__(self, push, pop, is_empty):\n        self.push = push\n        self.pop = pop\n        self.is_empty = is_empty\n        self.reading_y = False\n        self.valid = True\n\n    def feed(self, character):\n        if character == \"\\\\\":\n            return self.valid and self.is_empty()\n        if not self.valid:\n            return None\n        if character == \"x\" and not self.reading_y:\n            self.push(1)\n            self.push(1)\n        elif character == \"y\" and not self.is_empty():\n            self.reading_y = True\n            self.pop()\n        else:\n            self.valid = False\n        return None\n\n\ndef accepts_frame(transmission):\n    stack = []\n    receiver = Receiver(stack.append, stack.pop, lambda: not stack)\n    for character in transmission:\n        answer = receiver.feed(character)\n        if answer is not None:\n            return answer\n    return False\n```"
+        },
+        "en": {
+          "title": "Recognize x followed by twice as many y characters",
+          "prompt": "A receiver gets one event per character. On that event whatCharIsComing() returns the character just received. A backslash (\\) ends the frame and is excluded from the payload. With push, pop and isEmpty on an initially empty stack and a constant number of flags, decide at the end whether the payload is x^n followed by y^(2n), for n≥0. Any other character invalidates it. For example xxyyyy succeeds, while yyx and xya fail. In the code adapter each feed call receives the character read for one event.",
+          "hint": "What obligation does an x leave for later y characters?",
+          "hints": [
+            "What obligation does an x leave for later y characters?",
+            "Every x requires two y characters. What information would an outstanding count alone miss?",
+            "Push two markers for x. Once a y arrives, forbid further x characters. Pop once per y and accept only a valid frame with an empty stack at the terminator."
+          ],
+          "reference_solution": "Read the latest character once on each receive event. Repeated values such as xx are still separate events. Before the first y, push two markers for each x. On a y, require a marker, pop it, and enter the y phase. An x in this phase, a y with no marker, or a foreign character marks the frame invalid. Consume events until the backslash and return true exactly if the frame remains valid and the stack is empty.\n\nAfter any valid prefix the stack height equals twice the number of x characters minus the number of y characters. The phase flag ensures that every x precedes every y. At the end, emptiness is therefore equivalent to the required equality. For xxyyyy the heights are 2,4,3,2,1,0. In xyyx the intermediate debt reaches zero but the final x breaks ordering.\n\nThe implementation processes one frame. accepts_frame provides a character-event adapter for tests and returns False if its input ends without a terminator.\n\n```python\nclass Receiver:\n    \"\"\"Call feed exactly once for each newly delivered character.\"\"\"\n\n    def __init__(self, push, pop, is_empty):\n        self.push = push\n        self.pop = pop\n        self.is_empty = is_empty\n        self.reading_y = False\n        self.valid = True\n\n    def feed(self, character):\n        if character == \"\\\\\":\n            return self.valid and self.is_empty()\n        if not self.valid:\n            return None\n        if character == \"x\" and not self.reading_y:\n            self.push(1)\n            self.push(1)\n        elif character == \"y\" and not self.is_empty():\n            self.reading_y = True\n            self.pop()\n        else:\n            self.valid = False\n        return None\n\n\ndef accepts_frame(transmission):\n    stack = []\n    receiver = Receiver(stack.append, stack.pop, lambda: not stack)\n    for character in transmission:\n        answer = receiver.feed(character)\n        if answer is not None:\n            return answer\n    return False\n```"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-380-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "מה צריך לזכור מכל x עד שמגיעים תווי y?"
+        },
+        {
+          "id": "PREP-380-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "כל x יוצר התחייבות לשני תווי y. איזה מידע חסר אם זוכרים רק כמה התחייבויות נותרו?"
+        },
+        {
+          "id": "PREP-380-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "דחפו שני סמנים לכל x. אחרי ה־y הראשון, כל x פוסל את המסגרת. שלפו סמן לכל y וקבלו בסיום רק אם אין חוב ולא אירעה שגיאה."
+        },
+        {
+          "id": "PREP-380-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "What obligation does an x leave for later y characters?"
+        },
+        {
+          "id": "PREP-380-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Every x requires two y characters. What information would an outstanding count alone miss?"
+        },
+        {
+          "id": "PREP-380-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Push two markers for x. Once a y arrives, forbid further x characters. Pop once per y and accept only a valid frame with an empty stack at the terminator."
+        }
+      ],
+      "solution_code_paths": [
+        "solutions/prep_380_ordered_double_stream.py"
+      ],
+      "verification_script_path": "checks/check_nov18b_software.py",
+      "verification_result_path": "checks/prep-380-1118b-verification.json",
+      "related_question_ids": [
+        "PREP-037",
+        "PREP-228"
+      ],
+      "media_assets": [
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-380-stream-debt-he.png",
+          "language": "he",
+          "description": "אימות רצף של x ואחריהם מספר כפול של y"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-380-stream-debt-en.png",
+          "language": "en",
+          "description": "Recognize x followed by twice as many y characters"
+        }
+      ],
+      "markdown_path": "questions/prep-380-recognize-ordered-double-y-stream.md",
+      "solution_code_path": "solutions/prep_380_ordered_double_stream.py",
+      "assumptions": [
+        "Each frame starts with a fresh empty stack. The first backslash ends this frame and later characters belong to future frames."
+      ],
+      "optimality": "Constant work per character, O(k) total time. The stack can reach 2k markers over k received characters.",
+      "verification": [
+        "Compared all short words over x, y and a foreign character with the direct language definition, including missing terminators and trailing input."
+      ],
+      "edge_cases": [
+        "A terminator alone accepts the empty payload. xy leaves one marker. A leading y immediately makes the frame invalid."
+      ],
+      "common_mistakes": [
+        "Checking the final count ratio alone accepts inputs in the wrong order. Ignoring foreign characters also changes the language."
+      ],
+      "interview_answer": "The stack counts y characters still owed and a flag records the phase. The terminator requires zero debt and a valid frame.",
+      "solution_extensions": [
+        {
+          "question": "What if an unbounded counter is permitted?",
+          "answer_direction": "Store the same debt in an integer and keep the phase flag. Up to k characters need O(log(k+1)) counter bits.",
+          "principle": "An interface restriction can change storage cost."
+        }
+      ],
+      "source_ambiguities": [
+        "The source ends a frame with a backslash. Allow n=0 and assume a distinct receive event for each character, even for repeated values."
+      ]
+    },
+    {
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "id": "PREP-381",
+      "key": "online-rectangle-shelf-placement",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "software",
+      "topic": "arrays_and_search",
+      "topics": [
+        "software",
+        "arrays_and_search"
+      ],
+      "source_tags": [],
+      "source_topic_tags": [],
+      "added_topic_tags": [
+        "arrays_and_search"
+      ],
+      "reported_companies": [],
+      "authorship": "Bilingual AI-assisted proposed solution and independent technical checks. Human expert review pending.",
+      "format": "code",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-17.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        },
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-18.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_companion_diagram"
+        }
+      ],
+      "original_prompt": "אתה צריך למלא לוח טטריס בגודל M על L. M מייצג את רוחב הלוח ו-L את אורך הלוח. יש לך פונקציה נתונה get_next שמביאה לך כל פעם צורה אחרת עם רוחב m ואורך l. עליך למלא כל פעם שורה עד הסוף ולאחר מכן לעבור לשורה הבאה (שמתחילה בהתאם ל-l המקסימלי מהשורה הקודמת) וכך עד שכל הלוח מלא ככל הניתן. כתוב קוד אשר ממלא את הלוח, שים לב למקרי קצה.",
+      "translations": {
+        "he": {
+          "title": "סידור מלבנים בשורות על לוח",
+          "prompt": "לוח ברוחב M ובגובה L מקבל זרם סופי של מלבנים בגודל (m,l) דרך get_next(). ערך None מסמן סוף. הציבו אותם בסדר ההגעה משמאל לימין, החל מהפינה השמאלית התחתונה (0,0). התקדמו לרוחב כל שורה. תחתית השורה הבאה נמצאת בגובה ראש המלבן הגבוה בשורה הנוכחית. החזירו לכל מלבן שהוצב את [אינדקס הקלט,x,y] של פינתו השמאלית התחתונה.\n\nלתרגיל זה אין סיבוב, שינוי סדר או מילוי מאוחר של חורים בשורות סגורות. אם המלבן מתאים בהמשך השורה, הציבו אותו שם. אם חסר רוחב, נסו לפתוח עבורו את השורה הבאה. אם המלבן אינו מתאים או שממד שלו אינו חיובי, דלגו עליו והשאירו את השורה הנוכחית פתוחה. מותר לפגוש את שפת הלוח בדיוק. כל הממדים שלמים וממדי הלוח אינם שליליים. הסבירו אילו פערים עלולים להישאר.",
+          "hint": "איזה מידע צריך לשמור כדי להניח את המלבן הבא בלי לסרוק את הלוח?",
+          "hints": [
+            "איזה מידע צריך לשמור כדי להניח את המלבן הבא בלי לסרוק את הלוח?",
+            "שמרו את הקצה הימני של השורה, את גובה הבסיס שלה ואת גובה המלבן הגבוה בה.",
+            "לפני סגירת שורה, בדקו שהמלבן נכנס בגובה בבסיס החדש. אם הוא נדחה, שמרו את שלושת הערכים הקודמים."
+          ],
+          "reference_solution": "שמרו שלושה מספרים. x הוא הקצה הפנוי הבא לרוחב. base הוא גובה תחתית השורה, ו־shelf_height הוא הגובה המרבי של מלבנים שכבר נוספו לשורה. אתחלו את שלושתם לאפס. עבור מלבן תקין בדקו אם קצהו העליון חורג מ־L או שרוחבו גדול מהלוח. במקרה כזה דלגו. אחרת, אם נשאר די רוחב, החזירו את נקודת ההצבה והתקדמו ברוחב המלבן. עדכנו את הגובה המרבי.\n\nאם הרוחב הנותר קטן מדי, חשבו בסיס אפשרי base+shelf_height. רק אם המלבן נכנס בגובה החדש, סגרו את השורה הישנה והתחילו את החדשה ב־x=0. אם אינו נכנס, דילוג בלי לסגור את השורה יכול להשאיר מקום למלבן קטן יותר שיגיע בהמשך. הפסיקו בסוף הזרם. אפשר להפסיק מוקדם גם כשהשורה הגיעה לשפת ימין ושיא גובהה הגיע לשפת הלוח העליונה.\n\nלדוגמה, על לוח 6×5 החלקים (2,1),(1,3),(3,2),(4,2) מונחים בנקודות (0,0),(2,0),(3,0),(0,3). החלק השלישי נמוך מהשני, ולכן החלק הרביעי מתחיל בגובה 3. השורות אינן חופפות מאחר שבסיס שורה חדשה גבוה לפחות כמו החלק העליון של כל מלבן בשורה הקודמת. בתוך השורה טווחי הרוחב זרים. הפער מעל חלק נמוך נשאר ריק כשהשורה נסגרת. זו מדיניות הצבה מקוונת, והיא אינה מבטיחה ניצול שטח מרבי.\n\n```python\ndef shelf_placements(width, height, get_next):\n    \"\"\"Yield [input index, x, y] for each placement on a fixed board.\"\"\"\n    x = base = shelf_height = 0\n    index = 0\n    while width > 0 and height > 0:\n        piece = get_next()\n        if piece is None:\n            return\n        w, h = piece\n        current = index\n        index += 1\n        if not (0 < w <= width and 0 < h <= height - base):\n            continue\n        if w > width - x:\n            new_base = base + shelf_height\n            if h > height - new_base:\n                continue\n            x, base, shelf_height = 0, new_base, 0\n        yield [current, x, base]\n        x += w\n        shelf_height = max(shelf_height, h)\n        if x == width and base + shelf_height == height:\n            return\n\n\ndef pack_shelves(width, height, pieces):\n    source = iter(pieces)\n    return list(shelf_placements(width, height, lambda: next(source, None)))\n```"
+        },
+        "en": {
+          "title": "Place a stream of rectangles on shelves",
+          "prompt": "A board of width M and height L receives a finite stream of (m,l) rectangles from get_next(). None ends the stream. Place them in arrival order from left to right, starting at bottom left (0,0). A new row starts at the top of the tallest rectangle in the current row. Return [input index,x,y] for the bottom-left corner of each placed rectangle.\n\nFor this exercise there is no rotation, reordering or later backfilling of closed rows. If the rectangle fits at the end of the current row, place it there. When it lacks horizontal space, try starting the next row for it. If it does not fit, or either dimension is nonpositive, skip it and keep the current row open. Touching the board edge is allowed. All dimensions are integers and board dimensions are nonnegative. Explain where gaps may remain.",
+          "hint": "What information would let you place a rectangle without scanning the board?",
+          "hints": [
+            "What information would let you place a rectangle without scanning the board?",
+            "Keep the next horizontal position, the row base and the height of the tallest piece placed in it.",
+            "Before closing a row, test the candidate at the prospective new base. Preserve the current row if the candidate is rejected."
+          ],
+          "reference_solution": "Keep three numbers. x is the next horizontal position, base is the bottom of the row, and shelf_height is the maximum height of the rectangles already placed in that row. Initialize all three to zero. Skip a nonpositive rectangle, a rectangle wider than the board or one too tall even at the current base. If enough width remains, emit its placement, advance x by its width and update the maximum height.\n\nWhen width runs out, compute the prospective base as base+shelf_height. Close the row only when the rectangle fits above that new base, then start at x=0. Otherwise skip it and preserve the row so a smaller later piece may still fit. Stop when the stream ends. It is also safe to stop once the row reaches the right edge and its tallest piece reaches the board top.\n\nFor a 6×5 board, pieces (2,1),(1,3),(3,2),(4,2) land at (0,0),(2,0),(3,0),(0,3). The third rectangle is shorter than the second, so the fourth starts at height 3. The base of each new row is at least as high as the top of each piece in the preceding row, and horizontal intervals within a row are disjoint. Gaps above short pieces remain unused when a row closes. This online policy does not guarantee maximum occupied area.\n\n```python\ndef shelf_placements(width, height, get_next):\n    \"\"\"Yield [input index, x, y] for each placement on a fixed board.\"\"\"\n    x = base = shelf_height = 0\n    index = 0\n    while width > 0 and height > 0:\n        piece = get_next()\n        if piece is None:\n            return\n        w, h = piece\n        current = index\n        index += 1\n        if not (0 < w <= width and 0 < h <= height - base):\n            continue\n        if w > width - x:\n            new_base = base + shelf_height\n            if h > height - new_base:\n                continue\n            x, base, shelf_height = 0, new_base, 0\n        yield [current, x, base]\n        x += w\n        shelf_height = max(shelf_height, h)\n        if x == width and base + shelf_height == height:\n            return\n\n\ndef pack_shelves(width, height, pieces):\n    source = iter(pieces)\n    return list(shelf_placements(width, height, lambda: next(source, None)))\n```"
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-381-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "איזה מידע צריך לשמור כדי להניח את המלבן הבא בלי לסרוק את הלוח?"
+        },
+        {
+          "id": "PREP-381-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "שמרו את הקצה הימני של השורה, את גובה הבסיס שלה ואת גובה המלבן הגבוה בה."
+        },
+        {
+          "id": "PREP-381-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "לפני סגירת שורה, בדקו שהמלבן נכנס בגובה בבסיס החדש. אם הוא נדחה, שמרו את שלושת הערכים הקודמים."
+        },
+        {
+          "id": "PREP-381-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "What information would let you place a rectangle without scanning the board?"
+        },
+        {
+          "id": "PREP-381-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Keep the next horizontal position, the row base and the height of the tallest piece placed in it."
+        },
+        {
+          "id": "PREP-381-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Before closing a row, test the candidate at the prospective new base. Preserve the current row if the candidate is rejected."
+        }
+      ],
+      "solution_code_paths": [
+        "solutions/prep_381_shelf_rectangles.py"
+      ],
+      "verification_script_path": "checks/check_nov18b_software.py",
+      "verification_result_path": "checks/prep-381-1118b-verification.json",
+      "related_question_ids": [],
+      "media_assets": [
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-381-shelf-board-given-he.png",
+          "language": "he",
+          "description": "סידור מלבנים בשורות על לוח"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-381-shelf-board-given-en.png",
+          "language": "en",
+          "description": "Place a stream of rectangles on shelves"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-381-shelf-placement-trace-he.png",
+          "language": "he",
+          "description": "סידור מלבנים בשורות על לוח"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-381-shelf-placement-trace-en.png",
+          "language": "en",
+          "description": "Place a stream of rectangles on shelves"
+        }
+      ],
+      "markdown_path": "questions/prep-381-online-rectangle-shelf-placement.md",
+      "solution_code_path": "solutions/prep_381_shelf_rectangles.py",
+      "assumptions": [
+        "Use lower-left coordinates. Rectangles are fixed in orientation. Skips are allowed and complete tiling is not required."
+      ],
+      "optimality": "O(k) time for k pieces read and O(1) auxiliary storage beyond the output. Each placement can be emitted immediately.",
+      "verification": [
+        "Compared placements against an explicit shelf model. Checked exact fits, oversized pieces, zero dimensions and a skipped piece followed by one that fits."
+      ],
+      "edge_cases": [
+        "An exact width fit is legal. Rejecting a rectangle whose new row would exceed the height must preserve room for the next input."
+      ],
+      "common_mistakes": [
+        "The most recently placed rectangle may be shorter than an earlier one. Starting the next row at its top alone can cause overlap."
+      ],
+      "interview_answer": "Track the next x, the base and peak height. On horizontal overflow start a new row only when the candidate fits there.",
+      "solution_extensions": [
+        {
+          "question": "Can sorting the pieces in advance improve utilization?",
+          "answer_direction": "Grouping similar heights may reduce gaps, but sorting requires advance access and changes the input-order constraint.",
+          "principle": "Online placement versus offline rearrangement."
+        }
+      ],
+      "source_ambiguities": [
+        "The following board sketch is part of the given problem. The exercise fixes input-order placement without rotation and skips a shape that does not fit."
+      ]
+    },
+    {
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "id": "PREP-382",
+      "key": "three-plane-cuts-cylinder-eight-congruent-pieces",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "logic",
+      "topic": "tradeoff_reasoning",
+      "topics": [
+        "logic",
+        "tradeoff_reasoning"
+      ],
+      "source_tags": [
+        "logic",
+        "elbit"
+      ],
+      "source_topic_tags": [],
+      "added_topic_tags": [
+        "tradeoff_reasoning"
+      ],
+      "reported_companies": [
+        "elbit"
+      ],
+      "authorship": "Bilingual AI-assisted proposed solution and independent technical checks. Human expert review pending.",
+      "format": "logic_puzzle",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-09.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        }
+      ],
+      "original_prompt": "חלקו את הגליל לשמונה חלקים זהים בעזרת שלושה חיתוכים בלבד.",
+      "translations": {
+        "he": {
+          "title": "שמונה חלקים חופפים בשלושה חיתוכים",
+          "prompt": "נתון גליל עגול ישר ומלא, כמו בשרטוט. איך חותכים אותו לשמונה חלקים חופפים בשלושה חיתוכים מישוריים? בכל חיתוך מישור אחד עובר דרך הגליל כולו. החלקים נשארים במקומם בין החיתוכים. הסבירו מדוע אפשר להניח כל חלק בדיוק על כל חלק אחר.",
+          "hint": "אחרי החיתוך הראשון יש שני חלקים. בכמה חלקים חייב לפגוע החיתוך הבא כדי שאפשר יהיה להגיע לשמונה?",
+          "hints": [
+            "אחרי החיתוך הראשון יש שני חלקים. בכמה חלקים חייב לפגוע החיתוך הבא כדי שאפשר יהיה להגיע לשמונה?",
+            "הסתכלו על הגליל מלמעלה. אילו שני קווים מחלקים את העיגול לארבע גזרות חופפות?",
+            "שני מישורים דרך ציר הגליל כבר מחלקים את הבסיס. באיזה גובה יעבור מישור שיחצה את כל ארבעת החלקים?"
+          ],
+          "reference_solution": "### בוחרים שני קטרים וגובה אחד\nבמבט מלמעלה מסמנים שני קטרים ניצבים. מעבירים חתך אנכי לכל אורך הגליל לאורך הקוטר הראשון, וחתך אנכי שני לאורך הקוטר השני. מתקבלים ארבעה רבעי גליל בגובה המלא. החיתוך השלישי מקביל לבסיסים ועובר בדיוק בחצי הגובה. הוא חוצה את כל ארבעת הרבעים בבת אחת.\n\nלכל חלק בסיס בצורת רבע עיגול באותו רדיוס וגובה השווה למחצית גובה הגליל. סיבוב סביב ציר הגליל בכפולה של רבע סיבוב מתאים בין רבעים באותה שכבה. הזזה אנכית במחצית הגובה מתאימה בין השכבות. כך מתקבלות שמונה צורות חופפות.\n\n**מדוע שלושה חיתוכים נחוצים?** החלקים בכל שלב קמורים, ולכן מישור יכול לחלק כל חלק לכל היותר לשניים. בשני חיתוכים אפשר לקבל לכל היותר ארבעה חלקים."
+        },
+        "en": {
+          "title": "Eight congruent pieces in three cuts",
+          "prompt": "A solid right circular cylinder is shown below. How can you divide it into eight congruent pieces using three plane cuts? Each cut passes through the entire cylinder, and the pieces stay in place between cuts. Explain how any piece can fit exactly onto any other.",
+          "hint": "After the first cut there are two pieces. How many must the next cut intersect to leave eight pieces achievable?",
+          "hints": [
+            "After the first cut there are two pieces. How many must the next cut intersect to leave eight pieces achievable?",
+            "Look at the circular base from above. Which two lines divide it into four congruent sectors?",
+            "Two planes through the cylinder axis divide the base. At what height could a plane bisect all four pieces?"
+          ],
+          "reference_solution": "### Choose two diameters and one height\nIn the top view, draw two perpendicular diameters. Make a vertical cut along the first diameter, from top to bottom, then a vertical cut along the second. This gives four full-height quarter cylinders. Make the third cut parallel to the bases, exactly halfway up. It bisects all four quarters at once.\n\nEach piece has a quarter-disk base of the same radius and half the original height. A rotation around the axis by a multiple of a quarter turn aligns any two quarters in a layer. A vertical translation by half the cylinder height aligns matching quarters in the two layers. This establishes congruence for all eight pieces.\n\n**Why are three cuts necessary?** Each intermediate piece is convex, so a plane can split it into at most two. Two cuts can produce at most four pieces."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-382-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "אחרי החיתוך הראשון יש שני חלקים. בכמה חלקים חייב לפגוע החיתוך הבא כדי שאפשר יהיה להגיע לשמונה?"
+        },
+        {
+          "id": "PREP-382-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "הסתכלו על הגליל מלמעלה. אילו שני קווים מחלקים את העיגול לארבע גזרות חופפות?"
+        },
+        {
+          "id": "PREP-382-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "שני מישורים דרך ציר הגליל כבר מחלקים את הבסיס. באיזה גובה יעבור מישור שיחצה את כל ארבעת החלקים?"
+        },
+        {
+          "id": "PREP-382-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "After the first cut there are two pieces. How many must the next cut intersect to leave eight pieces achievable?"
+        },
+        {
+          "id": "PREP-382-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Look at the circular base from above. Which two lines divide it into four congruent sectors?"
+        },
+        {
+          "id": "PREP-382-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Two planes through the cylinder axis divide the base. At what height could a plane bisect all four pieces?"
+        }
+      ],
+      "solution_code_paths": [],
+      "verification_script_path": "checks/check_1118b_cylinder_cards_hourglasses.py",
+      "verification_result_path": "checks/prep-382-1118b-verification.json",
+      "related_question_ids": [],
+      "media_assets": [
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-382-uncut-cylinder-he.png",
+          "language": "he",
+          "description": "שמונה חלקים חופפים בשלושה חיתוכים"
+        },
+        {
+          "type": "prompt_diagram",
+          "path": "diagrams/prep-382-uncut-cylinder-en.png",
+          "language": "en",
+          "description": "Eight congruent pieces in three cuts"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-382-cylinder-three-sections-he.png",
+          "language": "he",
+          "description": "שמונה חלקים חופפים בשלושה חיתוכים"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-382-cylinder-three-sections-en.png",
+          "language": "en",
+          "description": "Eight congruent pieces in three cuts"
+        }
+      ],
+      "markdown_path": "questions/prep-382-three-plane-cuts-cylinder-eight-congruent-pieces.md",
+      "assumptions": [
+        "The cylinder is right and circular. Each cut is a plane through the entire solid and the pieces stay in position."
+      ],
+      "optimality": "Three cuts suffice, and two cuts can produce at most four pieces.",
+      "verification": [
+        "The four angular intervals and two height intervals were checked with rational arithmetic for full coverage and disjoint interiors."
+      ],
+      "edge_cases": [
+        "Diameters meeting at 60 degrees produce two different sector angles. An off-center horizontal cut produces two different heights."
+      ],
+      "common_mistakes": [
+        "Checking volume alone does not establish that the pieces fit exactly onto one another."
+      ],
+      "interview_answer": "Make perpendicular vertical cuts through the axis to get four quarters. A horizontal cut at half height bisects all four quarters into congruent pieces.",
+      "solution_extensions": [
+        {
+          "question": "What if the horizontal mid-height cut has already been made?",
+          "answer_direction": "Make the same two perpendicular axial cuts, passing through both layers each time.",
+          "principle": "Applying the same set of cutting planes in any order gives the same final partition."
+        }
+      ],
+      "source_ambiguities": [
+        "The edited puzzle specifies a right circular cylinder, plane cuts and stationary pieces. Identical means congruent."
+      ]
+    },
+    {
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "id": "PREP-383",
+      "key": "thirteen-cards-paired-rank-constraints",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "logic",
+      "topic": "estimation_sanity_checks",
+      "topics": [
+        "logic",
+        "estimation_sanity_checks"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "source_topic_tags": [],
+      "added_topic_tags": [
+        "estimation_sanity_checks"
+      ],
+      "reported_companies": [
+        "intel"
+      ],
+      "authorship": "Bilingual AI-assisted proposed solution and independent technical checks. Human expert review pending.",
+      "format": "logic_puzzle",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-16.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        }
+      ],
+      "original_prompt": "בחפיסה 13 קלפים, ובה מלכים, מלכות, אסים ונסיכים. יש לפחות אחד מכל סוג וכל הכמויות שונות. מספר המלכים והמלכות ביחד 5, ומספר הנסיכים והמלכות ביחד 6. מאיזה סוג יש רק שני קלפים?",
+      "translations": {
+        "he": {
+          "title": "שלושה־עשר קלפים וארבע דרגות",
+          "prompt": "בערימה 13 קלפים מארבע דרגות בלבד — מלכים, מלכות, נסיכים ואסים. כל דרגה מופיעה לפחות פעם אחת, וארבע הכמויות שונות זו מזו. מלכים ומלכות יחד מונים 5, ונסיכים ומלכות יחד מונים 6. ייתכנו יותר מארבעה קלפים מאותה דרגה. אם ידוע שדרגה כלשהי מופיעה פעמיים, איזו דרגה זו? האם קיומה של דרגה כזו מתחייב גם בלי המידע הנוסף?",
+          "hint": "בחרו משתנה לכמות המלכות, שמופיעה בשני הנתונים.",
+          "hints": [
+            "בחרו משתנה לכמות המלכות, שמופיעה בשני הנתונים.",
+            "אם יש q מלכות, כמה מלכים וכמה נסיכים יש? השלימו את מספר האסים מתוך הסך 13.",
+            "נסו את כל הערכים החיוביים ל־q שמשאירים לפחות מלך אחד. פסלו כל שורה שבה שתי כמויות שוות."
+          ],
+          "reference_solution": "### מתחילים בדרגה שמופיעה בשתי המשוואות\nנסמן ב־q את מספר המלכות. יש `5−q` מלכים, `6−q` נסיכים ו־`2+q` אסים לאחר השלמה ל־13. מכיוון שיש לפחות מלכה אחת ומלך אחד, q יכול להיות 1, 2, 3 או 4.\n\n| מלכות | מלכים | נסיכים | אסים | הכמויות שונות? |\n| --- | --- | --- | --- | --- |\n| 1 | 4 | 5 | 3 | כן |\n| 2 | 3 | 4 | 4 | לא |\n| 3 | 2 | 3 | 5 | לא |\n| 4 | 1 | 2 | 6 | כן |\n\nבשורה האחרונה יש בדיוק שני **נסיכים**. זו השורה החוקית היחידה שבה דרגה מופיעה פעמיים. גם השורה הראשונה חוקית ובה אין אף דרגה שמופיעה פעמיים. מכאן שהשאלה האחרונה אכן מוסיפה מידע."
+        },
+        "en": {
+          "title": "Thirteen cards and four ranks",
+          "prompt": "A pile contains 13 cards, all kings, queens, jacks or aces. Each rank occurs at least once, and all four counts are different. The kings and queens together total 5, and the jacks and queens together total 6. More than four copies of a rank are allowed. If some rank occurs exactly twice, which rank is it? Do the other clues alone guarantee that any rank occurs twice?",
+          "hint": "Choose a variable for the rank shared by both pair totals.",
+          "hints": [
+            "Choose a variable for the rank shared by both pair totals.",
+            "If there are q queens, how many kings and jacks are there? Use the total of 13 to obtain the number of aces.",
+            "Try each positive value of q that leaves at least one king. Discard any row with two equal counts."
+          ],
+          "reference_solution": "### Start with the rank in both equations\nLet q be the number of queens. There are `5−q` kings, `6−q` jacks and hence `2+q` aces after subtracting from 13. Since there is at least one queen and at least one king, the possible values of q are 1, 2, 3 and 4.\n\n| Queens | Kings | Jacks | Aces | Distinct counts? |\n| --- | --- | --- | --- | --- |\n| 1 | 4 | 5 | 3 | Yes |\n| 2 | 3 | 4 | 4 | No |\n| 3 | 2 | 3 | 5 | No |\n| 4 | 1 | 2 | 6 | Yes |\n\nThe final row has exactly two **jacks**. It is the only valid row containing a two. The first row also satisfies all the original clues and has no count of two, so the existence of such a rank adds information."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-383-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "בחרו משתנה לכמות המלכות, שמופיעה בשני הנתונים."
+        },
+        {
+          "id": "PREP-383-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "אם יש q מלכות, כמה מלכים וכמה נסיכים יש? השלימו את מספר האסים מתוך הסך 13."
+        },
+        {
+          "id": "PREP-383-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "נסו את כל הערכים החיוביים ל־q שמשאירים לפחות מלך אחד. פסלו כל שורה שבה שתי כמויות שוות."
+        },
+        {
+          "id": "PREP-383-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Choose a variable for the rank shared by both pair totals."
+        },
+        {
+          "id": "PREP-383-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "If there are q queens, how many kings and jacks are there? Use the total of 13 to obtain the number of aces."
+        },
+        {
+          "id": "PREP-383-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Try each positive value of q that leaves at least one king. Discard any row with two equal counts."
+        }
+      ],
+      "solution_code_paths": [],
+      "verification_script_path": "checks/check_1118b_cylinder_cards_hourglasses.py",
+      "verification_result_path": "checks/prep-383-1118b-verification.json",
+      "related_question_ids": [],
+      "media_assets": [],
+      "markdown_path": "questions/prep-383-thirteen-cards-paired-rank-constraints.md",
+      "assumptions": [
+        "The pile can contain any number of copies of each rank, and each card has one rank."
+      ],
+      "optimality": "Checking the four possible queen counts exhausts every feasible assignment.",
+      "verification": [
+        "Every positive composition of 13 into four rank counts was enumerated and checked against each clue."
+      ],
+      "edge_cases": [
+        "If the cards must come from one standard deck with at most four of each rank, both otherwise valid rows are ruled out."
+      ],
+      "common_mistakes": [
+        "Stopping at a valid assignment with two jacks without checking whether a twice-occurring rank is guaranteed."
+      ],
+      "interview_answer": "Two assignments satisfy the clues. One has two jacks and the other has no rank occurring twice. If a rank is guaranteed to occur twice, it is jacks.",
+      "solution_extensions": [
+        {
+          "question": "Which ranks could occur twice if the counts no longer had to differ?",
+          "answer_direction": "The middle two rows become valid. Queens or kings could then also occur twice.",
+          "principle": "Revisit precisely the cases excluded by the condition being removed."
+        }
+      ],
+      "source_ambiguities": [
+        "The question implicitly assumes a rank appears twice. The exercise checks this premise explicitly. The source gives no four-cards-per-rank limit."
+      ]
+    },
+    {
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "id": "PREP-384",
+      "key": "measure-fifteen-with-four-and-seven-minute-hourglasses",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "logic",
+      "topic": "estimation_sanity_checks",
+      "topics": [
+        "logic",
+        "estimation_sanity_checks"
+      ],
+      "source_tags": [
+        "logic",
+        "intel",
+        "intel-2"
+      ],
+      "source_topic_tags": [],
+      "added_topic_tags": [
+        "estimation_sanity_checks"
+      ],
+      "reported_companies": [
+        "intel"
+      ],
+      "authorship": "Bilingual AI-assisted proposed solution and independent technical checks. Human expert review pending.",
+      "format": "logic_puzzle",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-21.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        }
+      ],
+      "original_prompt": "נתונים שני שעוני חול, אחד של שבע דקות ואחד של ארבע דקות. מדדו חמש־עשרה דקות.",
+      "translations": {
+        "he": {
+          "title": "רבע שעה בשני שעוני חול",
+          "prompt": "לרשותכם שעון חול של ארבע דקות ושעון חול של שבע דקות. איך תמדדו בדיוק 15 דקות החל מרגע שתבחרו להתחיל? מותר להתחיל כל שעון בנפרד ולהפוך אותו שוב כשיתרוקן. אפשר לזהות מתי החול נגמר, ואין על השעונים סימוני ביניים.",
+          "hint": "האם נחוץ ששני השעונים יעבדו במקביל?",
+          "hints": [
+            "האם נחוץ ששני השעונים יעבדו במקביל?",
+            "אם מתחילים בשבע דקות שלמות, כמה דקות עדיין חסרות?",
+            "אילו שני מחזורים שלמים של אותו שעון מסתכמים בזמן שנותר?"
+          ],
+          "reference_solution": "### מחברים שלושה פרקי זמן שלמים\nבתחילת המדידה מפעילים את השעון של שבע הדקות. כשהוא מתרוקן מפעילים את השעון של ארבע הדקות. כשהשעון הקצר מתרוקן בפעם הראשונה, הופכים אותו מיד. בהתרוקנות הבאה מסתיימת המדידה.\n\nרגעי המעבר, בדקות מתחילת המדידה, הם `0 → 7 → 11 → 15`. משכי ההפעלה הרצופים הם 7, 4 ו־4 דקות. ההתרוקנות עצמה מסמנת כל מעבר, ולכן אין צורך להעריך זמן לפי גובה החול."
+        },
+        "en": {
+          "title": "Fifteen minutes with two hourglasses",
+          "prompt": "You have a four-minute hourglass and a seven-minute hourglass. How can you measure exactly 15 minutes from a start of your choice? You may start the glasses separately and turn a glass again once it empties. You can tell when a glass empties, but the glasses have no intermediate markings.",
+          "hint": "Do both glasses have to run at the same time?",
+          "hints": [
+            "Do both glasses have to run at the same time?",
+            "If you start by measuring seven whole minutes, how long remains?",
+            "Which two full runs of the same glass add up to the remaining time?"
+          ],
+          "reference_solution": "### Add three consecutive full runs\nAt the start of the interval, start the seven-minute glass. When it empties, start the four-minute glass. When the shorter glass empties for the first time, turn it immediately. Its next emptying marks the end of the interval.\n\nThe event times in minutes from the start are `0 → 7 → 11 → 15`. The three successive runs last 7, 4 and 4 minutes. Every transition is signaled by an empty glass, so the sand level never needs to be estimated."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-384-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "האם נחוץ ששני השעונים יעבדו במקביל?"
+        },
+        {
+          "id": "PREP-384-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "אם מתחילים בשבע דקות שלמות, כמה דקות עדיין חסרות?"
+        },
+        {
+          "id": "PREP-384-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "אילו שני מחזורים שלמים של אותו שעון מסתכמים בזמן שנותר?"
+        },
+        {
+          "id": "PREP-384-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Do both glasses have to run at the same time?"
+        },
+        {
+          "id": "PREP-384-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "If you start by measuring seven whole minutes, how long remains?"
+        },
+        {
+          "id": "PREP-384-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Which two full runs of the same glass add up to the remaining time?"
+        }
+      ],
+      "solution_code_paths": [],
+      "verification_script_path": "checks/check_1118b_cylinder_cards_hourglasses.py",
+      "verification_result_path": "checks/prep-384-1118b-verification.json",
+      "related_question_ids": [],
+      "media_assets": [
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-384-hourglass-emptying-events-he.png",
+          "language": "he",
+          "description": "רבע שעה בשני שעוני חול"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-384-hourglass-emptying-events-en.png",
+          "language": "en",
+          "description": "Fifteen minutes with two hourglasses"
+        }
+      ],
+      "markdown_path": "questions/prep-384-measure-fifteen-with-four-and-seven-minute-hourglasses.md",
+      "assumptions": [
+        "Both glasses are accurate and ready for a full run. Turning takes negligible time."
+      ],
+      "optimality": "Three serial full runs suffice. Two serial full runs can last at most 14 minutes.",
+      "verification": [
+        "The emptying times were checked for the serial schedule and for the variant where both glasses must be started together."
+      ],
+      "edge_cases": [
+        "If both glasses must start together, turn the short one at minute 4. Leave the long one empty after minute 7. At the second emptying of the short glass, minute 8, turn the long one. It empties at minute 15."
+      ],
+      "common_mistakes": [
+        "Adding the durations of overlapping runs as though the runs occupied successive intervals."
+      ],
+      "interview_answer": "Run the seven-minute glass once, then run the four-minute glass twice consecutively. Its final emptying marks 15 minutes from the start.",
+      "solution_extensions": [
+        {
+          "question": "Which durations can be measured by a sequence of full runs?",
+          "answer_direction": "Every duration of the form 4a+7b for nonnegative integers a and b can be measured by chaining that many runs.",
+          "principle": "When intervals are consecutive and disjoint, their durations add."
+        }
+      ],
+      "source_ambiguities": [
+        "The source wording leaves the number of seven-minute glasses ambiguous. One usable glass of each duration suffices."
+      ]
+    },
+    {
+      "id": "PREP-385",
+      "key": "op-amp-differential-input-negative-feedback",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "hardware",
+      "topic": "analog_circuits",
+      "topics": [
+        "hardware",
+        "analog_circuits",
+        "negative_feedback"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "analog_circuits",
+        "negative_feedback"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "intel"
+      ],
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "concept_explanation",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Independently authored bilingual proposed solution, original diagrams and executable educational checks. Professional human review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-02.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        }
+      ],
+      "original_prompt": "הסבירו מהו מגבר שרת.",
+      "translations": {
+        "he": {
+          "title": "מהו מגבר שרת וכיצד משוב שלילי קובע את המוצא?",
+          "prompt": "הסבירו מהו מגבר שרת. ציינו מה מייצגות שתי הכניסות, מה מזין את המוצא, ומה קובע את מתחו בחוג פתוח. הדגימו באמצעות עוקב מתח כיצד חיבור המוצא לאחת הכניסות משנה את ההתנהגות. מתי מותר להניח שמתחי הכניסות כמעט שווים?",
+          "hint": "איזה הפרש משנה את המוצא כאשר מגביהים את הכניסה המסומנת בפלוס?",
+          "hints": [
+            "איזה הפרש משנה את המוצא כאשר מגביהים את הכניסה המסומנת בפלוס?",
+            "בעוקב מתח חברו את המוצא לכניסה ההופכת. מה יקרה להפרש הכניסות אם המוצא יעלה מעט מעל הערך הדרוש?",
+            "כתבו את משוואת החוג עם הגבר סופי. בדקו אם מתח המוצא המחושב נמצא בתחום האפשרי."
+          ],
+          "reference_solution": "מגבר שרת הוא מגבר מתח הפרשי. הוא דוגם את המתח בכניסה הלא־הופכת ובכניסה ההופכת, ומספק מתח וזרם לעומס בעזרת ספקי הכוח. בתדר נמוך ובתחום הליניארי מתקיים `Vout=A₀(V+−V−)`. הגדלת מתח הכניסה החיובית ביחס לשלילית דוחפת את המוצא כלפי מעלה. במודל אידאלי עכבת הכניסה אינסופית ועכבת המוצא אפס. ברכיב ממשי יש זרמי הטיה קטנים ומגבלה על זרם המוצא.\n\n**חוג פתוח.** ההגבר בדרך כלל גדול. למשל בהגבר של 100,000 הפרש של 1 mV דורש מוצא של 100 V לפי המשוואה הליניארית. אם תחום היציאה הזמין הוא מ־‎−4 V עד ‎+4 V, המוצא יגיע לאזור הרוויה החיובית. גבולות התנודה תלויים ברכיב, באספקה ובעומס.\n\n**חוג סגור.** בעוקב מחברים את האות לכניסה החיובית ואת המוצא ישירות לכניסה השלילית. עלייה במוצא מקטינה את הפרש הכניסות וכך מתקנת את השגיאה. מתקבל `Vout=A₀(Vin−Vout)`, כלומר `Vout/Vin=A₀/(1+A₀)`. בהגבר 100,000 ובכניסה של 1 V המוצא הוא כ־0.999990 V, וההפרש בין הכניסות כ־10 µV. מתחי הכניסות קרובים כאשר המשוב השלילי יציב, הגבר החוג גדול והרכיב פועל בתחום הליניארי. במעגל ממשי בודקים גם את תחום המתח המשותף בכניסות, רוחב הפס ומגבלות העומס."
+        },
+        "en": {
+          "title": "What is an op amp and how does negative feedback set its output?",
+          "prompt": "Explain what an operational amplifier is. Identify its two inputs and the source of output power. What sets its open-loop output voltage? Use a voltage follower to show how feeding the output back to an input changes its behavior. When may you approximate the two input voltages as equal?",
+          "hint": "Which voltage difference increases when the non-inverting input rises?",
+          "hints": [
+            "Which voltage difference increases when the non-inverting input rises?",
+            "Connect the follower output to its inverting input. How does the input difference respond if the output rises slightly too far?",
+            "Write the loop equation with finite open-loop gain. Check that the predicted voltage lies within the available output swing."
+          ],
+          "reference_solution": "An op amp is a differential voltage amplifier. It senses the non-inverting and inverting input voltages and draws power from its supplies to drive the load. At low frequency in the linear region, `Vout=A₀(V+−V−)`. Raising the non-inverting input relative to the inverting input moves the output up. The ideal model has infinite input impedance and zero output impedance. A physical part draws bias currents and has a finite output-current limit.\n\n**Open loop.** Gain is usually large. With a gain of 100,000, a 1 mV input difference would demand 100 V from the linear model. If the available swing runs from −4 V to +4 V, the output reaches positive saturation. Actual swing depends on device, supplies and load.\n\n**Closed loop.** In a follower the signal drives the non-inverting input and the output connects directly to the inverting input. If the output rises too far the differential input falls, correcting the error. Then `Vout=A₀(Vin−Vout)`, giving `Vout/Vin=A₀/(1+A₀)`. With a gain of 100,000 and a 1 V input, the output is about 0.999990 V and the input difference is about 10 µV. Near-equal input voltages require stable negative feedback, large loop gain and linear operation. A real design also checks input common-mode range, bandwidth and loading."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-385-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "איזה הפרש משנה את המוצא כאשר מגביהים את הכניסה המסומנת בפלוס?"
+        },
+        {
+          "id": "PREP-385-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "בעוקב מתח חברו את המוצא לכניסה ההופכת. מה יקרה להפרש הכניסות אם המוצא יעלה מעט מעל הערך הדרוש?"
+        },
+        {
+          "id": "PREP-385-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "כתבו את משוואת החוג עם הגבר סופי. בדקו אם מתח המוצא המחושב נמצא בתחום האפשרי."
+        },
+        {
+          "id": "PREP-385-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "Which voltage difference increases when the non-inverting input rises?"
+        },
+        {
+          "id": "PREP-385-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "Connect the follower output to its inverting input. How does the input difference respond if the output rises slightly too far?"
+        },
+        {
+          "id": "PREP-385-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Write the loop equation with finite open-loop gain. Check that the predicted voltage lies within the available output swing."
+        }
+      ],
+      "solution_code_path": "solutions/digital1118b_models.py",
+      "solution_code_paths": [
+        "solutions/digital1118b_models.py"
+      ],
+      "verification_script_path": "checks/check_digital1118b.py",
+      "verification_result_path": "checks/digital1118b-verification.json",
+      "related_question_ids": [
+        "PREP-221",
+        "PREP-222",
+        "PREP-297"
+      ],
+      "media_assets": [
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-385-op-amp-follower-1118b-he.png",
+          "language": "he",
+          "description": "עוקב מתח עם משוב מהמוצא לכניסה ההופכת"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-385-op-amp-follower-1118b-en.png",
+          "language": "en",
+          "description": "Voltage follower with feedback to the inverting input"
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "assumptions": [
+        "DC examples with positive finite gain and an illustrative clipped output swing."
+      ],
+      "optimality": "A follower illustrates feedback with a single return wire.",
+      "verification": "Open- and closed-loop examples are checked against the DC gain equation and output limits.",
+      "edge_cases": [
+        "Input outside the common-mode range.",
+        "Positive feedback or a saturated output."
+      ],
+      "common_mistakes": [
+        "Physically shorting inputs because their voltages are approximately equal.",
+        "Assuming the output can always reach the supply rails exactly."
+      ],
+      "interview_answer": "The amplifier senses a voltage difference and draws energy from its supplies. Stable negative feedback drives the error small while the output has enough headroom.",
+      "source_ambiguities": [
+        "The original asks for a definition. The follower and numerical values are teaching examples."
+      ],
+      "solution_extensions": [
+        {
+          "question": "What if a follower is asked for 5 V with a 4 V maximum output?",
+          "answer_direction": "It saturates, leaving about one volt of differential input.",
+          "principle": "Feedback is limited by output capability."
+        }
+      ],
+      "markdown_path": "questions/prep-385-op-amp-differential-input-negative-feedback.md",
+      "technical_references": [
+        {
+          "title": "Texas Instruments, Handbook of Operational Amplifier Applications",
+          "url": "https://www.ti.com/lit/an/sboa092b/sboa092b.pdf",
+          "scope": "Op-amp model and voltage follower."
+        }
+      ]
+    },
+    {
+      "id": "PREP-386",
+      "key": "static-complementary-cmos-aoi21",
+      "version": 1,
+      "created_on": "2026-11-18",
+      "category": "hardware",
+      "topic": "boolean_algebra",
+      "topics": [
+        "hardware",
+        "boolean_algebra"
+      ],
+      "source_topic_tags": [
+        "hardware"
+      ],
+      "added_topic_tags": [
+        "boolean_algebra"
+      ],
+      "source_tags": [
+        "logic",
+        "hardware",
+        "intel"
+      ],
+      "reported_companies": [
+        "intel"
+      ],
+      "company_attribution_status": "reported_by_supplied_source_not_independently_verified",
+      "difficulty": null,
+      "estimated_minutes": null,
+      "format": "circuit_design",
+      "status": "in_review",
+      "solution_status": "proposed",
+      "solution_display_label": "הצעה לפתרון",
+      "origin": "user_supplied_screenshot",
+      "reviewed_by": null,
+      "ai_assisted": true,
+      "authorship": "Independently authored bilingual proposed solution, original diagrams and executable educational checks. Professional human review pending.",
+      "sources": [
+        {
+          "type": "user_supplied_image",
+          "path": "sources/2026-11-18-batch21-13.png",
+          "received_on": "2026-11-18",
+          "role": "original_question_screenshot"
+        }
+      ],
+      "original_prompt": "ממשו את F=NOT(AB+C) בעזרת CMOS.",
+      "translations": {
+        "he": {
+          "title": "מימוש הפונקציה ‎¬(AB+C) ב־CMOS משלים",
+          "prompt": "ממשו את F=NOT((A AND B) OR C) באמצעות שער CMOS סטטי משלים. הקלטים חד־סיביים ויציבים. שרטטו את רשתות המשיכה לאספקה ולאדמה, ציינו איזה קלט שולט בכל טרנזיסטור והראו מדוע המוצא מוגדר בכל אחד משמונת צירופי הקלט.",
+          "hint": "באילו מצבי קלט צריך לקבל אפס?",
+          "hints": [
+            "באילו מצבי קלט צריך לקבל אפס?",
+            "בענף המוליך לאדמה, חיבור בטור דורש שתי הולכות וחיבור במקביל דורש אחת.",
+            "החליפו את כל רכיבי ה־NMOS ב־PMOS ואת כל הטורים במקבילים ולהפך, ובדקו את המקרה שבו C לבדו מופעל."
+          ],
+          "reference_solution": "בונים תחילה את מסלולי ההולכה לאדמה. כדי לאפס את F די ש־C יהיה 1, או שגם A וגם B יהיו 1. לכן טרנזיסטור NMOS הנשלט ב־C מחובר במקביל לענף ובו שני טרנזיסטורי NMOS בטור הנשלטים ב־A וב־B. ענף מקביל יכול לבדו לחבר את F לאדמה.\n\nהפלט גבוה כאשר `¬C ∧ (¬A ∨ ¬B)`. טרנזיסטור PMOS מוליך כשהשער נמוך. בין האספקה ל־F מחברים את טרנזיסטור C בטור לזוג A ו־B המחוברים במקביל. מחברים את גופי ה־PMOS לאספקה ואת גופי ה־NMOS לאדמה בטכנולוגיית bulk המקובלת. במימוש זה שישה טרנזיסטורים.\n\n| A | B | F כאשר C=0 | F כאשר C=1 |\n| --- | --- | --- | --- |\n| 0 | 0 | 1 | 0 |\n| 0 | 1 | 1 | 0 |\n| 1 | 0 | 1 | 0 |\n| 1 | 1 | 0 | 0 |\n\nכאשר C=1 רכיב ה־NMOS שלו מושך לאדמה ורכיב ה־PMOS שלו מנתק את האספקה. כאשר C=0 נותר לבחון את A ו־B. רק בשורה 11 יש מסלול תחתון שלם ובשלוש השורות האחרות קיים מסלול עליון שלם. מכאן שבכל שורה יציבה מחוברת רשת אחת בלבד. בזמן מעבר ייתכנו זרם קצר וטעינת קיבול מוצא."
+        },
+        "en": {
+          "title": "Implement ¬(AB+C) in complementary CMOS",
+          "prompt": "Implement F=NOT((A AND B) OR C) as one static complementary CMOS gate with stable one-bit inputs. Draw both pull networks, label each transistor gate and show why the output is defined for all eight input combinations.",
+          "hint": "For which input values must the output be zero?",
+          "hints": [
+            "For which input values must the output be zero?",
+            "On a path to ground, series devices must both conduct. Parallel branches only need one conducting branch.",
+            "Swap NMOS for PMOS and series for parallel. Check the case in which only C is high."
+          ],
+          "reference_solution": "Start with paths to ground. F must go low when C is high, or when A and B are both high. Connect the NMOS controlled by C in parallel with a series pair driven by A and B. Either complete branch can pull F to ground.\n\nThe high-output condition is `¬C ∧ (¬A ∨ ¬B)`. A PMOS conducts when its gate is low. Between the supply and F place the C PMOS in series with two parallel PMOS devices driven by A and B. In conventional bulk CMOS tie PMOS bodies to VDD and NMOS bodies to ground. This implementation uses six devices.\n\n| A | B | F with C=0 | F with C=1 |\n| --- | --- | --- | --- |\n| 0 | 0 | 1 | 0 |\n| 0 | 1 | 1 | 0 |\n| 1 | 0 | 1 | 0 |\n| 1 | 1 | 0 | 0 |\n\nWith C high, its NMOS conducts to ground and its PMOS interrupts the supply path. With C low, A and B decide the output. Only 11 closes the lower branch. Each other row closes an upper branch. Exactly one network conducts for every settled binary input. During transitions the circuit can draw short-circuit current and charge its output capacitance."
+        }
+      },
+      "prepared_hints": [
+        {
+          "id": "PREP-386-he-H01",
+          "language": "he",
+          "level": 1,
+          "content": "באילו מצבי קלט צריך לקבל אפס?"
+        },
+        {
+          "id": "PREP-386-he-H02",
+          "language": "he",
+          "level": 2,
+          "content": "בענף המוליך לאדמה, חיבור בטור דורש שתי הולכות וחיבור במקביל דורש אחת."
+        },
+        {
+          "id": "PREP-386-he-H03",
+          "language": "he",
+          "level": 3,
+          "content": "החליפו את כל רכיבי ה־NMOS ב־PMOS ואת כל הטורים במקבילים ולהפך, ובדקו את המקרה שבו C לבדו מופעל."
+        },
+        {
+          "id": "PREP-386-en-H01",
+          "language": "en",
+          "level": 1,
+          "content": "For which input values must the output be zero?"
+        },
+        {
+          "id": "PREP-386-en-H02",
+          "language": "en",
+          "level": 2,
+          "content": "On a path to ground, series devices must both conduct. Parallel branches only need one conducting branch."
+        },
+        {
+          "id": "PREP-386-en-H03",
+          "language": "en",
+          "level": 3,
+          "content": "Swap NMOS for PMOS and series for parallel. Check the case in which only C is high."
+        }
+      ],
+      "solution_code_path": "solutions/digital1118b.sv",
+      "solution_code_paths": [
+        "solutions/digital1118b.sv"
+      ],
+      "verification_script_path": "checks/check_digital1118b.py",
+      "verification_result_path": "checks/digital1118b-verification.json",
+      "related_question_ids": [
+        "PREP-302",
+        "PREP-205",
+        "PREP-282"
+      ],
+      "media_assets": [
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-386-aoi21-networks-1118b-he.png",
+          "language": "he",
+          "description": "חיבורי ששת הטרנזיסטורים ברשתות המשיכה ב־CMOS"
+        },
+        {
+          "type": "solution_diagram",
+          "path": "diagrams/prep-386-aoi21-networks-1118b-en.png",
+          "language": "en",
+          "description": "Six transistor connections in the complementary pull networks"
+        }
+      ],
+      "follow_up_integration_status": "prepared_in_archive_not_connected_to_interactive_queue",
+      "assumptions": [
+        "Settled binary rail inputs and an ideal switch interpretation."
+      ],
+      "optimality": "One six-transistor gate with no separate output inverter.",
+      "verification": "All eight input combinations are checked in a switch simulation against the Boolean expression.",
+      "edge_cases": [
+        "C high dominates even when A and B are low.",
+        "When A and B differ and C is low, one parallel upper path is sufficient."
+      ],
+      "common_mistakes": [
+        "Repeating the same series/parallel topology in the pull-up network.",
+        "Inverting the output a second time."
+      ],
+      "interview_answer": "Use series A and B in parallel with C below the output, then parallel A and B in series with C above it. Exactly one network conducts in each settled row.",
+      "source_ambiguities": [
+        "The exercise uses static complementary CMOS and true-polarity inputs."
+      ],
+      "solution_extensions": [
+        {
+          "question": "How would you implement AB+C?",
+          "answer_direction": "Place an inverter after the AOI21 output.",
+          "principle": "Polarity of a static complementary gate."
+        }
+      ],
+      "markdown_path": "questions/prep-386-static-complementary-cmos-aoi21.md",
+      "technical_references": [
+        {
+          "title": "MIT 6.884, CMOS Gates",
+          "url": "https://ocw.mit.edu/courses/6-884-complex-digital-systems-spring-2005/5db68ba6abd100ecc232604ccfeb9f46_l03_cmos_gates.pdf",
+          "scope": "Complementary pull-network construction."
+        }
       ]
     }
   ]

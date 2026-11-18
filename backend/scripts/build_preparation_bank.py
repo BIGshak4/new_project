@@ -138,6 +138,17 @@ PRIMARY = [
     "tradeoff_reasoning",
     "estimation_sanity_checks",
     "tradeoff_reasoning",
+    # PREP-377 through PREP-386, in archive order.
+    "testbench_basics",
+    "testbench_basics",
+    "arrays_and_search",
+    "basic_data_structures",
+    "arrays_and_search",
+    "tradeoff_reasoning",
+    "estimation_sanity_checks",
+    "estimation_sanity_checks",
+    "tradeoff_reasoning",
+    "boolean_algebra",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

@@ -691,13 +691,32 @@ BATCH1118_SOURCES = {
 }
 ORACLES.update(runpy.run_path(str(BACKEND / "tests/fixtures/execution_1118_oracles.py"))["ORACLES"])
 
+BATCH1118B_SOURCES = {
+    "prep-median-of-unsorted-array": "prep_379_unsorted_median.py",
+    "prep-recognize-ordered-double-y-stream": "prep_380_ordered_double_stream.py",
+    "prep-online-rectangle-shelf-placement": "prep_381_shelf_rectangles.py",
+}
+ORACLES.update(runpy.run_path(str(BACKEND / "tests/fixtures/execution_1118b_oracles.py"))["ORACLES"])
 
-def build_batch1118_contracts():
-    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1118_inputs.json").read_bytes())
+
+def _python_contracts_with_oracles(filename):
+    questions = json.loads((BACKEND / "tests/fixtures" / filename).read_bytes())
     for key, question in questions.items():
         for case in question["languages"]["python"]["cases"]:
             case["expected"] = ORACLES[key](*case["args"])
     return questions
+
+
+def build_batch1118_contracts():
+    return _python_contracts_with_oracles("execution_batch1118_inputs.json")
+
+
+def build_batch1118b_contracts():
+    return _python_contracts_with_oracles("execution_batch1118b_inputs.json")
+
+
+def batch1118b_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1118B_SOURCES[key]).read_text(encoding="utf8")
 
 
 def batch1118_source(key):
@@ -1031,6 +1050,7 @@ endmodule
     questions.update(build_batch1115c_contracts())
     questions.update(build_batch1115d_contracts())
     questions.update(build_batch1118_contracts())
+    questions.update(build_batch1118b_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -1182,6 +1202,15 @@ def build_smoke():
             "successors_of_insertion_order": "def successors_of_insertion_order(keys):\n    return keys[1:]+[None] if keys else []\n",
         }[entry]
         cases.append({"question_key": key, "language": "python", "correct": batch1118_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1118b_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = {
+            "median": "def median(values):\n    return sorted(values)[len(values)//2] if values else None\n",
+            "accepts_frame": "def accepts_frame(s):\n    return s.count('y') == 2*s.count('x')\n",
+            "pack_shelves": "def pack_shelves(width,height,pieces):\n    return []\n",
+        }[entry]
+        cases.append({"question_key": key, "language": "python", "correct": batch1118b_source(key),
                       "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
@@ -1733,6 +1762,8 @@ end architecture;
         python[key] = batch1115d_source(key)
     for key in BATCH1118_SOURCES:
         python[key] = batch1118_source(key)
+    for key in BATCH1118B_SOURCES:
+        python[key] = batch1118b_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

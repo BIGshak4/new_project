@@ -126,7 +126,7 @@ class TestTheSeeds:
     def test_the_reasoning_puzzles_are_in_every_job_types_plan(self, catalog):
         """68 questions that no plan scheduled: the skill was in no role and no job type (Shaked, 2026-11-14)."""
         svc, _ = practice(catalog)
-        assert sum(q.primary_skill == PUZZLES for q in catalog.questions.values()) == 77
+        assert sum(q.primary_skill == PUZZLES for q in catalog.questions.values()) == 79
         for key in catalog.job_types:
             plan = {p.key: p for p in svc._plan("student", key)[3]}
             assert plan[PUZZLES].importance == Importance.IMPORTANT and plan[PUZZLES].combined_weight > 0, key

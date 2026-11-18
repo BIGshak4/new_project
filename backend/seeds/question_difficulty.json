@@ -187,7 +187,7 @@
   "prep-all-distinct-string-permutations": {
     "difficulty": 5,
     "reason": "Generate permutations with multiplicity counts and restored state; relate work and space to distinct outputs.",
-    "content_sha256": "25fa6d92ecdf8e69b4a2cab61fc17eeda7bb54dd4a7d1eaf380124c51a0a7e6b"
+    "content_sha256": "05a12a07e45829e1e4e0cf74449bc74dc373613cd918e345dba9827bde60fea8"
   },
   "prep-all-unique-value-triples-target-sum": {
     "difficulty": 6,
@@ -257,7 +257,7 @@
   "prep-balanced-brackets-mixed-text": {
     "difficulty": 3,
     "reason": "Use a stack of unmatched openers, ignore ordinary text, and reject mismatched closers.",
-    "content_sha256": "7c8397244c01096cd276595aa10883d84a395249c0ee7e614d262ff4b5aaad65"
+    "content_sha256": "0663bb565c1796866acbb847fa178c399cbc22ce1a9f7f33794d5e83a84894fd"
   },
   "prep-bidirectional-client-server-test-design": {
     "difficulty": 6,
@@ -662,7 +662,7 @@
   "prep-five-stones-clock-balance": {
     "difficulty": 4,
     "reason": "Combining a balanced equilateral triple with an opposite pair solves the odd count on twelve marks.",
-    "content_sha256": "12c137ee8b7ca868f342d949177440e9ea7baf5d355b96f1171a6cb44d5875a8"
+    "content_sha256": "e40d54745b664129a608580c529ac750441625c56200327bd0e80407191f8eb1"
   },
   "prep-floor-log2-counter-register": {
     "difficulty": 4,
@@ -706,8 +706,8 @@
   },
   "prep-four-to-one-mux-from-two-to-one": {
     "difficulty": 3,
-    "reason": "Tracing two selector levels gives the drawn reversed input order and the conventional rewiring.",
-    "content_sha256": "f611204a7d8ac489d074c8b231f70cbbfb03575f3a1fdf8d344af8534d3cb9ee"
+    "reason": "Requires a selector equation, composing three cells, and tracking both the historically drawn and conventional channel orders.",
+    "content_sha256": "9ef323655a208e48650dc27c004aa1a3fae58a947527278ddf259c6512fad26c"
   },
   "prep-four-transistor-rail-xor-analysis": {
     "difficulty": 6,
@@ -952,7 +952,7 @@
   "prep-mosfet-structure-current-bias-model": {
     "difficulty": 6,
     "reason": "The full MOS question now spans cross-section, device equations, electrostatic threshold, body bias, supply connections and constrained static/dynamic power tradeoffs; the main challenge is combining models without conflating device Vth and circuit Vm.",
-    "content_sha256": "23e6883d42f2f3501e20358d8cf7bef8979574be5a29198fbd6a81eebad78bf0"
+    "content_sha256": "d7e4cb7cb4b3a8208b5c8966ea4474ccd8fc14111745c276f7fad2b4c3303d6b"
   },
   "prep-most-frequent-word-list": {
     "difficulty": 3,
@@ -1152,7 +1152,7 @@
   "prep-random-permutation-fisher-yates": {
     "difficulty": 6,
     "reason": "State persists across calls; range conversion needs rejection sampling and a conditional-uniformity argument.",
-    "content_sha256": "856e28664311840020feb3cd533f523cee8f4dee59eca4e7c5ffea57fd553d43"
+    "content_sha256": "f8aacc194c17b649a9bcc20c53247da69d70e3ae5d4b1f6f943af4bed9466a8b"
   },
   "prep-rational-lions-cow-survival-parity": {
     "difficulty": 5,
@@ -1176,8 +1176,8 @@
   },
   "prep-recursion-benefits-cost-and-termination": {
     "difficulty": 3,
-    "reason": "A decreasing argument and a loop comparison explain why summation has linear work and uneven stack costs.",
-    "content_sha256": "c34887ba57453f5c71b569897f07386fc4964132dccbee4aac740b585aeb591f"
+    "reason": "A communication extension adds a concrete base case, smaller call and return trace to a foundational discussion of recursion.",
+    "content_sha256": "6212df0afd4e9bc42873fc742d243f084abbd21b25ed48f2ef65ee31d055647a"
   },
   "prep-red-white-two-urn-probability": {
     "difficulty": 6,
@@ -1497,7 +1497,7 @@
   "prep-toggle-nine-thirteen-without-conditionals": {
     "difficulty": 2,
     "reason": "The two promised values differ in one bit; one XOR mask swaps them.",
-    "content_sha256": "db9548b4aaee06e6ea4e12941dee9d2063595160f4b4f5445c8723bc491f9020"
+    "content_sha256": "4321ae5a8c8a9c34876d686fe0e9de8bcc15bcaadfabeddd7d16fbde7b559440"
   },
   "prep-top-two-distinct-and-mode": {
     "difficulty": 5,
@@ -1565,9 +1565,9 @@
     "content_sha256": "006cb0c4341dd1afe39c93b4f07a2a8f4e3786a4c37fec2db244a997492002e4"
   },
   "prep-two-register-copy-parallel-and-recirculating-serial": {
-    "difficulty": 2,
-    "reason": "The specified parallel interface needs only direct wiring and one capture edge; the serial version is an extension.",
-    "content_sha256": "b3d4834a1cadc586700ce488ef25c2d586c77ffe6f8ed2bc6b448ff32df86a36"
+    "difficulty": 6,
+    "reason": "Parallel and serial copy gain a restricted-ISA follow-up with only two registers. It requires explicit branch semantics and preserving information without a data temporary.",
+    "content_sha256": "0fc3152a1f6e7a67723e773b3df9597be6c6d125fdf101cdbc53731a946d6270"
   },
   "prep-two-sensor-disk-rotation-direction-fsm": {
     "difficulty": 5,
@@ -1646,8 +1646,8 @@
   },
   "prep-xor-mux-zero-only": {
     "difficulty": 5,
-    "reason": "Use the select condition as an implicit high input only in its active branch, avoiding a forbidden complement.",
-    "content_sha256": "45f7612030fa727057d3584fe267e642845fd0dd43b188a8462d536ae94a4709"
+    "reason": "The original zero-only construction and timing analysis still dominate. The new inverter variant adds a direct two-case decomposition.",
+    "content_sha256": "4ed66186df423591edf748081499a3f7c862cbe4d464a852c2fbd886ce134918"
   },
   "prep-zero-matrix-original-rows-columns": {
     "difficulty": 4,
@@ -2023,5 +2023,55 @@
     "difficulty": 4,
     "reason": "Requires separating the impossibility of fixed whole-token selection from a symmetric fractional construction and justifying it for every assignment.",
     "content_sha256": "c1c3573db0367cdc4176554328167069004ea99e96e6fc8794496ca50d9770ab"
+  },
+  "prep-select-tests-from-failure-matrix": {
+    "difficulty": 6,
+    "reason": "Distinguishes screening from diagnosis and balances marginal coverage, false rejects and missing ground truth.",
+    "content_sha256": "6257e3eff76921b4de5f963c51dd6499b38633341125ff0fb6f800988ebbf07d"
+  },
+  "prep-verify-multi-client-memory-allocation": {
+    "difficulty": 6,
+    "reason": "Combines valid random stimulus, zero-size semantics, coverage bias and an independent oracle for competing clients.",
+    "content_sha256": "d9e4a5db79b0f4f595257f8aa7f54430d71e9496ffb344468c51cc6805c2d6bf"
+  },
+  "prep-median-of-unsorted-array": {
+    "difficulty": 5,
+    "reason": "Choosing the right rank is straightforward; expected-linear in-place selection requires maintaining a three-way partition and handling two middle values.",
+    "content_sha256": "3ec635979176c9f361c9bdef050df572ded26823e8e0cd6ee6950f0959f81a7d"
+  },
+  "prep-recognize-ordered-double-y-stream": {
+    "difficulty": 4,
+    "reason": "Counting requires stack discipline and a separate phase to reject order violations before end-of-frame.",
+    "content_sha256": "5f58897e70fca12271c130f938e2334a64f71deef19ebf2ecc769acc2eb17418"
+  },
+  "prep-online-rectangle-shelf-placement": {
+    "difficulty": 5,
+    "reason": "An online layout must track a shelf maximum and define how rejected shapes affect subsequent placements, including exact width and height fits.",
+    "content_sha256": "cb37c25f2058d9fd38c3db7009ef7cf1eb8975e17457090068532685306eff97"
+  },
+  "prep-three-plane-cuts-cylinder-eight-congruent-pieces": {
+    "difficulty": 3,
+    "reason": "Requires coordinating horizontal and axial plane sections and distinguishing congruence from equal volume.",
+    "content_sha256": "9eb2eadf04b4964f48e6ff78045cffc45dba372bca345e4097d694ae1bd9c4e2"
+  },
+  "prep-thirteen-cards-paired-rank-constraints": {
+    "difficulty": 4,
+    "reason": "Four possible queen counts must be checked against pairwise distinctness and the implicit existence of a twice-occurring rank.",
+    "content_sha256": "a7a0301d85044ba65ce7c3292ccfcb87c6493910d90e2a4d319ca634ae5ac194"
+  },
+  "prep-measure-fifteen-with-four-and-seven-minute-hourglasses": {
+    "difficulty": 2,
+    "reason": "A direct decomposition suffices once the learner schedules complete, observable emptying events from the specified start.",
+    "content_sha256": "eae6fa64205b58400235b66dddf00622fb2475f5e8c50c091b862527dacb5e3a"
+  },
+  "prep-op-amp-differential-input-negative-feedback": {
+    "difficulty": 3,
+    "reason": "Requires interpreting differential open-loop gain, deriving a follower relationship and explaining the assumptions behind near-equal input voltages.",
+    "content_sha256": "5af338c755e7d167ad63cf00c5de802f45c5d01ae994014813e5b20f92f1717e"
+  },
+  "prep-static-complementary-cmos-aoi21": {
+    "difficulty": 4,
+    "reason": "Requires translating a mixed AND/OR complement into dual conduction networks and checking that every static input has exactly one active rail.",
+    "content_sha256": "ec7839c4f5640375fb2421d0a943febab5f130b3442712e20430861b87a15563"
   }
 }

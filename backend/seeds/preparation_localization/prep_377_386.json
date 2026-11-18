@@ -1,0 +1,718 @@
+{
+  "PREP-377": {
+    "assumptions": {
+      "he": [
+        "משך הרצת כל בדיקה קבוע. בדוגמה בדיקות מופעלות בזו אחר זו."
+      ],
+      "en": [
+        "Each test has a fixed duration. The timing example runs the tests in sequence."
+      ]
+    },
+    "optimality": {
+      "he": "האלגוריתם החמדני הוא קירוב. חיפוש ממצה מתאים לסדרה קטנה כשצריך להוכיח מינימום.",
+      "en": "Greedy selection approximates the minimum. Exhaustive subset search certifies a minimum for small suites."
+    },
+    "verification": {
+      "he": "המודל נבדק על כל מטריצות שלוש בדיקות ושלושה יעדים, כולל יעדים שאי אפשר לכסות.",
+      "en": "The model was checked on every three-test, three-target matrix, including unreachable targets."
+    },
+    "edge_cases": {
+      "he": [
+        "שורת כשל גורפת, תוצאה חסרה באחת העמודות ובדיקה מחויבת שמוסיפה אפס כיסוי."
+      ],
+      "en": [
+        "An all-fail row, missing observations, and a mandated test with zero marginal coverage."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מחיקת שורות על סמך שיעור הכשל לבדו עלולה לפספס תקלה נדירה."
+      ],
+      "en": [
+        "Ranking only by overall failure rate can drop the sole detector of a rare fault."
+      ]
+    },
+    "interview_answer": {
+      "he": "אמדוד את הכיסוי השולי של כל בדיקה מול עלותה ואאמת את הפגומים שחמקו ואת פסילות השווא באצווה נפרדת.",
+      "en": "I would measure incremental coverage per test cost and validate escapes and false rejects on a held-out lot."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור מציג רק חלק מהיחידות ואינו מסמן אילו מהן תקינות."
+      ],
+      "en": [
+        "The source omits columns and does not label good units."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה אם בדיקה נעצרת בכשל הראשון?",
+          "answer_direction": "החיסכון תלוי גם בסדר ובסיכוי שכבר התגלה כשל.",
+          "principle": "עלות צפויה לעומת עלות הרצת סדרה מלאה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if testing stops at the first failure?",
+          "answer_direction": "Expected time depends on order and the conditional probability of reaching each test.",
+          "principle": "Expected cost versus full-suite cost."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "Greedy Set-Cover Algorithms",
+          "url": "https://www.cs.ucr.edu/~neal/publication/Young16SetCover.pdf",
+          "scope": "בחירה לפי כיסוי שולי."
+        }
+      ],
+      "en": [
+        {
+          "title": "Greedy Set-Cover Algorithms",
+          "url": "https://www.cs.ucr.edu/~neal/publication/Young16SetCover.pdf",
+          "scope": "Greedy choice by marginal coverage."
+        }
+      ]
+    }
+  },
+  "PREP-378": {
+    "assumptions": {
+      "he": [
+        "כתובת חוקית היא מספר שלם מ־0 עד m−1, והזיכרון יכול לכלול תאים פנויים."
+      ],
+      "en": [
+        "A legal base is an integer from 0 through m−1. The memory may contain unused cells."
+      ]
+    },
+    "optimality": {
+      "he": "החלוקה הקבועה צורכת זמן O(n). מיון נקודות החיתוך עולה O(n log n) ושטח העבודה הוא O(n).",
+      "en": "The deterministic split takes O(n) time. Sorting boundaries uses O(n log n) time and O(n) storage."
+    },
+    "verification": {
+      "he": "המחולל נבדק על אלפי חלוקות מול סימון עצמאי של כל תא, כולל יותר לקוחות מתאים.",
+      "en": "Thousands of layouts were checked against independent per-cell occupancy, including cases with more clients than cells."
+    },
+    "edge_cases": {
+      "he": [
+        "אין לקוחות, אין כתובת חוקית, לקוח ריק, תחומים צמודים וחלוקה שמשאירה רווח בסוף."
+      ],
+      "en": [
+        "No clients, no legal address, empty client, adjacent regions, and trailing unused space."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בחירת בסיס וגודל עצמאיים לכל לקוח אינה מבטיחה היעדר חפיפה."
+      ],
+      "en": [
+        "Choosing each client's base and size independently does not guarantee disjoint regions."
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "לא מוגדרת תגובה לגישה מחוץ לתחום או לתצורה פסולה. יש להגדירה לפני קביעת תוצאות צפויות."
+      ],
+      "en": [
+        "Specify the response to illegal accesses or configurations before asserting a particular result."
+      ]
+    },
+    "interview_answer": {
+      "he": "אתחיל בחלוקה עם מנה ושארית, אגריל גבולות ואז אערבב לקוחות. אבדוק חוקיות ובידוד בעזרת מפת תאים נפרדת.",
+      "en": "I start with quotient and remainder, randomize boundaries and client ordering, and check legality and isolation with a separate cell map."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד פוגעים במקרה נדיר של שני תחומים שנוגעים זה בזה?",
+          "answer_direction": "מגרילים גבול משותף במפורש ושומרים את הזרע לשחזור.",
+          "principle": "בדיקות מכוונות לצד גיוון אקראי."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would you exercise adjacent regions more often?",
+          "answer_direction": "Generate a shared boundary explicitly and save the random seed for replay.",
+          "principle": "Directed coverage complements random variety."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "Python random",
+          "url": "https://docs.python.org/3/library/random.html",
+          "scope": "טווחים שלמים סגורים וערבוב."
+        }
+      ],
+      "en": [
+        {
+          "title": "Python random",
+          "url": "https://docs.python.org/3/library/random.html",
+          "scope": "Inclusive integer draws and shuffling."
+        }
+      ]
+    }
+  },
+  "PREP-379": {
+    "assumptions": {
+      "he": [
+        "מותר לסדר את הקלט מחדש. ערכי הקלט הם int32 והמחולל בוחר אינדקס אחיד בכל סבב."
+      ],
+      "en": [
+        "The input may be reordered. Values are int32, with a uniform pivot index on each pass."
+      ]
+    },
+    "optimality": {
+      "he": "כל חלוקה סורקת את הטווח הפעיל. לציר אחיד יש הסתברות של כחצי ליפול במחצית המרכזית, ואז נשארים לכל היותר כשלושה רבעים מהטווח. הסכום הצפוי גאומטרי ולכן O(n). רצף צירים קיצוניים יכול לעלות O(n²). המימוש האיטרטיבי משתמש ב־O(1) תאי עזר.",
+      "en": "Each partition scans the active interval. A uniform pivot has roughly one-half probability of lying in its middle half, leaving at most about three quarters. Expected work sums as a geometric series to O(n). Repeated extreme pivots cost O(n²) in the worst case. Iterative selection uses O(1) working cells."
+    },
+    "verification": {
+      "he": [
+        "נבדקו מערכים קצרים בכל הצירופים מול חציון שהתקבל ממיון, וגם ערכי הקצה של int32."
+      ],
+      "en": [
+        "Compared exhaustive small arrays with sorted-reference medians and checked int32 extrema."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "בקלט [4,4,4,4] קבוצת השווים מכילה את שתי הדרגות. בקלט [−2,1] התוצאה היא ‎−0.5."
+      ],
+      "en": [
+        "With [4,4,4,4] the equal band contains both ranks. With [−2,1] the result is −0.5."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בחירה של איבר אמצעי יחיד עבור אורך זוגי מחמיצה חצי מההגדרה. אין לקחת את התא הקודם בלי למצוא את המקסימום בקידומת שעדיין אינה ממוינת."
+      ],
+      "en": [
+        "Returning only the upper middle for even length changes the median. The position immediately to its left need not hold the lower middle until the prefix is sorted."
+      ]
+    },
+    "interview_answer": {
+      "he": "מוצאים את הדרגה האמצעית באמצעות חלוקה לשלושה חלקים. במערך זוגי מוצאים גם את המקסימום שמשמאלה וממצעים.",
+      "en": "Select the middle rank with a three-way partition. For even length scan its left prefix for the other middle value and average them."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "ומה אם אסור לשנות את המערך?",
+          "answer_direction": "אפשר לעבוד על עותק בגודל n ולשמור את הקלט המקורי.",
+          "principle": "הקשר בין הרשאת שינוי לבין זיכרון עזר."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if the input is read-only?",
+          "answer_direction": "Copy n values and partition the copy to preserve the original.",
+          "principle": "Auxiliary storage depends on mutation rights."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "נבחר חציון מדגמי רגיל. מותר לשנות את סדר המערך, וניתן להציג גם פתרון מיון פשוט."
+      ],
+      "en": [
+        "Use the conventional sample median. The input may be reordered and a sorting-based baseline is welcome."
+      ]
+    }
+  },
+  "PREP-380": {
+    "assumptions": {
+      "he": [
+        "מחסנית חדשה לכל מסגרת. הלוכסן הראשון מסיים אותה ושאר התווים שייכים למסגרות עתידיות."
+      ],
+      "en": [
+        "Each frame starts with a fresh empty stack. The first backslash ends this frame and later characters belong to future frames."
+      ]
+    },
+    "optimality": {
+      "he": "עבודה קבועה לכל אירוע. בזרם של k תווים הזמן O(k) והמחסנית יכולה להגיע ל־2k סמנים.",
+      "en": "Constant work per character, O(k) total time. The stack can reach 2k markers over k received characters."
+    },
+    "verification": {
+      "he": [
+        "כל המילים הקצרות מעל x,y ותו זר הושוו להגדרה הישירה, לרבות תו סיום חסר ותווים אחריו."
+      ],
+      "en": [
+        "Compared all short words over x, y and a foreign character with the direct language definition, including missing terminators and trailing input."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "לוכסן בלבד מסיים מסגרת ריקה חוקית. xy נפסל עקב חוב של סמן אחד. y בתחילת שידור נפסל מיד מבחינה לוגית."
+      ],
+      "en": [
+        "A terminator alone accepts the empty payload. xy leaves one marker. A leading y immediately makes the frame invalid."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בדיקת היחס הסופי בלבד תקבל רצפים בסדר שגוי. אין להתעלם מתו שאינו x או y."
+      ],
+      "en": [
+        "Checking the final count ratio alone accepts inputs in the wrong order. Ignoring foreign characters also changes the language."
+      ]
+    },
+    "interview_answer": {
+      "he": "המחסנית מונה חובות ל־y ודגל מציין שכבר הגיע ה־y הראשון. בסיום בודקים יתרה אפס ותקינות המסגרת.",
+      "en": "The stack counts y characters still owed and a flag records the phase. The terminator requires zero debt and a valid frame."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "אם מותר להשתמש במונה לא חסום, כמה מקום אפשר לחסוך?",
+          "answer_direction": "שמרו את אותו חוב כמספר שלם ואת דגל השלב. עד k תווים מספיקים O(log(k+1)) ביטים למונה.",
+          "principle": "הבדל בין מגבלת ממשק לבין המידע הדרוש."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if an unbounded counter is permitted?",
+          "answer_direction": "Store the same debt in an integer and keep the phase flag. Up to k characters need O(log(k+1)) counter bits.",
+          "principle": "An interface restriction can change storage cost."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור מתאר זרם המסתיים בלוכסן הפוך. נקבע ש־n יכול להיות אפס ושאות קבלה נפרד מודיע על כל תו, גם אם ערכו זהה לקודם."
+      ],
+      "en": [
+        "The source ends a frame with a backslash. Allow n=0 and assume a distinct receive event for each character, even for repeated values."
+      ]
+    }
+  },
+  "PREP-381": {
+    "assumptions": {
+      "he": [
+        "מקור הצירים בשמאל למטה. מלבנים אינם מסתובבים. ניתן לדלג על צורה, ואין חובה לכסות את כל השטח."
+      ],
+      "en": [
+        "Use lower-left coordinates. Rectangles are fixed in orientation. Skips are allowed and complete tiling is not required."
+      ]
+    },
+    "optimality": {
+      "he": "O(k) זמן עבור k צורות שנקראו. O(1) זיכרון עזר בנוסף לפלט. אפשר לפלוט כל הצבה מיד.",
+      "en": "O(k) time for k pieces read and O(1) auxiliary storage beyond the output. Each placement can be emitted immediately."
+    },
+    "verification": {
+      "he": [
+        "נבדקו דריכה לאורך גבולות, צורות רחבות או גבוהות מדי, רוחב ואורך אפס ודילוג לפני צורה שכן נכנסת. הושוו הצבות למודל שסורק במפורש את השורות."
+      ],
+      "en": [
+        "Compared placements against an explicit shelf model. Checked exact fits, oversized pieces, zero dimensions and a skipped piece followed by one that fits."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "מלבן שממלא את השורה בדיוק מותר. חלק שגבוה מהשטח שנותר גם בשורה החדשה נדחה בלי להזיז את נקודת ההצבה."
+      ],
+      "en": [
+        "An exact width fit is legal. Rejecting a rectangle whose new row would exceed the height must preserve room for the next input."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "גובה המלבן האחרון יכול להיות קטן מגובה השורה. שימוש בו לבדו כמדרגה הבאה עלול לגרום לחפיפה עם מלבן מוקדם יותר."
+      ],
+      "en": [
+        "The most recently placed rectangle may be shorter than an earlier one. Starting the next row at its top alone can cause overlap."
+      ]
+    },
+    "interview_answer": {
+      "he": "שומרים קצה רוחב, בסיס וגובה שיא לכל שורה. בחריגה ברוחב פותחים שורה חדשה רק אם ההצבה שם חוקית.",
+      "en": "Track the next x, the base and peak height. On horizontal overflow start a new row only when the candidate fits there."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם מיון המלבנים מראש עשוי לשפר את הניצול?",
+          "answer_direction": "למשל, קיבוץ גבהים דומים עשוי לצמצם חללים. מיון דורש לקבל את הקלט מראש ומשנה את אילוץ סדר ההגעה.",
+          "principle": "מדיניות מקוונת לעומת סידור לא מקוון."
+        }
+      ],
+      "en": [
+        {
+          "question": "Can sorting the pieces in advance improve utilization?",
+          "answer_direction": "Grouping similar heights may reduce gaps, but sorting requires advance access and changes the input-order constraint.",
+          "principle": "Online placement versus offline rearrangement."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "השרטוט המצורף בתמונה העוקבת הוא חלק מהנתון. הושלם חוזה להצבה לפי סדר הקבלה בלי סיבובים ועם דילוג על צורה שאינה מתאימה."
+      ],
+      "en": [
+        "The following board sketch is part of the given problem. The exercise fixes input-order placement without rotation and skips a shape that does not fit."
+      ]
+    }
+  },
+  "PREP-382": {
+    "assumptions": {
+      "he": [
+        "גליל עגול ישר. מישורי החיתוך עוברים דרך כל הגוף והחלקים נשארים במקומם."
+      ],
+      "en": [
+        "The cylinder is right and circular. Each cut is a plane through the entire solid and the pieces stay in position."
+      ]
+    },
+    "optimality": {
+      "he": "שלושה חיתוכים מספיקים, ושני חיתוכים יכולים ליצור לכל היותר ארבעה חלקים.",
+      "en": "Three cuts suffice, and two cuts can produce at most four pieces."
+    },
+    "verification": {
+      "he": [
+        "נבדקו ארבעת תחומי הזווית ושני תחומי הגובה בחשבון רציונלי. התחומים מכסים את הגליל, ופנימיהם זרים."
+      ],
+      "en": [
+        "The four angular intervals and two height intervals were checked with rational arithmetic for full coverage and disjoint interiors."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "שני קטרים בזווית של 60 מעלות יוצרים גזרות בשתי מידות. מישור בגובה שאינו האמצע יוצר שכבות בגבהים שונים."
+      ],
+      "en": [
+        "Diameters meeting at 60 degrees produce two different sector angles. An off-center horizontal cut produces two different heights."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בדיקת נפח בלבד אינה מוכיחה שאפשר לחפוף בין שתי צורות."
+      ],
+      "en": [
+        "Checking volume alone does not establish that the pieces fit exactly onto one another."
+      ]
+    },
+    "interview_answer": {
+      "he": "שני חתכים אנכיים דרך הציר בזווית ישרה יוצרים ארבעה רבעים. חתך אופקי בחצי הגובה הופך כל רבע לשני רבעים חופפים.",
+      "en": "Make perpendicular vertical cuts through the axis to get four quarters. A horizontal cut at half height bisects all four quarters into congruent pieces."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך משתנה הבנייה אם חתך אחד כבר בוצע במקביל לבסיסים בדיוק בחצי הגובה?",
+          "answer_direction": "מבצעים את שני החתכים האנכיים הניצבים דרך הציר. כל אחד עובר בשתי השכבות.",
+          "principle": "סדר החלת אותם שלושה מישורי חיתוך אינו משנה את החלוקה הסופית."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the horizontal mid-height cut has already been made?",
+          "answer_direction": "Make the same two perpendicular axial cuts, passing through both layers each time.",
+          "principle": "Applying the same set of cutting planes in any order gives the same final partition."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "גליל עגול ישר, חתכים מישוריים והישארות החלקים במקומם הם הנחות העריכה. \"זהים\" פורש כחופפים."
+      ],
+      "en": [
+        "The edited puzzle specifies a right circular cylinder, plane cuts and stationary pieces. Identical means congruent."
+      ]
+    }
+  },
+  "PREP-383": {
+    "assumptions": {
+      "he": [
+        "הערימה יכולה לכלול מספר חופשי של עותקים מאותה דרגה. כל קלף שייך לדרגה אחת."
+      ],
+      "en": [
+        "The pile can contain any number of copies of each rank, and each card has one rank."
+      ]
+    },
+    "optimality": {
+      "he": "בדיקת ארבע אפשרויות למספר המלכות ממצה את כל החלוקות.",
+      "en": "Checking the four possible queen counts exhausts every feasible assignment."
+    },
+    "verification": {
+      "he": [
+        "נמנו כל ההרכבים החיוביים של 13 לארבע דרגות ונבדקו כל האילוצים בנפרד."
+      ],
+      "en": [
+        "Every positive composition of 13 into four rank counts was enumerated and checked against each clue."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אם דורשים להשתמש בחפיסה רגילה אחת ובה לכל היותר ארבעה קלפים מכל דרגה, שתי החלוקות החוקיות נפסלות."
+      ],
+      "en": [
+        "If the cards must come from one standard deck with at most four of each rank, both otherwise valid rows are ruled out."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לעצור ברגע שנמצאה חלוקה עם שני נסיכים, בלי לבדוק אם הנתונים מחייבים שבכלל יהיו שניים מדרגה כלשהי."
+      ],
+      "en": [
+        "Stopping at a valid assignment with two jacks without checking whether a twice-occurring rank is guaranteed."
+      ]
+    },
+    "interview_answer": {
+      "he": "יש שתי חלוקות חוקיות. אחת כוללת שני נסיכים ובשנייה אף דרגה אינה מופיעה פעמיים. אם מובטח שיש זוג בדרגה מסוימת, אלו הנסיכים.",
+      "en": "Two assignments satisfy the clues. One has two jacks and the other has no rank occurring twice. If a rank is guaranteed to occur twice, it is jacks."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה קורה אם משמיטים את הדרישה שהכמויות שונות זו מזו?",
+          "answer_direction": "נוספות שתי השורות האמצעיות. אז גם מלכות או מלכים יכולים להופיע פעמיים.",
+          "principle": "מספיק לבחון מחדש את השורות שנפסלו בזכות האילוץ שהוסר."
+        }
+      ],
+      "en": [
+        {
+          "question": "Which ranks could occur twice if the counts no longer had to differ?",
+          "answer_direction": "The middle two rows become valid. Queens or kings could then also occur twice.",
+          "principle": "Revisit precisely the cases excluded by the condition being removed."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "השאלה מניחה במשתמע שיש דרגה שמופיעה פעמיים. בתרגיל בודקים הנחה זו במפורש. המקור אינו מגביל כל דרגה לארבעה קלפים."
+      ],
+      "en": [
+        "The question implicitly assumes a rank appears twice. The exercise checks this premise explicitly. The source gives no four-cards-per-rank limit."
+      ]
+    }
+  },
+  "PREP-384": {
+    "assumptions": {
+      "he": [
+        "השעונים מדויקים, מוכנים להפעלה מלאה והופכים אותם ברגע האירוע."
+      ],
+      "en": [
+        "Both glasses are accurate and ready for a full run. Turning takes negligible time."
+      ]
+    },
+    "optimality": {
+      "he": "בהפעלה טורית של מחזורים שלמים די בשלוש הרצות. שתי הרצות כאלה נמשכות לכל היותר 14 דקות.",
+      "en": "Three serial full runs suffice. Two serial full runs can last at most 14 minutes."
+    },
+    "verification": {
+      "he": [
+        "חושב זמן כל התרוקנות גם בהפעלה טורית וגם בגרסה שבה שני השעונים מתחילים יחד."
+      ],
+      "en": [
+        "The emptying times were checked for the serial schedule and for the variant where both glasses must be started together."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אם שני השעונים חייבים להתחיל יחד, אפשר להפוך את הקצר כשהוא מתרוקן בדקה 4. הארוך מתרוקן בדקה 7 וממתין. בהתרוקנות השנייה של הקצר, בדקה 8, הופכים את הארוך ומקבלים סימן בדקה 15."
+      ],
+      "en": [
+        "If both glasses must start together, turn the short one at minute 4. Leave the long one empty after minute 7. At the second emptying of the short glass, minute 8, turn the long one. It empties at minute 15."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לחבר את זמניהם של שני שעונים שרצו במקביל, כאילו פרקי הזמן שלהם עברו זה אחר זה."
+      ],
+      "en": [
+        "Adding the durations of overlapping runs as though the runs occupied successive intervals."
+      ]
+    },
+    "interview_answer": {
+      "he": "שבע דקות בשעון הארוך ושתי הרצות רצופות של ארבע דקות בשעון הקצר מסמנות 15 דקות מתחילת המדידה.",
+      "en": "Run the seven-minute glass once, then run the four-minute glass twice consecutively. Its final emptying marks 15 minutes from the start."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "אילו משכים תוכלו למדוד ברצף של מחזורי חול שלמים?",
+          "answer_direction": "כל משך שניתן לכתוב בתור 4a+7b, כאשר a ו־b שלמים אי־שליליים, מתקבל על ידי שרשור המחזורים.",
+          "principle": "כשפרקי הזמן זרים ורצופים, אפשר לחבר את משכיהם."
+        }
+      ],
+      "en": [
+        {
+          "question": "Which durations can be measured by a sequence of full runs?",
+          "answer_direction": "Every duration of the form 4a+7b for nonnegative integers a and b can be measured by chaining that many runs.",
+          "principle": "When intervals are consecutive and disjoint, their durations add."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "למדידה דרוש שעון פעיל אחד מכל משך. גם אם מפרשים את המקור כמתיר שעון נוסף של שבע דקות, אותה שיטה עובדת."
+      ],
+      "en": [
+        "The source wording leaves the number of seven-minute glasses ambiguous. One usable glass of each duration suffices."
+      ]
+    }
+  },
+  "PREP-385": {
+    "assumptions": {
+      "he": [
+        "דוגמאות DC עם הגבר חיובי וסופי ורוויה מדומה בקצות תחום התנודה."
+      ],
+      "en": [
+        "DC examples with positive finite gain and an illustrative clipped output swing."
+      ]
+    },
+    "optimality": {
+      "he": "הבחירה בעוקב מדגימה משוב עם חוט אחד.",
+      "en": "A follower illustrates feedback with a single return wire."
+    },
+    "verification": {
+      "he": "דוגמאות חוג פתוח וסגור נבדקו מול משוואת ההגבר והמגבלות במודל DC.",
+      "en": "Open- and closed-loop examples are checked against the DC gain equation and output limits."
+    },
+    "edge_cases": {
+      "he": [
+        "כניסה מחוץ לתחום המתח המשותף.",
+        "משוב חיובי או מוצא ברוויה."
+      ],
+      "en": [
+        "Input outside the common-mode range.",
+        "Positive feedback or a saturated output."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "קיצור פיזי של שתי הכניסות מתוך הנחת מתח שווה.",
+        "הנחה שהמוצא מגיע תמיד בדיוק למתחי האספקה."
+      ],
+      "en": [
+        "Physically shorting inputs because their voltages are approximately equal.",
+        "Assuming the output can always reach the supply rails exactly."
+      ]
+    },
+    "interview_answer": {
+      "he": "המגבר מגביר את הפרש הכניסות ושואב אנרגיה מהאספקה. משוב שלילי יציב גורם למוצא לתקן את ההפרש כל עוד למוצא יש מרווח תנודה.",
+      "en": "The amplifier senses a voltage difference and draws energy from its supplies. Stable negative feedback drives the error small while the output has enough headroom."
+    },
+    "source_ambiguities": {
+      "he": [
+        "השאלה המקורית מבקשת הגדרה. העוקב והנתונים המספריים נבחרו להמחשה."
+      ],
+      "en": [
+        "The original asks for a definition. The follower and numerical values are teaching examples."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם עוקב המתח יתבקש לספק 5 V כשהמוצא מוגבל ל־4 V?",
+          "answer_direction": "הוא ייכנס לרוויה והכניסות יישארו בהפרש של כוולט.",
+          "principle": "המשוב מוגבל ביכולת ההנעה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if a follower is asked for 5 V with a 4 V maximum output?",
+          "answer_direction": "It saturates, leaving about one volt of differential input.",
+          "principle": "Feedback is limited by output capability."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "Texas Instruments, Handbook of Operational Amplifier Applications",
+          "url": "https://www.ti.com/lit/an/sboa092b/sboa092b.pdf",
+          "scope": "מודל מגבר שרת ועוקב מתח."
+        }
+      ],
+      "en": [
+        {
+          "title": "Texas Instruments, Handbook of Operational Amplifier Applications",
+          "url": "https://www.ti.com/lit/an/sboa092b/sboa092b.pdf",
+          "scope": "Op-amp model and voltage follower."
+        }
+      ]
+    }
+  },
+  "PREP-386": {
+    "assumptions": {
+      "he": [
+        "טרנזיסטורים כמפסקים אידאליים במצב יציב וקלטים בגובה מסילות האספקה."
+      ],
+      "en": [
+        "Settled binary rail inputs and an ideal switch interpretation."
+      ]
+    },
+    "optimality": {
+      "he": "שישה טרנזיסטורים בשער יחיד ללא מהפך יציאה נפרד.",
+      "en": "One six-transistor gate with no separate output inverter."
+    },
+    "verification": {
+      "he": "שמונת הצירופים נבדקו בסימולציית מתגים מול ביטוי בוליאני עצמאי.",
+      "en": "All eight input combinations are checked in a switch simulation against the Boolean expression."
+    },
+    "edge_cases": {
+      "he": [
+        "C גבוה מכריע גם כאשר A ו־B נמוכים.",
+        "כש־A ו־B שונים ו־C נמוך, ענף אחד מספיק למשוך כלפי מעלה."
+      ],
+      "en": [
+        "C high dominates even when A and B are low.",
+        "When A and B differ and C is low, one parallel upper path is sufficient."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "העתקת החיבור הטורי־מקבילי גם לרשת העליונה.",
+        "היפוך המוצא פעם נוספת."
+      ],
+      "en": [
+        "Repeating the same series/parallel topology in the pull-up network.",
+        "Inverting the output a second time."
+      ]
+    },
+    "interview_answer": {
+      "he": "למטה מציבים את A ו־B בטור ובמקביל להם את C. למעלה A ו־B במקביל ובטור להם C. שתי הרשתות מתחלפות בהולכה על פני שמונה שורות טבלת האמת.",
+      "en": "Use series A and B in parallel with C below the output, then parallel A and B in series with C above it. Exactly one network conducts in each settled row."
+    },
+    "source_ambiguities": {
+      "he": [
+        "נבחר CMOS סטטי משלים עם כניסות חיוביות."
+      ],
+      "en": [
+        "The exercise uses static complementary CMOS and true-polarity inputs."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד מממשים את AB+C?",
+          "answer_direction": "הוסיפו מהפך למוצא השער שכבר תוכנן.",
+          "principle": "קוטביות של שער סטטי משלים."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would you implement AB+C?",
+          "answer_direction": "Place an inverter after the AOI21 output.",
+          "principle": "Polarity of a static complementary gate."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "MIT 6.884, CMOS Gates",
+          "url": "https://ocw.mit.edu/courses/6-884-complex-digital-systems-spring-2005/5db68ba6abd100ecc232604ccfeb9f46_l03_cmos_gates.pdf",
+          "scope": "בניית רשתות משיכה משלימות."
+        }
+      ],
+      "en": [
+        {
+          "title": "MIT 6.884, CMOS Gates",
+          "url": "https://ocw.mit.edu/courses/6-884-complex-digital-systems-spring-2005/5db68ba6abd100ecc232604ccfeb9f46_l03_cmos_gates.pdf",
+          "scope": "Complementary pull-network construction."
+        }
+      ]
+    }
+  }
+}

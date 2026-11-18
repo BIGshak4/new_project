@@ -18,7 +18,7 @@ def test_previous_profiles_remain_identical_and_new_contracts_are_covered():
     authored = runpy.run_path(str(FIXTURES / 'execution_catalog_authoring.py'))
     added = authored['build_batch1118_contracts']()
     assert len(prior) == 66
-    assert set(manifest) - set(prior) == set(added)
+    assert set(manifest) - set(prior) - set(authored['BATCH1118B_SOURCES']) == set(added)
     assert all(manifest[key] == spec for key, spec in prior.items())
     for key, spec in added.items():
         assert spec['languages'] == manifest[key]['languages']

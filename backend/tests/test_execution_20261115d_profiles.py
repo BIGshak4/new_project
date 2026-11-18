@@ -41,9 +41,9 @@ def test_input_only_profiles_use_independent_oracles_and_discriminate_wrong_sour
 def test_all_sixty_three_previous_profiles_are_unchanged():
     prior=json.loads(subprocess.check_output(['git','show',
         '397947d1cb08587b4f6705ff2b5f5bd33d8aebb4:backend/seeds/execution_cases.json'],cwd=ROOT))['questions']
-    assert len(prior)==63 and len(MANIFEST)==69
+    assert len(prior)==63 and len(MANIFEST)==72
     assert all(MANIFEST[key]==spec for key,spec in prior.items())
-    assert set(MANIFEST) - set(prior) - set(AUTHOR['BATCH1118_SOURCES']) == set(INPUTS)
+    assert set(MANIFEST) - set(prior) - set(AUTHOR['BATCH1118_SOURCES']) - set(AUTHOR['BATCH1118B_SOURCES']) == set(INPUTS)
 
 
 def test_voltage_runtime_distinguishes_strict_grid_values_from_off_grid_and_endpoints():
