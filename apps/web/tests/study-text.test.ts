@@ -164,8 +164,8 @@ test("all 405 bilingual catalog prompts and references render with the productio
   }
 });
 
-test("all 700 bilingual short questions and answers render with Hebrew paragraph direction intact", () => {
-  assert.equal(quickQuestions.length, 700);
+test("all 800 bilingual short questions and answers render with Hebrew paragraph direction intact", () => {
+  assert.equal(quickQuestions.length, 800);
   for (const question of quickQuestions) {
     for (const lang of ["he", "en"] as const) {
       for (const field of ["prompt", "answer"] as const) {

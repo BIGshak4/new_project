@@ -596,7 +596,7 @@ def test_real_provenance_private_difficulty_and_no_old_identity_or_text_reuse():
         localized.update(json.loads(path.read_bytes()))
     old_cards = []
     for path in CONTENT.glob("fundamentals-*.json"):
-        if "700" in path.name or "revisions" in path.name:
+        if path.name.endswith(("-700.json", "-800.json")) or "revisions" in path.name:
             continue
         data = json.loads(path.read_bytes())
         if isinstance(data, list):

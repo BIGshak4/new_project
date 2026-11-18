@@ -184,7 +184,7 @@ def test_each_mcq_has_one_input_derived_correct_choice(check):
 
 def test_short_cards_are_distinct_bilingual_bounded_and_source_linked():
     previous = [card for path in CONTENT.glob("fundamentals-*.json")
-                if not path.name.endswith(("-500.json", "-700.json", "-revisions.json"))
+                if not path.name.endswith(("-500.json", "-700.json", "-800.json", "-revisions.json"))
                 for card in json.loads(path.read_bytes())]
     assert len(previous) == 400
     assert len(CARDS) == 15 and {c["id"] for c in CARDS} == {f"quick-sw-{n}" for n in range(236, 251)}

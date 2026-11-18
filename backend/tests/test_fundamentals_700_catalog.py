@@ -28,7 +28,7 @@ def prior(key):
 def test_prior500_revisions_and2540_quiz_records_are_unchanged():
     web = read(CONTENT / "fundamentals-revisions.json")
     backend = read(SEEDS / "fundamentals_catalog.json")["questions"]
-    assert web == backend and len(web) == 700
+    assert web == backend and len(web) == 800
     old = {key: value for key, value in web.items() if prior(key)}
     assert len(old) == 500
     assert digest(old) == "4ea925755eff42b2b404de5b1b003317638830d5d6358e9930e35f3291258c1a"
@@ -49,7 +49,7 @@ def test_200_new_cards_are_concise_bilingual_linked_and_distinct():
     all_cards = [
         q
         for path in CONTENT.glob("fundamentals-*.json")
-        if isinstance(rows := read(path), list)
+        if not path.name.endswith("-800.json") and isinstance(rows := read(path), list)
         for q in rows
     ]
     assert len(new) == 200 and len(all_cards) == 700
@@ -84,9 +84,9 @@ def test_200_new_cards_are_concise_bilingual_linked_and_distinct():
 
 def test_1000_new_variants_have_hash_bound_release_and_backend_difficulty():
     quiz = read(SEEDS / "duel_quiz.json")["questions"]
-    additions = [q for q in quiz if q.get("source_key") and not prior(q["source_key"])]
-    assert len(quiz) == 3540 and len(additions) == 1000
-    assert sum(q["status"] == "approved" for q in quiz) == 3500
+    additions = [q for q in quiz if q.get("source_key") and 251 <= int(q["source_key"].rsplit("-", 1)[1]) <= 350]
+    assert len(quiz) == 4040 and len(additions) == 1000
+    assert sum(q["status"] == "approved" for q in quiz) == 4000
     counts = Counter(q["source_key"] for q in additions)
     assert len(counts) == 200 and set(counts.values()) == {5}
     checks = {

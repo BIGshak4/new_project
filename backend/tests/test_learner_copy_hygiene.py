@@ -11,7 +11,7 @@ import re
 from pathlib import Path
 
 from tests.difficulty_history import before_difficulty_review
-from tests.copy_november12_history import before_700_quiz_additions, is_700_addition
+from tests.copy_november12_history import before_700_quiz_additions, is_post_500_addition
 from tests.preparation_november7_history import baseline, before_batch1107_compiled
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -80,8 +80,8 @@ def test_short_identity_code_and_quiz_correct_choices_survive_copy_changes():
     expected = read(FIXTURE)
     cards = [q for path in (ROOT / "apps/web/src/content").glob("fundamentals-*.json")
              if path.name != "fundamentals-revisions.json" for q in read(path)]
-    assert len(cards) == 700
-    cards = [card for card in cards if not is_700_addition(card["id"])]
+    assert len(cards) == 800
+    cards = [card for card in cards if not is_post_500_addition(card["id"])]
     assert len(cards) == 500
     controls_only = [{k: v for k, v in q.items() if k not in ("title", "prompt", "answer", "takeaway")}
                      for q in sorted(cards, key=lambda q: q["id"])]

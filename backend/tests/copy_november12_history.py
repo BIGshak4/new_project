@@ -46,20 +46,31 @@ def is_700_addition(ident, *, variant=False):
     return bool(match and 251 <= int(match[1]) <= 350)
 
 
+def is_post_500_addition(ident, *, variant=False):
+    if is_700_addition(ident, variant=variant):
+        return True
+    pattern = r"quick-(?:hw|sw)-(\d+)-v[1-5]" if variant else r"quick-(?:hw|sw)-(\d+)"
+    match = re.fullmatch(pattern, ident or "")
+    return bool(match and 351 <= int(match[1]) <= 400)
+
+
 def before_700_quiz_additions(key, actual):
-    """Project only known 700 additions before strict November 12 copy hashes."""
+    """Project only explicitly allocated later additions before strict November 12 copy hashes."""
     restored = copy.deepcopy(actual)
     if key == "duel_quiz.json":
         # Legacy standalone rows have no source_key and must remain untouched.
         restored["questions"] = [row for row in restored["questions"]
-                                 if not is_700_addition(row.get("source_key"))]
+                                 if not is_post_500_addition(row.get("source_key"))]
         current = "Quiz-duel content: 700 short-question sources with five authored bilingual variants each (3500), "
+        latest = current.replace("700 short", "800 short").replace("(3500)", "(4000)")
+        if restored.get("_about", "").startswith(latest):
+            restored["_about"] = current + restored["_about"][len(latest):]
         previous = "Quiz-duel content: 500 short-question sources with five authored bilingual variants each (2500), "
         if restored.get("_about", "").startswith(current):
             restored["_about"] = previous + restored["_about"][len(current):]
     elif key == "release-manifest.json":
         restored["questions"] = [row for row in restored["questions"]
-                                 if not is_700_addition(row.get("key"), variant=True)]
+                                 if not is_post_500_addition(row.get("key"), variant=True)]
     return restored
 
 
@@ -175,5 +186,5 @@ def before_current_fundamentals_manifest(actual):
             assert actual["questions"][ident] == digest(current), ("nov12_revision", ident)
             restored["questions"][ident] = digest(old)
     restored["questions"] = {ident: value for ident, value in restored["questions"].items()
-                             if not is_700_addition(ident)}
+                             if not is_post_500_addition(ident)}
     return restored

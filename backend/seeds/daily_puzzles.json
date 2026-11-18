@@ -1547,5 +1547,1511 @@
         }
       }
     ]
+  },
+  {
+    "available_from": "2026-11-19",
+    "start_puzzle_rotation": true,
+    "puzzles": [
+      {
+        "id": "popcount-information-loss",
+        "source_question_key": "prep-eight-bit-popcount-adders",
+        "duplicate_source": "sources/2026-11-03-batch20-17.png",
+        "he": {
+          "title": "האם אפשר לשחזר את הקולות?",
+          "prompt": "שלושה ביטים נכנסים לרשת מחברים למחצה ושני מוצאים מחזירים את הכמות הכוללת של אחדים. למוצא 10 בבינארי, כמה מילות קלט אפשריות? האם מחשיפת שני ביטי הספירה ניתן לזהות איזה קלט היה 0?",
+          "solution": "הפלט מציין שני אחדים. הקלטים 110,101,011 מפיקים אותו פלט, ולכן יש שלוש אפשרויות ואי אפשר לזהות את המיקום. שמירת הכמות בלבד מאבדת את זהות המצביעים."
+        },
+        "en": {
+          "title": "Can a vote counter be reversed?",
+          "prompt": "Three bits enter a half-adder network whose two outputs encode the number of ones. For output 10 in binary, how many input words are possible? Can the count identify which input was zero?",
+          "solution": "The output means two ones. Inputs 110,101 and 011 all produce that count, giving three possibilities with no way to identify the zero's position. The count discards voter identity."
+        }
+      },
+      {
+        "id": "label-on-the-mixed-box",
+        "source_question_key": "prep-three-mislabeled-marble-bowls",
+        "duplicate_source": "sources/2026-11-07-night30-25.png",
+        "he": {
+          "title": "התווית שעל הקופסה המעורבת",
+          "prompt": "שלוש קופסאות מכילות כדורים שחורים בלבד, לבנים בלבד, או תערובת. כל התוויות שגויות. מהקופסה המסומנת ״מעורבת״ יצא כדור לבן. מה יש בקופסה המסומנת ״שחורים״ ואיך יודעים?",
+          "solution": "הקופסה שנדגמה אינה מעורבת ולכן כולה לבנה. הקופסה המסומנת ״שחורים״ אינה שחורה וגם אינה הלבנה שכבר זוהתה. היא המעורבת. הקופסה האחרונה מכילה רק שחורים."
+        },
+        "en": {
+          "title": "The label on the mixed box",
+          "prompt": "Three boxes hold all black balls, all white balls, or a mixture. Every label is wrong. A white ball is drawn from the box marked “mixed.” What is inside the box marked “black,” and why?",
+          "solution": "The sampled box cannot be mixed, so it is all white. The box marked black cannot be all black and the all-white box is already accounted for. It must be mixed, leaving all black for the last box."
+        }
+      },
+      {
+        "id": "transition-duty-count",
+        "source_question_key": "prep-circuit-from-clock-input-output-waveforms",
+        "duplicate_source": "sources/2026-10-30-batch20-04.png",
+        "he": {
+          "title": "כמה מחזורים דולק גלאי השינוי?",
+          "prompt": "קלט מחזורי הוא 00001111 שוב ושוב. בכל חזית המערכת מסמנת למשך מחזור אם הדגימה שונה מקודמתה. מהו אחוז הזמן שבו הסימון דולק אחרי האתחול? מה יקרה אם נוסיף מחזור השהיה לפלט?",
+          "solution": "בכל שמונה דגימות יש שני שינויים, כולל המעבר בין סוף מחזור לתחילת הבא. הפלט דולק בשני מחזורים מתוך שמונה, כלומר 25%. השהיה של מחזור מזיזה את שני הפולסים ואינה משנה את השיעור."
+        },
+        "en": {
+          "title": "Counting high cycles at a change detector",
+          "prompt": "The sampled input repeats 00001111. On each edge a detector signals for one cycle if the sample changed. What fraction of cycles is high after startup? Does delaying the output by one cycle change that fraction?",
+          "solution": "There are two changes per eight samples, including the wrap from the last sample to the next period. Two of eight cycles are high, or 25%. A one-cycle delay shifts both pulses and preserves that fraction."
+        }
+      },
+      {
+        "id": "four-sorter-lower-bound",
+        "source_question_key": "prep-sorting-networks-four-and-six-inputs",
+        "duplicate_source": "sources/2026-10-24-batch20-14.png",
+        "he": {
+          "title": "האם ארבע השוואות מספיקות?",
+          "prompt": "ארבעה מספרים שונים מגיעים לרשת מיון קבועה. כל רכיב משווה זוג ומחזיר אותו לפי הסדר. מישהו מציע רשת עם ארבעה רכיבים בלבד. איך אפשר לפסול אותה בלי לראות את החיווט?",
+          "solution": "יש 24 סדרי קלט אפשריים. לארבע השוואות יש לכל היותר 16 רצפי החלטות. סדר ההחלפות שנקבע על ידי רצף החלטות אחד יכול למיין לכל היותר תמורת קלט אחת, ולכן נחוצות לפחות חמש השוואות."
+        },
+        "en": {
+          "title": "Can four comparisons sort four values?",
+          "prompt": "Four distinct numbers enter a fixed sorting network. Each component compares two values and returns them in order. How can you rule out a proposed four-component network without seeing its wiring?",
+          "solution": "There are 24 input orders. Four binary comparisons yield at most 16 decision sequences. The swaps fixed by one sequence can sort at most one input permutation, so at least five comparisons are needed."
+        }
+      },
+      {
+        "id": "inventory-price-stamps",
+        "source_question_key": "prep-constant-time-set-get-setall-array",
+        "duplicate_source": "sources/2026-10-24-batch20-08.png",
+        "he": {
+          "title": "מחיר פרטי אחרי עדכון גורף",
+          "prompt": "בחנות מיליון מוצרים. מעדכנים מוצר א׳ ל־8, את כל המוצרים ל־5, ואז מוצר ב׳ ל־7. איזו פיסת מידע לצד כל מחיר תאפשר לקרוא את מחירי א׳ וב׳ בזמן קבוע בלי לבקר בכל המוצרים בעדכון הגורף?",
+          "solution": "שומרים חותמת סדר לכל עדכון פרטי ולמחיר הגורף. מחיר פרטי תקף אם העדכון שלו מאוחר מהעדכון הגורף. לכן א׳ שווה 5 וב׳ שווה 7. מספיק גם דור גלובלי שמגדילים בכל עדכון גורף ומעתיקים בעת עדכון פרטי."
+        },
+        "en": {
+          "title": "A price after a store-wide update",
+          "prompt": "A store sets item A to 8, all items to 5, and item B to 7. What information beside each price lets you read A and B in constant time without visiting a million items during the global update?",
+          "solution": "Stamp each individual update and the global price with their update order. An individual price wins only if newer than the global update, so A costs 5 and B costs 7. Equivalently, increment a global generation on each global update and copy it on an individual write."
+        }
+      },
+      {
+        "id": "quadrature-skipped-state",
+        "source_question_key": "prep-two-sensor-disk-rotation-direction-fsm",
+        "duplicate_source": "sources/2026-11-07-night30-13.png",
+        "he": {
+          "title": "המצב שנעלם בין החיישנים",
+          "prompt": "שני חיישנים על דיסקה מספקים בסיבוב ימינה את המחזור 00,01,11,10. נקלטו רק 00 ואחריו 11. מה אפשר לקבוע על הכיוון אם ייתכן שהוחמצה דגימה?",
+          "solution": "שום כיוון אינו מוכח. בכיוון אחד 01 נמצא באמצע ובכיוון האחר 10 נמצא באמצע. יש לסמן את המעבר כדו־משמעי או לדגום בתדירות שמבטיחה כי בכל מעבר נראה רק שינוי ביט אחד."
+        },
+        "en": {
+          "title": "The missing sensor state",
+          "prompt": "Two disk sensors give the cycle 00,01,11,10 clockwise. Only 00 followed by 11 was recorded. What can be inferred about direction if a sample may have been missed?",
+          "solution": "Neither direction is established. Clockwise, the intermediate state is 01. Counterclockwise it is 10. Flag the jump as ambiguous or sample fast enough to observe each single-bit change."
+        }
+      },
+      {
+        "id": "rotating-table-opposite-pair",
+        "source_question_key": "prep-four-hidden-switches-rotating-table",
+        "duplicate_source": "sources/2026-10-30-batch70-04.png",
+        "he": {
+          "title": "מה שורד סיבוב של שולחן?",
+          "prompt": "ארבעה מתגים נמצאים בפינות ריבוע. אחרי כל מהלך השולחן מסתובב במספר לא ידוע של רבעי סיבוב. ידוע שהמצב מתחלף סביב השולחן, 0101. אילו שני מתגים תהפכו כדי לקבל מצב אחיד בוודאות?",
+          "solution": "הופכים זוג מתגים שנמצאים זה מול זה. הם בהכרח שווים, והזוג השני שווה לערך ההפוך. לא משנה באיזה אלכסון בוחרים, מקבלים ארבעה אפסים או ארבעה אחדים."
+        },
+        "en": {
+          "title": "What survives a table rotation?",
+          "prompt": "Four switches occupy the corners of a square. Between moves the table rotates by an unknown multiple of a quarter turn. The switches currently alternate, 0101 around the table. Which two can you flip to guarantee a uniform state?",
+          "solution": "Flip a pair of opposite switches. They share one value and the other diagonal shares its opposite. Either diagonal therefore leaves four zeros or four ones."
+        }
+      },
+      {
+        "id": "three-clock-halves",
+        "source_question_key": "prep-divide-by-three-fifty-percent-duty",
+        "duplicate_source": "sources/prep-010-additional-2026-10-21-third.png",
+        "he": {
+          "title": "חצי מחזור שאינו מספר שלם",
+          "prompt": "שעון כניסה סימטרי מזין מחלק בשלוש. האם פלט שמשתנה רק בחזיתות עולות יכול להיות גל מחזורי בעל מחזור של שלוש תקופות כניסה ויחס מחזור של 50% בדיוק? איך עוזרות חזיתות יורדות?",
+          "solution": "רמת פלט קבועה בין חזיתות עולות נמשכת מספר שלם של תקופות, אבל נדרשות 1.5 תקופות בכל רמה. שימוש גם בחזית יורדת מאפשר לתזמן מעבר אחרי שלושה חצאי מחזור ולעבור שוב אחרי שלושה נוספים."
+        },
+        "en": {
+          "title": "A half period between clock edges",
+          "prompt": "A symmetric clock drives a divide-by-three circuit. Can an output that changes only on rising edges have a three-period cycle and exactly 50% duty? How would falling edges help?",
+          "solution": "A level held between rising edges lasts an integer number of periods. Each level here must last 1.5 periods. Using falling edges too permits a change after three half periods and another three half periods later."
+        }
+      },
+      {
+        "id": "eight-bit-prefix-delay",
+        "source_question_key": "prep-isolate-highest-one-eight-bits",
+        "duplicate_source": "sources/2026-11-15-batch20d-10.png",
+        "he": {
+          "title": "החסם על ההשהיה במשקל AND",
+          "prompt": "במילה בת שמונה ביטים רוצים להשאיר רק את ה־1 הגבוה ביותר. כל שער OR או NOT נחשב מיידי ורק שער AND עולה יחידת זמן. מותר להחליף AND בשערים אחרים. האם יחידה אחת היא חסם תחתון להשהיה לפי מודל זה?",
+          "solution": "לא. לכל ביט בונים OR של הביטים שמעליו. ביט התוצאה הוא NOT של OR בין אותו סיכום לבין NOT של ביט הקלט. כל הפעולות במימוש הן OR ו־NOT, ולכן ההשהיה במודל היא אפס. זהו חישוב במודל העלויות הנתון."
+        },
+        "en": {
+          "title": "Delay when only AND gates cost time",
+          "prompt": "Keep only the highest one of an eight-bit input. OR and NOT are instantaneous in the stated model and an AND costs one time unit. You may replace an AND with other gates. Is one unit a lower bound on the delay in this model?",
+          "solution": "No. Form the OR of the bits above each bit. Its result bit is the NOT of the OR of that prefix and the inverted input bit. Only OR and NOT gates remain, giving zero delay under these costs."
+        }
+      },
+      {
+        "id": "nor-with-floating-drivers",
+        "source_question_key": "prep-xor-from-high-impedance-components",
+        "duplicate_source": "sources/2026-11-18-batch31-08.png",
+        "he": {
+          "title": "מי מניע את החוט ב־01?",
+          "prompt": "תא P מניע 1 רק ב־00 ותא N מניע 0 רק ב־11. אחרת יציאתם במצב Z. מותר לחבר מוצאים יחד. כיצד שלושה תאים יממשו NOR של a,b בלי להשאיר חוט צף?",
+          "solution": "מחברים P(a,b),‏ N(a,a) ו־N(b,b) לאותו מוצא. ב־00 רק P פעיל. בכל מצב אחר לפחות אחד מתאי N פעיל, ושני תאי N יכולים להסכים על אפס. לעולם אין מחלוקת בין מניע גבוה לנמוך."
+        },
+        "en": {
+          "title": "Who drives the wire at 01?",
+          "prompt": "A P cell drives one only at 00 and an N cell drives zero only at 11. Otherwise each is high impedance. Outputs may share a wire. How can three cells implement NOR of a,b without leaving the wire floating?",
+          "solution": "Wire P(a,b), N(a,a), and N(b,b) to the output. Only P drives at 00. At every other input at least one N drives low. Two N cells can agree on zero, and no high driver opposes them."
+        }
+      },
+      {
+        "id": "encoder-zero-ambiguity",
+        "source_question_key": "prep-sixteen-input-interrupt-controller",
+        "duplicate_source": "sources/prep-016-additional-2026-10-21-7.png",
+        "he": {
+          "title": "שני מצבים עם אותו קוד",
+          "prompt": "מקודד עדיפות ל־4 כניסות מחזיר 00 כאשר כניסה 0 היא הפעילה היחידה, וגם כאשר אין בקשות. בקר המקבל רק את שני ביטי הקוד צריך להחליט אם להעיר מעבד. האם שינוי בטבלת הפענוח מספיק?",
+          "solution": "לא. בזמן הבקשה ובזמן סרק הבקר רואה אותם שני ביטים. מוסיפים ביט valid שהוא OR של ארבע הכניסות, או מעבירים מידע נוסף שקול. ארבע כתובות בתוספת מצב סרק הן חמישה מצבים שונים."
+        },
+        "en": {
+          "title": "Two states with the same code",
+          "prompt": "A four-input priority encoder emits 00 when input zero is the sole request and also when no request exists. A controller sees only the two code bits and must decide whether to wake a processor. Can changing its decode table suffice?",
+          "solution": "No. The controller observes the same two bits for an actual request and for idle. Add a valid bit equal to the OR of the input lines, or supply equivalent information. Four addresses plus idle are five distinguishable cases."
+        }
+      },
+      {
+        "id": "clock-double-instant",
+        "source_question_key": "prep-clock-hands-angle-six-thirty",
+        "duplicate_source": "sources/2026-10-31-batch22-10.png",
+        "he": {
+          "title": "האם המחוגים עומדים בזמן ההמתנה?",
+          "prompt": "בדיוק בשעה 3:00 מחוג השעות מקדים את מחוג הדקות ברבע סיבוב. כעבור כמה דקות הם ייפגשו לראשונה? נמקו מדוע התשובה אינה בדיוק רבע שעה.",
+          "solution": "הפער הראשוני 90 מעלות. מחוג הדקות מתקדם 6 מעלות לדקה ומחוג השעות 0.5, ולכן קצב סגירת הפער הוא 5.5 מעלות לדקה. המפגש כעבור 90/5.5=180/11 דקות."
+        },
+        "en": {
+          "title": "Do the hands stand still while waiting?",
+          "prompt": "At exactly 3:00 the hour hand is a quarter-turn ahead of the minute hand. How many minutes pass before they first coincide? Why not exactly fifteen?",
+          "solution": "The initial gap is 90 degrees. The minute hand moves at 6 degrees per minute and the hour hand at 0.5. Their relative speed is 5.5 degrees per minute, so the meeting occurs after 90/5.5=180/11 minutes."
+        }
+      },
+      {
+        "id": "partition-boundary-completion",
+        "source_question_key": "prep-three-color-in-place-partition",
+        "duplicate_source": "sources/2026-10-25-batch11-03.png",
+        "he": {
+          "title": "מתי נגמר המיון בשלושה צבעים?",
+          "prompt": "במהלך מיון במקום של 0,1,2 אוחסן החלק שעדיין לא נבדק בין האינדקסים i ו־j כולל. מתכנת עוצר ברגע ש־i=j. תנו מצב קצר שבו עדיין נדרשת החלפה.",
+          "solution": "במערך [1,0,2] האיבר הראשון כבר מסווג כ־1 והאחרון כ־2, והטווח הלא מסווג הוא האיבר הבודד 0 באמצע. צריך עדיין להחליף אותו עם ה־1. מסיימים רק כאשר i גדול מ־j."
+        },
+        "en": {
+          "title": "When is a three-color partition complete?",
+          "prompt": "An in-place partition of 0,1,2 keeps its unchecked region between indices i and j inclusive. A programmer stops as soon as i=j. Give a short state in which a swap is still needed.",
+          "solution": "In [1,0,2] the first item can be classified as a one and the last as a two, leaving the middle zero unchecked. It must still swap with the one. Stop only when i is greater than j."
+        }
+      },
+      {
+        "id": "shuffle-equal-marginals",
+        "source_question_key": "prep-random-permutation-fisher-yates",
+        "duplicate_source": "sources/2026-11-14-batch30-14.png",
+        "he": {
+          "title": "כל תא נראה אקראי",
+          "prompt": "בוחרים באחידות אחת משלוש ההזזות המעגליות של [A,B,C]. לכל אות אותה הסתברות להופיע בכל תא. האם בכך הוכחנו שכל תמורה מתקבלת באותה הסתברות?",
+          "solution": "לא. מתקבלות רק ABC, BCA ו־CAB, כל אחת בהסתברות שליש. למשל ACB לעולם אינה מתקבלת, אף שבכל מיקום בנפרד ההסתברויות אחידות. לערבוב אחיד של שלושה איברים דרושה הסתברות שישית לכל אחד מששת הסדרים."
+        },
+        "en": {
+          "title": "Every slot looks random",
+          "prompt": "Pick one of the three cyclic rotations of [A,B,C] uniformly. Each letter is equally likely to occupy each slot. Does that prove the shuffle samples every permutation uniformly?",
+          "solution": "No. Only ABC, BCA and CAB can occur, each with probability one third. ACB never occurs, despite uniform individual positions. A uniform permutation must assign one sixth to each of the six orders."
+        }
+      },
+      {
+        "id": "egg-first-drop-tight",
+        "source_question_key": "prep-two-crystal-balls-hundred-floors",
+        "duplicate_source": "sources/2026-10-31-batch22-01.png",
+        "he": {
+          "title": "הקומה הראשונה כאשר אין מרווח",
+          "prompt": "יש שתי ביצים ו־15 קומות. סף השבירה קבוע וייתכן שכל הקומות בטוחות. אם רוצים לזהות את הקומה הבטוחה הגבוהה ביותר בחמש זריקות לכל היותר, מאיזו קומה חייבים להתחיל?",
+          "solution": "קומה 5. אם הביצה נשברת נשארות ארבע זריקות עם ביצה אחת, ולכן אפשר לבדוק לכל היותר ארבע קומות נמוכות יותר. אם היא שורדת, שתי ביצים וארבע זריקות מכסות לכל היותר 4+3+2+1=10 קומות נוספות. שני האילוצים קובעים בדיוק 5."
+        },
+        "en": {
+          "title": "The first drop with no slack",
+          "prompt": "Two eggs and fifteen floors are available. The breaking threshold is fixed and all floors might be safe. To identify the highest safe floor in at most five drops, which floor must be tried first?",
+          "solution": "Floor 5. A break leaves one egg and four drops, covering at most four lower floors. Survival leaves two eggs and four drops, covering at most 4+3+2+1=10 higher floors. Together these bounds force floor 5."
+        }
+      },
+      {
+        "id": "moving-token-parity",
+        "source_question_key": "prep-moving-rabbit-ten-bushes",
+        "duplicate_source": "sources/prep-029-apple-2026-10-22.png",
+        "he": {
+          "title": "הזוגיות של האסימון הנע",
+          "prompt": "אסימון נסתר עומד באחת מעשר משבצות בשורה. אחרי כל בדיקה שלא הצליחה הוא עובר בדיוק למשבצת שכנה. אם לפני הבדיקה הראשונה היה באינדקס זוגי, אילו משבצות אפשר לשלול לפני הבדיקה הרביעית?",
+          "solution": "כל המשבצות הזוגיות נשללות. אחרי שלוש החמצות היו שלושה צעדים, וכל צעד הופך זוגיות גם בקצה הלוח, שם הכיוון כפוי. הבדיקות עצמן יכולות לשלול מקומות נוספים לפי מסלולן."
+        },
+        "en": {
+          "title": "The moving token’s parity",
+          "prompt": "A hidden token occupies one of ten cells in a line. After each unsuccessful check it moves exactly one cell to a neighbor. If it started at an even index, which cells can be ruled out before the fourth check?",
+          "solution": "All even cells are ruled out. Three misses cause three moves, each flipping parity, including at an endpoint where the direction is forced. The specific checks may also rule out other positions."
+        }
+      },
+      {
+        "id": "sorter-fault-direction",
+        "source_question_key": "prep-four-input-sorter-single-crossing-fault",
+        "duplicate_source": "sources/2026-11-15-batch20-20.png",
+        "he": {
+          "title": "איזה זוג יחשוף ממיין תקול?",
+          "prompt": "יחידת השוואה אמורה להוציא משמאל את הקטן מבין שני הקלטים. תקלה אפשרית אחת משאירה את החוטים ישרים תמיד ואחרת מצליבה אותם תמיד. אילו בדיקות יבחינו בין שלושת המצבים אם אפשר לראות את שני המוצאים?",
+          "solution": "מזינים (1,2) ואז (2,1). יחידה תקינה נותנת (1,2) פעמיים. חיווט ישר נותן (1,2) ואז (2,1). חיווט מוצלב נותן (2,1) ואז (1,2). ערכים שווים לא היו מגלים את ההבדל."
+        },
+        "en": {
+          "title": "Which pair reveals the faulty sorter?",
+          "prompt": "A compare-exchange unit should put the smaller input on the left. One possible fault always passes inputs straight through, another always crosses them. Which tests distinguish both faults from a good unit when both outputs are visible?",
+          "solution": "Feed (1,2) and then (2,1). A good unit returns (1,2) twice. Straight wiring gives (1,2) then (2,1). Crossed wiring gives (2,1) then (1,2). Equal inputs would conceal the distinction."
+        }
+      },
+      {
+        "id": "xor-cofactor-mux",
+        "source_question_key": "prep-xor-mux-zero-only",
+        "duplicate_source": "sources/2026-10-30-batch110-09.png",
+        "he": {
+          "title": "שני ענפים לשער XOR",
+          "prompt": "מותר להשתמש במוקסים 2:1 ובקבועים 0 ו־1. רוצים XOR של A,B ובוחרים ב־A כקו הבחירה האחרון. מה חייב להופיע על כל כניסת נתונים ואיך מפיקים זאת במוקס נוסף?",
+          "solution": "כש־A=0 הדרישה היא B וכש־A=1 הדרישה היא ההפך של B. מחברים לכניסה הראשונה B ולשנייה את פלט המוקס עם בחירה B, כניסת 0 המחוברת ל־1 וכניסת 1 המחוברת ל־0."
+        },
+        "en": {
+          "title": "Two branches for XOR",
+          "prompt": "Use only 2:1 muxes and constants 0 and 1. To compute A XOR B, choose A as the final select. What must its two data inputs be and how can the extra signal be made with another mux?",
+          "solution": "For A=0 the output must equal B. For A=1 it must invert B. Feed B to data input zero and feed data input one from a second mux selected by B, with data inputs one and zero in that order."
+        }
+      },
+      {
+        "id": "shared-tail-alignment",
+        "source_question_key": "prep-linked-lists-first-shared-node",
+        "duplicate_source": "sources/prep-032-additional-2026-10-20.png",
+        "he": {
+          "title": "יישור שני המסלולים",
+          "prompt": "לשתי רשימות מקושרות ללא מעגלים אורכים 8 ו־5. ידוע שהן נפגשות בצומת אחד ומשם ממשיכות יחד. כיצד מוצאים את הצומת הראשון המשותף בלי להשוות ערכי נתונים ובלי לשמור רשימת כתובות?",
+          "solution": "מקדמים את המצביע של הרשימה הארוכה בשלושה צעדים. לשני המצביעים נותר מרחק שווה לסוף. מתקדמים יחד עד שזהות הצמתים שווה. הם מגיעים לראש הזנב המשותף באותו צעד."
+        },
+        "en": {
+          "title": "Align two paths to a shared tail",
+          "prompt": "Two acyclic linked lists of lengths 8 and 5 meet at a node and share the rest of their tails. How can you find their first shared node without comparing payloads or recording addresses?",
+          "solution": "Advance the longer list's pointer three steps. The pointers now have equal remaining distance to the end. Walk them in lockstep until the node identities match. They reach the head of the shared tail together."
+        }
+      },
+      {
+        "id": "remainder-machine-states",
+        "source_question_key": "prep-serial-binary-divisibility-by-three-fsm",
+        "duplicate_source": "sources/2026-11-14-batch30-22.png",
+        "he": {
+          "title": "האם שתי שאריות יכולות לחלוק מצב?",
+          "prompt": "מכונה קוראת מספר משמאל לימין ומדווחת אם הקידומת מתחלקת ב־3. השאריות 1 ו־2 שתיהן נותנות תשובה שלילית כעת. מצאו ביט יחיד שמוכיח כי אסור לאחד את מצביהן.",
+          "solution": "מצרפים 1 מימין. השארית החדשה היא (2r+1) mod 3. עבור r=1 מקבלים 0 ועבור r=2 מקבלים 2. מאותה תשובה כעת מגיעות תשובות שונות כבר בצעד הבא."
+        },
+        "en": {
+          "title": "Can two remainders share a state?",
+          "prompt": "A machine reads a binary number left to right and reports whether each prefix is divisible by three. Remainders 1 and 2 both give a negative result now. Find one bit that proves the states cannot be merged.",
+          "solution": "Append one on the right. The new remainder is (2r+1) mod 3. From r=1 it is zero, whereas from r=2 it is two. Identical current outputs lead to different outputs after just one bit."
+        }
+      },
+      {
+        "id": "crossed-bracket-types",
+        "source_question_key": "prep-balanced-brackets-mixed-text",
+        "duplicate_source": "sources/2026-10-30-batch70-14.png",
+        "he": {
+          "title": "מספרי הסוגריים מסתדרים",
+          "prompt": "בביטוי ([)] יש סוגר פותח וסוגר סוגר מכל סוג, ושום מונה לפי סוג אינו יורד מתחת לאפס. מדוע בכל זאת הביטוי פסול, ואיזה מידע דרוש לזיהוי השגיאה בזמן הקריאה?",
+          "solution": "הסוגריים צריכים להיסגר בסדר הפוך לפתיחתם. כשנקרא התו השלישי, בראש מחסנית הפתיחות נמצא [ אך התו ) דורש (. לכן דוחים מיד. שני מונים לבדם אינם זוכרים את סדר הפתיחה."
+        },
+        "en": {
+          "title": "The bracket counts agree",
+          "prompt": "The string ([)] has one opening and one closing bracket of each kind, and neither per-kind balance ever goes negative. Why is the string still invalid, and what state detects it as it is read?",
+          "solution": "Brackets must close in reverse opening order. At the third character the opening stack has [ on top, but ) requires (. Reject at once. Separate counters cannot remember which kind was opened most recently."
+        }
+      },
+      {
+        "id": "decimal-walk-last-digit",
+        "source_question_key": "prep-two-thousand-digits-adjacent-multiples",
+        "duplicate_source": "sources/prep-038-additional-2026-10-21-1.png",
+        "he": {
+          "title": "האם ספרת האחדות מוכרחת?",
+          "prompt": "מספר בן 2,000 ספרות מתחיל ב־3. כל זוג ספרות סמוכות יוצר כפולה של 17 או 23. האם ספרת האחדות נקבעת ביחידות? מצאו את כל האפשרויות.",
+          "solution": "מ־3 מתקבל המסלול 3→4→6. מ־6 אפשר להמשיך דרך 9→2→3, וכך לחזור במחזור באורך 5, או לצאת דרך 8→5→1→7 ואז להיעצר. אם נשארים במחזור, הספרה ה־2000 היא 2. יציאה מן ה־6 בעמדה 1998 נותנת 5 בעמדה 2000. היציאה הקודמת האפשרית, בעמדה 1993, נעצרת כבר ב־1997. לכן האפשרויות הן 2 ו־5."
+        },
+        "en": {
+          "title": "Is the units digit forced?",
+          "prompt": "A 2,000-digit number starts with 3. Each adjacent pair forms a multiple of 17 or 23. Is the units digit determined uniquely? Find all possibilities.",
+          "solution": "Starting at 3 forces 3→4→6. At 6 one may take 9→2→3 and repeat a five-cycle, or exit via 8→5→1→7 and stop. Staying on the cycle puts 2 at position 2,000. Exiting from 6 at position 1,998 puts 5 there. The previous possible exit, at 1,993, stops at 1,997. Thus the last digit is either 2 or 5."
+        }
+      },
+      {
+        "id": "subset-reused-stage",
+        "source_question_key": "prep-pair-sum-existence-and-optimization",
+        "duplicate_source": "sources/2026-11-07-batch10-08.png",
+        "he": {
+          "title": "המספר שהשתמשו בו פעמיים",
+          "prompt": "מחפשים תת־קבוצה שסכומה 6 מתוך [3,8]. טבלת סכומים מתחילה עם 0 ובזמן עיבוד 3 האלגוריתם מוסיף 3 לכל סכום בטבלה תוך כדי סריקתה כלפי מעלה. כיצד נולד פתרון כוזב, ואיך שומרים שכל איבר ישמש לכל היותר פעם אחת?",
+          "solution": "האלגוריתם מסמן 3 מתוך 0 ואז משתמש ב־3 החדש כדי לסמן 6 באותו מעבר. יש רק מופע אחד של 3. מעדכנים מתוך תמונת מצב שלפני האיבר, או בסריקה יורדת אם כל הערכים חיוביים."
+        },
+        "en": {
+          "title": "A number used twice",
+          "prompt": "Find a subset summing to six in [3,8]. A sum table starts with zero. While processing three, an algorithm adds three to reachable sums as it scans the table upward. Where does the false solution come from, and how do you enforce single use of each item?",
+          "solution": "The algorithm marks three from zero and then uses that freshly marked three to reach six in the same pass. Only one three exists. Update from a snapshot taken before the item, or scan sums downward for positive inputs."
+        }
+      },
+      {
+        "id": "pulse-length-three",
+        "source_question_key": "prep-rising-edge-single-clock-pulse",
+        "duplicate_source": "sources/2026-11-15-batch20d-12.png",
+        "he": {
+          "title": "שלושה מחזורים מן החזית",
+          "prompt": "גלאי כבר סימן עלייה בכניסה בפולס של מחזור אחד. רוצים שהפלט יהיה גבוה במחזור הזיהוי ובשני המחזורים הבאים בלבד. מה תשמרו במונה ומה יקרה אם הכניסה נשארת גבוהה?",
+          "solution": "במחזור הזיהוי מדליקים את הפלט וטוענים 2 כמספר המחזורים הנוספים. בכל מחזור שבו המונה חיובי מדליקים ומפחיתים 1. קלט קבוע בגובה 1 אינו חזית נוספת, לכן הפלט נכבה במחזור הרביעי."
+        },
+        "en": {
+          "title": "Three cycles from an edge",
+          "prompt": "A rising-edge detector already gives a one-cycle pulse. The output must stay high in the detection cycle and exactly two more cycles. What should a counter remember, and what happens if the input stays high?",
+          "solution": "Assert the output on detection and load 2 for the additional cycles. While the count is positive, assert the output and decrement. A level held at one gives no fresh edge, so the output is low in the fourth cycle."
+        }
+      },
+      {
+        "id": "symbol-not-bit",
+        "source_question_key": "prep-serial-safe-abcd-sequence-detector",
+        "duplicate_source": "sources/2026-10-30-batch20-03.png",
+        "he": {
+          "title": "ארבעה סמלים, שנים־עשר ביטים",
+          "prompt": "גלאי מחפש ארבעה סמלים עוקבים. בכל חזית נכנסים שלושה ביטים יחד כסמל אחד. האם גלאי שמחפש את תבנית 12 הביטים בכל היסט של ביט שקול לו?",
+          "solution": "לא. התאמה שמתחילה באמצע סמל אינה מתחילה בחזית שבה הגיע סמל, ולכן עלולה להפיק אזעקת שווא. משווים ארבעה סמלים שלמים או מגבילים את חיפוש הביטים לגבולות סמל ידועים."
+        },
+        "en": {
+          "title": "Four symbols or twelve bits?",
+          "prompt": "A detector looks for four consecutive symbols. Each edge supplies a whole three-bit symbol. Is it equivalent to search for the 12-bit pattern at every possible bit offset?",
+          "solution": "No. A match starting inside a symbol does not start on a symbol clock edge and can create a false detection. Compare four complete symbols or restrict bit-level matching to known symbol boundaries."
+        }
+      },
+      {
+        "id": "fibonacci-paused-clock",
+        "source_question_key": "prep-hardware-fibonacci-register-adder",
+        "duplicate_source": "sources/2026-11-15-batch20b-17.png",
+        "he": {
+          "title": "פיבונאצ׳י עם עצירה",
+          "prompt": "שני אוגרים מתחילים ב־(0,1). בכל חזית עם enable=1 הם מקבלים יחד (Y,X+Y), וביתר החזיתות נשמרים. היציאה היא תמיד X+Y. מה ייראה אחרי כל חזית בסדרת האפשור 1,0,1,1?",
+          "solution": "זוגות האוגרים הם (1,1), (1,1), (1,2), (2,3), ולכן היציאות 2,2,3,5. ההשמה בו־זמנית משתמשת בכל פעם בשני הערכים הישנים."
+        },
+        "en": {
+          "title": "Fibonacci on pause",
+          "prompt": "Two registers start at (0,1). On an enabled edge they simultaneously take (Y,X+Y), otherwise they hold. The output always equals X+Y. What appears after each edge for enables 1,0,1,1?",
+          "solution": "The register pairs are (1,1), (1,1), (1,2), (2,3), so the outputs are 2,2,3,5. Simultaneous updates use both old values."
+        }
+      },
+      {
+        "id": "winner-after-the-pulse",
+        "source_question_key": "prep-first-finisher-latched-winner",
+        "duplicate_source": "sources/2026-10-25-batch20-09.png",
+        "he": {
+          "title": "הפולס נעלם, המנצח נשאר",
+          "prompt": "שלוש כניסות מציינות חציית קו סיום בפולסים קצרים בני מחזור אחד. מובטח שאין תיקו. אחרי האיפוס, איך שומרים את זהות המנצח גם אם כל הקלטים חוזרים לאפס?",
+          "solution": "מתחילים במצב ״אין זוכה״. רק במצב הזה דוגמים את האינדקס של הכניסה הפעילה ועוברים למצב ״הוכרע״. לאחר מכן האוגר מחזיק את האינדקס עד איפוס. דרוש סימון נפרד לסרק אם גם אינדקס 0 חוקי."
+        },
+        "en": {
+          "title": "The winner after the pulse",
+          "prompt": "Three runners signal the finish with single-cycle pulses, and ties cannot occur. After reset, how do you retain the winner when all inputs return to zero?",
+          "solution": "Start in a no-winner state. Only in that state capture the active input index and mark the race decided. Hold that index until reset. Use a distinct idle indication when index zero is a valid winner."
+        }
+      },
+      {
+        "id": "threshold-monotone-repeated-pin",
+        "source_question_key": "prep-three-of-four-from-two-of-four-boxes",
+        "duplicate_source": "sources/2026-10-30-batch110-03.png",
+        "he": {
+          "title": "אות אחד בשתי כניסות",
+          "prompt": "רכיב סף מוציא 1 אם לפחות שתיים מארבע כניסותיו הן 1. חברו לכניסות (A,A,B,B). איזו פונקציה מתקבלת? האם החיבור הזה מחליף בדיקה של שלושה מתוך ארבעה אותות בלתי תלויים?",
+          "solution": "מתקבל OR. כל אחד משני האותות מספק לבדו שתי כניסות דלוקות. החיבור אינו סופר ארבעה קולות נפרדים ולכן אינו מממש את סף השלושה לארבעה משתנים."
+        },
+        "en": {
+          "title": "One signal on two pins",
+          "prompt": "A threshold cell returns one when at least two of its four pins are high. Connect (A,A,B,B). What function results? Does that connection test three of four independent signals?",
+          "solution": "It implements OR. Each high signal supplies two votes by itself. The wiring counts duplicated votes rather than four independent inputs, so it cannot test a three-of-four threshold on four variables."
+        }
+      },
+      {
+        "id": "binary-bit-weight-wrap",
+        "source_question_key": "prep-lsb-first-divisibility-by-five-fsm",
+        "duplicate_source": "sources/2026-10-30-batch20-18.png",
+        "he": {
+          "title": "משקלו של הביט החמישי",
+          "prompt": "ביטים מגיעים מהפחות משמעותי אל המשמעותי. אילו משקלים יש לארבעת הביטים הראשונים מודולו 5? מדוע אפשר להשתמש שוב במשקל הראשון עבור הביט החמישי?",
+          "solution": "המשקלים הם 1,2,4,3, כי כל משקל הוא פי שניים מהקודם מודולו 5. הכפלת 3 בשתיים מחזירה 1 מודולו 5. לכן כופלים כל ביט נכנס במשקל המחזורי שלו ומוסיפים לשארית."
+        },
+        "en": {
+          "title": "The weight of the fifth bit",
+          "prompt": "Bits arrive least significant first. What are the weights modulo five of the first four bits, and why can the fifth use the first weight again?",
+          "solution": "The weights are 1,2,4,3. Each is double the previous weight modulo five, and twice three is one modulo five. Multiply each incoming bit by its cyclic weight and add it to the running remainder."
+        }
+      },
+      {
+        "id": "sensor-reversal-before-exit",
+        "source_question_key": "prep-doorway-occupancy-two-sensors",
+        "duplicate_source": "sources/2026-11-08-batch20-14.png",
+        "he": {
+          "title": "כשבול העץ חוזר לאחור",
+          "prompt": "בול עץ ארוך מן המרחק בין חיישנים A,B ונע לאורך המסילה. התחנות ריקות בתחילה. התקבלו הקריאות 00→10→11→10→00. האם הבול השלים מעבר משמאל לימין, בהנחה שכל שינוי נקלט ו־A הוא השמאלי?",
+          "solution": "לא. הבול הגיע משמאל והפעיל את שני החיישנים, אבל B התפנה לפני A והבול נסוג שמאלה. מעבר ימינה היה מסתיים ב־11→01→00. הסדר שבו מתפנים החיישנים חשוב כמו סדר הפעלתם."
+        },
+        "en": {
+          "title": "When the log backs out",
+          "prompt": "A log is longer than the distance between sensors A and B, with A on the left. Initially both are clear. The readings are 00→10→11→10→00, with no missed changes. Did the log complete a left-to-right crossing?",
+          "solution": "No. The log entered from the left and covered both sensors, but B cleared before A: the log backed out to the left. Completing a rightward crossing would end 11→01→00. The clearing order matters as well as the activation order."
+        }
+      },
+      {
+        "id": "collector-known-off",
+        "source_question_key": "prep-twenty-one-prisoners-one-light",
+        "duplicate_source": "sources/2026-10-31-batch21-10.png",
+        "he": {
+          "title": "מדוע סופרים דווקא 19?",
+          "prompt": "עשרים משתתפים נכנסים בזה אחר זה לחדר עם נורה שמתחילה כבויה. אחד הוא המונה. כל משתתף אחר מדליק נורה כבויה פעם אחת בלבד. מתי המונה יכול לדעת שכולם ביקרו, בהנחה שכולם ממשיכים לקבל תורות?",
+          "solution": "המונה מכבה וסופר כל נורה דולקת שהוא מוצא. ההדלקה הראשונה אמיתית כי הנורה התחילה כבויה, וכל אחת מ־19 ההדלקות באה מאדם אחר. עם הכיבוי ה־19 יש ראיה לכולם, כולל המונה עצמו."
+        },
+        "en": {
+          "title": "Why count exactly nineteen?",
+          "prompt": "Twenty participants take turns entering a room with a lamp initially off. One is the counter. Each other participant turns an off lamp on at most once, doing so at the first opportunity. When can the counter know everyone has visited if all continue to get turns?",
+          "solution": "The counter turns off and counts each lit lamp encountered. The known initial off state rules out a spurious first count, and each of the 19 signals comes from a different participant. On count 19 the counter has evidence for everyone, including the counter."
+        }
+      },
+      {
+        "id": "midpoint-low-bit",
+        "source_question_key": "prep-average-difference-two-logic-gates",
+        "duplicate_source": "sources/2026-11-08-batch20-10.png",
+        "he": {
+          "title": "ביט היחידות של המספר שבאמצע",
+          "prompt": "שני מספרים בני שישה ביטים ללא סימן שונים בדיוק ב־2, בלי גלישה. איך תפיקו את ביט היחידות של המספר שביניהם? מאיזה קלט לוקחים את חמשת הביטים הגבוהים כשהקטן זוגי וכשהוא אי־זוגי?",
+          "solution": "הופכים את ביט היחידות של הקטן. אם הקטן זוגי, הוספת 1 אינה מעבירה נשא ולכן שומרים את ביטיו הגבוהים. אם הוא אי־זוגי, האמצע זוגי, והמספר הגדול הוא האמצע ועוד 1 ללא נשא. אז ביטיו הגבוהים של הגדול מתאימים."
+        },
+        "en": {
+          "title": "The midpoint's units bit",
+          "prompt": "Two unsigned six-bit numbers differ by exactly two without overflow. How do you obtain the midpoint's units bit? Which operand supplies its upper five bits when the smaller number is even or odd?",
+          "solution": "Invert the smaller operand's units bit. If it is even, adding one produces no carry, so keep its upper bits. If it is odd, the midpoint is even and adding one more to reach the larger operand causes no carry. Use the larger operand's upper bits in that case."
+        }
+      },
+      {
+        "id": "fibonacci-duplicate-calls",
+        "source_question_key": "prep-software-fibonacci-recursion-improvement",
+        "duplicate_source": "sources/2026-10-30-batch70-15.png",
+        "he": {
+          "title": "איזו קריאה מחושבת פעמיים?",
+          "prompt": "בחישוב רקורסיבי ישיר של F(5) פותחים את F(4) ואת F(3). איזה חישוב חוזר כבר ברמה הבאה, וכיצד מספיקים שני משתנים כדי להפיק את אותה תשובה?",
+          "solution": "גם F(4) קוראת ל־F(3), ולכן אותה תת־בעיה נפתרת שוב. מתחילים בזוג (0,1) ומעדכנים יחד ל־(b,a+b). לאחר חמישה עדכונים הראשון בזוג הוא F(5)=5, בלי חישובים חוזרים."
+        },
+        "en": {
+          "title": "Which call is repeated?",
+          "prompt": "Direct recursion for F(5) calls F(4) and F(3). Which calculation is repeated at the next level, and how can two variables produce the same result?",
+          "solution": "F(4) calls F(3), so that subproblem is solved again. Start at (0,1) and update the pair together to (b,a+b). After five updates the first component is F(5)=5, with no duplicated subproblems."
+        }
+      },
+      {
+        "id": "carry-from-an-enable",
+        "source_question_key": "prep-three-bit-up-down-counter-gates",
+        "duplicate_source": "sources/2026-10-24-batch30-10.png",
+        "he": {
+          "title": "מתי מעבירים נשא בעת ספירה?",
+          "prompt": "מונה דו־ביטי ללא סימן גדל באחד רק כאשר EN=1. מתכנן מציע להפוך את הביט העליון בכל פעם שהביט התחתון היה 1. איזה קלט מפריך את ההצעה ומהו תנאי ההיפוך הנכון?",
+          "solution": "במצב 01 עם EN=0 המונה חייב להישאר 01, וההצעה תשנה אותו. הביט העליון מתהפך רק כאשר EN והביט התחתון הישן שניהם 1. הביט התחתון מתהפך כאשר EN=1."
+        },
+        "en": {
+          "title": "When does an enable cause a carry?",
+          "prompt": "A two-bit unsigned counter increments only when EN=1. A designer toggles the high bit whenever the old low bit was one. Give a counterexample and the correct toggle condition.",
+          "solution": "At 01 with EN=0 the count must hold, but the proposed circuit changes it. Toggle the upper bit only when EN and the old low bit are both one. The low bit toggles whenever EN is one."
+        }
+      },
+      {
+        "id": "profit-order-matters",
+        "source_question_key": "prep-stock-one-transaction-best-days",
+        "duplicate_source": "sources/2026-10-30-batch90-04.png",
+        "he": {
+          "title": "מחיר זול שהגיע מאוחר",
+          "prompt": "מחירים לפי ימים הם [9,2,6,1]. מותר לקנות פעם אחת ולמכור ביום מאוחר יותר. למה חיסור המינימום מהמקסימום מטעה, ואילו ימים, ממוספרים מ־1, נותנים את הרווח המרבי?",
+          "solution": "המחיר 9 קדם למחיר 1 ולכן הפרש 8 אינו עסקה חוקית. בזמן סריקה זוכרים את המחיר הנמוך שכבר נראה ואת יומו. ביום 3 מוכרים ב־6 אחרי קנייה ב־2 ביום 2, לרווח 4."
+        },
+        "en": {
+          "title": "A cheap price that came too late",
+          "prompt": "Daily prices are [9,2,6,1]. You may buy once and sell on a later day. Why is maximum minus minimum misleading, and which one-based days yield the best profit?",
+          "solution": "Price 9 precedes price 1, so the difference 8 is not a valid trade. Scan in order, keeping the lowest earlier price and its day. Buy for 2 on day 2 and sell for 6 on day 3, earning 4."
+        }
+      },
+      {
+        "id": "fifo-wrap-not-empty",
+        "source_question_key": "prep-eight-cell-synchronous-hardware-fifo",
+        "duplicate_source": "sources/2026-10-24-batch20-11.png",
+        "he": {
+          "title": "אותה כתובת, שני מצבים",
+          "prompt": "לתור מעגלי עם ארבעה תאים יש מצביעי קריאה וכתיבה בני שני ביטים. אחרי ארבע כתיבות מתור ריק שני המצביעים שוב שווים. איך מבחינים בין התור הזה לתור ריק?",
+          "solution": "מוסיפים מונה תפוסה 0 עד 4, או ביט הקפה לכל מצביע. אינדקסים שווים עם תפוסה 4 מציינים מלא ועם תפוסה 0 מציינים ריק. השוואת האינדקסים לבדם מאבדת את ההבדל."
+        },
+        "en": {
+          "title": "Same address, two queue states",
+          "prompt": "A four-slot circular FIFO uses two-bit read and write indices. After four writes to an empty FIFO the two indices match again. How can this state be distinguished from empty?",
+          "solution": "Keep an occupancy count from zero to four, or a wrap bit for each pointer. Equal indices with count four mean full and with count zero mean empty. Comparing indices alone loses that distinction."
+        }
+      },
+      {
+        "id": "mux-and-or-shared-select",
+        "source_question_key": "prep-and-gate-with-one-two-to-one-mux",
+        "duplicate_source": "sources/2026-10-31-batch20-11.png",
+        "he": {
+          "title": "אותו בורר לשתי פעולות",
+          "prompt": "לרשותכם מוקס 2:1 עם קו בחירה A. מה מחברים לשתי כניסות הנתונים כדי לקבל A AND B, ומה משנים כדי לקבל A OR B?",
+          "solution": "ל־AND מחברים D0=0 ו־D1=B. ל־OR מחברים D0=B ו־D1=1. בכל מקרה קובעים את כניסות הנתונים לפי ערך הפונקציה כשהבחירה קבועה ל־0 ול־1."
+        },
+        "en": {
+          "title": "One selector, two operations",
+          "prompt": "A 2:1 mux uses A as its select. Which two data inputs implement A AND B, and which implement A OR B?",
+          "solution": "For AND connect D0=0 and D1=B. For OR connect D0=B and D1=1. Each data input is the function restricted to the corresponding constant select value."
+        }
+      },
+      {
+        "id": "negative-prefix-maximum",
+        "source_question_key": "prep-maximum-sum-contiguous-subarray",
+        "duplicate_source": "sources/2026-10-31-batch20-06.png",
+        "he": {
+          "title": "רווח שיא גם כשהכול שלילי",
+          "prompt": "אחרי כל מספר בזרם מחזירים את הסכום המרבי של קטע רציף לא ריק שנראה עד אז. מה צריכים להיות הפלטים לזרם ‎−4,−2,3,−1, ואיזו טעות תגרום לפלט הראשון להיות 0?",
+          "solution": "הפלטים הם ‎−4,−2,3,3. שומרים את הטוב ביותר המסתיים כאן ואת השיא עד כה. בכל x מעדכנים את הראשון למקסימום של x ושל הקודם ועוד x. אתחול השיא ל־0 מכניס קטע ריק האסור בשאלה."
+        },
+        "en": {
+          "title": "A best sum in an all-negative prefix",
+          "prompt": "After each stream item report the maximum sum of any nonempty contiguous segment seen so far. What outputs belong to −4,−2,3,−1, and which initialization could incorrectly report zero first?",
+          "solution": "The outputs are −4,−2,3,3. Track the best sum ending here and the best ever. Update the former to the larger of x and its old value plus x. Initializing the global best to zero incorrectly admits an empty segment."
+        }
+      },
+      {
+        "id": "toggle-clock-reset-phase",
+        "source_question_key": "prep-xor-feedback-dff-hold-toggle-timing",
+        "duplicate_source": "sources/prep-074-divider-2026-10-22.png",
+        "he": {
+          "title": "תדר זהה, מופע אחר",
+          "prompt": "פליפ־פלופ D מקבל בכניסה את ההיפוך של Q ודוגם בחזיתות עולות. איך ישפיע אתחול ל־1 במקום ל־0 על תדר המוצא ועל רצף ארבע הדגימות הראשונות אחרי החזיתות?",
+          "solution": "כל חזית הופכת את הערך. מאפס מתקבל 1,0,1,0 ומאחד מתקבל 0,1,0,1. בשני המקרים אותה רמה חוזרת כל שתי תקופות כניסה, ולכן התדר נחצה ורק המופע משתנה."
+        },
+        "en": {
+          "title": "Same frequency, different phase",
+          "prompt": "A rising-edge D flip-flop feeds the complement of Q back into D. How does starting at one instead of zero affect frequency and the first four post-edge samples?",
+          "solution": "Each edge toggles Q. From zero the post-edge values are 1,0,1,0, and from one they are 0,1,0,1. The period is two input cycles in either case, so the frequency halves and the phase changes."
+        }
+      },
+      {
+        "id": "permuted-memory-addresses",
+        "source_question_key": "prep-memory-address-alias-detection",
+        "duplicate_source": "sources/2026-10-30-batch90-12.png",
+        "he": {
+          "title": "החוטים הוחלפו, האם הבדיקה תגלה?",
+          "prompt": "בזיכרון תקין מבחינת הנתונים הוחלפו שני קווי כתובת, באותו אופן בקריאה ובכתיבה. השינוי הוא תמורה של התאים, ושום זוג כתובות אינו חולק תא. האם בדיקת כתיבה וקריאה דרך אותו ממשק יכולה לגלות את ההחלפה כאשר התוכן ההתחלתי אינו ידוע?",
+          "solution": "לא. כל כתובת לוגית עדיין מתנהגת כתא עצמאי ושומרת בדיוק את הנתון האחרון שנכתב אליה. כדי להבחין בין המפות דרוש מידע חיצוני, למשל תוכן מפעל ידוע הקשור למיקום פיזי."
+        },
+        "en": {
+          "title": "Can a test see a fixed address permutation?",
+          "prompt": "Two memory address wires are swapped consistently for reads and writes. This permutes the cells without aliasing any addresses. Can a read/write test through the same interface detect the permutation when initial contents are unknown?",
+          "solution": "No. Each logical address still behaves as an independent cell returning the last value written there. Distinguishing the maps requires outside information, such as known factory contents associated with physical locations."
+        }
+      },
+      {
+        "id": "xor-swap-same-location",
+        "source_question_key": "prep-swap-without-temp-fixed-width",
+        "duplicate_source": "sources/2026-10-30-batch20-17.png",
+        "he": {
+          "title": "כששני השמות הם אותו תא",
+          "prompt": "מחליפים שני משתנים באמצעות שלוש פעולות XOR רצופות. מה יקרה אם שני המשתנים מתייחסים לאותו תא שהכיל 7? מדוע בחילוף של שני תאים שונים הבעיה אינה מתרחשת?",
+          "solution": "ההשמה הראשונה היא 7 XOR 7 ולכן מאפסת את התא. שתי ההשמות הבאות נשארות באפס. בתאים שונים אחרי הצעד הראשון התא השני עדיין מחזיק את ערכו המקורי, ואפשר לשחזר בעזרתו את שני הערכים."
+        },
+        "en": {
+          "title": "When both names denote one cell",
+          "prompt": "A swap uses the usual three successive XOR assignments. What happens if both variables refer to the very same cell, initially 7? Why is the distinct-cell case different?",
+          "solution": "The first assignment computes 7 XOR 7 and zeros the cell. Both later assignments still yield zero. With distinct cells the second one retains its original value after the first step, so both values can be recovered."
+        }
+      },
+      {
+        "id": "event-bursts-same-timestamp",
+        "source_question_key": "prep-error-bit-window-monitor",
+        "duplicate_source": "sources/2026-10-31-batch21-12.png",
+        "he": {
+          "title": "חמש תקלות באותה חותמת זמן",
+          "prompt": "שעון המערכת מדווח רק שניות שלמות. מונה אמור להתריע על חמישה אירועי שגיאה בעשר שניות. מתכנת שומר קבוצה של חותמות זמן שונות. חמש שגיאות דווחו בזמן 12. מה יקרה ומאיזה מבנה עדיף להתחיל?",
+          "solution": "הקבוצה מכילה רק 12 פעם אחת ולכן מחמיצה את ההתראה. שומרים תור עם רשומה לכל אירוע, או תור של זוגות זמן ושכיחות. כשחותמת יוצאת מהחלון מסירים את כל האירועים המתאימים לה."
+        },
+        "en": {
+          "title": "Five errors at one timestamp",
+          "prompt": "A clock reports only whole seconds. A monitor must alert on five error events in ten seconds. It keeps a set of distinct timestamps. Five errors arrive at time 12. What happens, and what representation works better?",
+          "solution": "The set holds 12 just once and misses the alarm. Use a queue with an entry per event, or time/count pairs. When a timestamp expires, remove its full count from the window."
+        }
+      },
+      {
+        "id": "mux-storage-feedback",
+        "source_question_key": "prep-mux-latch-edge-register",
+        "duplicate_source": "sources/2026-10-24-batch20-18.png",
+        "he": {
+          "title": "אות הנתונים משתנה בזמן החזקה",
+          "prompt": "במוקס מחברים D0 ליציאה של עצמו ו־D1 לאות נתונים. תחילה הבחירה 1 והנתונים 1. מורידים את הבחירה ל־0 ורק אחר כך משנים את הנתונים ל־0. מהי היציאה ומה יקרה בפתיחה הבאה?",
+          "solution": "בזמן שהבחירה 0 המשוב משמר את ה־1 שנקלט. כשהבחירה תחזור ל־1 ייבחר הנתון הנוכחי 0, והיציאה תעקוב אחריו אחרי ההשהיה. מניחים שהנתונים עמדו בתזמון הסגירה."
+        },
+        "en": {
+          "title": "Data changes during a latch hold",
+          "prompt": "A mux feeds its output into D0 and a data signal into D1. Initially the select and data are both high. Drop the select, then lower the data. What is the output now and when the latch opens again?",
+          "solution": "While select is zero, feedback retains the captured one. When select goes high again the current zero is selected and the output follows after propagation delay. This assumes timing at latch closure was met."
+        }
+      },
+      {
+        "id": "five-stones-one-clock",
+        "source_question_key": "prep-five-stones-clock-balance",
+        "duplicate_source": "sources/2026-11-08-batch20-05.png",
+        "he": {
+          "title": "חמש אבנים ומרכז אחד",
+          "prompt": "חמש אבנים זהות מונחות על חמישה סימוני שעות שונים בשעון אופקי. מצאו סידור מאוזן באמצעות זוג אבנים וקבוצה של שלוש, והסבירו למה אין מומנט כולל סביב המרכז.",
+          "solution": "לדוגמה מניחים אבנים ב־12,4,8 וב־3,9. השלישייה היא משולש שווה־צלעות סביב המרכז ולכן סכום וקטורי המיקום שלה אפס. גם זוג הווקטורים הנגדיים מתבטל. מרכז המסה הכולל נמצא במרכז השעון."
+        },
+        "en": {
+          "title": "Five stones around one clock",
+          "prompt": "Five identical stones occupy five different hour marks on a level clock face. Find a balanced arrangement made of a pair and a group of three. Why does the net torque about the center vanish?",
+          "solution": "Use 12,4,8 and 3,9. The three equally spaced marks form an equilateral triangle about the center, so their position vectors sum to zero. The opposing pair also cancels. The combined center of mass lies at the clock center."
+        }
+      },
+      {
+        "id": "pair-count-duplicates",
+        "source_question_key": "prep-count-unordered-index-pairs-target-sum",
+        "duplicate_source": "sources/2026-11-15-batch20d-03.png",
+        "he": {
+          "title": "שלושה עותקים של אותו מספר",
+          "prompt": "במערך [2,2,2,4] סופרים זוגות של אינדקסים שונים שערכי האיברים בהם מסתכמים ל־4, בלי להבדיל בסדר. כמה יש ואיך סופרים במעבר אחד בלי לספור כל זוג פעמיים?",
+          "solution": "יש שלושה זוגות מבין שלושת המופעים של 2. לפני הוספת x לטבלת השכיחויות מוסיפים לתוצאה את מספר ההופעות הקודמות של 4−x. שלושת ערכי ה־2 מוסיפים 0,1,2 בהתאמה, וה־4 אינו מוסיף דבר."
+        },
+        "en": {
+          "title": "Three copies of one value",
+          "prompt": "Count unordered pairs of distinct indices summing to four in [2,2,2,4]. How many are there, and how can a single pass avoid counting each pair twice?",
+          "solution": "There are three pairs among the three twos. Before recording each x, add the previous frequency of 4−x. The twos contribute zero, one and two. The four contributes nothing."
+        }
+      },
+      {
+        "id": "rope-over-two-wheels",
+        "source_question_key": "prep-earth-rope-uniform-clearance",
+        "duplicate_source": "sources/2026-11-07-batch20-20.png",
+        "he": {
+          "title": "חבל אחד, שני גלגלים",
+          "prompt": "שני גלגלים מעגליים בעלי רדיוסים שונים מוקפים כל אחד בחבל צמוד. יש מטר אחד נוסף לחלק בין שני החבלים כך שבשניהם ייווצר אותו מרווח רדיאלי אחיד. כיצד לחלק ומה המרווח?",
+          "solution": "תוספת אורך לכל מעגל היא 2π פעמים תוספת הרדיוס, בלי תלות ברדיוס המקורי. לכן מחלקים חצי מטר לכל חבל ומקבלים מרווח של 1/(4π) מטר בכל גלגל."
+        },
+        "en": {
+          "title": "One rope allowance, two wheels",
+          "prompt": "Two different-sized circular wheels each have a tight concentric rope. Divide one extra meter of rope between them to produce the same uniform radial gap on both. How should it be split and what gap results?",
+          "solution": "The extra circumference of each circle is 2π times its increase in radius, independent of its starting radius. Split one half meter per rope for a gap of 1/(4π) meter on each wheel."
+        }
+      },
+      {
+        "id": "nand-buffer-copies",
+        "source_question_key": "prep-xor-from-four-two-input-nand-gates",
+        "duplicate_source": "sources/2026-11-18-batch31-26.png",
+        "he": {
+          "title": "חוצץ ללא שער חוצץ",
+          "prompt": "יש רק שערי NAND דו־כניסתיים וחיווט, ומותר לקשור כניסות יחד. נדרש חוצץ לא־מהפך שהאות יעבור בו דרך שערים. איך בונים אותו, ומה קורה ל־0 ול־1 בדרך?",
+          "solution": "קושרים את שתי כניסות השער הראשון ל־x ומקבלים NOT x. קושרים את שתי כניסות השני ליציאה הראשונה. אפס נהפך לאחד ושוב לאפס, ואחד נהפך לאפס ושוב לאחד."
+        },
+        "en": {
+          "title": "A buffer without a buffer gate",
+          "prompt": "Only two-input NANDs and wires are available and inputs may be tied together. Build a noninverting buffer whose data actually passes through gates. What happens to zero and one along the path?",
+          "solution": "Tie both pins of the first NAND to x to get NOT x. Tie both pins of the second NAND to that result. Zero becomes one then zero, and one becomes zero then one."
+        }
+      },
+      {
+        "id": "thousand-states-proof",
+        "source_question_key": "prep-three-ones-ten-sample-sliding-window-checker",
+        "duplicate_source": "sources/2026-11-07-batch10-01.png",
+        "he": {
+          "title": "כמה מצבים דורש הזיכרון?",
+          "prompt": "רכיב מוציא 1 אם באלף הדגימות האחרונות היה לפחות 1. כמה מצבים בני־הבחנה יש למרחק מה־1 האחרון, כולל המקרה ״אין 1 בחלון״? נמקו מדוע אי אפשר לאחד שני מרחקים שונים.",
+          "solution": "יש 1,001 מצבים: מרחק 0 עד 999 והיעדר דגימת 1 בחלון. לשני מרחקים שונים מזינים אפסים עד שבמרחק הגדול יותר ה־1 יוצא מהחלון: בשני המצבים הפלטים יהיו שונים. גם מצב היעדר מיוחד כי פלטו כבר 0. לכן דרושים לפחות עשרה ביטי מצב."
+        },
+        "en": {
+          "title": "How many distinguishable histories?",
+          "prompt": "A circuit reports whether any one occurred in the last thousand samples. How many distinguishable states represent the distance since the last one, including “no one in the window”? Why can't two different distances be merged?",
+          "solution": "There are 1,001 states: distances zero through 999 plus absence. For two different distances, append zeros until the older one expires while the younger remains, distinguishing their outputs. Absence already has output zero. At least ten state bits are necessary."
+        }
+      },
+      {
+        "id": "stable-backward-merge",
+        "source_question_key": "prep-merge-two-sorted-arrays",
+        "duplicate_source": "sources/2026-10-25-batch20-15.png",
+        "he": {
+          "title": "מי נכנס ראשון דווקא מהסוף?",
+          "prompt": "שני מערכים ממוינים מכילים רשומות עם מפתח ותווית מקור. ממזגים לאחור לתוך מקום פנוי בסוף המערך הראשון. במקרה של שוויון רוצים שרשומות מהמערך הראשון יופיעו קודם בתוצאה הסופית. מאיזה מערך לוקחים כששני המפתחות האחרונים שווים?",
+          "solution": "לוקחים מן המערך השני כי כרגע ממלאים את המקום המאוחר יותר. הרשומה מהמערך הראשון תישאר למקום מוקדם יותר. בחירה מהראשון במקרה שוויון הייתה הופכת את סדר המקורות."
+        },
+        "en": {
+          "title": "Who goes first when merging backward?",
+          "prompt": "Two sorted arrays contain records with keys and origin labels. Merge backward into free space at the end of the first array. On equal keys, records from the first array must appear earlier in the final sequence. Which last record should be taken first on a tie?",
+          "solution": "Take from the second array, since the current write slot is the later one. The first array's record remains for an earlier position. Taking it first while writing backward would reverse the requested source order."
+        }
+      },
+      {
+        "id": "free-slot-mask",
+        "source_question_key": "prep-thirty-two-slot-bitmap-allocator",
+        "duplicate_source": "sources/2026-10-25-batch11-01.png",
+        "he": {
+          "title": "הביט שמחזיר כתובת פנויה",
+          "prompt": "במפת תפוסה בת שמונה ביטים 1 מסמן כתובת תפוסה. המפה היא 11110111, כשהביט הימני מסמן כתובת 0. איזו כתובת אפשר להקצות, ואיך משחררים אותה בלי לשנות שכנים?",
+          "solution": "כתובת 3 פנויה. להקצאה מציבים את ביט 3 בעזרת OR עם 00001000. לשחרור מבצעים AND עם 11110111. כל שאר ביטי המפה נשמרים."
+        },
+        "en": {
+          "title": "A bit that identifies a free address",
+          "prompt": "In an eight-bit occupancy map one means occupied. The map is 11110111 with address zero at the right. Which address may be allocated, and how can it be freed without changing neighbors?",
+          "solution": "Address 3 is free. Allocate it by OR with 00001000; free it by AND with 11110111. Every other bit retains its value."
+        }
+      },
+      {
+        "id": "sr-latch-release-order",
+        "source_question_key": "prep-sr-storage-from-logic-gates",
+        "duplicate_source": "sources/2026-10-31-batch20-10.png",
+        "he": {
+          "title": "שחרור כניסות האחסון",
+          "prompt": "ב־SR latch משני שערי NOR, ‏S=1 ו־R=1 למשך זמן ואז שניהם יורדים כמעט יחד. למה טבלת האמת למצבי עבודה רגילים אינה מספיקה לניבוי הערך הסופי?",
+          "solution": "בזמן ששתי הכניסות 1 שתי היציאות נדחפות ל־0. לאחר השחרור שני הצדדים מנסים לעלות, והשהיות יחסיות ורעש עשויים להכריע איזה צד יתייצב גבוה. לא הוגדרה תוצאת אחסון יחידה למעבר הזה."
+        },
+        "en": {
+          "title": "Releasing the latch inputs",
+          "prompt": "A cross-coupled NOR SR latch has S=R=1 for a while and both are then released almost together. Why does the ordinary operation table not determine its final stored value?",
+          "solution": "While both inputs are one both outputs are forced low. On release both sides attempt to rise, and relative delays and noise can determine which side wins. That transition has no guaranteed stored value."
+        }
+      },
+      {
+        "id": "lowest-one-qualification",
+        "source_question_key": "prep-isolate-lowest-set-bit-basic-gates",
+        "duplicate_source": "sources/2026-11-07-night30-11.png",
+        "he": {
+          "title": "מתי ביט רשאי לזכות?",
+          "prompt": "מעגל צריך להחזיר מסכה שבה נשאר רק ה־1 הימני ביותר של x. כתבו תנאי לביט 3 של המסכה ובדקו אותו על הקלטים 1011000 ו־1011010.",
+          "solution": "דרוש x3=1 וגם x2=x1=x0=0. בקלט הראשון שני התנאים מתקיימים ולכן ביט 3 דולק. בשני ביט 1 דולק ולכן הוא זוכה וביט 3 כבוי."
+        },
+        "en": {
+          "title": "When may a bit win?",
+          "prompt": "A circuit keeps only the rightmost one of x. Give the condition for bit three of the output mask and evaluate it on 1011000 and 1011010.",
+          "solution": "Require x3=1 and x2=x1=x0=0. The first word satisfies both conditions. In the second, bit one is high and wins priority, so bit three is low."
+        }
+      },
+      {
+        "id": "two-bit-comparator-test-count",
+        "source_question_key": "prep-one-bit-and-four-bit-unsigned-comparator",
+        "duplicate_source": "sources/2026-11-15-batch20b-12.png",
+        "he": {
+          "title": "כמה שורות למשווה?",
+          "prompt": "משווה מקבל שני מספרים בני שני ביטים ומחזיר האם הראשון גדול ממש. כמה זוגות קלט יש בבדיקה ממצה וכמה מהם צריכים להחזיר 1? האם הצלחה מוכיחה שכל רכיב פנימי תקין?",
+          "solution": "יש 16 זוגות. ארבעה הם שוויון. 12 הנותרים מתחלקים סימטרית לשש תוצאות גדולות ולשש קטנות. הצלחה מוכיחה את טבלת הקלט־פלט בתנאי הבדיקה. תקלה פנימית שמוסווית בכל המוצאים אינה ניתנת לזיהוי כך."
+        },
+        "en": {
+          "title": "How many rows for a comparator?",
+          "prompt": "A comparator takes two unsigned two-bit numbers and reports strict greater-than. How many input pairs make an exhaustive test, how many should return one, and does success prove every internal component is fault-free?",
+          "solution": "There are 16 pairs, four equal. The remaining 12 split symmetrically into six greater and six less. Passing verifies the external truth table under the test conditions; an internally masked fault is not observable this way."
+        }
+      },
+      {
+        "id": "inverted-pin-and",
+        "source_question_key": "prep-and-from-inverted-input-and-or-gates",
+        "duplicate_source": "sources/2026-10-30-batch40-02.png",
+        "he": {
+          "title": "AND עם כניסה מהופכת",
+          "prompt": "תא G מחשב G(a,b)=a AND NOT b. אסור להשתמש בקבועים או בשערים אחרים. הראו איך שני עותקים של G יכולים לחשב x AND y.",
+          "solution": "מחשבים t=G(x,y), ואז G(x,t)=x AND NOT(x AND NOT y). אם x=0 התוצאה 0. אם x=1 אז t=NOT y והתוצאה y. לכן זה AND."
+        },
+        "en": {
+          "title": "AND with an inverted pin",
+          "prompt": "A cell computes G(a,b)=a AND NOT b. Constants and other gates are unavailable. Show how two instances of G compute x AND y.",
+          "solution": "Compute t=G(x,y), then G(x,t)=x AND NOT(x AND NOT y). When x=0 the result is zero. When x=1, t=NOT y and the result is y. These are exactly the AND cases."
+        }
+      },
+      {
+        "id": "handshake-extreme-partners",
+        "source_question_key": "prep-prince-princess-handshake-counts",
+        "duplicate_source": "sources/2026-10-30-batch20-20.png",
+        "he": {
+          "title": "מי בני הזוג עם 0 ו־8?",
+          "prompt": "במפגש של חמישה זוגות איש אינו לוחץ יד לבן זוגו או לעצמו, וכל זוג אנשים לוחץ ידיים לכל היותר פעם אחת. תשעת הנשאלים מדווחים על מספרים שונים מ־0 עד 8. למה האדם שדיווח על 0 חייב להיות בן זוגו של מי שדיווח על 8?",
+          "solution": "לבעל 8 יש בדיוק שמונה שותפים מותרים, ולכן הוא לחץ את יד כולם פרט לבן זוגו. אילו בעל 0 לא היה בן זוגו, היה מקבל לפחות לחיצה אחת. סתירה זו מחייבת שהם זוג."
+        },
+        "en": {
+          "title": "Whose partners shook zero and eight hands?",
+          "prompt": "At a gathering of five couples nobody shakes their own hand or their partner's, and each pair shakes at most once. The nine people queried report all counts from 0 to 8. Why must the zero and eight respondents be partners?",
+          "solution": "The person with eight has exactly eight eligible partners for handshakes and therefore shook all of them. If the zero respondent were not their spouse, they would have received at least one handshake. Hence the two are spouses."
+        }
+      },
+      {
+        "id": "threshold-power-choice",
+        "source_question_key": "prep-mosfet-structure-current-bias-model",
+        "duplicate_source": "sources/2026-11-15-batch20d-08.png",
+        "he": {
+          "title": "שני תאים בעלי מתח סף שונה",
+          "prompt": "שני תאי CMOS באותה טכנולוגיה מבצעים אותה פעולה, האחד בעל מתח סף גבוה והאחר נמוך. יש מסלול עם מרווח תזמון גדול והדליפה במנוחה חשובה. איזה תא תעדיפו ומה תבדקו לפני החלפה?",
+          "solution": "בדרך כלל תא בעל מתח סף גבוה מקטין זרם תת־סף אך מגיב לאט יותר. נבדוק מחדש את תזמוני המסלול בתנאי העבודה המתוכננים. ההספק הדינמי תלוי גם בקיבול, במתח, בתדירות ובפעילות, ואינו נקבע רק לפי מתח הסף."
+        },
+        "en": {
+          "title": "Two cells with different thresholds",
+          "prompt": "Two CMOS cells in the same technology perform the same logic with high and low threshold voltages. One path has ample timing slack and idle leakage matters. Which cell would you try there and what must be checked?",
+          "solution": "Try the high-threshold cell: it typically reduces subthreshold leakage but switches more slowly. Recheck path timing under the required operating conditions. Dynamic power also depends on capacitance, supply, frequency and activity, rather than threshold alone."
+        }
+      },
+      {
+        "id": "palindrome-middle-character",
+        "source_question_key": "prep-ascii-letter-palindrome-two-pointers",
+        "duplicate_source": "sources/2026-11-14-batch30-02.png",
+        "he": {
+          "title": "האות שבמרכז המילה",
+          "prompt": "בודקים אם מילה בת חמש אותיות היא פלינדרום. מהן ההשוואות המספיקות, ולמה אין צורך להשוות את האות השלישית לשום אות אחרת?",
+          "solution": "משווים את אות 1 ל־5 ואת 2 ל־4. אי־שוויון באחת מהן פוסל. האות השלישית משתקפת לעצמה, כך שהיא תמיד מקיימת את דרישת הסימטריה."
+        },
+        "en": {
+          "title": "The middle letter of a palindrome",
+          "prompt": "To test whether a five-letter word is a palindrome, which comparisons suffice, and why does its third letter need no comparison with another letter?",
+          "solution": "Compare positions one and five, then two and four. A mismatch rejects the word. Position three reflects to itself and automatically satisfies the symmetry requirement."
+        }
+      },
+      {
+        "id": "free-list-sentinel-width",
+        "source_question_key": "prep-sixty-four-slot-inband-free-list",
+        "duplicate_source": "sources/2026-11-01-batch20-15.png",
+        "he": {
+          "title": "כתובת אחת יותר ממספר הקודים",
+          "prompt": "בזירה עם 256 תאים פנויים אפשריים, כל קישור ברשימה מקודד ב־8 ביטים. מישהו מקצה את 255 לסימון סוף הרשימה וממשיך להשתמש גם בתא 255. איזה מצב אינו ניתן לפענוח, ואיזה תיקון אפשרי?",
+          "solution": "קישור המצביע לתא 255 וסוף הרשימה מקבלים אותו קוד. ל־256 כתובות ועוד סוף דרושים 257 מצבים. אפשר להרחיב לקוד בן תשעה ביטים, לשמור ביט סוף נפרד, או לוותר על תא אחד."
+        },
+        "en": {
+          "title": "One more state than available codes",
+          "prompt": "An arena has 256 addressable cells and each free-list link uses eight bits. A designer reserves code 255 for end-of-list but still uses cell 255. Which state becomes ambiguous and how could it be fixed?",
+          "solution": "A link to cell 255 and end-of-list become indistinguishable. Encoding 256 addresses plus end takes 257 states. Widen the link to nine bits, keep a separate end flag, or reserve one cell."
+        }
+      },
+      {
+        "id": "branchless-swap-overflow",
+        "source_question_key": "prep-toggle-nine-thirteen-without-conditionals",
+        "duplicate_source": "sources/2026-11-18-batch31-10.png",
+        "he": {
+          "title": "הקבוע שלא נכנס למילה",
+          "prompt": "רכיב בקלט בן שלושה ביטים ללא סימן מבטיח x=5 או x=6. פעולת חיבור רוויה נעצרת ב־7 במקום לגלוש. מתכנן מחליף בין הערכים באמצעות (5+6)−x עם חיבור רווי. מה מחזיר המימוש, ואיך אפשר לבצע את ההחלפה באותו רוחב?",
+          "solution": "הסכום נתקע ב־7. עבור 5 מקבלים 2 ועבור 6 מקבלים 1. מסכת XOR שערכה 5 XOR 6, כלומר 3, הופכת רק את שני הביטים השונים. לכן x XOR 3 מחליף את 101 ו־110 בלי לייצג את 11."
+        },
+        "en": {
+          "title": "The constant that does not fit",
+          "prompt": "A three-bit unsigned unit guarantees x is 5 or 6. Its saturating adder clamps at seven rather than wrapping. A designer swaps the pair via (5+6)−x using that adder. What result does it give and how can the swap work at the same width?",
+          "solution": "The sum clamps to seven, yielding two for input five and one for six. The mask 5 XOR 6 is three, flipping only the two differing bits. Thus x XOR 3 swaps 101 and 110 without representing eleven."
+        }
+      },
+      {
+        "id": "mux-as-nor",
+        "source_question_key": "prep-nand-and-nor-from-two-to-one-muxes",
+        "duplicate_source": "sources/2026-10-30-batch40-05.png",
+        "he": {
+          "title": "כשהבורר גבוה התוצאה כבר ידועה",
+          "prompt": "מותר להשתמש במוקסים 2:1 וקבועים. כדי לבנות NOR של A,B בוחרים ב־A כקו הבחירה האחרון. איזו כניסה אפשר לקשור לקבוע ואיזו צריכה אות מחושב?",
+          "solution": "כאשר A=1 התוצאה תמיד 0, לכן D1=0. כאשר A=0 התוצאה היא NOT B, לכן D0 מקבל מוקס הנשלט ב־B שבוחר 1 עבור 0 ו־0 עבור 1."
+        },
+        "en": {
+          "title": "A select that determines the result",
+          "prompt": "Using 2:1 muxes and constants, build NOR of A,B with A as the outer select. Which data input can be constant and which needs a computed signal?",
+          "solution": "When A=1 the result is always zero, so D1=0. When A=0 the result is NOT B. Feed D0 with a mux selected by B that selects one for zero and zero for one."
+        }
+      },
+      {
+        "id": "half-adder-truth-check",
+        "source_question_key": "prep-four-bit-addition-half-adders-only",
+        "duplicate_source": "sources/2026-10-30-batch90-06.png",
+        "he": {
+          "title": "שתי יציאות לאותו זוג ביטים",
+          "prompt": "למחבר למחצה הוצע להשתמש ב־OR לביט הסכום וב־AND לביט הנשא. איזו שורה בודדת של טבלת האמת מפריכה את ההצעה, ואיזה שער צריך להחליף?",
+          "solution": "עבור 1+1 התוצאה הבינארית 10. הנשיאה אכן 1, אך הסכום חייב להיות 0 ו־OR מחזיר 1. מחליפים את OR ב־XOR ומשאירים את AND."
+        },
+        "en": {
+          "title": "Two outputs from the same two bits",
+          "prompt": "A half adder is proposed with OR for its sum and AND for its carry. Which single input row disproves it, and which gate needs replacing?",
+          "solution": "At 1+1 the binary result is 10. The carry is correctly one, but the sum must be zero while OR returns one. Replace OR with XOR and retain AND."
+        }
+      },
+      {
+        "id": "postfix-division-order",
+        "source_question_key": "prep-postfix-expression-stack-evaluation",
+        "duplicate_source": "sources/2026-11-18-batch31-22.png",
+        "he": {
+          "title": "מי המחלק במחסנית?",
+          "prompt": "הביטוי הפוסטפיקסי 93-2/ כולל ספרות בודדות. מה תוצאתו ואיזה ערך נשלף ראשון בכל פעולה בינארית?",
+          "solution": "בחיסור נשלף 3 לפני 9 ולכן מחשבים 9−3=6. בחילוק נשלף 2 לפני 6 ולכן מחשבים 6/2=3. הפריט העליון הוא האופרנד הימני, דבר שחשוב במיוחד בחיסור ובחילוק."
+        },
+        "en": {
+          "title": "Which popped number is the divisor?",
+          "prompt": "The postfix expression 93-2/ uses single-digit operands. What is its value, and which operand is popped first for each binary operator?",
+          "solution": "At subtraction, 3 pops before 9, giving 9−3=6. At division, 2 pops before 6, giving 6/2=3. The top of the stack is the right operand, which matters for subtraction and division."
+        }
+      },
+      {
+        "id": "zero-multiplier-loop",
+        "source_question_key": "prep-primitive-register-multiply-and-absolute-difference",
+        "duplicate_source": "sources/2026-11-01-batch20-04.png",
+        "he": {
+          "title": "כפל באפס לפני הלולאה",
+          "prompt": "מכפילים A ב־B לא־שלילי על ידי הוספת A לתוצאה והפחתת 1 מ־B בכל סיבוב. בגרסה שמבצעת את גוף הלולאה לפני בדיקת B, מה משתבש עבור A=7,B=0 ומה צריך לשמור כנכונה בכל צעד?",
+          "solution": "התוצאה הנכונה 0, אך מתווספת 7 ונעשה ניסיון להפחית מאפס. בודקים שהמונה חיובי לפני הגוף ומתחילים בתוצאה 0. בכל ראש לולאה התוצאה החלקית ועוד A כפול המונה הנותר שווה למכפלה המקורית."
+        },
+        "en": {
+          "title": "Multiplication by zero before the loop",
+          "prompt": "Multiply A by nonnegative B by adding A to the result and decrementing B each iteration. If the body runs before testing B, what fails for A=7,B=0, and what invariant should each step preserve?",
+          "solution": "The correct result is zero, yet seven is added and zero is decremented. Start with a zero result and test the counter before entering. At each loop head, accumulated result plus A times the remaining count equals the original product."
+        }
+      },
+      {
+        "id": "clamp-by-two-top-bits",
+        "source_question_key": "prep-eight-bit-unsigned-lower-clamp-sixty-four",
+        "duplicate_source": "sources/2026-10-30-batch20-16.png",
+        "he": {
+          "title": "שני ביטים במקום משווה",
+          "prompt": "מעגל מחזיר max(x,64) עבור x בן שמונה ביטים ללא סימן. אילו שני ביטים מספיק לבדוק כדי להחליט אם להחליף את כל הקלט ב־64? מה קורה ב־63 וב־64?",
+          "solution": "x קטן מ־64 בדיוק כשביטים 7 ו־6 שניהם 0. במקרה זה בוחרים בקבוע 01000000, ואחרת מעבירים את x. בקלט 63 נבחר הקבוע; בקלט 64 מועבר הקלט, ובשניהם הפלט 64."
+        },
+        "en": {
+          "title": "Two bits instead of a comparator",
+          "prompt": "A circuit returns max(x,64) for an unsigned byte. Which two bits suffice to decide whether to replace the whole input by 64? What happens at 63 and 64?",
+          "solution": "x is below 64 exactly when bits seven and six are both zero. Then select constant 01000000; otherwise pass x. At 63 the constant is selected, at 64 the input passes, and both outputs are 64."
+        }
+      },
+      {
+        "id": "duplicate-stack-maximum",
+        "source_question_key": "prep-stack-with-prefix-minimum",
+        "duplicate_source": "sources/2026-11-14-batch30-10.png",
+        "he": {
+          "title": "המקסימום מופיע פעמיים",
+          "prompt": "דוחפים למחסנית את 3,7,7,2 בסדר זה. איזו תשובה צריכה max לתת אחרי שתי שליפות, ואיך שומרים אותה בזמן קבוע גם כשהמקסימום חוזר?",
+          "solution": "שולפים 2 ואז 7, אך 7 נוסף נשאר בראש. אפשר לשמור לצד כל תא את מקסימום כל האיברים עד אליו. לאחר שליפה הרשומה החדשה בראש כבר מכילה את המקסימום הנכון 7."
+        },
+        "en": {
+          "title": "The maximum occurs twice",
+          "prompt": "Push 3,7,7,2 onto a stack in that order. What should max report after two pops, and how can the stack retain the answer in constant time despite equal maxima?",
+          "solution": "Popping 2 and then 7 still leaves another 7 on top. Store with each cell the maximum from the bottom through that cell. After a pop, the new top already carries the correct maximum, here seven."
+        }
+      },
+      {
+        "id": "boundary-on-a-shift-register",
+        "source_question_key": "prep-first-equal-in-sorted-array",
+        "duplicate_source": "sources/2026-11-18-batch31-12.png",
+        "he": {
+          "title": "אותו חיפוש, שתי דרכי גישה",
+          "prompt": "רשימה של 64 ערכים ממוינים עשויה להכיל 0 עד 64 ערכים קטנים מ־k. אם אפשר לשאול על כל אינדקס האם ערכו קטן מ־k, כמה שאלות כן/לא נדרשות במקרה הגרוע? מדוע אין זו הבטחה לאותו מספר מחזורים ברגיסטר הזזה?",
+          "solution": "יש 65 גבולות אפשריים. שש תשובות מבחינות לכל היותר ב־64 אפשרויות, ושבע מספיקות בחיפוש בינארי מאוזן. ברגיסטר הזזה אי אפשר לקפוץ לאמצע; הזמן להעברת האיברים לבדו עלול להיות ליניארי."
+        },
+        "en": {
+          "title": "One search, two access methods",
+          "prompt": "A sorted list of 64 values may contain anywhere from zero to 64 values below k. With random-access tests asking whether an indexed value is below k, how many yes/no tests are needed in the worst case? Why is that no clock bound for a shift register?",
+          "solution": "There are 65 possible boundaries. Six answers distinguish at most 64 outcomes; seven suffice by balanced binary search. A shift register cannot jump to the middle, and bringing elements to the read port can itself take linear time."
+        }
+      },
+      {
+        "id": "binary-print-signed",
+        "source_question_key": "prep-unsigned-integer-binary-text-c",
+        "duplicate_source": "sources/2026-11-14-batch30-05.png",
+        "he": {
+          "title": "איזה ייצוג מדפיסים עבור מינוס אחת?",
+          "prompt": "פונקציה אמורה להדפיס מספר C בבינארי. לקלט ‎−1 הוצעו הפלטים ‎−1 ו־11111111. באיזה חוזה כל אחד מתאים, אם רוחב מילת הדוגמה הוא שמונה ביטים?",
+          "solution": "הראשון הוא סימן מינוס ואחריו הגודל בערך מוחלט בבסיס 2. השני הוא דפוס הביטים הקבוע של ‎−1 במשלים לשתיים על שמונה ביטים. עבור הדפסת דפוס קבוע ניגשים לסיביות דרך טיפוס ללא סימן ברוחב המתאים."
+        },
+        "en": {
+          "title": "Which representation prints negative one?",
+          "prompt": "A function prints C integers in binary. For −1 two proposed outputs are −1 and 11111111. Under which contract is each appropriate if the example word has eight bits?",
+          "solution": "The first is a sign followed by the magnitude in base two. The second is the fixed eight-bit two's-complement pattern for −1. For a fixed-bit print, inspect an unsigned value of the intended width."
+        }
+      },
+      {
+        "id": "square-sum-valid",
+        "source_question_key": "prep-finite-cycle-index-and-square-recurrence",
+        "duplicate_source": "sources/2026-11-18-batch31-02.png",
+        "he": {
+          "title": "מתי שוויון הריבועים תקף?",
+          "prompt": "בודק שלשות מקבל שלושה מספרים ללא סימן בני 4 ביטים. איזה רוחב נדרש לסכום המדויק a²+b²? מתי מותר להרים valid אם מחשבים את שלושת הריבועים במחזורים שונים?",
+          "solution": "הערך המרבי 15²+15²=450 ולכן נדרשים תשעה ביטים. שומרים את התוצאות מאותה שלשת קלט ומרימים valid רק כאשר כולן זמינות והשוואת הסכום ל־c² הושלמה. תוצאה ישנה מאתחול או משלשה קודמת אינה מספיקה."
+        },
+        "en": {
+          "title": "When is the squares comparison valid?",
+          "prompt": "A triple checker takes three unsigned four-bit inputs. How wide must the exact a²+b² sum be? When may valid be raised if the three squares are computed on different cycles?",
+          "solution": "The largest sum is 15²+15²=450, requiring nine bits. Keep results from the same input triple and assert valid only when all three are ready and their comparison is complete. A reset value or a square from an earlier triple does not suffice."
+        }
+      },
+      {
+        "id": "cycle-runners-head-start",
+        "source_question_key": "prep-singly-linked-list-floyd-cycle",
+        "duplicate_source": "sources/2026-10-31-batch21-17.png",
+        "he": {
+          "title": "היכן נפגשים המצביעים?",
+          "prompt": "ברשימה A→B→C→D→B מתחילים שני מצביעים ב־A. בכל צעד האיטי מתקדם פעם אחת והמהיר פעמיים. אחרי כמה צעדים חיוביים הם נפגשים לראשונה והאם זהו בהכרח ראש המעגל?",
+          "solution": "אחרי צעד אחד הם ב־B,C; אחרי שניים ב־C,B; אחרי שלושה שניהם ב־D. הכניסה למעגל היא B, כך שהמפגש מוכיח קיום מעגל אך אינו מצביע בהכרח על כניסתו."
+        },
+        "en": {
+          "title": "Where do the pointers meet?",
+          "prompt": "In A→B→C→D→B two pointers start at A. Each step the slow pointer moves once and the fast pointer twice. After how many positive steps do they first meet, and is that necessarily the cycle entry?",
+          "solution": "The positions are B,C after one step, C,B after two, and D,D after three. The cycle entry is B. The meeting proves there is a cycle but need not identify its entry."
+        }
+      },
+      {
+        "id": "late-event-peak",
+        "source_question_key": "prep-minimum-workers-weighted-interval-demand",
+        "duplicate_source": "sources/2026-10-30-batch110-05.png",
+        "he": {
+          "title": "האירוע שהגיע אחרי הדיווח",
+          "prompt": "לוג תהליכים מתעדכן באיחור. כרגע מופיע רק תהליך שצרך 40 יחידות ב־[2,6), ומוכרז שיא סופי של 40 עד זמן 6. אחר כך מגיע רישום של תהליך נוסף שצרך 30 ב־[3,4). מה היה השיא ואילו תנאים נחוצים להכרזה סופית?",
+          "solution": "בקטע [3,4) הצריכה הכוללת הייתה 70. עד שיש הבטחה שכל אירועי הזמן המדווח כבר התקבלו, השיא הוא זמני. אפשר להמתין לסימון שלמות או לשמור מידע שיאפשר לתקן את השיא עם הגעת רישום מאוחר."
+        },
+        "en": {
+          "title": "The log record that arrives late",
+          "prompt": "A process log accepts late records. Only a job using 40 units over [2,6) is visible when the system declares a final peak of 40 through time six. Then a job using 30 over [3,4) arrives. What was the peak, and what makes a final announcement possible?",
+          "solution": "The jobs overlap on [3,4), so peak usage was 70. A reported maximum is provisional until there is a guarantee all earlier events arrived. Wait for a completeness watermark or retain history to revise the peak after a late record."
+        }
+      },
+      {
+        "id": "matrix-zeros-not-contagious",
+        "source_question_key": "prep-zero-matrix-original-rows-columns",
+        "duplicate_source": "sources/2026-10-31-batch22-19.png",
+        "he": {
+          "title": "אפס חדש אינו מקור חדש",
+          "prompt": "במטריצה ששורותיה [1,0,3] ו־[4,5,6] יש לאפס כל שורה ועמודה שהכילו אפס במקור. מה צריכה להיות השורה השנייה ולמה סריקה שכותבת אפסים מיד עלולה לשגות?",
+          "solution": "השורה השנייה צריכה להיות [4,0,6]. רק העמודה האמצעית שלה נפגעה מן האפס המקורי. אפסים שנוצרו במהלך העבודה עלולים להיקרא בטעות כמקורות נוספים. מסמנים שורות ועמודות לפני האיפוס."
+        },
+        "en": {
+          "title": "A new zero is not a new source",
+          "prompt": "A matrix has rows [1,0,3] and [4,5,6]. Zero every row and column containing an original zero. What should the second row become, and why can a scan that immediately writes zeros be wrong?",
+          "solution": "The second row should be [4,0,6]. Only its middle column is affected by the original zero. Overwriting during discovery can make newly created zeros appear to be extra sources. Mark rows and columns before clearing them."
+        }
+      },
+      {
+        "id": "popcount-read-lower-bound",
+        "source_question_key": "prep-byte-popcount-parallel-and-lookup",
+        "duplicate_source": "sources/2026-11-07-night30-30.png",
+        "he": {
+          "title": "הביט שלא נקרא",
+          "prompt": "מערך מכיל n תאים, בכל תא ביט יחיד. מותר לקרוא תא אחד בכל פעולה. טוענים שאפשר לספור בדיוק את כל האחדים במקרה הגרוע בפחות מ־n קריאות. איך קלט שכולו אפסים מפריך את הטענה?",
+          "solution": "אם נשאר תא שלא נקרא, מתארים מערך שני שזהה למערך הראשון מלבד 1 באותו תא. כל התצפיות זהות אך הסכום שונה באחד. לכן במודל הזה נדרשות n קריאות במקרה הגרוע."
+        },
+        "en": {
+          "title": "The unread bit",
+          "prompt": "An array contains n one-bit cells; one operation reads one cell. Someone claims the exact number of ones can always be computed with fewer than n reads. How does the all-zero input disprove this claim?",
+          "solution": "If a cell is unread, form another input identical except for a one in that cell. All observations are the same while the count differs by one. Thus n reads are required in the worst case under this access model."
+        }
+      },
+      {
+        "id": "counter-carry-from-old-state",
+        "source_question_key": "prep-extend-mod16-black-box-to-mod32-counter",
+        "duplicate_source": "sources/2026-11-03-batch20-04.png",
+        "he": {
+          "title": "מסתכלים על הספירה לפני החזית או אחריה?",
+          "prompt": "מונה נמוך בן ארבעה ביטים עובר מ־1110 ל־1111 ואז ל־0000. ביט חמישי אמור להתרחב יחד איתו. אם הביט החמישי מתהפך בחזית שבה הערך החדש הנמוך הוא 1111, מה תהיה השגיאה ומתי נכון להפוך?",
+          "solution": "הוא מתהפך חזית אחת מוקדם מדי. לדוגמה מ־01110 נקבל 11111 במקום 01111. בספירה רגילה ביט 4 מתהפך כאשר הערך שלפני החזית הוא 1111, במעבר של החלק הנמוך לאפס."
+        },
+        "en": {
+          "title": "Should carry look at the old or new count?",
+          "prompt": "A four-bit low counter goes from 1110 to 1111 and then to 0000. A fifth bit must extend it. If that bit toggles at the edge whose new low value is 1111, what goes wrong and when should it toggle?",
+          "solution": "It toggles one edge early. For example 01110 becomes 11111 instead of 01111. On an ordinary increment toggle bit four when the pre-edge low value is 1111, as the low nibble wraps to zero."
+        }
+      },
+      {
+        "id": "nmos-high-level",
+        "source_question_key": "prep-nmos-only-load-inverter",
+        "duplicate_source": "sources/2026-11-18-batch31-25.png",
+        "he": {
+          "title": "למה המוצא הגבוה נעצר?",
+          "prompt": "במהפך יש NMOS משיכה מטה ועוד NMOS העשרה בתור עומס, שהשער והנקז שלו מחוברים ל־VDD והמקור למוצא. כאשר הטרנזיסטור התחתון כבוי, מדוע מתח המוצא לא מגיע במודל הפשוט ל־VDD?",
+          "solution": "ככל שהמוצא עולה, מתח השער־מקור של העומס קטן והוא מפסיק להוליך היטב ליד VDD−Vth. בהזנחת אפקט המצע זהו אומדן לרמה הגבוהה. עם אפקט מצע מתח הסף עצמו יכול לעלות."
+        },
+        "en": {
+          "title": "Why does the high level stop rising?",
+          "prompt": "An inverter uses an NMOS pull-down and an enhancement NMOS load with gate and drain tied to VDD and source at the output. With the pull-down off, why does the output fall short of VDD in the simple model?",
+          "solution": "As the output rises, the load's gate-to-source voltage decreases. Strong conduction ceases near VDD−Vth, estimating the high level when body effect is neglected. Body effect can further raise the threshold."
+        }
+      },
+      {
+        "id": "boolean-calculator-xor",
+        "source_question_key": "prep-arithmetic-only-boolean-gates",
+        "duplicate_source": "sources/2026-10-30-batch40-08.png",
+        "he": {
+          "title": "XOR במחשבון חשבוני",
+          "prompt": "הקלטים x ו־y הם רק 0 או 1. המחשבון מאפשר חיבור, חיסור וכפל. איזה תיקון ל־x+y ייתן 1 כשבדיוק אחד מהם דולק ו־0 אחרת?",
+          "solution": "מחשבים x+y−2xy. כאשר שניהם 1 הסכום 2 ומחסירים 2. כאשר לכל היותר אחד דולק המכפלה אפס והתוצאה נשארת סכום הביטים."
+        },
+        "en": {
+          "title": "XOR on an arithmetic calculator",
+          "prompt": "Inputs x and y are either zero or one. A calculator allows addition, subtraction and multiplication. What correction to x+y makes it one exactly when one input is high?",
+          "solution": "Compute x+y−2xy. When both inputs are one their sum is two and the correction subtracts two. Otherwise the product vanishes and the original sum is the desired bit."
+        }
+      },
+      {
+        "id": "mux-selected-zero",
+        "source_question_key": "prep-two-input-mux-symbol-and-truth-table",
+        "duplicate_source": "sources/2026-10-30-batch70-02.png",
+        "he": {
+          "title": "מי חוסם את הכניסה שלא נבחרה?",
+          "prompt": "מממשים מוקס באמצעות שני שערי AND ושער OR. על שני שערי ה־AND חיברו בטעות את אותו קו בחירה S במקום להשתמש גם בהיפוכו. תנו קלט שבו הטעות גלויה והסבירו את התיקון.",
+          "solution": "עבור S=0 ו־D0=1 שני ענפי המעגל התקול כבויים, במקום להעביר 1. מחברים NOT S לענף D0 ואת S לענף D1. כך רק הענף הנבחר מגיע ל־OR."
+        },
+        "en": {
+          "title": "What blocks the unselected input?",
+          "prompt": "A mux uses two AND gates and an OR. Both ANDs were accidentally wired to select S instead of using its complement on one branch. Give an input exposing the bug and explain the fix.",
+          "solution": "With S=0 and D0=1 both faulty branches turn off instead of passing one. Gate D0 with NOT S and D1 with S. Only the selected branch then reaches the OR."
+        }
+      },
+      {
+        "id": "letter-counter-width",
+        "source_question_key": "prep-cpu-thousand-sorter-two-thousand-memory-models",
+        "duplicate_source": "sources/2026-10-31-batch22-17.png",
+        "he": {
+          "title": "אלף אותיות זהות",
+          "prompt": "ממיין אלף אותיות A–Z מחזיק מונה לכל אות. מישהו מציע שישה ביטים למונה כי 1000/26 קטן מ־64. מדוע הקלט החוקי הפשוט ביותר מפריך זאת ומהו הרוחב הנדרש לכל מונה עצמאי?",
+          "solution": "כל אלף האותיות יכולות להיות A. מונה יחיד צריך לייצג ערכים מ־0 עד 1000 כולל. תשעה ביטים מספיקים רק עד 511, ועשרה מספיקים עד 1023."
+        },
+        "en": {
+          "title": "A thousand identical letters",
+          "prompt": "A sorter of 1,000 A–Z letters keeps a counter per letter. A designer proposes six bits per counter because 1000/26 is below 64. What valid input disproves the choice, and how wide must an independent counter be?",
+          "solution": "All 1,000 letters can be A. One counter must represent zero through 1,000 inclusive. Nine bits stop at 511, while ten reach 1,023."
+        }
+      },
+      {
+        "id": "restore-after-permutation",
+        "source_question_key": "prep-all-distinct-string-permutations",
+        "duplicate_source": "sources/2026-11-15-batch10c-04.png",
+        "he": {
+          "title": "ההחלפה שאחרי הקריאה",
+          "prompt": "מחולל תמורות של ABC מחליף אות למקום הראשון ומייצר רקורסיבית את הסיומות. מדוע מימוש שעובד על אותו מערך מחזיר את האותיות למקומן אחרי כל קריאה, לפני בדיקת המועמד הבא?",
+          "solution": "כל ענף צריך להתחיל מאותו מצב של מערך המועמדים. ההחלפה החוזרת משחזרת את הקידומת ואת סדר הסיומת למצב שנכנס ללולאה. כך כל מועמד מוצב במקום הראשון בדיוק בענף המיועד לו."
+        },
+        "en": {
+          "title": "The swap after recursion",
+          "prompt": "A permutation generator swaps a candidate into the first position of ABC and recursively arranges the suffix. Why does an in-place swapping implementation undo its swap after each recursive call before the next candidate?",
+          "solution": "Each sibling branch needs the same candidate array it had on entry. Swapping back restores both the prefix and suffix order expected by the loop, so each candidate occupies the first position in its intended branch."
+        }
+      },
+      {
+        "id": "coin-game-central-symmetry",
+        "source_question_key": "prep-circular-table-coin-placement-strategy",
+        "duplicate_source": "sources/2026-10-31-batch21-04.png",
+        "he": {
+          "title": "מדוע נותר מקום להעתק?",
+          "prompt": "שני שחקנים מניחים דסקיות זהות ללא חפיפה על שולחן עגול. הראשון שם דסקית במרכז ואז מחקה כל מהלך של השני בסיבוב של 180 מעלות. למה הדסקית החדשה של השני לא חוסמת את ההעתק שלה עצמה?",
+          "solution": "אם רדיוס דסקית הוא r, מרכז כל דסקית חוקית נמצא לפחות 2r ממרכז השולחן בגלל הדסקית האמצעית. המרחק ממנה לתמונת הראי שלה הוא כפול המרחק הזה, לפחות 4r בין המרכזים. לכן השתיים אינן חופפות."
+        },
+        "en": {
+          "title": "Why is there room for the mirror move?",
+          "prompt": "Two players place equal disks without overlap on a round table. The first starts at the center and mirrors each later opponent move by a half turn. Why can the opponent's just-placed disk not block its own mirror?",
+          "solution": "For disk radius r, a legal center lies at least 2r from the table center because of the central disk. Its mirrored center is twice that distance away, at least 4r. The two disks cannot overlap."
+        }
+      },
+      {
+        "id": "lighter-bag-two-weighings",
+        "source_question_key": "prep-nine-coins-known-lighter-two-weighings",
+        "duplicate_source": "sources/2026-11-07-night30-18.png",
+        "he": {
+          "title": "שלוש תוצאות בשקילה",
+          "prompt": "בדיוק אחד מתשעת השקים מכיל מטבעות קלים יותר, וכל המטבעות הרגילים זהים. בוחרים מטבע אחד מכל שק ונעזרים במאזני כפות. מדוע שקילה אחת אף פעם אינה מספיקה להבטחת זיהוי וכיצד מספיקות שתיים?",
+          "solution": "לשקילה יש רק שלוש תוצאות, מול תשע אפשרויות. משווים שלשה לשלשה. הקבוצה הקלה חשודה, או השלשה שלא נשקלה במקרה של שוויון. משווים שני מטבעות מתוך השלשה החשודה. הקל מזוהה, או השלישי אם יש שוויון."
+        },
+        "en": {
+          "title": "Three outcomes per weighing",
+          "prompt": "One of nine bags contains lighter coins, and the others contain identical genuine coins. Choose one coin per bag and use a balance scale. Why can one weighing never guarantee identification, and how can two suffice?",
+          "solution": "One weighing has only three outcomes for nine candidates. Weigh three against three. Keep the lighter group, or the unweighed three on balance. Compare two of the three suspects. The lighter coin identifies the bag, or the third does if they balance."
+        }
+      },
+      {
+        "id": "switch-parity",
+        "source_question_key": "prep-two-independent-switches-one-led",
+        "duplicate_source": "sources/2026-10-31-batch20-04.png",
+        "he": {
+          "title": "שני אנשים לוחצים יחד",
+          "prompt": "נורה צריכה להתהפך בכל שינוי מצב של אחד משני מפסקים דו־מצביים. במודל לוגי אידאלי שני המפסקים עוברים בו־זמנית מ־00 ל־11. האם מצב הנורה הסופי צריך להשתנות ולמה?",
+          "solution": "לא. אפשר לבחור את מצב הנורה כ־XOR של המפסקים, או כהיפוכו לפי מצב ההתחלה. שינוי של שני הביטים יחד משמר את הזוגיות, ולכן המצב הסופי זהה."
+        },
+        "en": {
+          "title": "Two people switch together",
+          "prompt": "A lamp must toggle whenever either of two binary switches changes. In an ideal logic model they both change simultaneously from 00 to 11. Should the final lamp state differ, and why?",
+          "solution": "No. Set the lamp to the XOR of the two switch positions, or its complement depending on the starting convention. Flipping two bits preserves parity and therefore preserves the final state."
+        }
+      },
+      {
+        "id": "overlap-one-bit-prefix",
+        "source_question_key": "prep-detect-overlapping-1011-stream",
+        "duplicate_source": "sources/2026-11-01-batch20-05.png",
+        "he": {
+          "title": "ה־1 שמשמש פעמיים",
+          "prompt": "גלאי של 1011 מקבל את הזרם 1011011. צריך לזהות גם הופעות חופפות. באילו מקומות מסתיימות התאמות אם מתחילים לספור מ־1, ומה חייב הגלאי לזכור אחרי הראשונה?",
+          "solution": "ההתאמות מסתיימות במקומות 4 ו־7. הביט האחרון של ההתאמה הראשונה הוא גם תחילית 1 של ההתאמה השנייה. לכן אחרי התאמה עוברים למצב ״כבר ראינו 1״."
+        },
+        "en": {
+          "title": "The one that serves twice",
+          "prompt": "An overlapping 1011 detector receives 1011011. At which one-based positions do matches end, and what must the detector retain after the first one?",
+          "solution": "Matches end at positions four and seven. The final one of the first match is the one-symbol prefix of the next. After a match, retain the state meaning a leading one has already arrived."
+        }
+      },
+      {
+        "id": "timing-three-paths",
+        "source_question_key": "prep-setup-hold-definitions-and-setup-fixes",
+        "duplicate_source": "sources/2026-11-15-batch20b-03.png",
+        "he": {
+          "title": "איזה מסלול בודקים ראשון?",
+          "prompt": "שלושה מסלולי נתונים מתחברים דרך שער OR לאוגר משותף. זמני הנתונים הכוללים עד כניסתו, לאחר שקלול השער, נעים בין 2 ל־8, בין 3 ל־11 ובין 1 ל־6 ננו־שניות בהתאמה. השעונים זהים. איזה מסלול מגביל setup ואיזה מגביל hold?",
+          "solution": "לבדיקת setup לוקחים את ההגעה המאוחרת ביותר, 11 במסלול השני. ל־hold בודקים את ההגעה המוקדמת ביותר, 1 במסלול השלישי. אלה שני מסלולים שונים אף שהיעד זהה."
+        },
+        "en": {
+          "title": "Which path sets each timing bound?",
+          "prompt": "Three paths converge through an OR into one register. Their total min/max data arrival times, including the gate, are 2/8, 3/11 and 1/6 nanoseconds. The clocks match. Which path limits setup and which limits hold?",
+          "solution": "Setup uses the latest arrival, 11 on path two. Hold uses the earliest arrival, one on path three. The two checks can be controlled by different paths even though the endpoint is shared."
+        }
+      },
+      {
+        "id": "turtle-half-turn",
+        "source_question_key": "prep-turtle-single-sequence-return-position",
+        "duplicate_source": "sources/2026-11-15-batch20b-10.png",
+        "he": {
+          "title": "חצי סיבוב בלי להתקדם",
+          "prompt": "חץ מתחיל בראשית ופונה צפונה. M מקדם תא אחד, R מסובב ימינה ו־T מסובב ב־180 מעלות. האם הרצף MTMR חוזר לנקודת ההתחלה, והאם גם הכיוון המקורי משוחזר?",
+          "solution": "כן למיקום ולא לכיוון. ה־M הראשון זז צפונה. T מכוון דרומה וה־M השני מחזיר לראשית. R מסובב מדרום למערב. בדיקת מיקום צריכה להתעלם מן הכיוון הסופי אם זה החוזה."
+        },
+        "en": {
+          "title": "A half-turn without moving",
+          "prompt": "An arrow starts at the origin facing north. M moves one cell, R turns right, and T turns 180 degrees. Does MTMR return to the origin, and is the starting heading restored?",
+          "solution": "It restores the position but not the heading. The first M moves north, T turns south, and the next M returns to the origin. R turns south to west. A position-only contract ignores the final heading."
+        }
+      },
+      {
+        "id": "reverse-even-length-string",
+        "source_question_key": "prep-reverse-words-using-character-reversal",
+        "duplicate_source": "sources/2026-11-14-batch30-27.png",
+        "he": {
+          "title": "חציית המצביעים במילה",
+          "prompt": "הופכים במקום את התווים ABCD באמצעות החלפות מקצות המחרוזת. באיזה תנאי על האינדקסים עוצרים, ומה משתבש אם ממשיכים גם אחרי שהם חולפים זה על פני זה?",
+          "solution": "מחליפים כל עוד שמאל קטן מימין. אחרי A↔D ו־B↔C מתקבל DCBA. אם ממשיכים מעבר לנקודת החצייה מתחילים להחליף שוב אותם זוגות ולבטל את ההיפוך."
+        },
+        "en": {
+          "title": "When the pointers cross",
+          "prompt": "Reverse the characters ABCD in place by swapping from the ends inward. When should the indices stop, and what goes wrong if they keep moving after crossing?",
+          "solution": "Swap while left is less than right. After swapping A with D and B with C, the string is DCBA. Going past the crossing revisits the same pairs and starts undoing the reversal."
+        }
+      },
+      {
+        "id": "recursive-primitive-base-case",
+        "source_question_key": "prep-abstract-list-head-tail-concat-reversal",
+        "duplicate_source": "sources/2026-11-07-night30-17.png",
+        "he": {
+          "title": "הקריאה שאינה מקטינה את הבעיה",
+          "prompt": "בספריית מחרוזות הפעולה tail מחזירה את כל התווים פרט לראשון, ו־tail של מחרוזת ריקה מחזירה שוב מחרוזת ריקה. מתכנת כתב reverse(s)=concat(reverse(tail(s)),head(s)) בלי תנאי עצירה. מה קורה בקלט A ואיזה תנאי יספיק לכל אורך?",
+          "solution": "הקריאה על A קוראת לפעולה על מחרוזת ריקה. משם מתקבל רצף אינסופי של קריאות על אותו קלט, ואין ערך תקין ל־head הריק. אם האורך אפס מחזירים מיד מחרוזת ריקה. בכל קלט אחר tail מקצר באחד עד לתנאי העצירה."
+        },
+        "en": {
+          "title": "A recursive call that fails to shrink",
+          "prompt": "A string library's tail returns all but the first character and returns empty on an empty input. A programmer writes reverse(s)=concat(reverse(tail(s)),head(s)) without a base case. What happens on A, and which guard suffices for every length?",
+          "solution": "A calls reverse on empty and then repeatedly recurses on the same empty input; head of empty also has no valid result. Return empty immediately when length is zero. Every nonempty call shortens its input by one until that guard is reached."
+        }
+      },
+      {
+        "id": "prefix-equivalence-detector",
+        "source_question_key": "prep-serial-1101-state-storage-count",
+        "duplicate_source": "sources/2026-11-07-batch20-05.png",
+        "he": {
+          "title": "למה זוכרים דווקא 11?",
+          "prompt": "גלאי מחפש 1101. אחרי קריאת 111, מהי הסיומת הארוכה ביותר שעדיין עשויה לפתוח התאמה? הראו המשך של שני ביטים שמוכיח מדוע איפוס מלא בשלב זה שגוי.",
+          "solution": "הסיומת היא 11. אם יגיעו 0 ואז 1, ארבעת הביטים האחרונים של 11101 יהיו 1101. איפוס לאחר ה־1 השלישי היה מחמיץ את ההתאמה."
+        },
+        "en": {
+          "title": "Why remember the prefix 11?",
+          "prompt": "A detector searches for 1101. After reading 111, what is the longest suffix that can still start a match? Give two further bits proving that resetting completely here would be wrong.",
+          "solution": "Retain suffix 11. If zero then one follow, the last four bits of 11101 form 1101. Resetting after the third one would miss that match."
+        }
+      },
+      {
+        "id": "inverter-switch-point",
+        "source_question_key": "prep-cmos-inverter-operation",
+        "duplicate_source": "sources/2026-11-15-batch20d-07.png",
+        "he": {
+          "title": "נקודת המיתוג זזה",
+          "prompt": "במהפך CMOS מגדילים רק את רוחב ה־PMOS, וכל יתר הפרמטרים קבועים. לאיזה כיוון צפויה לזוז נקודת המיתוג בעקומת ה־DC, ומה ההסבר הפיזיקלי?",
+          "solution": "המשיכה למעלה מתחזקת. כדי לאזן אותה נדרש NMOS חזק יותר באותו רגע, כלומר מתח כניסה גבוה יותר. לכן נקודת המיתוג נוטה לזוז לכיוון VDD. גודל השינוי תלוי במאפייני הטרנזיסטורים."
+        },
+        "en": {
+          "title": "The switching point moves",
+          "prompt": "Only the PMOS width in a CMOS inverter is increased, all other parameters fixed. Which way should the DC switching point move, and why?",
+          "solution": "The pull-up strengthens. Balancing it now requires stronger NMOS conduction and thus a higher input voltage. The switching point tends to move toward VDD. The shift's magnitude depends on device characteristics."
+        }
+      },
+      {
+        "id": "divisible-eight-low-bits",
+        "source_question_key": "prep-binary-divisibility-by-two-four-eight",
+        "duplicate_source": "sources/2026-11-15-batch20d-19.png",
+        "he": {
+          "title": "שלושה ביטים מספיקים",
+          "prompt": "מילה בינארית מסתיימת ב־100 וכל הביטים הגבוהים מוסתרים. אילו מבין 2,4,8 מחלקים בהכרח את המספר? למה החלק המוסתר אינו משנה?",
+          "solution": "ערך המילה הוא 8k+4. הוא מתחלק ב־2 וב־4, אבל השארית בחלוקה ל־8 היא 4. כל ביט גבוה יותר תורם כפולה של 8."
+        },
+        "en": {
+          "title": "Three bits suffice",
+          "prompt": "A binary word ends in 100 and its higher bits are hidden. Which of 2,4,8 must divide it? Why can the hidden bits be ignored?",
+          "solution": "The value is 8k+4. Both two and four divide it, but its remainder modulo eight is four. Every higher bit contributes a multiple of eight."
+        }
+      },
+      {
+        "id": "alternating-window-storage",
+        "source_question_key": "prep-0101-overlap-and-storage-contract",
+        "duplicate_source": "sources/2026-11-15-batch20d-02.png",
+        "he": {
+          "title": "חיסכון בזיכרון של גלאי",
+          "prompt": "בכל חזית נכנס ביט ויש לדווח מיד אם ארבעת הביטים האחרונים הם 1010. במימוש ישיר של חלון הזזה, כמה פליפ־פלופים צריך עבור ההיסטוריה אם הביט הנוכחי כבר זמין בכניסה? מה קורה בשלב האתחול?",
+          "solution": "שומרים את שלוש הדגימות הקודמות ומשווים אותן ואת הקלט הנוכחי לתבנית. אם הדגימות לפני ההתחלה אינן חלק מהמסר, מתירים התאמה רק מהדגימה הרביעית. אפשר לעקוב אחר מספר הדגימות התקפות במונה רווי קטן."
+        },
+        "en": {
+          "title": "Saving one detector register",
+          "prompt": "One bit arrives per edge; report whether the last four bits are 1010. In a direct sliding-window implementation, how many flip-flops hold history when the current bit is already at the input? What about startup?",
+          "solution": "Store three previous samples and compare them plus the current input to the pattern. If pre-start history is outside the message, enable matches only from the fourth sample onward. A small saturating counter can track valid history."
+        }
+      },
+      {
+        "id": "two-equal-maxima",
+        "source_question_key": "prep-top-two-distinct-and-mode",
+        "duplicate_source": "sources/2026-11-15-batch10c-01.png",
+        "he": {
+          "title": "שני מקומות, אותו ערך",
+          "prompt": "במערך [7,1,7,5] מבקשים את סכום שני האיברים המרבי במקומות שונים. מה התשובה, וכיצד כלל המחפש דווקא שני ערכים שונים מקלקל אותה?",
+          "solution": "בוחרים את שני המופעים של 7 ומקבלים 14. דרישת ייחוד לפי ערך מחליפה בטעות את המופע השני ב־5 ומחזירה 12. בסריקה מחזיקים שני מועמדים ממקומות שונים ומאפשרים שוויון בערכיהם."
+        },
+        "en": {
+          "title": "Two positions, the same value",
+          "prompt": "For [7,1,7,5], maximize the sum of two elements at different positions. What is the result, and why would requiring two distinct values give the wrong answer?",
+          "solution": "Choose both sevens to get 14. A distinct-value rule wrongly chooses five instead of the second seven and returns 12. Maintain two candidates from different indices and allow equal values."
+        }
+      },
+      {
+        "id": "switching-divided-clocks",
+        "source_question_key": "prep-synchronous-clock-divider-two-and-four",
+        "duplicate_source": "sources/2026-11-15-batch20-14.png",
+        "he": {
+          "title": "בחירה בין שני שעונים",
+          "prompt": "שני ביטים של מונה מספקים שעונים מחולקים ב־2 וב־4. קו בחירה של מוקס משתנה באמצע מחזור, כשהשעון הראשון גבוה והשני נמוך. איזו תקלה עלולה להראות יציאת המוקס וכיצד מתכננים בחירת תדר בטוחה?",
+          "solution": "היציאה עלולה לרדת באמצע פולס ולייצר פולס קצר מדי. אם היציאה משמשת כשעון, משתמשים במנגנון החלפת שעון ללא גליצ׳ים המתאים לתחומי השעון, או משאירים שעון יחיד ובוחרים אותות אפשור מחולקים."
+        },
+        "en": {
+          "title": "Selecting between two divided clocks",
+          "prompt": "Two counter bits supply divide-by-two and divide-by-four clocks. A mux select changes mid-cycle while the first clock is high and the second low. What can happen at the output, and how can frequency selection be made safe?",
+          "solution": "The output can fall halfway through a pulse, producing a runt pulse. For a clock output, use a glitch-free switching mechanism suited to the clock domains. Alternatively keep one clock and select divided clock enables."
+        }
+      },
+      {
+        "id": "word-delimiter-flush",
+        "source_question_key": "prep-most-frequent-word-list",
+        "duplicate_source": "sources/2026-11-07-night30-19.png",
+        "he": {
+          "title": "המילה האחרונה בלי רווח",
+          "prompt": "קוד סופר מילים כאשר הוא נתקל ברווח. עבור הטקסט red blue red הוא מחזיר תיקו כי המופע האחרון של red לא נספר. איזה אירוע נוסף צריך להיחשב גבול מילה ואיך מטפלים בשני רווחים רצופים?",
+          "solution": "גם סוף הקלט מסיים מילה פעילה. שומרים אם נאספו תווים ומעדכנים שכיחות רק למילה לא ריקה. כך שני רווחים אינם יוצרים מילה ריקה ו־red נספרת פעמיים."
+        },
+        "en": {
+          "title": "The last word has no trailing space",
+          "prompt": "A word counter commits a word only when a space is seen. On red blue red it reports a tie because the last red was never counted. Which additional event closes a word, and how should consecutive spaces be handled?",
+          "solution": "End of input also closes an active word. Track whether any characters have accumulated and increment only for a nonempty token. Consecutive spaces add no empty words, and red is counted twice."
+        }
+      },
+      {
+        "id": "birthday-next-year",
+        "source_question_key": "prep-calendar-age-two-days-ago-next-year",
+        "duplicate_source": "sources/2026-11-18-batch31-29.png",
+        "he": {
+          "title": "השנה הבאה או בעוד שנה?",
+          "prompt": "היום 1 בינואר ויום ההולדת של סוזן ב־31 בדצמבר. שלשום הייתה בת 8. באיזה תאריך תהיה בת 11, ומדוע ״בשנה הבאה״ ו״בעוד שנה בדיוק״ נותנים תשובות שונות?",
+          "solution": "אתמול מלאו לה 9. ב־31 בדצמבר השנה ימלאו לה 10 וב־31 בדצמבר בשנה הקלנדרית הבאה 11. בעוד שנה בדיוק, ב־1 בינואר, היא תהיה עדיין בת 10."
+        },
+        "en": {
+          "title": "Next year or one year from now?",
+          "prompt": "Today is January 1 and Susan's birthday is December 31. Two days ago she was eight. When will she turn eleven, and why do “next calendar year” and “exactly a year from today” differ?",
+          "solution": "She turned nine yesterday. On December 31 of this year she turns ten, and on December 31 of the next calendar year she turns eleven. Exactly a year from today, on January 1, she will still be ten."
+        }
+      },
+      {
+        "id": "reverse-list-next-link",
+        "source_question_key": "prep-reverse-singly-linked-list-in-place",
+        "duplicate_source": "sources/2026-11-03-batch20-07.png",
+        "he": {
+          "title": "הקישור שחייבים לשמור",
+          "prompt": "ברשימה A→B→C הופכים במקום את A.next ל־null לפני ששומרים מצביע להמשך. למה הראש המקורי כבר אינו מספיק כדי להשלים את ההיפוך, ובאיזה סדר מעדכנים בכל צעד?",
+          "solution": "מ־A כבר אין דרך להגיע ל־B. בכל צעד שומרים next, מפנים את מצביע הצומת הנוכחי לקודם, ואז מקדמים את הקודם לנוכחי ואת הנוכחי ל־next השמור. בסוף הקודם הוא הראש החדש."
+        },
+        "en": {
+          "title": "The link you must save",
+          "prompt": "In A→B→C you reverse A.next to null before storing a pointer to the remainder. Why is the original head no longer enough to finish the reversal, and what is the update order at each step?",
+          "solution": "A no longer reaches B. At each step save next, redirect the current node's link to the previous node, then advance previous to current and current to the saved next. At the end previous is the new head."
+        }
+      },
+      {
+        "id": "virtual-call-base-reference",
+        "source_question_key": "prep-abstract-classes-virtual-and-pure-virtual",
+        "duplicate_source": "sources/2026-11-15-batch20-17.png",
+        "he": {
+          "title": "איזה מימוש ייקרא?",
+          "prompt": "ב־C++ מחלקה B מגדירה f וירטואלית ו־D יורשת ממנה ודורסת אותה. משתנה B& מצביע על עצם D שכבר סיים בנייה. איזה f ירוץ בקריאה רגילה דרך ההפניה, ומה היה משתנה אילו f לא הייתה וירטואלית?",
+          "solution": "בקריאה הווירטואלית נבחר המימוש הסופי לפי הטיפוס הדינמי, ולכן D::f. בפונקציה לא וירטואלית הבחירה לפי הטיפוס הסטטי של הביטוי B&, ולכן B::f. טבלת פונקציות היא מימוש נפוץ לשיגור הדינמי."
+        },
+        "en": {
+          "title": "Which override is called?",
+          "prompt": "In C++, B declares a virtual f and D overrides it. A B& refers to a fully constructed D object. Which f runs in a normal call through that reference, and what if f were nonvirtual?",
+          "solution": "Virtual dispatch selects the final overrider for the dynamic type, D::f. For a nonvirtual function selection uses the static type of the B& expression and calls B::f. A virtual table is a common implementation of dynamic dispatch."
+        }
+      },
+      {
+        "id": "smallest-missing-positive-bound",
+        "source_question_key": "prep-first-missing-positive-in-place",
+        "duplicate_source": "sources/2026-11-15-batch20b-19.png",
+        "he": {
+          "title": "כמה רחוק צריך לחפש?",
+          "prompt": "במערך של n שלמים, כולל שליליים וחזרות, מחפשים את החיובי הקטן ביותר שחסר. הוכיחו שאין צורך לחפש מעבר ל־n+1 והדגימו מערך שבו הערך הזה אכן נדרש.",
+          "solution": "אם חסר ערך בין 1 ל־n התשובה שם. אם כולם מופיעים, n התאים מלאים בהם ולכן n+1 חסר. המערך [1,2,…,n] מממש בדיוק את המקרה השני."
+        },
+        "en": {
+          "title": "How far can the first gap lie?",
+          "prompt": "For n integers, allowing negatives and duplicates, find the smallest missing positive. Prove that looking past n+1 is unnecessary and give an array where n+1 is actually needed.",
+          "solution": "If any value from one to n is missing, the answer lies in that range. Otherwise all n slots already hold those n values, so n+1 is absent. The array [1,2,…,n] attains that bound."
+        }
+      },
+      {
+        "id": "room-light-last-exit",
+        "source_question_key": "prep-three-person-room-lamp-four-state-fsm",
+        "duplicate_source": "sources/2026-11-14-batch30-21.png",
+        "he": {
+          "title": "יציאה שאינה מכבה את האור",
+          "prompt": "בחדר יש שני אנשים והאור דולק. חיישן כיוון מדווח על יציאה אחת. בקר השומר רק אם האור דולק אינו יודע אם לכבות. איזו היסטוריה אחרת מבהירה למה דרוש עוד מצב?",
+          "solution": "גם בחדר עם אדם אחד האור דולק לפני יציאה, אבל אחריה צריך לכבות. בחדר עם שניים נשאר אדם והאור נשאר דולק. לכן שומרים מספר נוכחים בטווח הקיבולת ומשווים לאפס אחרי העדכון."
+        },
+        "en": {
+          "title": "An exit that leaves the light on",
+          "prompt": "A room contains two people and its light is on. A directional sensor reports one exit. A controller storing only the lamp bit cannot decide whether to switch off. Which other history explains why more state is needed?",
+          "solution": "With one occupant the light is also on before an exit, but then it must turn off. With two, one person remains. Keep an occupancy count bounded by capacity and test it against zero after the update."
+        }
+      },
+      {
+        "id": "stack-after-underflow",
+        "source_question_key": "prep-java-fixed-capacity-integer-stack",
+        "duplicate_source": "sources/2026-11-18-batch31-11.png",
+        "he": {
+          "title": "שליפה ממחסנית ריקה",
+          "prompt": "מחסנית ממומשת כרשימה מקושרת והראש הוא האיבר העליון. מתחילים כשהיא ריקה, מבצעים push(4), pop(), pop(). מה הרצף הצפוי אם החוזה מחזיר שגיאה בשליפה ריקה, ומה אסור לשנות אז?",
+          "solution": "השליפה הראשונה מחזירה 4 ומעדכנת את הראש ל־null. השנייה מחזירה שגיאת מחסנית ריקה לפני קריאת שדות מהראש. הראש נשאר null ומספר האיברים נשאר 0."
+        },
+        "en": {
+          "title": "Popping an empty stack",
+          "prompt": "A stack is a linked list with its head as top. Starting empty, perform push(4), pop(), pop(). What is the expected result under an error-on-empty contract, and what must the last operation leave intact?",
+          "solution": "The first pop returns four and sets head to null. The next reports the empty-stack error before reading fields through head. Head stays null and size stays zero."
+        }
+      },
+      {
+        "id": "overlap-copy-backward",
+        "source_question_key": "prep-checked-c-string-copy-contract",
+        "duplicate_source": "sources/2026-11-18-batch31-05.png",
+        "he": {
+          "title": "איזה ערך יידרס ראשון?",
+          "prompt": "במערך [A,B,C,D,E] מעתיקים שלושה תאים החל מאינדקס 0 אל אינדקס 1. מהו הפלט הנכון ואיזה כיוון העתקה משיג אותו בלי מערך זמני?",
+          "solution": "התוצאה [A,A,B,C,E]. מתחילים מן הסוף ומעתיקים C, אחריו B ואז A. העתקה קדימה הייתה כותבת A במקום B לפני שהספקנו לקרוא את B מן המקור."
+        },
+        "en": {
+          "title": "Which value gets overwritten first?",
+          "prompt": "In [A,B,C,D,E], copy three cells from index zero to index one. What result is required, and which copy direction works without a temporary array?",
+          "solution": "The result is [A,A,B,C,E]. Copy from the end, moving C, then B, then A. A forward loop would overwrite source B with A before reading B."
+        }
+      }
+    ]
   }
 ]

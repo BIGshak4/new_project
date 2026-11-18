@@ -15,6 +15,9 @@ import code500 from "../content/fundamentals-code-500.json";
 import hardware700 from "../content/fundamentals-hardware-700.json";
 import reasoning700 from "../content/fundamentals-reasoning-700.json";
 import code700 from "../content/fundamentals-code-700.json";
+import hardware800 from "../content/fundamentals-hardware-800.json";
+import reasoning800 from "../content/fundamentals-reasoning-800.json";
+import code800 from "../content/fundamentals-code-800.json";
 
 export type QuickTopic = "gates" | "bits" | "sequential" | "states" | "electronics" | "python" | "algorithms" | "reasoning";
 type Localized = { he: string; en: string };
@@ -38,7 +41,7 @@ export const quickTopics: { id: QuickTopic; label: Localized }[] = [
 ];
 // Original study cards, deliberately separate from the interview assessment bank.
 // These newly authored answers have not received the founders' human-review attestation.
-// At 700 cards the mix is 350 hardware /245 reasoning /105 software.
+// The catalog keeps a 50% hardware, 35% reasoning and 15% software mix.
 // Interview-derived additions retain explicit links to their source PREP questions.
 // Presentation order belongs to each visit; IDs and revisions never depend on it.
 export const quickQuestions = [
@@ -47,6 +50,7 @@ export const quickQuestions = [
   ...hardware400, ...reasoning400, ...code400,
   ...hardware500, ...reasoning500, ...code500,
   ...hardware700, ...reasoning700, ...code700,
+  ...hardware800, ...reasoning800, ...code800,
 ] as QuickQuestion[];
 
 /** A one-line numeric answer ("0. ...") is prose, not a Markdown list marker. */

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import hashlib
-from collections import defaultdict
+from collections import Counter, defaultdict
 from collections.abc import Callable
 from datetime import UTC, date, datetime, time, timedelta
 from functools import cached_property
@@ -29,8 +29,54 @@ class DailyPuzzleService:
         current = self._current
         if current is not None and current[0] == day:
             return current[1]
-        # A deck visits each source question once. New batches enter on the next shuffle,
-        # so publishing more variants cannot change a puzzle people already opened.
+        starts = [
+            entry.available_from for entry in self.entries
+            if entry.start_puzzle_rotation and entry.available_from <= day
+        ]
+        entry = self._puzzle_rotation(day, max(starts)) if starts else self._family_rotation(day)
+        self._current = (day, entry)
+        return entry
+
+    def _puzzle_rotation(self, day: date, start: date) -> DailyPuzzleEntry:
+        previous = None
+        if any(entry.available_from < start for entry in self.entries):
+            previous = self.for_day(start - timedelta(days=1)).source_question_key
+        first_deck = True
+        while True:
+            seed = f"daily-puzzle-deck:{start.isoformat()}:"
+            remaining = sorted(
+                (entry for entry in self.entries if entry.available_from <= start),
+                key=lambda entry: hashlib.sha256((seed + entry.id).encode()).digest(),
+            )
+            if first_deck:
+                # Put a new puzzle first on the first Jerusalem day of its rotation.
+                first = next((
+                    i for i, entry in enumerate(remaining)
+                    if entry.available_from == start and entry.source_question_key != previous
+                ), 0)
+                remaining.insert(0, remaining.pop(first))
+            deck_size = len(remaining)
+            counts = Counter(entry.source_question_key for entry in remaining)
+            for offset in range(deck_size):
+                # If one family holds a majority of the remaining cards, alternate
+                # it now so it does not form a run at the end of the deck.
+                family, count = counts.most_common(1)[0]
+                required = family if count * 2 > len(remaining) and family != previous else None
+                index = next((
+                    i for i, entry in enumerate(remaining)
+                    if entry.source_question_key != previous
+                    and (required is None or entry.source_question_key == required)
+                ), 0)
+                entry = remaining.pop(index)
+                if (day - start).days == offset:
+                    return entry
+                previous = entry.source_question_key
+                counts[previous] -= 1
+            start += timedelta(days=deck_size)
+            first_deck = False
+
+    def _family_rotation(self, day: date) -> DailyPuzzleEntry:
+        # Retain the original family schedule for its published calendar dates.
         start = min((entry.available_from for entry in self.entries), default=None)
         previous = None
         round_number = 0
@@ -46,9 +92,7 @@ class DailyPuzzleService:
             index = (day - start).days
             if index < len(deck):
                 variants = groups[deck[index]]
-                entry = variants[round_number % len(variants)]
-                self._current = (day, entry)
-                return entry
+                return variants[round_number % len(variants)]
             previous = deck[-1]
             start += timedelta(days=len(deck))
             round_number += 1
