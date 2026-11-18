@@ -658,14 +658,16 @@
         "קלט ריק מחזיר None. כל האיברים שלמים מדויקים; אין גלישת סכום.",
         "בשוויון סכומים בוחרים התחלה מוקדמת ואחריה סוף מוקדם.",
         "עלות העתקת רצף הפלט נספרת בנפרד ממספר משתני העזר.",
-        "דוגמה חדשה וחד־משמעית מחליפה רק את ההדגמה ללומד; צילום המקור וטענת 7 נשמרים ומסומנים כלא תואמים לתעתיק האפשרי."
+        "דוגמה חדשה וחד־משמעית מחליפה רק את ההדגמה ללומד; צילום המקור וטענת 7 נשמרים ומסומנים כלא תואמים לתעתיק האפשרי.",
+        "פלט אחד מיד אחרי כל ערך, עם טווח לא־ריק ומספרים שלמים מדויקים."
       ],
       "en": [
         "Intervals are contiguous and nonempty; return sum plus inclusive zero-based boundaries.",
         "Empty input returns None. Exact integer sums do not overflow.",
         "Equal sums prefer earliest start and then earliest end.",
         "Optional output-slice copying is costed separately from auxiliary variables.",
-        "A separate unambiguous teaching example is used; original screenshot and its seven claim remain preserved and flagged against the possible transcription."
+        "A separate unambiguous teaching example is used; original screenshot and its seven claim remain preserved and flagged against the possible transcription.",
+        "One immediate output per item, a nonempty interval, and exact integers."
       ]
     },
     "source_ambiguities": {
@@ -701,8 +703,8 @@
       }
     },
     "verification": {
-      "he": "עברו כל 97,656 המערכים באורכים 0–7 מעל ‎-2..2 ועוד 500 מערכי מספרים גדולים. אורקל עצמאי מונה כל רצף לא־ריק ומחשב את סכומו ישירות; משווה סכום, שני גבולות ושוויונות. נבדקה גם אי־התאמה בין טענת 7 לבין התעתיק האפשרי שמחזיר 6. קוד פייתון רץ בפועל.\n\nבנוסף לבדיקות הקודמות, הווריאציה הטורית עברה 97,655 השוואות מול מנייה עצמאית של כל הקטעים באורכים 1–7 מעל חמשת הערכים −2..2; נבדקו שוויונות, שליליים בלבד ואיסור מעבר נוסף.",
-      "en": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed.\n\nIn addition to prior checks, the stream variant passed 97,655 comparisons with independent interval enumeration at lengths 1–7 over values −2..2, including ties, all-negative input and no replay."
+      "he": "עברו כל 97,656 המערכים באורכים 0–7 מעל ‎-2..2 ועוד 500 מערכי מספרים גדולים. אורקל עצמאי מונה כל רצף לא־ריק ומחשב את סכומו ישירות; משווה סכום, שני גבולות ושוויונות. נבדקה גם אי־התאמה בין טענת 7 לבין התעתיק האפשרי שמחזיר 6. קוד פייתון רץ בפועל.\n\nבנוסף לבדיקות הקודמות, הווריאציה הטורית עברה 97,655 השוואות מול מנייה עצמאית של כל הקטעים באורכים 1–7 מעל חמשת הערכים −2..2; נבדקו שוויונות, שליליים בלבד ואיסור מעבר נוסף.\n\nנבדקו פלטים של כל קידומת מול סריקה ממצה של הטווחים. בדיקת זרם שומר מוודאת קריאה אחת בלבד לכל בקשת פלט.",
+      "en": "Passed all 97,656 arrays of lengths 0..7 over -2..2 plus 500 large-integer arrays. Independent oracle enumerates every nonempty interval and sums directly; checks include sum, both boundaries and ties. Also verified the seven-versus-six discrepancy for the possible source transcription. Python executed.\n\nIn addition to prior checks, the stream variant passed 97,655 comparisons with independent interval enumeration at lengths 1–7 over values −2..2, including ties, all-negative input and no replay.\n\nChecked every prefix against exhaustive interval sums. A guarded stream also verifies one input read for each requested output."
     },
     "edge_cases": {
       "he": [
@@ -711,7 +713,8 @@
         "מערך ריק: None.",
         "אפסים ושוויונות: התחלה מוקדמת ואז סוף מוקדם.",
         "המקסימום עשוי להיות איבר יחיד או כל המערך.",
-        "רצף ריק אינו מותר ולכן אינו מתחרה בשיא שלילי."
+        "רצף ריק אינו מותר ולכן אינו מתחרה בשיא שלילי.",
+        "זרם ריק אינו מפיק פלט. ערך יחיד שלילי חייב להיות פלט שלילי, ולא אפס."
       ],
       "en": [
         "All-negative input returns its largest element, not zero.",
@@ -719,7 +722,8 @@
         "Empty input returns None.",
         "Zeros/ties prefer earliest start and then earliest end.",
         "The optimum may be one element or the entire array.",
-        "An empty interval is forbidden and cannot beat a negative optimum."
+        "An empty interval is forbidden and cannot beat a negative optimum.",
+        "An empty stream emits nothing. A single negative item emits that negative value, not zero."
       ]
     },
     "common_mistakes": {
@@ -729,7 +733,8 @@
         "שמירת current בלי שיא גלובלי מחזירה רק את הרצף המסתיים בסוף.",
         "איבוד גבולות הרצף או שוויון לא עקבי.",
         "העתקת פרוסה בכל צעד עלולה להוסיף עלות ריבועית.",
-        "שינוי שקט של הדוגמה כדי שתיתן את 7 שבצילום."
+        "שינוי שקט של הדוגמה כדי שתיתן את 7 שבצילום.",
+        "שמירת best בלבד לא מספיקה. ייתכן שסכום חלש שמסתיים באיבר החדש עוד יתחבר לערכים עתידיים."
       ],
       "en": [
         "Initializing best to zero admits an empty result for all-negative input.",
@@ -737,12 +742,13 @@
         "Keeping current without a global best returns only the last-ending interval.",
         "Losing boundaries or inconsistent tie handling.",
         "Copying a slice at every step can introduce quadratic cost.",
-        "Silently changing source values to fabricate its claimed seven."
+        "Silently changing source values to fabricate its claimed seven.",
+        "Keeping only the best-so-far loses the best ending at the current item, which might extend into a future winner."
       ]
     },
     "interview_answer": {
-      "he": "אשמור את הסכום הטוב ביותר של רצף שמסתיים בתא הנוכחי ואת השיא הכללי. אם הסכום הקודם שלילי אתחיל מחדש, אחרת אמשיך. אאתחל מהאיבר הראשון כדי לטפל גם בקלט שכולו שלילי, ואשמור גבולות. זה מעבר O(N) עם O(1) מילות עזר; העתקת הרצף עצמו נספרת בנפרד.",
-      "en": "Keep the best nonempty interval sum ending here and the global best. Restart after a negative previous sum; otherwise extend. Initialize from the first element to handle all-negative inputs and retain boundaries. This takes O(N) time and O(1) auxiliary words, with output copying accounted separately."
+      "he": "אשמור את הסכום הטוב ביותר של רצף שמסתיים בתא הנוכחי ואת השיא הכללי. אם הסכום הקודם שלילי אתחיל מחדש, אחרת אמשיך. אאתחל מהאיבר הראשון כדי לטפל גם בקלט שכולו שלילי, ואשמור גבולות. זה מעבר O(N) עם O(1) מילות עזר; העתקת הרצף עצמו נספרת בנפרד.\n\nמעבירים את המקסימום שמסתיים כאן קדימה, שומרים בנפרד את הטוב ביותר עד כאן ופולטים אותו מיד.",
+      "en": "Keep the best nonempty interval sum ending here and the global best. Restart after a negative previous sum; otherwise extend. Initialize from the first element to handle all-negative inputs and retain boundaries. This takes O(N) time and O(1) auxiliary words, with output copying accounted separately.\n\nCarry the best sum ending here and the best sum anywhere so far, and emit the latter immediately."
     },
     "solution_extensions": {
       "he": {

@@ -337,7 +337,7 @@
   "prep-calendar-age-two-days-ago-next-year": {
     "difficulty": 4,
     "reason": "Place a birthday at a calendar-year boundary and trace the three changes in completed age.",
-    "content_sha256": "07e8ef99debcde41e0a35802e92005092705c3e2e4809510c9f25ae12f527b48"
+    "content_sha256": "65753e5b412728e965e6c2cde28dd0c16a253e171de72f6312aea4ea75b42d0f"
   },
   "prep-camel-banana-transport-with-caches": {
     "difficulty": 8,
@@ -562,7 +562,7 @@
   "prep-eight-bit-popcount-adders": {
     "difficulty": 5,
     "reason": "The full question spans several restricted-adder libraries, signal weights, output widths and finite verification; the new seven-bit clause preserves the existing reasoning difficulty.",
-    "content_sha256": "6a4dd7f571419d33b846bc9829b42805ab29cddebc56eb3f8d676b91fe5042a1"
+    "content_sha256": "5dcf3ff7ff682eb2c629b1e1e3857ef824e8b2a098a4b4795a46c29a6ea29802"
   },
   "prep-eight-bit-times-six-full-adders": {
     "difficulty": 4,
@@ -635,14 +635,14 @@
     "content_sha256": "b1735b421c5e4b0419a44b0d2306a86648207c92d1e8d73809172b842683fd86"
   },
   "prep-finite-cycle-index-and-square-recurrence": {
-    "difficulty": 5,
-    "reason": "The consecutive-squares identity must become simultaneous bounded register updates with correct intermediate and output widths.",
-    "content_sha256": "ff44a5953d29417ead63d1d1aeeb6df438874a8d69fbe71340db1427521ca84d"
+    "difficulty": 6,
+    "reason": "Builds on an arithmetic invariant and adds operand capture, exact comparison width, shared hardware latency and setup/hold reasoning.",
+    "content_sha256": "28867f6d8bb241e38fde0bf26e5b84fc95126883ad8c5c2171e68b44cee1f553"
   },
   "prep-first-equal-in-sorted-array": {
-    "difficulty": 4,
-    "reason": "Lower-bound binary search must retain the first duplicate and handle both an end boundary and an absent target.",
-    "content_sha256": "324ed7f8224e27af4c642bf7f6836d12aacce72ba6fc30538b9eaa44a9e9764c"
+    "difficulty": 5,
+    "reason": "Requires the partition semantics, comparison decision-tree bound, and distinct worst-case access cost for a forward-only shift register.",
+    "content_sha256": "c02555bc3d71a7350525e20728b953baeef434297a8c4cafd21a0a82ad826184"
   },
   "prep-first-finisher-latched-winner": {
     "difficulty": 4,
@@ -886,8 +886,8 @@
   },
   "prep-maximum-sum-contiguous-subarray": {
     "difficulty": 5,
-    "reason": "The best interval ending here and the global best need separate invariants to handle negative inputs and earliest ties.",
-    "content_sha256": "c1d6e13c7a9dc5af36dd0ca925101bbd4352a870715983bff28d02346e39a66d"
+    "reason": "Extends a finite end-of-input result to a causal online algorithm with a useful invariant for infinite input.",
+    "content_sha256": "43bb623de86c7b9e57a460186f1d3989bd81d978e0d6cf38a4a473e067dd8791"
   },
   "prep-maximum-two-integers-without-comparisons": {
     "difficulty": 7,
@@ -1012,7 +1012,7 @@
   "prep-nmos-only-load-inverter": {
     "difficulty": 6,
     "reason": "Explaining the enhancement load and pull-down requires tracing both charging paths, threshold loss, ratio and static current.",
-    "content_sha256": "c24014dfa8bb939fe3d8d80cd97702eeb215451da0f6aa76b2b2d4fcdfe21abb"
+    "content_sha256": "220277a99eb93828923f5670bce7a82c13c30dfc0f0c768a76fd18800e94fad3"
   },
   "prep-noisy-baseband-sampling-antialias": {
     "difficulty": 5,
@@ -1042,7 +1042,7 @@
   "prep-one-two-missing-values": {
     "difficulty": 3,
     "reason": "With inspectable values and auxiliary memory allowed, membership flags recover both omissions in linear time.",
-    "content_sha256": "4221ddeba5139233277b1483ce4946ccaa554e5ca1831966776576b4684b0b5b"
+    "content_sha256": "16a83496de6f6ce6ddbc53823bf9578d536c361d2acd84fac963305f8f685614"
   },
   "prep-online-two-color-hat-partition": {
     "difficulty": 5,
@@ -1105,9 +1105,9 @@
     "content_sha256": "85e0efb6cb57dcd143160174e85a7e626b74f564ab3b7544d4031864bf411878"
   },
   "prep-postfix-expression-stack-evaluation": {
-    "difficulty": 3,
-    "reason": "The stack is specified; the main traps are operand order, underflow and a leftover operand.",
-    "content_sha256": "54e03e46a01b4818e911b2aa060809b6a2221978e5e9e67d58352f9c30d4e1d4"
+    "difficulty": 5,
+    "reason": "Adds character-level tokenization, division operand order and exact signed truncation with validity checks.",
+    "content_sha256": "3d0a479c9ca287541db73ed5292b7970fde5d7fd9ffd923bc56389c453c64004"
   },
   "prep-power-of-two-check": {
     "difficulty": 3,
@@ -1152,7 +1152,7 @@
   "prep-random-permutation-fisher-yates": {
     "difficulty": 6,
     "reason": "State persists across calls; range conversion needs rejection sampling and a conditional-uniformity argument.",
-    "content_sha256": "e152882d0ea2b6d889f46f6d2471d25c86895745ab00562b2102981dbcd3e28a"
+    "content_sha256": "856e28664311840020feb3cd533f523cee8f4dee59eca4e7c5ffea57fd553d43"
   },
   "prep-rational-lions-cow-survival-parity": {
     "difficulty": 5,
@@ -1202,7 +1202,7 @@
   "prep-reverse-singly-linked-list-in-place": {
     "difficulty": 4,
     "reason": "Save the successor before rewiring and maintain the disjoint reversed prefix and unprocessed suffix.",
-    "content_sha256": "c30803e96bc5093a11cff43dd15b577dddd19c5cdfbd9c8991f4affabeb18082"
+    "content_sha256": "454c20ceef340956d0bfe605104b1598a68922ec83b673f88969cd8c2128118a"
   },
   "prep-reverse-words-using-character-reversal": {
     "difficulty": 4,
@@ -1251,8 +1251,8 @@
   },
   "prep-setup-hold-definitions-and-setup-fixes": {
     "difficulty": 6,
-    "reason": "The full question combines setup/hold repair with three individually skewed reconvergent launch paths and shared-delay tradeoffs.",
-    "content_sha256": "62bef878850d07474c5e51aa1bb5e473a6c23f4a24dfbc23725528b63bc8ab46"
+    "reason": "Combines both timing inequalities, skew and uncertainty conventions, concrete slack counterexamples and the effect of repairs.",
+    "content_sha256": "116fd7e5af612a6fb2d7418e8ce3d4b75aadb5683c22941bca86972203498791"
   },
   "prep-seventeen-prisoners-two-mandatory-switches": {
     "difficulty": 8,
@@ -1337,7 +1337,7 @@
   "prep-sr-storage-from-logic-gates": {
     "difficulty": 5,
     "reason": "Connect cross-coupled feedback, reason about the forbidden release and distinguish transparency from edge capture.",
-    "content_sha256": "ba89a7029bea29a848ad0525ab06f50c97700e8ece9f5e3f0b709003238b1c90"
+    "content_sha256": "1793b604a5c0029173ab1f6b1ddfe42238e4f5e8f5348e68fdad2f6886ec4da1"
   },
   "prep-stable-move-zeroes-to-end": {
     "difficulty": 3,
@@ -1442,7 +1442,7 @@
   "prep-three-bit-up-down-counter-gates": {
     "difficulty": 5,
     "reason": "Derive gate-only toggling conditions from the old lower bits for both count directions and wraparound.",
-    "content_sha256": "6111304bb3f1723c93cf764a4162ba387834ee6b91dd10dd9550b0608df13065"
+    "content_sha256": "433db7cb289ed17d6ef64b2e598f8e1f40668d616a230db3a04773f44586ef1c"
   },
   "prep-three-color-in-place-partition": {
     "difficulty": 5,
@@ -1497,7 +1497,7 @@
   "prep-toggle-nine-thirteen-without-conditionals": {
     "difficulty": 2,
     "reason": "The two promised values differ in one bit; one XOR mask swaps them.",
-    "content_sha256": "5179eb1d495363a9af3746d689ef9706ad3bcb0e32e3bd766ad379e6708f2877"
+    "content_sha256": "db9548b4aaee06e6ea4e12941dee9d2063595160f4b4f5445c8723bc491f9020"
   },
   "prep-top-two-distinct-and-mode": {
     "difficulty": 5,
@@ -1636,13 +1636,13 @@
   },
   "prep-xor-from-four-two-input-nand-gates": {
     "difficulty": 4,
-    "reason": "Synthesize a shared NAND intermediate and verify that the remaining gates cover exactly the unequal cases.",
-    "content_sha256": "7ec619405e686c7eacc5080f70d7f1f3f0b3b0bfa3a4d596ebd447c7e7161bf3"
+    "reason": "Exercises a complete NAND-only logic library and verification of a shared netlist, including the already existing XOR construction.",
+    "content_sha256": "31f476bb6633b698ff5a1741d5a65519dabd1a131cd155f9f4f6a387237d186d"
   },
   "prep-xor-from-high-impedance-components": {
-    "difficulty": 7,
-    "reason": "Construct defined intermediate nets from tri-state cells and prove no input floats or has conflicting drivers.",
-    "content_sha256": "edd3ab19dc732d806f95d062e623851ee23676ac24d2179df3204ac324719b25"
+    "difficulty": 6,
+    "reason": "Requires static drive resolution and avoiding floating or opposing drivers across an expanded family of XOR, NAND, inverter and NOR designs.",
+    "content_sha256": "7bbc5216dfb3c138cde3298623388c6b93fa4372f15b3354eeb1a46cbddf5328"
   },
   "prep-xor-mux-zero-only": {
     "difficulty": 5,
@@ -1687,7 +1687,7 @@
   "prep-java-fixed-capacity-integer-stack": {
     "difficulty": 3,
     "reason": "Maintain a fixed-array live-prefix invariant and explicit full/empty failures; membership is a linear scan.",
-    "content_sha256": "96b556a5cc64e36c8db317d7ee6cfb7d67abce3f5db1010aad9cc278ccc2f305"
+    "content_sha256": "6277fafa0ca4f170880a8eea2e02a6f7203e436694bb1a280bc9dd81fea2aa1c"
   },
   "prep-four-channel-shared-adc-sampling-budget": {
     "difficulty": 6,
@@ -1800,9 +1800,9 @@
     "content_sha256": "d223e93d992048d91727275d40a00b5e1e6b2eb8cf3efd1b0506114bdc35c053"
   },
   "prep-checked-c-string-copy-contract": {
-    "difficulty": 4,
-    "reason": "Identify pointer lifetime, capacity, NUL termination and overlap, then preserve the target on validation failure.",
-    "content_sha256": "7f01524076170e0fd752025d4021026ae3493ad573461a6be8a5dbd195461bfe"
+    "difficulty": 5,
+    "reason": "Adds directional overlapping copy in one fixed array, with interval validation and an invariant over unread data.",
+    "content_sha256": "122b5f57ec1f7c75e921b80ccee49954a3562224c52a355e7f8d8988c0c1a521"
   },
   "prep-binary-tree-preorder-null-codec": {
     "difficulty": 5,
@@ -1968,5 +1968,60 @@
     "difficulty": 5,
     "reason": "Requires separating delay measurement from transition time and explaining electrical, slew, sizing and PVT effects with conditional directions and a checked numerical model.",
     "content_sha256": "bbccaf69339a652d8f34f09574a7f25399b3c159b388c0aea25b464aecfe18a0"
+  },
+  "prep-two-receive-antennas-phase-and-angle": {
+    "difficulty": 6,
+    "reason": "Requires deriving a signed geometric phase, applying a periodic measurement model, and handling angular-domain and endpoint ambiguities.",
+    "content_sha256": "7d8e022067bbea38e1984c72c16d7eef79f93b0b5e91717b48bdbb2f0dd724ba"
+  },
+  "prep-nmos-current-mirror-transfer-and-compliance": {
+    "difficulty": 5,
+    "reason": "Requires choosing a transistor topology and deriving the piecewise current transfer with explicit output headroom and matching assumptions.",
+    "content_sha256": "ce1f9dad0dc2825fec404589c6445c0c739d776c2cec5fcc9bb969f93bab42f6"
+  },
+  "prep-count-accepted-byte-7e": {
+    "difficulty": 4,
+    "reason": "A byte comparator gates a synchronous saturating counter, with reset priority and distinct last representable and overflow events.",
+    "content_sha256": "d99d3feb3cdd3baaada837e31c51e7bcfa835f3723db6a1b95914b621f99c04b"
+  },
+  "prep-three-computer-disagreement-and-outlier": {
+    "difficulty": 5,
+    "reason": "Derives compact combinational logic and distinguishes a minority indication from a proven wrong answer under several fault assumptions.",
+    "content_sha256": "a00f26cf394d0d275b215a69f9220987b508af242fb6f68b82476fef679d7803"
+  },
+  "prep-test-64-bit-array-under-seven-ones-cap": {
+    "difficulty": 6,
+    "reason": "Uses fault observability and a counting lower bound under constrained stimulus, with explicit separation of actual power and requested data.",
+    "content_sha256": "d164236624c96e47f30bbdfe7b37ffe6488ceccbf083b6b01d80d800f753d9a3"
+  },
+  "prep-clone-linked-list-with-random-pointers": {
+    "difficulty": 5,
+    "reason": "Uses original node identity to reconstruct two relationship types, including arbitrary cycles in random links, with a clear ownership contract.",
+    "content_sha256": "6e8a90ed988b8981739aed2fe1e20e9badc573b9ca5fd934f755cafe95440c86"
+  },
+  "prep-uniform-random-except-last-five": {
+    "difficulty": 5,
+    "reason": "Defines a fixed-domain state, proves a rank-to-allowed-value bijection, and explains the smallest valid domain and conditional uniformity.",
+    "content_sha256": "a764eda6bfc0238f79b45e6c9e2723b5737ee7c6fa70b1aa641be0c6190808a4"
+  },
+  "prep-bst-inorder-successor-parent-pointers": {
+    "difficulty": 4,
+    "reason": "Distinguishes walking down and walking up, preserves node identity, and explains why the height controls worst-case time.",
+    "content_sha256": "dedc746625a8accf8b7902ac9c0a923cc5a3e7e23ae5b110070ec1ebb238690b"
+  },
+  "prep-shared-visual-stretch-and-painting": {
+    "difficulty": 4,
+    "reason": "Requires applying the same invertible observation transform to both sides and distinguishing a conditional argument from a historical conclusion.",
+    "content_sha256": "fd8950cb5f05616979fd66edfcea4f40b3b97760aa3b8bb6a64b22487a6d1529"
+  },
+  "prep-commute-traffic-future-underdetermined": {
+    "difficulty": 3,
+    "reason": "Requires separating measurements, a projection under explicit assumptions, and the distinction between delay and time at rest.",
+    "content_sha256": "3dc605ccfcfd2bf119b25a0e29a8872beaad78a9b3cac6ba56b71aec8e037007"
+  },
+  "prep-equal-shares-four-hidden-tokens": {
+    "difficulty": 4,
+    "reason": "Requires separating the impossibility of fixed whole-token selection from a symmetric fractional construction and justifying it for every assignment.",
+    "content_sha256": "c1c3573db0367cdc4176554328167069004ea99e96e6fc8794496ca50d9770ab"
   }
 }

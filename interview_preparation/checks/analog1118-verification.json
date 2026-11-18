@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "question_ids": [
+    "PREP-366",
+    "PREP-367"
+  ],
+  "geometry": {
+    "distance_projections": 148,
+    "unique_inversions": 2172,
+    "half_wavelength_collisions": 3,
+    "interior_collisions_above_half_wavelength": 9
+  },
+  "mirror": {
+    "transfer_samples": 3618,
+    "example_points": [
+      {
+        "voltage": 0.25,
+        "knee_input_mA": 0.03125,
+        "knee_output_mA": 0.0625,
+        "output_at_0_5mA": 0.4375
+      },
+      {
+        "voltage": 0.75,
+        "knee_input_mA": 0.28125,
+        "knee_output_mA": 0.5625,
+        "output_at_0_5mA": 0.9375
+      }
+    ]
+  },
+  "invalid_inputs": 9,
+  "human_expert_review": false,
+  "scope": "Plane-wave geometry, wrapped phase, and ideal long-channel equation checks. No RF measurements or SPICE simulation.",
+  "source_sha256": {
+    "solutions/prep_366_receive_phase.py": "cb57a5a7c4e58366771c25ee7fba2230221a0e019c87f8760cbe65ea56cc1a2b",
+    "solutions/prep_367_nmos_mirror.py": "011012e097f69c324f41956a2b39598e07e1d07b0d2ee659b616f581b12f2031",
+    "checks/check_analog1118.py": "085ffcb8864195043ac7dc829161a179730bf2072b0a024426e3d382935ebbe6"
+  }
+}

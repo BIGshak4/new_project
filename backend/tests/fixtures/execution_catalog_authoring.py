@@ -684,6 +684,26 @@ def batch1115d_source(key):
     return (ROOT / "interview_preparation/solutions" / BATCH1115D_SOURCES[key]).read_text(encoding="utf8")
 
 
+BATCH1118_SOURCES = {
+    "prep-checked-c-string-copy-contract": "prep_332_copy_overlapping_slice.py",
+    "prep-uniform-random-except-last-five": "prep_372_random_last_five.py",
+    "prep-bst-inorder-successor-parent-pointers": "prep_373_bst_successor.py",
+}
+ORACLES.update(runpy.run_path(str(BACKEND / "tests/fixtures/execution_1118_oracles.py"))["ORACLES"])
+
+
+def build_batch1118_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1118_inputs.json").read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1118_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1118_SOURCES[key]).read_text(encoding="utf8")
+
+
 def build_batch1114_contracts():
     questions = json.loads((BACKEND / "tests/fixtures/execution_batch1114_inputs.json").read_text(encoding="utf-8"))
     for key, question in questions.items():
@@ -1010,6 +1030,7 @@ endmodule
     questions.update(build_batch1115b_contracts())
     questions.update(build_batch1115c_contracts())
     questions.update(build_batch1115d_contracts())
+    questions.update(build_batch1118_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -1152,6 +1173,15 @@ def build_smoke():
             "minimum_cross_distance": "def minimum_cross_distance(left,right):\n    return 0\n",
         }[entry]
         cases.append({"question_key": key, "language": "python", "correct": batch1115d_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1118_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = {
+            "copied_array": "def copied_array(values,source,size,target):\n    for i in range(size):\n        values[target+i]=values[source+i]\n    return values\n",
+            "random_from_ranks": "def random_from_ranks(low,high,ranks):\n    return [low+rank for rank in ranks]\n",
+            "successors_of_insertion_order": "def successors_of_insertion_order(keys):\n    return keys[1:]+[None] if keys else []\n",
+        }[entry]
+        cases.append({"question_key": key, "language": "python", "correct": batch1118_source(key),
                       "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
@@ -1701,6 +1731,8 @@ end architecture;
         python[key] = batch1115c_source(key)
     for key in BATCH1115D_SOURCES:
         python[key] = batch1115d_source(key)
+    for key in BATCH1118_SOURCES:
+        python[key] = batch1118_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

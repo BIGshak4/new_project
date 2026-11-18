@@ -235,11 +235,13 @@
     "assumptions": {
       "he": [
         "רשימה או tuple סופיים של int ושל \"+\",\"-\",\"*\"; bool, מחרוזות מספרים וחילוק אינם בתחום.",
-        "שלמים מדויקים, פעולות בינאריות בלבד, והקלט אינו משתנה."
+        "שלמים מדויקים, פעולות בינאריות בלבד, והקלט אינו משתנה.",
+        "כל ספרת ASCII היא טוקן, תו מינוס הוא אופרטור בינארי, ושלמים מדויקים נשמרים עד סוף החישוב."
       ],
       "en": [
         "Finite list or tuple of int values and \"+\",\"-\",\"*\"; bool, numeric strings and division are outside the domain.",
-        "Exact integers, binary operators only, unchanged input."
+        "Exact integers, binary operators only, unchanged input.",
+        "Each ASCII digit is a token, minus is binary, and arithmetic is over exact integers."
       ]
     },
     "optimality": {
@@ -251,13 +253,15 @@
         "מספר יחיד, כולל אפס או מספר שלילי, הוא ביטוי תקין.",
         "קלט ריק, פעולה בהתחלה או שני מספרים שנותרו בסוף אינם תקינים.",
         "[3,2,\"-\"] מחזיר 1 ואילו [2,3,\"-\"] מחזיר ‎-1.",
-        "הדוגמה המקורית מחזירה 20; תוצאות ביניים גדולות אינן נחתכות."
+        "הדוגמה המקורית מחזירה 20; תוצאות ביניים גדולות אינן נחתכות.",
+        "ריק, שארית אופרנדים, חלוקה באפס, מנה שלילית, תו לא מוכר ופחות משני אופרנדים."
       ],
       "en": [
         "One integer, including zero or a negative, is valid.",
         "Empty input, an initial operator or leftover numbers are invalid.",
         "[3,2,\"-\"] yields 1; [2,3,\"-\"] yields -1.",
-        "The source example yields 20; large intermediate values are not truncated."
+        "The source example yields 20; large intermediate values are not truncated.",
+        "Empty input, leftover operands, zero divisor, negative quotient, unknown character and insufficient operands."
       ]
     },
     "common_mistakes": {
@@ -265,26 +269,28 @@
         "להשתמש באופרנד הראשון שנשלף בתור השמאלי, ואז להפוך חיסור.",
         "לאמת רק גודל סופי ולפספס חוסר אופרנדים מוקדם.",
         "להחזיר את העליון למרות שנותרו ערכים נוספים.",
-        "להוסיף קדימות אופרטורים, סוגריים או eval אף שה־postfix כבר קובע את הקיבוץ."
+        "להוסיף קדימות אופרטורים, סוגריים או eval אף שה־postfix כבר קובע את הקיבוץ.",
+        "חילוק לפי סדר pop הופך את היחס. Python // על שלילים מעגלת כלפי מטה ולא לכיוון אפס."
       ],
       "en": [
         "Using the first popped value as the left operand and reversing subtraction.",
         "Checking final size only and missing an earlier operand shortage.",
         "Returning the top despite extra remaining values.",
-        "Adding precedence handling, parentheses or eval when postfix already fixes grouping."
+        "Adding precedence handling, parentheses or eval when postfix already fixes grouping.",
+        "Using pop order as arithmetic order reverses division. Signed Python // floors instead of truncating toward zero."
       ]
     },
     "interview_answer": {
-      "he": "אעבור משמאל לימין. מספר נדחף למחסנית; פעולה שולפת ימין ואז שמאל, מחשבת left op right ודוחפת תוצאה. בכל פעולה נדרשים שני ערכים ובסוף ערך אחד. כך כל תת־ביטוי מחושב כשאופרנדיו מוכנים. O(k) פעולות מחסנית ו־O(k) זיכרון במקרה הגרוע.",
-      "en": "Scan left to right. Push each number; an operator pops right then left, computes left op right and pushes the result. Require two values at an operator and one at the end. Each subexpression is evaluated when its operands are ready. O(k) stack operations and worst-case O(k) space."
+      "he": "אעבור משמאל לימין. מספר נדחף למחסנית; פעולה שולפת ימין ואז שמאל, מחשבת left op right ודוחפת תוצאה. בכל פעולה נדרשים שני ערכים ובסוף ערך אחד. כך כל תת־ביטוי מחושב כשאופרנדיו מוכנים. O(k) פעולות מחסנית ו־O(k) זיכרון במקרה הגרוע.\n\nדוחפים ספרות, שולפים שני ערכים בסדר ימין ואז שמאל, ומוודאים שבסוף נשאר ערך אחד. בחילוק קוטמים לכיוון אפס.",
+      "en": "Scan left to right. Push each number; an operator pops right then left, computes left op right and pushes the result. Require two values at an operator and one at the end. Each subexpression is evaluated when its operands are ready. O(k) stack operations and worst-case O(k) space.\n\nPush digits, pop right then left, and end with exactly one value. Division uses truncation toward zero."
     },
     "source_ambiguities": {
       "he": "המקור משתמש ב־postorder ואינו מגדיר טיפוס טוקנים, אוסף פעולות או טיפול בשגיאות. העריכה מגדירה postfix של שלמים ופעולות בינאריות +,-,* בלבד, שגיאות מפורשות וללא נרמול של טקסט. לא נוספו שיוכי חברות.",
       "en": "The source says postorder without defining token types, operator set or malformed-input behavior. This edition defines integer postfix with binary +,-,* only and explicit errors, without implicit text parsing. No employer attribution was added."
     },
     "verification": {
-      "he": "97,656 רצפי טוקנים באורכים 0..7 נבדקו מול מנתח רקורסיבי עצמאי מהסוף, כולל רצפים תקינים ולא תקינים. נוספו הדוגמה, סדר חיסור, שלמים גדולים ושמונה דחיות תחום. המודל בפייתון הורץ; אין מדידת ביצועים או אישור מומחה.",
-      "en": "97,656 streams of lengths 0..7 matched an independent recursive parser from the right, covering valid and invalid streams. Additional checks cover the example, subtraction order, large integers and eight domain rejections. Actual Python ran; no benchmark or expert approval."
+      "he": "97,656 רצפי טוקנים באורכים 0..7 נבדקו מול מנתח רקורסיבי עצמאי מהסוף, כולל רצפים תקינים ולא תקינים. נוספו הדוגמה, סדר חיסור, שלמים גדולים ושמונה דחיות תחום. המודל בפייתון הורץ; אין מדידת ביצועים או אישור מומחה.\n\nמימוש הסריקה הושווה למפרש רקורסיבי עצמאי על רצפים קצרים, כולל שלוש הדוגמאות, שגיאות וחילוק שלילי.",
+      "en": "97,656 streams of lengths 0..7 matched an independent recursive parser from the right, covering valid and invalid streams. Additional checks cover the example, subtraction order, large integers and eight domain rejections. Actual Python ran; no benchmark or expert approval.\n\nCompared the scan with an independent recursive parser over short streams, including all three examples, invalid inputs and negative division."
     },
     "solution_extensions": {
       "he": {

@@ -1,0 +1,94 @@
+{
+  "intake": {
+    "image_files": 31,
+    "logical_questions": 29,
+    "new_questions": 11,
+    "expanded_questions": 8,
+    "additional_sources_only": 10,
+    "source_files_verified": 31,
+    "authored_pngs": 46,
+    "companion_pairs": {
+      "6": [
+        7
+      ],
+      "16": [
+        17
+      ]
+    }
+  },
+  "catalog": {
+    "preparation": 375,
+    "long_interview": 405,
+    "visible_question_families": 400,
+    "private_assets": 2274
+  },
+  "backend": {
+    "legacy_passed_after_fixes": 588,
+    "legacy_skipped": 3,
+    "normal_entrypoint_passed": 160
+  },
+  "execution": {
+    "passed": 546,
+    "current_profiles": 69,
+    "prior_profiles_preserved": 66,
+    "positive_fixtures": 108,
+    "smoke_fixtures": 49
+  },
+  "web": {
+    "tests_passed": 493,
+    "typecheck": "passed",
+    "production_build": "passed",
+    "local_browser": {
+      "cases": 116,
+      "figures": 252,
+      "linked_prompt_cases": 8,
+      "errors": [],
+      "viewport_sizes": [
+        390,
+        1280
+      ],
+      "languages": [
+        "he",
+        "en"
+      ],
+      "scope": "Local production React study renderer and prompt classifier with manual reveal in an isolated fixture, headless Edge, emulated widths."
+    }
+  },
+  "digital_model": {
+    "python": {
+      "square_triples": 4100,
+      "binary_gate_vectors": 4,
+      "voter_vectors": 8,
+      "voter_diagnoses": 16,
+      "counter_samples": 2334,
+      "timing_examples": 5,
+      "healthy_and_single_fault_memories": 129,
+      "sample_multiple_fault_memories": 256
+    },
+    "rtl": {
+      "square_cases": 4096,
+      "square_observation_edges": 51136,
+      "count_samples": 526,
+      "logic_vectors": 8,
+      "compiler": "Icarus Verilog version 13.0 (stable) (v13_0)",
+      "rtl_sha256": "8d1da71aabb8ac8d02d519b6f72bb1ce09cf4d34dd9f1df3fe91c4bb9a178e69",
+      "testbench_sha256": "e1d24e5eadff3ff12312df0393893396e6448d3dc47fb1b10ce737bc3cd2a217"
+    },
+    "scope": [
+      "Boolean steady-state drive resolution and sampled RTL only.",
+      "Timing examples use arithmetic timing budgets, not timing closure.",
+      "Memory testing uses a deterministic stuck-at model and correct readout, not physical power instrumentation."
+    ]
+  },
+  "analog_model": {
+    "geometry": {
+      "distance_projections": 148,
+      "unique_inversions": 2172,
+      "half_wavelength_collisions": 3,
+      "interior_collisions_above_half_wavelength": 9
+    },
+    "mirror_cases": 3618,
+    "scope": "Plane-wave geometry, wrapped phase, and ideal long-channel equation checks. No RF measurements or SPICE simulation."
+  },
+  "review": "Proposed solutions pending professional human review."
+}

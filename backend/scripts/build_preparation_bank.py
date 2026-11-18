@@ -126,6 +126,18 @@ PRIMARY = [
     "fsm_controllers",
     "testbench_basics",
     "tradeoff_reasoning",
+    # PREP-366 through PREP-376, in archive order.
+    "tradeoff_reasoning",
+    "tradeoff_reasoning",
+    "counters",
+    "boolean_algebra",
+    "testbench_basics",
+    "basic_data_structures",
+    "arrays_and_search",
+    "basic_data_structures",
+    "tradeoff_reasoning",
+    "estimation_sanity_checks",
+    "tradeoff_reasoning",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.

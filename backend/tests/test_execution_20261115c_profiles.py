@@ -40,9 +40,10 @@ def test_input_only_cases_have_independent_expected_values_and_reject_wrong_fixt
 def test_all_fifty_nine_previous_profiles_and_current_totals_are_exact():
     prior=json.loads(subprocess.check_output(['git','show',
         'c44202c0c5fc6e8087cdff5399cc933118f68cf8:backend/seeds/execution_cases.json'],cwd=ROOT))['questions']
-    assert len(prior)==59 and len(MANIFEST)==66
+    assert len(prior)==59 and len(MANIFEST)==69
     assert all(MANIFEST[key]==spec for key,spec in prior.items())
-    assert set(MANIFEST)-set(prior)-set(AUTHOR['BATCH1115D_SOURCES'])==set(INPUTS)
+    later = set(AUTHOR['BATCH1115D_SOURCES']) | set(AUTHOR['BATCH1118_SOURCES'])
+    assert set(MANIFEST) - set(prior) - later == set(INPUTS)
 
 
 def test_pyramid_streaming_matches_full_reference_and_preserves_inputs():

@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "python_model": {
+    "square_triples": 4100,
+    "binary_gate_vectors": 4,
+    "voter_vectors": 8,
+    "voter_diagnoses": 16,
+    "counter_samples": 2334,
+    "timing_examples": 5,
+    "healthy_and_single_fault_memories": 129,
+    "sample_multiple_fault_memories": 256
+  },
+  "rtl": {
+    "square_cases": 4096,
+    "square_observation_edges": 51136,
+    "count_samples": 526,
+    "logic_vectors": 8,
+    "compiler": "Icarus Verilog version 13.0 (stable) (v13_0)",
+    "rtl_sha256": "8d1da71aabb8ac8d02d519b6f72bb1ce09cf4d34dd9f1df3fe91c4bb9a178e69",
+    "testbench_sha256": "e1d24e5eadff3ff12312df0393893396e6448d3dc47fb1b10ce737bc3cd2a217"
+  },
+  "verification_scope": [
+    "Boolean steady-state drive resolution and sampled RTL only.",
+    "Timing examples use arithmetic timing budgets, not timing closure.",
+    "Memory testing uses a deterministic stuck-at model and correct readout, not physical power instrumentation."
+  ],
+  "sha256": {
+    "solutions/digital1118_models.py": "72fd0b09a8e1e9e237e91ac760ff2f5c0679b53d2fa082e4c5aa2e383e6c8f80",
+    "checks/check_digital1118.py": "1b5e4893347e144d197a180adc7e31909bfb005e92072a0b2804278bc0462fa4"
+  }
+}

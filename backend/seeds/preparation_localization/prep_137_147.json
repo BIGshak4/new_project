@@ -387,11 +387,13 @@
     "assumptions": {
       "he": [
         "מערך שלם ממוין בסדר לא יורד; גישה אקראית, קריאה בלבד ואינדקסים מאפס.",
-        "‎-1 מציין שאין הופעה; תקינות המיון היא הבטחה ולא בדיקה לינארית."
+        "‎-1 מציין שאין הופעה; תקינות המיון היא הבטחה ולא בדיקה לינארית.",
+        "הקלט ממוין בסדר לא יורד, הגודל ידוע, והשוואה סופרת פעולה בינארית על ערך יחיד. לכל היותר תא אחד גלוי ברגיסטר, עם גישה קדימה בלבד."
       ],
       "en": [
         "Nondecreasing integer array; random access, read-only and zero-based indices.",
-        "-1 means absent; sortedness is promised, not linearly validated."
+        "-1 means absent; sortedness is promised, not linearly validated.",
+        "Known N and a sorted input. Each comparison queries one word and returns a binary outcome. The shift register exposes only the current cell and can advance only forward."
       ]
     },
     "optimality": {
@@ -401,36 +403,40 @@
     "edge_cases": {
       "he": [
         "ריק, איבר יחיד, יעד חסר בין שני ערכים או מחוץ לטווח.",
-        "כל האיברים שווים, הופעה ראשונה באפס או בסוף, דוגמת המקור."
+        "כל האיברים שווים, הופעה ראשונה באפס או בסוף, דוגמת המקור.",
+        "ריק, כולם קטנים או כולם גדולים, שוויון מרובה, ובקלט ביטים סף 0 לעומת סף 1."
       ],
       "en": [
         "Empty, singleton, absent between entries or outside range.",
-        "All equal, first occurrence at zero/end, supplied example."
+        "All equal, first occurrence at zero/end, supplied example.",
+        "Empty input, all values below or above, ties, and k=0 versus k=1 on bit cells."
       ]
     },
     "common_mistakes": {
       "he": [
         "לעצור בשוויון הראשון שהחיפוש פגש.",
         "לסרוק אחורה על כפילויות ולאבד זמן לוגריתמי.",
-        "להחזיר את lower_bound בלי לבדוק גבול ושוויון."
+        "להחזיר את lower_bound בלי לבדוק גבול ושוויון.",
+        "חיפוש אמצע ישיר ברגיסטר הזזה מניח גישה אקראית שאינה נתונה. עצירה בשוויון אינה קובעת גבול ראשון כשיש כפילויות."
       ],
       "en": [
         "Stopping at the first equality encountered.",
         "Scanning backward through duplicates and losing logarithmic time.",
-        "Returning lower_bound without its range/equality checks."
+        "Returning lower_bound without its range/equality checks.",
+        "Jumping to mid in a shift register assumes unavailable random access. Stopping at some equal value can miss the leftmost boundary."
       ]
     },
     "interview_answer": {
-      "he": "אחפש בינארית את הגבול הראשון שבו הערך אינו קטן מהיעד. בשוויון עדיין אזיז את הקצה הימני לשמאל. כשהקצוות נפגשים, אחזיר את האינדקס רק אם הוא בתחום ושווה ליעד, אחרת ‎-1.",
-      "en": "Binary-search the first value not below target, continuing left on equality. At convergence return the index only when in range and equal; otherwise -1."
+      "he": "אחפש בינארית את הגבול הראשון שבו הערך אינו קטן מהיעד. בשוויון עדיין אזיז את הקצה הימני לשמאל. כשהקצוות נפגשים, אחזיר את האינדקס רק אם הוא בתחום ושווה ליעד, אחרת ‎-1.\n\nבחיפוש אקראי מפצלים את N+1 מיקומי הגבול ולכן מספיקות ceil(log2(N+1)) השוואות. בהזזה קדימה בלבד ייתכן שחייבים להגיע לתא האחרון.",
+      "en": "Binary-search the first value not below target, continuing left on equality. At convergence return the index only when in range and equal; otherwise -1.\n\nRAM halves the N+1 candidate boundaries and achieves ceil(log2(N+1)) comparisons. Forward-only access may have to expose the final cell."
     },
     "source_ambiguities": {
       "he": "המקור לא הגדיר היעדר הופעה, אינדוקס או סיבוכיות; הם הובהרו. קשורה ל־SW-004/example-first-greater-or-equal, אבל כלל ההחזרה בהיעדר ערך שונה. אין שאלה ידנית או שאלת אימות זהה.",
       "en": "Source omits absence, index base and complexity; these are clarified. Related to SW-004/example-first-greater-or-equal, with a different absent result. No identical manual or verification record."
     },
     "verification": {
-      "he": "5,720 מקרים ממצים ו־1,000 דגימות מול סריקה עצמאית; חסם גישות והיעדר שינוי קלט נבדקו בפועל ב־Python.",
-      "en": "5,720 exhaustive cases and 1,000 seeded arrays versus independent scanning; actual Python access-bound and input-preservation checks."
+      "he": "5,720 מקרים ממצים ו־1,000 דגימות מול סריקה עצמאית; חסם גישות והיעדר שינוי קלט נבדקו בפועל ב־Python.\n\nשני האלגוריתמים נבדקו מול ספירה עצמאית של ערכים הקטנים מ־k, כולל חסמי פעולות מדויקים לכל הגבולות במערכי ביטים קצרים.",
+      "en": "5,720 exhaustive cases and 1,000 seeded arrays versus independent scanning; actual Python access-bound and input-preservation checks.\n\nBoth algorithms were compared with an independent count of values below k, including exact worst-case operation counts over every boundary of short bit arrays."
     },
     "solution_extensions": {
       "he": {

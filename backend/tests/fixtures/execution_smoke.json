@@ -322,6 +322,27 @@
       "correct": "\"\"\"Return minimum cross-array absolute distance without changing the inputs.\"\"\"\n\n\ndef minimum_cross_distance(left, right):\n    if not left or not right:\n        return None\n    a, b = sorted(left), sorted(right)\n    i = j = 0\n    best = abs(a[0] - b[0])\n    while i < len(a) and j < len(b):\n        gap = abs(a[i] - b[j])\n        best = min(best, gap)\n        if gap == 0:\n            return 0\n        if a[i] < b[j]:\n            i += 1\n        else:\n            j += 1\n    return best\n",
       "wrong": "def minimum_cross_distance(left,right):\n    return 0\n",
       "syntax_error": "def minimum_cross_distance(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-checked-c-string-copy-contract",
+      "language": "python",
+      "correct": "def copy_within(values, source, size, target):\n    \"\"\"Copy one fixed-size slice with snapshot semantics and constant scratch.\"\"\"\n    length = len(values)\n    if size < 0 or not 0 <= source <= length or not 0 <= target <= length:\n        raise ValueError('invalid slice')\n    if size > length - source or size > length - target:\n        raise ValueError('slice exceeds array bounds')\n    if size == 0 or target == source:\n        return\n    backwards = source < target < source + size\n    offsets = range(size - 1, -1, -1) if backwards else range(size)\n    for offset in offsets:\n        values[target + offset] = values[source + offset]\n\n\ndef copied_array(values, source, size, target):\n    \"\"\"Return the JSON-visible array after the requested in-place operation.\"\"\"\n    copy_within(values, source, size, target)\n    return values\n",
+      "wrong": "def copied_array(values,source,size,target):\n    for i in range(size):\n        values[target+i]=values[source+i]\n    return values\n",
+      "syntax_error": "def copied_array(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-uniform-random-except-last-five",
+      "language": "python",
+      "correct": "from collections import deque\n\n\nclass RandomLastFive:\n    \"\"\"Keep a separate history for each fixed inclusive range and instance.\"\"\"\n\n    def __init__(self, low, high, rand):\n        if high - low + 1 < 6:\n            raise ValueError('at least six values are required')\n        self.low = low\n        self.high = high\n        self.rand = rand\n        self.history = deque(maxlen=5)\n\n    def next(self):\n        high_rank = self.high - self.low - len(self.history)\n        rank = self.rand(0, high_rank)\n        if not 0 <= rank <= high_rank:\n            raise ValueError('rand returned a rank outside the requested range')\n        value = self.low + rank\n        for excluded in sorted(self.history):\n            if excluded > value:\n                break\n            value += 1\n        self.history.append(value)\n        return value\n\n\ndef random_from_ranks(low, high, ranks):\n    \"\"\"Deterministic adapter with zero-based ranks supplied for successive draws.\"\"\"\n    draws = iter(ranks)\n    generator = RandomLastFive(low, high, lambda _lo, _hi: next(draws))\n    return [generator.next() for _ in ranks]\n",
+      "wrong": "def random_from_ranks(low,high,ranks):\n    return [low+rank for rank in ranks]\n",
+      "syntax_error": "def random_from_ranks(*args)\n    return None\n"
+    },
+    {
+      "question_key": "prep-bst-inorder-successor-parent-pointers",
+      "language": "python",
+      "correct": "class Node:\n    def __init__(self, key):\n        self.key = key\n        self.left = None\n        self.right = None\n        self.parent = None\n\n\ndef successor(node):\n    \"\"\"Return the next node in ascending key order, or None.\"\"\"\n    if node is None:\n        return None\n    if node.right is not None:\n        node = node.right\n        while node.left is not None:\n            node = node.left\n        return node\n\n    parent = node.parent\n    while parent is not None and node is parent.right:\n        node, parent = parent, parent.parent\n    return parent\n\n\ndef successors_of_insertion_order(keys):\n    \"\"\"JSON adapter: build the BST, then return successors in input-key order.\"\"\"\n    root = None\n    nodes = []\n    for key in keys:\n        item = Node(key)\n        nodes.append(item)\n        if root is None:\n            root = item\n            continue\n        cursor = root\n        while True:\n            branch = 'left' if key < cursor.key else 'right'\n            child = getattr(cursor, branch)\n            if child is None:\n                setattr(cursor, branch, item)\n                item.parent = cursor\n                break\n            cursor = child\n    return [found.key if (found := successor(node)) is not None else None\n            for node in nodes]\n",
+      "wrong": "def successors_of_insertion_order(keys):\n    return keys[1:]+[None] if keys else []\n",
+      "syntax_error": "def successors_of_insertion_order(*args)\n    return None\n"
     }
   ]
 }

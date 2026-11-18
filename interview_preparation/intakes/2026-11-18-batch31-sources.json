@@ -1,0 +1,686 @@
+{
+  "received_on": "2026-11-18",
+  "screenshot_count": 31,
+  "source_count": 29,
+  "new_question_count": 11,
+  "technical_extension_count": 8,
+  "provenance_only_count": 10,
+  "affected_question_count": 29,
+  "sources": [
+    {
+      "screenshot": 1,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-01.png"
+      ],
+      "sha256": "52fa8bd8c8dc12cfb07c7de79477c33cc4d5150c005b53aa94220d7e85e521de",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-01.png": "52fa8bd8c8dc12cfb07c7de79477c33cc4d5150c005b53aa94220d7e85e521de"
+      },
+      "original_prompt": "חוקרי אמנות בחנו ציורים של צייר שחי לפני שנים רבות. בכל הציורים הדמויות והאובייקטים מרוחים לרוחב ונראים רחבים מהמציאות. אופטומטריסט טען שככל הנראה בעיית ראייה גרמה לצייר לראות הכל בצורה רחבה. מהנדס עיבוד תמונה טען שהאופטומטריסט בהכרח טועה, אף שאין לו ידע רפואי. מדוע הוא צודק?",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "logic",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-374"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 2,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-02.png"
+      ],
+      "sha256": "12d12488d590768d21fdfbc5917f6991dc64061a832558b4797374f85ae04f4d",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-02.png": "12d12488d590768d21fdfbc5917f6991dc64061a832558b4797374f85ae04f4d"
+      },
+      "original_prompt": "לתכנן מערכת שמקבלת CLK, RESET ומוציאה כל מחזור שעון 1,4,9,16,25,… בדרך שאלו על T-setup ו־T-hold. לאחר מכן להשתמש במערכת לתכנון מערכת שמקבלת CLK, RESET, a[n-1:0], b[n-1:0], c[n-1:0] ומוציאה 1 אם a^2+b^2=c^2. בנוסף מוציאה ביט VALID שמוודא שסיימנו.",
+      "reported_companies": [
+        "amazon"
+      ],
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "question_ids": [
+        "PREP-140"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 3,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-03.png"
+      ],
+      "sha256": "0903bd6f24587943c09486a173ccf6d94d4d488dd3bb38e24623f4426d5b3dd5",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-03.png": "0903bd6f24587943c09486a173ccf6d94d4d488dd3bb38e24623f4426d5b3dd5"
+      },
+      "original_prompt": "ממש פונקציית רנדום שתחזיר כל פעם מספר חדש בין 1 ל־N.",
+      "reported_companies": [
+        "google"
+      ],
+      "source_tags": [
+        "hardware",
+        "google"
+      ],
+      "question_ids": [
+        "PREP-022"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 4,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-04.png"
+      ],
+      "sha256": "4c2bed60f5c0b2d0723c27264a1e144243167ad2741af6882042c3bee7ccb3aa",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-04.png": "4c2bed60f5c0b2d0723c27264a1e144243167ad2741af6882042c3bee7ccb3aa"
+      },
+      "original_prompt": "משרת סטודנט אמבדד, תוכנה low-level ב־cpp. יש רשימה מקושרת רגילה עם שדה נוסף בכל node שמצביע לאיבר שרירותי ברשימה. כל node מכיל next, data ו־random pointer. בצעו clone לרשימה כמו שצריך.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-371"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 5,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-05.png"
+      ],
+      "sha256": "2c1120f35a7908787e581542e9223c74f0784eac6c3a3ce5a5ed0ee1c9e52375",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-05.png": "2c1120f35a7908787e581542e9223c74f0784eac6c3a3ce5a5ed0ee1c9e52375"
+      },
+      "original_prompt": "בנה פונקציה בשפה שתבחר שמקבלת מערך, source index, size, target index ומעתיקה את האלמנטים החל מ־source index באורך size ל־target index. לדוגמה, במערך עם אינדקסים 0 עד 1064, עבור source index=30, size=5, target index=200 מעתיקים מ־30 עד 34 אל 200 עד 204. התייחס לכל המקרים, למשל size=0 או חפיפה בין הטווחים, וחשוב איך למנוע דריסת מידע.",
+      "reported_companies": [
+        "google"
+      ],
+      "source_tags": [
+        "hardware",
+        "software",
+        "google",
+        "verification"
+      ],
+      "question_ids": [
+        "PREP-332"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 6,
+      "companion_screenshots": [
+        7
+      ],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-06.png",
+        "sources/2026-11-18-batch31-07.png"
+      ],
+      "sha256": "48d1542d7df626d0a1ff7e99ac9270e1d4b8112527895d9fd4abf5eb376ae29e",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-06.png": "48d1542d7df626d0a1ff7e99ac9270e1d4b8112527895d9fd4abf5eb376ae29e",
+        "sources/2026-11-18-batch31-07.png": "bbfdf6e0e8ba54afed5f040ac51fc9f913870205f45eb8fa579554543f2f7a0b"
+      },
+      "original_prompt": "נתונות שתי אנטנות במרחק d זו מזו. א. מצא את הקשר בין הזווית θ ובין הפרש הפאזה φ בין הקלטים של שתי האנטנות. ב. מה צריך להיות d בהינתן תוצאת סעיף א?",
+      "reported_companies": [],
+      "source_tags": [],
+      "question_ids": [
+        "PREP-366"
+      ],
+      "decision": "new_question",
+      "companion_descriptions": {
+        "7": "שרטוט נלווה לשאלת האנטנות. אנטנות 2 ו־1 בקצות קו באורך d. הזווית θ מסומנת ביחס לקו המחבר ביניהן. מסומן גם היטל x על הקרן."
+      }
+    },
+    {
+      "screenshot": 8,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-08.png"
+      ],
+      "sha256": "ad56431dfc1b8817c47d4e293c86169d2dc4be380ac4370a83a749020799738c",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-08.png": "ad56431dfc1b8817c47d4e293c86169d2dc4be380ac4370a83a749020799738c"
+      },
+      "original_prompt": "נתונים שער N ושער P עם שתי כניסות a,b ויציאה אחת. P נותן 1 רק ב־00 ו־Z אחרת. N נותן 0 רק ב־11 ו־Z אחרת. א. ממש מהפך. ב. ממש שער NOR.",
+      "reported_companies": [
+        "marvell"
+      ],
+      "source_tags": [
+        "logic",
+        "verification",
+        "marvell"
+      ],
+      "question_ids": [
+        "PREP-015"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 9,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-09.png"
+      ],
+      "sha256": "f6585b4778f1fed440c408ae32c1550b5a4fa8e0c19a8f38f50038793df36f88",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-09.png": "f6585b4778f1fed440c408ae32c1550b5a4fa8e0c19a8f38f50038793df36f88"
+      },
+      "original_prompt": "ממש באמצעות רכיבי Full-Adder מכונה הסופרת את כמות ה־1 בכניסה בעלת 7 סיביות.",
+      "reported_companies": [
+        "cisco"
+      ],
+      "source_tags": [
+        "logic",
+        "cisco"
+      ],
+      "question_ids": [
+        "PREP-001"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 10,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-10.png"
+      ],
+      "sha256": "2cd097c8eb60913eb00b02e219a9d8a9e5cfaf9d7233bf9b23a6e74f4b0b0848",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-10.png": "2cd097c8eb60913eb00b02e219a9d8a9e5cfaf9d7233bf9b23a6e74f4b0b0848"
+      },
+      "original_prompt": "יש משתנה שיכול לקבל שני ערכים 5 או 6. כתוב פונקציה שמקבלת ערך אחד ומחזירה את השני בלי להשתמש במשפטי תנאי.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-119"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 11,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-11.png"
+      ],
+      "sha256": "485e9921992551f9b78be77266b4f972fd59f48c39116aef51e1726bef8f60dd",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-11.png": "485e9921992551f9b78be77266b4f972fd59f48c39116aef51e1726bef8f60dd"
+      },
+      "original_prompt": "ממש מחסנית עם פונקציות push,pop באמצעות מבנה נתונים כלשהו בשפת תכנות שתבחר.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "software",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-309"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 12,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-12.png"
+      ],
+      "sha256": "54627c1067e27e97abf2b9b19b30dfaae9a2cbc062c3f6996356827e9d479540",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-12.png": "54627c1067e27e97abf2b9b19b30dfaae9a2cbc062c3f6996356827e9d479540"
+      },
+      "original_prompt": "נתון מערך ממוין בגודל N. יש רכיב המקבל 2 ביטים ומחזיר 1 אם הראשון גדול מהשני. נתון k. מצא את המקום שבו כל מה שמימין גדול מ־k וכל מה שמשמאל קטן מ־k במספר פעולות קטן ככל שניתן. א. כמה פעולות במקרה הגרוע ב־RAM עם גישה לכל תא לפי בחירה? ב. כמה במקרה הגרוע ברגיסטר הזזה שבו ניגשים רק לביט הראשון בכל פעם?",
+      "reported_companies": [
+        "elta"
+      ],
+      "source_tags": [
+        "hardware",
+        "elta",
+        "logic"
+      ],
+      "question_ids": [
+        "PREP-137"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 13,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-13.png"
+      ],
+      "sha256": "3b870c5180ace618df52bad2273d82b6cefd28eca7c1c734785c07fd43a34dc5",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-13.png": "3b870c5180ace618df52bad2273d82b6cefd28eca7c1c734785c07fd43a34dc5"
+      },
+      "original_prompt": "אני נוסע כל יום בקו ישר מהבית לעבודה במשך חצי שעה. ב־10 הדקות הראשונות אני עובר חצי דרך באופן חופשי וב־20 דקות עובר את שארית הדרך בפקק. כמה דקות אעמוד בפקק בעוד 10 שנים?",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-375"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 14,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-14.png"
+      ],
+      "sha256": "4d040441339e7da66b8972d10351aa6f9fe49dd0097066e8661f33263817df02",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-14.png": "4d040441339e7da66b8972d10351aa6f9fe49dd0097066e8661f33263817df02"
+      },
+      "original_prompt": "נתונות 4 גלולות, 2 מסוג רעל א׳ ו־2 מסוג רעל ב׳, וכל סוג מנטרל את השני. יש לקחת בסך הכול 2 כדורים מתוך ה־4 ולהבטיח הישרדות, כלומר כדור אחד מכל סוג. כל ארבעת הכדורים נראים זהים ולא ניתן להפריד ביניהם לפי המראה. איך והאם ניתן להבטיח הישרדות?",
+      "reported_companies": [
+        "rafael"
+      ],
+      "source_tags": [
+        "hardware",
+        "rafael"
+      ],
+      "question_ids": [
+        "PREP-376"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 15,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-15.png"
+      ],
+      "sha256": "bd53e4f0e2f43bc463e93d3d375a38d159b60f532dd01ddb75ce95aaf1dd199c",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-15.png": "bd53e4f0e2f43bc463e93d3d375a38d159b60f532dd01ddb75ce95aaf1dd199c"
+      },
+      "original_prompt": "ממש קופסה שמקבלת מידע ומחזירה כמה פעמים התקבל הקלט 0x7E אשר מיוצג בבסיס 16.",
+      "reported_companies": [
+        "marvell"
+      ],
+      "source_tags": [
+        "hardware",
+        "marvell"
+      ],
+      "question_ids": [
+        "PREP-368"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "companion_screenshots": [
+        17
+      ],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-16.png",
+        "sources/2026-11-18-batch31-17.png"
+      ],
+      "sha256": "c4b41b665261aabfe1bd90ef14d3497d1524d57a5426f7c944894fa013b22f59",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-16.png": "c4b41b665261aabfe1bd90ef14d3497d1524d57a5426f7c944894fa013b22f59",
+        "sources/2026-11-18-batch31-17.png": "7b3d962edb1370a6099ad7b9b1629b5d1a08f22184ed662e0182b98d6f1d7c51"
+      },
+      "original_prompt": "שלושה מחשבים A,B,C מקבלים יחד ביט זהה. כל מחשב יכול להחזיר ביט שגוי, לרבות מצב שבו כולם צודקים או כולם טועים. א. ממש מערכת שמוציאה 1 רק כאשר הפלטים אינם זהים. ב. אם המערכת נדלקת, החזר איזה מחשב הוציא ביט שונה מהאחרים. הסבר את הבעיה כשאף אחד לא טועה או כולם טועים, ואז הזהות היא don’t care.",
+      "reported_companies": [],
+      "source_tags": [],
+      "question_ids": [
+        "PREP-369"
+      ],
+      "decision": "new_question",
+      "companion_descriptions": {
+        "17": "שרטוט נלווה. A, B, C מקבלים ביטים ומזינים את שלושת מוצאיהם לקופסה שממנה מתקבלים הפלטים."
+      }
+    },
+    {
+      "screenshot": 18,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-18.png"
+      ],
+      "sha256": "dae4779357e36432ea52d20e1cfdc98a0212efa028ae77e9dfa7ba1be2f4f85b",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-18.png": "dae4779357e36432ea52d20e1cfdc98a0212efa028ae77e9dfa7ba1be2f4f85b"
+      },
+      "original_prompt": "נתונה rand(x,y) שמגרילה מספר אקראי בין x ל־y. ממש rand5(x,y) שמגרילה מספר באותו תחום שלא הוגרל בחמש הפעמים האחרונות.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-372"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 19,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-19.png"
+      ],
+      "sha256": "beb61166fdd29fa21ecde222ea98490a1c1259b4f21624abc01cea6615ac03b9",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-19.png": "beb61166fdd29fa21ecde222ea98490a1c1259b4f21624abc01cea6615ac03b9"
+      },
+      "original_prompt": "הסבר את אופן הפעולה של פליפ פלופ ואיך הוא שונה מ־SR LATCH.",
+      "reported_companies": [
+        "cisco"
+      ],
+      "source_tags": [
+        "hardware",
+        "cisco"
+      ],
+      "question_ids": [
+        "PREP-106"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 20,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-20.png"
+      ],
+      "sha256": "14e73be400ce9041ed57c76ded24b4f7cbc60926452a20e14bbc1c0df2af2902",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-20.png": "14e73be400ce9041ed57c76ded24b4f7cbc60926452a20e14bbc1c0df2af2902"
+      },
+      "original_prompt": "מה הזמן שיותר גרוע בפליפ פלופ, Hold או Setup?",
+      "reported_companies": [
+        "cisco"
+      ],
+      "source_tags": [
+        "hardware",
+        "cisco"
+      ],
+      "question_ids": [
+        "PREP-176"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 21,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-21.png"
+      ],
+      "sha256": "a356c4cf9333b0c229e20ad49cab877b95c5764f03f9aeeef7946aee4c63dead",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-21.png": "a356c4cf9333b0c229e20ad49cab877b95c5764f03f9aeeef7946aee4c63dead"
+      },
+      "original_prompt": "עץ חיפוש בינארי, בן ימני גדול מהאב ובן שמאלי קטן. Node=(left,parent,right). תאר אלגוריתם וכתוב פסאודו קוד לפונקציה המקבלת צומת ומחזירה את הצומת הקרוב ביותר שגדול ממנו.",
+      "reported_companies": [
+        "rafael"
+      ],
+      "source_tags": [
+        "logic",
+        "rafael"
+      ],
+      "question_ids": [
+        "PREP-373"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 22,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-22.png"
+      ],
+      "sha256": "cd43dfcd6e83acc44538733d92f692e43a48751fb5f375335b170cf8a1a923a8",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-22.png": "cd43dfcd6e83acc44538733d92f692e43a48751fb5f375335b170cf8a1a923a8"
+      },
+      "original_prompt": "Write code to evaluate a given postfix expression efficiently. For example: 82/ evaluates to 4 (8/2), 138*+ evaluates to 25 (1+8*3), and 545*+5/ evaluates to 5 ((5+4*5)/5).",
+      "reported_companies": [
+        "amazon"
+      ],
+      "source_tags": [
+        "software",
+        "amazon"
+      ],
+      "question_ids": [
+        "PREP-123"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 23,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-23.png"
+      ],
+      "sha256": "4781faab01904d2d7ee43c9565d7e9d00fb0e833f0af078ba1ea43bf74f2acfa",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-23.png": "4781faab01904d2d7ee43c9565d7e9d00fb0e833f0af078ba1ea43bf74f2acfa"
+      },
+      "original_prompt": "כתוב פונקציה שמקבלת רשימה מקושרת חד כיוונית עם מצביע לצומת כלשהו ומוחקת את הצומת הזה.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "software",
+        "rafael",
+        "intel-2"
+      ],
+      "question_ids": [
+        "PREP-238"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 24,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-24.png"
+      ],
+      "sha256": "1dd8350425774922fdfc4203919c2e1af58736c45558365c89c662af25b06a65",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-24.png": "1dd8350425774922fdfc4203919c2e1af58736c45558365c89c662af25b06a65"
+      },
+      "original_prompt": "ממש ראי זרם על ידי טרנזיסטורים וצייר גרף Iout כפונקציה של Iin.",
+      "reported_companies": [
+        "qualcomm"
+      ],
+      "source_tags": [
+        "hardware",
+        "qualcomm"
+      ],
+      "question_ids": [
+        "PREP-367"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 25,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-25.png"
+      ],
+      "sha256": "0c00a2003d77b91d708740302e8c7b8857428f1df4f5572ee1c02a41004f2b42",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-25.png": "0c00a2003d77b91d708740302e8c7b8857428f1df4f5572ee1c02a41004f2b42"
+      },
+      "original_prompt": "לממש מהפך רק עם NMOSים.",
+      "reported_companies": [],
+      "source_tags": [
+        "apple",
+        "hardware",
+        "actelis-networks"
+      ],
+      "question_ids": [
+        "PREP-153"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 26,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-26.png"
+      ],
+      "sha256": "4583fd14ebaa00cbbd0812ad9e61b554d4f1b605cf6183f8137ff78101c95db4",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-26.png": "4583fd14ebaa00cbbd0812ad9e61b554d4f1b605cf6183f8137ff78101c95db4"
+      },
+      "original_prompt": "לממש באמצעות שער NAND את כל השערים הבסיסיים BUFFER, NOT, AND, OR, NOR, XOR.",
+      "reported_companies": [],
+      "source_tags": [
+        "intel",
+        "hardware",
+        "actelis-networks"
+      ],
+      "question_ids": [
+        "PREP-092"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 27,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-27.png"
+      ],
+      "sha256": "cc9c9b2fee290038ff0e84273903abf30f6db74484c1d932e63dc3f2734c5596",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-27.png": "cc9c9b2fee290038ff0e84273903abf30f6db74484c1d932e63dc3f2734c5596"
+      },
+      "original_prompt": "ממש פסאודו קוד שעבור סדרה אינסופית של מספרים חיוביים ושליליים מוציא את סכום תת הסדרה הרציפה המקסימלי מבין סדרת הקלטים עד לאותו רגע.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "logic",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-072"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 28,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-28.png"
+      ],
+      "sha256": "5481ac612e505037e427d820cfbb4181a4da3ac513d49b3fd2dc43a3e2c0a2d3",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-28.png": "5481ac612e505037e427d820cfbb4181a4da3ac513d49b3fd2dc43a3e2c0a2d3"
+      },
+      "original_prompt": "נתון מערך בגודל 99 שמכיל את המספרים 1 עד 100 כאשר אחד חסר. מצא אותו.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-041"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 29,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-29.png"
+      ],
+      "sha256": "67f9802f8d888d2dbb793111a078b791745153536c22a2a2317b46c22c88c72a",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-29.png": "67f9802f8d888d2dbb793111a078b791745153536c22a2a2317b46c22c88c72a"
+      },
+      "original_prompt": "לפני יומיים סוזן הייתה בת 8, בעוד שנה תהיה בת 11. איך זה אפשרי?",
+      "reported_companies": [],
+      "source_tags": [
+        "logic",
+        "apple",
+        "actelis-networks"
+      ],
+      "question_ids": [
+        "PREP-232"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 30,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-30.png"
+      ],
+      "sha256": "2afadac552afcbd55f315bf7796a481343cb23aef5aced9e1994f6ec981e017d",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-30.png": "2afadac552afcbd55f315bf7796a481343cb23aef5aced9e1994f6ec981e017d"
+      },
+      "original_prompt": "נתון מערך בינארי באורך 64. נתונה מגבלת הספק של 7 ביטים דלוקים בכל פעם. תכנן קוד שבודק אם יש תקלות במערך.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "verification",
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-370"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 31,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch31-31.png"
+      ],
+      "sha256": "363e9fc0ca22a299ea04b631b9827e6cfb37ed42b598cfee3e4e79370e801c8d",
+      "archive_sha256": {
+        "sources/2026-11-18-batch31-31.png": "363e9fc0ca22a299ea04b631b9827e6cfb37ed42b598cfee3e4e79370e801c8d"
+      },
+      "original_prompt": "תכנן מונה בינארי שסופר עד 7 ומתאפס. לאחר מכן תכנן מונה שסופר מ־7 בירידה וחוזר ל־7.",
+      "reported_companies": [
+        "sandisk"
+      ],
+      "source_tags": [
+        "hardware",
+        "sandisk"
+      ],
+      "question_ids": [
+        "PREP-064"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ]
+}

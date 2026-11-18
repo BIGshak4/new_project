@@ -8,6 +8,7 @@ from app.engine.catalog import load_catalog
 from app.engine.solution_review import solution_review
 from app.services.question_resources import learner_media
 from tests.preparation_november15_history import before_nov15
+from tests.preparation_november15b_history import before_nov15b
 
 ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / "interview_preparation"
@@ -54,11 +55,15 @@ def test_complete_bilingual_difficulty_and_reveal_boundaries_follow_current_cont
     compiled = {q["key"]: q for q in read(SEEDS / "questions/preparation_bank.json")}
     for ident, question in selected.items():
         q = question.model_dump(mode="json")
+        current = compiled[q["key"]]
+        history_key = "compiled:" + q["key"]
+        at_intake = before_nov15b(history_key, current)
+        assert q["version"] == current["version"]
         if ident in VARIANTS:
-            prior = before_nov15("compiled:" + q["key"], compiled[q["key"]])
-            assert q["version"] == prior["version"] + 1
+            prior = before_nov15(history_key, current)
+            assert at_intake["version"] == prior["version"] + 1
         else:
-            assert q["version"] == 1
+            assert at_intake["version"] == 1
         r = ratings[q["key"]]
         assert type(r["difficulty"]) is int and 1 <= r["difficulty"] <= 10
         assert r["reason"].strip() and r["content_sha256"] == difficulty_fingerprint(q)

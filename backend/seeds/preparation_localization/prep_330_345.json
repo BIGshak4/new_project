@@ -134,10 +134,12 @@
   "PREP-332": {
     "assumptions": {
       "he": [
-        "הקיבולות מתארות בתים קריאים/כתיבים של אחסון חי. אורך המחרוזת נקבע ב־NUL הראשון."
+        "הקיבולות מתארות בתים קריאים/כתיבים של אחסון חי. אורך המחרוזת נקבע ב־NUL הראשון.",
+        "טווחי מקור ויעד הם אינדקסים באותו מערך; size סופר תאים והמערך נשאר באותו אורך."
       ],
       "en": [
-        "Capacities describe valid live storage, and the first NUL determines string length."
+        "Capacities describe valid live storage, and the first NUL determines string length.",
+        "Both ranges use offsets in one fixed-length array, and size counts cells."
       ]
     },
     "optimality": {
@@ -146,31 +148,37 @@
     },
     "verification": {
       "he": [
-        "קומפלו ובוצעו מקרים של מקור ויעד זהים, חפיפה לשני הצדדים, יעד קצר, מקור ללא NUL ומחרוזת ריקה."
+        "קומפלו ובוצעו מקרים של מקור ויעד זהים, חפיפה לשני הצדדים, יעד קצר, מקור ללא NUL ומחרוזת ריקה.",
+        "הלולאה נבדקה מול עותק פרוסה עצמאי עבור גדלים ומיקומים חוקיים באופן ממצה על מערכים קצרים, כולל דחיית קלט שגוי לפני שינוי."
       ],
       "en": [
-        "Compiled cases cover identical pointers, both overlap directions, insufficient capacity, unterminated input and the empty string."
+        "Compiled cases cover identical pointers, both overlap directions, insufficient capacity, unterminated input and the empty string.",
+        "The loop was compared with an independent slice snapshot on exhaustive valid slices over short arrays. Invalid ranges were checked for no mutation."
       ]
     },
     "edge_cases": {
       "he": [
-        "מחרוזת ריקה דורשת בייט יעד אחד. source=target תקין אם הקיבולות מספיקות. בדקו חפיפה לשני הכיוונים."
+        "מחרוזת ריקה דורשת בייט יעד אחד. source=target תקין אם הקיבולות מספיקות. בדקו חפיפה לשני הכיוונים.",
+        "גודל אפס בקצה, העתקה לעצמו, חפיפה בשני הכיוונים, טווחים זרים ובדיקה שאין שינוי כשקלט לא חוקי."
       ],
       "en": [
-        "An empty string still needs one target byte. Identical pointers are valid with enough capacity. Test both overlap directions."
+        "An empty string still needs one target byte. Identical pointers are valid with enough capacity. Test both overlap directions.",
+        "Zero size at the end, self-copy, both overlap directions, disjoint ranges and no partial mutation on a bounds error."
       ]
     },
     "common_mistakes": {
       "he": [
-        "בדיקת NULL אינה מאמתת lifetime או גודל הקצאה. strncpy אינה מבטיחה NUL אם המקור ארוך מדי."
+        "בדיקת NULL אינה מאמתת lifetime או גודל הקצאה. strncpy אינה מבטיחה NUL אם המקור ארוך מדי.",
+        "לולאה קדימה בכל מצב משכפלת לעיתים את התא הראשון על חלק מהטווח במקום להעביר את הערכים המקוריים."
       ],
       "en": [
-        "A NULL test does not validate lifetime or allocation size. strncpy can leave an overlong result unterminated."
+        "A NULL test does not validate lifetime or allocation size. strncpy can leave an overlong result unterminated.",
+        "An unconditional forward loop can propagate the first source item instead of preserving original source values."
       ]
     },
     "interview_answer": {
-      "he": "אאמת מקור מסוים וקיבולת כולל NUL, ואז אשתמש ב־memmove להעתקה שמכבדת חפיפה.",
-      "en": "Validate a bounded source and capacity including NUL, then copy with memmove."
+      "he": "אאמת מקור מסוים וקיבולת כולל NUL, ואז אשתמש ב־memmove להעתקה שמכבדת חפיפה.\n\nהעתיקו אחורה אם היעד מתחיל באמצע המקור מימין. בשאר המקרים אפשר קדימה. כך שומרים את הערכים שעוד לא נקראו.",
+      "en": "Validate a bounded source and capacity including NUL, then copy with memmove.\n\nCopy backward when the target begins inside the source to its right. Otherwise forward is safe. Preserve every source value until its turn to be read."
     },
     "solution_extensions": {
       "he": [

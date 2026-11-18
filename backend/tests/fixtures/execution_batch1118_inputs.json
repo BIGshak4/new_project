@@ -1,0 +1,629 @@
+{
+  "prep-checked-c-string-copy-contract": {
+    "contract": {
+      "he": "ההרצה בודקת את הרחבת המערך. קבלו מערך מספרים שלמים ואינדקסים מאופסים עם טווחים חוקיים. העתיקו size תאים מ־source ל־target באותו מערך כפי שהיו לפני הכתיבה. החזירו את כל המערך לאחר ההעתקה. אפס הוא ערך רגיל, וגודל אפס משאיר את המערך כפי שהיה.",
+      "en": "This runner covers the array follow-up. Given an integer array and zero-based indices specifying valid ranges, copy size cells from source to target as they stood before writes. Return the entire array afterward. Zero is an ordinary value. Size zero leaves the array unchanged."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "copied_array",
+        "starter": "def copied_array(values, source, size, target):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              [],
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "args": [
+              [
+                9
+              ],
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "args": [
+              [
+                5
+              ],
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              0,
+              3,
+              1
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              1,
+              3,
+              0
+            ]
+          },
+          {
+            "args": [
+              [
+                3,
+                2,
+                1,
+                0,
+                -1
+              ],
+              0,
+              2,
+              3
+            ]
+          },
+          {
+            "args": [
+              [
+                3,
+                2,
+                1,
+                0,
+                -1
+              ],
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "args": [
+              [
+                -1,
+                0,
+                4,
+                4,
+                -8
+              ],
+              0,
+              4,
+              1
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              2,
+              4,
+              4
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              5,
+              5,
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                -7,
+                2,
+                0,
+                3,
+                5
+              ],
+              1,
+              0,
+              5
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                5,
+                2,
+                4,
+                3,
+                9
+              ],
+              2,
+              4,
+              1
+            ]
+          },
+          {
+            "args": [
+              [
+                2,
+                3,
+                5,
+                7,
+                11,
+                13
+              ],
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                4,
+                0,
+                2,
+                1,
+                3,
+                9
+              ],
+              0,
+              5,
+              1
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-uniform-random-except-last-five": {
+    "contract": {
+      "he": "בהרצה הדרגות ניתנות מראש כדי לבדוק תוצאות במדויק. התחילו בלי היסטוריה. לכל דרגה r בחרו את הערך שמספרו r בסדר עולה מבין הערכים השלמים בטווח הסגור [low,high] שלא הופיעו בחמש התוצאות האחרונות. הדרגות מאופסות ותקינות. יש לפחות שישה ערכים בטווח. החזירו את כל הבחירות בסדר הקריאות.",
+      "en": "The runner supplies draws as ranks to make results deterministic. Start with empty history. For each r, take the value at zero-based index r in ascending order among integers in the inclusive range [low,high] absent from the previous five results. Ranks are valid and the range contains at least six values. Return all selections in call order."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "random_from_ranks",
+        "starter": "def random_from_ranks(low, high, ranks):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              0,
+              5,
+              []
+            ]
+          },
+          {
+            "args": [
+              1,
+              6,
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              1,
+              6,
+              [
+                5,
+                4,
+                3,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              -5,
+              0,
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              -3,
+              5,
+              [
+                4,
+                5,
+                3,
+                2,
+                2,
+                1,
+                3,
+                0,
+                3,
+                2,
+                0,
+                3,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              10,
+              18,
+              [
+                8,
+                0,
+                6,
+                0,
+                4,
+                0,
+                3,
+                1,
+                2,
+                0,
+                3
+              ]
+            ]
+          },
+          {
+            "args": [
+              1,
+              9,
+              [
+                0,
+                3,
+                1,
+                2,
+                0,
+                3,
+                2,
+                1,
+                3
+              ]
+            ]
+          },
+          {
+            "args": [
+              99,
+              104,
+              [
+                3,
+                0,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              7,
+              14,
+              [
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              -10,
+              9,
+              [
+                19,
+                17,
+                15,
+                13,
+                11,
+                10,
+                12,
+                8,
+                14,
+                0,
+                0,
+                0,
+                1,
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              0,
+              6,
+              [
+                3,
+                1,
+                0,
+                3,
+                2,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              -30,
+              -24,
+              [
+                6,
+                0,
+                4,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-bst-inorder-successor-parent-pointers": {
+    "contract": {
+      "he": "ההרצה מקבלת מפתחות שלמים שונים לבניית עץ החיפוש בסדר ההכנסה הנתון. החזירו רשימה באותו סדר, ובה המפתח הגדול הקרוב ביותר לכל מפתח. עבור הצומת המרבי החזירו None, ועבור קלט ריק רשימה ריקה. הוכחת השימוש בקישורי העץ שייכת להסבר, בעוד ההרצה בודקת את ערכי התוצאה.",
+      "en": "The runner gives distinct integer keys in the insertion order of the BST. Return a list in that order containing each key’s next greater key. Return None for the maximum and an empty list for empty input. Explain the link traversal separately. The runner checks result values."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "successors_of_insertion_order",
+        "starter": "def successors_of_insertion_order(keys):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              []
+            ]
+          },
+          {
+            "args": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                4,
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                4,
+                6
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                8,
+                3,
+                10,
+                6,
+                4,
+                7
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                7,
+                6,
+                5,
+                4,
+                3,
+                2,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                -5,
+                -4,
+                -8,
+                -9,
+                -7
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                5,
+                1,
+                9,
+                4,
+                2,
+                3,
+                8,
+                7,
+                6
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                100,
+                50,
+                150,
+                25,
+                75,
+                125,
+                175,
+                60,
+                55,
+                65,
+                130
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                -1,
+                1,
+                -10,
+                10,
+                -4,
+                4,
+                -2,
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1099511627776,
+                0,
+                -1099511627776,
+                42,
+                -42
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                9,
+                5,
+                2,
+                1,
+                3,
+                7,
+                6,
+                8,
+                13,
+                11,
+                15,
+                12,
+                14
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                9,
+                1,
+                12,
+                2,
+                8,
+                10,
+                20,
+                3,
+                4,
+                6,
+                5
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
