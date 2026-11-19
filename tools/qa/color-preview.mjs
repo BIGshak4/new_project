@@ -8,7 +8,7 @@ import {pathToFileURL} from 'node:url';
 
 const root=resolve(import.meta.dirname,'../..');
 const origin=process.argv[2] || 'http://localhost:3225';
-assert.ok(['localhost','127.0.0.1','jobrun-practice.netlify.app'].includes(new URL(origin).hostname));
+assert.ok(['localhost','127.0.0.1','muxijobrun.com'].includes(new URL(origin).hostname));
 const require=createRequire('C:/Users/harel/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/package.json');
 const {chromium}=require('playwright');
 const {colorPalettes}=await import(pathToFileURL(resolve(root,'apps/web/src/app/color-preview/palettes.ts')).href);

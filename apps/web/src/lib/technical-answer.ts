@@ -1,3 +1,5 @@
+import { formatTruthTable, parseTruthTable, type AnswerTruthTable } from "./answer-truth-table";
+
 export const answerLanguages = [
   "c",
   "cpp",
@@ -10,7 +12,7 @@ export const answerLanguages = [
 ] as const;
 export type AnswerLanguage = (typeof answerLanguages)[number];
 
-export function parseTechnicalAnswer(value: string) {
+function parseWrittenAnswer(value: string) {
   // Split the final recognized block, retaining earlier examples as explanation.
   // A greedy body regex can accidentally swallow several same-fence blocks.
   const untouched = () => ({ explanation: value, code: "", language: undefined });
@@ -33,7 +35,19 @@ export function parseTechnicalAnswer(value: string) {
   };
 }
 
-export function formatTechnicalAnswer(
+type TechnicalAnswer = ReturnType<typeof parseWrittenAnswer> & { truthTable?: AnswerTruthTable };
+
+export function parseTechnicalAnswer(value: string): TechnicalAnswer {
+  // Put the table first so existing code answers keep their terminal Markdown fence.
+  const tableBlock = /^~~~truth-table\n([\s\S]*?)\n~~~(?:\n\n|$)/.exec(value);
+  if (tableBlock) {
+    const truthTable = parseTruthTable(tableBlock[1]);
+    if (truthTable) return { ...parseWrittenAnswer(value.slice(tableBlock[0].length)), truthTable };
+  }
+  return parseWrittenAnswer(value);
+}
+
+function formatWrittenAnswer(
   explanation: string,
   code: string,
   language: AnswerLanguage,
@@ -46,6 +60,18 @@ export function formatTechnicalAnswer(
   );
   const fence = "`".repeat(longest + 1);
   return `${explanation ? explanation + "\n\n" : ""}${fence}${language}\n${code}\n${fence}`;
+}
+
+export function formatTechnicalAnswer(
+  explanation: string,
+  code: string,
+  language: AnswerLanguage,
+  truthTable?: AnswerTruthTable,
+) {
+  const written = formatWrittenAnswer(explanation, code, language);
+  if (!truthTable) return written;
+  const table = `~~~truth-table\n${formatTruthTable(truthTable)}\n~~~`;
+  return written ? `${table}\n\n${written}` : table;
 }
 
 export function defaultAnswerLanguage(

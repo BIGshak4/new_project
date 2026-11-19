@@ -1,0 +1,1074 @@
+{
+  "PREP-312": {
+    "assumptions": {
+      "he": [
+        "המקלות ישרים, בעלי אותו אורך, ומותר להרימם ולסובב את צורת הכף."
+      ],
+      "en": [
+        "Sticks are straight and equally long. They can be lifted, and the scoop can face another direction."
+      ]
+    },
+    "optimality": {
+      "he": "שתי הזזות מספיקות ומספרן קבוע בחוזה.",
+      "en": "The construction uses the required two moves."
+    },
+    "verification": {
+      "he": [
+        "בדיקת קואורדינטות משווה את אורכי המקלות, נקודות החיבור, חפיפת הצורה, שני המקלות שנשארו ומיקום הכדור."
+      ],
+      "en": [
+        "A coordinate check measures lengths, connections, congruence, the two stationary segments and the position of the ball."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אפשר גם לשקף את הפתרון כלפי מטה. הכדור צריך להיות בתוך הכף מלכתחילה, עם רווח מהמקלות."
+      ],
+      "en": [
+        "Reflecting the construction downward also works. The ball initially lies inside with clearance from the sticks."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "אם מזיזים רק את שתי הדפנות לצד האחר, הידית הישנה בולטת כעת לתוך חלל הכף."
+      ],
+      "en": [
+        "Moving both side sticks across the base leaves the original handle projecting into the new cavity."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני משאיר דופן אחת ואת הידית. בסיס שמוזז בחצי אורך מאפשר להחליף ביניהן תפקידים ולמקם את הדופן האחרת בצד הנגדי.",
+      "en": "I leave a side and the handle stationary. Moving the base half a length lets them trade roles, and I put the remaining side opposite the new lower side."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "האם יש פתרון סימטרי?",
+          "answer_direction": "משאירים את הדופן התחתונה במקום העליונה ומחליקים את הבסיס כלפי מטה.",
+          "principle": "סימטריית שיקוף"
+        }
+      ],
+      "en": [
+        {
+          "question": "Is there a reflected solution?",
+          "answer_direction": "Keep the lower side instead of the upper one and slide the base downward.",
+          "principle": "Reflection symmetry"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "התרשים קובע את כיוון הפתח; מותר לסובב את הצורה השלמה."
+      ],
+      "en": [
+        "The diagram fixes the initial orientation. The final scoop may be rotated."
+      ]
+    }
+  },
+  "PREP-313": {
+    "assumptions": {
+      "he": [
+        "הקיבולת גדלה גאומטרית; הרשימה דו־מקושרת; האינדקס בתחום 0..n."
+      ],
+      "en": [
+        "Capacity grows geometrically; the list is doubly linked; 0≤i≤n."
+      ]
+    },
+    "optimality": {
+      "he": "העלויות תלויות באופן מסירת המקום, בקרבה לקצה ובקיבולת הפנויה.",
+      "en": "Costs depend on how the position is given, distance to an end, and spare capacity."
+    },
+    "verification": {
+      "he": [
+        "בדיקת ספירה מדמה הגדלות והזזות, ומשווה את המערך הסופי והיקף ההעתקות למספר האיברים שהוסטו."
+      ],
+      "en": [
+        "A counting simulation checks resulting sequences and the number of elements moved during growth and shifts."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "הכנסה באינדקס n היא append; ברשימה ריקה מעדכנים גם ראש וגם זנב."
+      ],
+      "en": [
+        "Index n is append. In an empty list both head and tail change."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לייחס O(1) להכנסה לפי אינדקס ברשימה בלי לספור את איתור הצומת, או לתת ל־append במערך חסם קשיח של O(1)."
+      ],
+      "en": [
+        "Claiming list insertion at an index is O(1) skips the lookup. Vector append has an occasional linear cost."
+      ]
+    },
+    "interview_answer": {
+      "he": "ברשימה זול לחבר צומת כשכבר הגעתי למקום. במערך זול להגיע למקום, אך הכנסת איבר עשויה להזיז סיומת שלמה.",
+      "en": "A list cheaply relinks a known position. A vector cheaply locates an index, but insertion may shift the whole suffix."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מתי reserve עוזר?",
+          "answer_direction": "הקצאה מראש מונעת הגדלות עד לקיבולת שנשמרה. הכנסה באמצע עדיין מזיזה את הסיומת.",
+          "principle": "עלות הגדלה מול עלות הזזה"
+        }
+      ],
+      "en": [
+        {
+          "question": "When does reserve help?",
+          "answer_direction": "Preallocation prevents growth until the reserved capacity is exhausted. Middle insertions still shift the suffix.",
+          "principle": "Distinguishing growth from shifting"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הרשימה מוגדרת כדו־מקושרת עם מצביע זנב. עלות העתקת איבר נחשבת קבועה."
+      ],
+      "en": [
+        "Use a doubly linked list with a tail pointer and constant-cost element movement."
+      ]
+    }
+  },
+  "PREP-314": {
+    "assumptions": {
+      "he": [
+        "התאמה מדויקת בין אסימונים, עם מפרידי רווח לבן וללא נרמול אותיות או פיסוק."
+      ],
+      "en": [
+        "Exact token matching, whitespace separators, and no case or punctuation normalization."
+      ]
+    },
+    "optimality": {
+      "he": "בתוחלת O(T+D) זמן, כאשר T ו־D הם מספרי התווים בטקסט ובמילון במודל גיבוב מקובל. הקבוצה והמילים שמחזירה split תופסות O(T+D) זיכרון.",
+      "en": "Expected O(T+D) time for T text and D dictionary characters under ordinary hashing assumptions. The set and the list returned by split use O(T+D) space."
+    },
+    "verification": {
+      "he": [
+        "דוגמאות הכוללות טאבים, פיסוק, רישיות וקלט ריק, והשוואה מול חיפוש לינארי נפרד במילון."
+      ],
+      "en": [
+        "Checks include tabs, punctuation, case and empty input; a separate linear dictionary scan supplies expected decisions."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "טקסט ריק, טקסט של רווחים בלבד או מילון ריק עוברים. cat, עם פסיק היא מילה שונה מ־cat לפי החוזה."
+      ],
+      "en": [
+        "Empty text, whitespace-only text and an empty dictionary pass. The comma makes cat, different from cat."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיפוש תת־מחרוזת יסמן גם scatter, ושימוש בפיצול רק לפי רווח רגיל יחמיץ טאבים."
+      ],
+      "en": [
+        "Substring search also matches scatter. Splitting on literal spaces alone misses tabs."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחפש כל אסימון שלם בקבוצת המילים האסורות ואפסיק ברגע שיש התאמה.",
+      "en": "I check each complete token against a hash set and stop on the first match."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך חוסכים את רשימת המילים המפוצלת בטקסט גדול?",
+          "answer_direction": "קוראים תו אחר תו, צוברים רק את המילה הנוכחית ומשווים כשהיא מסתיימת, כולל המילה האחרונה.",
+          "principle": "סריקה זורמת"
+        }
+      ],
+      "en": [
+        {
+          "question": "How can a large text be processed without a token list?",
+          "answer_direction": "Read one character at a time. Buffer and test each current token at a boundary, including the last token.",
+          "principle": "Streaming tokenization"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע מהו גבול מילה. בתרגיל המילים מופרדות ברווח לבן והבדיקה רגישה לרישיות."
+      ],
+      "en": [
+        "Token boundaries are unspecified in the source. Here whitespace separates words and comparisons are case-sensitive."
+      ]
+    }
+  },
+  "PREP-315": {
+    "assumptions": {
+      "he": [
+        "שני הרובוטים זזים יחידה באותו כיוון, יש בדיקה מקומית אמינה וניתן למנות צעדים."
+      ],
+      "en": [
+        "Identical unit moves, reliable local checks, and the ability to count steps."
+      ]
+    },
+    "optimality": {
+      "he": "O(d+1) צעדים ו־O(1) מונים. המונים דורשים O(log(d+2)) ביטים.",
+      "en": "O(d+1) moves and O(1) counters, using O(log(d+2)) counter bits."
+    },
+    "verification": {
+      "he": [
+        "סימולציה על מיקומי התחלה ומטרות משני הצדדים בודקת גילוי, מרחק קבוע בין הרובוטים וחסם צעדים לינארי."
+      ],
+      "en": [
+        "Position simulations on both sides verify detection, preserved separation and a linear step bound."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אם d=0 עוצרים בבדיקה הראשונה. הרובוטים יכולים להתחיל באותה נקודה."
+      ],
+      "en": [
+        "If d=0 the initial check succeeds. The robots may start together."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בדיקה רק בקצות המסלולים מדלגת על מטרות. חלוקת הרובוטים לכיוונים מנוגדים מפרה את התנועה המשותפת."
+      ],
+      "en": [
+        "Checking only the endpoints skips targets. Sending the robots in opposite directions breaks the common-command constraint."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני שולח לשניהם את אותה פקודה, מחליף כיוון ומכפיל את יעד ההיסט בכל סבב. בדיקה בכל צעד מבטיחה כיסוי בזמן O(d+1).",
+      "en": "I send both robots the same commands, alternating direction and doubling the displacement goal after each leg. Checking every step finds the object in O(d+1) steps."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מדוע לא להגדיל את היעד בצעד אחד בכל פעם?",
+          "answer_direction": "המסלולים החוזרים נעשים ארוכים בהדרגה וסכומם עד d יכול לגדול ריבועית.",
+          "principle": "מחיר החזרה לאזורי חיפוש קודמים"
+        }
+      ],
+      "en": [
+        {
+          "question": "Why not increase the goal size by one per leg?",
+          "answer_direction": "The repeated traversals then grow arithmetically; their total through distance d can be quadratic.",
+          "principle": "Cost of revisiting previously searched sites"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הקו נבחר כגריד שלם. שני הרובוטים מקבלים תמיד אותה פקודת תזוזה."
+      ],
+      "en": [
+        "Use an integer line; both robots always receive the same move command."
+      ]
+    }
+  },
+  "PREP-316": {
+    "assumptions": {
+      "he": [
+        "מותר להשתמש בזהויות חזקות של מספרים שלמים חיוביים."
+      ],
+      "en": [
+        "Use exponent identities for positive integers."
+      ]
+    },
+    "optimality": {
+      "he": "מספר קבוע של פעולות חשבון מדויקות לנתונים המבוקשים.",
+      "en": "A constant number of exact arithmetic operations for this specific instance."
+    },
+    "verification": {
+      "he": [
+        "חשבון שלמים מדויק מאמת את שתי הזהויות ואת כיוון האי־שוויון."
+      ],
+      "en": [
+        "Exact integer arithmetic verifies both identities and the final inequality."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "חשוב שהבסיסים אחרי הפירוק חיוביים. למשל, העלאה בחזקה זוגית אינה שומרת סדר בכל הישר הממשי."
+      ],
+      "en": [
+        "Positivity matters: raising to an even power does not preserve order over the entire real line."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "השוואת המעריכים בלבד או הבסיסים בלבד אינה מכריעה כששניהם משתנים."
+      ],
+      "en": [
+        "Comparing only the bases or only the exponents ignores that both change."
+      ]
+    },
+    "interview_answer": {
+      "he": "אלה 512 ו־324 בחזקה שמינית, ולכן 16¹⁸ גדולה יותר.",
+      "en": "They are the eighth powers of 512 and 324, so 16¹⁸ is larger."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד תשוו באותה דרך 8⁶ ו־6⁸?",
+          "answer_direction": "שתיהן ריבועים: השוו 8³=512 עם 6⁴=1296. הפעם 6⁸ גדולה יותר.",
+          "principle": "בחירת מעריך משותף"
+        }
+      ],
+      "en": [
+        {
+          "question": "Can you compare 8⁶ and 6⁸ in the same way?",
+          "answer_direction": "Both are squares. Compare 8³=512 with 6⁴=1296, giving 6⁸ as the larger one.",
+          "principle": "Choosing a common exponent"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "שני הבסיסים חיוביים וההשוואה מדויקת."
+      ],
+      "en": [
+        "Both bases are positive and the comparison is exact."
+      ]
+    }
+  },
+  "PREP-317": {
+    "assumptions": {
+      "he": [
+        "משחק מסתיים במנצח ומפסיד יחידים; אין משחקי דירוג חוזרים."
+      ],
+      "en": [
+        "Every match has exactly one loser and one winner. There are no additional placement games."
+      ]
+    },
+    "optimality": {
+      "he": "O(1) פעולות חשבון גם עבור n שחקנים.",
+      "en": "O(1) arithmetic operations for any n players."
+    },
+    "verification": {
+      "he": [
+        "סימולציה סופרת זוגות בכל סיבוב ומשווה ל־n−1 במגוון גדלים, כולל 125."
+      ],
+      "en": [
+        "A round simulation counts pairs and checks the n−1 formula over a range of sizes, including 125."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "שחקן יחיד זוכה בלי משחק. טורניר ללא שחקנים אינו מוכתר במנצח."
+      ],
+      "en": [
+        "One player wins without a match. An empty tournament has no champion."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "עיגול כלפי מעלה של מספר המשחקים בסיבוב אי־זוגי סופר בטעות את העלייה החופשית כמשחק."
+      ],
+      "en": [
+        "Rounding the match count up in an odd round counts a bye as a played match."
+      ]
+    },
+    "interview_answer": {
+      "he": "124 שחקנים חייבים להיות מודחים, ולכל אחד משחק הפסד אחד.",
+      "en": "There are 124 eliminated players and each has precisely one losing match."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם מוסיפים משחק על המקום השלישי?",
+          "answer_direction": "זהו משחק נוסף בין שני מודחים שאינו קובע מי נשאר בתחרות על התואר. בטורניר הזה הסך נעשה 125.",
+          "principle": "זיהוי אילו משחקים מצמצמים את מספר המתחרים"
+        }
+      ],
+      "en": [
+        {
+          "question": "What if a third-place match is added?",
+          "answer_direction": "It is an extra match between two already eliminated players. This tournament would then have 125 matches.",
+          "principle": "Identifying which matches reduce the active field"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "כל משחק מדיח שחקן אחד. עלייה ללא יריב אינה משחק."
+      ],
+      "en": [
+        "Each played match eliminates one player. A bye is not a match."
+      ]
+    }
+  },
+  "PREP-318": {
+    "assumptions": {
+      "he": [
+        "מטריצה ריבועית של שורות נפרדות שניתן לשנות; ללא דרישה להעתקת גיבוי."
+      ],
+      "en": [
+        "The square matrix consists of distinct writable rows. No backup copy is required."
+      ]
+    },
+    "optimality": {
+      "he": "n(n−1)/2 החלפות, זמן Θ(n²) וזיכרון עזר O(1).",
+      "en": "n(n−1)/2 swaps, Θ(n²) time and O(1) auxiliary storage."
+    },
+    "verification": {
+      "he": [
+        "השוואה למטריצה חדשה שמחושבת לפי הגדרת השחלוף, בדיקת זהות המטריצה והשורות ושחלוף כפול."
+      ],
+      "en": [
+        "Checks compare with an independently allocated transpose, verify outer and row identities, and apply a second transpose."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "מטריצה ריקה או בגודל 1×1 נשארת ללא שינוי. מחוץ לחוזה נמצאות מטריצות מלבניות ושורות שהן אותו אובייקט."
+      ],
+      "en": [
+        "Empty and 1×1 matrices are unchanged. Rectangular inputs and aliased rows are outside the contract."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "אם עוברים על שני המשולשים, כל זוג מוחלף פעמיים והמטריצה חוזרת למקור."
+      ],
+      "en": [
+        "Visiting both triangles swaps every pair twice and restores the original matrix."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני מחליף רק מעל האלכסון, (i,j) עם (j,i). כך כל זוג מטופל פעם אחת בזמן Θ(n²) ובזיכרון עזר קבוע.",
+      "en": "I visit only the strict upper triangle and swap (i,j) with (j,i), taking Θ(n²) time and constant auxiliary space."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה מתקבל אם משחלפים פעמיים?",
+          "answer_direction": "ההחלפה השנייה מבטלת כל החלפה מהראשונה, ולכן מקבלים בדיוק את המטריצה המקורית.",
+          "principle": "שחלוף כפעולה הופכית לעצמה"
+        }
+      ],
+      "en": [
+        {
+          "question": "What happens after two transposes?",
+          "answer_direction": "Each second swap undoes the corresponding first swap, restoring the original matrix.",
+          "principle": "Transposition is an involution"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הגרסה להרצה מקבלת רשימת שורות בגודל ידוע באמצעות len. מותר מספר קבוע של משתני עזר."
+      ],
+      "en": [
+        "The runnable version infers size from the rows. Constant temporary storage is permitted."
+      ]
+    }
+  },
+  "PREP-319": {
+    "assumptions": {
+      "he": [
+        "בסיס 10; סופרים רק אפסים רצופים בקצה הימני."
+      ],
+      "en": [
+        "Use base ten and count only consecutive zeros at the right-hand end."
+      ]
+    },
+    "optimality": {
+      "he": "O(log₅(n+1)) חלוקות שלמות ומספר קבוע של משתנים. עלות חלוקה תלויה בגודל המספר בחשבון ללא מגבלת רוחב.",
+      "en": "O(log₅(n+1)) integer divisions and a constant number of variables. Unbounded-integer division cost depends on operand width."
+    },
+    "verification": {
+      "he": [
+        "בדיקה מחשבת עצרות בגודל סופי וסופרת את האפסים ישירות בכתיב העשרוני, כולל בדיקת 24 ו־49."
+      ],
+      "en": [
+        "A finite check evaluates factorials and directly counts ending characters in their decimal notation, including 24 and 49."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "0!=1 ולכן אין אפסים בסוף. גם עבור n<5 התוצאה אפס."
+      ],
+      "en": [
+        "0!=1 has no trailing zeros. All n<5 also give zero."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ספירת כפולות של חמש בלבד מחמיצה את הגורמים הנוספים בכל כפולה של 25 ושל חזקות גבוהות יותר."
+      ],
+      "en": [
+        "Counting multiples of five just once misses extra factors from multiples of 25 and higher powers."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני סופר את גורמי החמש לפי שכבות. ל־100! יש 24 אפסים בסוף ול־200! יש 49.",
+      "en": "I count factors of five in layers. There are 24 trailing zeros in 100! and 49 in 200!."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה משתנה בבסיס 12?",
+          "answer_direction": "פרקו 12=2²·3. אם v₂ ו־v₃ הם מספרי הגורמים בעצרת, מספר האפסים הוא min(⌊v₂/2⌋,v₃).",
+          "principle": "אפסים בבסיס כללי"
+        }
+      ],
+      "en": [
+        {
+          "question": "How would the answer change in base 12?",
+          "answer_direction": "Factor 12=2²·3. If v₂ and v₃ count those prime factors in the factorial, the result is min(⌊v₂/2⌋,v₃).",
+          "principle": "Trailing zeros in another base"
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "נבחר פירוש של אפסים עוקבים בסוף הכתיב העשרוני."
+      ],
+      "en": [
+        "Zeros means consecutive trailing decimal zeros."
+      ]
+    }
+  },
+  "PREP-320": {
+    "assumptions": {
+      "he": "אפיק בן שמונה סיביות, פלט צירופי, הזזה לוגית ימינה ומילוי באפס.",
+      "en": "Eight-bit combinational logical right shift with zero fill."
+    },
+    "optimality": {
+      "he": "העלויות מתייחסות לבנייה בעזרת תאי מוקס דו־כניסתיים. לא נדרש מינימום שטח לאחר סינתזה.",
+      "en": "The counts describe this 2-to-1 MUX construction. Area minimization after synthesis is a separate metric."
+    },
+    "verification": {
+      "he": "נבדקו 4,164 השוואות במודל פייתון, כולל כל הקלטים והבחירות לארבעת הרכיבים.",
+      "en": "The Python model passed 4,164 comparisons, covering every input and select setting of all four components."
+    },
+    "edge_cases": {
+      "he": [
+        "בהזזה 0 המילה נשמרת. בהזזה 7 רק סיבית הקלט העליונה עשויה לשרוד."
+      ],
+      "en": [
+        "Shift zero preserves the input. At distance seven only the top input bit can survive."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיווט מחזורי יחזיר ביטים שנפלו בקצה ויממש רוטציה."
+      ],
+      "en": [
+        "Wrapping an out-of-range index would implement rotation."
+      ]
+    },
+    "interview_answer": {
+      "he": "XOR בוחר בין b לבין ההשלמה שלו. מוקס גדול נבנה כעץ, והזזה לוגית משתמשת בשלוש שכבות הבוחרות מרחקים 1, 2 ו־4.",
+      "en": "XOR selects b or its complement. A larger MUX is a tree. A variable logical shift uses three layers selecting strides of 1, 2 and 4."
+    },
+    "source_ambiguities": {
+      "he": "נבחרו רוחב שמונה, כיוון ימינה ומילוי באפס.",
+      "en": "The width, direction and zero-fill convention are specified for this exercise."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך אפשר לבצע רוטציה באותן שכבות?",
+          "direction": "חברו את קלט המקור לפי אינדקס מודולו שמונה.",
+          "tests": "סיבית שיצאה מאחד הקצוות חוזרת בקצה השני."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can these stages implement rotation?",
+          "direction": "Wrap the source index modulo eight.",
+          "tests": "A bit leaving one end reappears at the other."
+        }
+      ]
+    }
+  },
+  "PREP-321": {
+    "assumptions": {
+      "he": "חיוויים מסונכרנים, נסיעה הניתנת לעצירה ביעד ודלת שמשלימה פקודה. הדלת פתוחה מחזור מלא אחרי אישור פתיחה.",
+      "en": "Synchronized indications, stoppable motion at the target, and eventual completion of door and motion commands. Dwell is one full period after confirmation."
+    },
+    "optimality": {
+      "he": "חמישה מצבי בקרה, שלוש בקשות נשמרות ומספר קבוע של אוגרים. הבחירה המעגלית מבטיחה שירות בהנחות המודל.",
+      "en": "Five control states plus a three-bit request mask and fixed-size registers. The cyclic selection rule guarantees eventual service under the stated assumptions."
+    },
+    "verification": {
+      "he": "מודל פייתון נבדק על 192 צירופי קומה התחלתית ומסכות כפתורים ובתרחיש של לחיצות חוזרות במהלך השירות.",
+      "en": "The Python model was checked on 192 initial-floor/button-mask combinations and an additional sequence with requests overlapping service."
+    },
+    "edge_cases": {
+      "he": [
+        "בקשות כפולות לאותה קומה מתלכדות. בקשה בקומה הנוכחית אינה מפעילה מנוע."
+      ],
+      "en": [
+        "Repeated calls coalesce by floor. A target on the current floor needs no motion."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "מחיקת כל המסכה כשדלת נפתחת תאבד בקשות מקומות אחרות."
+      ],
+      "en": [
+        "Clearing the whole mask when the door opens loses requests at other floors."
+      ]
+    },
+    "interview_answer": {
+      "he": "מסכה צוברת בקשות, יעד נעול מונע שינוי תוך נסיעה, וחמשת מצבי הבקר מבדילים בין תנועה, שתי פעולות הדלת ומצבי ההמתנה.",
+      "en": "Latch per-floor requests and keep the selected target stable. Five control states separate idle and travel from the opening, dwell and closing phases."
+    },
+    "source_ambiguities": {
+      "he": "נבחרו מספור הקומות, מדיניות סריקה הוגנת וסדר ההכרעה בין לחיצה לאישור פתיחה.",
+      "en": "Floor numbering, a fair scheduler and the priority between a same-floor press and door-open confirmation are specified."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד מאריכים את שהיית הדלת במצב פתוח?",
+          "direction": "מאפסים מונה עם אישור הפתיחה ומחכים למספר מחזורים קבוע לפני סגירה.",
+          "tests": "היעד נשאר נעול ובקשות אחרות ממשיכות להישמר."
+        }
+      ],
+      "en": [
+        {
+          "question": "How could the door dwell longer?",
+          "direction": "Start a counter on open confirmation and wait for a configured number of ticks before closing.",
+          "tests": "Continue recording other requests while holding the target."
+        }
+      ]
+    }
+  },
+  "PREP-322": {
+    "assumptions": {
+      "he": "תזמון משותף, זרם בלתי דחיס של בתים שרירותיים, ותבנית valid קבועה שאינה נושאת מידע על ערך הבית.",
+      "en": "Common clock, arbitrary incompressible bytes, and a fixed valid schedule carrying no payload information."
+    },
+    "optimality": {
+      "he": "שתי סיביות להעברה הן רוחב המידע השלם המינימלי, עם קיבולת של חמש העברות לכל בית.",
+      "en": "Two data bits is the minimum integer width at five transfer opportunities per byte."
+    },
+    "verification": {
+      "he": "מודל המתאם מסר את כל 256 ערכי הבית ברצף. בכל מסגרת אומתו ארבעה זוגות והרכבתם מחדש לבית המקורי.",
+      "en": "The Python adapter sent all 256 byte values consecutively. Every frame was reconstructed from its four transmitted pairs."
+    },
+    "edge_cases": {
+      "he": [
+        "הבית הבא נקלט אחרי מסירת הזוג האחרון. אין צורך להניח שהבתים שונים זה מזה."
+      ],
+      "en": [
+        "The next byte can load immediately after the final pair is accepted. Repeated byte values work normally."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "השוואת 5X ל־X בלי לציין את רוחב ההעברה אינה קובעת אם הקו עומד בקצב."
+      ],
+      "en": [
+        "Comparing 5X and X alone ignores the number of bits carried by a transfer."
+      ]
+    },
+    "interview_answer": {
+      "he": "המקור מייצר שמונה סיביות בחמישה מחזורים. קו בן שתי סיביות מעביר ארבעה זוגות וצורך את החלון החמישי לטעינה.",
+      "en": "Eight bits arrive in five slots. Send four ordered pairs on a two-bit link and use the fifth slot for loading."
+    },
+    "source_ambiguities": {
+      "he": "רוחב הקליטה חסר בתיאור. גוזרים רוחב מינימלי ובודקים בנפרד ממשקי סיבית ובית.",
+      "en": "The receiver transfer width is unspecified. Treating it as a design parameter gives a precise minimum and explains byte and single-bit interfaces."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "לכמה זמן יספיק FIFO של B סיביות נוספות בקו חד־סיביתי?",
+          "direction": "בכל קבוצה החוב נטו גדל בשלוש סיביות.",
+          "tests": "בדקו גם את תפוסת השיא בתוך קבוצה כדי לקבוע את רגע הגלישה המדויק."
+        }
+      ],
+      "en": [
+        {
+          "question": "How long can a B-bit extra FIFO help on a one-bit link?",
+          "direction": "The net backlog grows by three bits per five-slot interval.",
+          "tests": "Account for peak backlog within the interval to locate the exact overflow edge."
+        }
+      ]
+    }
+  },
+  "PREP-323": {
+    "assumptions": {
+      "he": "prev=0 באיפוס. x סינכרוני ונדגם בחזית עולה. התוצאות רשומות.",
+      "en": "Reset sets prev to zero. The input is synchronous and the rising-edge results are registered."
+    },
+    "optimality": {
+      "he": "סיבית אחת של היסטוריית קלט מספיקה. שלושה אוגרי פלט מממשים את תזמון היציאות המבוקש.",
+      "en": "One input-history bit suffices. Three output registers implement the specified output timing."
+    },
+    "verification": {
+      "he": "מודל פייתון הושווה לטבלת המעברים ב־2,304 תרחישים של שמונה דגימות עם איפוס במיקומים שונים וללא איפוס.",
+      "en": "The Python model matched a transition oracle across 2,304 eight-sample scenarios with and without reset at different positions."
+    },
+    "edge_cases": {
+      "he": [
+        "ערך גבוה ראשון אחרי איפוס מדווח כעלייה. שני שינויים בין חזיתות עלולים להיעלם."
+      ],
+      "en": [
+        "A first high after reset is reported as a rise. Two transitions between sampling edges can disappear."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "עדכון prev לפני חישוב הפלט בקוד סדרתי משווה את x לעצמו."
+      ],
+      "en": [
+        "Writing prev before computing the outputs in sequential software compares x with itself."
+      ]
+    },
+    "interview_answer": {
+      "he": "משווים לדגימה הקודמת. כיוון המעבר קובע rise או fall, וההפרש הבוליאני קובע toggle.",
+      "en": "Compare the input with its previous sample. Transition direction selects rise or fall, and their XOR-of-samples condition gives toggle."
+    },
+    "source_ambiguities": {
+      "he": "נבחר גילוי בין דגימות ופלטים רשומים. קיימת הבחנה בין אירוע בדגימה לבין חזית אסינכרונית בפועל.",
+      "en": "The contract defines sampled transitions and registered outputs, distinguishing these from instantaneous asynchronous edges."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד מדכאים דיווח על הדגימה הראשונה?",
+          "direction": "הוסיפו סיבית seen, הפעילו אותה עם הדגימה הראשונה ואפשרו אירוע רק כאשר ערכה הקודם היה אחד.",
+          "tests": "בדקו רצף שמתחיל ב־1 לאחר איפוס."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can the first sample be suppressed?",
+          "direction": "Set a seen bit on the first sample and enable event reporting only if its pre-edge value was one.",
+          "tests": "Test a high first sample after reset."
+        }
+      ]
+    }
+  },
+  "PREP-324": {
+    "assumptions": {
+      "he": "קלט שלם בלתי מסומן בן שמונה סיביות. החילוק הוא חילוק שלם ונבחרת חלוקה סדרתית בזמן קבוע.",
+      "en": "The operand is an unsigned byte. Return integer quotient and remainder using a fixed-latency serial design."
+    },
+    "optimality": {
+      "he": "שמונה מחזורי עיבוד ומחסר קבוע אחד הממוחזר בכל מחזור. עבור מילה בת W סיביות נדרשים W מחזורים.",
+      "en": "Eight processing cycles reuse one constant-subtraction datapath. A W-bit input takes W cycles."
+    },
+    "verification": {
+      "he": "כל 256 ערכי הקלט הושוו במודל פייתון למנה ולשארית של divmod.",
+      "en": "All 256 input words matched Python's divmod oracle for both returned values."
+    },
+    "edge_cases": {
+      "he": [
+        "עבור 0–5 המנה אפס. עבור 255 התוצאה היא מנה 42 ושארית 3."
+      ],
+      "en": [
+        "Inputs below six give quotient zero. Input 255 gives quotient 42 and remainder 3."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "אוגר בן שלוש סיביות מתאים לשארית התקפה אך צר מכדי לחשב את 2r+b לפני ההשוואה."
+      ],
+      "en": [
+        "Three bits hold every valid remainder but truncate some trial values before comparison."
+      ]
+    },
+    "interview_answer": {
+      "he": "מכניסים בכל מחזור סיבית לקידומת. אם השארית המורחבת מגיעה לשש מחסרים שש ורושמים אחת במנה.",
+      "en": "Append one input bit per step. Subtract six and append a one to the quotient whenever the expanded remainder reaches six."
+    },
+    "source_ambiguities": {
+      "he": "נבחרו חילוק שלם, רוחב הקלט, סדר הסיביות והחזרת שארית כבקרת תוצאה.",
+      "en": "The sample width, division convention, processing order and remainder output are specified here."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד מצמצמים את מספר מחזורי העיבוד של אותו בית?",
+          "direction": "אפשר לפרוש כמה צעדי חילוק בסדרה בתוך מחזור אחד.",
+          "tests": "כל צעד נוסף בשרשרת מגדיל את העומק הצירופי."
+        }
+      ],
+      "en": [
+        {
+          "question": "How could fewer cycles process the same byte?",
+          "direction": "Unroll several remainder steps combinationally in one cycle.",
+          "tests": "The additional dependent steps increase path depth."
+        }
+      ]
+    }
+  },
+  "PREP-325": {
+    "assumptions": {
+      "he": "תוצאה בת שמונה סיביות עם רוויה, דגימה נמוכה מפרידה בין פולסים, ו־valid מציין את רגע פרסום התוצאה.",
+      "en": "Eight-bit saturating result, at least one separating low sample and a one-cycle result-valid strobe."
+    },
+    "optimality": {
+      "he": "אוגר ספירה אחד ושני דגלי חריגה, עם תוצאת מדידה שמורה. רזולוציית המדידה היא מחזור שעון אחד.",
+      "en": "One working counter, temporary and latched overflow status and a retained result. Time resolution is one clock period."
+    },
+    "verification": {
+      "he": "מודל פייתון עבר 261 תרחישים, כולל 255, 256 ו־500 דגימות, מדידה מיד אחרי רוויה ואיפוס בתוך פולס.",
+      "en": "The Python model passed 261 scenarios, including 255, 256 and 500 highs, a new pulse immediately after saturation, and reset during a run."
+    },
+    "edge_cases": {
+      "he": [
+        "דגימה גבוהה יחידה מחזירה 1. רצף נמוך בלבד אינו מפעיל valid."
+      ],
+      "en": [
+        "A single sampled high gives one. An all-low stream produces no valid result."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "התחלת הספירה רק אחרי זיהוי הדגימה הגבוהה הראשונה גורמת לשגיאה של מחזור אחד."
+      ],
+      "en": [
+        "Starting the count one cycle after seeing the first high causes an off-by-one error."
+      ]
+    },
+    "interview_answer": {
+      "he": "סופרים דגימות גבוהות, מפרסמים ומאפסים את המונה בדגימה הנמוכה הבאה, ומכפילים את התוצאה ב־T לקבלת אומדן זמן.",
+      "en": "Count all high samples. Publish and clear on the following low sample. Multiply the unclipped count by T for a time estimate."
+    },
+    "source_ambiguities": {
+      "he": "נבחרו רוחב התוצאה, מדיניות גלישה, מועד פרסום התוצאה ופירוש המדידה ביחידות שעון.",
+      "en": "Result width, overflow policy, publication edge and the clock-count interpretation are specified."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד משפיעה הכפלת תדר שעון הייחוס על המדידה?",
+          "direction": "הצעד בזמן קטן בחצי, אך גם משך הפולס המרבי שאפשר למדוד ללא רוויה קטן בחצי באותו מונה.",
+          "tests": "שקלו להוסיף סיבית למונה כדי לשמר את הטווח."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the reference frequency doubles?",
+          "direction": "The time step halves, as does the maximum unclipped physical duration with the same counter.",
+          "tests": "An additional counter bit can preserve the range."
+        }
+      ]
+    }
+  },
+  "PREP-326": {
+    "assumptions": {
+      "he": "נתיב חד־מחזורי, skew חיובי לשעון קליטה מאוחר. בדוגמה B עוקב אחרי A ללא היפוך.",
+      "en": "A one-cycle path with positive skew for a later capture clock. In the example B follows A without inversion."
+    },
+    "optimality": {
+      "he": "התקציב קובע את השהיית clock-to-Q המרבית המותרת עבור הנתיב הנתון.",
+      "en": "The budget gives the maximum allowed clock-to-Q delay for this path."
+    },
+    "verification": {
+      "he": "חמש דוגמאות tCQ נבדקו מול מועדי ההגעה והקליטה, כולל שוויון והפרה.",
+      "en": "Five clock-to-Q values were checked against absolute deadlines, including equality and a failing path."
+    },
+    "edge_cases": {
+      "he": [
+        "ב־tCQ,max=6 ps הנתיב עומד בדיוק בדרישה.",
+        "בדיקת hold מצריכה השהיות מינימום ודרישת hold."
+      ],
+      "en": [
+        "At tCQ,max=6 ps the path meets setup exactly.",
+        "Hold analysis needs minimum delays and the hold specification."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בחירת 5 ps כחזית הקליטה המיועדת לנתון החדש.",
+        "הנחה ש־tCQ הוא אפס כאשר נדרשת תשובה כללית."
+      ],
+      "en": [
+        "Using 5 ps as the intended capture time for the new value.",
+        "Assuming zero tCQ in the general setup condition."
+      ]
+    },
+    "interview_answer": {
+      "he": "B חייב להתייצב עד 18 ps ומגיע בזמן tCQ,max + 12 ps. מותר tCQ,max עד 6 ps.",
+      "en": "B is due at 18 ps and arrives at tCQ,max + 12 ps. The limit is 6 ps."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך אותו skew משפיע על hold?",
+          "direction": "בדקו את חזית אותו מחזור. בהיעדר אי־ודאות נדרש tCQ,min + dmin ≥ s + thold.",
+          "tests": "השוו את הדדליין בחזית 5 ps להגעת הנתון במסלול המהיר."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does the same skew affect hold?",
+          "direction": "Check the same-cycle edge. With zero uncertainty require tCQ,min + dmin ≥ s + thold.",
+          "tests": "Compare the deadline at the 5 ps edge with the fastest path."
+        }
+      ]
+    }
+  },
+  "PREP-327": {
+    "assumptions": {
+      "he": "R ו־C חיוביים, הכניסה אידאלית, אין עומס במוצא והמתח נמדד ביחס לאדמה.",
+      "en": "R and C are positive, the source is ideal, the output is unloaded and voltages use ground as reference."
+    },
+    "optimality": {
+      "he": "קבוע הזמן קובע את הפשרה בין מעקב אחר הקלט לבין החלקת המעברים.",
+      "en": "The time constant trades input tracking against smoothing."
+    },
+    "verification": {
+      "he": "נבדקו 5,000 צעדי אינטגרציה לתגובה הסינוסית ושלושה קבועי זמן למחזור הריבועי מול חישוב חוזר של הטעינה והפריקה.",
+      "en": "Checked 5,000 numerical integration steps for the sine and propagated square-wave half-cycles independently at three time constants."
+    },
+    "edge_cases": {
+      "he": [
+        "כאשר τ קטן ביחס לחצי המחזור, המוצא מתקרב לרמות הכניסה.",
+        "כאשר τ גדול ביחס למחזור, המוצא במצב מתמיד נע סביב 0.5 V בתנודה קטנה."
+      ],
+      "en": [
+        "For τ much shorter than half a period, the output approaches the two input levels.",
+        "For τ much longer than a period, the periodic output has small ripple about 0.5 V."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "המרת 250 rad/s ל־250 Hz.",
+        "הנחה שהקבל נפרק לחלוטין בסוף כל חצי מחזור."
+      ],
+      "en": [
+        "Treating 250 rad/s as 250 Hz.",
+        "Assuming a complete discharge every half-period."
+      ]
+    },
+    "interview_answer": {
+      "he": "הסינוס מונחת ומפגר לפי H(jω). בגל הריבועי מתקבל רצף טעינות ופריקות מעריכיות בין q/(1+q) ל־1/(1+q).",
+      "en": "The sinusoid attenuates and lags according to H(jω). The square wave produces exponential charge and discharge between q/(1+q) and 1/(1+q)."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה ישתנה אם הכניסה נעה בין ‎−1 ל־1 וולט?",
+          "direction": "השתמשו בליניאריות. המוצא החדש הוא פעמיים המוצא המחזורי שחישבנו פחות וולט אחד.",
+          "tests": "ודאו שסכום השיא והשפל שווה לאפס."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the square wave swings from −1 to +1 V?",
+          "direction": "By linearity the new periodic output equals twice the previous output minus 1 V.",
+          "tests": "Check that the extrema sum to zero."
+        }
+      ]
+    }
+  },
+  "PREP-328": {
+    "assumptions": {
+      "he": "מספרים ללא סימן, שעון משותף, שערים בהשהיה אחידה ואוגרי כניסה ומוצא. בחישוב המספרי skew אפס.",
+      "en": "Unsigned operands, a common clock, equal gate delays and registered input and output. The numerical example uses zero skew."
+    },
+    "optimality": {
+      "he": "הנתיב הקריטי מחושב למבנה ripple הנתון. תאים ממשיים, חיווט ומבני נשא אחרים עשויים לשנות אותו.",
+      "en": "The critical path applies to the given ripple implementation. Physical cells, routing and alternative carry structures can change it."
+    },
+    "verification": {
+      "he": "כל 4,096 רביעיות הקלט הושוו לאריתמטיקה שלמה. זמני הגעה חושבו ברמת שער וקיבלו עומקים 9, או 5 ו־7 עם אוגרים.",
+      "en": "All 4,096 operand tuples were checked against integer arithmetic. Gate-level arrival calculations gave depth 9, or 5 and 7 with registers."
+    },
+    "edge_cases": {
+      "he": [
+        "ארבעה קלטי 7 מחייבים שש סיביות במוצא.",
+        "בצינור עם עצירות יש לשמור את שני סכומי הזוגות של אותה רביעייה יחד."
+      ],
+      "en": [
+        "Four sevens require all six output bits.",
+        "With pipeline stalls, the two pair sums from one tuple must stay aligned."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיתוך הנשא לפני ההזזה.",
+        "קיצור מחזור השעון בלי לכלול זמני האוגרים.",
+        "הנחה שכל הוספת אוגר מקטינה גם את ההשהיה עבור קלט יחיד."
+      ],
+      "en": [
+        "Discarding carry before shifting.",
+        "Reducing the period without register overhead.",
+        "Assuming that inserting a register reduces single-tuple latency."
+      ]
+    },
+    "interview_answer": {
+      "he": "שני מחברי זוגות מזינים מחבר ארבע־סיביות. הצמדת אפס מכפילה את הסכום. אוגרי ביניים מפצלים נתיב 9d לשתי דרגות של 5d ו־7d.",
+      "en": "Two pair adders feed a four-column adder. Append zero to double the sum. Intermediate registers split the 9d path into stages of 5d and 7d."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד אפשר לצמצם שהיית חיבור בלי להוסיף שלב צינור?",
+          "direction": "השתמשו במדחסי carry-save לצמצום מספר האופרנדים והעבירו נשא לרוחב המילה במחבר האחרון בלבד.",
+          "tests": "חשבו מחדש השהיה לפי מימוש השערים והחיווט שנבחרו."
+        }
+      ],
+      "en": [
+        {
+          "question": "How could you shorten addition without adding a pipeline stage?",
+          "direction": "Use carry-save compressors to reduce the number of operands and propagate carries across the word only in the last adder.",
+          "tests": "Recompute timing for the chosen cell and wiring model."
+        }
+      ]
+    }
+  },
+  "PREP-329": {
+    "assumptions": {
+      "he": "המקור אחיד ורציף, האומדן הוא מרכז התא, סף פנימי שייך לתא העליון ו־1 V שייך לקוד 7. תדר חצי־ההספק נמוך ממחצית תדר הדגימה.",
+      "en": "The source is continuous and uniform, reconstruction uses midpoints, internal boundaries map upward and 1 V maps to code 7. The half-power frequency lies below Nyquist."
+    },
+    "optimality": {
+      "he": "מרכז כל תא הוא התוחלת המותנית עבור מקור אחיד ולכן ממזער את ממוצע ריבוע השגיאה באותו תא.",
+      "en": "For a uniform source the cell midpoint is its conditional mean and minimizes the mean squared error in that cell."
+    },
+    "verification": {
+      "he": "מודל Python בדק 8,192 דגימות, תשעה גבולות וחמישה תדרים של פונקציית התמסורת. סקריפט MATLAB מכיל בדיקות עצמיות. הבדיקה המספרית בוצעה ב־Python.",
+      "en": "A Python model checked 8,192 samples, nine boundaries and five filter frequencies. The MATLAB script includes self-checks. Numerical verification ran in Python."
+    },
+    "edge_cases": {
+      "he": [
+        "ב־1 V יש לרוות לקוד 7.",
+        "אם הכניסה קבועה במרכז תא יחיד, ההיסטוגרמה כוללת עמודה אחת והשגיאה אפס."
+      ],
+      "en": [
+        "Clamp 1 V to code 7.",
+        "A constant input at one midpoint occupies a single bin and has zero error."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חלוקה ל־7 מרווחים למרות הגדרת שמונה תאים שווים.",
+        "ערבוב היסטוגרמת הקודים עם גרף השגיאה כתלות במתח.",
+        "הצבת תדר ב־Hz במקום תדר מנורמל בחישוב המקדמים."
+      ],
+      "en": [
+        "Dividing by 7 despite the specified eight equal cells.",
+        "Confusing the code histogram with the error versus voltage curve.",
+        "Using frequency in Hz where the coefficient formula needs a normalized frequency."
+      ]
+    },
+    "interview_answer": {
+      "he": "שמונה תאים ברוחב 1/8 V נותנים שגיאת שיא של 1/16 V ו־MSE של 1/768 V². למסנן אפשר לבחור IIR מסדר ראשון ולבדוק שב־100 Hz ההספק נחתך לחצי.",
+      "en": "Eight 1/8 V cells give a 1/16 V peak error and MSE of 1/768 V². A first-order IIR can be checked for half power at 100 Hz."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מהו האומדן הטוב ביותר בתא אם צפיפות הכניסה משתנה בתוך התא?",
+          "direction": "בחישוב MSE בחרו את התוחלת המותנית של x בתא. היא עלולה לסטות מאמצע התא.",
+          "tests": "חשבו תא עם צפיפות שעולה ליניארית לכיוון הקצה העליון."
+        }
+      ],
+      "en": [
+        {
+          "question": "What is the best estimate if the input density varies within a cell?",
+          "direction": "For MSE use the conditional mean of x in that cell. It can differ from the midpoint.",
+          "tests": "Evaluate a cell whose density increases linearly toward its upper end."
+        }
+      ]
+    }
+  }
+}

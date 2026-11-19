@@ -1195,7 +1195,7 @@ def test_thirty_sources_keep_bytes_full_transcriptions_and_exact_identity_mappin
 
 def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_prefixes(catalog):
     questions = archive()
-    assert len(questions) == 310 and len(catalog.questions) == 340
+    assert len(questions) == 385 and len(catalog.questions) == 415
     current_runtime = {q.assets.get("preparation_id"): q for q in catalog.questions.values() if q.assets.get("preparation_id")}
     for ident, expected in UNCHANGED_TECHNICAL_SHA256.items():
         original = questions[ident]
@@ -1205,14 +1205,18 @@ def test_all_previous_questions_preserve_technical_snapshots_or_exact_appended_p
         original, runtime = questions[ident], current_runtime[ident]
         assert original["version"] == runtime.version, ident
         assert technical_before_batch110(original)["version"] == expected["version"] + 1, ident
-        assert digest(original["prepared_hints"]) == expected["prepared_hints_sha256"]
+        historical = technical_before_batch90(original)
+        assert digest(historical["prepared_hints"]) == expected["prepared_hints_sha256"]
         assert solution_review(runtime).status == "pending_review"
         for language in ("he", "en"):
             prior = expected[language]
-            raw = original["translations"][language]
+            raw = historical["translations"][language]
             live = runtime.text(language)
             assert digest({key: raw.get(key) for key in ("title", "hint", "hints")}) == prior["raw_hint_title_sha256"]
-            assert digest({"title": live.title, "hints": list(live.hints)}) == prior["runtime_hint_title_sha256"]
+            assert digest({
+                "title": before_learner_copy_text(runtime.key, language, "title", live.title),
+                "hints": before_learner_copy_text(runtime.key, language, "hints", list(live.hints)),
+            }) == prior["runtime_hint_title_sha256"]
             for field in ("prompt", "reference_solution"):
                 for kind, value in (("raw", raw[field]), ("runtime", before_learner_copy_text(runtime.key, language, field, getattr(live, field)))):
                     prefix = prior[kind][field]
@@ -1256,7 +1260,7 @@ def test_inventory_retains_old_asset_hashes_and_private_originals(catalog):
         assert by_local[path]["sha256"] == previous_digest
         assert hashlib.sha256((BANK / path).read_bytes()).hexdigest() == previous_digest
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 525 and len(set(sources)) == 523
+    assert len(sources) == 682 and len(set(sources)) == 675
     names = json.loads((ROOT / "apps/web/src/lib/source-screenshots.json").read_bytes())
     assert set(names) == {Path(path).name for path in sources}
     for question in catalog.questions.values():

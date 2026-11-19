@@ -118,7 +118,7 @@
     },
     "interview_answer": {
       "he": "אשמור את r של הקידומת. מחשב t=2 r+b, פולט z לפי t≥5 ומחסיר 5 כשצריך. Q_next=2 Q+z. הבקרה סופית; פלט Q מקבילי לזרם בלתי מוגבל דורש אחסון גדל.",
-      "en": "Keep prefix remainder r. Compute t=2 r+b, emit z=(t≥5), subtract5 when needed and update Q_next=2 Q+z. The controller is finite; an unbounded parallel quotient needs growing storage."
+      "en": "Keep prefix remainder r. Compute t=2 r+b, emit z=(t≥5), subtract 5 when needed and update Q_next=2 Q+z. The controller is finite; an unbounded parallel quotient needs growing storage."
     },
     "source_ambiguities": {
       "he": [
@@ -228,7 +228,7 @@
         "שתי ספרות BCD ואות valid; התנהגות שגיאה מפורשת."
       ],
       "en": [
-        "Four input bits; only codes0..9 are valid digits.",
+        "Four input bits; only codes 0..9 are valid digits.",
         "Two BCD output digits and a valid flag; invalid behavior is explicit."
       ]
     },
@@ -289,7 +289,7 @@
       "en": [
         {
           "question": "Can the high tens bits be tied low?",
-          "answer_direction": "Yes. Tens ranges over0..2, so its two most significant bits are always0; fixed wires retain the four-bit BCD interface.",
+          "answer_direction": "Yes. Tens ranges over 0..2, so its two most significant bits are always 0; fixed wires retain the four-bit BCD interface.",
           "principle": "A value range can force constant bits."
         }
       ]
@@ -313,21 +313,23 @@
       "en": "O(n) time, O(1) extra words or O(log(n+1)) coordinate bits; no trail storage.\n\nO(k+rows) including shape validation; O(1) words."
     },
     "verification": {
-      "he": "כל 29,524 הרצפים עד אורך 9 ו־250,959 צעדים נבדקו מול מודל מרוכב נפרד; שלושה קלטים פגומים נדחו.\n\nכל ארבעת הכיוונים ורצפי RLM באורכים 0..7 בלוח 5×5 מול תנועה במספרים מרוכבים.",
-      "en": "All 29,524 sequences through length 9 and 250,959 steps matched an independent complex model; three invalid inputs were rejected.\n\nAll four headings and RLM strings of lengths 0..7 on a 5x5 board versus independent complex motion."
+      "he": "כל 29,524 הרצפים עד אורך 9 ו־250,959 צעדים נבדקו מול מודל מרוכב נפרד; שלושה קלטים פגומים נדחו.\n\nכל ארבעת הכיוונים ורצפי RLM באורכים 0..7 בלוח 5×5 מול תנועה במספרים מרוכבים. כל 87,381 הרצפים באורך עד 8 מעל M,R,L,T הושוו לאורקל מספרים מרוכבים.",
+      "en": "All 29,524 sequences through length 9 and 250,959 steps matched an independent complex model; three invalid inputs were rejected.\n\nAll four headings and RLM strings of lengths 0..7 on a 5x5 board versus independent complex motion. All 87,381 M,R,L,T sequences through length eight were compared with a complex-number oracle."
     },
     "edge_cases": {
       "he": [
         "רצף ריק או פניות בלבד: חוזר.",
         "חזרה למיקום עם כיוון אחר נחשבת הצלחה.",
         "M יחיד אינו חוזר; אות קטנה אינה פקודה חוקית בחוזה שנבחר.",
-        "ריק; סיבובים; גבול; מטריצה לא מלבנית; כיוון לא חוקי."
+        "ריק; סיבובים; גבול; מטריצה לא מלבנית; כיוון לא חוקי.",
+        "T לבדו אינו משנה מיקום; MTM חוזר; MMTM אינו חוזר."
       ],
       "en": [
         "Empty sequence or turns only return.",
         "Returning with another heading is success.",
         "One M does not return; lowercase is invalid under the chosen contract.",
-        "Empty commands; turns; edge; ragged matrix; invalid heading."
+        "Empty commands; turns; edge; ragged matrix; invalid heading.",
+        "T alone preserves position; MTM returns; MMTM does not."
       ]
     },
     "common_mistakes": {
@@ -371,6 +373,11 @@
           "question": "ומה אם הלוח הוא טורוס?",
           "answer_direction": "עדכון שורה ועמודה נעשה מודולו הממדים; זו גרסה נפרדת.",
           "principle": "תנאי גבול הם חלק מחוזה המעברים."
+        },
+        {
+          "question": "כיצד מוסיפים T בלי עזר?",
+          "answer_direction": "מוסיפים שתיים לאינדקס הכיוון מודולו ארבע.",
+          "principle": "שמירת אינווריאנט המיקום והכיוון."
         }
       ],
       "en": [
@@ -383,6 +390,11 @@
           "question": "What if the board is a torus?",
           "answer_direction": "Update row/column modulo dimensions as a separate variant.",
           "principle": "Boundary conditions belong to the transition contract."
+        },
+        {
+          "question": "How is T added without an auxiliary sequence?",
+          "answer_direction": "Add two to the heading modulo four.",
+          "principle": "Preserve the position/heading invariant."
         }
       ]
     },
@@ -436,7 +448,7 @@
       ],
       "en": [
         "Zero or negative a is outside the cube contract.",
-        "Interior travel gives a√3; edges only give3a.",
+        "Interior travel gives a√3; edges only give 3a.",
         "Symmetric paths attain the same minimum."
       ]
     },
@@ -526,7 +538,7 @@
     },
     "interview_answer": {
       "he": "אייצר 25 זוגות אחידים משתי קריאות, אדחה את 21–24 ואחזיר שארית מודולו 7 עבור השאר. לכל תשובה שלושה זוגות; התוחלת 50/21 קריאות, עם עצירה בהסתברות 1 בלבד.",
-      "en": "Generate25 equiprobable pairs, reject 21..24 and return modulo 7 for the rest. Each answer has three pairs; expect 50/21 calls, with almost-sure rather than bounded termination."
+      "en": "Generate 25 equiprobable pairs, reject 21..24 and return modulo 7 for the rest. Each answer has three pairs; expect 50/21 calls, with almost-sure rather than bounded termination."
     },
     "source_ambiguities": {
       "he": [
@@ -581,7 +593,7 @@
       "en": [
         "77 yields one boom, not two.",
         "14 emits no output under the supplied rule.",
-        "69→70 introduces7;79→80 removes it; generalized API N=0 yields no lines."
+        "69→70 introduces 7;79→80 removes it; generalized API N=0 yields no lines."
       ]
     },
     "common_mistakes": {
@@ -598,7 +610,7 @@
     },
     "interview_answer": {
       "he": "אבדוק הופעת הספרה 7 ואפיק boom אחד רק בהתאמה; אחרת לא יהיה פלט. מיליון קטן מספיק גם לסריקה פשוטה. לשיפור החלטת הזיהוי אשמור ספרות ומונה שביעיות ואעדכן רק את הנשא; אספור גם את מחיר הפלט.",
-      "en": "Test for digit7 and emit one boom only on a match; otherwise emit nothing. A simple scan handles one million. To optimize membership keep decimal digits and a seven-count, update carried digits and include output cost."
+      "en": "Test for digit 7 and emit one boom only on a match; otherwise emit nothing. A simple scan handles one million. To optimize membership keep decimal digits and a seven-count, update carried digits and include output cost."
     },
     "source_ambiguities": {
       "he": [
@@ -623,7 +635,7 @@
       "en": [
         {
           "question": "What if only the count through N is needed, without printing each value?",
-          "answer_direction": "Use digit DP or count the complement without7; then visiting every integer is unnecessary.",
+          "answer_direction": "Use digit DP or count the complement without 7; then visiting every integer is unnecessary.",
           "principle": "Output requirements determine lower bounds."
         }
       ]
@@ -685,7 +697,7 @@
       ],
       "en": [
         "The source supplies sea and crossing observations but no island topology, inner-shore, proximity-range, fence, motion or boundary-start contract.",
-        "A hole-free island and a sensing strip known outside are explicit explicit assumptions; the conditional solution does not replace the source."
+        "A hole-free island and a sensing strip known outside are explicit assumptions; the conditional solution does not replace the source."
       ]
     },
     "solution_extensions": {

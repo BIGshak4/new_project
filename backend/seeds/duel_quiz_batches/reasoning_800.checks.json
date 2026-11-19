@@ -1,0 +1,4732 @@
+[
+  {
+    "key": "quick-sw-351-v1",
+    "task": "copy_scale",
+    "inputs": {
+      "w": 8,
+      "m": 3,
+      "c": 2
+    },
+    "options": [
+      "12",
+      "8",
+      "16/3",
+      "24"
+    ],
+    "expected": "12",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-374"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The model appears 8 × 3 cm wide. Dividing by the canvas magnification of 2 gives a physical width of 12 cm.",
+    "source_difficulty_rationale": "Equate the apparent sizes before converting back to physical units."
+  },
+  {
+    "key": "quick-sw-351-v2",
+    "task": "copy_scale",
+    "inputs": {
+      "w": 10,
+      "m": 2,
+      "c": 4
+    },
+    "options": [
+      "40",
+      "5",
+      "10",
+      "20"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-374"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The model appears 10 × 2 cm wide. Dividing by the canvas magnification of 4 gives a physical width of 5 cm.",
+    "source_difficulty_rationale": "Equate the apparent sizes before converting back to physical units."
+  },
+  {
+    "key": "quick-sw-351-v3",
+    "task": "copy_scale",
+    "inputs": {
+      "w": 7,
+      "m": 3,
+      "c": 3
+    },
+    "options": [
+      "8",
+      "6",
+      "7",
+      "21"
+    ],
+    "expected": "7",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-374"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The model appears 7 × 3 cm wide. Dividing by the canvas magnification of 3 gives a physical width of 7 cm.",
+    "source_difficulty_rationale": "Equate the apparent sizes before converting back to physical units."
+  },
+  {
+    "key": "quick-sw-351-v4",
+    "task": "copy_scale",
+    "inputs": {
+      "w": 9,
+      "m": 2,
+      "c": 3
+    },
+    "options": [
+      "9",
+      "27/2",
+      "18",
+      "6"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-374"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The model appears 9 × 2 cm wide. Dividing by the canvas magnification of 3 gives a physical width of 6 cm.",
+    "source_difficulty_rationale": "Equate the apparent sizes before converting back to physical units."
+  },
+  {
+    "key": "quick-sw-351-v5",
+    "task": "copy_scale",
+    "inputs": {
+      "w": 5,
+      "m": 3,
+      "c": 4
+    },
+    "options": [
+      "15/4",
+      "5",
+      "20/3",
+      "15"
+    ],
+    "expected": "15/4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-374"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The model appears 5 × 3 cm wide. Dividing by the canvas magnification of 4 gives a physical width of 15/4 cm.",
+    "source_difficulty_rationale": "Equate the apparent sizes before converting back to physical units."
+  },
+  {
+    "key": "quick-sw-352-v1",
+    "task": "traffic_delay",
+    "inputs": {
+      "d": 12,
+      "v": 60,
+      "t": 20
+    },
+    "options": [
+      "32",
+      "8",
+      "20",
+      "12"
+    ],
+    "expected": "8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-375"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Free-flow time in minutes is 60 × 12 / 60. Subtracting it from 20 gives a delay of 8 minutes.",
+    "source_difficulty_rationale": "Delay relative to a baseline can accumulate while the vehicle is moving."
+  },
+  {
+    "key": "quick-sw-352-v2",
+    "task": "traffic_delay",
+    "inputs": {
+      "d": 6,
+      "v": 30,
+      "t": 12
+    },
+    "options": [
+      "24",
+      "1",
+      "0",
+      "12"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-375"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Free-flow time in minutes is 60 × 6 / 30. Subtracting it from 12 gives a delay of 0 minutes.",
+    "source_difficulty_rationale": "Delay relative to a baseline can accumulate while the vehicle is moving."
+  },
+  {
+    "key": "quick-sw-352-v3",
+    "task": "traffic_delay",
+    "inputs": {
+      "d": 15,
+      "v": 90,
+      "t": 16
+    },
+    "options": [
+      "16",
+      "10",
+      "26",
+      "6"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-375"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Free-flow time in minutes is 60 × 15 / 90. Subtracting it from 16 gives a delay of 6 minutes.",
+    "source_difficulty_rationale": "Delay relative to a baseline can accumulate while the vehicle is moving."
+  },
+  {
+    "key": "quick-sw-352-v4",
+    "task": "traffic_delay",
+    "inputs": {
+      "d": 3,
+      "v": 40,
+      "t": 7
+    },
+    "options": [
+      "5/2",
+      "7",
+      "9/2",
+      "23/2"
+    ],
+    "expected": "5/2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-375"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Free-flow time in minutes is 60 × 3 / 40. Subtracting it from 7 gives a delay of 5/2 minutes.",
+    "source_difficulty_rationale": "Delay relative to a baseline can accumulate while the vehicle is moving."
+  },
+  {
+    "key": "quick-sw-352-v5",
+    "task": "traffic_delay",
+    "inputs": {
+      "d": 25,
+      "v": 75,
+      "t": 50
+    },
+    "options": [
+      "70",
+      "30",
+      "50",
+      "20"
+    ],
+    "expected": "30",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-375"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Free-flow time in minutes is 60 × 25 / 75. Subtracting it from 50 gives a delay of 30 minutes.",
+    "source_difficulty_rationale": "Delay relative to a baseline can accumulate while the vehicle is moving."
+  },
+  {
+    "key": "quick-sw-353-v1",
+    "task": "hidden_share",
+    "inputs": {
+      "a": 4,
+      "b": 2,
+      "goal": 1
+    },
+    "options": [
+      "2/3",
+      "1/2",
+      "1/4",
+      "1/6"
+    ],
+    "expected": "1/4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-376"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Taking fraction f of each token collects 4 × f units of A. Dividing the target 1 by 4 gives 1/4.",
+    "source_difficulty_rationale": "Taking the same fraction of every item preserves the composition."
+  },
+  {
+    "key": "quick-sw-353-v2",
+    "task": "hidden_share",
+    "inputs": {
+      "a": 6,
+      "b": 4,
+      "goal": 2
+    },
+    "options": [
+      "1/5",
+      "3/5",
+      "1/4",
+      "1/3"
+    ],
+    "expected": "1/3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-376"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Taking fraction f of each token collects 6 × f units of A. Dividing the target 2 by 6 gives 1/3.",
+    "source_difficulty_rationale": "Taking the same fraction of every item preserves the composition."
+  },
+  {
+    "key": "quick-sw-353-v3",
+    "task": "hidden_share",
+    "inputs": {
+      "a": 3,
+      "b": 6,
+      "goal": 2
+    },
+    "options": [
+      "2/3",
+      "2/9",
+      "1/3",
+      "1/6"
+    ],
+    "expected": "2/3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-376"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Taking fraction f of each token collects 3 × f units of A. Dividing the target 2 by 3 gives 2/3.",
+    "source_difficulty_rationale": "Taking the same fraction of every item preserves the composition."
+  },
+  {
+    "key": "quick-sw-353-v4",
+    "task": "hidden_share",
+    "inputs": {
+      "a": 5,
+      "b": 3,
+      "goal": 4
+    },
+    "options": [
+      "1/3",
+      "4/5",
+      "1/2",
+      "5/8"
+    ],
+    "expected": "4/5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-376"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Taking fraction f of each token collects 5 × f units of A. Dividing the target 4 by 5 gives 4/5.",
+    "source_difficulty_rationale": "Taking the same fraction of every item preserves the composition."
+  },
+  {
+    "key": "quick-sw-353-v5",
+    "task": "hidden_share",
+    "inputs": {
+      "a": 4,
+      "b": 5,
+      "goal": 0
+    },
+    "options": [
+      "1/5",
+      "1",
+      "0",
+      "4/9"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-376"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Taking fraction f of each token collects 4 × f units of A. Dividing the target 0 by 4 gives 0.",
+    "source_difficulty_rationale": "Taking the same fraction of every item preserves the composition."
+  },
+  {
+    "key": "quick-sw-354-v1",
+    "task": "cooldown_return",
+    "inputs": {
+      "n": 8,
+      "k": 3
+    },
+    "options": [
+      "0",
+      "1/8",
+      "3/8",
+      "1/5"
+    ],
+    "expected": "1/5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "X has left the exclusion window. There are 8 minus 3 eligible labels, exactly one of which is X. The probability is 1/5.",
+    "source_difficulty_rationale": "The draw probability depends on the currently eligible labels."
+  },
+  {
+    "key": "quick-sw-354-v2",
+    "task": "cooldown_return",
+    "inputs": {
+      "n": 5,
+      "k": 4
+    },
+    "options": [
+      "1",
+      "0",
+      "1/5",
+      "4/5"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "X has left the exclusion window. There are 5 minus 4 eligible labels, exactly one of which is X. The probability is 1.",
+    "source_difficulty_rationale": "The draw probability depends on the currently eligible labels."
+  },
+  {
+    "key": "quick-sw-354-v3",
+    "task": "cooldown_return",
+    "inputs": {
+      "n": 9,
+      "k": 1
+    },
+    "options": [
+      "1",
+      "1/8",
+      "0",
+      "1/9"
+    ],
+    "expected": "1/8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "X has left the exclusion window. There are 9 minus 1 eligible labels, exactly one of which is X. The probability is 1/8.",
+    "source_difficulty_rationale": "The draw probability depends on the currently eligible labels."
+  },
+  {
+    "key": "quick-sw-354-v4",
+    "task": "cooldown_return",
+    "inputs": {
+      "n": 10,
+      "k": 5
+    },
+    "options": [
+      "1/10",
+      "1/2",
+      "1/5",
+      "0"
+    ],
+    "expected": "1/5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "X has left the exclusion window. There are 10 minus 5 eligible labels, exactly one of which is X. The probability is 1/5.",
+    "source_difficulty_rationale": "The draw probability depends on the currently eligible labels."
+  },
+  {
+    "key": "quick-sw-354-v5",
+    "task": "cooldown_return",
+    "inputs": {
+      "n": 7,
+      "k": 2
+    },
+    "options": [
+      "0",
+      "1/7",
+      "2/7",
+      "1/5"
+    ],
+    "expected": "1/5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "X has left the exclusion window. There are 7 minus 2 eligible labels, exactly one of which is X. The probability is 1/5.",
+    "source_difficulty_rationale": "The draw probability depends on the currently eligible labels."
+  },
+  {
+    "key": "quick-sw-355-v1",
+    "task": "cooldown_sequences",
+    "inputs": {
+      "n": 4,
+      "k": 2,
+      "t": 4
+    },
+    "options": [
+      "48",
+      "256",
+      "16",
+      "108"
+    ],
+    "expected": "48",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The first step allows 4 choices. After j steps, min(j, 2) choices are excluded. Multiplying the choices across 4 steps gives 48 sequences.",
+    "source_difficulty_rationale": "The number of choices changes while the exclusion window fills."
+  },
+  {
+    "key": "quick-sw-355-v2",
+    "task": "cooldown_sequences",
+    "inputs": {
+      "n": 3,
+      "k": 1,
+      "t": 4
+    },
+    "options": [
+      "6",
+      "24",
+      "81",
+      "16"
+    ],
+    "expected": "24",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The first step allows 3 choices. After j steps, min(j, 1) choices are excluded. Multiplying the choices across 4 steps gives 24 sequences.",
+    "source_difficulty_rationale": "The number of choices changes while the exclusion window fills."
+  },
+  {
+    "key": "quick-sw-355-v3",
+    "task": "cooldown_sequences",
+    "inputs": {
+      "n": 5,
+      "k": 3,
+      "t": 2
+    },
+    "options": [
+      "4",
+      "120",
+      "20",
+      "25"
+    ],
+    "expected": "20",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The first step allows 5 choices. After j steps, min(j, 3) choices are excluded. Multiplying the choices across 2 steps gives 20 sequences.",
+    "source_difficulty_rationale": "The number of choices changes while the exclusion window fills."
+  },
+  {
+    "key": "quick-sw-355-v4",
+    "task": "cooldown_sequences",
+    "inputs": {
+      "n": 3,
+      "k": 2,
+      "t": 5
+    },
+    "options": [
+      "243",
+      "1",
+      "48",
+      "6"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The first step allows 3 choices. After j steps, min(j, 2) choices are excluded. Multiplying the choices across 5 steps gives 6 sequences.",
+    "source_difficulty_rationale": "The number of choices changes while the exclusion window fills."
+  },
+  {
+    "key": "quick-sw-355-v5",
+    "task": "cooldown_sequences",
+    "inputs": {
+      "n": 4,
+      "k": 2,
+      "t": 1
+    },
+    "options": [
+      "4",
+      "2",
+      "24",
+      "5"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The first step allows 4 choices. After j steps, min(j, 2) choices are excluded. Multiplying the choices across 1 steps gives 4 sequences.",
+    "source_difficulty_rationale": "The number of choices changes while the exclusion window fills."
+  },
+  {
+    "key": "quick-sw-356-v1",
+    "task": "cooldown_cycle",
+    "inputs": {
+      "n": 4,
+      "k": 3,
+      "t": 6
+    },
+    "options": [
+      "3",
+      "2",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The window blocks 3 of the 4 cards. Each turn releases the next card in the original order, so the sequence cycles. Pick 6 gives 2.",
+    "source_difficulty_rationale": "Once only one outcome is legal, the continuation is determined even after a random start."
+  },
+  {
+    "key": "quick-sw-356-v2",
+    "task": "cooldown_cycle",
+    "inputs": {
+      "n": 5,
+      "k": 4,
+      "t": 10
+    },
+    "options": [
+      "4",
+      "1",
+      "5",
+      "3"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The window blocks 4 of the 5 cards. Each turn releases the next card in the original order, so the sequence cycles. Pick 10 gives 5.",
+    "source_difficulty_rationale": "Once only one outcome is legal, the continuation is determined even after a random start."
+  },
+  {
+    "key": "quick-sw-356-v3",
+    "task": "cooldown_cycle",
+    "inputs": {
+      "n": 5,
+      "k": 4,
+      "t": 7
+    },
+    "options": [
+      "4",
+      "5",
+      "1",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The window blocks 4 of the 5 cards. Each turn releases the next card in the original order, so the sequence cycles. Pick 7 gives 2.",
+    "source_difficulty_rationale": "Once only one outcome is legal, the continuation is determined even after a random start."
+  },
+  {
+    "key": "quick-sw-356-v4",
+    "task": "cooldown_cycle",
+    "inputs": {
+      "n": 6,
+      "k": 5,
+      "t": 14
+    },
+    "options": [
+      "2",
+      "5",
+      "6",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The window blocks 5 of the 6 cards. Each turn releases the next card in the original order, so the sequence cycles. Pick 14 gives 2.",
+    "source_difficulty_rationale": "Once only one outcome is legal, the continuation is determined even after a random start."
+  },
+  {
+    "key": "quick-sw-356-v5",
+    "task": "cooldown_cycle",
+    "inputs": {
+      "n": 4,
+      "k": 3,
+      "t": 9
+    },
+    "options": [
+      "2",
+      "1",
+      "4",
+      "3"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The window blocks 3 of the 4 cards. Each turn releases the next card in the original order, so the sequence cycles. Pick 9 gives 1.",
+    "source_difficulty_rationale": "Once only one outcome is legal, the continuation is determined even after a random start."
+  },
+  {
+    "key": "quick-sw-357-v1",
+    "task": "service_sites",
+    "inputs": {
+      "d": 1000,
+      "p": 4,
+      "r": 8,
+      "h": 10
+    },
+    "options": [
+      "13",
+      "25",
+      "4",
+      "3"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Daily capacity per station is 4 × 8 × 10. Divide 1000 by that capacity and round up. This requires 4 stations.",
+    "source_difficulty_rationale": "Express demand and capacity over the same time interval."
+  },
+  {
+    "key": "quick-sw-357-v2",
+    "task": "service_sites",
+    "inputs": {
+      "d": 960,
+      "p": 3,
+      "r": 8,
+      "h": 10
+    },
+    "options": [
+      "12",
+      "32",
+      "1",
+      "4"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Daily capacity per station is 3 × 8 × 10. Divide 960 by that capacity and round up. This requires 4 stations.",
+    "source_difficulty_rationale": "Express demand and capacity over the same time interval."
+  },
+  {
+    "key": "quick-sw-357-v3",
+    "task": "service_sites",
+    "inputs": {
+      "d": 481,
+      "p": 4,
+      "r": 10,
+      "h": 12
+    },
+    "options": [
+      "2",
+      "1",
+      "5",
+      "11"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Daily capacity per station is 4 × 10 × 12. Divide 481 by that capacity and round up. This requires 2 stations.",
+    "source_difficulty_rationale": "Express demand and capacity over the same time interval."
+  },
+  {
+    "key": "quick-sw-357-v4",
+    "task": "service_sites",
+    "inputs": {
+      "d": 200,
+      "p": 2,
+      "r": 6,
+      "h": 10
+    },
+    "options": [
+      "10",
+      "2",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Daily capacity per station is 2 × 6 × 10. Divide 200 by that capacity and round up. This requires 2 stations.",
+    "source_difficulty_rationale": "Express demand and capacity over the same time interval."
+  },
+  {
+    "key": "quick-sw-357-v5",
+    "task": "service_sites",
+    "inputs": {
+      "d": 1199,
+      "p": 5,
+      "r": 8,
+      "h": 10
+    },
+    "options": [
+      "15",
+      "24",
+      "3",
+      "2"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Daily capacity per station is 5 × 8 × 10. Divide 1199 by that capacity and round up. This requires 3 stations.",
+    "source_difficulty_rationale": "Express demand and capacity over the same time interval."
+  },
+  {
+    "key": "quick-sw-358-v1",
+    "task": "station_bounds",
+    "inputs": {
+      "lo": 400,
+      "hi": 600,
+      "a": 80,
+      "b": 120
+    },
+    "options": [
+      "4",
+      "5",
+      "7",
+      "8"
+    ],
+    "expected": "8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Pair maximum demand 600 with minimum capacity 80. Divide and round up to get 8 stations.",
+    "source_difficulty_rationale": "A guaranteed capacity bound must account for the adverse extremes together."
+  },
+  {
+    "key": "quick-sw-358-v2",
+    "task": "station_bounds",
+    "inputs": {
+      "lo": 750,
+      "hi": 900,
+      "a": 100,
+      "b": 150
+    },
+    "options": [
+      "9",
+      "5",
+      "6",
+      "8"
+    ],
+    "expected": "9",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Pair maximum demand 900 with minimum capacity 100. Divide and round up to get 9 stations.",
+    "source_difficulty_rationale": "A guaranteed capacity bound must account for the adverse extremes together."
+  },
+  {
+    "key": "quick-sw-358-v3",
+    "task": "station_bounds",
+    "inputs": {
+      "lo": 64,
+      "hi": 65,
+      "a": 16,
+      "b": 32
+    },
+    "options": [
+      "4",
+      "5",
+      "2",
+      "3"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Pair maximum demand 65 with minimum capacity 16. Divide and round up to get 5 stations.",
+    "source_difficulty_rationale": "A guaranteed capacity bound must account for the adverse extremes together."
+  },
+  {
+    "key": "quick-sw-358-v4",
+    "task": "station_bounds",
+    "inputs": {
+      "lo": 90,
+      "hi": 120,
+      "a": 40,
+      "b": 60
+    },
+    "options": [
+      "4",
+      "5",
+      "3",
+      "2"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Pair maximum demand 120 with minimum capacity 40. Divide and round up to get 3 stations.",
+    "source_difficulty_rationale": "A guaranteed capacity bound must account for the adverse extremes together."
+  },
+  {
+    "key": "quick-sw-358-v5",
+    "task": "station_bounds",
+    "inputs": {
+      "lo": 100,
+      "hi": 100,
+      "a": 24,
+      "b": 25
+    },
+    "options": [
+      "4",
+      "6",
+      "7",
+      "5"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Pair maximum demand 100 with minimum capacity 24. Divide and round up to get 5 stations.",
+    "source_difficulty_rationale": "A guaranteed capacity bound must account for the adverse extremes together."
+  },
+  {
+    "key": "quick-sw-359-v1",
+    "task": "weighing_label",
+    "inputs": {
+      "delta": 2,
+      "normal": 150,
+      "actual": 158
+    },
+    "options": [
+      "4",
+      "8",
+      "2",
+      "5"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The entire difference between 158 and 150 comes from the unusual bag. Dividing by the signed per-coin difference 2 gives bag 4.",
+    "source_difficulty_rationale": "Distinct sample counts turn the mass difference into a bag signature."
+  },
+  {
+    "key": "quick-sw-359-v2",
+    "task": "weighing_label",
+    "inputs": {
+      "delta": -2,
+      "normal": 300,
+      "actual": 294
+    },
+    "options": [
+      "4",
+      "3",
+      "6",
+      "2"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The entire difference between 294 and 300 comes from the unusual bag. Dividing by the signed per-coin difference -2 gives bag 3.",
+    "source_difficulty_rationale": "Distinct sample counts turn the mass difference into a bag signature."
+  },
+  {
+    "key": "quick-sw-359-v3",
+    "task": "weighing_label",
+    "inputs": {
+      "delta": 3,
+      "normal": 450,
+      "actual": 453
+    },
+    "options": [
+      "2",
+      "0",
+      "1",
+      "3"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The entire difference between 453 and 450 comes from the unusual bag. Dividing by the signed per-coin difference 3 gives bag 1.",
+    "source_difficulty_rationale": "Distinct sample counts turn the mass difference into a bag signature."
+  },
+  {
+    "key": "quick-sw-359-v4",
+    "task": "weighing_label",
+    "inputs": {
+      "delta": -1,
+      "normal": 180,
+      "actual": 174
+    },
+    "options": [
+      "1",
+      "7",
+      "0",
+      "6"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The entire difference between 174 and 180 comes from the unusual bag. Dividing by the signed per-coin difference -1 gives bag 6.",
+    "source_difficulty_rationale": "Distinct sample counts turn the mass difference into a bag signature."
+  },
+  {
+    "key": "quick-sw-359-v5",
+    "task": "weighing_label",
+    "inputs": {
+      "delta": 4,
+      "normal": 240,
+      "actual": 260
+    },
+    "options": [
+      "5",
+      "20",
+      "4",
+      "6"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The entire difference between 260 and 240 comes from the unusual bag. Dividing by the signed per-coin difference 4 gives bag 5.",
+    "source_difficulty_rationale": "Distinct sample counts turn the mass difference into a bag signature."
+  },
+  {
+    "key": "quick-sw-360-v1",
+    "task": "zero_sample",
+    "inputs": {
+      "n": 5
+    },
+    "options": [
+      "4",
+      "10",
+      "15",
+      "5"
+    ],
+    "expected": "10",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Two bags with the same sample count would produce the same deviation. Use 5 distinct counts starting at zero. Their minimum sum is 10.",
+    "source_difficulty_rationale": "A zero deviation carries information when an unusual bag is guaranteed."
+  },
+  {
+    "key": "quick-sw-360-v2",
+    "task": "zero_sample",
+    "inputs": {
+      "n": 2
+    },
+    "options": [
+      "2",
+      "4",
+      "1",
+      "3"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Two bags with the same sample count would produce the same deviation. Use 2 distinct counts starting at zero. Their minimum sum is 1.",
+    "source_difficulty_rationale": "A zero deviation carries information when an unusual bag is guaranteed."
+  },
+  {
+    "key": "quick-sw-360-v3",
+    "task": "zero_sample",
+    "inputs": {
+      "n": 8
+    },
+    "options": [
+      "36",
+      "8",
+      "7",
+      "28"
+    ],
+    "expected": "28",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Two bags with the same sample count would produce the same deviation. Use 8 distinct counts starting at zero. Their minimum sum is 28.",
+    "source_difficulty_rationale": "A zero deviation carries information when an unusual bag is guaranteed."
+  },
+  {
+    "key": "quick-sw-360-v4",
+    "task": "zero_sample",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      "15",
+      "21",
+      "6",
+      "5"
+    ],
+    "expected": "15",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Two bags with the same sample count would produce the same deviation. Use 6 distinct counts starting at zero. Their minimum sum is 15.",
+    "source_difficulty_rationale": "A zero deviation carries information when an unusual bag is guaranteed."
+  },
+  {
+    "key": "quick-sw-360-v5",
+    "task": "zero_sample",
+    "inputs": {
+      "n": 4
+    },
+    "options": [
+      "3",
+      "6",
+      "10",
+      "4"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Two bags with the same sample count would produce the same deviation. Use 4 distinct counts starting at zero. Their minimum sum is 6.",
+    "source_difficulty_rationale": "A zero deviation carries information when an unusual bag is guaranteed."
+  },
+  {
+    "key": "quick-sw-361-v1",
+    "task": "opening_byes",
+    "inputs": {
+      "n": 13
+    },
+    "options": [
+      "4",
+      "1",
+      "3",
+      "6"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Double the bracket size until it fits 13. Each unfilled slot gives one automatic advance, for 3 byes.",
+    "source_difficulty_rationale": "An empty slot advances one entrant without eliminating anyone."
+  },
+  {
+    "key": "quick-sw-361-v2",
+    "task": "opening_byes",
+    "inputs": {
+      "n": 16
+    },
+    "options": [
+      "8",
+      "4",
+      "15",
+      "0"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Double the bracket size until it fits 16. Each unfilled slot gives one automatic advance, for 0 byes.",
+    "source_difficulty_rationale": "An empty slot advances one entrant without eliminating anyone."
+  },
+  {
+    "key": "quick-sw-361-v3",
+    "task": "opening_byes",
+    "inputs": {
+      "n": 17
+    },
+    "options": [
+      "15",
+      "8",
+      "5",
+      "1"
+    ],
+    "expected": "15",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Double the bracket size until it fits 17. Each unfilled slot gives one automatic advance, for 15 byes.",
+    "source_difficulty_rationale": "An empty slot advances one entrant without eliminating anyone."
+  },
+  {
+    "key": "quick-sw-361-v4",
+    "task": "opening_byes",
+    "inputs": {
+      "n": 6
+    },
+    "options": [
+      "5",
+      "2",
+      "3",
+      "0"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Double the bracket size until it fits 6. Each unfilled slot gives one automatic advance, for 2 byes.",
+    "source_difficulty_rationale": "An empty slot advances one entrant without eliminating anyone."
+  },
+  {
+    "key": "quick-sw-361-v5",
+    "task": "opening_byes",
+    "inputs": {
+      "n": 31
+    },
+    "options": [
+      "5",
+      "30",
+      "1",
+      "15"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "Double the bracket size until it fits 31. Each unfilled slot gives one automatic advance, for 1 byes.",
+    "source_difficulty_rationale": "An empty slot advances one entrant without eliminating anyone."
+  },
+  {
+    "key": "quick-sw-362-v1",
+    "task": "survivor_rounds",
+    "inputs": {
+      "n": 13,
+      "r": 2
+    },
+    "options": [
+      "3",
+      "9",
+      "6",
+      "4"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "One survives from each pair, as does a possible unpaired entrant. Halving 13 with upward rounding for 2 rounds leaves 4.",
+    "source_difficulty_rationale": "An odd field rounds the survivor count upward."
+  },
+  {
+    "key": "quick-sw-362-v2",
+    "task": "survivor_rounds",
+    "inputs": {
+      "n": 17,
+      "r": 4
+    },
+    "options": [
+      "2",
+      "1",
+      "8",
+      "13"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "One survives from each pair, as does a possible unpaired entrant. Halving 17 with upward rounding for 4 rounds leaves 2.",
+    "source_difficulty_rationale": "An odd field rounds the survivor count upward."
+  },
+  {
+    "key": "quick-sw-362-v3",
+    "task": "survivor_rounds",
+    "inputs": {
+      "n": 12,
+      "r": 2
+    },
+    "options": [
+      "10",
+      "3",
+      "8",
+      "6"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "One survives from each pair, as does a possible unpaired entrant. Halving 12 with upward rounding for 2 rounds leaves 3.",
+    "source_difficulty_rationale": "An odd field rounds the survivor count upward."
+  },
+  {
+    "key": "quick-sw-362-v4",
+    "task": "survivor_rounds",
+    "inputs": {
+      "n": 9,
+      "r": 1
+    },
+    "options": [
+      "7",
+      "8",
+      "5",
+      "4"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "One survives from each pair, as does a possible unpaired entrant. Halving 9 with upward rounding for 1 rounds leaves 5.",
+    "source_difficulty_rationale": "An odd field rounds the survivor count upward."
+  },
+  {
+    "key": "quick-sw-362-v5",
+    "task": "survivor_rounds",
+    "inputs": {
+      "n": 31,
+      "r": 3
+    },
+    "options": [
+      "3",
+      "23",
+      "15",
+      "4"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "One survives from each pair, as does a possible unpaired entrant. Halving 31 with upward rounding for 3 rounds leaves 4.",
+    "source_difficulty_rationale": "An odd field rounds the survivor count upward."
+  },
+  {
+    "key": "quick-sw-363-v1",
+    "task": "factorial_jump",
+    "inputs": {
+      "prev": 24,
+      "n": 25
+    },
+    "options": [
+      "2",
+      "5",
+      "1",
+      "0"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The new factor is 25. Factors of 2 are already plentiful for forming pairs that make 10. Count how many times 5 divides the new factor. The increase is 2.",
+    "source_difficulty_rationale": "One new factor can add several zeros when it contains several factors of 5."
+  },
+  {
+    "key": "quick-sw-363-v2",
+    "task": "factorial_jump",
+    "inputs": {
+      "prev": 124,
+      "n": 125
+    },
+    "options": [
+      "0",
+      "3",
+      "25",
+      "1"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The new factor is 125. Factors of 2 are already plentiful for forming pairs that make 10. Count how many times 5 divides the new factor. The increase is 3.",
+    "source_difficulty_rationale": "One new factor can add several zeros when it contains several factors of 5."
+  },
+  {
+    "key": "quick-sw-363-v3",
+    "task": "factorial_jump",
+    "inputs": {
+      "prev": 29,
+      "n": 30
+    },
+    "options": [
+      "0",
+      "3",
+      "1",
+      "6"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The new factor is 30. Factors of 2 are already plentiful for forming pairs that make 10. Count how many times 5 divides the new factor. The increase is 1.",
+    "source_difficulty_rationale": "One new factor can add several zeros when it contains several factors of 5."
+  },
+  {
+    "key": "quick-sw-363-v4",
+    "task": "factorial_jump",
+    "inputs": {
+      "prev": 48,
+      "n": 49
+    },
+    "options": [
+      "9",
+      "1",
+      "4",
+      "0"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The new factor is 49. Factors of 2 are already plentiful for forming pairs that make 10. Count how many times 5 divides the new factor. The increase is 0.",
+    "source_difficulty_rationale": "One new factor can add several zeros when it contains several factors of 5."
+  },
+  {
+    "key": "quick-sw-363-v5",
+    "task": "factorial_jump",
+    "inputs": {
+      "prev": 49,
+      "n": 50
+    },
+    "options": [
+      "2",
+      "10",
+      "1",
+      "0"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The new factor is 50. Factors of 2 are already plentiful for forming pairs that make 10. Count how many times 5 divides the new factor. The increase is 2.",
+    "source_difficulty_rationale": "One new factor can add several zeros when it contains several factors of 5."
+  },
+  {
+    "key": "quick-sw-364-v1",
+    "task": "factorial_radix",
+    "inputs": {
+      "n": 8,
+      "base": 12
+    },
+    "options": [
+      "1",
+      "2",
+      "0",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Each trailing zero needs one complete factor of 12. Factor the base into primes and count how many complete groups are available in 8!. There are 2 groups.",
+    "source_difficulty_rationale": "The limiting prime factor determines the number of trailing zeros."
+  },
+  {
+    "key": "quick-sw-364-v2",
+    "task": "factorial_radix",
+    "inputs": {
+      "n": 10,
+      "base": 8
+    },
+    "options": [
+      "5",
+      "8",
+      "2",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Each trailing zero needs one complete factor of 8. Factor the base into primes and count how many complete groups are available in 10!. There are 2 groups.",
+    "source_difficulty_rationale": "The limiting prime factor determines the number of trailing zeros."
+  },
+  {
+    "key": "quick-sw-364-v3",
+    "task": "factorial_radix",
+    "inputs": {
+      "n": 7,
+      "base": 9
+    },
+    "options": [
+      "0",
+      "3",
+      "4",
+      "1"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Each trailing zero needs one complete factor of 9. Factor the base into primes and count how many complete groups are available in 7!. There are 1 groups.",
+    "source_difficulty_rationale": "The limiting prime factor determines the number of trailing zeros."
+  },
+  {
+    "key": "quick-sw-364-v4",
+    "task": "factorial_radix",
+    "inputs": {
+      "n": 11,
+      "base": 6
+    },
+    "options": [
+      "4",
+      "1",
+      "5",
+      "2"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Each trailing zero needs one complete factor of 6. Factor the base into primes and count how many complete groups are available in 11!. There are 4 groups.",
+    "source_difficulty_rationale": "The limiting prime factor determines the number of trailing zeros."
+  },
+  {
+    "key": "quick-sw-364-v5",
+    "task": "factorial_radix",
+    "inputs": {
+      "n": 5,
+      "base": 16
+    },
+    "options": [
+      "3",
+      "0",
+      "2",
+      "1"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Each trailing zero needs one complete factor of 16. Factor the base into primes and count how many complete groups are available in 5!. There are 0 groups.",
+    "source_difficulty_rationale": "The limiting prime factor determines the number of trailing zeros."
+  },
+  {
+    "key": "quick-sw-365-v1",
+    "task": "power_ratio",
+    "inputs": {
+      "a": 8,
+      "i": 5,
+      "b": 4,
+      "j": 7
+    },
+    "options": [
+      "5/7",
+      "1",
+      "2",
+      "1/2"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-316"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Rewrite both terms as powers of 2. Dividing subtracts their exponents after conversion. The resulting ratio is 2.",
+    "source_difficulty_rationale": "Convert to a common base before combining exponents."
+  },
+  {
+    "key": "quick-sw-365-v2",
+    "task": "power_ratio",
+    "inputs": {
+      "a": 4,
+      "i": 4,
+      "b": 16,
+      "j": 2
+    },
+    "options": [
+      "1/4",
+      "2",
+      "0",
+      "1"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-316"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Rewrite both terms as powers of 2. Dividing subtracts their exponents after conversion. The resulting ratio is 1.",
+    "source_difficulty_rationale": "Convert to a common base before combining exponents."
+  },
+  {
+    "key": "quick-sw-365-v3",
+    "task": "power_ratio",
+    "inputs": {
+      "a": 2,
+      "i": 6,
+      "b": 4,
+      "j": 4
+    },
+    "options": [
+      "1/4",
+      "4",
+      "1/2",
+      "3/2"
+    ],
+    "expected": "1/4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-316"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Rewrite both terms as powers of 2. Dividing subtracts their exponents after conversion. The resulting ratio is 1/4.",
+    "source_difficulty_rationale": "Convert to a common base before combining exponents."
+  },
+  {
+    "key": "quick-sw-365-v4",
+    "task": "power_ratio",
+    "inputs": {
+      "a": 16,
+      "i": 3,
+      "b": 8,
+      "j": 3
+    },
+    "options": [
+      "1",
+      "8",
+      "1/8",
+      "2"
+    ],
+    "expected": "8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-316"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Rewrite both terms as powers of 2. Dividing subtracts their exponents after conversion. The resulting ratio is 8.",
+    "source_difficulty_rationale": "Convert to a common base before combining exponents."
+  },
+  {
+    "key": "quick-sw-365-v5",
+    "task": "power_ratio",
+    "inputs": {
+      "a": 4,
+      "i": 6,
+      "b": 8,
+      "j": 5
+    },
+    "options": [
+      "1/2",
+      "6/5",
+      "1/8",
+      "8"
+    ],
+    "expected": "1/8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-316"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Rewrite both terms as powers of 2. Dividing subtracts their exponents after conversion. The resulting ratio is 1/8.",
+    "source_difficulty_rationale": "Convert to a common base before combining exponents."
+  },
+  {
+    "key": "quick-sw-366-v1",
+    "task": "lockstep_coverage",
+    "inputs": {
+      "gap": 3,
+      "s": 5
+    },
+    "options": [
+      "12",
+      "10",
+      "6",
+      "9"
+    ],
+    "expected": "9",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each robot visits 5 + 1 sites. Take the union of their two intervals, counting any overlap once. This gives 9 sites.",
+    "source_difficulty_rationale": "Lockstep motion preserves separation, but visited paths can still overlap."
+  },
+  {
+    "key": "quick-sw-366-v2",
+    "task": "lockstep_coverage",
+    "inputs": {
+      "gap": 5,
+      "s": 2
+    },
+    "options": [
+      "6",
+      "4",
+      "8",
+      "3"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each robot visits 2 + 1 sites. Take the union of their two intervals, counting any overlap once. This gives 6 sites.",
+    "source_difficulty_rationale": "Lockstep motion preserves separation, but visited paths can still overlap."
+  },
+  {
+    "key": "quick-sw-366-v3",
+    "task": "lockstep_coverage",
+    "inputs": {
+      "gap": 1,
+      "s": 0
+    },
+    "options": [
+      "3",
+      "2",
+      "0",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each robot visits 0 + 1 sites. Take the union of their two intervals, counting any overlap once. This gives 2 sites.",
+    "source_difficulty_rationale": "Lockstep motion preserves separation, but visited paths can still overlap."
+  },
+  {
+    "key": "quick-sw-366-v4",
+    "task": "lockstep_coverage",
+    "inputs": {
+      "gap": 4,
+      "s": 3
+    },
+    "options": [
+      "4",
+      "9",
+      "8",
+      "6"
+    ],
+    "expected": "8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each robot visits 3 + 1 sites. Take the union of their two intervals, counting any overlap once. This gives 8 sites.",
+    "source_difficulty_rationale": "Lockstep motion preserves separation, but visited paths can still overlap."
+  },
+  {
+    "key": "quick-sw-366-v5",
+    "task": "lockstep_coverage",
+    "inputs": {
+      "gap": 2,
+      "s": 6
+    },
+    "options": [
+      "14",
+      "12",
+      "7",
+      "9"
+    ],
+    "expected": "9",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each robot visits 6 + 1 sites. Take the union of their two intervals, counting any overlap once. This gives 9 sites.",
+    "source_difficulty_rationale": "Lockstep motion preserves separation, but visited paths can still overlap."
+  },
+  {
+    "key": "quick-sw-367-v1",
+    "task": "excursion_cost",
+    "inputs": {
+      "legs": [
+        1,
+        2,
+        4
+      ],
+      "last": 5
+    },
+    "options": [
+      "19",
+      "12",
+      "24",
+      "5"
+    ],
+    "expected": "19",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each excursion in [1, 2, 4] includes the return trip. Only the last 5 steps are paid once. Total travel is 19.",
+    "source_difficulty_rationale": "Displacement from the start and total distance traveled are different quantities."
+  },
+  {
+    "key": "quick-sw-367-v2",
+    "task": "excursion_cost",
+    "inputs": {
+      "legs": [
+        1
+      ],
+      "last": 2
+    },
+    "options": [
+      "2",
+      "4",
+      "3",
+      "6"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each excursion in [1] includes the return trip. Only the last 2 steps are paid once. Total travel is 4.",
+    "source_difficulty_rationale": "Displacement from the start and total distance traveled are different quantities."
+  },
+  {
+    "key": "quick-sw-367-v3",
+    "task": "excursion_cost",
+    "inputs": {
+      "legs": [],
+      "last": 1
+    },
+    "options": [
+      "0",
+      "3",
+      "1",
+      "2"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each excursion in [] includes the return trip. Only the last 1 steps are paid once. Total travel is 1.",
+    "source_difficulty_rationale": "Displacement from the start and total distance traveled are different quantities."
+  },
+  {
+    "key": "quick-sw-367-v4",
+    "task": "excursion_cost",
+    "inputs": {
+      "legs": [
+        2,
+        4
+      ],
+      "last": 7
+    },
+    "options": [
+      "13",
+      "26",
+      "7",
+      "19"
+    ],
+    "expected": "19",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each excursion in [2, 4] includes the return trip. Only the last 7 steps are paid once. Total travel is 19.",
+    "source_difficulty_rationale": "Displacement from the start and total distance traveled are different quantities."
+  },
+  {
+    "key": "quick-sw-367-v5",
+    "task": "excursion_cost",
+    "inputs": {
+      "legs": [
+        1,
+        3
+      ],
+      "last": 4
+    },
+    "options": [
+      "12",
+      "8",
+      "16",
+      "4"
+    ],
+    "expected": "12",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Each excursion in [1, 3] includes the return trip. Only the last 4 steps are paid once. Total travel is 12.",
+    "source_difficulty_rationale": "Displacement from the start and total distance traveled are different quantities."
+  },
+  {
+    "key": "quick-sw-368-v1",
+    "task": "clock_interval",
+    "inputs": {
+      "start": "11:11:08",
+      "end": "11:11:15"
+    },
+    "options": [
+      "7",
+      "6",
+      "5",
+      "8"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Check each second in the inclusive interval, preserving leading zeros and ignoring colons. Exactly 6 displays qualify.",
+    "source_difficulty_rationale": "Repeated occurrences of a digit still count as one distinct digit."
+  },
+  {
+    "key": "quick-sw-368-v2",
+    "task": "clock_interval",
+    "inputs": {
+      "start": "12:21:19",
+      "end": "12:21:24"
+    },
+    "options": [
+      "5",
+      "4",
+      "2",
+      "6"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Check each second in the inclusive interval, preserving leading zeros and ignoring colons. Exactly 2 displays qualify.",
+    "source_difficulty_rationale": "Repeated occurrences of a digit still count as one distinct digit."
+  },
+  {
+    "key": "quick-sw-368-v3",
+    "task": "clock_interval",
+    "inputs": {
+      "start": "00:00:00",
+      "end": "00:00:02"
+    },
+    "options": [
+      "2",
+      "0",
+      "4",
+      "3"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Check each second in the inclusive interval, preserving leading zeros and ignoring colons. Exactly 3 displays qualify.",
+    "source_difficulty_rationale": "Repeated occurrences of a digit still count as one distinct digit."
+  },
+  {
+    "key": "quick-sw-368-v4",
+    "task": "clock_interval",
+    "inputs": {
+      "start": "08:59:59",
+      "end": "09:00:01"
+    },
+    "options": [
+      "1",
+      "3",
+      "2",
+      "0"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Check each second in the inclusive interval, preserving leading zeros and ignoring colons. Exactly 1 displays qualify.",
+    "source_difficulty_rationale": "Repeated occurrences of a digit still count as one distinct digit."
+  },
+  {
+    "key": "quick-sw-368-v5",
+    "task": "clock_interval",
+    "inputs": {
+      "start": "23:33:20",
+      "end": "23:33:23"
+    },
+    "options": [
+      "1",
+      "2",
+      "4",
+      "3"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Check each second in the inclusive interval, preserving leading zeros and ignoring colons. Exactly 2 displays qualify.",
+    "source_difficulty_rationale": "Repeated occurrences of a digit still count as one distinct digit."
+  },
+  {
+    "key": "quick-sw-369-v1",
+    "task": "clock_minutes",
+    "inputs": {
+      "hour": "18",
+      "a": 1,
+      "b": 8
+    },
+    "options": [
+      "3",
+      "4",
+      "2",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The minute tens digit must lie between 0 and 5. Either allowed digit may occupy the units place. Multiplying the choices at the two positions gives 2.",
+    "source_difficulty_rationale": "A digit's position in a time field constrains its allowed range."
+  },
+  {
+    "key": "quick-sw-369-v2",
+    "task": "clock_minutes",
+    "inputs": {
+      "hour": "12",
+      "a": 1,
+      "b": 2
+    },
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The minute tens digit must lie between 0 and 5. Either allowed digit may occupy the units place. Multiplying the choices at the two positions gives 4.",
+    "source_difficulty_rationale": "A digit's position in a time field constrains its allowed range."
+  },
+  {
+    "key": "quick-sw-369-v3",
+    "task": "clock_minutes",
+    "inputs": {
+      "hour": "09",
+      "a": 0,
+      "b": 9
+    },
+    "options": [
+      "2",
+      "1",
+      "3",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The minute tens digit must lie between 0 and 5. Either allowed digit may occupy the units place. Multiplying the choices at the two positions gives 2.",
+    "source_difficulty_rationale": "A digit's position in a time field constrains its allowed range."
+  },
+  {
+    "key": "quick-sw-369-v4",
+    "task": "clock_minutes",
+    "inputs": {
+      "hour": "23",
+      "a": 2,
+      "b": 3
+    },
+    "options": [
+      "3",
+      "4",
+      "1",
+      "2"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The minute tens digit must lie between 0 and 5. Either allowed digit may occupy the units place. Multiplying the choices at the two positions gives 4.",
+    "source_difficulty_rationale": "A digit's position in a time field constrains its allowed range."
+  },
+  {
+    "key": "quick-sw-369-v5",
+    "task": "clock_minutes",
+    "inputs": {
+      "hour": "07",
+      "a": 0,
+      "b": 7
+    },
+    "options": [
+      "3",
+      "4",
+      "2",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The minute tens digit must lie between 0 and 5. Either allowed digit may occupy the units place. Multiplying the choices at the two positions gives 2.",
+    "source_difficulty_rationale": "A digit's position in a time field constrains its allowed range."
+  },
+  {
+    "key": "quick-sw-370-v1",
+    "task": "checkpoint_paths",
+    "inputs": {
+      "x": 3,
+      "y": 3,
+      "a": 1,
+      "b": 1
+    },
+    "options": [
+      "20",
+      "8",
+      "2",
+      "12"
+    ],
+    "expected": "12",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the order of steps to (1,1), then the order from there to (3,3). Any first segment can join any second segment. Multiplying their counts gives 12.",
+    "source_difficulty_rationale": "A required checkpoint splits a path into two freely combinable pieces."
+  },
+  {
+    "key": "quick-sw-370-v2",
+    "task": "checkpoint_paths",
+    "inputs": {
+      "x": 4,
+      "y": 2,
+      "a": 2,
+      "b": 0
+    },
+    "options": [
+      "6",
+      "15",
+      "9",
+      "7"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the order of steps to (2,0), then the order from there to (4,2). Any first segment can join any second segment. Multiplying their counts gives 6.",
+    "source_difficulty_rationale": "A required checkpoint splits a path into two freely combinable pieces."
+  },
+  {
+    "key": "quick-sw-370-v3",
+    "task": "checkpoint_paths",
+    "inputs": {
+      "x": 2,
+      "y": 3,
+      "a": 0,
+      "b": 0
+    },
+    "options": [
+      "1",
+      "10",
+      "0",
+      "11"
+    ],
+    "expected": "10",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the order of steps to (0,0), then the order from there to (2,3). Any first segment can join any second segment. Multiplying their counts gives 10.",
+    "source_difficulty_rationale": "A required checkpoint splits a path into two freely combinable pieces."
+  },
+  {
+    "key": "quick-sw-370-v4",
+    "task": "checkpoint_paths",
+    "inputs": {
+      "x": 4,
+      "y": 3,
+      "a": 2,
+      "b": 2
+    },
+    "options": [
+      "17",
+      "9",
+      "18",
+      "35"
+    ],
+    "expected": "18",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the order of steps to (2,2), then the order from there to (4,3). Any first segment can join any second segment. Multiplying their counts gives 18.",
+    "source_difficulty_rationale": "A required checkpoint splits a path into two freely combinable pieces."
+  },
+  {
+    "key": "quick-sw-370-v5",
+    "task": "checkpoint_paths",
+    "inputs": {
+      "x": 3,
+      "y": 2,
+      "a": 3,
+      "b": 2
+    },
+    "options": [
+      "0",
+      "11",
+      "1",
+      "10"
+    ],
+    "expected": "10",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the order of steps to (3,2), then the order from there to (3,2). Any first segment can join any second segment. Multiplying their counts gives 10.",
+    "source_difficulty_rationale": "A required checkpoint splits a path into two freely combinable pieces."
+  },
+  {
+    "key": "quick-sw-371-v1",
+    "task": "obstacle_paths",
+    "inputs": {
+      "x": 3,
+      "y": 3,
+      "a": 1,
+      "b": 2
+    },
+    "options": [
+      "11",
+      "20",
+      "9",
+      "6"
+    ],
+    "expected": "11",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Subtract the paths through (1,2) from all paths. Such a path visits that point exactly once. This leaves 11 paths.",
+    "source_difficulty_rationale": "A complement count removes disallowed cases from the total."
+  },
+  {
+    "key": "quick-sw-371-v2",
+    "task": "obstacle_paths",
+    "inputs": {
+      "x": 3,
+      "y": 2,
+      "a": 2,
+      "b": 0
+    },
+    "options": [
+      "4",
+      "7",
+      "10",
+      "3"
+    ],
+    "expected": "7",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Subtract the paths through (2,0) from all paths. Such a path visits that point exactly once. This leaves 7 paths.",
+    "source_difficulty_rationale": "A complement count removes disallowed cases from the total."
+  },
+  {
+    "key": "quick-sw-371-v3",
+    "task": "obstacle_paths",
+    "inputs": {
+      "x": 2,
+      "y": 2,
+      "a": 1,
+      "b": 1
+    },
+    "options": [
+      "4",
+      "3",
+      "2",
+      "6"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Subtract the paths through (1,1) from all paths. Such a path visits that point exactly once. This leaves 2 paths.",
+    "source_difficulty_rationale": "A complement count removes disallowed cases from the total."
+  },
+  {
+    "key": "quick-sw-371-v4",
+    "task": "obstacle_paths",
+    "inputs": {
+      "x": 4,
+      "y": 1,
+      "a": 0,
+      "b": 1
+    },
+    "options": [
+      "5",
+      "1",
+      "2",
+      "4"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Subtract the paths through (0,1) from all paths. Such a path visits that point exactly once. This leaves 4 paths.",
+    "source_difficulty_rationale": "A complement count removes disallowed cases from the total."
+  },
+  {
+    "key": "quick-sw-371-v5",
+    "task": "obstacle_paths",
+    "inputs": {
+      "x": 2,
+      "y": 3,
+      "a": 2,
+      "b": 3
+    },
+    "options": [
+      "0",
+      "10",
+      "11",
+      "1"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Subtract the paths through (2,3) from all paths. Such a path visits that point exactly once. This leaves 0 paths.",
+    "source_difficulty_rationale": "A complement count removes disallowed cases from the total."
+  },
+  {
+    "key": "quick-sw-372-v1",
+    "task": "grid_clashes",
+    "inputs": {
+      "red": [
+        0,
+        4
+      ],
+      "green": [
+        0,
+        2,
+        4
+      ]
+    },
+    "options": [
+      "6",
+      "2",
+      "4",
+      "0"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "For each red–green pair, an absolute difference of 1 or 2 disqualifies it. Zero difference is allowed. The count of invalid pairs is 2.",
+    "source_difficulty_rationale": "A distance bound with a zero exception requires checking both ends of its interval."
+  },
+  {
+    "key": "quick-sw-372-v2",
+    "task": "grid_clashes",
+    "inputs": {
+      "red": [
+        3
+      ],
+      "green": [
+        3
+      ]
+    },
+    "options": [
+      "2",
+      "3",
+      "0",
+      "1"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "For each red–green pair, an absolute difference of 1 or 2 disqualifies it. Zero difference is allowed. The count of invalid pairs is 0.",
+    "source_difficulty_rationale": "A distance bound with a zero exception requires checking both ends of its interval."
+  },
+  {
+    "key": "quick-sw-372-v3",
+    "task": "grid_clashes",
+    "inputs": {
+      "red": [
+        1,
+        4
+      ],
+      "green": [
+        6,
+        8
+      ]
+    },
+    "options": [
+      "0",
+      "4",
+      "2",
+      "1"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "For each red–green pair, an absolute difference of 1 or 2 disqualifies it. Zero difference is allowed. The count of invalid pairs is 1.",
+    "source_difficulty_rationale": "A distance bound with a zero exception requires checking both ends of its interval."
+  },
+  {
+    "key": "quick-sw-372-v4",
+    "task": "grid_clashes",
+    "inputs": {
+      "red": [
+        0,
+        3,
+        6
+      ],
+      "green": [
+        1,
+        4,
+        7
+      ]
+    },
+    "options": [
+      "5",
+      "2",
+      "3",
+      "9"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "For each red–green pair, an absolute difference of 1 or 2 disqualifies it. Zero difference is allowed. The count of invalid pairs is 5.",
+    "source_difficulty_rationale": "A distance bound with a zero exception requires checking both ends of its interval."
+  },
+  {
+    "key": "quick-sw-372-v5",
+    "task": "grid_clashes",
+    "inputs": {
+      "red": [
+        2,
+        9
+      ],
+      "green": [
+        5,
+        12
+      ]
+    },
+    "options": [
+      "2",
+      "0",
+      "4",
+      "1"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "For each red–green pair, an absolute difference of 1 or 2 disqualifies it. Zero difference is allowed. The count of invalid pairs is 0.",
+    "source_difficulty_rationale": "A distance bound with a zero exception requires checking both ends of its interval."
+  },
+  {
+    "key": "quick-sw-373-v1",
+    "task": "pyramid_pixels",
+    "inputs": {
+      "h": 5,
+      "w": 7,
+      "levels": 2
+    },
+    "options": [
+      "4",
+      "35",
+      "51",
+      "16"
+    ],
+    "expected": "51",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-354"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Divide each dimension by 2, rounding upward at every step. Summing height times width over all levels gives 51 pixels.",
+    "source_difficulty_rationale": "For an odd dimension, the sampling origin affects the output size."
+  },
+  {
+    "key": "quick-sw-373-v2",
+    "task": "pyramid_pixels",
+    "inputs": {
+      "h": 8,
+      "w": 4,
+      "levels": 2
+    },
+    "options": [
+      "10",
+      "2",
+      "32",
+      "42"
+    ],
+    "expected": "42",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-354"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Divide each dimension by 2, rounding upward at every step. Summing height times width over all levels gives 42 pixels.",
+    "source_difficulty_rationale": "For an odd dimension, the sampling origin affects the output size."
+  },
+  {
+    "key": "quick-sw-373-v3",
+    "task": "pyramid_pixels",
+    "inputs": {
+      "h": 1,
+      "w": 5,
+      "levels": 2
+    },
+    "options": [
+      "10",
+      "5",
+      "2",
+      "8"
+    ],
+    "expected": "10",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-354"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Divide each dimension by 2, rounding upward at every step. Summing height times width over all levels gives 10 pixels.",
+    "source_difficulty_rationale": "For an odd dimension, the sampling origin affects the output size."
+  },
+  {
+    "key": "quick-sw-373-v4",
+    "task": "pyramid_pixels",
+    "inputs": {
+      "h": 3,
+      "w": 3,
+      "levels": 1
+    },
+    "options": [
+      "14",
+      "13",
+      "4",
+      "9"
+    ],
+    "expected": "13",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-354"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Divide each dimension by 2, rounding upward at every step. Summing height times width over all levels gives 13 pixels.",
+    "source_difficulty_rationale": "For an odd dimension, the sampling origin affects the output size."
+  },
+  {
+    "key": "quick-sw-373-v5",
+    "task": "pyramid_pixels",
+    "inputs": {
+      "h": 7,
+      "w": 2,
+      "levels": 0
+    },
+    "options": [
+      "15",
+      "13",
+      "14",
+      "0"
+    ],
+    "expected": "14",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-354"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Divide each dimension by 2, rounding upward at every step. Summing height times width over all levels gives 14 pixels.",
+    "source_difficulty_rationale": "For an odd dimension, the sampling origin affects the output size."
+  },
+  {
+    "key": "quick-sw-374-v1",
+    "task": "drainage",
+    "inputs": {
+      "z": [
+        1,
+        4,
+        3,
+        2,
+        0
+      ],
+      "sink": 4
+    },
+    "options": [
+      "2",
+      "5",
+      "0",
+      "3"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-355"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Follow strict descents from each site until a terminal point. Counting all paths ending at index 4 gives 3 sites.",
+    "source_difficulty_rationale": "A basin includes sites that reach the sink through intermediate sites."
+  },
+  {
+    "key": "quick-sw-374-v2",
+    "task": "drainage",
+    "inputs": {
+      "z": [
+        2,
+        4,
+        2
+      ],
+      "sink": 0
+    },
+    "options": [
+      "2",
+      "3",
+      "1",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-355"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Follow strict descents from each site until a terminal point. Counting all paths ending at index 0 gives 2 sites.",
+    "source_difficulty_rationale": "A basin includes sites that reach the sink through intermediate sites."
+  },
+  {
+    "key": "quick-sw-374-v3",
+    "task": "drainage",
+    "inputs": {
+      "z": [
+        7
+      ],
+      "sink": 0
+    },
+    "options": [
+      "2",
+      "1",
+      "0",
+      "7"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-355"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Follow strict descents from each site until a terminal point. Counting all paths ending at index 0 gives 1 sites.",
+    "source_difficulty_rationale": "A basin includes sites that reach the sink through intermediate sites."
+  },
+  {
+    "key": "quick-sw-374-v4",
+    "task": "drainage",
+    "inputs": {
+      "z": [
+        0,
+        1,
+        3,
+        2,
+        1
+      ],
+      "sink": 4
+    },
+    "options": [
+      "3",
+      "1",
+      "2",
+      "5"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-355"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Follow strict descents from each site until a terminal point. Counting all paths ending at index 4 gives 2 sites.",
+    "source_difficulty_rationale": "A basin includes sites that reach the sink through intermediate sites."
+  },
+  {
+    "key": "quick-sw-374-v5",
+    "task": "drainage",
+    "inputs": {
+      "z": [
+        5,
+        4,
+        3,
+        2,
+        1
+      ],
+      "sink": 4
+    },
+    "options": [
+      "1",
+      "0",
+      "6",
+      "5"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-355"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Follow strict descents from each site until a terminal point. Counting all paths ending at index 4 gives 5 sites.",
+    "source_difficulty_rationale": "A basin includes sites that reach the sink through intermediate sites."
+  },
+  {
+    "key": "quick-sw-375-v1",
+    "task": "josephus_rotate",
+    "inputs": {
+      "n": 7,
+      "s": 3
+    },
+    "options": [
+      "2",
+      "7",
+      "3",
+      "1"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-012"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Start with survivor index 0 in a circle of one. Growing the circle to size m changes that index to (index + 2) mod m. Then rotate the origin to 3. The surviving label is 2.",
+    "source_difficulty_rationale": "Rotating the starting point rotates the result by the same offset."
+  },
+  {
+    "key": "quick-sw-375-v2",
+    "task": "josephus_rotate",
+    "inputs": {
+      "n": 8,
+      "s": 4
+    },
+    "options": [
+      "8",
+      "4",
+      "1",
+      "5"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-012"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Start with survivor index 0 in a circle of one. Growing the circle to size m changes that index to (index + 2) mod m. Then rotate the origin to 4. The surviving label is 4.",
+    "source_difficulty_rationale": "Rotating the starting point rotates the result by the same offset."
+  },
+  {
+    "key": "quick-sw-375-v3",
+    "task": "josephus_rotate",
+    "inputs": {
+      "n": 5,
+      "s": 5
+    },
+    "options": [
+      "5",
+      "1",
+      "2",
+      "3"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-012"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Start with survivor index 0 in a circle of one. Growing the circle to size m changes that index to (index + 2) mod m. Then rotate the origin to 5. The surviving label is 2.",
+    "source_difficulty_rationale": "Rotating the starting point rotates the result by the same offset."
+  },
+  {
+    "key": "quick-sw-375-v4",
+    "task": "josephus_rotate",
+    "inputs": {
+      "n": 6,
+      "s": 2
+    },
+    "options": [
+      "5",
+      "1",
+      "2",
+      "6"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-012"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Start with survivor index 0 in a circle of one. Growing the circle to size m changes that index to (index + 2) mod m. Then rotate the origin to 2. The surviving label is 6.",
+    "source_difficulty_rationale": "Rotating the starting point rotates the result by the same offset."
+  },
+  {
+    "key": "quick-sw-375-v5",
+    "task": "josephus_rotate",
+    "inputs": {
+      "n": 9,
+      "s": 1
+    },
+    "options": [
+      "3",
+      "4",
+      "9",
+      "1"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-012"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Start with survivor index 0 in a circle of one. Growing the circle to size m changes that index to (index + 2) mod m. Then rotate the origin to 1. The surviving label is 3.",
+    "source_difficulty_rationale": "Rotating the starting point rotates the result by the same offset."
+  },
+  {
+    "key": "quick-sw-376-v1",
+    "task": "silence_worlds",
+    "inputs": {
+      "n": 4,
+      "r": 2
+    },
+    "options": [
+      "6",
+      "5",
+      "16",
+      "2"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-343"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Silence rules out all sets of size at most 2. Count the subsets of the 4 participants larger than that bound. There are 5 possibilities.",
+    "source_difficulty_rationale": "Information about a group size can leave its members' identities undetermined."
+  },
+  {
+    "key": "quick-sw-376-v2",
+    "task": "silence_worlds",
+    "inputs": {
+      "n": 5,
+      "r": 3
+    },
+    "options": [
+      "2",
+      "10",
+      "6",
+      "32"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-343"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Silence rules out all sets of size at most 3. Count the subsets of the 5 participants larger than that bound. There are 6 possibilities.",
+    "source_difficulty_rationale": "Information about a group size can leave its members' identities undetermined."
+  },
+  {
+    "key": "quick-sw-376-v3",
+    "task": "silence_worlds",
+    "inputs": {
+      "n": 3,
+      "r": 1
+    },
+    "options": [
+      "8",
+      "2",
+      "3",
+      "4"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-343"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Silence rules out all sets of size at most 1. Count the subsets of the 3 participants larger than that bound. There are 4 possibilities.",
+    "source_difficulty_rationale": "Information about a group size can leave its members' identities undetermined."
+  },
+  {
+    "key": "quick-sw-376-v4",
+    "task": "silence_worlds",
+    "inputs": {
+      "n": 6,
+      "r": 5
+    },
+    "options": [
+      "1",
+      "64",
+      "6",
+      "2"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-343"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Silence rules out all sets of size at most 5. Count the subsets of the 6 participants larger than that bound. There are 1 possibilities.",
+    "source_difficulty_rationale": "Information about a group size can leave its members' identities undetermined."
+  },
+  {
+    "key": "quick-sw-376-v5",
+    "task": "silence_worlds",
+    "inputs": {
+      "n": 4,
+      "r": 0
+    },
+    "options": [
+      "1",
+      "15",
+      "16",
+      "4"
+    ],
+    "expected": "15",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-343"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Silence rules out all sets of size at most 0. Count the subsets of the 4 participants larger than that bound. There are 15 possibilities.",
+    "source_difficulty_rationale": "Information about a group size can leave its members' identities undetermined."
+  },
+  {
+    "key": "quick-sw-377-v1",
+    "task": "digit_chain",
+    "inputs": {
+      "n": 3,
+      "pairs": [
+        "12",
+        "21",
+        "23"
+      ]
+    },
+    "options": [
+      "4",
+      "2",
+      "3",
+      "9"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-038"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Track how many strings end in each digit. Append a digit only along an allowed pair and add the counts arriving at the same ending. At length 3 the total is 3.",
+    "source_difficulty_rationale": "Pairs cannot be chosen independently because one ends where the next starts."
+  },
+  {
+    "key": "quick-sw-377-v2",
+    "task": "digit_chain",
+    "inputs": {
+      "n": 4,
+      "pairs": [
+        "01",
+        "10"
+      ]
+    },
+    "options": [
+      "8",
+      "3",
+      "1",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-038"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Track how many strings end in each digit. Append a digit only along an allowed pair and add the counts arriving at the same ending. At length 4 the total is 2.",
+    "source_difficulty_rationale": "Pairs cannot be chosen independently because one ends where the next starts."
+  },
+  {
+    "key": "quick-sw-377-v3",
+    "task": "digit_chain",
+    "inputs": {
+      "n": 3,
+      "pairs": [
+        "12",
+        "34"
+      ]
+    },
+    "options": [
+      "0",
+      "4",
+      "2",
+      "6"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-038"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Track how many strings end in each digit. Append a digit only along an allowed pair and add the counts arriving at the same ending. At length 3 the total is 0.",
+    "source_difficulty_rationale": "Pairs cannot be chosen independently because one ends where the next starts."
+  },
+  {
+    "key": "quick-sw-377-v4",
+    "task": "digit_chain",
+    "inputs": {
+      "n": 4,
+      "pairs": [
+        "11",
+        "12",
+        "21"
+      ]
+    },
+    "options": [
+      "2",
+      "8",
+      "27",
+      "3"
+    ],
+    "expected": "8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-038"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Track how many strings end in each digit. Append a digit only along an allowed pair and add the counts arriving at the same ending. At length 4 the total is 8.",
+    "source_difficulty_rationale": "Pairs cannot be chosen independently because one ends where the next starts."
+  },
+  {
+    "key": "quick-sw-377-v5",
+    "task": "digit_chain",
+    "inputs": {
+      "n": 2,
+      "pairs": [
+        "00",
+        "09",
+        "90",
+        "99"
+      ]
+    },
+    "options": [
+      "8",
+      "5",
+      "4",
+      "2"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-038"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Track how many strings end in each digit. Append a digit only along an allowed pair and add the counts arriving at the same ending. At length 2 the total is 4.",
+    "source_difficulty_rationale": "Pairs cannot be chosen independently because one ends where the next starts."
+  },
+  {
+    "key": "quick-sw-378-v1",
+    "task": "majority_error",
+    "inputs": {
+      "p": "1/4"
+    },
+    "options": [
+      "1/4",
+      "1/64",
+      "9/64",
+      "5/32"
+    ],
+    "expected": "5/32",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The majority is wrong with exactly two errors or three errors. For p = 1/4, adding 3 × p² × (1−p) and p³ gives 5/32.",
+    "source_difficulty_rationale": "Split the event into disjoint cases before adding their probabilities."
+  },
+  {
+    "key": "quick-sw-378-v2",
+    "task": "majority_error",
+    "inputs": {
+      "p": "1/3"
+    },
+    "options": [
+      "7/27",
+      "1/3",
+      "1/27",
+      "2/9"
+    ],
+    "expected": "7/27",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The majority is wrong with exactly two errors or three errors. For p = 1/3, adding 3 × p² × (1−p) and p³ gives 7/27.",
+    "source_difficulty_rationale": "Split the event into disjoint cases before adding their probabilities."
+  },
+  {
+    "key": "quick-sw-378-v3",
+    "task": "majority_error",
+    "inputs": {
+      "p": "1/2"
+    },
+    "options": [
+      "0",
+      "1/2",
+      "1/8",
+      "3/8"
+    ],
+    "expected": "1/2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The majority is wrong with exactly two errors or three errors. For p = 1/2, adding 3 × p² × (1−p) and p³ gives 1/2.",
+    "source_difficulty_rationale": "Split the event into disjoint cases before adding their probabilities."
+  },
+  {
+    "key": "quick-sw-378-v4",
+    "task": "majority_error",
+    "inputs": {
+      "p": "1/10"
+    },
+    "options": [
+      "1/1000",
+      "27/1000",
+      "7/250",
+      "1/10"
+    ],
+    "expected": "7/250",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The majority is wrong with exactly two errors or three errors. For p = 1/10, adding 3 × p² × (1−p) and p³ gives 7/250.",
+    "source_difficulty_rationale": "Split the event into disjoint cases before adding their probabilities."
+  },
+  {
+    "key": "quick-sw-378-v5",
+    "task": "majority_error",
+    "inputs": {
+      "p": "2/3"
+    },
+    "options": [
+      "2/3",
+      "8/27",
+      "4/9",
+      "20/27"
+    ],
+    "expected": "20/27",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "The majority is wrong with exactly two errors or three errors. For p = 2/3, adding 3 × p² × (1−p) and p³ gives 20/27.",
+    "source_difficulty_rationale": "Split the event into disjoint cases before adding their probabilities."
+  },
+  {
+    "key": "quick-sw-379-v1",
+    "task": "unanimous_error",
+    "inputs": {
+      "p": "1/3"
+    },
+    "options": [
+      "1/9",
+      "1/3",
+      "1/27",
+      "2/9"
+    ],
+    "expected": "1/9",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Agreement leaves only two cases. All errors have weight p³ and all correct readings have weight (1−p)³. For p = 1/3, the share due to error is 1/9.",
+    "source_difficulty_rationale": "After observing agreement, normalize over the cases consistent with it."
+  },
+  {
+    "key": "quick-sw-379-v2",
+    "task": "unanimous_error",
+    "inputs": {
+      "p": "1/4"
+    },
+    "options": [
+      "9/64",
+      "1/28",
+      "1/4",
+      "1/64"
+    ],
+    "expected": "1/28",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Agreement leaves only two cases. All errors have weight p³ and all correct readings have weight (1−p)³. For p = 1/4, the share due to error is 1/28.",
+    "source_difficulty_rationale": "After observing agreement, normalize over the cases consistent with it."
+  },
+  {
+    "key": "quick-sw-379-v3",
+    "task": "unanimous_error",
+    "inputs": {
+      "p": "2/5"
+    },
+    "options": [
+      "8/125",
+      "36/125",
+      "8/35",
+      "2/5"
+    ],
+    "expected": "8/35",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Agreement leaves only two cases. All errors have weight p³ and all correct readings have weight (1−p)³. For p = 2/5, the share due to error is 8/35.",
+    "source_difficulty_rationale": "After observing agreement, normalize over the cases consistent with it."
+  },
+  {
+    "key": "quick-sw-379-v4",
+    "task": "unanimous_error",
+    "inputs": {
+      "p": "3/4"
+    },
+    "options": [
+      "3/4",
+      "27/64",
+      "1/4",
+      "27/28"
+    ],
+    "expected": "27/28",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Agreement leaves only two cases. All errors have weight p³ and all correct readings have weight (1−p)³. For p = 3/4, the share due to error is 27/28.",
+    "source_difficulty_rationale": "After observing agreement, normalize over the cases consistent with it."
+  },
+  {
+    "key": "quick-sw-379-v5",
+    "task": "unanimous_error",
+    "inputs": {
+      "p": "1/2"
+    },
+    "options": [
+      "1/2",
+      "1/8",
+      "3/8",
+      "0"
+    ],
+    "expected": "1/2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Agreement leaves only two cases. All errors have weight p³ and all correct readings have weight (1−p)³. For p = 1/2, the share due to error is 1/2.",
+    "source_difficulty_rationale": "After observing agreement, normalize over the cases consistent with it."
+  },
+  {
+    "key": "quick-sw-380-v1",
+    "task": "repeat_coverage",
+    "inputs": {
+      "n": 5,
+      "k": 3,
+      "r": 2
+    },
+    "options": [
+      "2",
+      "4",
+      "3",
+      "10"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-370"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "There are 5 × 2 required tests. Repeat the channel list and cut it into groups of at most 3. No group repeats a channel, attaining the bound of 4 rounds.",
+    "source_difficulty_rationale": "A capacity bound becomes exact once a legal schedule achieves it."
+  },
+  {
+    "key": "quick-sw-380-v2",
+    "task": "repeat_coverage",
+    "inputs": {
+      "n": 6,
+      "k": 3,
+      "r": 2
+    },
+    "options": [
+      "2",
+      "5",
+      "4",
+      "12"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-370"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "There are 6 × 2 required tests. Repeat the channel list and cut it into groups of at most 3. No group repeats a channel, attaining the bound of 4 rounds.",
+    "source_difficulty_rationale": "A capacity bound becomes exact once a legal schedule achieves it."
+  },
+  {
+    "key": "quick-sw-380-v3",
+    "task": "repeat_coverage",
+    "inputs": {
+      "n": 7,
+      "k": 7,
+      "r": 3
+    },
+    "options": [
+      "21",
+      "4",
+      "2",
+      "3"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-370"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "There are 7 × 3 required tests. Repeat the channel list and cut it into groups of at most 7. No group repeats a channel, attaining the bound of 3 rounds.",
+    "source_difficulty_rationale": "A capacity bound becomes exact once a legal schedule achieves it."
+  },
+  {
+    "key": "quick-sw-380-v4",
+    "task": "repeat_coverage",
+    "inputs": {
+      "n": 4,
+      "k": 1,
+      "r": 2
+    },
+    "options": [
+      "8",
+      "2",
+      "9",
+      "7"
+    ],
+    "expected": "8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-370"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "There are 4 × 2 required tests. Repeat the channel list and cut it into groups of at most 1. No group repeats a channel, attaining the bound of 8 rounds.",
+    "source_difficulty_rationale": "A capacity bound becomes exact once a legal schedule achieves it."
+  },
+  {
+    "key": "quick-sw-380-v5",
+    "task": "repeat_coverage",
+    "inputs": {
+      "n": 7,
+      "k": 4,
+      "r": 3
+    },
+    "options": [
+      "3",
+      "6",
+      "5",
+      "21"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-370"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "There are 7 × 3 required tests. Repeat the channel list and cut it into groups of at most 4. No group repeats a channel, attaining the bound of 6 rounds.",
+    "source_difficulty_rationale": "A capacity bound becomes exact once a legal schedule achieves it."
+  },
+  {
+    "key": "quick-sw-381-v1",
+    "task": "pyramid_indent",
+    "inputs": {
+      "w": 7
+    },
+    "options": [
+      "3",
+      "7",
+      "6",
+      "16"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-347"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The first row has (7−1)/2 leading spaces; each subsequent row has one fewer. Summing down to zero gives 6.",
+    "source_difficulty_rationale": "Two extra stars reduce the indentation by one on either side of the center."
+  },
+  {
+    "key": "quick-sw-381-v2",
+    "task": "pyramid_indent",
+    "inputs": {
+      "w": 1
+    },
+    "options": [
+      "1",
+      "2",
+      "3",
+      "0"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-347"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The first row has (1−1)/2 leading spaces; each subsequent row has one fewer. Summing down to zero gives 0.",
+    "source_difficulty_rationale": "Two extra stars reduce the indentation by one on either side of the center."
+  },
+  {
+    "key": "quick-sw-381-v3",
+    "task": "pyramid_indent",
+    "inputs": {
+      "w": 5
+    },
+    "options": [
+      "3",
+      "9",
+      "2",
+      "5"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-347"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The first row has (5−1)/2 leading spaces; each subsequent row has one fewer. Summing down to zero gives 3.",
+    "source_difficulty_rationale": "Two extra stars reduce the indentation by one on either side of the center."
+  },
+  {
+    "key": "quick-sw-381-v4",
+    "task": "pyramid_indent",
+    "inputs": {
+      "w": 11
+    },
+    "options": [
+      "11",
+      "15",
+      "36",
+      "5"
+    ],
+    "expected": "15",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-347"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The first row has (11−1)/2 leading spaces; each subsequent row has one fewer. Summing down to zero gives 15.",
+    "source_difficulty_rationale": "Two extra stars reduce the indentation by one on either side of the center."
+  },
+  {
+    "key": "quick-sw-381-v5",
+    "task": "pyramid_indent",
+    "inputs": {
+      "w": 9
+    },
+    "options": [
+      "4",
+      "9",
+      "10",
+      "25"
+    ],
+    "expected": "10",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-347"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 2,
+    "source_difficulty": 2,
+    "difficulty_rationale": "The first row has (9−1)/2 leading spaces; each subsequent row has one fewer. Summing down to zero gives 10.",
+    "source_difficulty_rationale": "Two extra stars reduce the indentation by one on either side of the center."
+  },
+  {
+    "key": "quick-sw-382-v1",
+    "task": "cube_layers",
+    "inputs": {
+      "d": 3,
+      "k": 1
+    },
+    "options": [
+      "3",
+      "8",
+      "12",
+      "6"
+    ],
+    "expected": "6",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-290"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Choose positions for 1 ones at the lower vertex, then select one zero to flip. Each edge has a unique lower endpoint. This counts 6 edges.",
+    "source_difficulty_rationale": "Orienting the change avoids double-counting edges between layers."
+  },
+  {
+    "key": "quick-sw-382-v2",
+    "task": "cube_layers",
+    "inputs": {
+      "d": 4,
+      "k": 0
+    },
+    "options": [
+      "4",
+      "1",
+      "16",
+      "32"
+    ],
+    "expected": "4",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-290"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Choose positions for 0 ones at the lower vertex, then select one zero to flip. Each edge has a unique lower endpoint. This counts 4 edges.",
+    "source_difficulty_rationale": "Orienting the change avoids double-counting edges between layers."
+  },
+  {
+    "key": "quick-sw-382-v3",
+    "task": "cube_layers",
+    "inputs": {
+      "d": 4,
+      "k": 2
+    },
+    "options": [
+      "16",
+      "12",
+      "6",
+      "4"
+    ],
+    "expected": "12",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-290"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Choose positions for 2 ones at the lower vertex, then select one zero to flip. Each edge has a unique lower endpoint. This counts 12 edges.",
+    "source_difficulty_rationale": "Orienting the change avoids double-counting edges between layers."
+  },
+  {
+    "key": "quick-sw-382-v4",
+    "task": "cube_layers",
+    "inputs": {
+      "d": 5,
+      "k": 4
+    },
+    "options": [
+      "32",
+      "80",
+      "5",
+      "1"
+    ],
+    "expected": "5",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-290"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Choose positions for 4 ones at the lower vertex, then select one zero to flip. Each edge has a unique lower endpoint. This counts 5 edges.",
+    "source_difficulty_rationale": "Orienting the change avoids double-counting edges between layers."
+  },
+  {
+    "key": "quick-sw-382-v5",
+    "task": "cube_layers",
+    "inputs": {
+      "d": 5,
+      "k": 2
+    },
+    "options": [
+      "10",
+      "32",
+      "80",
+      "30"
+    ],
+    "expected": "30",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-290"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 4,
+    "source_difficulty": 4,
+    "difficulty_rationale": "Choose positions for 2 ones at the lower vertex, then select one zero to flip. Each edge has a unique lower endpoint. This counts 30 edges.",
+    "source_difficulty_rationale": "Orienting the change avoids double-counting edges between layers."
+  },
+  {
+    "key": "quick-sw-383-v1",
+    "task": "expression_slots",
+    "inputs": {
+      "n": 5,
+      "groups": 3
+    },
+    "options": [
+      "24",
+      "6",
+      "16",
+      "40"
+    ],
+    "expected": "24",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-164"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the gaps separating the 3 numbers from the gaps between digits. Each selected gap has two sign choices. This gives 24 placements with signs.",
+    "source_difficulty_rationale": "Counting written expressions differs from counting distinct numerical values."
+  },
+  {
+    "key": "quick-sw-383-v2",
+    "task": "expression_slots",
+    "inputs": {
+      "n": 6,
+      "groups": 1
+    },
+    "options": [
+      "243",
+      "1",
+      "32",
+      "6"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-164"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the gaps separating the 1 numbers from the gaps between digits. Each selected gap has two sign choices. This gives 1 placements with signs.",
+    "source_difficulty_rationale": "Counting written expressions differs from counting distinct numerical values."
+  },
+  {
+    "key": "quick-sw-383-v3",
+    "task": "expression_slots",
+    "inputs": {
+      "n": 4,
+      "groups": 4
+    },
+    "options": [
+      "27",
+      "9",
+      "8",
+      "1"
+    ],
+    "expected": "8",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-164"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the gaps separating the 4 numbers from the gaps between digits. Each selected gap has two sign choices. This gives 8 placements with signs.",
+    "source_difficulty_rationale": "Counting written expressions differs from counting distinct numerical values."
+  },
+  {
+    "key": "quick-sw-383-v4",
+    "task": "expression_slots",
+    "inputs": {
+      "n": 6,
+      "groups": 2
+    },
+    "options": [
+      "5",
+      "32",
+      "30",
+      "10"
+    ],
+    "expected": "10",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-164"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the gaps separating the 2 numbers from the gaps between digits. Each selected gap has two sign choices. This gives 10 placements with signs.",
+    "source_difficulty_rationale": "Counting written expressions differs from counting distinct numerical values."
+  },
+  {
+    "key": "quick-sw-383-v5",
+    "task": "expression_slots",
+    "inputs": {
+      "n": 7,
+      "groups": 4
+    },
+    "options": [
+      "160",
+      "20",
+      "64",
+      "280"
+    ],
+    "expected": "160",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-164"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Choose the gaps separating the 4 numbers from the gaps between digits. Each selected gap has two sign choices. This gives 160 placements with signs.",
+    "source_difficulty_rationale": "Counting written expressions differs from counting distinct numerical values."
+  },
+  {
+    "key": "quick-sw-384-v1",
+    "task": "parking_prefix",
+    "inputs": {
+      "events": [
+        -1,
+        -1,
+        1,
+        1
+      ]
+    },
+    "options": [
+      "3",
+      "2",
+      "0",
+      "4"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-356"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Sum the events from the start to each point in the log. Initial occupancy must cover the largest deficit anywhere along the way. This requires 2 cars.",
+    "source_difficulty_rationale": "The final balance alone cannot show whether an earlier departure was possible."
+  },
+  {
+    "key": "quick-sw-384-v2",
+    "task": "parking_prefix",
+    "inputs": {
+      "events": [
+        1,
+        -1,
+        -1
+      ]
+    },
+    "options": [
+      "3",
+      "0",
+      "1",
+      "2"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-356"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Sum the events from the start to each point in the log. Initial occupancy must cover the largest deficit anywhere along the way. This requires 1 cars.",
+    "source_difficulty_rationale": "The final balance alone cannot show whether an earlier departure was possible."
+  },
+  {
+    "key": "quick-sw-384-v3",
+    "task": "parking_prefix",
+    "inputs": {
+      "events": [
+        1,
+        1,
+        -1
+      ]
+    },
+    "options": [
+      "1",
+      "3",
+      "2",
+      "0"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-356"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Sum the events from the start to each point in the log. Initial occupancy must cover the largest deficit anywhere along the way. This requires 0 cars.",
+    "source_difficulty_rationale": "The final balance alone cannot show whether an earlier departure was possible."
+  },
+  {
+    "key": "quick-sw-384-v4",
+    "task": "parking_prefix",
+    "inputs": {
+      "events": [
+        -1,
+        1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    "options": [
+      "3",
+      "4",
+      "5",
+      "0"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-356"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Sum the events from the start to each point in the log. Initial occupancy must cover the largest deficit anywhere along the way. This requires 3 cars.",
+    "source_difficulty_rationale": "The final balance alone cannot show whether an earlier departure was possible."
+  },
+  {
+    "key": "quick-sw-384-v5",
+    "task": "parking_prefix",
+    "inputs": {
+      "events": []
+    },
+    "options": [
+      "3",
+      "0",
+      "1",
+      "2"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-356"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "Sum the events from the start to each point in the log. Initial occupancy must cover the largest deficit anywhere along the way. This requires 0 cars.",
+    "source_difficulty_rationale": "The final balance alone cannot show whether an earlier departure was possible."
+  },
+  {
+    "key": "quick-sw-385-v1",
+    "task": "sampling_overlap",
+    "inputs": {
+      "a": 3,
+      "b": 4,
+      "lo": 0,
+      "hi": 25
+    },
+    "options": [
+      "7",
+      "26",
+      "3",
+      "2"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The samplers coincide at multiples of the least common multiple of 3 and 4. Count those in the closed interval. This gives 3 positions.",
+    "source_difficulty_rationale": "Alongside the common period, check which interval endpoints are included."
+  },
+  {
+    "key": "quick-sw-385-v2",
+    "task": "sampling_overlap",
+    "inputs": {
+      "a": 2,
+      "b": 4,
+      "lo": 1,
+      "hi": 11
+    },
+    "options": [
+      "1",
+      "11",
+      "3",
+      "2"
+    ],
+    "expected": "2",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The samplers coincide at multiples of the least common multiple of 2 and 4. Count those in the closed interval. This gives 2 positions.",
+    "source_difficulty_rationale": "Alongside the common period, check which interval endpoints are included."
+  },
+  {
+    "key": "quick-sw-385-v3",
+    "task": "sampling_overlap",
+    "inputs": {
+      "a": 4,
+      "b": 6,
+      "lo": 1,
+      "hi": 10
+    },
+    "options": [
+      "0",
+      "1",
+      "10",
+      "2"
+    ],
+    "expected": "0",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The samplers coincide at multiples of the least common multiple of 4 and 6. Count those in the closed interval. This gives 0 positions.",
+    "source_difficulty_rationale": "Alongside the common period, check which interval endpoints are included."
+  },
+  {
+    "key": "quick-sw-385-v4",
+    "task": "sampling_overlap",
+    "inputs": {
+      "a": 5,
+      "b": 5,
+      "lo": 5,
+      "hi": 15
+    },
+    "options": [
+      "4",
+      "3",
+      "0",
+      "11"
+    ],
+    "expected": "3",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The samplers coincide at multiples of the least common multiple of 5 and 5. Count those in the closed interval. This gives 3 positions.",
+    "source_difficulty_rationale": "Alongside the common period, check which interval endpoints are included."
+  },
+  {
+    "key": "quick-sw-385-v5",
+    "task": "sampling_overlap",
+    "inputs": {
+      "a": 2,
+      "b": 3,
+      "lo": 6,
+      "hi": 6
+    },
+    "options": [
+      "0",
+      "3",
+      "1",
+      "2"
+    ],
+    "expected": "1",
+    "method": "Independent case oracle in test_fundamentals_reasoning_800.py",
+    "professional_review": "pending",
+    "authorship": "AI-assisted original principle exercise",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "source_relation": "Original exercise based on a principle of the linked interview",
+    "difficulty": 3,
+    "source_difficulty": 3,
+    "difficulty_rationale": "The samplers coincide at multiples of the least common multiple of 2 and 3. Count those in the closed interval. This gives 1 positions.",
+    "source_difficulty_rationale": "Alongside the common period, check which interval endpoints are included."
+  }
+]

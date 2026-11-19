@@ -190,7 +190,7 @@ async function facts() {
       nodes:d.querySelectorAll('.react-flow__node').length, selected:selected?.value ?? null,
       selectedNode:!!d.querySelector('.react-flow__node.selected'),
       simulationRunning:!!d.querySelector('.simulation-bar button[aria-pressed="true"]'),
-      clock:d.querySelector('.simulation-bar button:nth-child(2)')?.textContent.trim() ?? null,
+      gateSignal:d.querySelector('.logic-part .part-reading')?.textContent.trim() ?? null,
       question:aside ? {text:aside.textContent.trim(),height:aside.getBoundingClientRect().height,scrollHeight:aside.scrollHeight,clientHeight:aside.clientHeight,textVisiblePixels:visibleHeight(aside.querySelector('p'))} : null,
       closeAccessible:b.width>=43 && b.height>=43 && b.x>=-1 && b.y>=-1 && b.right<=innerWidth+1 && b.bottom<=innerHeight+1 && (hit===back||back.contains(hit)),
       activeIsBack:document.activeElement===back
@@ -205,7 +205,7 @@ function assertCommon(state, label) {
   check(`${label}: no horizontal dialog overflow`, state.dialogWidth <= state.dialogClientWidth + 1, { scroll: state.dialogWidth, client: state.dialogClientWidth });
   check(`${label}: gate retained`, state.nodes === 1, state.nodes);
   check(`${label}: selection retained`, state.selected === selectedId && state.selectedNode, { selected: state.selected, selectedNode: state.selectedNode });
-  check(`${label}: simulation retained`, state.simulationRunning && /1$/.test(state.clock ?? ""), state.clock);
+  check(`${label}: combinational output stays visible`, state.gateSignal !== null && !state.simulationRunning, state.gateSignal);
 }
 async function deletionInMode(t, layout, key) {
   const node = `document.querySelector('.react-flow__node[data-id=' + ${JSON.stringify(JSON.stringify(selectedId))} + '] .logic-part')`;
@@ -215,7 +215,7 @@ async function deletionInMode(t, layout, key) {
   await click(named(t("ביטול שינוי במעגל", "Undo circuit change")));
   await click(node);
   const restored = await facts();
-  check(`${layout}: undo restores component and active simulation`, restored.modal && restored.layout === layout && restored.nodes === 1 && restored.selected === selectedId && restored.selectedNode && restored.simulationRunning && /1$/.test(restored.clock ?? ""));
+  check(`${layout}: undo restores component and its output`, restored.modal && restored.layout === layout && restored.nodes === 1 && restored.selected === selectedId && restored.selectedNode && restored.gateSignal !== null);
 }
 async function deletionChecks(t, scenario) {
   const node = (id) => `document.querySelector('.react-flow__node[data-id=' + ${JSON.stringify(JSON.stringify(id))} + '] .logic-part')`;
@@ -359,22 +359,21 @@ try {
       check("undo removes gate", await evaluate("document.querySelectorAll('.react-flow__node').length===0"));
       await click(named(t("ביצוע שינוי מחדש במעגל", "Redo circuit change")));
       check("redo restores gate and selection", await evaluate(`document.querySelectorAll('.react-flow__node').length===1 && document.querySelector('.component-picker select').value===${JSON.stringify(selectedId)}`));
-      await click(button(t("הרצת סימולציה", "Run simulation")));
-      await click(`document.querySelector('.simulation-bar button:nth-child(2)')`);
+      check("combinational circuits show live signals without a simulation button", await evaluate("!!document.querySelector('.logic-part .part-reading') && !document.querySelector('[data-muxi-control=circuit-simulate]')"));
       const inlineState = await facts();
       baselineTransform = inlineState.viewportTransform;
       scenario.states.inline = inlineState;
       check("inline viewport transform recorded", !!baselineTransform && baselineTransform !== "none", baselineTransform);
-      await click(button(t("הרחבת הלוח", "Expand drawing")));
-      await waitFor("document.querySelector('dialog').matches(':modal')", "expanded native modal");
+      await click(button(t("מסך מלא", "Full screen")));
+      await waitFor("document.querySelector('dialog').matches(':modal')", "fullscreen native modal");
       await evaluate("document.querySelector('.component-library').parentElement.scrollTop=0");
       let state = await facts();
-      scenario.states.expanded = state;
-      assertCommon(state, "expanded");
-      check("expanded has native modality", state.modal && state.layout === "expanded" && state.bodyOverflow === "hidden");
+      scenario.states.fullscreen = state;
+      assertCommon(state, "fullscreen");
+      check("fullscreen fills viewport and locks background scroll", state.modal && state.layout === "fullscreen" && state.bodyOverflow === "hidden" && Math.abs(state.rect.x) < 1 && Math.abs(state.rect.y) < 1 && Math.abs(state.rect.width-config.width) < 1 && Math.abs(state.rect.height-config.height) < 1, state.rect);
       check("question text is visible", state.question?.text.length > 50 && state.question.height > 100, state.question);
-      check("expanded close button accessible", state.closeAccessible);
-      await screenshot(`${config.name === "mobile" ? "mobile-question" : "desktop-expanded"}-${config.lang}-${config.dark ? "dark" : "light"}`);
+      check("fullscreen close button accessible", state.closeAccessible);
+      await screenshot(`${config.name === "mobile" ? "mobile-question" : "desktop-fullscreen"}-${config.lang}-${config.dark ? "dark" : "light"}`);
       if (config.name === "mobile") {
         await evaluate("document.querySelector('.circuit-canvas').scrollIntoView({block:'center',behavior:'instant'})");
         const questionCanvas = await facts();
@@ -382,34 +381,23 @@ try {
         check("mobile question and canvas visible together", questionCanvas.canvasVisiblePixels >= 200 && questionCanvas.question?.textVisiblePixels >= 20, { canvasPixels: questionCanvas.canvasVisiblePixels, questionTextPixels: questionCanvas.question?.textVisiblePixels });
         await screenshot(`mobile-question-canvas-${config.lang}-${config.dark ? "dark" : "light"}`);
       }
-      await deletionInMode(t, "expanded", "Backspace");
+      await deletionInMode(t, "fullscreen", "Backspace");
       await click(named(t("סגירת תצוגת השאלה", "Close question reference")));
       check("question close hides reference", await evaluate("!document.querySelector('dialog aside')"));
       await click(button(t("הצגת השאלה", "Show question")));
       check("question can reopen", await evaluate("!!document.querySelector('dialog aside')"));
-      await click(button(t("מסך מלא", "Full screen")));
-      state = await facts();
-      scenario.states.fullscreen = state;
-      assertCommon(state, "fullscreen");
-      check("fullscreen fills viewport", state.modal && state.layout === "fullscreen" && Math.abs(state.rect.x) < 1 && Math.abs(state.rect.y) < 1 && Math.abs(state.rect.width-config.width) < 1 && Math.abs(state.rect.height-config.height) < 1, state.rect);
-      check("fullscreen close button accessible", state.closeAccessible);
       if (config.name === "mobile") {
         await click(button(t("הסתרת השאלה", "Hide question")));
         await evaluate("document.querySelector('.circuit-canvas').scrollIntoView({block:'center',behavior:'instant'})");
+        await screenshot(`mobile-canvas-${config.lang}-${config.dark ? "dark" : "light"}`);
       }
-      await screenshot(`${config.name === "mobile" ? "mobile-canvas" : "desktop-fullscreen"}-${config.lang}-${config.dark ? "dark" : "light"}`);
       await deletionInMode(t, "fullscreen", "Delete");
-      await click(button(t("חלון מוגדל", "Expanded window")));
-      state = await facts();
-      scenario.states.reexpanded = state;
-      assertCommon(state, "return to expanded");
-      check("fullscreen can return to expanded", state.modal && state.layout === "expanded");
       await click(button(t("חזרה לתשובה", "Back to answer")));
       state = await facts();
       scenario.states.closed = state;
       assertCommon(state, "back to answer");
       check("back restores inline, scroll and focus", !state.modal && state.layout === "inline" && state.bodyOverflow === await evaluate("window.__bodyOverflow") && state.activeIsBack, state);
-      await click(button(t("הרחבת הלוח", "Expand drawing")));
+      await click(button(t("מסך מלא", "Full screen")));
       await waitFor("document.querySelector('dialog').matches(':modal')", "modal for Escape");
       await send("Input.dispatchKeyEvent", { type: "keyDown", key: "Escape", code: "Escape", windowsVirtualKeyCode: 27 });
       await send("Input.dispatchKeyEvent", { type: "keyUp", key: "Escape", code: "Escape", windowsVirtualKeyCode: 27 });
@@ -418,12 +406,22 @@ try {
       scenario.states.escape = state;
       assertCommon(state, "Escape");
       check("Escape restores inline, scroll and focus", !state.modal && state.layout === "inline" && state.bodyOverflow === await evaluate("window.__bodyOverflow") && state.activeIsBack);
-      // History survives the complete modal cycle, including the simulation state.
+      // Undo/redo still use the same graph history after a modal cycle.
       await click(named(t("ביטול שינוי במעגל", "Undo circuit change")));
       check("undo history survives modes", await evaluate("document.querySelectorAll('.react-flow__node').length===0"));
       await click(named(t("ביצוע שינוי מחדש במעגל", "Redo circuit change")));
       check("redo history survives modes", await evaluate("document.querySelectorAll('.react-flow__node').length===1"));
       await deletionChecks(t, scenario);
+      const control = name => `document.querySelector('[data-muxi-control="${name}"]')`;
+      await click("document.querySelector('[data-muxi-control=circuit-group][data-muxi-group=\"3\"]')");
+      await click("document.querySelector('[data-muxi-control=circuit-add-part][data-muxi-kind=dff]')");
+      await click(control("circuit-simulate"));
+      await click(control("circuit-clock-step"));
+      for (const layout of ["fullscreen", "inline"]) {
+        await click(control("circuit-fullscreen"));
+        await waitFor(`window.__circuitDialog.dataset.layout==="${layout}"`, layout);
+        check(`${layout}: clocked simulation preserves its current step`, await evaluate(`(${control("circuit-simulate")}).getAttribute('aria-pressed') === "true" && /1$/.test((${control("circuit-clock-step")}).textContent.trim())`));
+      }
       const scenarioChecks = checks.filter((c) => c.scenario === current);
       console.log(`${scenarioChecks.every((c) => c.pass) ? "PASS" : "FAIL"} ${current}: ${scenarioChecks.filter((c) => c.pass).length}/${scenarioChecks.length} checks`);
     } catch (error) {

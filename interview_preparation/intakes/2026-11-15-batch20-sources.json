@@ -1,0 +1,398 @@
+{
+  "received_on": "2026-11-15",
+  "screenshot_count": 20,
+  "source_count": 20,
+  "new_question_count": 16,
+  "technical_extension_count": 3,
+  "provenance_only_count": 1,
+  "affected_question_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-01.png"
+      ],
+      "sha256": "376e0b10809bd5136b3d38425c75155f149aac0fbfbb60f9842153119453ed9b",
+      "original_prompt": "ישנו counter שסופר עד 8 (כקופסה שחורה). ממש בעזרתו counter שסופר מ-1 עד 5. לאחר מכן ביקשו לכתוב טבלת אמת שלו, כיצד ניתן לצמצם את התשובה ואיזה בעיה יש במימוש. [מצורף גם שרטוט לוגי עם a,b,y, מהפך, שער AND, שער XOR ומשוב.]",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-338",
+        "PREP-342"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-02.png"
+      ],
+      "sha256": "30b0f5160a0f61cf01fc37b8a48efe0ca7aedd2d76c2ce61131c700816fe6ef4",
+      "original_prompt": "[בשרטוט שלושה תאי הזזה S0,S1,S2 במצב התחלתי 0,0,1. משוב שער XOR מ-S1 ו-S2 אל S0, היציאה y מ-S2.] מהו המצב בזמן שעון הבא? y=?",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-339"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-03.png"
+      ],
+      "sha256": "28160768357b87ee6b8091d9d9e6d1dcc7c8bfaa097c94ad5be2e6b4c4c64c00",
+      "original_prompt": "In this task we will investigate interesting patterns that could be observed on a digital clock. Such a clock represents a point in time using the format HH:MM:SS (HH between 0 and 23, MM and SS between 0 and 59). A point in time is interesting if it uses at most two different digits to print. Write class Solution { public int solution(String S, String T); } returning the number of interesting points in time between S and T inclusive. Strings S and T strictly follow HH:MM:SS, S precedes T on the same day. Examples: 15:15:00 to 15:15:12 returns 1 (15:15:11); 22:22:21 to 22:22:23 returns 3. Focus on correctness. [The source screenshot includes a partial Java submission and platform UI.]",
+      "reported_companies": [
+        "SintecMedia"
+      ],
+      "source_tags": [
+        "sintecmedia"
+      ],
+      "question_ids": [
+        "PREP-330"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-04.png"
+      ],
+      "sha256": "f2fbb1e5ac79c0b2e203cf5cca6ab593e21e3ffa5ecc275ddb2aa9c09b66507f",
+      "original_prompt": "לכתוב פונקציה ב-C שמקבלת מערך של מספרים חיוביים ומוציאה את תוצאת המכפלה של המספרים אחד בשני (כלומר אם מתקבל המערך [1,2,3,4,5] המוצא יהיה 120). מבלי להשתמש בפעולת הכפל. איזה שינוי יש לעשות בפונקציה אם נתון שהמספרים לא בהכרח חיוביים.",
+      "reported_companies": [
+        "SanDisk"
+      ],
+      "source_tags": [
+        "software",
+        "sandisk"
+      ],
+      "question_ids": [
+        "PREP-331"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-05.png"
+      ],
+      "sha256": "6584b9aa0619b9e949fd124cd2e43e04e6647c754d9d0822088306f97b5b5ace",
+      "original_prompt": "שאלה ב-C העתקת שתי מחרוזות ממחרוזת source למחרוזת target אילו בעיות יכולות להיווצר במהלך ההעתקה? שתי רמזים: סיום מחרוזת מסתיים ב-0 ובעיות שיכולות להיווצר בהקשר של הפוינטרים.",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "software",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-332"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-06.png"
+      ],
+      "sha256": "8af007bc9e464cac1d1febc62a1a20264906844e6800a1705dfa536089c3b72c",
+      "original_prompt": "נתון מערך בגודל N, שמאותחל במספרים שהטווח שלהם לא ידוע. כל המספרים חוזרים פעמיים במערך מלבד מספר אחד שחוזר פעם אחת. איך תמצא את המספר שחוזר פעם אחת בדרך היעילה ביותר?",
+      "reported_companies": [],
+      "source_tags": [
+        "pmc-sierra"
+      ],
+      "question_ids": [
+        "PREP-027"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-07.png"
+      ],
+      "sha256": "ffd6250d5c0ba2978763ecedd8dd3a2d19f48f76322769117dace67ea4cec370",
+      "original_prompt": "יש לכתוב לוגיקה הבנויה משערים לוגיים (AND, OR, XOR וכד'), של קופסא המקבלת קלט של 32 ביט המחולק ל-16 מספרים בני 2 ביט כל אחד, ומוציאה את המספר המקסימלי בין כולם.",
+      "reported_companies": [
+        "Broadcom"
+      ],
+      "source_tags": [
+        "hardware",
+        "broadcom"
+      ],
+      "question_ids": [
+        "PREP-340"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-08.png"
+      ],
+      "sha256": "750551f2f997d7d2bf2ce41457dedd347306a104488f03f7faa1ad5af46ce266",
+      "original_prompt": "נתון עץ בינארי (לכל צומת 2 בנים לכל היותר). העץ לא מאוזן ולא ממויין, ויתכנו רשומות זהות בצמתים שונים. רוצים להעביר את העץ למחשב אחר. תכנן אלגוריתם שיקודד את העץ לקובץ ואלגוריתם שיפענח את הקובץ חזרה לעץ.",
+      "reported_companies": [
+        "Microsoft"
+      ],
+      "source_tags": [
+        "microsoft",
+        "software"
+      ],
+      "question_ids": [
+        "PREP-333"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-09.png"
+      ],
+      "sha256": "137912c5899663f0d76e4c0f984ad3be5048af6c14cb0391e30d4574fe942391",
+      "original_prompt": "מה ההבדל בין סמפור ל-mutex?",
+      "reported_companies": [
+        "KLA"
+      ],
+      "source_tags": [
+        "software",
+        "kla"
+      ],
+      "question_ids": [
+        "PREP-334"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-10.png"
+      ],
+      "sha256": "4aa00bd80485942b5db89dd7778da7d4a8a65f255463cc5735fd7adc157e0611",
+      "original_prompt": "שנה את הקוד הבא ע״י הוספת או שינוי תו אחד בלבד כך שיודפסו 20 סימני '-'. תן 3 פתרונות אפשריים. for(i=0;i<n;--i){ printf(\"-\"); }",
+      "reported_companies": [
+        "Horizon"
+      ],
+      "source_tags": [
+        "software",
+        "horizon",
+        "2312313"
+      ],
+      "question_ids": [
+        "PREP-335"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-11.png"
+      ],
+      "sha256": "bf48b94074a6d048d996969d708d26b144d632c3bc3949cdb559e92b0a880723",
+      "original_prompt": "איזה הבדלים קיימים בין פונקציה וירטואלית לפונקציה וירטואלית טהורה?",
+      "reported_companies": [
+        "KLA"
+      ],
+      "source_tags": [
+        "software",
+        "kla",
+        "2312313"
+      ],
+      "question_ids": [
+        "PREP-243"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-12.png"
+      ],
+      "sha256": "5d5cf779f3b9254541d780482ac75c572de67178ab9868eef375b9576a4ba35c",
+      "original_prompt": "איך מממשים פונקציות עם מספר לא קבוע של ארגומנטים ב-C, כמו printf למשל?",
+      "reported_companies": [
+        "Microsoft"
+      ],
+      "source_tags": [
+        "software",
+        "microsoft"
+      ],
+      "question_ids": [
+        "PREP-336"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-13.png"
+      ],
+      "sha256": "d830cdef1e8608d7415386b1fabddb7b540ffda62e72163247ff18eb3d35dac2",
+      "original_prompt": "יום אחד התגלגלה שמועה לאוזנו של ראש שבט אינדיאני קטן, שיש מספר נשים בוגדות. ראש הכפר כינס את כל הגברים, וסיפר להם על כך - עוד הוא הוסיף שכל אחד מהגברים יודע מי כל הנשים הבוגדות מלבד אישתו. ראש השבט קבע שכל מי שמגלה שאשתו בוגדת בו, חייב להרוג אותה עם כדור בראש ב-12 בלילה בדיוק. בלילה הראשון לא קרה כלום - רק בלילה הרביעי נשמעו יריות. מיותר לציין שכל האינדיאנים חכמים ביותר. כמה נשים בוגדות היו בכפר?",
+      "reported_companies": [],
+      "source_tags": [
+        "tag-2",
+        "2312313",
+        "logic"
+      ],
+      "question_ids": [
+        "PREP-343"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-14.png"
+      ],
+      "sha256": "dcdd53a2ad814db4685b9000d9614e59e9360c5792649132ebd48da87b41cffc",
+      "original_prompt": "א. בנה מחלק תדר פי 2. ב. בעזרת הרכיב הקודם בנה מחלק תדר פי 4 ופי 8. ג. בעזרת הבלוקים האלו, בנה רכיב המקבל שעון ככניסה ובהתאם לקווי בקרה מוציא חצי תדר, רבע תדר או שמינית תדר. ממש בצורה מינימלית.",
+      "reported_companies": [
+        "Marvell"
+      ],
+      "source_tags": [
+        "sandisk",
+        "asic",
+        "logic-design",
+        "hardware",
+        "marvell"
+      ],
+      "question_ids": [
+        "PREP-216"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-15.png"
+      ],
+      "sha256": "156ec8ddbea8e040b267abb6220018e9bc455cd922586c9a8a0de8c88e3afbbf",
+      "original_prompt": "יש 10 שקים עם 10 מטבעות בכל שק, כאשר ב-9 מהשקים כל המטבעות זהים, במשקל ידוע ובשק אחד יש 10 מטבעות במשקל שונה, ידוע גם הוא. לא ניתן לזהות את השק השונה לפי מראהו החיצוני אלא רק לפי שקילה. לרשותך שקילה אחת בלבד, עליך למצוא איזה שק הוא השונה.",
+      "reported_companies": [
+        "Zoran"
+      ],
+      "source_tags": [
+        "csr",
+        "logic"
+      ],
+      "question_ids": [
+        "PREP-344"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-16.png"
+      ],
+      "sha256": "e01a914295a7e2a81065af5c892404e91ab7dbed3012ac7cd790119d86ba1b1a",
+      "original_prompt": "שני חוטים רצים במקביל. כל אחד משנה לולאה, ושניהם צריכים להמתין אחד לשני במקום מסוים בלולאה (כל אחד בלולאה שלו) ורק אז להמשיך. ממש את זה באמצעות אמצעי סנכרון המוכרים לך. לשם הפשטות, אפשר להניח שהלולאות של שניהם זהות ונקודות ההמתנה שלהם בלולאות הן גם זהות. אסור להשתמש בחוט נוסף.",
+      "reported_companies": [
+        "Microsoft"
+      ],
+      "source_tags": [
+        "software",
+        "microsoft",
+        "algorithms-software"
+      ],
+      "question_ids": [
+        "PREP-337"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-17.png"
+      ],
+      "sha256": "02f6632a12adfe5f78bb7b58c1056668ce4fa354ed0dbb2a6917ea8dfc3f29f6",
+      "original_prompt": "מה זה פונקציות וירטואליות? איך התוכנית יודעת להגיע לפונקציה הנכונה כשהפונקציה הווירטואלית נקראת?",
+      "reported_companies": [
+        "Microsoft"
+      ],
+      "source_tags": [
+        "software",
+        "microsoft"
+      ],
+      "question_ids": [
+        "PREP-243"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-18.png"
+      ],
+      "sha256": "f8b5cd45561e04b99a4ed6d21420835e9c4f3a20992d4fd2f05c1049a1e890ff",
+      "original_prompt": "יש לבנות מכונת מצבים אשר מקבלת מחרוזת המורכבת ממספר סופי של מילים המופרדות ברווח אחד או יותר, אשר מסתיימת ב-\\n. על המערכת להחזיר את מספר המילים השונות במחרוזת.",
+      "reported_companies": [
+        "Marvell"
+      ],
+      "source_tags": [
+        "logic-design",
+        "state-machines",
+        "hardware",
+        "marvell"
+      ],
+      "question_ids": [
+        "PREP-341"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-19.png"
+      ],
+      "sha256": "e7917663b89467014aa45ff5b55772232a56a9404fa8e534ad797afd2c1a0cba",
+      "original_prompt": "שאלה על מעגל פשוט של שני נגדים ומקור מתח, להסביר מה צריך להיות גודל קבל המוצא כדי לקבל הספק מקסימאלי",
+      "reported_companies": [
+        "Elta"
+      ],
+      "source_tags": [
+        "hardware",
+        "elta"
+      ],
+      "question_ids": [
+        "PREP-345"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-11-15-batch20-20.png"
+      ],
+      "sha256": "cda657f45e720b55cf43b7f8edb752a894e74414ab37e2677c16dc3be6a393c4",
+      "original_prompt": "נתונה בלאק בוקס שמכניסים עליה שני מספרים והיא מסדרת אותם min max. ליצור בעזרתה מערכת עבור ארבע כניסות וארבע יציאות. לאחר יצירת המערכת אומרים ש*אחת* הקופסאות תקולה ובמקום להוציא min max הפלט הוא בדיוק הקלט (למשל נכנס 5 משמאל ו-7 מימין אז יוצא 5 משמאל ו-7 מימין ללא קשר למי גדול יותר) או שהקופסא מוציאה את הפלט באלכסון (למשל נכנס 5 משמאל ו-7 מימין אז יוצא 7 משמאל ו-5 מימין ללא קשר למי גדול יותר). התקלה לבחירתך (מקבילה או אלכסונית). איזה קלט צריך להכניס כדי לבדוק האם המערכת תקולה, ואם היא תקולה, איזה מהקופסאות תקולה?",
+      "reported_companies": [
+        "Intel"
+      ],
+      "source_tags": [
+        "validation",
+        "hardware",
+        "intel",
+        "logic-design"
+      ],
+      "question_ids": [
+        "PREP-030"
+      ],
+      "decision": "technical_extension"
+    }
+  ]
+}

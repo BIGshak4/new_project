@@ -1,0 +1,51 @@
+{
+  "started": "2026-11-12T08:25:09.872Z",
+  "seconds": 97.255,
+  "corpus": [
+    {
+      "bank": "interview",
+      "records": 340
+    },
+    {
+      "bank": "fundamentals",
+      "records": 500
+    },
+    {
+      "bank": "multiple_choice",
+      "records": 2540
+    }
+  ],
+  "sourceFields": 54640,
+  "uniqueRenderedFields": 34251,
+  "passed": 414,
+  "failed": 0,
+  "coverage": [
+    {
+      "environment": "desktop-he-light",
+      "fields": 34251,
+      "blocks": 37479,
+      "isolates": 78775,
+      "batches": 172,
+      "questionVersions": 6760
+    },
+    {
+      "environment": "mobile-he-light",
+      "fields": 34251,
+      "blocks": 37479,
+      "isolates": 78775,
+      "batches": 172,
+      "questionVersions": 6760
+    }
+  ],
+  "screenshots": [
+    "desktop-he-light-technical-examples.png",
+    "desktop-he-light-decoder.png",
+    "desktop-he-light-technical-material.png",
+    "mobile-he-light-technical-examples.png",
+    "mobile-he-light-markdown-boundaries.png",
+    "mobile-he-light-decoder.png",
+    "mobile-he-light-technical-material.png"
+  ],
+  "errors": [],
+  "scope": "Actual StudyText, BidiText and TechnicalMaterial bundled from source, compared with an unsegmented Markdown control and handwritten Range/glyph expectations. Fresh isolated headless Edge contexts; loopback fixture only; no accounts or API/database access."
+}

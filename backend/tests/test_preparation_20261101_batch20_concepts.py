@@ -8,6 +8,7 @@ from fractions import Fraction
 from pathlib import Path
 
 import pytest
+from tests.preparation_november15_history import before_nov15
 
 ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / 'interview_preparation'
@@ -77,7 +78,8 @@ def test_archived_five_records_keep_actual_source_companies_and_bilingual_materi
     expected = {240: ('Check Point', 16), 241: ('Rafael', 18), 242: ('Apple', 19),
                 243: ('Apple', 20), 244: ('Mellanox', 14)}
     for number, (company, screenshot) in expected.items():
-        q = archive[f'PREP-{number}']
+        ident = f'PREP-{number}'
+        q = before_nov15("archive:" + ident, archive[ident])
         assert q['version'] == 1 and q['ai_assisted'] and q['reviewed_by'] is None
         assert q['solution_status'] == 'proposed' and q['difficulty'] is q['estimated_minutes'] is None
         assert q['reported_companies'] == [company]

@@ -6,6 +6,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
+
 import pytest
 
 from app.engine.catalog import load_catalog
@@ -56,7 +58,7 @@ def test_all21_sources_are_preserved_and_reversal_pair_shares_identity():
 
 def test_all243_previous_records_assets_translations_and_compiled_values_are_frozen():
     archive=read(BANK/'questions.json')
-    assert len(archive['questions'])==archive['question_count']== 310
+    assert len(archive['questions'])==archive['question_count']== 385
     assert {q['id'] for q in archive['questions'] if int(q['id'][5:])<257}-BATCH1103_BASELINE['records'].keys()==NEW
     assert set(BATCH1103_BASELINE['variant_ids'])==VARIANTS
     assert set(BATCH1103_BASELINE['source_only_ids'])==SOURCE_ONLY
@@ -76,7 +78,7 @@ def test_all243_previous_records_assets_translations_and_compiled_values_are_fro
 
 def test_bilingual_hints_material_and_protected_media_stay_gated():
     catalog=load_catalog(SEEDS)
-    assert len(catalog.questions)== 340
+    assert len(catalog.questions)== 415
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS|SOURCE_ONLY}
     assert set(selected)==NEW|VARIANTS|SOURCE_ONLY
@@ -105,9 +107,9 @@ def test_bilingual_hints_material_and_protected_media_stay_gated():
 
 def test_short_cards_quizzes_and_human_review_registry_are_unchanged():
     for name,previous in BATCH1103_BASELINE['short_card_source_sha256'].items():
-        assert digest(read(ROOT/'apps/web/src/content'/name))==previous
-    assert digest(read(SEEDS/'fundamentals_catalog.json'))==BATCH1103_BASELINE['fundamentals_catalog_sha256']
-    assert digest(read(SEEDS/'duel_quiz.json'))==BATCH1103_BASELINE['quiz_bank_sha256']
+        assert digest(before_current_copy('fundamentals', name, read(ROOT/'apps/web/src/content'/name)))==previous
+    assert digest(before_current_fundamentals_manifest(read(SEEDS/'fundamentals_catalog.json')))==BATCH1103_BASELINE['fundamentals_catalog_sha256']
+    assert digest(before_current_copy('quiz', 'duel_quiz.json', read(SEEDS/'duel_quiz.json')))==BATCH1103_BASELINE['quiz_bank_sha256']
     assert digest(read(SEEDS/'solution_review_attestations.json'))==BATCH1103_BASELINE['review_registry_canonical_sha256']
 
 

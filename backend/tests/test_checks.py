@@ -96,6 +96,25 @@ class TestTruthTableCheck:
         result = check_truth_table(self.spec, "it depends on the clock")
         assert result.passed is None
 
+    def test_editor_table_uses_input_names_and_requested_output(self):
+        spec = {"variables": ["A", "B"], "expression": "A & ~B", "output_name": "Enable"}
+        table = "~~~truth-table\ninputs\tB\tA\noutputs\tY\tEnable\n00\t1\t0\n01\t1\t1\n10\t0\t0\n11\t1\t0\n~~~"
+        assert check_truth_table(spec, table + "\n\nMy explanation").passed is True
+        wrong = check_truth_table(spec, table.replace("01\t1\t1", "01\t1\t0"))
+        assert wrong.passed is False
+        assert wrong.mismatches[0]["inputs"] == {"A": 1, "B": 0}
+        assert check_truth_table(spec, table.replace("Enable", "Spare")).passed is None
+        assert check_truth_table(spec, table.replace("01\t1\t1", "01\t1\t-")).passed is None
+
+    def test_unset_and_wildcard_cells_are_distinct_and_never_coerced_to_binary_values(self):
+        spec = {"variables": ["A"], "outputs": [0, 1], "dont_cares": [0]}
+        table = "~~~truth-table\ninputs\tA\noutputs\tY\n0\t-\n1\t1\n~~~"
+        assert check_truth_table(spec, table).passed is True
+        assert check_truth_table(spec, table.replace("\t-", "\tX")).passed is True
+        assert check_truth_table(spec, table.replace("1\t1", "1\tX")).passed is False
+        assert check_truth_table(spec, table.replace("1\t1", "1\t-")).passed is None
+        assert check_numeric({"expected": 7}, table + "\n\n7").passed is True
+
 
 class TestNumericCheck:
     def test_bare_number_uses_expected_unit(self):

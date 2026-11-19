@@ -38,6 +38,7 @@ from app.api.v1 import (
     avatars,
     billing,
     coins,
+    daily_puzzle,
     duels,
     fundamentals,
     identity,
@@ -111,6 +112,7 @@ app.include_router(billing.router)
 app.include_router(fundamentals.router)
 app.include_router(coins.router)
 app.include_router(duels.router)
+app.include_router(daily_puzzle.router)
 app.include_router(avatars.router)
 app.include_router(identity.router)
 
@@ -363,9 +365,9 @@ async def health(request: Request, db_check: bool = False) -> dict:
     settings = get_settings()
     runtime = getattr(app.state, "runtime", None)
     detailed = health_detail_allowed(settings, request.headers.get("X-Health-Key"))
-    # Render supplies the public Git revision. Restrict the shape so deployment
+    # The release process or Render supplies the public Git revision. Restrict the shape so deployment
     # verification cannot accidentally expose arbitrary environment content.
-    revision = os.environ.get("RENDER_GIT_COMMIT", "")
+    revision = os.environ.get("SOURCE_REVISION") or os.environ.get("RENDER_GIT_COMMIT", "")
     source_revision = revision if re.fullmatch(r"[0-9a-f]{40}", revision) else None
     body = {"status": "ok", "engine_version": ENGINE_VERSION, "source_revision": source_revision,
             "env": settings.env, "llm_provider": settings.llm_provider,

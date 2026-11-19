@@ -98,19 +98,21 @@ function stopsBeforeEnd(code: string) {
 }
 function CodeDemo({ lang, onAction }: DemoProps) {
   const [answer, setAnswer] = useState("");
-  const currentCode = parseTechnicalAnswer(answer).code;
+  const parts = parseTechnicalAnswer(answer);
+  const currentCode = parts.code;
   const corrected = stopsBeforeEnd(currentCode);
   return <>
     <p className={styles.prompt}>{examples[1].prompt[lang]}</p>
     <pre className={styles.code} dir="ltr"><code>{currentCode || buggyCode}</code></pre>
     <button type="button" data-muxi-control="code-fix" onClick={() => {
-      setAnswer(formatTechnicalAnswer(parseTechnicalAnswer(answer).explanation, fixedCode, "c")); onAction("code-edited");
+      setAnswer(formatTechnicalAnswer(parts.explanation, fixedCode, "c", parts.truthTable)); onAction("code-edited");
     }}>{lang === "he" ? "ניסוי התיקון של מוקסי" : "Try Muxi’s correction"}</button>
     {corrected && <p className={styles.result} role="status"><BidiText>{lang === "he" ? "כעת תנאי העצירה הוא לפני i = n. במערך של ארבעה איברים האינדקס האחרון הוא 3." : "This condition stops before i = n. For four items, the last valid index is 3."}</BidiText></p>}
     <AnswerEditor value={answer} onChange={value => {
       setAnswer(value);
       if (stopsBeforeEnd(parseTechnicalAnswer(value).code)) onAction("code-edited");
-    }} lang={lang} disabled={false} codeLanguage="c" starterCode={buggyCode} />
+    }} lang={lang} disabled={false} codeLanguage="c" starterCode={buggyCode}
+      question={{ title: examples[1].title[lang], content: <><p><BidiText>{examples[1].prompt[lang]}</BidiText></p><pre className="code-block" dir="ltr"><code>{buggyCode}</code></pre></> }} />
   </>;
 }
 

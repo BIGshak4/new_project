@@ -218,3 +218,5 @@ Intuition: a full adder splits up to three ones into a pair (carry) and a leftov
 נוספה וריאציה בשתי השפות; הנוסח, הפתרון והרמזים הקודמים נשמרו. הפתרון המורחב ממתין לביקורת מקצועית.
 
 [הווריאציה המלאה / Full variant](prep-001-eight_fa_only-1107n30-addendum.md)
+
+[הרחבה שנקלטה ב־15.11.2026 / November 15 addendum](prep-001-hardware1115c-addendum.md)

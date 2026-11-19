@@ -27,7 +27,8 @@
         "הבדל בביט התחתון בלבד; קלט חתום דורש חוזה אחר.",
         "A=B בכל רוחב מחזיר אפס ב־G.",
         "0 מול הערך המרבי; הבדל רק ב־MSB; הבדל רק ב־LSB.",
-        "בהשוואה החד־ביטית X,Y לעולם אינם אחד יחד."
+        "בהשוואה החד־ביטית X,Y לעולם אינם אחד יחד.",
+        "בסעיף המוקסים A=B חייב להחזיר0. בדיקה ממצה של G אינה אבחון חד־משמעי של כל רכיב פנימי."
       ],
       "en": [
         "Equal words, all zero and all one.",
@@ -35,7 +36,8 @@
         "A difference only at the lowest bit; signed input requires another contract.",
         "A=B returns zero for G at every width.",
         "Zero versus maximum; MSB-only difference; LSB-only difference.",
-        "The one-bit completion never asserts X and Y together."
+        "The one-bit completion never asserts X and Y together.",
+        "The MUX variant returns0 for A=B. Exhausting G is not unique diagnosis of every internal cell."
       ]
     },
     "common_mistakes": {

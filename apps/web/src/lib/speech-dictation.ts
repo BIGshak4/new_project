@@ -58,8 +58,8 @@ export function appendDictatedText(current: string, transcript: string, maxLengt
 
 export function dictationExplanationLimit(answer: string) {
   const parts = parseTechnicalAnswer(answer);
-  // A code-only answer gains a blank line when its first explanation is added.
-  const separator = parts.code && !parts.explanation ? 2 : 0;
+  // The first explanation inserts a blank line beside an existing code block or table.
+  const separator = !parts.explanation && (parts.code || parts.truthTable) ? 2 : 0;
   return Math.max(0, 20000 - (answer.length - parts.explanation.length) - separator);
 }
 

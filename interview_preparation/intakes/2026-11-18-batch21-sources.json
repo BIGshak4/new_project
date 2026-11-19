@@ -1,0 +1,461 @@
+{
+  "received_on": "2026-11-18",
+  "screenshot_count": 21,
+  "source_count": 19,
+  "new_question_count": 10,
+  "technical_extension_count": 4,
+  "provenance_only_count": 6,
+  "affected_question_count": 20,
+  "sources": [
+    {
+      "screenshot": 1,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-01.png"
+      ],
+      "sha256": "9e53c513970c0d62117f579bc2f8fd50c97854f34df91f173c5c4e467569ddc0",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-01.png": "9e53c513970c0d62117f579bc2f8fd50c97854f34df91f173c5c4e467569ddc0"
+      },
+      "original_prompt": "כתבו קוד שבודק תקינות של סוגריים בקלט נתון.",
+      "reported_companies": [
+        "elbit"
+      ],
+      "source_tags": [
+        "altair",
+        "intel",
+        "hardware",
+        "verification",
+        "elbit"
+      ],
+      "question_ids": [
+        "PREP-037"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 2,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-02.png"
+      ],
+      "sha256": "7f11deddc1debe96ed14821157ffff2e1f255a50f58bc8fd3d5415d6e22b2f51",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-02.png": "7f11deddc1debe96ed14821157ffff2e1f255a50f58bc8fd3d5415d6e22b2f51"
+      },
+      "original_prompt": "הסבירו מהו מגבר שרת.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-385"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 3,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-03.png"
+      ],
+      "sha256": "e231926873c27a01a6ea648baa3a59101ac86d255b069e9eec4964b3e8dc697a",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-03.png": "e231926873c27a01a6ea648baa3a59101ac86d255b069e9eec4964b3e8dc697a"
+      },
+      "original_prompt": "כל טסט לוקח 10 מילי שניות. רוצים לחסוך זמני בדיקה על ידי הורדת חלק מהטסטים. איזה טסטים נבחר להוריד וכך לחסוך בזמן יקר ועדיין נוכל למצוא בעיות ביעילות גבוהה?",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-377"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 4,
+      "companion_screenshots": [
+        5
+      ],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-04.png",
+        "sources/2026-11-18-batch21-05.png"
+      ],
+      "sha256": "06aaa22d71595e04b7985ff44d2cd003e83419dc1f1c935db0838d9c21c8f502",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-04.png": "06aaa22d71595e04b7985ff44d2cd003e83419dc1f1c935db0838d9c21c8f502",
+        "sources/2026-11-18-batch21-05.png": "703915d7f5eb66f1c05987d7fbf7d242f61de2a8d6516688e3ba397f5a6fcd98"
+      },
+      "original_prompt": "השאלה חולקה לכמה רמות - מהקל אל הקשה:\nסעיף א: הצע בדיקות רלוונטיות לבדיקת תקינות הרכיב.\nסעיף ב: כתוב בשפת קוד כלשהי מימוש חוקי כלשהו לחלוקת זיכרון תקינה עבור n לקוחות [ממש את func(n,m)]. ניתן לכתוב אפילו חלוקה לגדלים זהים.\nהבהרה: הקלט הוא מספר הלקוחות n וגודל הזיכרון m, והפלט צריך להיות שני מערכים size() ו-adrs() המכילים עבור כל לקוח את גודל הזיכרון שהוקצה לו והכתובת ממנה הוא הוקצה.\nסעיף ג: בהנתן הפונק׳ randomize(a,b) שמקבלת שני פרמטרים והפלט שלה הוא מס׳ רנדומלי בין a ל-b כולל. sort - ממיינת מערך.\nבנה מימוש אחר וכמה שיותר אידיאלי לחלוקת זיכרון תקינה עבור n לקוחות. נסה לייצר את המימוש שמאפשר לבדוק את הרכיב בצורה המיטבית (שהפונק׳ תהיה עם כמה שיותר רנדומליות בלוגיקה של חלוקת הזיכרון).\nלא חובה שכולם יקבלו זיכרון, אם לקוח לא מקבל זיכרון ה-size שלו הוא אפס וה-adrs מאותחל לערך חוקי כלשהו בזיכרון.\n*סעיף ג התחלק לכמה תתי סעיפים בראיון עד להגעה למימוש האולטימטיבי, הדגש היה על זיהוי הבעיות שכל מימוש שנותנים מייצר, והתגברות עליהם עם מימוש אחר/משודרג.",
+      "reported_companies": [],
+      "source_tags": [],
+      "question_ids": [
+        "PREP-378"
+      ],
+      "decision": "new_question",
+      "companion_descriptions": {
+        "5": "הרכיב המדובר MEMORY_ALLOCATOR מכיל זיכרון בגודל M אליו מחוברים N לקוחות שונים היכולים לכתוב ולקרוא ממנו במקביל. חוקי הזיכרון: אסור להקצות זיכרון ללקוח מחוץ לכתובות מערך הזיכרון. אסור שתהיה חפיפה בין אזורי הזיכרון של כל לקוח. הקונפיגורציה מגדירה עבור כל לקוח את כתובת התחלת הזיכרון שהוקצה עבורו וגודל שהוקצה. בתרשים Client 0, Client 1, …, Client n−1, Logic, Reg_configuration, Array [M]."
+      }
+    },
+    {
+      "screenshot": 6,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-06.png"
+      ],
+      "sha256": "c7ce169f497ad1f086829cf11613609d89254df6030946b00489dbcefc8a79c1",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-06.png": "c7ce169f497ad1f086829cf11613609d89254df6030946b00489dbcefc8a79c1"
+      },
+      "original_prompt": "נתון מערך מספרים לא ממוין. מצאו את החציון שלו.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "logic",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-379"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 7,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-07.png"
+      ],
+      "sha256": "126a103d7830be40369e124b59c901f130e719a52646038fb576be294fff0e89",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-07.png": "126a103d7830be40369e124b59c901f130e719a52646038fb576be294fff0e89"
+      },
+      "original_prompt": "איך תסביר לילד מהי רקורסיה?",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "software",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-196"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 8,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-08.png"
+      ],
+      "sha256": "87b44fde577202de61f2c41641164f900741a53d2ed05a9edadc3f1c5cc994db",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-08.png": "87b44fde577202de61f2c41641164f900741a53d2ed05a9edadc3f1c5cc994db"
+      },
+      "original_prompt": "למצוא אלגוריתם שמרנדם מערך בגודל N. להסביר על הסיבוכיות ואז למצוא אלגוריתם שיתן את כל הפרמוטציות של המערך (רקורסיבי).",
+      "reported_companies": [
+        "amazon"
+      ],
+      "source_tags": [
+        "verification",
+        "hardware",
+        "amazon"
+      ],
+      "question_ids": [
+        "PREP-022",
+        "PREP-162"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 9,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-09.png"
+      ],
+      "sha256": "ba021088af8ce31e3e5adf8737fb89cdfce26ed41b3c25c2f270d33d645222e1",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-09.png": "ba021088af8ce31e3e5adf8737fb89cdfce26ed41b3c25c2f270d33d645222e1"
+      },
+      "original_prompt": "חלקו את הגליל לשמונה חלקים זהים בעזרת שלושה חיתוכים בלבד.",
+      "reported_companies": [
+        "elbit"
+      ],
+      "source_tags": [
+        "logic",
+        "elbit"
+      ],
+      "question_ids": [
+        "PREP-382"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-10.png"
+      ],
+      "sha256": "1a28e1301f936f1fdf329fefce2e1268c60beed98d0d3169b7ad49857451c3b7",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-10.png": "1a28e1301f936f1fdf329fefce2e1268c60beed98d0d3169b7ad49857451c3b7"
+      },
+      "original_prompt": "ממשו XOR באמצעות בורר ושערי NOT.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-031"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 11,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-11.png"
+      ],
+      "sha256": "611fd11ec12bdaef6936b4477e743d3f0371a18339663a81031e5dfcd4221ef4",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-11.png": "611fd11ec12bdaef6936b4477e743d3f0371a18339663a81031e5dfcd4221ef4"
+      },
+      "original_prompt": "יש לנו משדר ומקלט, המשדר שולח תווים ברצף והוא מסיים כאשר שולח \"\\\". המשדר יכול לשדר תו כלשהו אבל המקלט מעוניין רק בתווים x ו-y. המקלט יש לו הפונקציות הבאות: push(), pop(), isEmpty(), whatCharIsComing(). הפונקציה האחרונה פשוט מחזירה את התו ששודר אחרון ושום דבר אחר.\nהמטרה היא להחזיר בסוף השידור האם התקבל הרצף x^n y^2n כלומר מספר ה-y-ים הוא פי 2 ממספר ה-x-ים או לא (כלומר false).\nexample1: xxyyyy -> true\nexample2: yyx -> false כי צריך קודם x-ים ואז y-ים.\nexample3: xya -> false כי יש בו תו שהוא לא x ולא y.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel",
+        "software"
+      ],
+      "question_ids": [
+        "PREP-380"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 12,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-12.png"
+      ],
+      "sha256": "ee950676f2f32822fb9fb98c85f2ed8b146f9177e1de3e6bed4532bd7de7def2",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-12.png": "ee950676f2f32822fb9fb98c85f2ed8b146f9177e1de3e6bed4532bd7de7def2"
+      },
+      "original_prompt": "כתוב פונקציה שמקבלת כקלט את המספרים 4 או 7 ומחזירה את המספר השני בהתאם. זאת אומרת: אם הפונקציה קיבלה את הספרה 4 היא תחזיר 7 ולהפך. לאחר מכן עשו זאת בלי להשתמש בתנאים כמו if.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "software",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-119"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 13,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-13.png"
+      ],
+      "sha256": "e55f8a938062de66ad4493c2b6f3131c168bbdc5dfff8586dedbedaa1732f341",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-13.png": "e55f8a938062de66ad4493c2b6f3131c168bbdc5dfff8586dedbedaa1732f341"
+      },
+      "original_prompt": "ממשו את F=NOT(AB+C) בעזרת CMOS.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "logic",
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-386"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 14,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-14.png"
+      ],
+      "sha256": "2291dee0e00d01b862c5a34618514ece05439d3d7d65ca4b8c70cb48ab10f549",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-14.png": "2291dee0e00d01b862c5a34618514ece05439d3d7d65ca4b8c70cb48ab10f549"
+      },
+      "original_prompt": "מהו טרנזיסטור MOS? ציירו והסבירו את מצבי הפעולה.",
+      "reported_companies": [
+        "kla"
+      ],
+      "source_tags": [
+        "hardware",
+        "kla"
+      ],
+      "question_ids": [
+        "PREP-115"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 15,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-15.png"
+      ],
+      "sha256": "87e6af352332638ce50051f5afabfb3b3befe2547e4f8fc8b7c97023be3117f2",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-15.png": "87e6af352332638ce50051f5afabfb3b3befe2547e4f8fc8b7c97023be3117f2"
+      },
+      "original_prompt": "יש שעון אנלוגי רגיל כאשר באמצע השעון יש מחט דקה שעליה מונח השעון. רוצים לשים 5 אבנים על שעות עגולות בלבד כך שהשעון יעמוד בצורה יציבה.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-085"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 16,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-16.png"
+      ],
+      "sha256": "ebda89d8e0830cf75f46e358bd3097ca91f8a55f8b5de7be90907e9636220f1d",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-16.png": "ebda89d8e0830cf75f46e358bd3097ca91f8a55f8b5de7be90907e9636220f1d"
+      },
+      "original_prompt": "בחפיסה 13 קלפים, ובה מלכים, מלכות, אסים ונסיכים. יש לפחות אחד מכל סוג וכל הכמויות שונות. מספר המלכים והמלכות ביחד 5, ומספר הנסיכים והמלכות ביחד 6. מאיזה סוג יש רק שני קלפים?",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-383"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 17,
+      "companion_screenshots": [
+        18
+      ],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-17.png",
+        "sources/2026-11-18-batch21-18.png"
+      ],
+      "sha256": "c81cf432ba86f5ee936d42b4757273a2a3f499524e974cfd3d8437aa352847f7",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-17.png": "c81cf432ba86f5ee936d42b4757273a2a3f499524e974cfd3d8437aa352847f7",
+        "sources/2026-11-18-batch21-18.png": "a773ed135e5e3bdfbed34b74bbf9fd7b3f3de7b6d567821755685142cc1058c9"
+      },
+      "original_prompt": "אתה צריך למלא לוח טטריס בגודל M על L. M מייצג את רוחב הלוח ו-L את אורך הלוח. יש לך פונקציה נתונה get_next שמביאה לך כל פעם צורה אחרת עם רוחב m ואורך l. עליך למלא כל פעם שורה עד הסוף ולאחר מכן לעבור לשורה הבאה (שמתחילה בהתאם ל-l המקסימלי מהשורה הקודמת) וכך עד שכל הלוח מלא ככל הניתן. כתוב קוד אשר ממלא את הלוח, שים לב למקרי קצה.",
+      "reported_companies": [],
+      "source_tags": [],
+      "question_ids": [
+        "PREP-381"
+      ],
+      "decision": "new_question",
+      "companion_descriptions": {
+        "18": "תרשים נלווה של לוח M על L ובו מלבנים סמוכים בגבהים וברוחבים שונים. השורה הבאה מתחילה בגובה המלבן הגבוה בשורה שלפניה."
+      }
+    },
+    {
+      "screenshot": 19,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-19.png"
+      ],
+      "sha256": "576d9f354f05b01e4ba90589d998b0c0fb4c61e1a19359149df5a352edd83d20",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-19.png": "576d9f354f05b01e4ba90589d998b0c0fb4c61e1a19359149df5a352edd83d20"
+      },
+      "original_prompt": "ממשו MUX 2:1 באמצעות שערים לוגיים בלבד. השתמשו רק ברכיב שמימשתם כדי לבנות MUX 4:1.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "apple",
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-214"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 20,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-20.png"
+      ],
+      "sha256": "9badbb4ddde0c13a7ae20b4fa33226e8eba8ab86b9184ea7f1b73b93e2725241",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-20.png": "9badbb4ddde0c13a7ae20b4fa33226e8eba8ab86b9184ea7f1b73b93e2725241"
+      },
+      "original_prompt": "1. יש 2 רגיסטרים, R1, R2. תעשה ביניהם השמה בעזרת איזה פקודה שתבחר. 2. לוקחים לך את פקודה mov, כיצד תבצע את ההשמה? 3. כעת לפתור את בעיית ההשמה רק בעזרת: inc, dec, jmpz.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "hardware",
+        "intel"
+      ],
+      "question_ids": [
+        "PREP-227"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 21,
+      "companion_screenshots": [],
+      "archive_paths": [
+        "sources/2026-11-18-batch21-21.png"
+      ],
+      "sha256": "61e824842f99fbe496ae20f622b9c75f322dba2671f64d729e7e86d77e574cb9",
+      "archive_sha256": {
+        "sources/2026-11-18-batch21-21.png": "61e824842f99fbe496ae20f622b9c75f322dba2671f64d729e7e86d77e574cb9"
+      },
+      "original_prompt": "נתונים שני שעוני חול, אחד של שבע דקות ואחד של ארבע דקות. מדדו חמש־עשרה דקות.",
+      "reported_companies": [
+        "intel"
+      ],
+      "source_tags": [
+        "logic",
+        "intel",
+        "intel-2"
+      ],
+      "question_ids": [
+        "PREP-384"
+      ],
+      "decision": "new_question"
+    }
+  ]
+}

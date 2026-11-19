@@ -1,0 +1,2832 @@
+{
+  "date": "2026-11-12",
+  "scope": "All multiple-choice catalog questions, options, and rationale in Hebrew and English.",
+  "method": {
+    "generated_review": "Read every distinct paired prose/option/rationale wording. Only numerical substitutions were deduplicated; different wording was retained. All generated cases then passed structural and oracle checks.",
+    "preserved_review": "Read all 40 legacy draft and 50 pilot records, including all localized choices and rationale.",
+    "professional_review": "AI copy and bilingual equivalence review; no human professional attestation."
+  },
+  "coverage": {
+    "questions": 2540,
+    "approved_linked_variants": 2500,
+    "linked_sources": 500,
+    "legacy_drafts": 40,
+    "generated_variants": 2450,
+    "literal_preserved_records_reviewed": 90,
+    "literal_preserved_fields_reviewed": 1080,
+    "distinct_generated_wordings_reviewed": 4995,
+    "unique_wordings_by_shard": {
+      "hardware_basic": 474,
+      "hardware_advanced": 741,
+      "hardware_400": 558,
+      "hardware_500": 296,
+      "reasoning": 850,
+      "reasoning_400": 418,
+      "reasoning_500": 188,
+      "code": 578,
+      "code_400": 576,
+      "code_500": 316
+    },
+    "all_localized_fields_checked": 30480
+  },
+  "changes": {
+    "question_count": 690,
+    "localized_fields": 1018,
+    "generated_questions": 664,
+    "release_hash_fields_renewed": 1328,
+    "control_fields_changed": 0,
+    "keys": [
+      {
+        "key": "quiz-numbers-twos-complement-minus-one",
+        "fields": 2
+      },
+      {
+        "key": "quiz-numbers-signed-range-8bit",
+        "fields": 5
+      },
+      {
+        "key": "quiz-numbers-shift-left-multiply",
+        "fields": 1
+      },
+      {
+        "key": "quiz-comb-tristate-bus",
+        "fields": 1
+      },
+      {
+        "key": "quiz-code-unsigned-wrap",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-09-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-09-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-09-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-09-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-10-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-10-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-10-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-10-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-10-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-15-v5",
+        "fields": 4
+      },
+      {
+        "key": "quick-hw-21-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-21-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-21-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-21-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-21-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-40-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-40-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-40-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-40-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-40-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-61-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-100-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-103-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-103-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-103-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-103-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-103-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-104-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-104-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-104-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-104-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-104-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-109-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-109-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-109-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-109-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-109-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-11-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-11-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-11-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-11-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-11-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-111-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-111-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-111-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-111-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-111-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-117-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-117-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-117-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-117-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-117-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-126-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-126-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-126-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-126-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-126-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-130-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-130-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-130-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-130-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-130-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-133-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-133-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-133-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-133-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-133-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-138-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-138-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-138-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-138-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-138-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-140-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-140-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-140-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-140-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-140-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-141-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-141-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-141-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-141-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-141-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-143-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-143-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-143-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-143-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-143-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-145-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-145-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-145-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-145-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-145-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-149-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-149-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-152-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-152-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-152-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-152-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-152-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-153-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-153-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-153-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-153-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-153-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-154-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-154-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-154-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-154-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-154-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-155-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-155-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-155-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-155-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-155-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-156-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-156-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-156-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-156-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-156-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-157-v1",
+        "fields": 3
+      },
+      {
+        "key": "quick-hw-157-v2",
+        "fields": 3
+      },
+      {
+        "key": "quick-hw-157-v3",
+        "fields": 3
+      },
+      {
+        "key": "quick-hw-157-v4",
+        "fields": 3
+      },
+      {
+        "key": "quick-hw-157-v5",
+        "fields": 3
+      },
+      {
+        "key": "quick-hw-158-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-158-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-158-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-158-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-158-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-159-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-159-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-159-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-159-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-159-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-161-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-161-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-161-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-161-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-161-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-162-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-162-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-162-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-162-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-162-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-166-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-166-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-166-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-166-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-166-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-167-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-167-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-167-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-167-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-167-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-168-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-168-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-168-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-168-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-168-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-172-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-172-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-172-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-172-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-172-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-175-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-175-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-175-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-175-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-175-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-177-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-177-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-177-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-177-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-177-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-178-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-178-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-178-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-178-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-178-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-183-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-183-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-183-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-183-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-183-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-185-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-185-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-185-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-185-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-187-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-187-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-187-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-187-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-187-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-190-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-190-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-190-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-190-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-190-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-192-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-192-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-192-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-192-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-192-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-198-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-198-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-198-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-198-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-198-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-200-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-200-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-200-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-200-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-200-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-201-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-201-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-201-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-201-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-201-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-203-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-203-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-203-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-203-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-203-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-207-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-207-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-207-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-207-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-207-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-208-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-208-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-208-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-208-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-208-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-220-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-220-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-220-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-220-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-220-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-222-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-222-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-222-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-222-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-222-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-223-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-223-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-223-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-223-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-223-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-228-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-228-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-228-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-228-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-228-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-231-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-231-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-231-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-231-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-231-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-233-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-233-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-233-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-236-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-236-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-236-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-236-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-236-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-237-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-237-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-237-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-237-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-237-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-238-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-238-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-238-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-238-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-238-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-239-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-239-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-239-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-239-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-239-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-245-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-245-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-245-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-245-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-245-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-29-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-29-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-29-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-29-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-29-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-39-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-39-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-39-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-39-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-39-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-41-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-41-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-41-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-41-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-41-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-42-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-42-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-42-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-42-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-42-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-44-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-44-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-44-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-44-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-44-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-48-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-48-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-48-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-48-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-48-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-49-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-49-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-49-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-49-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-49-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-51-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-51-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-52-v1",
+        "fields": 3
+      },
+      {
+        "key": "quick-hw-52-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-52-v3",
+        "fields": 3
+      },
+      {
+        "key": "quick-hw-52-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-52-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-60-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-60-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-61-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-61-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-61-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-61-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-61-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-62-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-66-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-71-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-71-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-71-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-71-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-71-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-72-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-72-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-72-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-72-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-72-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-74-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-74-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-74-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-74-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-74-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-77-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-77-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-77-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-77-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-77-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-80-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-80-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-80-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-80-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-80-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-88-v1",
+        "fields": 4
+      },
+      {
+        "key": "quick-hw-88-v2",
+        "fields": 4
+      },
+      {
+        "key": "quick-hw-88-v3",
+        "fields": 4
+      },
+      {
+        "key": "quick-hw-88-v4",
+        "fields": 4
+      },
+      {
+        "key": "quick-hw-88-v5",
+        "fields": 4
+      },
+      {
+        "key": "quick-hw-90-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-hw-91-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-91-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-91-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-91-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-91-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-93-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-98-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-98-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-98-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-98-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-98-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-99-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-99-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-99-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-99-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-hw-99-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-01-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-01-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-01-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-01-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-01-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-09-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-09-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-09-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-09-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-09-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-101-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-101-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-101-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-101-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-101-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-105-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-105-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-105-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-105-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-105-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-107-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-107-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-107-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-107-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-107-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-111-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-111-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-111-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-111-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-111-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-115-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-115-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-115-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-115-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-115-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-118-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-118-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-118-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-118-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-118-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-119-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-119-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-119-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-119-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-119-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-13-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-13-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-13-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-13-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-13-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-141-v1",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-141-v2",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-141-v3",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-141-v4",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-141-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-142-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-142-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-142-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-142-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-142-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-143-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-143-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-143-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-143-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-143-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-144-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-144-v2",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-144-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-144-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-144-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-147-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-147-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-147-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-147-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-147-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-149-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-149-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-149-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-149-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-149-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-15-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-15-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-15-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-15-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-15-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-150-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-150-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-150-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-150-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-150-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-151-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-151-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-151-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-151-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-151-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-154-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-154-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-154-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-154-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-154-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-155-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-155-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-155-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-155-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-155-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-156-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-156-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-156-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-156-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-156-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-157-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-157-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-157-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-157-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-157-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-159-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-159-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-159-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-159-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-159-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-160-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-160-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-160-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-160-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-160-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-161-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-161-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-161-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-161-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-161-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-163-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-163-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-163-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-163-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-163-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-164-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-164-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-164-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-164-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-164-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-166-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-166-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-166-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-166-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-166-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-167-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-167-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-167-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-167-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-167-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-171-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-171-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-171-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-171-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-171-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-173-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-173-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-173-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-173-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-173-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-175-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-175-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-175-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-175-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-175-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-176-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-176-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-176-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-176-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-176-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-180-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-180-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-180-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-180-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-186-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-188-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-190-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-191-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-192-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-193-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-195-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-197-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-200-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-202-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-202-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-202-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-202-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-202-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-208-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-208-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-208-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-208-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-208-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-209-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-209-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-209-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-209-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-209-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-217-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-217-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-217-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-217-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-217-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-220-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-220-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-220-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-220-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-220-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-222-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-222-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-222-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-222-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-222-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-224-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-224-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-224-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-224-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-224-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-231-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-231-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-231-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-231-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-231-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-236-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-240-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-240-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-240-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-242-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-242-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-243-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-243-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-244-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-246-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-246-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-246-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-246-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-246-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-248-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-248-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-248-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-248-v4",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-248-v5",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-25-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-25-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-25-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-25-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-26-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-26-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-26-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-26-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-26-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-36-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-36-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-36-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-36-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-36-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-38-v1",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-38-v2",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-38-v3",
+        "fields": 4
+      },
+      {
+        "key": "quick-sw-38-v4",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-38-v5",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-40-v1",
+        "fields": 4
+      },
+      {
+        "key": "quick-sw-40-v2",
+        "fields": 4
+      },
+      {
+        "key": "quick-sw-40-v3",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-40-v4",
+        "fields": 4
+      },
+      {
+        "key": "quick-sw-40-v5",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-58-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-58-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-58-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-58-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-58-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-60-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-60-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-60-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-60-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-60-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-65-v1",
+        "fields": 4
+      },
+      {
+        "key": "quick-sw-65-v2",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-65-v3",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-65-v4",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-65-v5",
+        "fields": 3
+      },
+      {
+        "key": "quick-sw-67-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-67-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-67-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-67-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-67-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-74-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-74-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-74-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-74-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-74-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-81-v1",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-81-v2",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-81-v3",
+        "fields": 2
+      },
+      {
+        "key": "quick-sw-81-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-81-v5",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-86-v1",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-86-v2",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-86-v3",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-86-v4",
+        "fields": 1
+      },
+      {
+        "key": "quick-sw-86-v5",
+        "fields": 1
+      }
+    ]
+  },
+  "verification": {
+    "editorial_validation_errors": 0,
+    "bilingual_numeric_flags_reviewed": 79,
+    "new_numeric_reviews": 19,
+    "oracle_inputs_expected_values_options_methods_unchanged": true,
+    "oracle_correct_text_only_changes": 7,
+    "replacement_characters_direction_overrides_or_Hebrew_inside_English": 0,
+    "demo_variant_count": 50,
+    "live_writes": false,
+    "focused_tests": {
+      "passed": 1626,
+      "failed": 0,
+      "seconds": 13.7,
+      "files": [
+        "test_duel_quiz_content.py",
+        "test_duel_quiz_full_bank.py",
+        "test_duel_quiz_basic_oracles.py",
+        "test_fundamentals_hardware_400.py",
+        "test_fundamentals_hardware_500.py",
+        "test_fundamentals_reasoning_400.py",
+        "test_fundamentals_reasoning_500.py",
+        "test_fundamentals_code_400.py",
+        "test_fundamentals_code_500.py"
+      ]
+    },
+    "assembler_check": "passed",
+    "demo_fixture_check": "passed",
+    "diff_whitespace_check": "passed",
+    "frozen_history_round_trip": "passed"
+  },
+  "seed_sha256": "b6d2026bdd0450af19a5932664fb295cf545e301e3a2481d907dd975ef898b68"
+}

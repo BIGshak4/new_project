@@ -7,7 +7,11 @@ import type { Lang } from "./auth";
 import { revealDelay, timerTone } from "../lib/ui";
 import { AnimatePresence, Pop, Reveal, motion, spring, useReducedMotion } from "./ui/motion";
 import { QuestionActions } from "./question-actions";
+import { QuestionPrompt } from "./question-prompt";
+import { sectionQuestionPrompt } from "../lib/question-prompt-sections";
+import { learnerCopy } from "../lib/learner-copy";
 import { AnswerEditor } from "./answer-editor";
+import { SubmittedAnswerContent } from "./submitted-answer-content";
 import { VisualAnswer } from "./visual-answer";
 import { emptyVisual, hasVisual, type VisualAnswer as Visual } from "../lib/circuit";
 import {
@@ -388,6 +392,8 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
   }
 
   const turn = interview.current_turn;
+  const prompt = turn && <InterviewQuestionText turn={turn} lang={lang} contentLang={interview.language} />;
+  const displayedHints = (turn?.hints ?? []).map(h => ({ level: h.level, text: learnerCopy(h.text) })).filter(h => h.text.trim());
   const secondsLeft = deadline ? Math.max(0, Math.round((deadline - now) / 1000)) : interview.remaining_min * 60;
   const tone = timerTone(secondsLeft);
   const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
@@ -431,13 +437,13 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
               {turn.subject_switch && <span className="small muted">{t("נושא חדש", "new subject")}</span>}
             </span>
           </div>
+          {prompt}
           <QuestionActions key={`${interviewId}-${turn.index}`} api={turn.question_key ? api : undefined}
-            questionKey={turn.question_key ?? `interview-${interviewId}-${turn.index}`} questionTitle={turn.question}
+            questionKey={turn.question_key ?? `interview-${interviewId}-${turn.index}`} questionTitle={sectionQuestionPrompt(turn.question, interview.language, turn.question_key ?? undefined).main}
             lang={lang} context="interview" />
-          <InterviewQuestionText text={turn.question} />
-          {turn.hints.length > 0 && (
+          {displayedHints.length > 0 && (
             <div className="interview-hints">
-              {turn.hints.map((h) => (
+              {displayedHints.map((h) => (
                 <p key={h.level} className="hint" dir={proseDirection(h.text)}>
                   <Lightbulb size={14} /> <BidiText>{h.text}</BidiText>
                 </p>
@@ -456,13 +462,14 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
                   "Write your answer below. You can add code, a diagram, or a photo of your work.",
                 )}
               </p>
-              <AnswerEditor key={`answer-${turn.index}`} value={answer} onChange={setAnswer} lang={lang} disabled={busy} codeLanguage={null} starterCode={null} />
+              <AnswerEditor key={`answer-${turn.index}`} value={answer} onChange={setAnswer} lang={lang} disabled={busy} codeLanguage={null} starterCode={null}
+                question={{ title: turn.skill_label, content: prompt }} />
               <VisualAnswer
                 key={`visual-${turn.index}`}
                 value={visual}
                 onChange={setVisual}
                 lang={lang}
-                question={{ title: turn.skill_label, content: <InterviewQuestionText text={turn.question} /> }}
+                question={{ title: turn.skill_label, content: prompt }}
                 attemptId={interviewId}
                 userId={userId}
                 disabled={busy}
@@ -489,7 +496,7 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
                 </p>
               )}
               <div className="row interview-actions">
-                <button className="primary" disabled={busy || uploading || (!answer.trim() && !hasVisual(visual))} onClick={() => void submit()}>
+                <button className="primary" disabled={busy || uploading || answer.length > 20000 || (!answer.trim() && !hasVisual(visual))} onClick={() => void submit()}>
                   {busy ? t("שולחים…", "Sending…") : t("שליחת התשובה", "Send answer")} <Arrow size={16} />
                 </button>
                 {interview.can_hint && secondsLeft > 0 && (
@@ -513,12 +520,13 @@ function InterviewRoom({ api, lang, userId, interviewId, onBack, onProgress }: P
             {interview.turns.length} {t("שאלות שנענו", "questions answered")}
           </summary>
           <ol>
-            {interview.turns.map((x) => (
-              <li key={x.index} dir={proseDirection(`${x.skill_label} ${x.question}`)}>
-                <span className="badge"><BidiText>{x.skill_label}</BidiText></span>{" "}<BidiText>{x.question.slice(0, 120)}</BidiText>
-                {x.question.length > 120 ? "…" : ""}
-              </li>
-            ))}
+            {interview.turns.map(x => {
+              const { main } = sectionQuestionPrompt(x.question, interview.language, x.question_key ?? undefined);
+              return <li key={x.index} dir={proseDirection(`${x.skill_label} ${main}`)}>
+                <span className="badge"><BidiText>{x.skill_label}</BidiText></span>{" "}<BidiText>{main.slice(0, 120)}</BidiText>
+                {main.length > 120 ? "…" : ""}
+              </li>;
+            })}
           </ol>
         </details>
       )}
@@ -653,7 +661,7 @@ function InterviewReportView({
             <ol className="report-turns">
               {report.turns.map((x, i) => (
                 <Reveal as="li" className="report-turn" key={x.index} delay={revealDelay(i, !!reduced, 0.08, 0.5)}>
-                  <TurnCard turn={x} lang={lang} />
+                  <TurnCard turn={x} lang={lang} contentLang={interview.language} />
                 </Reveal>
               ))}
             </ol>
@@ -665,11 +673,12 @@ function InterviewReportView({
 }
 
 /** Shared by the live question and the completed report so both keep formula direction intact. */
-function InterviewQuestionText({ text }: { text: string }) {
-  return <p className="interview-prompt" dir={proseDirection(text)}><BidiText>{text}</BidiText></p>;
+function InterviewQuestionText({ turn, lang, contentLang }: { turn: InterviewTurn; lang: Lang; contentLang: Lang }) {
+  return <QuestionPrompt text={turn.question} questionKey={turn.question_key} additionalWordings={turn.additional_wordings}
+    lang={lang} contentLang={contentLang} mainClassName="interview-prompt" />;
 }
 
-export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang }) {
+export function TurnCard({ turn: x, lang, contentLang = lang }: { turn: InterviewTurn; lang: Lang; contentLang?: Lang }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   return (
     <>
@@ -686,10 +695,10 @@ export function TurnCard({ turn: x, lang }: { turn: InterviewTurn; lang: Lang })
           )}
         </span>
       </div>
-      <InterviewQuestionText text={x.question} />
-      {x.answer && <p className="report-answer" dir={proseDirection(x.answer)}><BidiText>{x.answer}</BidiText></p>}
+      <InterviewQuestionText turn={x} lang={lang} contentLang={contentLang} />
+      {x.answer && <div className="report-answer"><SubmittedAnswerContent answer={x.answer} lang={lang} /></div>}
       {x.visual && hasVisual(x.visual) && <VisualAnswer value={x.visual} lang={lang}
-        question={{ title: x.skill_label, content: <InterviewQuestionText text={x.question} /> }} />}
+        question={{ title: x.skill_label, content: <InterviewQuestionText turn={x} lang={lang} contentLang={contentLang} /> }} />}
       {x.flags?.includes("circuit_assessed") && (
         <span className="chip">
           <Cpu size={14} /> {t("המעגל שציירתם נבדק", "Your circuit was assessed")}

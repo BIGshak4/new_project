@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "oracle": "Enumerate the four canonical values by independent bit constraints and verify result differs from both inputs",
+  "python_cases": 107376,
+  "exhaustive_widths": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "branch_free_ast_checked": true,
+  "native_c_compiled": true,
+  "native_c_cases": 165536,
+  "compiler": "Zig C11 -O2 -Wall -Wextra -Werror",
+  "compiler_constant_time_proof": false,
+  "question_id": "PREP-361",
+  "human_expert_review": false,
+  "source_sha256": {
+    "solutions/prep_361_distinct_from_two_uint32.py": "13bc2b00f8d5573733311b4ed8b447b459e3437a7f1cef55211ed47174891e23",
+    "solutions/prep_361_distinct_from_two_uint32.c": "9124b2dc30217742655d40069bdcaae224de59448cafd49b521704f4eab737ca"
+  }
+}

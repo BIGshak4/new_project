@@ -12,8 +12,9 @@ export type HelperTopicId =
 export const helperTargets = {
   explanation: '[data-muxi-control="explanation-open"], [data-muxi-control="answer-explanation"]',
   code: '[data-muxi-control="code-input"], [data-muxi-control="code-open"]',
+  table: '[data-muxi-control="truth-table-open"]',
   "run-code": '[data-muxi-control="code-execute"], [data-muxi-control="code-open"]',
-  circuit: '[data-muxi-control="circuit-expand"], [data-muxi-control="circuit-open"]',
+  circuit: '[data-muxi-control="circuit-fullscreen"], [data-muxi-control="circuit-open"]',
   photos: '[data-muxi-control="photos-open"], .visual-answer button[aria-controls$="-photos"]',
   goal: '[data-muxi-control="goal-edit"], .dashboard-edit-goal, [data-goal-summary] button',
   feedback: "#feedback",
@@ -26,6 +27,7 @@ export const helperDestinations = {
   fundamentals: "/?view=fundamentals&nav=1",
   interview: "/?view=interview&nav=1",
   games: "/games",
+  dailyPuzzle: "/games/daily-puzzle",
   shop: "/games/shop",
 } as const;
 
@@ -118,7 +120,7 @@ export const helperTopics: Readonly<Record<HelperTopicId, HelperTopic>> = {
   },
   practice: {
     title: text("נמצא דרך נוחה לפתור", "Find a comfortable way to solve"),
-    messages: [text("כל כלי התשובה מתחיל מקופל. פתחו בכפתור את מה שמתאים לכם, הסבר, קוד, מעגל או תמונות, ושלבו אותם באותה תשובה. קיפול הכלי שומר את התוכן שכבר כתבתם.", "Answer tools start collapsed. Use their buttons to open the explanation, code, circuit or images you need and combine them in one answer. Collapsing a tool keeps the content you entered.")],
+    messages: [text("אפשר לשלב הסבר, קוד, טבלת אמת, מעגל ותמונות באותה תשובה. פתחו את הכלים שתרצו לעבוד בהם. התוכן נשמר גם כשמקפלים כלי.", "You can combine an explanation, code, a truth table, a circuit and images in one answer. Open the tools you want to use. Your work is kept when you collapse a tool.")],
     choices: [topic("לנסח את דרך הפתרון", "Explain my reasoning", "explanation"), topic("לפתור שאלת תוכנה", "Solve a software question", "software"), topic("לפתור שאלת חומרה", "Solve a hardware question", "hardware"), topic("לצרף תמונת פתרון", "Attach an answer image", "attachments")],
   },
   explanation: {
@@ -138,7 +140,7 @@ export const helperTopics: Readonly<Record<HelperTopicId, HelperTopic>> = {
   },
   "code-start": {
     title: text("פותחים את עורך הקוד", "Open the code editor"),
-    messages: [text("לחצו על ״קוד, נוסחה או טבלת אמת״ ובחרו שפה. יש C, C++, Python, JavaScript ושפות HDL, וגם מצב טקסט לנוסחאות ופסאודו־קוד. אם לשאלה יש קוד התחלתי, אפשר להעתיק אותו לעורך.", "Choose “Code, formula, or truth table” and select a language. The editor supports C, C++, Python, JavaScript, HDL and plain text for formulas or pseudocode. If the question includes starter code, you can copy it into the editor."), text("Ctrl+Space פותח הצעות השלמה. כדי לצאת מהעורך במקלדת, לחצו Esc ואז Tab. ההסבר והקוד נשמרים יחד כחלק מהתשובה.", "Ctrl+Space opens completions. Press Esc, then Tab to leave the editor using the keyboard. Reasoning and code are saved together as part of your answer.")],
+    messages: [text("פתחו ״קוד או נוסחה״ ובחרו שפה. אם יש בשאלה קוד התחלתי, אפשר להעתיק אותו לעורך. לעריכה בחלון גדול יותר לחצו ״מסך מלא״.", "Open Code or formula and choose a language. If the question includes starter code, you can copy it into the editor. Choose Full screen for more room."), text("כדי לכתוב טבלת אמת, פתחו ״טבלת אמת״ בכלי התשובה. תנו שמות לקלטים ולפלטים ובחרו את ערכי הפלט בכל שורה.", "To write a truth table, open Truth table in the answer tools. Name the input and output columns and select the output values in each row.")],
     choices: [action("להראות לי את עורך הקוד", "Show me the code editor", { type: "focus", target: "code" }), topic("עכשיו לבדוק את הקוד", "Now test the code", "code-run")],
   },
   "code-run": {
@@ -148,12 +150,12 @@ export const helperTopics: Readonly<Record<HelperTopicId, HelperTopic>> = {
   },
   hardware: {
     title: text("מדרישות למעגל", "From requirements to a circuit"),
-    messages: [text("התחילו מהכניסות, הפלטים ורוחב האותות. אחר כך בחרו איך לתאר את הפתרון: הסבר, שרטוט מעגל, קוד HDL או תמונה של פתרון בכתב יד.", "Start with inputs, outputs and signal widths. Then choose how to express your solution: reasoning, a circuit drawing, HDL code or an image of handwritten work.")],
-    choices: [topic("לבנות ולחבר מעגל", "Build and wire a circuit", "circuit-build"), topic("לבדוק את ההתנהגות שלו", "Check how it behaves", "circuit-check"), action("להגיע לעורך בשביל HDL", "Find the editor for HDL", { type: "focus", target: "code" }), topic("רמזים, פתרון ומשוב", "Hints, references and feedback", "feedback")],
+    messages: [text("התחילו מהכניסות ומהפלטים של המעגל. בטבלת אמת אפשר לתת שם לכל אות ולמלא את הפלט לכל צירוף קלטים. אפשר גם לשרטט את המעגל או לכתוב קוד HDL.", "Start with the inputs and outputs. In a truth table, name each signal and fill in the outputs for each input combination. You can also draw the circuit or write HDL code.")],
+    choices: [topic("לבנות ולחבר מעגל", "Build and wire a circuit", "circuit-build"), action("למלא טבלת אמת", "Fill in a truth table", { type: "focus", target: "table" }), action("להגיע לעורך בשביל HDL", "Find the editor for HDL", { type: "focus", target: "code" }), topic("רמזים, פתרון ומשוב", "Hints, references and feedback", "feedback")],
   },
   "circuit-build": {
     title: text("בונים את השרטוט", "Build your drawing"),
-    messages: [text("בחרו ״שרטוט מעגל לוגי״ באזור התשובה. הוסיפו רכיבים וחברו בין הפינים בגרירה, או השתמשו ברשימות החיבור שמתחת ללוח. בחירת רכיב פותחת את ההגדרות שלו.", "Choose “Draw a logic circuit” in the answer area. Add components and drag between pins, or use the connection lists below the canvas. Select a component to see its settings."), text("״הרחבת הלוח״ מפנה מקום לעבודה. אפשר לבטל שינוי, ולהוריד עותק של השרטוט. אם נוח יותר לעבוד על נייר, אפשר לצרף תמונת פתרון באזור התשובה.", "“Expand drawing” gives you more working space. You can undo changes and download a copy of the circuit. If paper works better for you, attach an answer image in the answer area.")],
+    messages: [text("בחרו ״שרטוט מעגל לוגי״ באזור התשובה. הוסיפו רכיבים וחברו בין הפינים בגרירה, או השתמשו ברשימות החיבור שמתחת ללוח. בחירת רכיב פותחת את ההגדרות שלו.", "Choose “Draw a logic circuit” in the answer area. Add components and drag between pins, or use the connection lists below the canvas. Select a component to see its settings."), text("ב״מסך מלא״ אפשר לקרוא את השאלה בזמן השרטוט. לחצו על ״חזרה לתשובה״ כדי להמשיך לעבוד בעמוד השאלה. אפשר גם לבטל שינוי ולהוריד עותק של השרטוט.", "Choose Full screen to read the question as you draw. Select Back to answer to continue on the question page. You can also undo changes and download a copy of the drawing.")],
     choices: [action("להראות לי את אזור השרטוט", "Show me the drawing area", { type: "focus", target: "circuit" }), topic("איך בודקים את המעגל?", "How do I check the circuit?", "circuit-check")],
   },
   "circuit-check": {
@@ -213,8 +215,8 @@ export const helperTopics: Readonly<Record<HelperTopicId, HelperTopic>> = {
   },
   games: {
     title: text("קופצים למשחקים", "Head to Games"),
-    messages: [text("באזור המשחקים אפשר גם לנסות לבד שאלה מהמאגר האמיתי של השאלות האמריקאיות, לבדוק את התשובה ולקבל הסבר, בלי להוציא מטבעות. בדו־קרב שני חברים עונים על אותן חמש שאלות אמריקאיות. יוצרים הזמנה או מצטרפים עם קוד משחק, והשעון מתחיל רק אחרי ששניכם מוכנים. בסיום אפשר לחזור לשאלות ולהסברים.", "In Games, you can also try a question on your own from the real multiple-choice bank, check your answer and read the explanation without spending coins. In a duel, two friends answer the same five multiple-choice questions. Create an invitation or join with a game code. The clock starts only when both players are ready. Review the questions and explanations at the end."), text("לפני יצירת המשחק או ההצטרפות, בדקו את עלות המטבעות והכללים המוצגים. ״המשחקים שלי״ מחזיר למשחקים קיימים. קוד המשחק שונה מקוד החברים האישי שלכם.", "Before creating or joining a game, review the displayed coin cost and rules. “My games” takes you back to existing games. A game invitation code is different from your personal friend code.")],
-    choices: [action("פתיחת אזור המשחקים", "Open Games", { type: "navigate", destination: "games" }), topic("להוסיף חבר לפי קוד", "Add a friend by code", "friends"), topic("לעיצוב הדמות שלי", "Customize my character", "shop")],
+    messages: [text("לחידה היומית יש ניסיון אחד. אפשר לנסח הסבר, לכתוב קוד או לצרף שרטוט. שליחת התשובה לבדיקה מנצלת משוב אחד מהמכסה החודשית. ציון 90 ומעלה נחשב להצלחה, ובחצות לפי שעון ישראל נפתחת חידה חדשה.", "You get one attempt at each daily puzzle. Explain your reasoning, write code or attach a diagram. Submitting uses one feedback credit from your monthly allowance. A score of 90 or higher solves the puzzle. The next one opens at midnight in Israel."), text("אפשר גם לתרגל שאלה אמריקאית בחינם או להזמין חבר לדו־קרב של חמש שאלות. בוחרים חבר מהרשימה או שולחים קישור. עלות הכניסה מוצגת מראש והשעון מתחיל כששני השחקנים מוכנים.", "You can also try a free multiple-choice question or challenge a friend to a five-question duel. Pick a friend from your list or send an invite link. The entry cost is shown up front, and the clock starts when both players are ready.")],
+    choices: [action("לחידה היומית", "Play the Daily Puzzle", { type: "navigate", destination: "dailyPuzzle" }), action("לכל המשחקים", "All games", { type: "navigate", destination: "games" }), topic("להוסיף חבר לפי קוד", "Add a friend by code", "friends"), topic("לעיצוב הדמות שלי", "Customize my character", "shop")],
   },
   friends: {
     title: text("מוסיפים חבר לפי הקוד שלו", "Add a friend using their code"),

@@ -70,6 +70,7 @@ class QuestionSummary(BaseModel):
 
 class QuestionDetail(QuestionSummary):
     prompt: str                                # prompt plus shared code block
+    additional_wordings: list[str] = Field(default_factory=list)
     requirements: str
     choices: list[str] | None = None
     starter_code: str | None = None
@@ -215,6 +216,7 @@ def detail(loaded: LoadedQuestion, language: str) -> QuestionDetail:
     text = q.translations[base.language]
     return QuestionDetail(
         **base.model_dump(), prompt=q.prompt_with_code(base.language), requirements="",  # Internal grading guidance may disclose the solution; never send it to candidates.
+        additional_wordings=q.additional_wordings(base.language),
         choices=list(text.choices) if text.choices else None, starter_code=q.assets.get("starter_code"),
         code_language=q.assets.get("code_language"))
 

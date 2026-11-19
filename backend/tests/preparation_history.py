@@ -12,6 +12,7 @@ import json
 from pathlib import Path
 
 from tests.learner_copy_history import before_learner_copy_localized
+from tests.preparation_november14_history import before_nov14
 
 BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_batch90.json").read_bytes())
 BATCH110_BASELINE = json.loads((Path(__file__).parent / "fixtures/preparation_before_batch110.json").read_bytes())
@@ -148,7 +149,7 @@ def _assert_archive(archive, baseline, restore):
     by_id = {question["id"]: question for question in archive["questions"]}
     assert set(baseline["record_order"]) <= by_id.keys()
     original = {key: archive[key] for key in baseline["top_level"]}
-    assert archive["question_count"] == len(archive["questions"]) == 310
+    assert archive["question_count"] == len(archive["questions"]) == 385
     original["question_count"] = baseline["top_level"]["question_count"]
     original["questions"] = [restore(by_id[ident]) for ident in baseline["record_order"]]
     assert digest(original) == baseline["canonical_sha256"]
@@ -369,7 +370,7 @@ def before_batch1107n30_archive(archive):
 
 
 def before_batch1108b20_record(question):
-    return _before_record(question, BATCH1108B20_BASELINE)
+    return _before_record(before_nov14("archive:" + question["id"], question), BATCH1108B20_BASELINE)
 
 
 def assert_pre_batch1108b20_archive(archive):

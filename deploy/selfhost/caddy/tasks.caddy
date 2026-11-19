@@ -1,0 +1,4 @@
+{$TASKS_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy tasks:3000
+}

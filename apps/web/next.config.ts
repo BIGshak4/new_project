@@ -3,8 +3,9 @@ import type { NextConfig } from "next";
 const config: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
-  // Public source revision, captured during the Netlify Git build (never a credential).
-  env: { NEXT_PUBLIC_BUILD_REVISION: process.env.COMMIT_REF || "local" },
+  ...(process.env.JOBRUN_SELF_HOSTED === "1" ? { output: "standalone" as const } : {}),
+  // Public source revision from the hosting provider (never a credential).
+  env: { NEXT_PUBLIC_BUILD_REVISION: process.env.SOURCE_REVISION || process.env.COMMIT_REF || process.env.VERCEL_GIT_COMMIT_SHA || "local" },
   async headers() {
     return [{ source: "/:path*", headers: [
       { key: "X-Content-Type-Options", value: "nosniff" },

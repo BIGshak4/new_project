@@ -16,35 +16,35 @@
     },
     "verification": {
       "he": "כל 4 זוגות הקלט וכל 16 פלטי השערים מול טבלת אמת עצמאית.",
-      "en": "All4 input pairs and16 gate outputs against an independent truth-table oracle."
+      "en": "All 4 input pairs and 16 gate outputs against an independent truth-table oracle."
     },
     "edge_cases": {
       "he": [
-        "00,01,10,11; בפרט תיקון הסכום 2 במקרה11.",
-        "קלטים שאינם0/1 אינם בחוזה; אין חילוק."
+        "00,01,10,11; בפרט תיקון הסכום 2 במקרה 11.",
+        "קלטים שאינם 0/1 אינם בחוזה; אין חילוק."
       ],
       "en": [
-        "00,01,10,11, especially correcting sum2 for11.",
+        "00,01,10,11, especially correcting sum 2 for 11.",
         "Nonbinary inputs are outside the contract; no division."
       ]
     },
     "common_mistakes": {
       "he": [
-        "OR אינו X+Y לבדו, כי11 מחזיר2.",
+        "OR אינו X+Y לבדו, כי 11 מחזיר 2.",
         "XOR אינו OR, ונוסחאות סקלריות אינן bitwise על מילים."
       ],
       "en": [
-        "OR is not just X+Y:11 returns2.",
+        "OR is not just X+Y:11 returns 2.",
         "XOR differs from OR; scalar formulas are not word-level bitwise operations."
       ]
     },
     "interview_answer": {
-      "he": "כפל מבודד את11. NOT הוא1−X; AND הואXY; מתקנים X+Y בעזרת מינוסXY ל־OR או מינוס2XY ל־XOR.",
-      "en": "Multiplication isolates11. NOT is1−X, AND isXY; correct X+Y by subtractingXY forOR or2XY forXOR."
+      "he": "כפל מבודד את 11. NOT הוא 1−X; AND הוא XY; מתקנים X+Y בעזרת מינוס XY ל־OR או מינוס 2XY ל־XOR.",
+      "en": "Multiplication isolates 11. NOT is 1−X, AND is XY; correct X+Y by subtracting XY for OR or 2XY for XOR."
     },
     "source_ambiguities": {
       "he": [
-        "המקור אינו מגדיר טיפוס מספרי; תחום הסיביות0/1 הוצהר במפורש."
+        "המקור אינו מגדיר טיפוס מספרי; תחום הסיביות 0/1 הוצהר במפורש."
       ],
       "en": [
         "The source omits numeric types; scalar0/1 inputs are explicit."
@@ -55,13 +55,13 @@
         {
           "question": "איך תממשו NAND ו־NOR באותו מחשבון?",
           "answer_direction": "הפחיתו את תוצאת AND או OR מ־1.",
-          "principle": "הרכבת פונקציות ששומרות על תחום0/1."
+          "principle": "הרכבת פונקציות ששומרות על תחום 0/1."
         }
       ],
       "en": [
         {
           "question": "How would this calculator implement NAND and NOR?",
-          "answer_direction": "Subtract AND or OR from1.",
+          "answer_direction": "Subtract AND or OR from 1.",
           "principle": "Composition preserves the0/1 domain."
         }
       ]
@@ -90,29 +90,29 @@
       ],
       "en": [
         "f1=0 reduces to baseband; B>0.",
-        "Integerf2/B can create a zero-width nominal window.",
+        "Integer f2/B can create a zero-width nominal window.",
         "Out-of-band noise, uncertainty and endpoint tones need separate treatment."
       ]
     },
     "common_mistakes": {
       "he": [
-        "להשיב2(f2−f1) בלי לבדוק חלון ומיקום.",
+        "להשיב 2(f2−f1) בלי לבדוק חלון ומיקום.",
         "לחשוב שכל קצב גדול יותר בהכרח תקין.",
         "לבלבל דגימה ממשית בדגימתI/Q או לסמוך על סינון דיגיטלי מאוחר."
       ],
       "en": [
-        "Answering2(f2−f1) without a placement/window check.",
+        "Answering 2(f2−f1) without a placement/window check.",
         "Assuming every higher rate is safe.",
         "Confusing real sampling withI/Q or relying on post-alias digital filtering."
       ]
     },
     "interview_answer": {
-      "he": "2f2 הוא גבול מספיק רגיל. לחיסכון ב־bandpass בודקים חלונות2f2/m עד2f1/(m−1);2B לבדו אינו מספיק. מעשית בוחרים בפנים ומסננים אנלוגית לפני הדגימה.",
-      "en": "2f2 is the usual sufficient limit. Bandpass saving requires windows2f2/m through2f1/(m−1);2B alone is insufficient. Choose an interior rate and analog filtering in practice."
+      "he": "2f2 הוא גבול מספיק רגיל. לחיסכון ב־bandpass בודקים חלונות 2f2/m עד 2f1/(m−1);2B לבדו אינו מספיק. מעשית בוחרים בפנים ומסננים אנלוגית לפני הדגימה.",
+      "en": "2f2 is the usual sufficient limit. Bandpass saving requires windows2f2/m through 2f1/(m−1);2B alone is insufficient. Choose an interior rate and analog filtering in practice."
     },
     "verification": {
       "he": "12,474 בדיקות ספקטרום מדויקות,525 דגימות aliasing ו־25 דגימות בדוגמת נגד בקצה.",
-      "en": "12,474 exact spectral checks,525 alias-tone samples and25 endpoint-counterexample samples."
+      "en": "12,474 exact spectral checks,525 alias-tone samples and 25 endpoint-counterexample samples."
     },
     "source_ambiguities": {
       "he": [
@@ -141,15 +141,15 @@
     "solution_extensions": {
       "he": [
         {
-          "question": "מה משתנה אם המיקוםf1 לא ידוע במדויק?",
-          "answer_direction": "להרחיב את תחום התמיכה לפי האי־ודאות ולחשב מחדש חלונות, או לבחור דגימה מעל2f2 המתאים.",
+          "question": "מה משתנה אם המיקום f1 לא ידוע במדויק?",
+          "answer_direction": "להרחיב את תחום התמיכה לפי האי־ודאות ולחשב מחדש חלונות, או לבחור דגימה מעל 2f2 המתאים.",
           "principle": "ידע מוקדם מדויק הוא חלק מחוזה השחזור."
         }
       ],
       "en": [
         {
           "question": "What if the lower band edge is uncertain?",
-          "answer_direction": "Enlarge the support by uncertainty and recompute windows, or use ordinary sampling above the appropriate2f2.",
+          "answer_direction": "Enlarge the support by uncertainty and recompute windows, or use ordinary sampling above the appropriate 2f2.",
           "principle": "Prior band knowledge is part of the reconstruction contract."
         }
       ]
@@ -158,47 +158,47 @@
   "PREP-157": {
     "assumptions": {
       "he": [
-        "מוקס2:1 של סיבית אחת; S=0 בוחרD0.",
+        "מוקס 2:1 של סיבית אחת; S=0 בוחר D0.",
         "אין איפשור, שעון או מצב פנימי; לוגיקה דו־ערכית אידאלית."
       ],
       "en": [
-        "One-bit2:1MUX;S=0 selectsD0.",
+        "One-bit 2:1 MUX;S=0 selects D0.",
         "No enable, clock or state; ideal two-valued logic."
       ]
     },
     "optimality": {
-      "he": "טבלת8 צירופים ומשוואת בחירה מדויקת; אין דרישת מינימום שערים או השהיה.",
+      "he": "טבלת 8 צירופים ומשוואת בחירה מדויקת; אין דרישת מינימום שערים או השהיה.",
       "en": "Eight rows and an exact selection equation; no minimum gate or delay requirement."
     },
     "verification": {
-      "he": "כל8 שורות מול בחירה באינדקס, ושלוש דחיות קלט לא בינארי.",
-      "en": "All8rows against an indexed-selection oracle and3invalid input rejections."
+      "he": "כל 8 שורות מול בחירה באינדקס, ושלוש דחיות קלט לא בינארי.",
+      "en": "All 8 rows against an indexed-selection oracle and 3 invalid input rejections."
     },
     "edge_cases": {
       "he": [
         "שני נתונים שווים; שינוי רק בכניסה שלא נבחרה.",
-        "החלפתS כשהנתונים שונים; קודי בחירה פנויים ב־N שאינו חזקה של2."
+        "החלפת S כשהנתונים שונים; קודי בחירה פנויים ב־N שאינו חזקה של 2."
       ],
       "en": [
         "Equal data values; changes only on the unselected input.",
-        "ChangingS with different data; unused codes whenN is not a power of2."
+        "ChangingS with different data; unused codes when N is not a power of 2."
       ]
     },
     "common_mistakes": {
       "he": [
         "לבלבל בין נתון לסיבית הבחירה.",
         "להניח זיכרון או שעון בגלל שהסמל נראה כמו רכיב מורכב.",
-        "לפרש לא־משנה בטבלה כסיביתX פיזית."
+        "לפרש לא־משנה בטבלה כסיבית X פיזית."
       ],
       "en": [
         "Confusing data and select.",
         "Assuming storage or a clock from the symbol.",
-        "Interpreting a truth-table don’t-care as a physicalX input."
+        "Interpreting a truth-table don’t-care as a physical X input."
       ]
     },
     "interview_answer": {
-      "he": "מוקס מחבר לוגית כניסה נבחרת ליציאה: S=0 מעבירD0 ו־S=1 מעבירD1. הוא צירופי, והנוסחה היא NOT S·D0+S·D1 בלוגיקה בוליאנית.",
-      "en": "A multiplexer selects one input:S=0 passesD0,S=1 passesD1. It is combinational; the Boolean expression is NOT S·D0+S·D1."
+      "he": "מוקס מחבר לוגית כניסה נבחרת ליציאה: S=0 מעביר D0 ו־S=1 מעביר D1. הוא צירופי, והנוסחה היא NOT S·D0+S·D1 בלוגיקה בוליאנית.",
+      "en": "A multiplexer selects one input:S=0 passes D0,S=1 passes D1. It is combinational; the Boolean expression is NOT S·D0+S·D1."
     },
     "source_ambiguities": {
       "he": [
@@ -211,15 +211,15 @@
     "solution_extensions": {
       "he": [
         {
-          "question": "איך מרחיבים למוקס4:1 באמצעות2:1?",
+          "question": "איך מרחיבים למוקס 4:1 באמצעות 2:1?",
           "answer_direction": "שני מוקסים בשלב ראשון ומוקס אחד בשני; סדר סיביות הבחירה חייב להיות עקבי.",
           "principle": "פירוק בחירה היררכי."
         }
       ],
       "en": [
         {
-          "question": "How can2:1MUXes build a4:1MUX?",
-          "answer_direction": "Two first-stageMUXes and one second-stageMUX; keep selector-bit ordering consistent.",
+          "question": "How can 2:1 MUXes build a4:1 MUX?",
+          "answer_direction": "Two first-stage MUXes and one second-stage MUX; keep selector-bit ordering consistent.",
           "principle": "Hierarchical selection."
         }
       ]
@@ -235,7 +235,7 @@
         "load קודם לספירה; התחלות מיושרות באמצעות טעינה מפורשת."
       ],
       "en": [
-        "The black box increments exactly modulo16 at every rising edge and exposes synchronous count outputs.",
+        "The black box increments exactly modulo 16 at every rising edge and exposes synchronous count outputs.",
         "One extra state bit and gates are permitted; all storage shares clk.",
         "Starting at zero needs aligned initialization that the source did not guarantee.",
         "The box and added flip-flop use the same rising edge.",
@@ -247,8 +247,8 @@
       "en": "One supplied box, one extra DFF, four-one detection and XOR. One additional independent bit is minimal for logical storage in the 16-state model; no gate or delay minimum is proved.\n\nOne extra state bit, carry detection, XOR and load selection; the minimum bound concerns added storage only."
     },
     "verification": {
-      "he": "נבדקו 32 מעברים,32 מקרי איפוס מיושר ו־3,104 חזיתות ברצפים ארוכים מכל מצב, מול אורקל מודולו 32 ורכיב מודולו 16 בטבלת מעברים עצמאית. חמישה קלטים פגומים נדחו. Python בלבד; ללא HDL או תזמון פיזי.\n\n2,048 צירופים של32 מצבים,32 נתונים ו־load בשני ערכיו נבדקו מול מספר שלם בן5 ביטים. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
-      "en": "Checked 32 transitions,32 aligned resets and3,104 long-trace edges from every state against modulo32 and an independent modulo16 transition lookup. Five malformed states rejected. Python only; no HDL or physical timing.\n\n2,048 combinations of32 states,32 input words and both load values were compared with a five-bit integer oracle. HDL/simulation is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
+      "he": "נבדקו 32 מעברים,32 מקרי איפוס מיושר ו־3,104 חזיתות ברצפים ארוכים מכל מצב, מול אורקל מודולו 32 ורכיב מודולו 16 בטבלת מעברים עצמאית. חמישה קלטים פגומים נדחו. Python בלבד; ללא HDL או תזמון פיזי.\n\n2,048 צירופים של 32 מצבים,32 נתונים ו־load בשני ערכיו נבדקו מול מספר שלם בן 5 ביטים. HDL וסימולציה מתועדים בנפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "en": "Checked 32 transitions,32 aligned resets and 3,104 long-trace edges from every state against modulo 32 and an independent modulo 16 transition lookup. Five malformed states rejected. Python only; no HDL or physical timing.\n\n2,048 combinations of 32 states,32 input words and both load values were compared with a five-bit integer oracle. HDL/simulation is recorded separately.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
       "he": [
@@ -256,17 +256,17 @@
         "q=0 אחרי איפוס אינו סיבה להפוך h.",
         "התחלה במצב לא ידוע נותנת מחזור תקין בפאזה לא ידועה.",
         "החזקה או enable אינם קיימים בחוזה המקורי.",
-        "15→16,31→0 וטעינה כאשר הנמוכות15.",
-        "טעינת כל32 הנתונים; טעינה חוזרת ללא ספירה.",
+        "15→16,31→0 וטעינה כאשר הנמוכות 15.",
+        "טעינת כל 32 הנתונים; טעינה חוזרת ללא ספירה.",
         "פלט לפני אתחול אינו מובטח."
       ],
       "en": [
-        "15→16 and31→0.",
+        "15→16 and 31→0.",
         "q=0 after reset is not a reason to toggle h.",
         "Unknown initialization gives a valid cycle with unknown phase.",
         "Hold or enable is not part of the original interface.",
         "15→16,31→0 and loading when low=15.",
-        "Every32 load word; repeated loads without counting.",
+        "Every 32 load word; repeated loads without counting.",
         "Output before initialization is not promised."
       ]
     },
@@ -279,7 +279,7 @@
         "היפוך הביט הגבוה גם בטעינה; שימוש בנמוכות אחרי החזית; נשא כשעון; הוספת reset שאין לקופסה."
       ],
       "en": [
-        "Testing new zero instead of pre-edge15.",
+        "Testing new zero instead of pre-edge 15.",
         "Using q3 as a clock without clock-domain and timing analysis.",
         "Replacing the supplied box with a new five-bit counter.",
         "Promising zero initialization without a black-box reset.",
@@ -287,8 +287,8 @@
       ]
     },
     "interview_answer": {
-      "he": "ארבעת הביטים הנמוכים מגיעים מהקופסה. אוסיף h בפליפ-פלופ על אותו שעון, עם D=h XOR(q==15), ואוציא {h, q}. הבדיקה היא למצב הישן: כשהנמוכים עוברים 15→0, העליון מתהפך. אתחול שני החלקים חייב להיות מיושר.\n\nהקופסה נשארת בארבע הסיביות הנמוכות. הביט החמישי נטען ישירות מ־a4 כאשר load פעיל, ואחרת מתהפך רק כשהנמוכות הישנות15.",
-      "en": "Use the box as the low four bits. Add same-clock h with D=h XOR(q==15) and output{h, q}. Evaluate the old state: whenever low bits wrap15→0, toggle high. Align initialization of both parts.\n\nKeep the box for low bits. Load the high bit from a4 when load is active; otherwise toggle only when the old low bits equal15."
+      "he": "ארבעת הביטים הנמוכים מגיעים מהקופסה. אוסיף h בפליפ-פלופ על אותו שעון, עם D=h XOR(q==15), ואוציא {h, q}. הבדיקה היא למצב הישן: כשהנמוכים עוברים 15→0, העליון מתהפך. אתחול שני החלקים חייב להיות מיושר.\n\nהקופסה נשארת בארבע הסיביות הנמוכות. הביט החמישי נטען ישירות מ־a4 כאשר load פעיל, ואחרת מתהפך רק כשהנמוכות הישנות 15.",
+      "en": "Use the box as the low four bits. Add same-clock h with D=h XOR(q==15) and output{h, q}. Evaluate the old state: whenever low bits wrap 15→0, toggle high. Align initialization of both parts.\n\nKeep the box for low bits. Load the high bit from a4 when load is active; otherwise toggle only when the old low bits equal 15."
     },
     "source_ambiguities": {
       "he": [
@@ -310,7 +310,7 @@
           "principle": "תוספת מצב ומיפוי מספרי הם שאלות שונות."
         },
         {
-          "question": "מה משתנה אם מוסיפים enable לספירה, אך עדיין רוצים לטעון כשהוא0?",
+          "question": "מה משתנה אם מוסיפים enable לספירה, אך עדיין רוצים לטעון כשהוא 0?",
           "direction": "load קודם; אחרת toggle רק אם enable AND carry, והקופסה חייבת לתמוך בעצירת הספירה.",
           "tests": "עקביות הממשק של הקופסה וסדרי עדיפויות."
         }
@@ -318,11 +318,11 @@
       "en": [
         {
           "question": "What if the low counter has modulus M that is not a power of two?",
-          "answer_direction": "A cycle bit can still toggle at M−1, but binary concatenation no longer encodes0..2M−1. Use h·M+q or another output representation.",
+          "answer_direction": "A cycle bit can still toggle at M−1, but binary concatenation no longer encodes 0..2M−1. Use h·M+q or another output representation.",
           "principle": "State extension and numerical encoding are separate concerns."
         },
         {
-          "question": "What if count enable is added but loading must still work with enable0?",
+          "question": "What if count enable is added but loading must still work with enable 0?",
           "direction": "Load first; otherwise toggle on enable AND carry, and the box must actually support holding its count.",
           "tests": "Black-box interface and priority consistency."
         }
@@ -331,7 +331,7 @@
     "prompt_variants": {
       "he": {
         "batch1103_loaded_five_bit_extension": {
-          "prompt": "### הרחבה: מונה עם טעינה מקבילית מארבע לחמש סיביות\nנתונה קופסה עם ארבע כניסות a[3:0], ארבע יציאות q[3:0], clk ו־load. כאשר load=0 היא סופרת למעלה modulo16. כאשר load=1 היא טוענת את ארבע הכניסות בחזית הבאה. הרחיבו אותה באמצעות כניסה a4 ויציאה q4 כך שתתנהג כמונה בן חמש סיביות עם אותה טעינה מקבילית. חייבים להשתמש בקופסה המקורית.\n\nהבהרות: כל הרכיבים דוגמים באותה חזית עולה; לטעינה עדיפות על ספירה. הדוגמה המקורית בלי load נשמרת. המקור לא מוסיף reset: אפשר לאתחל את כל חמש הסיביות באמצעות load=1 ונתון0; לפני טעינה או אתחול מוסכם ערך הפלט עשוי להיות לא ידוע.",
+          "prompt": "### הרחבה: מונה עם טעינה מקבילית מארבע לחמש סיביות\nנתונה קופסה עם ארבע כניסות a[3:0], ארבע יציאות q[3:0], clk ו־load. כאשר load=0 היא סופרת למעלה modulo 16. כאשר load=1 היא טוענת את ארבע הכניסות בחזית הבאה. הרחיבו אותה באמצעות כניסה a4 ויציאה q4 כך שתתנהג כמונה בן חמש סיביות עם אותה טעינה מקבילית. חייבים להשתמש בקופסה המקורית.\n\nהבהרות: כל הרכיבים דוגמים באותה חזית עולה; לטעינה עדיפות על ספירה. הדוגמה המקורית בלי load נשמרת. המקור לא מוסיף reset: אפשר לאתחל את כל חמש הסיביות באמצעות load=1 ונתון 0; לפני טעינה או אתחול מוסכם ערך הפלט עשוי להיות לא ידוע.",
           "hints": [
             "אילו ארבע סיביות אפשר לקבל ישירות מהקופסה בלי לשנות דבר?",
             "מתי הביט החמישי צריך להתהפך בספירה רגילה, ומה אמור לקרות לו בטעינה?",
@@ -342,7 +342,7 @@
       },
       "en": {
         "batch1103_loaded_five_bit_extension": {
-          "prompt": "### Extension: four-to-five-bit counter with parallel load\nA supplied box has a[3:0],q[3:0],clk and load. With load=0 it increments modulo16; with load=1 it loads a[3:0] at the next edge. Add a4 and q4 so the combined unit is a five-bit modulo32 counter with the same parallel-load behavior. Retain the supplied box.\n\nClarifications: all storage samples the same rising edge; load takes priority over counting. The original no-load version remains separate. No reset is added by the source: load1/data0 can initialize all five bits; before a load or agreed initialization, output can be unknown.",
+          "prompt": "### Extension: four-to-five-bit counter with parallel load\nA supplied box has a[3:0],q[3:0],clk and load. With load=0 it increments modulo 16; with load=1 it loads a[3:0] at the next edge. Add a4 and q4 so the combined unit is a five-bit modulo 32 counter with the same parallel-load behavior. Retain the supplied box.\n\nClarifications: all storage samples the same rising edge; load takes priority over counting. The original no-load version remains separate. No reset is added by the source: load1/data0 can initialize all five bits; before a load or agreed initialization, output can be unknown.",
           "hints": [
             "Which four output bits can come directly from the original box?",
             "When should the fifth bit toggle during counting, and what should it do on load?",
@@ -400,7 +400,7 @@
       ],
       "en": [
         "Drawing one NMOS without a pull-up.",
-        "Claiming an enhancement load reaches fullVDD.",
+        "Claiming an enhancement load reaches full VDD.",
         "Calling pseudo-NMOS an all-NMOS circuit.",
         "Omitting static current and strength ratio.",
         "Reporting an educational model as synthesis or SPICE validation."
@@ -432,7 +432,7 @@
         {
           "title": "NTU Electronics III — NMOS inverter circuits",
           "url": "https://cc.ee.ntu.edu.tw/~lhlu/eecourses/Electronics3/Electronics_Ch16.pdf",
-          "note": "Slide16-9 shows resistor, enhancement and depletion loads; slide16-15 explains weak high levels and body effect. These diagrams and model are independently authored."
+          "note": "Slide 16-9 shows resistor, enhancement and depletion loads; slide 16-15 explains weak high levels and body effect. These diagrams and model are independently authored."
         }
       ]
     },
@@ -472,7 +472,7 @@
     },
     "verification": {
       "he": "128 צירופי נגדים ממצים בערכים 1,2 ועוד 200 רשתות מדגמיות רחבות.1,312 פתרונות נודאליים מדויקים ושחזור מלא, ועוד תשע קריאות המוכיחות דוגמת אי־זיהוי בגישה בין צדדים בלבד. ללא SPICE או חומרה.",
-      "en": "128 exhaustive networks with resistor values1,2 plus200 seeded wide networks.1,312 exact nodal solves recovered the target, plus nine readings for a cross-only nonidentifiability witness. No SPICE or hardware."
+      "en": "128 exhaustive networks with resistor values 1,2 plus 200 seeded wide networks.1,312 exact nodal solves recovered the target, plus nine readings for a cross-only nonidentifiability witness. No SPICE or hardware."
     },
     "edge_cases": {
       "he": [
@@ -531,7 +531,7 @@
       "en": [
         {
           "question": "How does measurement error affect the estimate?",
-          "answer_direction": "If each reading has absolute error at most ε, the inferred Rc error is at most2ε by the triangle inequality. Repeats and redundant readings improve statistical estimates only under a specified noise model.",
+          "answer_direction": "If each reading has absolute error at most ε, the inferred Rc error is at most 2ε by the triangle inequality. Repeats and redundant readings improve statistical estimates only under a specified noise model.",
           "principle": "An exact identity does not imply instrument accuracy."
         }
       ]
@@ -588,7 +588,7 @@
     },
     "verification": {
       "he": "6,506 מקרים ממצים ועוד 60 דגימות מול אורקל מוצר קרטזי נפרד; הדוגמה, חוקיות, ציון ושמירת קלט נבדקו ב־Python.",
-      "en": "6,506 exhaustive cases plus60 seeded cases against a separate Cartesian-product oracle; source example, feasibility, score and input preservation checked in Python."
+      "en": "6,506 exhaustive cases plus 60 seeded cases against a separate Cartesian-product oracle; source example, feasibility, score and input preservation checked in Python."
     },
     "solution_extensions": {
       "he": [
@@ -612,12 +612,12 @@
       "he": [
         "עובדים בני החלפה, לא משמשים בשני פרויקטים בו־זמנית, ושחרור והקצאה מחדש ללא עיכוב.",
         "ימים שלמים כוללים start,end; הרחבה רציפה חצי פתוחה כוללת start ומוציאה end.",
-        "demand שלם לא שלילי, זמני קלט סופיים; ריק מחזיר0."
+        "demand שלם לא שלילי, זמני קלט סופיים; ריק מחזיר 0."
       ],
       "en": [
         "Interchangeable workers, no double service at one time, immediate release/reassignment.",
         "Integer days include start/end; continuous extension is[start,end).",
-        "Nonnegative integer demands, finite endpoints; empty input returns0."
+        "Nonnegative integer demands, finite endpoints; empty input returns 0."
       ]
     },
     "optimality": {
@@ -627,7 +627,7 @@
     "edge_cases": {
       "he": [
         "פרקים לא חופפים, זהים, מכילים זה את זה או נוגעים בקצה.",
-        "יום יחיד כולל קצוות לעומת קטע רציף ריק; דרישה0 ורשימה ריקה.",
+        "יום יחיד כולל קצוות לעומת קטע רציף ריק; דרישה 0 ורשימה ריקה.",
         "סיום קודם להתחלה, דרישה שלילית, זמנים לא סופיים או יום לא שלם בגרסת הימים נדחים."
       ],
       "en": [
@@ -639,26 +639,26 @@
     "common_mistakes": {
       "he": [
         "לחבר את כל הפרויקטים גם כשהם בזמנים שונים.",
-        "להחסיר ביום הסיום למרות שהסוף כלול, או להוסיף1 לזמן סיום רציף.",
+        "להחסיר ביום הסיום למרות שהסוף כלול, או להוסיף 1 לזמן סיום רציף.",
         "לסרוק כל רגע רציף או להתעלם ממשקלים ולהסתפק במספר הפרקים החופפים."
       ],
       "en": [
         "Summing all projects even at different times.",
-        "Releasing on an included final day or adding1 to a continuous end.",
+        "Releasing on an included final day or adding 1 to a continuous end.",
         "Iterating every continuous moment or counting intervals without their weights."
       ]
     },
     "interview_answer": {
-      "he": "מספר העובדים הוא שיא סכום הדרישות. אמיין אירועי התחלה ושחרור ואסרוק סכום מצטבר. בימים כוללים אשחרר ב־end+1; בקטעים רציפים חצי פתוחים ב־end. הדוגמה דורשת13.",
-      "en": "Headcount is peak aggregate demand. Sort start/release events and scan the running total. Release at end+1 for inclusive days, end for continuous half-open intervals. The example needs13."
+      "he": "מספר העובדים הוא שיא סכום הדרישות. אמיין אירועי התחלה ושחרור ואסרוק סכום מצטבר. בימים כוללים אשחרר ב־end+1; בקטעים רציפים חצי פתוחים ב־end. הדוגמה דורשת 13.",
+      "en": "Headcount is peak aggregate demand. Sort start/release events and scan the running total. Release at end+1 for inclusive days, end for continuous half-open intervals. The example needs 13."
     },
     "source_ambiguities": {
       "he": "המקור לא קבע קצוות או אילוצי עובדים. נבחרו שתי מוסכמות מפורשות ללא הנחת end+1 ברציף. VSW-010 מאחדת פרקים ללא דרישות משוקללות, ולכן אינה כפילות.\n\nהצילום מזכיר קובץ מתעדכן אך אינו מגדיר לוג פתוח, מדגם שימוש משתנה או עלות עדכון. הפתרון מחשב רשומות גמורות בתמונה עקבית ומציין בנפרד הרחבה מקוונת.",
       "en": "Source omits endpoints and worker constraints. Two explicit conventions avoid assuming end+1 for continuous time. VSW-010 merges intervals without weighted demands, so is not a duplicate.\n\nThe source mentions an updating log but omits open-record semantics, varying-load samples and update cost. The solution queries completed records in a consistent snapshot and separately describes an online extension."
     },
     "verification": {
-      "he": "27,931 מקרים ממצים ועוד150 דגימות לכל מוסכמה, מול חישוב ישיר נפרד; נגיעה נותנת13 לעומת7 ומדגימה הבדל אמיתי.\n\n4,158 שאילתות על קידומות לוג מול סכימה ישירה של כל הקטעים הפעילים; אירועים באותו זמן ומשקלים שבריים נכללו.",
-      "en": "27,931 exhaustive cases plus150 seeded cases per convention against independent direct-demand oracles; touching intervals expose13 versus7.\n\n4,158 growing-prefix queries versus direct active-interval sums, including equal-time events and fractional weights."
+      "he": "27,931 מקרים ממצים ועוד 150 דגימות לכל מוסכמה, מול חישוב ישיר נפרד; נגיעה נותנת 13 לעומת 7 ומדגימה הבדל אמיתי.\n\n4,158 שאילתות על קידומות לוג מול סכימה ישירה של כל הקטעים הפעילים; אירועים באותו זמן ומשקלים שבריים נכללו.",
+      "en": "27,931 exhaustive cases plus 150 seeded cases per convention against independent direct-demand oracles; touching intervals expose 13 versus 7.\n\n4,158 growing-prefix queries versus direct active-interval sums, including equal-time events and fractional weights."
     },
     "solution_extensions": {
       "he": [
@@ -749,8 +749,8 @@
       "en": "Source asks for n² time but omits rectangularity, mutation, original-zero semantics and memory. The edited text explicitly corrects row j to column j and adds a constant-auxiliary-space extension. No duplicate in the three banks."
     },
     "verification": {
-      "he": "66,225 מטריצות ממצות ועוד300 דגימות, שתי שיטות מול מקור לא משתנה; נבדקו זהויות, אי־התפשטות ודחיית מבנה לא תקין.",
-      "en": "66,225 exhaustive matrices plus300 seeded cases, two methods versus unchanged source; identities, noncascade and invalid shapes checked."
+      "he": "66,225 מטריצות ממצות ועוד 300 דגימות, שתי שיטות מול מקור לא משתנה; נבדקו זהויות, אי־התפשטות ודחיית מבנה לא תקין.",
+      "en": "66,225 exhaustive matrices plus 300 seeded cases, two methods versus unchanged source; identities, noncascade and invalid shapes checked."
     },
     "solution_extensions": {
       "he": [
@@ -772,7 +772,7 @@
   "PREP-151": {
     "assumptions": {
       "he": [
-        "קלט שלם ללא סימן0..255 ופלט0..8, ללא פונקציית ספירה מובנית או המרה למחרוזת בפתרון.",
+        "קלט שלם ללא סימן 0..255 ופלט 0..8, ללא פונקציית ספירה מובנית או המרה למחרוזת בפתרון.",
         "גישה אקראית לטבלה ופעולות מילה הן המודל; הכנת הטבלה נספרת בנפרד.",
         "O(1) הוא הפירוש הערוך לסימון המקור, ולא o(1) מתמטי.",
         "החוזה הראשי מקבל uint32_t וכולל אפס.",
@@ -783,7 +783,7 @@
         "פעולת בית/טבלה נתונה ומוכנה, קלט unsigned בן 32 סיביות, ארבע קריאות בדיוק; אין בניית טבלה בכל קריאה."
       ],
       "en": [
-        "Unsigned0..255 input and0..8 output; no built-in popcount or string conversion in the solution.",
+        "Unsigned 0..255 input and 0..8 output; no built-in popcount or string conversion in the solution.",
         "Word operations/random access model; table setup counted separately.",
         "O(1) is the explicit interpretation of the source notation, not mathematical o(1).",
         "The main contract accepts uint32_t including zero.",
@@ -795,8 +795,8 @@
       ]
     },
     "optimality": {
-      "he": "כל שיטה קבועה בתחום של8 ביט. נוסחת הקבוצות אינה כוללת לולאת ביטים; טבלה עולה256 רשומות והכנתן. לרוחב משתנה יש לחשב מחדש זמן ומקום.\n\nk איטרציות עבור k אחדים, O(1) מילים נוספות במודל מילה; עד 32 צעדים בתחום uint32_t. אין טענת ביצועים אופטימליים או זמן ריצה אחיד.\n\nO(B) זמן עבור B בתים; מספר משתנים קבוע ומונה O(log(N+1)) ביטים. lookup ומקטעים מוסיפים זיכרון מוכרז.\n\nקבוע לרוחב 32: ארבע קריאות, O(1) עזר. לרוחב W נדרשות Θ(ceil(W/8)) קריאות. טבלת העזר 256 מונים בנפרד.",
-      "en": "Every method is bounded on8 bits. Grouping has no bit loop; a table needs256 entries and setup. Variable-width time/storage require separate analysis.\n\nk iterations for k set bits and O(1) auxiliary words; at most 32 steps for uint32_t. No optimal-performance or constant-runtime claim.\n\nO(B) time for B bytes; fixed variable count with an O(log(N+1))-bit total. Lookup/chunks add explicit storage.\n\nFixed32: four calls, O(1) auxiliary words. General W: Theta(ceil(W/8)) calls; table storage separately has 256 counters."
+      "he": "כל שיטה קבועה בתחום של 8 ביט. נוסחת הקבוצות אינה כוללת לולאת ביטים; טבלה עולה 256 רשומות והכנתן. לרוחב משתנה יש לחשב מחדש זמן ומקום.\n\nk איטרציות עבור k אחדים, O(1) מילים נוספות במודל מילה; עד 32 צעדים בתחום uint32_t. אין טענת ביצועים אופטימליים או זמן ריצה אחיד.\n\nO(B) זמן עבור B בתים; מספר משתנים קבוע ומונה O(log(N+1)) ביטים. lookup ומקטעים מוסיפים זיכרון מוכרז.\n\nקבוע לרוחב 32: ארבע קריאות, O(1) עזר. לרוחב W נדרשות Θ(ceil(W/8)) קריאות. טבלת העזר 256 מונים בנפרד.",
+      "en": "Every method is bounded on 8 bits. Grouping has no bit loop; a table needs 256 entries and setup. Variable-width time/storage require separate analysis.\n\nk iterations for k set bits and O(1) auxiliary words; at most 32 steps for uint32_t. No optimal-performance or constant-runtime claim.\n\nO(B) time for B bytes; fixed variable count with an O(log(N+1))-bit total. Lookup/chunks add explicit storage.\n\nFixed 32: four calls, O(1) auxiliary words. General W: Theta(ceil(W/8)) calls; table storage separately has 256 counters."
     },
     "edge_cases": {
       "he": [
@@ -824,9 +824,9 @@
     },
     "common_mistakes": {
       "he": [
-        "לכנות לולאה של8 צעדים O(N) בלי להגדיר N משתנה.",
+        "לכנות לולאה של 8 צעדים O(N) בלי להגדיר N משתנה.",
         "לבלבל ספירת אחדות עם מספר הביטים הדרושים לייצוג או עם זוגיות.",
-        "להסתיר את256 רשומות הטבלה או לטעון שתוצאת בית מוכיחה O(1) למספר באורך לא חסום.",
+        "להסתיר את 256 רשומות הטבלה או לטעון שתוצאת בית מוכיחה O(1) למספר באורך לא חסום.",
         "לספור את ערך המספר במקום את הביטים.",
         "לקרוא לכל לולאה על רוחב קבוע O(n) בלי להגדיר n.",
         "להזיז int שלילי עד שיתאפס.",
@@ -840,7 +840,7 @@
       "en": [
         "Calling an eight-step loop O(N) without a varying N.",
         "Confusing population count with representation length or parity.",
-        "Hiding256 table entries or extending a byte bound to unbounded integers.",
+        "Hiding 256 table entries or extending a byte bound to unbounded integers.",
         "Counting integer magnitude rather than set bits.",
         "Calling every fixed-width loop O(n) without defining n.",
         "Shifting a negative signed int until zero.",
@@ -853,16 +853,16 @@
       ]
     },
     "interview_answer": {
-      "he": "לבית יש רק8 ביטים ולכן גם סריקה היא O(1). כדי להימנע מלולאה אספור במקביל זוגות, רביעיות ובית באמצעות מסכות; חלופה היא טבלה בת256 תשובות שהוכנה מראש. את מחיר ההכנה והמקום אפריד ממחיר השאילתה.\n\nכל x&(x−1) מוחק את האחד הימני ביותר. אספור מחיקות עד אפס; האינווריאנט ומספר האחדים מוכיחים נכונות ועצירה. אגדיר unsigned ורוחב לפני ניתוח העלות.\n\nאסרוק יחידות קלט, אצבור במונה מספיק רחב ואמסך את הסיומת. popcount מזרז יחידה, אבל העלות הכוללת תלויה בכמות המידע שנקרא.\n\nאפרק את המילה לארבעה שדות בני שמונה ביטים, אספור כל שדה בפעולה הנתונה ואחבר. הקבוצות זרות ומכסות את כל הסיביות.",
-      "en": "A byte has eight bits, so scanning is already O(1). Without a loop, combine pair, nibble and byte counts with masks; alternatively use256 precomputed answers, separating setup/storage from query cost.\n\nEach x&(x−1) clears the lowest one. Count deletions until zero; the invariant and remaining-one count prove correctness and termination. Specify unsigned width before complexity.\n\nScan input units, accumulate in a wide-enough total and mask the tail. Popcount speeds a unit, while total work still scales with data read.\n\nExtract four disjoint eight-bit fields, count each with the supplied operation and add; the groups cover every bit once."
+      "he": "לבית יש רק 8 ביטים ולכן גם סריקה היא O(1). כדי להימנע מלולאה אספור במקביל זוגות, רביעיות ובית באמצעות מסכות; חלופה היא טבלה בת 256 תשובות שהוכנה מראש. את מחיר ההכנה והמקום אפריד ממחיר השאילתה.\n\nכל x&(x−1) מוחק את האחד הימני ביותר. אספור מחיקות עד אפס; האינווריאנט ומספר האחדים מוכיחים נכונות ועצירה. אגדיר unsigned ורוחב לפני ניתוח העלות.\n\nאסרוק יחידות קלט, אצבור במונה מספיק רחב ואמסך את הסיומת. popcount מזרז יחידה, אבל העלות הכוללת תלויה בכמות המידע שנקרא.\n\nאפרק את המילה לארבעה שדות בני שמונה ביטים, אספור כל שדה בפעולה הנתונה ואחבר. הקבוצות זרות ומכסות את כל הסיביות.",
+      "en": "A byte has eight bits, so scanning is already O(1). Without a loop, combine pair, nibble and byte counts with masks; alternatively use 256 precomputed answers, separating setup/storage from query cost.\n\nEach x&(x−1) clears the lowest one. Count deletions until zero; the invariant and remaining-one count prove correctness and termination. Specify unsigned width before complexity.\n\nScan input units, accumulate in a wide-enough total and mask the tail. Popcount speeds a unit, while total work still scales with data read.\n\nExtract four disjoint eight-bit fields, count each with the supplied operation and add; the groups cover every bit once."
     },
     "source_ambiguities": {
       "he": "במקור נראה o(1), והרוחב קבוע. הובהרה ההבחנה בלי לטעון שהסריקה אינה קבועה. קשורה ל־SW-001 ול־VSW-001 אך לא מפרסמת או מאשרת אותן; PREP-001 חומרתית.\n\nרוחב וסימן אינם מוגדרים בנוסח הכללי. הווריאציה מגדירה uint32_t ודנה בנפרד בחלופות; מגבלות בית אחד אינן מועתקות אליה.\n\nmassive אינו גודל מספרי והמקור אינו קובע אריזה או padding. אלה הוגדרו להדגמה; מגבלת המקצה בסעיף השני נשמרת בנפרד.\n\nהמקור אומר int בלי להגדיר סימן. בחרנו uint32, ואת טעות 3=101 תיקנו בלי לשנות את התמלול המקורי.",
       "en": "Source resembles o(1) on a fixed width. Clarify without falsely denying constant-time scanning. Linked to SW-001/VSW-001 without publishing or approving them; PREP-001 is hardware.\n\nWidth and sign are unspecified in the generic wording. This variant chooses uint32_t and treats alternatives separately; byte-only restrictions are not copied into it.\n\nMassive is not a numeric size and packing/padding were unspecified. The demonstration defines them; the second part’s allocator constraint remains separate.\n\nSource says int without signedness. We chose uint32 and corrected 3=101 without altering original transcription."
     },
     "verification": {
-      "he": "כל256 ערכי הבית בארבע שיטות,256 רשומות טבלה, ארבע דחיות לכל שיטה וזוגיות המשלים מול אורקל טקסט עצמאי. Python בלבד.\n\nכל 65536 ערכי 16 הביטים ומדגם דטרמיניסטי של ערכי 32 ביטים נבדקו מול אורקל עצמאי. קוד C מוצע נשמר; המודל אינו הידור C או בדיקת תזמון CPU.\n\n1,116,417 מקרי Python מול ביטים מפורשים, כולל כל בית חלקי; אין טענה שנבדק מערך massive פיזי או ביצועי SIMD.\n\n65,536 ערכי 16 סיביות, מקרי קצה ו־ 1,000 ערכים אקראיים; בדיקת מספר הקריאות והארגומנטים, וחמישה קלטים פסולים.",
-      "en": "All256 bytes in four methods,256 table entries, four invalid values each and complement identity against independent text oracle. Python only.\n\nAll 65536 sixteen-bit values and a deterministic 32-bit sample matched an independent oracle. Proposed C is retained; model execution is not C compilation or CPU timing measurement.\n\n1,116,417 Python cases against explicit bits, including every partial tail; no physical massive-array or SIMD benchmark claim.\n\n65,536 low-sixteen-bit values, boundaries and 1,000 random words; exact call count/arguments and five invalid inputs."
+      "he": "כל 256 ערכי הבית בארבע שיטות,256 רשומות טבלה, ארבע דחיות לכל שיטה וזוגיות המשלים מול אורקל טקסט עצמאי. Python בלבד.\n\nכל 65536 ערכי 16 הביטים ומדגם דטרמיניסטי של ערכי 32 ביטים נבדקו מול אורקל עצמאי. קוד C מוצע נשמר; המודל אינו הידור C או בדיקת תזמון CPU.\n\n1,116,417 מקרי Python מול ביטים מפורשים, כולל כל בית חלקי; אין טענה שנבדק מערך massive פיזי או ביצועי SIMD.\n\n65,536 ערכי 16 סיביות, מקרי קצה ו־ 1,000 ערכים אקראיים; בדיקת מספר הקריאות והארגומנטים, וחמישה קלטים פסולים.",
+      "en": "All 256 bytes in four methods,256 table entries, four invalid values each and complement identity against independent text oracle. Python only.\n\nAll 65536 sixteen-bit values and a deterministic 32-bit sample matched an independent oracle. Proposed C is retained; model execution is not C compilation or CPU timing measurement.\n\n1,116,417 Python cases against explicit bits, including every partial tail; no physical massive-array or SIMD benchmark claim.\n\n65,536 low-sixteen-bit values, boundaries and 1,000 random words; exact call count/arguments and five invalid inputs."
     },
     "solution_extensions": {
       "he": [
@@ -890,7 +890,7 @@
       "en": [
         {
           "question": "How can the same table count a64-bit value?",
-          "answer_direction": "Extract eight bytes, look up each and sum. Constant for64 bits, linear in byte count for variable width.",
+          "answer_direction": "Extract eight bytes, look up each and sum. Constant for 64 bits, linear in byte count for variable width.",
           "status": "Supplemental only."
         },
         {

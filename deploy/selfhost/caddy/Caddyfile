@@ -1,0 +1,22 @@
+{
+    email {$ACME_EMAIL}
+}
+
+{$APP_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy web:3000
+}
+
+www.{$APP_DOMAIN} {
+    redir https://{$APP_DOMAIN}{uri} permanent
+}
+
+{$API_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy api:8000 {
+        flush_interval -1
+    }
+}
+
+# The optional Compose overlay mounts tasks.caddy here only when requested.
+import /etc/caddy/optional/*.caddy

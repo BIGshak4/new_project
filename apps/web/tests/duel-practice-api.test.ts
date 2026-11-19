@@ -6,6 +6,31 @@ process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "fixture-public-key";
 const modules = Promise.all([import("../src/lib/duel-api"), import("../src/lib/supabase")]);
 const session = (id: string) => ({ data: { session: { access_token: "local-fixture-token", user: { id } } }, error: null });
 
+test("friend challenges and link invitations use distinct creation payloads and require explicit acceptance", async t => {
+  const [{ duelApi }, { supabase }] = await modules;
+  t.mock.method(supabase.auth, "getSession", async () => session("owner"));
+  const calls: { path: string; method?: string; body?: unknown }[] = [];
+  t.mock.method(globalThis, "fetch", async (url: string, init?: RequestInit) => {
+    const path = new URL(url).pathname;
+    calls.push({ path, method: init?.method, body: init?.body ? JSON.parse(String(init.body)) : undefined });
+    if (path.endsWith("/presence")) return new Response(null, { status: 204 });
+    return Response.json(path.endsWith("/invitations") ? { invitations: [] } : {});
+  });
+  const api = duelApi("owner", "https://fixture.invalid");
+  await api.create("he", "friend");
+  await api.create("en");
+  await api.presence();
+  await api.invitations();
+  await api.accept("roomcode");
+  assert.deepEqual(calls, [
+    { path: "/v1/duels", method: "POST", body: { language: "he", mode: "quiz", friend_id: "friend" } },
+    { path: "/v1/duels", method: "POST", body: { language: "en", mode: "quiz" } },
+    { path: "/v1/me/presence", method: "POST", body: {} },
+    { path: "/v1/duels/invitations", method: "GET", body: undefined },
+    { path: "/v1/duels/accept", method: "POST", body: { code: "roomcode" } },
+  ]);
+});
+
 test("real practice fetches bank content and sends only the round token and selected option for checking", async t => {
   const [{ duelApi }, { supabase }] = await modules;
   t.mock.method(supabase.auth, "getSession", async () => session("owner"));

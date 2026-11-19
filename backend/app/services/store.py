@@ -55,8 +55,17 @@ __all__ = ["DuplicateSubmissionKey", "StaleProfile", "Store", "Tx", "DbStore"]
 
 
 class Tx(Protocol):
+    async def feedback_uses(self, user_id: uuid.UUID, month: date) -> int: ...
+    async def has_feedback_use(self, user_id: uuid.UUID, reference: uuid.UUID) -> bool: ...
+    async def add_feedback_use(self, user_id: uuid.UUID, reference: uuid.UUID, month: date) -> None: ...
+    async def delete_feedback_use(self, user_id: uuid.UUID, reference: uuid.UUID) -> None: ...
     async def lock_usage(self, user_id: uuid.UUID, scope: str) -> None: ...
+    async def daily_attempt(self, user_id: uuid.UUID, day: date, puzzle_key: str | None, *, for_update: bool = False) -> dict | None: ...
+    async def save_daily_attempt(self, row: dict) -> None: ...
+    async def expired_daily_attempts(self, user_id: uuid.UUID, cutoff: datetime) -> list[dict]: ...
     async def identities_available(self) -> bool: ...
+    async def record_presence(self, user_id: uuid.UUID, now: datetime) -> None: ...
+    async def online_users(self, user_ids: list[uuid.UUID], since: datetime) -> set[uuid.UUID]: ...
     async def load_identity(self, user_id: uuid.UUID) -> dict | None: ...
     async def load_identities(self, user_ids: list[uuid.UUID]) -> dict: ...
     async def identity_by_code(self, friend_code: str) -> dict | None: ...
@@ -112,6 +121,8 @@ class Tx(Protocol):
     async def duel_by_code(self, code: str) -> Duel | None: ...
     async def save_duel(self, duel: Duel) -> None: ...
     async def list_duels(self, user_id: uuid.UUID, *, limit: int = 20) -> list[Duel]: ...
+    async def duel_invitations(self, user_id: uuid.UUID, since: datetime) -> list[dict]: ...
+    async def open_duel_invites(self, user_id: uuid.UUID, since: datetime) -> list[Duel]: ...
     async def last_duel_between(self, a: uuid.UUID, b: uuid.UUID) -> datetime | None: ...
     async def duels_accepted_today(self, user_id: uuid.UUID) -> int: ...
     async def duel_question_keys(self, user_id: uuid.UUID) -> set[str]: ...
@@ -167,6 +178,40 @@ class Store(Protocol):
 
 
 class DbTx:
+    async def feedback_uses(self, user_id, month):
+        # Read through to older bank grades so existing users keep their real monthly
+        # history, including grades completed by the preceding server during rollout.
+        rows = await self.connection.execute(text("""
+            select count(*) from (
+                select reference_id from public.feedback_allowance_use
+                where user_id = :uid and period = :month
+                union all
+                select distinct a.id from public.attempt a join public.attempt_submission s on s.attempt_id = a.id
+                where a.user_id = :uid and s.turn = 0 and s.status = 'done' and s.evaluation is not null
+                  and s.accepted_at >= (cast(:month as date)::timestamp at time zone 'Asia/Jerusalem')
+                  and s.accepted_at < ((cast(:month as date) + interval '1 month') at time zone 'Asia/Jerusalem')
+                  and not exists (select 1 from public.feedback_allowance_use u
+                                  where u.user_id = a.user_id and u.reference_id = a.id)
+            ) as feedback
+        """), {"uid": user_id, "month": month})
+        return rows.scalar_one()
+
+    async def has_feedback_use(self, user_id, reference):
+        result = await self.connection.execute(text(
+            "select 1 from public.feedback_allowance_use where user_id = :uid and reference_id = :ref"
+        ), {"uid": user_id, "ref": reference})
+        return result.scalar_one_or_none() is not None
+
+    async def add_feedback_use(self, user_id, reference, month):
+        await self.connection.execute(text(
+            "insert into public.feedback_allowance_use(user_id, reference_id, period) values (:uid, :ref, :month)"
+        ), {"uid": user_id, "ref": reference, "month": month})
+
+    async def delete_feedback_use(self, user_id, reference):
+        await self.connection.execute(text(
+            "delete from public.feedback_allowance_use where user_id = :uid and reference_id = :ref"
+        ), {"uid": user_id, "ref": reference})
+
     def __init__(self, connection: AsyncConnection, *, allow_in_review: bool):
         self.connection = connection
         self.allow_in_review = allow_in_review
@@ -182,8 +227,43 @@ class DbTx:
         await self.connection.execute(text("select pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                                       {"key": f"jobrun:usage:{scope}:{user_id}"})
 
+    async def daily_attempt(self, user_id, day, puzzle_key, *, for_update=False):
+        from sqlalchemy.dialects.postgresql import insert
+        table = await db.table("daily_puzzle_attempt")
+        match = (table.c.user_id == user_id) & (table.c.puzzle_day == day)
+        query = select(table).where(match)
+        if for_update:
+            query = query.with_for_update()
+        row = (await self.connection.execute(query)).mappings().one_or_none()
+        if row is None:
+            if puzzle_key is None:
+                return None
+            await self.connection.execute(insert(table).values(user_id=user_id, puzzle_day=day, puzzle_key=puzzle_key)
+                .on_conflict_do_nothing(index_elements=["user_id", "puzzle_day"]))
+            row = (await self.connection.execute(query)).mappings().one()
+        return dict(row)
+
+    async def save_daily_attempt(self, row):
+        table = await db.table("daily_puzzle_attempt")
+        fields = ("status", "language", "submission", "score", "lease_id", "claimed_at")
+        await self.connection.execute(table.update().where(table.c.id == row["id"])
+                                      .values(**{key: row[key] for key in fields}))
+
+    async def expired_daily_attempts(self, user_id, cutoff):
+        table = await db.table("daily_puzzle_attempt")
+        rows = await self.connection.execute(select(table).where(
+            table.c.user_id == user_id, table.c.status == "evaluating", table.c.claimed_at < cutoff)
+            .order_by(table.c.puzzle_day).with_for_update())
+        return [dict(row) for row in rows.mappings()]
+
     async def identities_available(self):
         return await identity.available()
+
+    async def record_presence(self, user_id, now):
+        await identity.record_presence(self.connection, user_id, now)
+
+    async def online_users(self, user_ids, since):
+        return await identity.online_users(self.connection, user_ids, since)
 
     async def load_identity(self, user_id):
         return await identity.load(self.connection, user_id)
@@ -342,6 +422,12 @@ class DbTx:
 
     async def list_duels(self, user_id, *, limit=20):
         return await duels.list_for(self.connection, user_id, limit=limit)
+
+    async def duel_invitations(self, user_id, since):
+        return await duels.invitations(self.connection, user_id, since)
+
+    async def open_duel_invites(self, user_id, since):
+        return await duels.open_invites(self.connection, user_id, since)
 
     async def last_duel_between(self, a, b):
         return await duels.last_between(self.connection, a, b)

@@ -11,6 +11,8 @@ import json
 import uuid
 from pathlib import Path
 
+from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
+
 import pytest
 
 from app.api.errors import ApiError
@@ -30,6 +32,7 @@ from tests.preparation_history import (
     assert_pre_batch20_assets,
     assert_pre_batch20_localization,
     before_batch20_record,
+    before_batch22_record,
     digest,
 )
 from tests.test_practice_hardening import GOOD, scripted
@@ -135,7 +138,7 @@ def test_twenty_exact_sources_keep_full_tags_companies_and_nineteen_identities(a
 
 
 def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
-    assert len(archive['questions']) == archive['question_count'] == 310
+    assert len(archive['questions']) == archive['question_count'] == 385
     raw = {q['id']: q for q in archive['questions']}
     historical_ids = raw.keys() & BATCH22_BASELINE['records'].keys()
     assert len(historical_ids) == 219
@@ -146,10 +149,11 @@ def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
     for ident in VARIANT_IDS:
         assert raw[ident]['key'] == before_batch20_record(raw[ident])['key'], ident
     for ident in SOURCE_ONLY_IDS:
-        current, previous = raw[ident], before_batch20_record(raw[ident])
-        assert current['version'] == previous['version']
-        assert current['translations'] == previous['translations']
-        assert current.get('prepared_hints') == previous.get('prepared_hints')
+        at_intake = before_batch22_record(raw[ident])
+        previous = before_batch20_record(raw[ident])
+        assert at_intake['version'] == previous['version'], ident
+        assert at_intake['translations'] == previous['translations'], ident
+        assert at_intake.get('prepared_hints') == previous.get('prepared_hints'), ident
     assert_pre_batch20_assets(read(SEEDS / 'preparation_uploads.json')['files'])
     localization = {}
     for path in sorted((SEEDS / 'preparation_localization').glob('*.json')):
@@ -161,7 +165,7 @@ def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
     assert historical_localization - BATCH20_BASELINE['localized_material'].keys() == NEW_IDS
     assert_pre_batch20_localization(localization)
     compiled = read(SEEDS / 'questions/preparation_bank.json')
-    assert len(compiled) == 310
+    assert len(compiled) == 385
     for question in compiled:
         if question['assets']['preparation_id'] not in BATCH22_BASELINE['records']:
             continue
@@ -187,7 +191,7 @@ def test_all_208_previous_records_and_1141_assets_remain_hash_bound(archive):
 def test_all_nineteen_questions_are_bilingual_and_eleven_new_records_are_rated_pending(catalog, archive):
     questions = selected(catalog)
     raw = {q['id']: q for q in archive['questions']}
-    assert len(catalog.questions) == 340 and set(questions) == AFFECTED_IDS
+    assert len(catalog.questions) == 415 and set(questions) == AFFECTED_IDS
     for ident, question in questions.items():
         source = raw[ident]
         resource = question.assets['preparation_resource']
@@ -261,7 +265,7 @@ def test_new_private_media_has_exact_paths_hashes_png_bytes_and_protected_code(c
         for filename in ('prep_216_220_sequential.sv', 'prep_216_220_sequential_tb.sv'):
             assert files[filename]['kind'] == 'file' and files[filename]['role'] == 'solution'
     sources = [entry['local_path'] for entry in uploads.values() if entry['local_path'].startswith('sources/')]
-    assert len(sources) == 525 and len(set(sources)) == 523
+    assert len(sources) == 682 and len(set(sources)) == 675
     assert set(read(ROOT / 'apps/web/src/lib/source-screenshots.json')) == {Path(path).name for path in sources}
 
 
@@ -356,13 +360,14 @@ async def test_new_question_feedback_cannot_create_assessment_metrics_or_xp(cata
 # 2026-11-04: authorized learner-copy baseline; all identity, grading and source-history assertions remain in place.
 def test_short_cards_quiz_and_review_attestations_are_frozen():
     # A later authorized expansion adds keys; every pre-expansion record stays frozen.
-    registry = read(SEEDS / 'fundamentals_catalog.json')
+    current_registry = read(SEEDS / 'fundamentals_catalog.json')
+    registry = before_current_fundamentals_manifest(current_registry)
     previous_registry = {**registry, 'questions': {
         key: value for key, value in registry['questions'].items()
         if int(key.rsplit('-', 1)[1]) <= 200
     }}
     assert digest(previous_registry) == BATCH20_BASELINE['fundamentals_sha256']
-    quiz = read(SEEDS / 'duel_quiz.json')['questions']
+    quiz = before_current_copy("quiz", "duel_quiz.json", read(SEEDS / 'duel_quiz.json'))['questions']
     historical_quiz = [row for row in quiz if not row.get('source_key')
                        or int(row['source_key'].rsplit('-', 1)[1]) <= 200]
     assert digest(sorted(historical_quiz, key=lambda row: row['key'])) == (
@@ -372,10 +377,10 @@ def test_short_cards_quiz_and_review_attestations_are_frozen():
     content = ROOT / 'apps/web/src/content'
     cards = []
     for name, expected in BATCH21_BASELINE['short_card_source_sha256'].items():
-        rows = read(content / name)
+        rows = before_current_copy("fundamentals", name, read(content / name))
         assert digest(rows) == expected
         cards.extend(rows)
     assert len(cards) == len({row['id'] for row in cards}) == 400
-    assert read(content / 'fundamentals-revisions.json') == registry['questions']
+    assert read(content / 'fundamentals-revisions.json') == current_registry['questions']
     assert len(historical_quiz) == 2040
     assert sum(row['status'] == 'approved' for row in historical_quiz) == 2000

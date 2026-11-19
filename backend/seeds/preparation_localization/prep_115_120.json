@@ -14,7 +14,7 @@
         "XOR is permitted; conditionals and conditional expressions are forbidden.",
         "Other input values need not be preserved.",
         "x is promised4/7; constants allowed.",
-        "Division is allowed inC; XOR only inD.",
+        "Division is allowed in C; XOR only in D.",
         "The reciprocal interpretation explicitly resolves repeated source wording."
       ]
     },
@@ -52,13 +52,13 @@
         "AND may clear a bit but does not set it in the reverse direction.",
         "Confusing the task with swapping two variables or inventing a validation requirement.",
         "Usingif in a no-branch part.",
-        "Reusing the 9/13 mask4 instead of 3.",
-        "Claiming the source explicitly supplied7→4."
+        "Reusing the 9/13 mask 4 instead of 3.",
+        "Claiming the source explicitly supplied 7→4."
       ]
     },
     "interview_answer": {
       "he": "9 ו־13 שונים רק בביט שמשקלו 4. XOR עם 4 הופך אותו בשני הכיוונים, ולכן מחזירים x^4. ההבטחה שקלט הוא אחד משניהם חיונית.\n\nלסעיפי if, חיסור, ללא חיסור ו־XOR אתן בהתאמה תנאי,11−x,28/x, x XOR3, תחת הבטחת הקלט 4/7.",
-      "en": "9 and 13 differ only at the bit of weight 4. XOR with 4 toggles it in both directions, so return x^4. The two-value domain promise is essential.\n\nForif, subtraction, no-subtraction andXOR use a branch,11−x,28/x andx XOR3 under the 4/7 promise."
+      "en": "9 and 13 differ only at the bit of weight 4. XOR with 4 toggles it in both directions, so return x^4. The two-value domain promise is essential.\n\nForif, subtraction, no-subtraction and XOR use a branch,11−x,28/x andx XOR3 under the 4/7 promise."
     },
     "source_ambiguities": {
       "he": "המקור אינו קובע שפת תכנות או עלות מינימלית. הותר XOR במפורש בתרגיל; קלטים אחרים נשארים מחוץ לחוזה המקורי.\n\n[\"המקור חוזר על אותו כיוון פעמיים; ההשלמה ההדדית היא הנחת עריכה.\", \"Intel מדווחת בצילום בלבד.\"]",
@@ -66,7 +66,7 @@
     },
     "verification": {
       "he": "שני מקרי הדרישה ו־131,072 כיווני מיפוי של ההכללה נבדקו בפייתון. בדיקת AST בודקת היעדר תנאי בפונקציה הראשית; לא בוצע ניסוי חומרה.\n\n8 מקרי קלט/חלופה,8 בדיקות הפעלה כפולה,3 בדיקות AST.",
-      "en": "Both required cases and 131,072 generalized directional mappings were checked in Python. An AST check verifies no conditional in the primary function; no hardware experiment was performed.\n\nEight input/method cases, eight involutions, threeAST restriction checks."
+      "en": "Both required cases and 131,072 generalized directional mappings were checked in Python. An AST check verifies no conditional in the primary function; no hardware experiment was performed.\n\nEight input/method cases, eight involutions, three AST restriction checks."
     },
     "solution_extensions": {
       "he": {
@@ -106,11 +106,11 @@
       },
       "en": {
         "119_four_seven_70": {
-          "prompt": "### Extension: map4 and 7 under four operation sets\nx is promised to be4 or7. A. Return the other value usingif. B. Noif, addition/subtraction only. C. Noif, addition or subtraction. D. XOR only.\n\nThe source repeats4→7 twice and omits the reverse rule. Preserve it verbatim; the edited task explicitly interprets the intended reciprocal map4→7,7→4 from its domain and parts. Under the literal text alone, behavior for 7 remains unspecified. Constants are allowed and each part has its own restrictions. ForC show integer division exact on the promised domain; forbidding division too would be an added restriction, andXOR works when available. This is not swapping two variables as inPREP-077.",
+          "prompt": "### Extension: map 4 and 7 under four operation sets\nx is promised to be 4 or 7. A. Return the other value usingif. B. Noif, addition/subtraction only. C. Noif, addition or subtraction. D. XOR only.\n\nThe source repeats 4→7 twice and omits the reverse rule. Preserve it verbatim; the edited task explicitly interprets the intended reciprocal map4→7,7→4 from its domain and parts. Under the literal text alone, behavior for 7 remains unspecified. Constants are allowed and each part has its own restrictions. For C show integer division exact on the promised domain; forbidding division too would be an added restriction, and XOR works when available. This is not swapping two variables as in PREP-077.",
           "hints": [
             "Only two values are promised. The formula need not define a replacement rule for every integer.",
-            "Their sum4+7 and product4·7 are shared by both directions. How can subtraction or division use them?",
-            "4 XOR7 equals 3, and applying the same XOR mask twice restores input. Also test 11−x and 28/x on4,7."
+            "Their sum 4+7 and product 4·7 are shared by both directions. How can subtraction or division use them?",
+            "4 XOR7 equals 3, and applying the same XOR mask twice restores input. Also test 11−x and 28/x on 4,7."
           ],
           "integration_status": ""
         }
@@ -188,23 +188,25 @@
         "VT>0, β>0; מודל הבסיס מזניח תת־סף, דליפות ומודולציית אורך תעלה.",
         "החתך מושגי ומישורי; תהליך הייצור והפרמטרים אינם מפרט של רכיב מסחרי.",
         "מילת הצומת במקור אינה מזוהה; אין לקבוע שזו gate.",
-        "המודל הנוסף בוחר NMOS, Rpullup, Ron, Cout ומדרגה ישירה בשער."
+        "המודל הנוסף בוחר NMOS, Rpullup, Ron, Cout ומדרגה ישירה בשער.",
+        "הרחבת הסף משתמשת ב־NMOS פלנרי, מקור וגוף מחוברים, השוואות בטמפרטורה וגאומטריה קבועות. מודל תת־סף מתייחס לרכיב דליפה אחד בלבד."
       ],
       "en": [
         "Enhancement long-channel NMOS, body tied to source, VDS≥0, constant temperature/mobility.",
         "VT>0 and β>0; core omits subthreshold conduction, leakage and channel-length modulation.",
         "The planar cross-section is conceptual; fabrication discussion and parameters do not specify a commercial device.",
         "The source node is unidentified;gate is not asserted as source fact.",
-        "Added illustration explicitly choosesNMOS, Rpullup, Ron, Cout and forced gate step."
+        "Added illustration explicitly chooses NMOS, Rpullup, Ron, Cout and forced gate step.",
+        "Threshold extension uses a planar NMOS with body/source tied and fixed geometry/temperature comparisons. The subthreshold model covers one leakage component only."
       ]
     },
     "optimality": {
-      "he": "אין טענת מינימום רכיבים או אופטימליות. חישוב נקודת DC במודל דורש O(1) פעולות וזיכרון; גרף בן m נקודות דורש O(m) חישובים. תכנון תהליך, שטח, השהיה והספק אינם נגזרים ממספר הפעולות בקוד.\n\nאין תכנון מיטבי מוגדר ללא מעגל ומדד. פתרון RC אנליטי להמחשה בלבד.",
-      "en": "No minimum-component or optimality claim. One modeled DC point costs O(1) arithmetic/storage; an m-point plot takes O(m) evaluations. Process design, area, delay and power do not follow from code-operation count.\n\nNo optimum is defined without a circuit/cost model. AnalyticRC is illustrative only."
+      "he": "אין טענת מינימום רכיבים או אופטימליות. חישוב נקודת DC במודל דורש O(1) פעולות וזיכרון; גרף בן m נקודות דורש O(m) חישובים. תכנון תהליך, שטח, השהיה והספק אינם נגזרים ממספר הפעולות בקוד.\n\nאין תכנון מיטבי מוגדר ללא מעגל ומדד. פתרון RC אנליטי להמחשה בלבד.\n\nאין בחירת Vth שממזערת תמיד גם הספק סטטי וגם דינמי תחת כל יעד ביצועים. יש לבחור מדד, אספקה, תדר, קיבול ותקציב זמן.",
+      "en": "No minimum-component or optimality claim. One modeled DC point costs O(1) arithmetic/storage; an m-point plot takes O(m) evaluations. Process design, area, delay and power do not follow from code-operation count.\n\nNo optimum is defined without a circuit/cost model. AnalyticRC is illustrative only.\n\nNo Vth choice always minimizes both static and dynamic power for every performance target. Specify supply, frequency, capacitance, timing budget and objective."
     },
     "verification": {
-      "he": "בוצעו 858 נקודות על רשת ערכים עם אינטגרציית מטען עצמאית ב־Decimal בדיוק 60 ספרות; 27 מקרי הרחבת CLM, שתי דוגמאות חיבור שונות של VDD וארבע דחיות קלט. נבדקו גבולות ויחידות בדוגמה. זו בדיקת משוואות Python, לא אימות תהליך, סימולציית רכיב או מדידה.\n\n16 תצורות ו־16,016 דגימות מול RK4 עצמאי; לא SPICE ולא זיהוי כוונת המילה במקור.",
-      "en": "Executed 858 grid points against independent 60-digit Decimal charge integration, 27 CLM-extension cases, two distinct VDD connections and four rejected inputs. Boundary behavior and example units were checked. This verifies Python equations, not fabrication, device simulation or measurements.\n\nSixteen scenarios,16,016 samples versus independentRK4; neitherSPICE nor resolution of the source typo."
+      "he": "בוצעו 858 נקודות על רשת ערכים עם אינטגרציית מטען עצמאית ב־Decimal בדיוק 60 ספרות; 27 מקרי הרחבת CLM, שתי דוגמאות חיבור שונות של VDD וארבע דחיות קלט. נבדקו גבולות ויחידות בדוגמה. זו בדיקת משוואות Python, לא אימות תהליך, סימולציית רכיב או מדידה.\n\n16 תצורות ו־16,016 דגימות מול RK4 עצמאי; לא SPICE ולא זיהוי כוונת המילה במקור.\n\nיחס הדליפה אומת בנפרד באמצעות אקספוננט Decimal ברמת דיוק 60 ספרות; הספק טעינה וחוק הריבוע במתח נבדקו אריתמטית. אלו בדיקות המודלים בלבד, לא סימולציית התקן או אפיון דליפה.",
+      "en": "Executed 858 grid points against independent 60-digit Decimal charge integration, 27 CLM-extension cases, two distinct VDD connections and four rejected inputs. Boundary behavior and example units were checked. This verifies Python equations, not fabrication, device simulation or measurements.\n\nSixteen scenarios,16,016 samples versus independent RK4; neither SPICE nor resolution of the source typo.\n\nThe leakage ratio was independently checked using a 60-digit Decimal exponential; charging power and voltage-squared scaling were checked arithmetically. These verify the chosen models, not device simulation or leakage characterization."
     },
     "edge_cases": {
       "he": [
@@ -215,7 +217,9 @@
         "VDS שלילי, גוף שאינו במתח המקור או גלישת מתח דורשים מודל אחר.",
         "מדרגה בשער לעומת באספקה או במקור.",
         "שער אידאלי כפוי לעומת מקור עם התנגדות.",
-        "מוצא בלי קיבול לעומת תגובה בעלת קבוע זמן."
+        "מוצא בלי קיבול לעומת תגובה בעלת קבוע זמן.",
+        "סף אינו גבול חד של אפס זרם: קיימת הולכת תת־סף.",
+        "כאשר VDD מתקרב לסף, נוסחת זמן פשוטה אינה תחליף למודל תת־סף או לתא מאופיין."
       ],
       "en": [
         "VDS=0 gives zero current even with an induced channel.",
@@ -225,7 +229,9 @@
         "Negative VDS, body different from source or overvoltage requires a different model.",
         "Gate versus supply/source step.",
         "Forced gate step versus resistive source.",
-        "No output capacitance versus finite time constant."
+        "No output capacitance versus finite time constant.",
+        "Threshold is not a sharp zero-current boundary: subthreshold conduction exists.",
+        "Near-threshold supply operation needs more than a simple strong-inversion delay proxy."
       ]
     },
     "common_mistakes": {
@@ -237,7 +243,10 @@
         "שימוש בחוק הריבוע כמדידה או מודל מדויק לכל טרנזיסטור מודרני.",
         "תיקון שקט של המילה ל־gate.",
         "תחזית מתח יציאה בלי שרטוט.",
-        "טענה שזרם שער תמיד אפס, גם בזמן טעינה."
+        "טענה שזרם שער תמיד אפס, גם בזמן טעינה.",
+        "לבלבל בין UT=kT/q לבין Vth של ההתקן.",
+        "להסיק מ־Vth גבוה שההספק הקיבולי קטן גם כאשר C,VDD,f ופעילות נשארים קבועים.",
+        "לטעון שסף גבוה מקטין בהכרח את כל סוגי הדליפה באותו יחס."
       ],
       "en": [
         "Confusing permanent n+ doping with gate-induced inversion.",
@@ -247,12 +256,15 @@
         "Presenting the square law as a measurement or an accurate model of every modern transistor.",
         "Silently replacing the unknown word withgate.",
         "Predicting output without a circuit.",
-        "Claiming gate current is always zero, including charging."
+        "Claiming gate current is always zero, including charging.",
+        "Confusing thermal voltage UT=kT/q with device Vth.",
+        "Claiming higher Vth lowers capacitive switching power at fixed C,VDD,f and activity.",
+        "Assuming higher threshold reduces every leakage mechanism by the same factor."
       ]
     },
     "interview_answer": {
-      "he": "ב־NMOS בגוף p יש מקור ושפך n+ ושער מבודד. את האילוח יוצרים בייצור, למשל בהחדרת תורמים וטיפול חום; שער חיובי יוצר תעלת היפוך ניידת, לא אילוח. מעל VT הזרם בטריודה הוא β[(VGS−VT)VDS−VDS²/2], וברוויה β(VGS−VT)²/2 כאשר VDS≥VGS−VT. VDD משפיע לפי חיבורי VGS,VDS והגוף, ולכן חייבים לציין מעגל הטיה.\n\nטרנזיסטור יכול לשלוט בזרם כמתג או מגבר. לפני תגובת מדרגה אברר סוג, צומת, הטיה ועומס; ״לגודל״ אינו נתון מספיק. רק בהנחת NMOS pull-down מוגדרת אפשר להסביר פריקת מוצא וקבוע זמן.",
-      "en": "An NMOS has n+ source/drain in a p body and an insulated gate. Fabrication, for example donor implantation and annealing, creates the doping; positive gate bias creates mobile inversion, not doping. Above VT, triode current is β[(VGS−VT)VDS−VDS²/2]; saturation is β(VGS−VT)²/2 for VDS≥VGS−VT. VDD acts through the actual gate/drain/body biases, so specify a circuit.\n\nA transistor can control current as a switch or amplifier. Before a step response, identify type, node, bias and load; the source word is insufficient. A specifiedNMOS pull-down permits a conditional output-discharge example."
+      "he": "ב־NMOS בגוף p יש מקור ושפך n+ ושער מבודד. את האילוח יוצרים בייצור, למשל בהחדרת תורמים וטיפול חום; שער חיובי יוצר תעלת היפוך ניידת, לא אילוח. מעל VT הזרם בטריודה הוא β[(VGS−VT)VDS−VDS²/2], וברוויה β(VGS−VT)²/2 כאשר VDS≥VGS−VT. VDD משפיע לפי חיבורי VGS,VDS והגוף, ולכן חייבים לציין מעגל הטיה.\n\nטרנזיסטור יכול לשלוט בזרם כמתג או מגבר. לפני תגובת מדרגה אברר סוג, צומת, הטיה ועומס; ״לגודל״ אינו נתון מספיק. רק בהנחת NMOS pull-down מוגדרת אפשר להסביר פריקת מוצא וקבוע זמן.\n\nמתח הסף נובע מהשדה הנדרש לשינוי מטען המשטח וליצירת היפוך, ותלוי במבנה ובתהליך. סף גבוה מפחית דליפת תת־סף אך מוריד זרם הנעה באותה אספקה. ההספק הדינמי הקיבולי הוא αCVDD²f; השפעת Vth עליו עקיפה ותלויה בפשרות ביצועים.",
+      "en": "An NMOS has n+ source/drain in a p body and an insulated gate. Fabrication, for example donor implantation and annealing, creates the doping; positive gate bias creates mobile inversion, not doping. Above VT, triode current is β[(VGS−VT)VDS−VDS²/2]; saturation is β(VGS−VT)²/2 for VDS≥VGS−VT. VDD acts through the actual gate/drain/body biases, so specify a circuit.\n\nA transistor can control current as a switch or amplifier. Before a step response, identify type, node, bias and load; the source word is insufficient. A specified NMOS pull-down permits a conditional output-discharge example.\n\nThreshold arises from the electrostatics needed to change surface charge and form inversion, and depends on structure/process. Higher threshold reduces subthreshold leakage but reduces drive at fixed supply. Capacitive dynamic power is αCVDD²f; Vth affects it indirectly through constrained design tradeoffs."
     },
     "source_ambiguities": {
       "he": [
@@ -261,7 +273,8 @@
         "VDD לבדו אינו מגדיר מתח שער או שפך. דוגמאות החיבור הוספו בעריכה.",
         "שיוך NVIDIA מדווח מהצילום ולא אומת עצמאית.",
         "המקור אינו כולל שרטוט או צומת תקפה; ההמחשה אינה שחזור.",
-        "Intel מדווחת בלבד."
+        "Intel מדווחת בלבד.",
+        "המקור אינו מגדיר מה קבוע בהשוואת הספק דינמי. הנוסח מפריד השוואה באספקה ובקיבול קבועים מהשוואת תכנון ביעד ביצועים."
       ],
       "en": [
         "The source does not choose transistor type, body structure or process; an explicit educational NMOS model is selected.",
@@ -269,7 +282,8 @@
         "VDD alone does not define gate or drain voltage. Bias examples are editorial additions.",
         "NVIDIA attribution is reported by the screenshot, not independently verified.",
         "No circuit or valid node is supplied; the illustration is not a reconstruction.",
-        "Intel is source-reported only."
+        "Intel is source-reported only.",
+        "The source does not specify what stays fixed in the dynamic-power comparison. The exercise separates fixed-supply/capacitance analysis from performance-constrained redesign."
       ]
     },
     "solution_extensions": {
@@ -288,6 +302,11 @@
           "question": "מה צריך כדי להחליף את Ron הקבוע במודל אמין יותר?",
           "answer_direction": "מודל התקן ותהליך, הטיה, קיבולים, עומס ומקור הקלט; אז מנתחים את המשוואות הלא־לינאריות או סימולציה מתאימה.",
           "principle": "מודל פשוט מחייב גבולות שימוש."
+        },
+        {
+          "question": "מדוע להשתמש בכמה סוגי Vth באותו תכנון?",
+          "answer_direction": "שמרו התקנים מהירים במסלולים הקריטיים והשתמשו בסף גבוה כשיש מרווח תזמון; בדקו מחדש דליפה, זמן ושטח.",
+          "principle": "פשרת מהירות ודליפה תחת תקציב זמן."
         }
       ],
       "en": [
@@ -302,9 +321,14 @@
           "principle": "Separate a first-order model from device data."
         },
         {
-          "question": "What is needed beyond fixedRon?",
+          "question": "What is needed beyond fixed Ron?",
           "answer_direction": "A process/device model, bias, capacitances, load and source; then use the nonlinear equations or appropriate simulation.",
           "principle": "A simple model has explicit limits."
+        },
+        {
+          "question": "Why use multiple Vth options in one design?",
+          "answer_direction": "Keep fast devices on critical paths and use higher thresholds where timing slack allows; recheck leakage, delay and area.",
+          "principle": "Speed/leakage tradeoffs under a timing budget."
         }
       ]
     },
@@ -321,6 +345,16 @@
         {
           "title": "Berkeley EECS-2012-50, סעיף 5.2 — החדרת מקור/שפך וטיפול חום להפעלת האילוח",
           "url": "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-50.pdf"
+        },
+        {
+          "title": "MIT: אלקטרוסטטיקה של קבל MOS",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2009/2a94c4436b68993a04ad47bda22eb067_MIT6_012F09_lec10.pdf",
+          "scope": "מקור הסף במודל מחסור פלנרי"
+        },
+        {
+          "title": "MIT: פשרות צריכת הספק",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c8/c8s1/",
+          "scope": "אנרגיית טעינה קיבולית ופשרות הולכת תת־סף"
         }
       ],
       "en": [
@@ -335,6 +369,16 @@
         {
           "title": "Berkeley EECS-2012-50 §5.2 — source/drain implantation and dopant-activation annealing",
           "url": "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-50.pdf"
+        },
+        {
+          "title": "MIT 6.012 lecture 10: MOS capacitor electrostatics",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2009/2a94c4436b68993a04ad47bda22eb067_MIT6_012F09_lec10.pdf",
+          "scope": "Threshold electrostatics in the planar depletion model"
+        },
+        {
+          "title": "MIT Computation Structures: power tradeoffs",
+          "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c8/c8s1/",
+          "scope": "Capacitive switching energy and subthreshold tradeoffs"
         }
       ]
     },
@@ -352,11 +396,11 @@
       },
       "en": {
         "115_gate_step_70": {
-          "prompt": "### Extension: transistor role and an unidentified step-input node\nWhat does a transistor do, and what happens when a step is applied? The screenshot literally uses the unidentified word legodel; no circuit or input node is specified. Do not silently replace it withgate or assert one output waveform. First identify missing information. As a separately labeled illustration only, analyze anNMOS pull-down with resistor pull-up to VDD and output capacitance, whose gate is forced from 0 to VDD and output starts high. Distinguish an ideal gate step from a step source connected through resistance and gate capacitance.",
+          "prompt": "### Extension: transistor role and an unidentified step-input node\nWhat does a transistor do, and what happens when a step is applied? The screenshot literally uses the unidentified word legodel; no circuit or input node is specified. Do not silently replace it withgate or assert one output waveform. First identify missing information. As a separately labeled illustration only, analyze an NMOS pull-down with resistor pull-up to VDD and output capacitance, whose gate is forced from 0 to VDD and output starts high. Distinguish an ideal gate step from a step source connected through resistance and gate capacitance.",
           "hints": [
             "A transistor can switch or amplify, but response depends on the circuit. Which node receives the step?",
-            "In anNMOS illustration a high gate can form a conducting channel and discharge output; loading and capacitance govern the transition.",
-            "An explicitly chosenRon switch plus pull-up approaches a divider voltage with time constant(Rpullup||Ron)Cout. This is an added illustration, not the missing original circuit."
+            "In an NMOS illustration a high gate can form a conducting channel and discharge output; loading and capacitance govern the transition.",
+            "An explicitly chosen Ron switch plus pull-up approaches a divider voltage with time constant(Rpullup||Ron)Cout. This is an added illustration, not the missing original circuit."
           ],
           "integration_status": ""
         }

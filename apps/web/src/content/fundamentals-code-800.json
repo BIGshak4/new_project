@@ -1,0 +1,355 @@
+[
+  {
+    "id": "quick-sw-386",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-371"
+    ],
+    "title": {
+      "he": "אותו יעד אחרי העתקה עמוקה",
+      "en": "Following a shared target after cloning"
+    },
+    "prompt": {
+      "he": "לשתי חוליות יש אותו ערך, ושתיהן מצביעות בשדה random לחוליה שלישית. כמה חוליות חדשות צריך ליצור, ולאן יפנו שני המצביעים בעותק?",
+      "en": "Two nodes have the same value and both random pointers lead to a third node. How many new nodes are needed, and where do the copied pointers lead?"
+    },
+    "answer": {
+      "he": "יוצרים שלוש חוליות. כל מצביע בעותק פונה לעותק של החוליה השלישית. מיפוי לפי ערך היה מאחד בטעות את שתי החוליות הראשונות.",
+      "en": "Create three nodes. Both copied pointers reference the clone of the third node. A map keyed by value would mistakenly merge the first two nodes."
+    },
+    "takeaway": {
+      "he": "מעתיקים לפי זהות החוליה ושומרים על שיתוף היעדים.",
+      "en": "Clone by node identity to preserve shared targets."
+    }
+  },
+  {
+    "id": "quick-sw-387",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-373"
+    ],
+    "title": {
+      "he": "האב הראשון שמגיעים אליו משמאל",
+      "en": "The first ancestor reached from the left"
+    },
+    "prompt": {
+      "he": "בעץ חיפוש, 20 הוא השורש, 8 בנו השמאלי ו־15 בנו הימני של 8. ל־15 אין ילדים. מי בא אחרי 15 בסדר עולה, ואיך מגיעים אליו באמצעות קישורי האב?",
+      "en": "In a search tree, 20 is the root, 8 its left child and 15 the right child of 8. Node 15 is a leaf. Which key follows 15 in ascending order, and how do parent pointers lead there?"
+    },
+    "answer": {
+      "he": "עולים מ־15 אל 8 דרך קישור של בן ימני וממשיכים. מ־8 עולים אל 20 דרך קישור של בן שמאלי. 20 הוא היורש.",
+      "en": "Climb from 15 to 8 through a right-child link and continue. From 8 the climb reaches 20 through a left-child link. The successor is 20."
+    },
+    "takeaway": {
+      "he": "בלי תת־עץ ימני, היורש הוא האב הקדמון הראשון שעולים אליו משמאל.",
+      "en": "Without a right subtree, the successor is the first ancestor reached from its left child."
+    }
+  },
+  {
+    "id": "quick-sw-388",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "title": {
+      "he": "הגרלה לפי מיקום בין הערכים המותרים",
+      "en": "Drawing a rank among eligible values"
+    },
+    "prompt": {
+      "he": "מגרילים מתוך 10 עד 16 כולל. חמש התוצאות האחרונות היו 12, 16, 11, 15 ו־10. כיצד הגרלה אחת של ביט הוגן מספיקה לבחירת התוצאה הבאה?",
+      "en": "Draw from 10 through 16 inclusive. The last five results were 12, 16, 11, 15 and 10. How can one fair bit select the next result?"
+    },
+    "answer": {
+      "he": "הערכים המותרים הם 13 ו־14. ממפים 0 ל־13 ו־1 ל־14. לכל ערך יש בדיוק תוצאת ביט אחת שמובילה אליו, ולכן ההסתברויות שוות.",
+      "en": "The eligible values are 13 and 14. Map 0 to 13 and 1 to 14. Each value has exactly one bit outcome leading to it, so their probabilities are equal."
+    },
+    "takeaway": {
+      "he": "הגרלה אחידה של מיקום ומיפוי חד־חד־ערכי שומרים על אחידות.",
+      "en": "A uniform rank and a one-to-one mapping give a uniform value."
+    }
+  },
+  {
+    "id": "quick-sw-389",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-332"
+    ],
+    "title": {
+      "he": "קריאה מטווח שעומד להידרס",
+      "en": "Reading a range before it is overwritten"
+    },
+    "prompt": {
+      "he": "במערך [4,7,9,2], מעתיקים את שלושת התאים הראשונים אל התאים שמתחילים באינדקס 1. איך מתקבל [4,4,7,9] בלי מערך עזר?",
+      "en": "In [4,7,9,2], copy the first three cells into the range starting at index 1. How can you produce [4,4,7,9] without a temporary array?"
+    },
+    "answer": {
+      "he": "מעתיקים מהסוף להתחלה. כותבים תחילה 9 בתא האחרון, אחר כך 7 ואחריו 4. כך כל ערך נקרא לפני שהכתיבה ליעד יכולה לשנות אותו.",
+      "en": "Copy backward. Write 9 into the last cell, then 7 and finally 4. Each source value is read before a destination write can overwrite it."
+    },
+    "takeaway": {
+      "he": "כיוון ההעתקה נקבע לפי מיקום החפיפה.",
+      "en": "The direction of copying depends on the overlap."
+    }
+  },
+  {
+    "id": "quick-sw-390",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-359"
+    ],
+    "title": {
+      "he": "כשל שנמצא בין נקודות הדגימה",
+      "en": "A failure between sampling points"
+    },
+    "prompt": {
+      "he": "בודקים מתח מ־0 עד 1 וולט בצעדים של 0.2, בלי נקודות הקצה. המדידה נכשלת ב־0.3 וב־0.8 בלבד. מהו הכשל הראשון שיתגלה?",
+      "en": "Test voltages between 0 and 1 volt in steps of 0.2, excluding both endpoints. A measurement fails only at 0.3 and 0.8. Which failure is observed first?"
+    },
+    "answer": {
+      "he": "נקודות המדידה הן 0.2, 0.4, 0.6 ו־0.8. הכשל הראשון שנמדד הוא ב־0.8. אפשר לייצג את המתחים כעשיריות שלמות כדי להימנע משגיאת עיגול.",
+      "en": "The samples are 0.2, 0.4, 0.6 and 0.8. The first observed failure is at 0.8. Integer tenths represent this grid exactly."
+    },
+    "takeaway": {
+      "he": "מחפשים את הכשל הראשון שנדגם על הרשת.",
+      "en": "Find the first failure actually sampled on the grid."
+    }
+  },
+  {
+    "id": "quick-sw-391",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-362"
+    ],
+    "title": {
+      "he": "השכן הקרוב משני צדי נקודת ההכנסה",
+      "en": "Both neighbors of an insertion point"
+    },
+    "prompt": {
+      "he": "מחפשים ל־13 את הערך הקרוב ביותר במערך הממוין [2,9,21,40]. חיפוש מחזיר את אינדקס 21, הערך הראשון שגדול מ־13. איזה ערך עוד צריך לבדוק?",
+      "en": "Find the value closest to 13 in sorted array [2,9,21,40]. A search locates 21, the first value above 13. Which other value should you check?"
+    },
+    "answer": {
+      "he": "בודקים גם את 9, האיבר שמשמאל לנקודת ההכנסה. המרחקים הם 4 ו־8 ולכן 9 קרוב יותר. בקצה המערך ייתכן שקיים רק אחד משני השכנים.",
+      "en": "Check 9, immediately to the left of the insertion point. The distances are 4 and 8, so 9 is closer. At an array boundary only one neighbor may exist."
+    },
+    "takeaway": {
+      "he": "במערך ממוין הערך הקרוב הוא אחד השכנים של נקודת ההכנסה.",
+      "en": "In sorted order, a closest value is adjacent to the insertion point."
+    }
+  },
+  {
+    "id": "quick-sw-392",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-333"
+    ],
+    "title": {
+      "he": "כמה מקומות פנויים נשארו בעץ?",
+      "en": "Counting open slots in a tree encoding"
+    },
+    "prompt": {
+      "he": "מתארים עץ בינארי בסדר תחילי. אות מסמנת צומת ו־# מסמן ילד חסר. נקראו האסימונים A B # #. כמה מקומות לילדים או לסמנים חסרים עדיין מחכים למילוי?",
+      "en": "A preorder binary-tree encoding uses letters for nodes and # for null children. The tokens A B # # have been read. How many slots still need a node or a null marker?"
+    },
+    "answer": {
+      "he": "נשאר מקום אחד, לילד הימני של A. מתחילים במקום אחד לשורש. כל צומת תופס מקום ופותח שניים, וכל # סוגר מקום אחד.",
+      "en": "One slot remains, for the right child of A. Start with one root slot. A node consumes one slot and creates two, while each # closes one slot."
+    },
+    "takeaway": {
+      "he": "ספירת מקומות פתוחים מאפשרת לזהות מתי תיאור העץ הושלם.",
+      "en": "The open-slot count tells you when the tree encoding is complete."
+    }
+  },
+  {
+    "id": "quick-sw-393",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-123"
+    ],
+    "title": {
+      "he": "מי נמצא מימין לסימן החיסור?",
+      "en": "Which operand goes on the right?"
+    },
+    "prompt": {
+      "he": "מחשבים את הביטוי בסימון סופי 8 3 2 * -. כשמגיעים לחיסור, מה שולפים קודם, ומהי התוצאה?",
+      "en": "Evaluate the postfix expression 8 3 2 * -. When you reach subtraction, which value do you pop first and what is the result?"
+    },
+    "answer": {
+      "he": "שולפים תחילה 6, תוצאת הכפל, ואז 8. הערך הראשון שנשלף הוא האופרנד הימני. לכן מחשבים 8 פחות 6 ומקבלים 2.",
+      "en": "Pop 6, the product, then 8. The first pop is the right operand. Compute 8 minus 6 to get 2."
+    },
+    "takeaway": {
+      "he": "בחיסור ובחילוק צריך לשמור על סדר האופרנדים.",
+      "en": "Subtraction and division require the original operand order."
+    }
+  },
+  {
+    "id": "quick-sw-394",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-162"
+    ],
+    "title": {
+      "he": "מקבעים את האות הראשונה בתמורה",
+      "en": "Fixing the first letter of a permutation"
+    },
+    "prompt": {
+      "he": "מהמילה ABBA יוצרים את כל הסידורים השונים שמתחילים ב־A. כמה כאלה יש?",
+      "en": "How many distinct arrangements of ABBA start with A?"
+    },
+    "answer": {
+      "he": "אחרי שמקבעים A נשארות האותיות A,B,B. יש שלוש אפשרויות למיקום A הנותרת. החלפה בין שני עותקי B לא יוצרת מילה נוספת.",
+      "en": "Fixing A leaves A,B,B. There are three positions for the remaining A. Swapping the two copies of B produces the same word."
+    },
+    "takeaway": {
+      "he": "בכל ענף רקורסיבי מעדכנים את השכיחויות אחרי בחירת האות.",
+      "en": "Each recursive branch uses the frequencies left after its letter choice."
+    }
+  },
+  {
+    "id": "quick-sw-395",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-337"
+    ],
+    "title": {
+      "he": "השכמה לפני שהחוט השני הגיע",
+      "en": "Waking before the other thread arrives"
+    },
+    "prompt": {
+      "he": "חוט ממתין במחסום לשני חוטים וזוכר את מספר הסבב 6. הוא מתעורר ומגלה תחת המנעול שהסבב עדיין 6. האם הוא רשאי לצאת מהמחסום?",
+      "en": "A thread at a two-thread barrier saved generation 6. It wakes and reads generation 6 while holding the lock. May it leave the barrier?"
+    },
+    "answer": {
+      "he": "עליו להמשיך להמתין. השכמה לבדה אינה מעידה שהחוט השני הגיע. החוט האחרון שמגיע מקדם את מספר הסבב תחת המנעול ומעיר את הממתין. שינוי המספר מעיד שהסבב המקורי הסתיים.",
+      "en": "It must keep waiting. A wakeup alone does not establish that the other thread arrived. The last arriving thread advances the generation under the lock and wakes the waiter. A changed generation marks completion of the original round."
+    },
+    "takeaway": {
+      "he": "אחרי השכמה בודקים שוב את תנאי ההמתנה תחת אותו מנעול.",
+      "en": "After a wakeup, recheck the waiting predicate under the same lock."
+    }
+  },
+  {
+    "id": "quick-sw-396",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-309"
+    ],
+    "title": {
+      "he": "מתי ערך ישן מפסיק להיות במחסנית?",
+      "en": "When is a stale value outside the stack?"
+    },
+    "prompt": {
+      "he": "מחסנית משתמשת במערך [4,8,6,0] ובמונה גודל 2. חיפוש בכל המערך מוצא 6. האם 6 אכן במחסנית?",
+      "en": "A stack uses backing array [4,8,6,0] and size 2. Searching the whole array finds 6. Is 6 in the stack?"
+    },
+    "answer": {
+      "he": "לא. שני התאים הפעילים הם 4 ו־8. תא שהוסר באמצעות הקטנת המונה יכול עדיין להכיל ערך ישן, ותא שלא נכתב עשוי להכיל ערך אתחול.",
+      "en": "No. The active entries are 4 and 8. Popping by reducing the size can leave an old value behind, and unused cells can contain default values."
+    },
+    "takeaway": {
+      "he": "סורקים רק את הטווח הפעיל של המבנה.",
+      "en": "Search only the data structure's active range."
+    },
+    "code": {
+      "language": "python",
+      "text": "def occurrences(buffer, size, key):\n    return sum(buffer[i] == key for i in range(size))"
+    }
+  },
+  {
+    "id": "quick-sw-397",
+    "topic": "python",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "title": {
+      "he": "כמה נקודות דגימה נכנסות בשורה?",
+      "en": "How many sampling points fit in a row?"
+    },
+    "prompt": {
+      "he": "רוחב תמונה הוא 10 פיקסלים. מתחילים בעמודה 2 ודוגמים כל 4 עמודות. כמה נקודות נכנסות בשורה אם העמודה הראשונה היא 0?",
+      "en": "An image is 10 pixels wide. Start at column 2 and sample every 4 columns. How many points fit if columns start at 0?"
+    },
+    "answer": {
+      "he": "שתי נקודות, בעמודות 2 ו־6. העמודה הבאה הייתה 10, אבל האינדקס האחרון בתמונה הוא 9.",
+      "en": "Two points fit, at columns 2 and 6. The next column would be 10, but the final image index is 9."
+    },
+    "takeaway": {
+      "he": "הנקודה האחרונה חייבת להיות באינדקס שקטן מרוחב התמונה.",
+      "en": "The last point must have an index strictly below the image width."
+    },
+    "code": {
+      "language": "python",
+      "text": "def count_columns(width, start, step):\n    return len(range(start, width, step))"
+    }
+  },
+  {
+    "id": "quick-sw-398",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-347"
+    ],
+    "title": {
+      "he": "כמה כוכבים יודפסו בפירמידה?",
+      "en": "Counting the stars printed in a pyramid"
+    },
+    "prompt": {
+      "he": "בשורות של פירמידה ממורכזת יש 1, 3, 5 ו־7 כוכבים. כמה כוכבים יודפסו בסך הכול, ואיך מנבאים את הכמות לפי גובה הפירמידה?",
+      "en": "A centered pyramid prints rows of 1, 3, 5 and 7 stars. How many stars are printed in total, and how do you predict the count from its height?"
+    },
+    "answer": {
+      "he": "יודפסו 16 כוכבים. אם יש h שורות, כל שורה מוסיפה את המספר האי־זוגי הבא. סכום h המספרים האי־זוגיים הראשונים הוא h בריבוע.",
+      "en": "There are 16 stars. With h rows, each row adds the next odd number. The sum of the first h odd numbers is h squared."
+    },
+    "takeaway": {
+      "he": "כמות התווים בפלט עשויה לגדול כריבוע מספר השורות.",
+      "en": "Output length can grow quadratically with the number of rows."
+    }
+  },
+  {
+    "id": "quick-sw-399",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-314"
+    ],
+    "title": {
+      "he": "מילה אחת שמגיעה בשני מקטעים",
+      "en": "One word received in two chunks"
+    },
+    "prompt": {
+      "he": "הטקסט מגיע בשני מקטעים, “a ca” ואחריו “t catfish”. המילה האסורה היא cat ונדרשת התאמה למילה שלמה. כמה התאמות יש?",
+      "en": "Text arrives in two chunks, “a ca” followed by “t catfish”. The forbidden word is cat and only full tokens count. How many matches are there?"
+    },
+    "answer": {
+      "he": "יש התאמה אחת. הסיומת ca והתו t משלימים יחד את cat. המילה catfish היא אסימון אחר. שומרים את המילה החלקית עד רווח או סוף הזרם.",
+      "en": "There is one match. The suffix ca and the next t form cat. The word catfish is a different token. Keep the partial token until whitespace or end of input."
+    },
+    "takeaway": {
+      "he": "גבול מקטע שידור אינו בהכרח גבול מילה.",
+      "en": "A chunk boundary need not be a word boundary."
+    }
+  },
+  {
+    "id": "quick-sw-400",
+    "topic": "algorithms",
+    "interviewIds": [
+      "PREP-318"
+    ],
+    "title": {
+      "he": "מתי שחלוף משנה את ערכי התאים?",
+      "en": "Which swaps change a matrix during transposition?"
+    },
+    "prompt": {
+      "he": "משחלפים במקום את המטריצה [[1,4,5],[4,2,8],[7,8,3]]. בכמה זוגות תאים ההחלפה תשנה את הערכים?",
+      "en": "Transpose [[1,4,5],[4,2,8],[7,8,3]] in place. For how many pairs does swapping actually change the cell values?"
+    },
+    "answer": {
+      "he": "רק בזוג שבפינות הימנית העליונה והשמאלית התחתונה, שבו הערכים 5 ו־7. בשני הזוגות האחרים שמעבר לאלכסון הערכים שווים. תאי האלכסון נשארים במקומם.",
+      "en": "Only the top-right and bottom-left pair changes, with values 5 and 7. The other two off-diagonal pairs have matching values. The diagonal stays in place."
+    },
+    "takeaway": {
+      "he": "עוברים פעם אחת על כל זוג סימטרי באמצעות התנאי i<j.",
+      "en": "Visit each symmetric pair once by requiring i<j."
+    }
+  }
+]

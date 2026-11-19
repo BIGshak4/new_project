@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "checks": 4000,
+  "dc_points": 1005,
+  "dc_models": 5,
+  "dc_switching_points": [
+    {
+      "beta_n": 1,
+      "beta_p": 1,
+      "vm_clm": 0.5,
+      "vm_ideal": 0.5
+    },
+    {
+      "beta_n": 1,
+      "beta_p": 2,
+      "vm_clm": 0.5421788309733624,
+      "vm_ideal": 0.5428932188134525
+    },
+    {
+      "beta_n": 2,
+      "beta_p": 1,
+      "vm_clm": 0.4578211690266377,
+      "vm_ideal": 0.4571067811865476
+    },
+    {
+      "beta_n": 0.5,
+      "beta_p": 2,
+      "vm_clm": 0.5820586321340928,
+      "vm_ideal": 0.5833333333333334
+    },
+    {
+      "beta_n": 2,
+      "beta_p": 0.5,
+      "vm_clm": 0.4179413678659073,
+      "vm_ideal": 0.4166666666666667
+    }
+  ],
+  "rc_scenarios": 18,
+  "rc_integration_samples": 144000,
+  "rejected_inputs": 5,
+  "leakage_ratio_for_0_1V_increase": 0.07585123415037487,
+  "scope": "Independent Decimal channel-charge integration and safeguarded secant solve versus binary-search DC model; analytic ideal switching points; Decimal leakage exponent; energy arithmetic; independent RK4 capacitor KCL against RC waveform and threshold crossing. Educational equations only; no SPICE, characterized process, synthesis, measurement or signoff."
+}

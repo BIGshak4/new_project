@@ -1,0 +1,23 @@
+{
+  "status": "checked",
+  "verification_scope": "Bilingual conceptual trace and primary-standards cross-check; no live network capture",
+  "endpoint_ip": [
+    "192.0.2.10",
+    "198.51.100.20"
+  ],
+  "first_next_hop": "192.0.2.1",
+  "expected_forwarding": "Switch uses MAC; router routes IP and rebuilds link encapsulation; no NAT",
+  "primary_references": [
+    "https://www.itu.int/rec/T-REC-X.200-199407-I/en",
+    "https://www.rfc-editor.org/rfc/rfc1122.html",
+    "https://www.rfc-editor.org/rfc/rfc826.html",
+    "https://www.rfc-editor.org/rfc/rfc9293.html",
+    "https://www.rfc-editor.org/rfc/rfc8446.html",
+    "https://www.rfc-editor.org/rfc/rfc8200.html#section-5",
+    "https://www.rfc-editor.org/rfc/rfc4861.html"
+  ],
+  "live_network_capture": false,
+  "question_id": "PREP-360",
+  "human_expert_review": false,
+  "source_sha256": {}
+}

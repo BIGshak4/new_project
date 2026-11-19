@@ -2,6 +2,7 @@
 
 import { QuestionMetadata } from "./question-metadata";
 import { QuestionActions } from "./question-actions";
+import { QuestionPrompt } from "./question-prompt";
 import { BidiText } from "./bidi-text";
 import { QuestionTitle } from "./question-title";
 import { proseDirection } from "../lib/bidi-segments";
@@ -36,8 +37,10 @@ import { FollowUps } from "./follow-ups";
 import { useFeedbackArrival } from "./use-feedback-arrival";
 import { emitMemberTourAction } from "../lib/member-tour";
 import { questionCategory } from "../lib/question-discovery";
-import { parseTechnicalAnswer } from "../lib/technical-answer";
+import { SubmittedAnswerContent } from "./submitted-answer-content";
 import { referenceInLanguage } from "../lib/material-locale";
+import { learnerCopy } from "../lib/learner-copy";
+import { sectionQuestionPrompt } from "../lib/question-prompt-sections";
 import { supabase } from "../lib/supabase";
 import {
   newIdempotencyKey,
@@ -499,11 +502,23 @@ export function PracticeSession({
 
   function download() {
     if (!attempt) return;
+    const sections = sectionQuestionPrompt(attempt.question.prompt, attempt.question.language, attempt.question.key);
     const content = JSON.stringify(
       {
         exported_at: new Date().toISOString(),
         simulated_feedback: demo,
-        attempt,
+        attempt: {
+          ...attempt,
+          question: {
+            ...attempt.question,
+            prompt: sections.main,
+            clarifications: sections.clarifications,
+            variations: sections.variations,
+            additional_wordings: attempt.question.additional_wordings?.map(learnerCopy).filter(Boolean),
+          },
+          hints: attempt.hints.map(hint => ({ ...hint, text: learnerCopy(hint.text) })),
+          reference: attempt.reference && learnerCopy(attempt.reference),
+        },
       },
       null,
       2,
@@ -519,21 +534,25 @@ export function PracticeSession({
   }
   const disabled = busy || recoveryRequired || attempt?.status === "evaluating";
   const retryable = attempt ? latestSubmission(attempt) : undefined;
-  const drawingQuestion: CircuitQuestionReference | undefined = question ? {
-    title: question.title,
-    content: <>
-      <RichText text={question.prompt} lang={lang} />
+  const questionContent = question && (
+    <QuestionPrompt text={question.prompt} questionKey={question.key} additionalWordings={question.additional_wordings}
+      lang={lang} contentLang={question.language} mainClassName="question-prompt">
       {question.has_media && (resources.data
         ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
         : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
-      {question.choices && (
+      {question.starter_code && <pre className="code-block" dir="ltr"><code>{question.starter_code}</code></pre>}
+      {!!question.choices?.length && (
         <ol className="choices">
-          {question.choices.map((choice, index) => (
-            <li key={index} dir={proseDirection(choice, lang === "he" ? "rtl" : "ltr")}><BidiText>{choice}</BidiText></li>
+          {question.choices.map(learnerCopy).map((choice, index) => (
+            <li key={index} dir={proseDirection(choice, question.language === "he" ? "rtl" : "ltr")}><BidiText>{choice}</BidiText></li>
           ))}
         </ol>
       )}
-    </>,
+    </QuestionPrompt>
+  );
+  const drawingQuestion: CircuitQuestionReference | undefined = question ? {
+    title: question.title,
+    content: questionContent,
   } : undefined;
 
   return (
@@ -586,6 +605,7 @@ export function PracticeSession({
                 <SubjectSketch subject={question.subject} className="sheet-sketch-corner" />
                 <QuestionTitle as="h1" lang={lang}><BidiText>{question.title}</BidiText></QuestionTitle>
                 <QuestionMetadata question={question} lang={lang} showCompanies={false} />
+                {questionContent}
                 {question.assessment_ready === false && <p className="notice study-review-note">
                   {t("המשוב ראשוני והתרגול נשמר, אך אינו משנה את רמת השליטה או מעניק נקודות.", "Feedback is provisional and practice is saved, but does not change skill levels or earn points.")}
                 </p>}
@@ -603,10 +623,6 @@ export function PracticeSession({
                     .
                   </p>
                 )}
-                <RichText text={question.prompt} lang={lang} />
-                {question.has_media && (resources.data
-                  ? <QuestionFigures media={resources.data.media} lang={lang} role="prompt" onRefresh={resources.retry} />
-                  : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />)}
                 {attempt && (
                   <>
                     <div className="row" data-member-tour="practice-hints" style={{ marginTop: 24 }}>
@@ -666,7 +682,7 @@ export function PracticeSession({
                         <h3>
                           {t("רמז", "Hint")} {h.level}
                         </h3>
-                        <RichText text={h.text} lang={lang} />
+                        <RichText text={learnerCopy(h.text)} lang={lang} />
                       </div>
                     ))}
                     {attempt.reference &&
@@ -680,15 +696,6 @@ export function PracticeSession({
                         />
                       )}
                   </>
-                )}
-                {question.choices && (
-                  <ol className="choices">
-                    {question.choices.map((c, i) => (
-                      <li key={i} dir={proseDirection(c, lang === "he" ? "rtl" : "ltr")}>
-                        <BidiText>{c}</BidiText>
-                      </li>
-                    ))}
-                  </ol>
                 )}
                 {!attempt && (
                   <section
@@ -795,6 +802,7 @@ export function PracticeSession({
                           disabled={disabled || !!pending}
                           codeLanguage={question.code_language}
                           starterCode={question.starter_code}
+                          question={drawingQuestion}
                           execution={executionEnabled ? { attemptId: attempt.id, api } : undefined}
                         />
                         <VisualAnswer
@@ -1031,7 +1039,7 @@ function ReferenceSolution({ text, sourceLanguage, lang, resources, hasMedia }: 
       </h3>
       {reference === null
         ? <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} solution />
-        : <div className="question-prompt"><StudyText text={reference} lang={lang} solution /></div>}
+        : <div className="question-prompt"><StudyText text={learnerCopy(reference)} lang={lang} solution /></div>}
       {(hasMedia || resources.data?.technical_material) && (!resources.data?.solution_revealed
         ? reference === null ? null
         : <ResourceStatus error={resources.error} retry={resources.retry} lang={lang} />
@@ -1056,16 +1064,10 @@ function SavedAnswer({
   question?: CircuitQuestionReference;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
-  const parts = parseTechnicalAnswer(s.answer);
   return (
     <section className="saved-answer">
       <h3>{t("התשובה ששלחתם", "Your submitted answer")}</h3>
-      {parts.explanation && <RichText text={parts.explanation} />}
-      {parts.code && (
-        <pre className="code-block" dir="ltr">
-          <code>{parts.code}</code>
-        </pre>
-      )}
+      <SubmittedAnswerContent answer={s.answer} lang={lang} />
       {s.visual && <VisualAnswer value={s.visual} lang={lang} question={question} />}
       <p className="help-status">
         {t("רמזים שנראו לפני השליחה", "Hints seen before submission")}:{" "}
@@ -1202,7 +1204,7 @@ function PersonalNotes({
             <summary>
               {t("הטיוטה השמורה בחשבון", "Draft saved to account")}
             </summary>
-            <RichText text={entry.answer} />
+            <SubmittedAnswerContent answer={entry.answer} lang={lang} />
           </details>
         )}
         <div className="row">

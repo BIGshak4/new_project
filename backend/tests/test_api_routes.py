@@ -471,6 +471,12 @@ def every_route():
         ("DELETE", f"/v1/me/friends/requests/{aid}", None), ("DELETE", f"/v1/me/friends/{aid}", None),
         # duels (2026-10-22)
         ("GET", "/v1/duels", None), ("POST", "/v1/duels", {"language": "he"}), ("POST", "/v1/duels/accept", {"code": "abcd2345"}),
+        ("POST", "/v1/me/presence", None),
+        ("GET", "/v1/duels/invitations", None),
+        ("GET", "/v1/games/daily-puzzle", None),
+        ("POST", "/v1/games/daily-puzzle/reveal", {"day": "2026-11-15", "id": "daily-puzzle"}),
+        ("POST", "/v1/games/daily-puzzle/submit", {"day": "2026-11-15", "id": "daily-puzzle", "answer": {"text": "x"}}),
+        ("POST", "/v1/games/daily-puzzle/retry", {"day": "2026-11-15", "id": "daily-puzzle"}),
         ("GET", "/v1/duels/practice", None),
         ("POST", "/v1/duels/practice/answer", {"round_token": "test-round", "choice": 0}),
         ("POST", f"/v1/duels/{uuid.UUID(int=0)}/ready", {}),

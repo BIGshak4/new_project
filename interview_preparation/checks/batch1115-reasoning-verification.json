@@ -1,0 +1,38 @@
+{
+  "result": "passed",
+  "knowledge": {
+    "agents": 6,
+    "verified_world_and_public_lower_bound_pairs": 192,
+    "actual_four": {
+      "first_action_night": 4,
+      "acting_agents": 4
+    },
+    "method": "Explicit indistinguishable worlds with public-silence updates"
+  },
+  "coin_bags": {
+    "exact_weight_cases": 80,
+    "signed_deviations": 4,
+    "sample_schemes": 2,
+    "method": "Explicit coin multisets evaluated with exact rational arithmetic"
+  },
+  "power": {
+    "nodal_and_thevenin_cases": 3672,
+    "capacitor_energy_integrals": 3,
+    "integration_steps_per_capacitance": 20000,
+    "maximum_watts": 0.024,
+    "divider_efficiency": 0.25,
+    "method": "Exact nodal solution and numerical energy integration"
+  },
+  "scope": "Finite mathematical models, without physical circuit measurements",
+  "verified_source_sha256": {
+    "checks/check_nov15_reasoning.py": "33954c6addffeac8d1fe7b68caf7c970bf16fcc93415da5601dc2199aa5a7118",
+    "diagrams/prep-343-public-silence-timeline-en.png": "dc410d221b9ee7eb9e295bb4024185fb0e3d60a6a7122d6915c6a9028fd15e15",
+    "diagrams/prep-343-public-silence-timeline-he.png": "071e5e1639e448213c5c33c361069f47942543df9507807154d403713d58a4a1",
+    "diagrams/prep-344-weighted-bag-sample-en.png": "9ec8a900927ef45162e736dd6dd0a4f898ff5ddaddf6f21710ec80a0ae2c53a4",
+    "diagrams/prep-344-weighted-bag-sample-he.png": "2a8274f8f0eab92bd69e602d181f9ff31a83dc51c05d801926945bf3fc4c1206",
+    "diagrams/prep-345-divider-output-load-en.png": "de82adbb6e1d3264d3bd7d686bf4a88d5cc38c56116607f736e2351a5d5bc120",
+    "diagrams/prep-345-divider-output-load-he.png": "046f3cff70a8508f2a86088f0ec6d789fb2da93420708269f29642e01a26a539",
+    "diagrams/prep-345-thevenin-power-en.png": "3e3903d11be7cf426d95df9fc37851bf3f94b38f55447b8ee56ab95da195a00a",
+    "diagrams/prep-345-thevenin-power-he.png": "f03347e9618e9ea81612b5318260a57858c0076086982e824daebe7d2a2fea82"
+  }
+}

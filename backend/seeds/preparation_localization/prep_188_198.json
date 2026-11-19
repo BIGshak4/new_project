@@ -280,10 +280,12 @@
   "PREP-196": {
     "assumptions": {
       "he": [
-        "דוגמת Python עם n≥0; חישוב סופי; ניתוח מילים מצוין בנפרד מעלות ביטים."
+        "דוגמת Python עם n≥0; חישוב סופי; ניתוח מילים מצוין בנפרד מעלות ביטים.",
+        "יש מספר סופי של קופסאות, וכל קופסה מכילה לכל היותר קופסה אחת."
       ],
       "en": [
-        "Python example with n≥0, finite computation; word-model analysis is distinguished from bit cost."
+        "Python example with n≥0, finite computation; word-model analysis is distinguished from bit cost.",
+        "There are finitely many boxes, each containing at most one smaller box."
       ]
     },
     "optimality": {
@@ -291,32 +293,36 @@
       "en": "For summation both versions take Θ(n) time; recursive stack Θ(n), loop O(1) auxiliary words."
     },
     "verification": {
-      "he": "300 קלטים מול n(n+1)/2. לא נטענת בטיחות מחסנית לעומק לא חסום.",
-      "en": "300 inputs versus n(n+1)/2; no unbounded-depth stack-safety claim."
+      "he": "300 קלטים מול n(n+1)/2. לא נטענת בטיחות מחסנית לעומק לא חסום.\n\nנבדקה ספירה של שרשראות מקוננות באורכים 0 עד 99.",
+      "en": "300 inputs versus n(n+1)/2; no unbounded-depth stack-safety claim.\n\nVerified nested chains of every length from 0 to 99."
     },
     "edge_cases": {
       "he": [
-        "n=0; שלילי נדחה; עומק גדול; תתי־בעיות חוזרות; עצים לא מאוזנים."
+        "n=0; שלילי נדחה; עומק גדול; תתי־בעיות חוזרות; עצים לא מאוזנים.",
+        "קופסה ריקה מבפנים עדיין נספרת כאחת. כשאין קופסה כלל, התוצאה היא אפס."
       ],
       "en": [
-        "n=0; negative input rejected; large depth; repeated subproblems; unbalanced trees."
+        "n=0; negative input rejected; large depth; repeated subproblems; unbalanced trees.",
+        "An empty box counts as one. No box at all counts as zero."
       ]
     },
     "common_mistakes": {
       "he": [
         "מבלבלים בין מספר קריאות לעומק פעיל.",
         "המרה ללולאה אינה מבטיחה שמידע DFS ייעלם.",
-        "אין להבטיח tail-call optimization בכל שפה."
+        "אין להבטיח tail-call optimization בכל שפה.",
+        "הוראה ״תעשי שוב״ לבדה אינה מסבירה מה מצטמצם, איפה עוצרים וכיצד משתמשים בתשובה שחוזרת."
       ],
       "en": [
         "Confusing total calls with active depth.",
         "Converting to iteration does not remove required DFS state.",
-        "Never assume universal tail-call optimization."
+        "Never assume universal tail-call optimization.",
+        "Saying “do it again” leaves out the smaller input, the stopping condition and the return step."
       ]
     },
     "interview_answer": {
-      "he": "רקורסיה מתאימה למבנה רקורסיבי ומקלה על הוכחה. משלמים על קריאות ועומק, וחייבים בסיס והתקדמות; זמן לא נובע מרקורסיה לבדה.",
-      "en": "Recursion fits recursive structure and induction. Calls/depth cost resources; base cases and progress are required, while time does not follow from recursion alone."
+      "he": "רקורסיה מתאימה למבנה רקורסיבי ומקלה על הוכחה. משלמים על קריאות ועומק, וחייבים בסיס והתקדמות; זמן לא נובע מרקורסיה לבדה.\n\nסופרים אחת ומבקשים אותה משימה על מה שבפנים. מקום ריק מחזיר אפס.",
+      "en": "Recursion fits recursive structure and induction. Calls/depth cost resources; base cases and progress are required, while time does not follow from recursion alone.\n\nCount one and ask the same question of the inside. Empty space answers zero."
     },
     "source_ambiguities": {
       "he": [
@@ -402,7 +408,7 @@
     },
     "source_ambiguities": {
       "he": "הצילום אינו מגדיר סימן, ממשק התחלה, השהיה או טיפול באפס. אלו הנחות עריכה מפורשות. 100100 מתפרש כבינארי, כלומר 36.",
-      "en": "The source omits signedness, start interface, latency and zero behavior. These are explicit explicit assumptions. 100100 is interpreted as binary, namely 36."
+      "en": "The source omits signedness, start interface, latency and zero behavior. These are explicit assumptions. 100100 is interpreted as binary, namely 36."
     },
     "solution_extensions": {
       "he": [

@@ -130,6 +130,25 @@ class BankQuestion(BaseModel):
     def languages_ready(self) -> list[str]:
         return [language for language, text in self.translations.items() if text.parity_checked]
 
+    def additional_wordings(self, language: str) -> list[str]:
+        """Only the localized statements from older variants stored outside the primary prompt."""
+        variants = self.assets
+        for key in ("preparation_resource", "learner_material", "prompt_variants", language):
+            if not isinstance(variants, dict):
+                return []
+            variants = variants.get(key)
+        if isinstance(variants, list):
+            # In this legacy shape the field name is the same in both localized copies.
+            candidates = [entry.get("translation_en") for entry in variants
+                          if isinstance(entry, dict) and "original_prompt" in entry]
+        elif isinstance(variants, dict) and isinstance(variants.get("preserved"), list):
+            candidates = [entry.get("prompt") for entry in variants["preserved"] if isinstance(entry, dict)]
+        else:
+            return []
+        prompt = self.text(language).prompt
+        wordings = (value.strip() for value in candidates if isinstance(value, str))
+        return list(dict.fromkeys(text for text in wordings if text and text not in prompt))
+
     def prompt_with_code(self, language: str) -> str:
         """The prompt plus the shared code block, which is stored once in assets and never translated."""
         prompt = self.text(language).prompt

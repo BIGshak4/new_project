@@ -13,6 +13,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.preparation_november18b_history import before_nov18b
+
 ROOT = Path(__file__).resolve().parents[2]
 BANK = ROOT / "interview_preparation"
 SEEDS = ROOT / "backend/seeds/preparation_localization"
@@ -67,7 +69,7 @@ def test_large_truth_domains_and_declared_timing_are_actually_checked(model_resu
 
 @pytest.mark.parametrize("ident", sorted(NEW))
 def test_new_records_keep_review_state_three_hints_and_traceable_assets(ident, archive):
-    q = archive[ident]
+    q = before_nov18b("archive:" + ident, archive[ident])
     assert q["status"] == "in_review" and q["solution_status"] == "proposed"
     assert q["reviewed_by"] is None and q["ai_assisted"] is True
     assert q["difficulty"] is None and q["estimated_minutes"] is None

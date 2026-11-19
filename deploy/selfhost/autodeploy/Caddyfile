@@ -1,0 +1,22 @@
+{
+    email {$ACME_EMAIL}
+}
+{$APP_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy web:3000
+}
+www.{$APP_DOMAIN} {
+    redir https://{$APP_DOMAIN}{uri} permanent
+}
+{$API_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy api:8000 {
+        flush_interval -1
+    }
+}
+# BEGIN TASKS
+{$TASKS_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy tasks:3000
+}
+# END TASKS

@@ -1,0 +1,177 @@
+# Production publishing and outbound deployment
+
+This route keeps image builds on GitHub's Linux runner and leaves the 2 GB VPS
+running prebuilt images. The VPS needs no GitHub personal access token, registry
+password, inbound CI SSH access or new public deployment endpoint. The publisher
+and host timer are configured and active; the verification record below separates
+the dated supervised checks from subsequent push-triggered releases.
+
+Verified on 12 November 2026: [publisher run 43270978923](https://github.com/BIGshak4/new_project/actions/runs/43270978923)
+successfully published and signed source
+`1e01ffe174b3f1fbbd7f02daecd93e3ec7a40854`. Both packages were already public;
+anonymous exact-identity, revision and matching-cohort verification passed on
+the VPS. This is historical web/API-pair evidence, before the Tasks extension.
+The installed updater passed 23 Linux unit tests and systemd validation.
+The supervised rollback drill passed at 18:59 UTC: the candidate passed real live
+gates, an intentional test failure triggered rollback, and c3 passed internal and
+public checks without a pending/blocked state. Normal deployment of `1e01ffe`
+passed at 18:59:47 UTC, including internal/public exact-SHA and database gates.
+The timer was enabled and active at 19:00:30 UTC; its first no-change invocation
+succeeded. `SELFHOST_VERIFY_LIVE=true` was configured at 19:00:50 UTC for future
+publications. These SHAs are dated evidence; use the dynamic latest-production
+check in [PRODUCTION.md](PRODUCTION.md) after later releases.
+
+The 14 November extension makes new releases a **three-image cohort**: practice
+web, API and founder Tasks. The canonical Tasks origin is
+`https://tasks.muxijobrun.com`, derived from `tasks.` plus `SELFHOST_APP_DOMAIN`.
+The matching fixed host controller/templates and DNS are installed. All three
+services reported `6231df36b5d6c645d00cc836df20810b0c951854` during the
+14 November 19:02 UTC external check; TLS/assets and the API database probe
+passed. Supabase URL cleanup is complete. A rolled-back synthetic-founder task
+test passed; the user's own login handoff remains pending. Both old Netlify
+sites have builds stopped and legacy deployment workflows are disabled. Copies
+are retained temporarily, but runtime and rollback do not depend on them. No
+billing-plan change is confirmed. See [PRODUCTION.md](PRODUCTION.md).
+
+## Release authority
+
+Use the dedicated `production` branch of `BIGshak4/new_project`. The existing
+`master` branch is historical and separate; old Netlify builds are stopped and
+legacy deployment workflows are disabled.
+Changes approved for the new site land on `production`; do not force-push it.
+Protect/review that branch where repository permissions allow.
+
+For ordinary updates, synchronize with current production, run the local checks,
+review the changes and push the reviewed commit using a normal fast-forward push:
+
+```sh
+git push origin HEAD:production
+```
+
+A rejected non-fast-forward push must be reconciled with the current branch;
+do not bypass it with a force push.
+
+`.github/workflows/selfhost-publish.yml` runs on a push to that branch, or a manual
+dispatch explicitly selecting it. It checks out the event's full SHA and checks
+that it is still the public production head before publishing. It runs the source
+frontend tests/type checks, builds all three `linux/amd64` images and performs
+isolated runtime/import smoke checks. Tasks uses the same two public Supabase
+build variables listed below; there is no new founder allowlist or private build
+credential. Database, model and server authentication credentials stay on the VPS.
+
+Push-triggered publication works from `production`. To expose GitHub's manual
+dispatch control, the workflow also needs a reviewed workflow-only copy on the
+default branch; that copy does not promote an application runtime to old hosting.
+
+Required public repository variables:
+
+- `SELFHOST_APP_DOMAIN=muxijobrun.com`
+- `SELFHOST_API_DOMAIN=api.muxijobrun.com`
+- `NEXT_PUBLIC_SUPABASE_URL`: existing public project URL
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: existing public publishable/anon key
+
+`SELFHOST_VERIFY_LIVE=true` is configured, so publication also waits up to twelve
+minutes for all three public health endpoints to report the same SHA. The Tasks
+endpoint must additionally report `service: jobrun-tasks`.
+The pull service gates on verified signed images, not whole-workflow completion;
+otherwise this final health check would wait for a deployment that never starts.
+
+## Public registry bootstrap
+
+The publisher uses its short-lived repository `GITHUB_TOKEN` with
+`packages: write`, plus `id-token: write` for keyless signing. It does not need a
+stored publishing key. OCI source/revision labels link new packages to the repo.
+
+Check visibility of both packages after first publication:
+
+- `ghcr.io/bigshak4/jobrun-api`
+- `ghcr.io/bigshak4/jobrun-web`
+
+A public source repository does not by itself prove that its container packages
+are public. In this deployment both packages were observed **Public** and
+anonymous verification succeeded, so no visibility change was needed. If a
+future package is private, its administrator can review **Package settings →
+Change visibility → Public**. GitHub documents that visibility change as
+irreversible; confirm the image contains only source/public client configuration
+before changing it. Repository push access alone does not establish package-admin
+access.
+
+Confirm anonymous access from the VPS before enabling its deployment timer.
+There is no `latest` or `production` image tag to trust, no GitHub Release asset,
+and no extra release-metadata package. Public branch head supplies the source SHA;
+all three corresponding signed images form the release cohort. There are still
+only two GHCR packages: the Tasks image has its own tag inside `jobrun-web`.
+
+## Exact publisher/puller contract
+
+For a full 40-character lowercase production SHA `SHA`:
+
+```text
+API tag: ghcr.io/bigshak4/jobrun-api:SHA
+Web tag: ghcr.io/bigshak4/jobrun-web:SHA
+Tasks tag: ghcr.io/bigshak4/jobrun-web:tasks-SHA
+Platform: linux/amd64
+OIDC issuer: https://token.actions.githubusercontent.com
+Certificate identity: https://github.com/BIGshak4/new_project/.github/workflows/selfhost-publish.yml@refs/heads/production
+Signed source_revision annotation: SHA
+Signed release_id annotation: GitHub run ID/run attempt, identical for all three images
+Tasks-only signed annotation: service=tasks
+```
+
+Cosign is pinned to `v3.1.4`; signing is keyless by default. Every signature binds
+the image digest and its required annotations. All three image digests must be
+distinct, including the two images sharing the `jobrun-web` repository. Tags and OCI labels alone are not
+source verification. The host resolves each SHA tag once and verifies the exact
+immutable reference before deploying it:
+
+```sh
+cosign verify \
+  --certificate-identity 'https://github.com/BIGshak4/new_project/.github/workflows/selfhost-publish.yml@refs/heads/production' \
+  --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' \
+  -a "source_revision=$SHA" \
+  ghcr.io/bigshak4/jobrun-api@sha256:THE_RESOLVED_API_DIGEST
+```
+
+Repeat for web and Tasks, adding `-a service=tasks` when verifying the Tasks
+digest. Require a shared verified `release_id` across all three, and apply only
+the resolved `@sha256:...` references using a fixed administrator-owned Compose
+definition. Never execute a script or Compose file downloaded from an image or
+release. Recheck that the production branch has not moved before switching.
+If any image/signature is missing, the branch changed, verification fails or
+the service is unreachable, retain the current release.
+
+## Host operation and recovery
+
+The implementation under `autodeploy/` supplies the host-side polling and service
+definitions. Install/review those files through the existing administrator SSH
+connection. Keep application secrets and infrastructure policy outside the
+published images. Enable the timer only after a dry run validates the expected
+cohort and a controlled update/rollback succeeds. Historical pair snapshots
+remain valid rollback targets; they must not be rewritten to invent a Tasks image.
+
+The timer needs outbound HTTPS/public Git access and a pinned verified Cosign
+binary. SSH source access is restricted by the attached `jobrun-production`
+DigitalOcean Cloud Firewall. The host-side recovery/UFW change was verified;
+future operator IP changes use the provider UI as described in
+[PRODUCTION.md](PRODUCTION.md).
+The publisher never needs inbound SSH access. Serialize deployments, retain
+the prior successful image digests/configuration and verify all enabled live revisions.
+A failed candidate restores the exact previous snapshot. If it contains only
+web/API, rollback removes the Tasks container and its Caddy site; the new Tasks
+hostname is then unavailable until a valid three-image release is restored.
+For a rollback that must preserve Tasks, select a retained three-image snapshot.
+A pre-Tasks pair is a historical web/API-only fallback, not a Netlify-dependent
+recovery route. Database rows and private storage stay in the existing Supabase
+project throughout. This single-VPS arrangement can
+have a short interruption while containers restart. Disk/memory/uptime monitoring
+and OS/container security updates remain operational responsibilities.
+
+Publish first, confirm both package visibility settings, prove anonymous signature
+checks for all three digests, install/test the puller, then enable live verification. Until all these
+pass, manual image transfer remains the working recovery path. The actual
+activation and current live SHA are recorded in [PRODUCTION.md](PRODUCTION.md).
+
+Official references: [GHCR publishing and anonymous public pulls](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry),
+[package visibility and administrator requirements](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility),
+[GitHub Actions signing identity](https://docs.sigstore.dev/quickstart/verification-cheat-sheet/),
+[Cosign signature/annotation verification](https://docs.sigstore.dev/cosign/verifying/verify/).

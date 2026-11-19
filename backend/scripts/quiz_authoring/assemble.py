@@ -21,7 +21,9 @@ SEED = ROOT / "backend/seeds/duel_quiz.json"
 SHARDS = ROOT / "backend/seeds/duel_quiz_batches"
 NAMES = ["hardware_basic", "hardware_advanced", "reasoning", "code",
          "hardware_400", "reasoning_400", "code_400",
-         "hardware_500", "reasoning_500", "code_500"]
+         "hardware_500", "reasoning_500", "code_500",
+         "hardware_700", "reasoning_700", "code_700",
+         "hardware_800", "reasoning_800", "code_800"]
 SOURCE_FILES = [
     "fundamentals-hardware.json",
     "fundamentals-code-logic.json",
@@ -37,6 +39,11 @@ SOURCE_FILES = [
     "fundamentals-hardware-500.json",
     "fundamentals-reasoning-500.json",
     "fundamentals-code-500.json",
+    "fundamentals-hardware-700.json",
+    "fundamentals-reasoning-700.json",
+    "fundamentals-code-700.json",
+    "fundamentals-hardware-800.json", "fundamentals-reasoning-800.json",
+    "fundamentals-code-800.json",
 ]
 PILOT_SOURCES = {
     "quick-hw-03",
@@ -50,7 +57,7 @@ PILOT_SOURCES = {
     "quick-sw-03",
     "quick-sw-61",
 }
-PRESERVED_SHA256 = "34be5c55099c8697e0d4c772d85bd29189f91da98b605ed448e906153c5fa253"
+PRESERVED_SHA256 = "fb57345588f3699b784e35179d43518e23f601b049570a6192cca99e53bf10e6"
 
 
 def content_digest(question):
@@ -99,7 +106,7 @@ def source_cards():
         for q in read(ROOT / "apps/web/src/content" / name):
             assert q["id"] not in cards, q["id"]
             cards[q["id"]] = q
-    assert len(cards) == 500
+    assert len(cards) == 800
     return cards
 
 
@@ -176,7 +183,7 @@ def validate(questions):
         assert sorted(q["variant"] for q in rows) == [1, 2, 3, 4, 5], source
         for lang in ("he", "en"):
             assert len({q["prompt"][lang] for q in rows}) == 5, (source, lang, "duplicate prompts")
-    assert len(groups) == 500 and sum(map(len, groups.values())) == 2500
+    assert len(groups) == 800 and sum(map(len, groups.values())) == 4000
     return issues, numeric_warnings
 
 
@@ -201,7 +208,7 @@ def collect():
         generated.extend(rows)
         checks.extend(evidence)
     authored = preserved + sorted(generated, key=lambda q: (q["source_key"], q["variant"]))
-    assert len(generated) == 2450
+    assert len(generated) == 3950
     issues, numbers = validate(authored)
     manifest_path = SHARDS / "release-manifest.json"
     released = apply_release(generated, read(manifest_path)) if manifest_path.exists() else generated
@@ -213,7 +220,7 @@ def collect():
             )
     existing["questions"] = preserved + sorted(released, key=lambda q: (q["source_key"], q["variant"]))
     existing["_about"] = (
-        "Quiz-duel content: 500 short-question sources with five authored bilingual variants each (2500), "
+        "Quiz-duel content: 800 short-question sources with five authored bilingual variants each (4000), "
         "plus 40 preserved standalone legacy drafts. The existing 50 pilot-approved variants retain their "
         "original release_approval metadata. New variant publication follows the content-bound release manifest; "
         "pilot publication is authorized by Harel and does not assert human professional review. "
@@ -253,7 +260,7 @@ def review_html(questions):
     return (
         """<!doctype html><html lang="he" dir="rtl"><meta charset="utf-8"><title>בדיקת מאגר החידון</title>
 <style>body{font:16px/1.65 system-ui;margin:2rem auto;max-width:1300px;padding:0 1rem;background:#f5f5f2;color:#202420}h1{font-size:1.8rem}input{font:inherit;padding:.6rem;width:90%;margin-bottom:1rem}details{background:white;border:1px solid #d4d8d2;margin:.6rem 0;padding:1rem}summary{cursor:pointer;font-weight:650}.pair{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;border-bottom:1px solid #ddd}article{min-width:0;padding:.5rem}.correct{background:#e0f2df;font-weight:650}pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere}h3{direction:ltr;text-align:left;font-size:1rem}@media(max-width:760px){.pair{grid-template-columns:1fr}}</style>
-<h1>מאגר החידון: 500 מקורות · 2,500 גרסאות · עברית ואנגלית</h1><p>האפשרות הנכונה מסומנת בירוק. פרסום בפיילוט אושר על ידי הראל; בדיקת AI וחישובים אינם אישור מומחה אנושי. זהו קובץ בדיקה מקומי המכיל תשובות, ולא מסך למשחק פעיל.</p><input id="filter" aria-label="סינון לפי מזהה או תוכן" placeholder="חיפוש לפי מזהה, נושא או טקסט…">"""
+<h1>מאגר החידון: 800 מקורות · 4,000 גרסאות · עברית ואנגלית</h1><p>האפשרות הנכונה מסומנת בירוק. פרסום בפיילוט אושר על ידי הראל; בדיקת AI וחישובים אינם אישור מומחה אנושי. זהו קובץ בדיקה מקומי המכיל תשובות, ולא מסך למשחק פעיל.</p><input id="filter" aria-label="סינון לפי מזהה או תוכן" placeholder="חיפוש לפי מזהה, נושא או טקסט…">"""
         + "".join(sections)
         + """<script>document.querySelector('#filter').addEventListener('input',e=>{const s=e.target.value.toLowerCase();for(const d of document.querySelectorAll('details'))d.hidden=!d.textContent.toLowerCase().includes(s)});</script></html>"""
     )
@@ -286,9 +293,9 @@ def main():
     seed, checks, issues, numbers = collect()
     reviewed = reviewed_number_flags(seed["questions"], numbers)
     report = dict(
-        source_count=500,
-        linked_variants=2500,
-        new_variants=2450,
+        source_count=800,
+        linked_variants=4000,
+        new_variants=3950,
         expansion_variants=500,
         preserved_legacy=40,
         text_errors=issues,
@@ -297,7 +304,7 @@ def main():
         checks_count=len(checks),
         human_review="pending for new variants",
         approved_variants=sum(q["status"] == "approved" for q in seed["questions"]),
-        release_authorization="Harel requested live publication on 2026-10-29 and expansions under the protocols on 2026-10-30 and 2026-10-31",
+        release_authorization="Harel requested live publication on 2026-10-29 and expansions under the protocols on 2026-10-30, 2026-10-31, 2026-11-12 and 2026-11-18",
         source_sha256={
             name: hashlib.sha256((ROOT / "apps/web/src/content" / name).read_bytes()).hexdigest()
             for name in SOURCE_FILES
@@ -317,7 +324,7 @@ def main():
         )
     assert not issues, issues[:20]
     print(
-        f"500 sources / 2500 linked variants; 500 expansion variants; 40 legacy preserved; {len(reviewed)} numeric-language flags reviewed; zero text errors."
+        f"800 sources / 4000 linked variants; 500 expansion variants; 40 legacy preserved; {len(reviewed)} numeric-language flags reviewed; zero text errors."
     )
 
 

@@ -11,11 +11,12 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 
-from sqlalchemy import func, select, update
+from sqlalchemy import UUID, cast, func, literal_column, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from app import db
+from app.repo import identity
 
 TABLE = "duel"
 STATUSES = ("open", "active", "settled", "cancelled")
@@ -130,6 +131,30 @@ async def list_for(connection: AsyncConnection, user_id: uuid.UUID, *, limit: in
         select(table).where((table.c.challenger_id == user_id) | (table.c.opponent_id == user_id))
         .order_by(table.c.created_at.desc()).limit(limit))).all()
     return [_from_row(r) for r in rows]
+
+
+async def open_invites(connection, user_id, since):
+    table = await db.table(TABLE)
+    rows = await connection.execute(select(table).where(table.c.challenger_id == user_id,
+                                                        table.c.status == "open", table.c.created_at >= since))
+    return [_from_row(row) for row in rows]
+
+
+async def invitations(connection, user_id, since):
+    if not await available() or not await identity.available():
+        return []
+    duel = await db.table(TABLE)
+    friendship = await db.table("friendship")
+    profile = await db.table("user_profile")
+    query = (select(duel.c.id, duel.c.code, duel.c.stake, duel.c.created_at, duel.c.mode, profile.c.username)
+             .select_from(duel)
+             .join(friendship, friendship.c.id == cast(duel.c.meta["friendship_id"].astext, UUID))
+             .join(profile, profile.c.id == duel.c.challenger_id)
+             .where(duel.c.status == literal_column("'open'"), duel.c.created_at >= since,
+                    duel.c.meta[literal_column("'invited_friend_id'")].astext == str(user_id),
+                    friendship.c.status == "accepted", profile.c.deleted_at.is_(None))
+             .order_by(duel.c.created_at.desc()))
+    return list((await connection.execute(query)).mappings())
 
 
 async def last_between(connection: AsyncConnection, a: uuid.UUID, b: uuid.UUID) -> datetime | None:

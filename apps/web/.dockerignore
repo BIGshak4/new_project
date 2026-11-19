@@ -1,0 +1,14 @@
+node_modules
+.next
+.netlify
+.vercel
+.git
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+test-results
+# Repository tests can import sibling apps and run outside production images.
+tests
+AGENTS.md
+CLAUDE.md

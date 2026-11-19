@@ -10,6 +10,7 @@ import { lockBodyScroll } from "../lib/body-scroll-lock";
 import { SUPPORT_OPEN_EVENT } from "../lib/support-report";
 import { INBOX_OPEN_EVENT, INBOX_REFRESH_EVENT, InboxRefresh, InboxRequests, supportStatus, userInboxApi, type InboxFeed, type InboxItem, type InboxLanguage, type MySupportDetail, type MySupportFile, type MySupportReports } from "../lib/user-inbox";
 import { BidiText } from "./bidi-text";
+import { FriendDuelActivity } from "./duels/friend-duel-activity";
 import styles from "./user-inbox.module.css";
 
 const api = userInboxApi((name, args) => supabase.rpc(name, args));
@@ -74,7 +75,7 @@ export function UserInboxProvider({ children }: { children: ReactNode }) {
   }, [launch]);
 
   return <InboxContext.Provider value={{ user, unread, open: launch, refreshBadge }}>
-    {children}
+    <FriendDuelActivity userId={user?.id ?? null} lang={lang}>{children}</FriendDuelActivity>
     <InboxPanel key={user?.id ?? "guest"} open={open} ready={ready} user={user} lang={lang} requestedReport={requestedReport} onClose={() => setOpen(false)} refreshBadge={refreshBadge} />
   </InboxContext.Provider>;
 }

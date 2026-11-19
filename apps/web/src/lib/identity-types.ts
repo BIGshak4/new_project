@@ -3,7 +3,7 @@ import type { AvatarConfig } from "./avatar-types";
 export type IdentityLanguage = "he" | "en";
 export type AccountIdentityData = { username: string | null; friend_code: string; can_claim_username: boolean };
 export type UsernameAvailability = { available: boolean; reason: "invalid" | "offensive" | "taken" | null };
-export type FriendPerson = { user_id: string; username: string | null; friend_code: string; avatar: AvatarConfig | null };
+export type FriendPerson = { user_id: string; username: string | null; friend_code: string; avatar: AvatarConfig | null; online?: boolean };
 export type FriendRequest = { id: string; person: FriendPerson; created_at: string };
 export type FriendsData = { friends: FriendPerson[]; incoming: FriendRequest[]; outgoing: FriendRequest[] };
 export type IdentityClient = {
@@ -87,7 +87,8 @@ function person(value: unknown): FriendPerson {
     const config = object(data.avatar);
     avatar = { component: text(config.component), color: text(config.color), skin: text(config.skin) };
   }
-  return { user_id: text(data.user_id), username: data.username, friend_code: code(data.friend_code), avatar };
+  return { user_id: text(data.user_id), username: data.username, friend_code: code(data.friend_code), avatar,
+    ...(typeof data.online === "boolean" ? { online: data.online } : {}) };
 }
 function request(value: unknown): FriendRequest {
   const data = object(value);

@@ -534,6 +534,207 @@ BATCH1108B20_ORACLES = runpy.run_path(
 ORACLES.update(BATCH1108B20_ORACLES)
 
 
+BATCH1114_SOURCES = {
+    "prep-forbidden-words-in-text": "prep_314_forbidden_words.py",
+    "prep-square-matrix-transpose-in-place": "prep_318_square_transpose.py",
+}
+ORACLES.update({
+    "prep-forbidden-words-in-text": lambda text, denied: not any(
+        token == word for token in text.split() for word in denied),
+    "prep-square-matrix-transpose-in-place": lambda matrix: [list(column) for column in zip(*matrix)],
+})
+
+
+BATCH1115_SOURCES = {
+    "prep-interesting-digital-clock-times": "prep_330_interesting_clock.py",
+    "prep-binary-tree-preorder-null-codec": "prep_333_tree_codec.py",
+}
+
+
+def oracle_clock_interval(start, end):
+    def number(value):
+        h, m, s = map(int, value.split(":"))
+        return 3600 * h + 60 * m + s
+    total = 0
+    for tick in range(number(start), number(end) + 1):
+        fields = (tick // 3600, (tick // 60) % 60, tick % 60)
+        mask = 0
+        for value in fields:
+            mask |= 1 << (value // 10)
+            mask |= 1 << (value % 10)
+        total += mask.bit_count() <= 2
+    return total
+
+
+def oracle_tree_normalize(text):
+    tokens = json.loads(text)
+    def consume(index):
+        value = tokens[index]
+        if value is None:
+            return index + 1
+        assert type(value) is int
+        return consume(consume(index + 1))
+    assert consume(0) == len(tokens)
+    return json.dumps(tokens, separators=(",", ":"))
+
+
+ORACLES.update({
+    "prep-interesting-digital-clock-times": oracle_clock_interval,
+    "prep-binary-tree-preorder-null-codec": oracle_tree_normalize,
+})
+
+
+def build_batch1115_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1115_inputs.json").read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1115_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1115_SOURCES[key]).read_text(encoding="utf8")
+
+
+BATCH1115B_SOURCES = {
+    "prep-odd-width-centered-star-pyramid": "prep_347_star_pyramid.py",
+    "prep-delete-given-interior-list-node": "prep_348_delete_interior_node.py",
+    "prep-turtle-single-sequence-return-position": "prep_182_turtle_turnback.py",
+}
+
+
+def oracle_1115b_pyramid(width):
+    middle = width // 2
+    return "\n".join("".join("*" if abs(column-middle) <= row else " "
+                             for column in range(width)).rstrip()
+                     for row in range(middle+1))
+
+
+def oracle_1115b_delete(values, index):
+    return values[:index] + values[index+1:]
+
+
+def oracle_1115b_turtle(commands):
+    position, heading = 0j, 1j
+    for command in commands:
+        if command == "M":
+            position += heading
+        else:
+            heading *= {"R": -1j, "L": 1j, "T": -1}[command]
+    return position == 0
+
+
+ORACLES.update({
+    "prep-odd-width-centered-star-pyramid": oracle_1115b_pyramid,
+    "prep-delete-given-interior-list-node": oracle_1115b_delete,
+    "prep-turtle-single-sequence-return-position": oracle_1115b_turtle,
+})
+
+
+def build_batch1115b_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1115b_inputs.json").read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1115b_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1115B_SOURCES[key]).read_text(encoding="utf8")
+
+
+BATCH1115C_SOURCES = {
+    "prep-finite-colored-sampling-grid-validation": "prep_353_sampling_grids.py",
+    "prep-blur-subsample-pyramid-and-row-streaming": "prep_354_image_pyramid.py",
+    "prep-eight-neighbor-plateau-drainage-basins": "prep_355_plateau_basins.py",
+    "prep-top-two-distinct-and-mode": "prep_211_maximum_pair_sum_1115c.py",
+}
+ORACLES.update(runpy.run_path(str(BACKEND / "tests/fixtures/execution_1115c_oracles.py"))["ORACLES"])
+
+
+def build_batch1115c_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1115c_inputs.json").read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1115c_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1115C_SOURCES[key]).read_text(encoding="utf8")
+
+
+BATCH1115D_SOURCES = {
+    "prep-first-failure-exact-decimal-voltage-grid": "prep_359_first_failure_decimal_grid.py",
+    "prep-branch-free-uint32-different-from-two-inputs": "prep_361_distinct_from_two_uint32.py",
+    "prep-minimum-absolute-distance-between-two-arrays": "prep_362_minimum_cross_array_distance.py",
+}
+ORACLES.update(runpy.run_path(str(BACKEND / "tests/fixtures/execution_1115d_oracles.py"))["ORACLES"])
+
+
+def build_batch1115d_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1115d_inputs.json").read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1115d_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1115D_SOURCES[key]).read_text(encoding="utf8")
+
+
+BATCH1118_SOURCES = {
+    "prep-checked-c-string-copy-contract": "prep_332_copy_overlapping_slice.py",
+    "prep-uniform-random-except-last-five": "prep_372_random_last_five.py",
+    "prep-bst-inorder-successor-parent-pointers": "prep_373_bst_successor.py",
+}
+ORACLES.update(runpy.run_path(str(BACKEND / "tests/fixtures/execution_1118_oracles.py"))["ORACLES"])
+
+BATCH1118B_SOURCES = {
+    "prep-median-of-unsorted-array": "prep_379_unsorted_median.py",
+    "prep-recognize-ordered-double-y-stream": "prep_380_ordered_double_stream.py",
+    "prep-online-rectangle-shelf-placement": "prep_381_shelf_rectangles.py",
+}
+ORACLES.update(runpy.run_path(str(BACKEND / "tests/fixtures/execution_1118b_oracles.py"))["ORACLES"])
+
+
+def _python_contracts_with_oracles(filename):
+    questions = json.loads((BACKEND / "tests/fixtures" / filename).read_bytes())
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def build_batch1118_contracts():
+    return _python_contracts_with_oracles("execution_batch1118_inputs.json")
+
+
+def build_batch1118b_contracts():
+    return _python_contracts_with_oracles("execution_batch1118b_inputs.json")
+
+
+def batch1118b_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1118B_SOURCES[key]).read_text(encoding="utf8")
+
+
+def batch1118_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1118_SOURCES[key]).read_text(encoding="utf8")
+
+
+def build_batch1114_contracts():
+    questions = json.loads((BACKEND / "tests/fixtures/execution_batch1114_inputs.json").read_text(encoding="utf-8"))
+    for key, question in questions.items():
+        for case in question["languages"]["python"]["cases"]:
+            case["expected"] = ORACLES[key](*case["args"])
+    return questions
+
+
+def batch1114_source(key):
+    return (ROOT / "interview_preparation/solutions" / BATCH1114_SOURCES[key]).read_text(encoding="utf-8")
+
+
 def build_batch1108b20_contracts():
     inputs = json.loads((BACKEND / "tests/fixtures/execution_batch1108b20_inputs.json").read_text(encoding="utf-8"))
     for key, question in inputs.items():
@@ -843,6 +1044,13 @@ endmodule
     questions.update(build_batch1107b20_contracts())
     questions.update(build_night1107n30_contracts())
     questions.update(build_batch1108b20_contracts())
+    questions.update(build_batch1114_contracts())
+    questions.update(build_batch1115_contracts())
+    questions.update(build_batch1115b_contracts())
+    questions.update(build_batch1115c_contracts())
+    questions.update(build_batch1115d_contracts())
+    questions.update(build_batch1118_contracts())
+    questions.update(build_batch1118b_contracts())
 
     # Every function contract names the callable interface; this is a test adapter, not a new question.
     for question in questions.values():
@@ -945,6 +1153,65 @@ def build_smoke():
         cases.append({"question_key": key, "language": "python", "correct": batch1108b20_source(key),
                       "wrong": f"def {entry}(*args):\n    return None\n",
                       "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1114_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = ("def contains_no_forbidden_words(text, forbidden):\n"
+                 "    return all(word not in text for word in forbidden)\n"
+                 if entry == "contains_no_forbidden_words"
+                 else "def transpose_in_place(matrix):\n    return matrix\n")
+        cases.append({"question_key": key, "language": "python", "correct": batch1114_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1115_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = ("def count_interesting_times(start, end):\n    return 0\n"
+                 if entry == "count_interesting_times"
+                 else "def tree_codec_round_trip(serialized):\n    return serialized\n")
+        cases.append({"question_key": key, "language": "python", "correct": batch1115_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1115b_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = ("def pyramid(width):\n    return ''\n" if entry == "pyramid" else
+                 "def delete_interior_result(values, index):\n    return values\n" if entry == "delete_interior_result" else
+                 "def returns_to_start_with_turnback(commands):\n    return True\n")
+        cases.append({"question_key": key, "language": "python", "correct": batch1115b_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1115c_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = {
+            "colored_grids_valid": "def colored_grids_valid(*args):\n    return True\n",
+            "image_pyramid": "def image_pyramid(image, levels):\n    return [image] * (levels + 1)\n",
+            "basin_sizes": "def basin_sizes(heights):\n    return [sum(map(len, heights))]\n",
+            "maximum_pair_sum": "def maximum_pair_sum(values):\n    x=sorted(set(values), reverse=True)\n    return x[0]+x[1] if len(x)>1 else None\n",
+        }[entry]
+        cases.append({"question_key": key, "language": "python", "correct": batch1115c_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1115d_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = {
+            "first_failure_voltage": "def first_failure_voltage(*args):\n    return None\n",
+            "different_uint32": "def different_uint32(a,b):\n    return (~a) & ((1<<32)-1)\n",
+            "minimum_cross_distance": "def minimum_cross_distance(left,right):\n    return 0\n",
+        }[entry]
+        cases.append({"question_key": key, "language": "python", "correct": batch1115d_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1118_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = {
+            "copied_array": "def copied_array(values,source,size,target):\n    for i in range(size):\n        values[target+i]=values[source+i]\n    return values\n",
+            "random_from_ranks": "def random_from_ranks(low,high,ranks):\n    return [low+rank for rank in ranks]\n",
+            "successors_of_insertion_order": "def successors_of_insertion_order(keys):\n    return keys[1:]+[None] if keys else []\n",
+        }[entry]
+        cases.append({"question_key": key, "language": "python", "correct": batch1118_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
+    for key, spec in build_batch1118b_contracts().items():
+        entry = spec["languages"]["python"]["entry"]
+        wrong = {
+            "median": "def median(values):\n    return sorted(values)[len(values)//2] if values else None\n",
+            "accepts_frame": "def accepts_frame(s):\n    return s.count('y') == 2*s.count('x')\n",
+            "pack_shelves": "def pack_shelves(width,height,pieces):\n    return []\n",
+        }[entry]
+        cases.append({"question_key": key, "language": "python", "correct": batch1118b_source(key),
+                      "wrong": wrong, "syntax_error": f"def {entry}(*args)\n    return None\n"})
     return {"version": 1, "cases": cases}
 
 
@@ -1483,6 +1750,20 @@ end architecture;
         (c if filename.endswith(".cpp") else python)[key] = night1107n30_source(key)
     for key in BATCH1108B20_SOURCES:
         python[key] = batch1108b20_source(key)
+    for key in BATCH1114_SOURCES:
+        python[key] = batch1114_source(key)
+    for key in BATCH1115_SOURCES:
+        python[key] = batch1115_source(key)
+    for key in BATCH1115B_SOURCES:
+        python[key] = batch1115b_source(key)
+    for key in BATCH1115C_SOURCES:
+        python[key] = batch1115c_source(key)
+    for key in BATCH1115D_SOURCES:
+        python[key] = batch1115d_source(key)
+    for key in BATCH1118_SOURCES:
+        python[key] = batch1118_source(key)
+    for key in BATCH1118B_SOURCES:
+        python[key] = batch1118b_source(key)
     cases = []
     for key, question in build_manifest()["questions"].items():
         for language in question["languages"]:

@@ -79,6 +79,76 @@ PRIMARY = [
     "basic_data_structures", "basic_data_structures", "bit_manipulation", "registers_shifters", "setup_hold_timing", "code_debugging", "truth_tables", "boolean_algebra", "basic_data_structures", "bit_manipulation", "universal_gates", "basic_data_structures", "fsm_sequence_detectors",
     "bit_manipulation", "tradeoff_reasoning", "testbench_basics", "counters", "binary_arithmetic", "tradeoff_reasoning", "code_debugging", "basic_data_structures", "tradeoff_reasoning", "estimation_sanity_checks", "number_representation", "basic_data_structures", "fsm_controllers", "universal_gates",
     "code_debugging", "basic_data_structures", "basic_data_structures", "setup_hold_timing", "tradeoff_reasoning", "estimation_sanity_checks", "basic_data_structures", "tradeoff_reasoning", "code_debugging",
+    # PREP-312 through PREP-329, in archive order.
+    "estimation_sanity_checks", "basic_data_structures", "arrays_and_search",
+    "tradeoff_reasoning", "estimation_sanity_checks", "estimation_sanity_checks",
+    "arrays_and_search", "estimation_sanity_checks", "registers_shifters",
+    "fsm_controllers", "tradeoff_reasoning", "edge_detection", "binary_arithmetic",
+    "counters", "setup_hold_timing", "tradeoff_reasoning", "binary_arithmetic",
+    "number_representation",
+    # PREP-330 through PREP-345, in archive order.
+    "arrays_and_search",
+    "bit_manipulation",
+    "code_debugging",
+    "basic_data_structures",
+    "basic_data_structures",
+    "code_debugging",
+    "code_debugging",
+    "basic_data_structures",
+    "counters",
+    "registers_shifters",
+    "combinational_blocks",
+    "fsm_state_tables",
+    "latches_flip_flops",
+    "estimation_sanity_checks",
+    "estimation_sanity_checks",
+    "tradeoff_reasoning",
+    # PREP-346 through PREP-352, in archive order.
+    "estimation_sanity_checks",
+    "code_debugging",
+    "basic_data_structures",
+    "combinational_blocks",
+    "registers_shifters",
+    "debugging_methodology",
+    "debugging_methodology",
+    # PREP-353 through PREP-358, in archive order.
+    "arrays_and_search",
+    "arrays_and_search",
+    "arrays_and_search",
+    "fsm_state_tables",
+    "tradeoff_reasoning",
+    "estimation_sanity_checks",
+    # PREP-359 through PREP-365, in archive order.
+    "arrays_and_search",
+    "tradeoff_reasoning",
+    "bit_manipulation",
+    "arrays_and_search",
+    "fsm_controllers",
+    "testbench_basics",
+    "tradeoff_reasoning",
+    # PREP-366 through PREP-376, in archive order.
+    "tradeoff_reasoning",
+    "tradeoff_reasoning",
+    "counters",
+    "boolean_algebra",
+    "testbench_basics",
+    "basic_data_structures",
+    "arrays_and_search",
+    "basic_data_structures",
+    "tradeoff_reasoning",
+    "estimation_sanity_checks",
+    "tradeoff_reasoning",
+    # PREP-377 through PREP-386, in archive order.
+    "testbench_basics",
+    "testbench_basics",
+    "arrays_and_search",
+    "basic_data_structures",
+    "arrays_and_search",
+    "tradeoff_reasoning",
+    "estimation_sanity_checks",
+    "estimation_sanity_checks",
+    "tradeoff_reasoning",
+    "boolean_algebra",
 ]
 
 # These describe author/personal-session state, never website learner activity or technical solution content.
@@ -96,7 +166,7 @@ def strip_personal(value):
 
 def paths_in(value):
     if isinstance(value, str):
-        yield from re.findall(r"(?:sources|diagrams|solutions)/[\w./-]+\.(?:png|sv|py|cpp|java|asm|c|h)\b", value)
+        yield from re.findall(r"(?:sources|diagrams|solutions)/[\w./-]+\.(?:png|sv|py|cpp|java|asm|c|h|m)\b", value)
     elif isinstance(value, dict):
         for v in value.values():
             yield from paths_in(v)

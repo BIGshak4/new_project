@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "oracle": "Independent Cartesian-product absolute-distance minimum",
+  "exhaustive_list_domain": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+  ],
+  "exhaustive_max_length": 3,
+  "finite_cases": 25340,
+  "input_preservation": true,
+  "symmetry_and_uniform_translation": true,
+  "question_id": "PREP-362",
+  "human_expert_review": false,
+  "source_sha256": {
+    "solutions/prep_362_minimum_cross_array_distance.py": "2bbd1058d4b279fcc36b22400c8a9b6a347fd9c155b3f6831a66853ae5065ac2"
+  }
+}

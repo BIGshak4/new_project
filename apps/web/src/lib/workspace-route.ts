@@ -5,6 +5,10 @@ export const DEFAULT_WORKSPACE_VIEW = "learn";
 export function personalAreaEntryUrl(url: URL, referrer: string, navigationType: NavigationTimingType | undefined, signedInNow: boolean): string | null {
   // Invitations and public pages have independent entry flows.
   if (!["/", "/games", "/games/shop"].includes(url.pathname)) return null;
+  if (url.pathname === "/" && url.searchParams.get("from") === "tasks" && url.searchParams.get("question")) {
+    const destination = new URLSearchParams({ view: "library", question: url.searchParams.get("question")! });
+    return `/?${destination}`;
+  }
   const internalLink = referrer.startsWith(url.origin + "/");
   if (!signedInNow && (navigationType === "back_forward" || (navigationType !== "reload" && internalLink))) return null;
   if (url.pathname !== "/") return "/";

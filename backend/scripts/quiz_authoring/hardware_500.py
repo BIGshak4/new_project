@@ -9,6 +9,7 @@ from __future__ import annotations
 import itertools
 import json
 import math
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -17,8 +18,22 @@ OUT = ROOT / "backend/seeds/duel_quiz_batches"
 CARDS, QUESTIONS, CHECKS = [], [], []
 
 
+def prose_spacing(text):
+    """Space prose punctuation while retaining code literals and digit grouping."""
+    text = str(text)
+    if not re.search(r"[א-ת]|[A-Za-z]{2,}", text):
+        return text
+    parts = re.split(r"(`[^`]*`)", text)
+    for i in range(0, len(parts), 2):
+        parts[i] = re.sub(r"(?<![0-9]),(?=\S)|(?<=[0-9]),(?![0-9]{3}(?:\D|$))(?=\S)|;(?=\S)", lambda m: m[0] + " ", parts[i])
+        parts[i] = re.sub(r":(?=[A-Za-zא-ת])", ": ", parts[i])
+    return "".join(parts)
+
+
 def loc(he, en):
-    return {"he": he, "en": en}
+    he = re.sub(r"(?<![0-9/])1 ביטים", "ביט אחד", str(he))
+    en = re.sub(r"(?<![0-9/])1 bits\b", "1 bit", str(en))
+    return {"he": prose_spacing(he), "en": prose_spacing(en)}
 
 
 def params(names, rows):
@@ -159,8 +174,8 @@ def model(n, p):
 def question(n, p):
     match n:
         case 201:
-            return loc(f"מסובבים את המילה הבלתי מסומנת {p['x']:0{p['w']}b} ברוחב {p['w']} ימינה ב־{p['k']} מקומות, באופן מעגלי. מה ערך הפלט העשרוני?",
-                       f"Rotate unsigned {p['x']:0{p['w']}b}, width {p['w']}, right by {p['k']} positions cyclically. What is the decimal output?")
+            return loc(f"מסובבים את המילה ללא סימן {p['x']:0{p['w']}b} ברוחב {p['w']} ימינה במספר מקומות השווה ל־{p['k']}, באופן מעגלי. מה ערך הפלט העשרוני?",
+                       f"Rotate unsigned {p['x']:0{p['w']}b}, width {p['w']}, right by {p['k']} {'position' if p['k'] == 1 else 'positions'} cyclically. What is the decimal output?")
         case 202:
             return loc(f"על מילה ברוחב {p['w']} מבצעים סיבוב מעגלי ימינה ב־{p['a']} ואז ב־{p['b']}. לאיזה סיבוב יחיד ימינה זה שקול, בתחום 0 עד {p['w'] - 1}?",
                        f"A width-{p['w']} word is rotated cyclically right by {p['a']}, then {p['b']}. What single right-rotation amount in 0 through {p['w'] - 1} is equivalent?")
@@ -180,8 +195,8 @@ def question(n, p):
             return loc(f"MUX 4:1 אידאלי ללא השהיה מחזיק D0..D3=[0,1,1,0]. הבחירה משתנה מ־00 ל־11: S0 עולה בזמן {p['s0_time']} ns ו־S1 בזמן {p['s1_time']} ns. לכמה ns הפלט יהיה 1 בין שני מצבי הקצה?",
                        f"An ideal zero-delay 4:1 MUX holds D0..D3=[0,1,1,0]. Selection changes from 00 to 11: S0 rises at {p['s0_time']} ns and S1 at {p['s1_time']} ns. For how many ns is output 1 between the endpoint states?")
         case 208:
-            return loc(f"במודל סף למהפך CMOS, VDD={p['vdd']} V ומתח שני השערים {p['gate']} V. ספי ההולכה הם Vtn={p['vtn']} V ו־|Vtp|={p['vtp']} V. הולכה דורשת מתח שער־מקור שעובר ממש את הסף המתאים. מה [PMOS מוליך,NMOS מוליך], בביטי 0/1?",
-                       f"In a CMOS inverter threshold model, VDD={p['vdd']} V and both gates are at {p['gate']} V. Thresholds are Vtn={p['vtn']} V and |Vtp|={p['vtp']} V. Conduction requires gate-source magnitude strictly beyond the relevant threshold. What is [PMOS on,NMOS on] as 0/1 bits?")
+            return loc(f"במודל סף למהפך CMOS, VDD={p['vdd']} V ומתח שני השערים {p['gate']} V. ספי ההולכה הם Vtn={p['vtn']} V ו־|Vtp|={p['vtp']} V. הולכה דורשת מתח שער־מקור שעובר ממש את הסף המתאים. מה [PMOS מוליך, NMOS מוליך], בביטי 0/1?",
+                       f"In a CMOS inverter threshold model, VDD={p['vdd']} V and both gates are at {p['gate']} V. Thresholds are Vtn={p['vtn']} V and |Vtp|={p['vtp']} V. Conduction requires gate-source magnitude strictly beyond the relevant threshold. What is [PMOS on, NMOS on] as 0/1 bits?")
         case 209:
             return loc(f"NMOS ו־PMOS במקביל מעבירים נתון {p['data']} V. מתחי הבקרה הם NG={p['ng']} V, PG={p['pg']} V; המסילה 1 V וסף כל רכיב 0.3 V. במודל מעבר סטטי ללא גוף או עומס, NMOS מעביר גבוה עד 0.7 ו־PMOS נמוך עד 0.3. מה הפלט, או Z כששניהם מנותקים?",
                        f"Parallel NMOS and PMOS pass {p['data']} V. Controls: NG={p['ng']} V, PG={p['pg']} V; rail 1 V, thresholds 0.3 V. In a static model without body effect or load, NMOS passes high to 0.7 and PMOS low to 0.3. What is output, or Z if both disconnect?")
@@ -216,17 +231,17 @@ def question(n, p):
             return loc(f"גלאי חופף מזהה את הרצף {p['pattern']}. מה מספר מחזורי השעון המזערי האפשרי בין סיומי שתי הופעות שונות? כל מחזור מקבלים ביט אחד ואין הפסקות קבלה.",
                        f"An overlapping detector recognizes {p['pattern']}. What is the minimum possible clock-cycle gap between the ends of two distinct occurrences? Accept one bit per cycle without pauses.")
         case 220:
-            return loc(f"גלאי חופף 0101 מקבל מדגמי [Valid,ביט]: {p['samples']}. במחזור לא תקף המצב מוחזק והפלט 0. באילו מחזורי שעון פיזיים, ממוספרים מ־1, יופק פולס? המצב בתחילה ריק.",
-                       f"An overlapping 0101 detector receives [Valid,bit] samples: {p['samples']}. On invalid cycles state holds and output is 0. At which physical clock cycles, numbered from 1, does a pulse occur? Start with empty history.")
+            return loc(f"גלאי חופף 0101 מקבל מדגמי [Valid, ביט]: {p['samples']}. במחזור לא תקף המצב מוחזק והפלט 0. באילו מחזורי שעון פיזיים, ממוספרים מ־1, יופק פולס? המצב בתחילה ריק.",
+                       f"An overlapping 0101 detector receives [Valid, bit] samples: {p['samples']}. On invalid cycles state holds and output is 0. At which physical clock cycles, numbered from 1, does a pulse occur? Start with empty history.")
         case 221:
             return loc(f"קורא טביעות אצבע מקבל אותו ערך שוב ושוב. Valid לאורך {len(p['valid'])} מחזורים הוא {p['valid']}. בכל Valid=1 מתקבלת דגימה חדשה, גם ללא שינוי בנתון. כמה דגימות התקבלו?",
                        f"A fingerprint reader presents the same value repeatedly. Valid over {len(p['valid'])} cycles is {p['valid']}. Each Valid=1 accepts a new sample even without a data change. How many samples are accepted?")
         case 222:
-            return loc(f"מונה רצף התאמות מתחיל ב־0, מול ערך שמור {p['ref']}. מדגמים [Valid,נתון] הם {p['samples']}. אי־התאמה תקפה מאפסת; Valid=0 מקפיא. מה המונה בסוף?",
-                       f"A matching-streak counter starts at 0 with reference {p['ref']}. Samples [Valid,data] are {p['samples']}. A valid mismatch resets; Valid=0 holds. What is the final count?")
+            return loc(f"מונה רצף התאמות מתחיל ב־0, מול ערך שמור {p['ref']}. מדגמים [Valid, נתון] הם {p['samples']}. אי־התאמה תקפה מאפסת; Valid=0 מקפיא. מה המונה בסוף?",
+                       f"A matching-streak counter starts at 0 with reference {p['ref']}. Samples [Valid, data] are {p['samples']}. A valid mismatch resets; Valid=0 holds. What is the final count?")
         case 223:
-            return loc(f"שני ערכים שמורים הם {p['refs']}. מדגמים [Valid,נתון] הם {p['samples']}. משווים לשניהם במקביל, ומקבלים הצלחה אם לפחות השוואה אחת שווה. כמה הצלחות תקפות יש?",
-                       f"Two stored references are {p['refs']}. Samples [Valid,data] are {p['samples']}. Compare both in parallel and accept a match if either equals the sample. How many valid matches occur?")
+            return loc(f"שני ערכים שמורים הם {p['refs']}. מדגמים [Valid, נתון] הם {p['samples']}. משווים לשניהם במקביל, ומקבלים הצלחה אם לפחות השוואה אחת שווה. כמה הצלחות תקפות יש?",
+                       f"Two stored references are {p['refs']}. Samples [Valid, data] are {p['samples']}. Compare both in parallel and accept a match if either equals the sample. How many valid matches occur?")
         case 224:
             return loc(f"משימות התקבלו לפי הסדר {p['accepted']}. לחיצת snapshot הייתה אחרי {p['cut']} הקבלות. המשימות שהושלמו הן {p['done']}. אילו תגיות מה־snapshot עדיין חסרות, בסדר עולה? התגיות ייחודיות.",
                        f"Tasks were accepted in order {p['accepted']}. A snapshot was taken after {p['cut']} acceptances. Completed tasks are {p['done']}. Which snapshot tags are still missing, sorted ascending? Tags are unique.")
@@ -240,8 +255,8 @@ def question(n, p):
             return loc(f"חבילות נכנסו בזמנים {p['arrivals']} וכולן עדיין בפנים בזמן {p['end']}. בכמה יחידות חבילה־זמן הן תרמו עד עכשיו לאינטגרל התפוסה?",
                        f"Packets arrived at times {p['arrivals']} and all remain inside at time {p['end']}. How many packet-time units have they contributed so far to the occupancy integral?")
         case 228:
-            return loc(f"רק החבילות שהושלמו נכללות בממוצע. זוגות [כניסה,יציאה] שלהן הם {p['pairs']}. מה זמן השהייה הממוצע? חבילות פעילות אינן כלולות. התוצאה שלמה.",
-                       f"Only completed packets enter this mean. Their [arrival,departure] pairs are {p['pairs']}. What is mean residence time? Active packets are excluded. The result is an integer.")
+            return loc(f"רק החבילות שהושלמו נכללות בממוצע. זוגות [כניסה, יציאה] שלהן הם {p['pairs']}. מה זמן השהייה הממוצע? חבילות פעילות אינן כלולות. התוצאה שלמה.",
+                       f"Only completed packets enter this mean. Their [arrival, departure] pairs are {p['pairs']}. What is mean residence time? Active packets are excluded. The result is an integer.")
         case 229:
             return loc(f"בשני פורטים סכומי זמני השהייה הם {p['sums']} ומספרי החבילות שהושלמו הם {p['counts']}. מה הממוצע הכולל לכל חבילה? התוצאה שלמה.",
                        f"Two ports have residence-time sums {p['sums']} and completed-packet counts {p['counts']}. What is the overall mean per packet? The result is an integer.")
@@ -256,7 +271,7 @@ def question(n, p):
                        f"The same address is read and written at one edge. Its old value is {p['old']} and the new write is {p['new']}. The explicit policy is {p['policy']}. What is read? Read-first returns old; write-first returns new.")
         case 233:
             return loc(f"בונים ארבע מילות זיכרון ברוחב {p['w']} ביטים. בנוסף, מספר רגיסטרי היציאה ברוחב מילה הוא {p['registered']}. מתעלמים מ־Valid ובקרה. כמה FF לאחסון נתונים דרושים?",
-                       f"Build four memory words, each {p['w']} bits wide, plus {p['registered']} word-wide output registers. Ignore Valid and control. How many data-storage FFs are required?")
+                       f"Build four memory words, each {p['w']} bits wide, plus {p['registered']} word-wide output {'register' if p['registered'] == 1 else 'registers'}. Ignore Valid and control. How many data-storage FFs are required?")
         case 234:
             return loc(f"בזיכרון בן ארבע כתובות, wr_addr={p['addr']} ו־wr_en={p['en']}. מה ערכה העשרוני של מסכת ה־enable בת 4 ביטים, כשביט i מפעיל כתובת i?",
                        f"In a four-address memory, wr_addr={p['addr']} and wr_en={p['en']}. What is the decimal 4-bit enable mask, where bit i enables address i?")
@@ -264,16 +279,16 @@ def question(n, p):
             return loc(f"FF דורש ששחרור איפוס יקדים חזית פעילה בלפחות {p['recovery']} ns, כולל שוויון. חזיתות באות בכפולות של {p['period']} ns, והאיפוס משתחרר בזמן {p['release']} ns. מה החזית הראשונה שמקיימת את חוזה ה־recovery? מתעלמים מ־removal.",
                        f"An FF requires reset release at least {p['recovery']} ns before an active edge, equality allowed. Edges occur at multiples of {p['period']} ns; reset releases at {p['release']} ns. What is the first edge satisfying recovery? Ignore removal.")
         case 236:
-            return loc(f"מחבר carry-select מחבר A={p['a']} ו־B={p['b']}, כל אחד 4 ביטים. מחלקים לשתי קבוצות של 2 ביטים, עם carry-in כללי אפס. הקבוצה הגבוהה מחשבת מראש עם נשא 0 ועם 1. מה [שני ביטי סכום גבוהים כערך עשרוני,נשא סופי] אחרי בחירה לפי הקבוצה הנמוכה?",
-                       f"A carry-select adder adds 4-bit A={p['a']} and B={p['b']} in two 2-bit groups, with initial carry-in zero. The high group precomputes carry-in 0 and 1. What is [high two sum bits as decimal,final carry] after selection by the low group?")
+            return loc(f"מחבר carry-select מחבר A={p['a']} ו־B={p['b']}, כל אחד 4 ביטים. מחלקים לשתי קבוצות של 2 ביטים, עם carry-in כללי אפס. הקבוצה הגבוהה מחשבת מראש עם נשא 0 ועם 1. מה [שני ביטי סכום גבוהים כערך עשרוני, נשא סופי] אחרי בחירה לפי הקבוצה הנמוכה?",
+                       f"A carry-select adder adds 4-bit A={p['a']} and B={p['b']} in two 2-bit groups, with initial carry-in zero. The high group precomputes carry-in 0 and 1. What is [high two sum bits as decimal, final carry] after selection by the low group?")
         case 237:
             return loc(f"מחברים מילים ברוחב {p['w']}: A={p['a']}, B={p['b']}. מגדירים G כנשא החוצה עם carry-in=0, ו־P=1 רק אם הנשיאה החוצה שווה ל־carry-in עבור שתי אפשרויותיו. מה [P,G] של כל הקבוצה?",
                        f"Add width-{p['w']} words A={p['a']} and B={p['b']}. G is carry-out with carry-in=0; P=1 only if carry-out equals carry-in for both possible inputs. What is the whole group's [P,G]?")
         case 238:
-            return loc(f"מחברים מספר בלתי מסומן בן {p['a']} ביטים למספר בלתי מסומן בן {p['b']} ביטים. מה רוחב הפלט המזערי ששומר כל סכום אפשרי ללא גלישה?",
+            return loc(f"מחברים מספר ללא סימן בן {p['a']} ביטים למספר ללא סימן בן {p['b']} ביטים. מה רוחב הפלט המזערי ששומר כל סכום אפשרי ללא גלישה?",
                        f"Add an unsigned {p['a']}-bit number to an unsigned {p['b']}-bit number. What minimum output width preserves every possible sum without overflow?")
         case 239:
-            return loc(f"מחשבים ממוצע של מספרים בלתי מסומנים A={p['a']}, B={p['b']}, עם חיבור ברוחב מספיק. נדרש עיגול כלפי מעלה. מה הפלט השלם?",
+            return loc(f"מחשבים ממוצע של מספרים ללא סימן A={p['a']}, B={p['b']}, עם חיבור ברוחב מספיק. נדרש עיגול כלפי מעלה. מה הפלט השלם?",
                        f"Average unsigned A={p['a']} and B={p['b']} using a sufficiently wide sum. Round upward. What integer is output?")
         case 240:
             return loc(f"ממוצע A={p['a']}, B={p['b']} מעוגל לשלם הקרוב; בדיוק בחצי בוחרים שלם זוגי. החיבור אינו גולש. מה הפלט?",
@@ -298,7 +313,7 @@ def question(n, p):
             return loc(f"למציאת floor(log2(x)) עבור x={p['x']}>0, מזיזים ימינה עד 1 וסופרים הזזות בלבד. מה המונה בסוף?",
                        f"To find floor(log2(x)) for x={p['x']}>0, shift right until reaching 1 and count shifts only. What is the final count?")
         case 245:
-            return loc(f"למילה בלתי מסומנת ברוחב {p['w']} ו־x>0, מחזירים floor(log2(x)). כמה ביטי פלט מספיקים לכל התוצאות? אינדיקציית x=0 נשמרת בנפרד.",
+            return loc(f"למילה ללא סימן ברוחב {p['w']} ו־x>0, מחזירים floor(log2(x)). כמה ביטי פלט מספיקים לכל התוצאות? אינדיקציית x=0 נשמרת בנפרד.",
                        f"For a width-{p['w']} unsigned word with x>0, return floor(log2(x)). How many output bits cover every result? Validity for x=0 is handled separately.")
         case 246:
             return loc(f"בחלוקה סדרתית ב־5, השארית הקודמת היא {p['r']}, וביט חדש {p['bit']} נצמד מימין. הספרה החדשה במנה היא floor((2r+b)/5). מה ערכה?",
@@ -385,7 +400,7 @@ SPECS = [
     (203, 199, 'gates', 'עלות השלבים במסובב נשלט', 'Count stages in a controlled rotator', 'מסובב בשלבים מחליף בחירה גדולה בכמה שכבות MUX.', 'A staged rotator replaces a large selection with several MUX layers.', params('w', [(4,),(8,),(16,),(32,),(64,)])),
     (204, 199, 'bits', 'כמות האחדים אינה מסתובבת החוצה', 'The ones count cannot rotate away', 'חיווט מחדש משנה מיקומים, לא את משקל המילה.', 'Rewiring changes positions, not word Hamming weight.', params('w x', [(4,11),(8,129),(8,255),(4,0),(8,90)])),
     (205, 199, 'gates', 'למצוא את מקורו של ביט פלט', 'Find the source of an output bit', 'כותבים מיפוי אינדקסים לפני שמחברים חוטים.', 'Write the index mapping before connecting wires.', params('w k j', [(8,3,7),(8,2,1),(4,1,3),(16,7,12),(4,0,2)])),
-    (206, 214, 'gates', 'מי סיבית הבחירה הגבוהה', 'Which select bit is high-order', 'סדר סיביות הבחירה הוא חלק מהגדרת ה־MUX.', 'Select-bit ordering is part of the MUX contract.', [dict(d=d,s1=s1,s0=s0) for d,s1,s0 in [([7,2,9,4],1,0),([1,5,8,3],0,1),([6,4,2,9],1,1),([8,3,5,1],0,0),([2,7,1,8],1,0)]]),
+    (206, 214, 'gates', 'מהי סיבית הבחירה הגבוהה?', 'Which select bit is high-order?', 'סדר סיביות הבחירה הוא חלק מהגדרת ה־MUX.', 'Select-bit ordering is part of the MUX contract.', [dict(d=d,s1=s1,s0=s0) for d,s1,s0 in [([7,2,9,4],1,0),([1,5,8,3],0,1),([6,4,2,9],1,1),([8,3,5,1],0,0),([2,7,1,8],1,0)]]),
     (207, 214, 'gates', 'קוד ביניים בבחירה יוצר פולס גם בלי השהיות', 'An intermediate select code creates a pulse even without delays', 'שינוי כמה ביטי בקרה דורש חוזה לדגימה או לקידוד הביניים.', 'Changing several control bits needs a sampling or intermediate-code contract.', params('s0_time s1_time', [(1,4),(5,2),(3,3),(0,2),(2,7)])),
     (208, 205, 'electronics', 'אזורי הולכה חופפים במהפך CMOS', 'Overlapping conduction regions in a CMOS inverter', 'עוברים ממודל ביטים למודל סף כדי להבין מצב מעבר.', 'Use a threshold model to reason about the transition region.', params('vdd gate vtn vtp', [(4,0,1,1),(4,4,1,1),(4,2,1,1),(2,1,1.2,1.2),(4,1.5,1,3)])),
     (209, 200, 'electronics', 'שני רכיבי מעבר משלימים זה את זה', 'Two pass devices complement one another', 'חיבור NMOS ו־PMOS במקביל יכול להעביר את שתי המסילות.', 'Parallel NMOS and PMOS devices can pass both rails.', params('ng pg data', [(1,1,1),(0,0,0),(1,0,1),(1,0,0),(0,1,1)])),

@@ -1,0 +1,3053 @@
+{
+  "review_date": "2026-11-12",
+  "reviewer": "Codex agent audit, not human approval",
+  "scope": "All 500 Fundamentals cards: complete paired reading of title/prompt/answer/takeaway in he/en, plus full-field punctuation/language/control-character screening.",
+  "reviewed_cards": 500,
+  "reviewed_localized_fields": 4000,
+  "fields": [
+    "title",
+    "prompt",
+    "answer",
+    "takeaway"
+  ],
+  "languages": [
+    "he",
+    "en"
+  ],
+  "files": {
+    "fundamentals-code-250.json": {
+      "cards": 7,
+      "localized_fields": 56,
+      "changed_cards": 2,
+      "changed_fields": 8
+    },
+    "fundamentals-code-400.json": {
+      "cards": 23,
+      "localized_fields": 184,
+      "changed_cards": 11,
+      "changed_fields": 29
+    },
+    "fundamentals-code-500.json": {
+      "cards": 15,
+      "localized_fields": 120,
+      "changed_cards": 5,
+      "changed_fields": 10
+    },
+    "fundamentals-code-expansion.json": {
+      "cards": 12,
+      "localized_fields": 96,
+      "changed_cards": 4,
+      "changed_fields": 14
+    },
+    "fundamentals-code-logic.json": {
+      "cards": 60,
+      "localized_fields": 480,
+      "changed_cards": 5,
+      "changed_fields": 9
+    },
+    "fundamentals-hardware-250.json": {
+      "cards": 25,
+      "localized_fields": 200,
+      "changed_cards": 7,
+      "changed_fields": 12
+    },
+    "fundamentals-hardware-400.json": {
+      "cards": 75,
+      "localized_fields": 600,
+      "changed_cards": 32,
+      "changed_fields": 49
+    },
+    "fundamentals-hardware-500.json": {
+      "cards": 50,
+      "localized_fields": 400,
+      "changed_cards": 16,
+      "changed_fields": 28
+    },
+    "fundamentals-hardware-expansion.json": {
+      "cards": 40,
+      "localized_fields": 320,
+      "changed_cards": 6,
+      "changed_fields": 12
+    },
+    "fundamentals-hardware.json": {
+      "cards": 60,
+      "localized_fields": 480,
+      "changed_cards": 15,
+      "changed_fields": 31
+    },
+    "fundamentals-reasoning-250.json": {
+      "cards": 18,
+      "localized_fields": 144,
+      "changed_cards": 1,
+      "changed_fields": 4
+    },
+    "fundamentals-reasoning-400.json": {
+      "cards": 52,
+      "localized_fields": 416,
+      "changed_cards": 27,
+      "changed_fields": 36
+    },
+    "fundamentals-reasoning-500.json": {
+      "cards": 35,
+      "localized_fields": 280,
+      "changed_cards": 8,
+      "changed_fields": 13
+    },
+    "fundamentals-reasoning-expansion.json": {
+      "cards": 28,
+      "localized_fields": 224,
+      "changed_cards": 10,
+      "changed_fields": 19
+    }
+  },
+  "changed_cards": [
+    {
+      "id": "quick-sw-119",
+      "before_revision": "2970262d46a1a08af6a95586c5a7ccb2476386b26dd2b589f67666fc35b65ac6",
+      "after_revision": "e2003ec8756a51d78bbb953cc3d0bc0827e0ae241562d5f87da9ef252dddb557"
+    },
+    {
+      "id": "quick-sw-124",
+      "before_revision": "9097595e845a6e55465081bd0ddfcb6aa1778c74a29e2fac8850a5bb2b74e860",
+      "after_revision": "a485bb9adbe306ea5aa9aaabd43431275218026dfba17cb30d7f02a08ee5c535"
+    },
+    {
+      "id": "quick-sw-180",
+      "before_revision": "350aea036dd5010eb75b6a4bc635dfbe9c872bd9577d30d31f32db457801875f",
+      "after_revision": "2b98c8a7c3d4afbb5e5fb807c9508fa4cacf028bd53cce43278d05c047e745a5"
+    },
+    {
+      "id": "quick-sw-184",
+      "before_revision": "a5e44a8fd6a3a8659939b5e0ce6fafce7d428635b9e1d5982c66f98d9d3cb10a",
+      "after_revision": "3499bb86c7294bb0e133989e97832a6b436d46bff575258ab5dfab3e19f0eeb8"
+    },
+    {
+      "id": "quick-sw-185",
+      "before_revision": "a8096e4c437333ba4df4155fc537c9131c2e1ae4dd2606fec447da3fabdd5863",
+      "after_revision": "8138ca329f31c0c5445f2ab0a18f72947caa51dd3308cbeaa5a49cb6795b4f50"
+    },
+    {
+      "id": "quick-sw-188",
+      "before_revision": "a5e159fcda5225f867b278217748814207d38ae5daae724de1889a6adeb944c3",
+      "after_revision": "b828b6bb47e8156852be481a6dc01ac34304d9d35ae30cfec98d4f659affc43d"
+    },
+    {
+      "id": "quick-sw-189",
+      "before_revision": "68ece08f9c1dd102b84206224127b7916d754174e3f97873f574246955b05c61",
+      "after_revision": "e1e7e4c6ccb8ec0d839b398823ac3756c0be6b800d3e449853fddba1cc9d377a"
+    },
+    {
+      "id": "quick-sw-190",
+      "before_revision": "3804dd3327f452e9f74ed468ebae8062f5742d68bc89b7cf435eb9777eab7ec2",
+      "after_revision": "2e387e9e3d4264e6ddfa4b8bf67eee786d05aee53b784bbbdb0597763afe5ef1"
+    },
+    {
+      "id": "quick-sw-192",
+      "before_revision": "d9210a06ea7da5b30cb5b147914847c3b41a99df263d88704906d3fb30bb1539",
+      "after_revision": "30e27d7fe4aabfbab89797cafa1f8d7fa7c6e08fd907fd7b618c893f0be19ae0"
+    },
+    {
+      "id": "quick-sw-193",
+      "before_revision": "8811caf3f564dfbce46a61734ffc9f70fa5c8b95877213353e521e8b35028771",
+      "after_revision": "672cfa602c476bac7da18e470ee4e130d08c1800f08773269f5be7c2f8c04481"
+    },
+    {
+      "id": "quick-sw-194",
+      "before_revision": "b052489869c57162f2659eae0c03ae42e48591d54942fb7c891a0cdffad9bcce",
+      "after_revision": "28559af7943b0901de5f389e3035dbdfa9d4f687693a5afde3f8c638965fff5c"
+    },
+    {
+      "id": "quick-sw-199",
+      "before_revision": "4a214925ee7277e816f47cc65a66c53795cec942d803c6aed48b2a8e4c21dfac",
+      "after_revision": "38fbf5bac43e5bc6a991ac3ccfcc01054c1358a012618404558f292a9ce34edd"
+    },
+    {
+      "id": "quick-sw-200",
+      "before_revision": "0dcd58bb67f17b2b509bc5199978ac636cbeec267bd1d2b8ab3685dd58cf2443",
+      "after_revision": "cb50bb744e97a69a39eba493d9c26b872a83c4f5d7c84e893461ea6812e14688"
+    },
+    {
+      "id": "quick-sw-237",
+      "before_revision": "fa85eaaec2e6728cf5b795b54c8bd8854585ca28a7ccfe278cefef0ca6f97e74",
+      "after_revision": "2d8bcbab47874d8e9ae57c344b0184e5f88b04b75312288865ed091bc8b51816"
+    },
+    {
+      "id": "quick-sw-239",
+      "before_revision": "f6e139e1dc633f8d6066a2f8016611659c8e2b3e0a7e321fca3f8c1676314402",
+      "after_revision": "59a82ee7d5046d19493976ef0c35a5c17e5f8067052a026e04037575239e1cbe"
+    },
+    {
+      "id": "quick-sw-246",
+      "before_revision": "90ea27423609907803745ff6d30f5de5aca2ce6d3401c014abe0ad4c531109d8",
+      "after_revision": "033d0d6bec6231cb04a53c81f60ec961c6aab75788eef6a659d52370e9b81a40"
+    },
+    {
+      "id": "quick-sw-247",
+      "before_revision": "d3b0faee09ff1f8b156800ad7122b11f0283681c91ae963465e9ec2dcabcce53",
+      "after_revision": "d605c2aa2187460579d240b86568c62b4bf2895a675e49060eb79d9517464eab"
+    },
+    {
+      "id": "quick-sw-249",
+      "before_revision": "35f582fbedb8fde74d3b0892ed544748d69938ebf738ff168bc02de8a8f90308",
+      "after_revision": "8661fbbf06e9f1dea36fc14bedeca2bbb73c74ed4bc045a5a3ddf604bc1f9df4"
+    },
+    {
+      "id": "quick-sw-91",
+      "before_revision": "81abd73a68566ca6f75d28494f594456cb30f1e01423e9cefa3abef228d8af15",
+      "after_revision": "46cc121ef44de32e4d3942ab8bbbf05f1f32ea75a13c37137a6728c481c29996"
+    },
+    {
+      "id": "quick-sw-92",
+      "before_revision": "fe1916d7bca12ce4b1fb306d7551aed2cae48797691431ef07d9d22e0a00fe75",
+      "after_revision": "55ee61fcb124294f198a7834ba965ae2f015dbd1bd70cb206b7ad4f3baa31686"
+    },
+    {
+      "id": "quick-sw-96",
+      "before_revision": "c9b40d51ff9ea998e6969590c1de77a91a34887375f2529c859b2bc7bf8c26ef",
+      "after_revision": "775144bd79367d7e871d8375afa503f121f33a535bf3ec7093dd94869b26ceed"
+    },
+    {
+      "id": "quick-sw-100",
+      "before_revision": "1a2803ee1780d70ba39784034d5fe5368c50245b4d078e996a3eb52dc6dae8ed",
+      "after_revision": "e69427d137b94b97f602d306f737ebaeb28b118a4777a4891d809a23982b4335"
+    },
+    {
+      "id": "quick-sw-01",
+      "before_revision": "e3acec969272d044029ee945fbc1a871c72bbb0af0ea22c72debf9e999f047d7",
+      "after_revision": "2ba8ca1d8a6dfa3b832d49f86c310e0a73f3c20b0d388b83efffd00f538f5835"
+    },
+    {
+      "id": "quick-sw-39",
+      "before_revision": "a5b0e8b636885e88d2798ecafaafa7f05e6a8436a9c6ca2fd0d8f696c93c6902",
+      "after_revision": "03959949c391b25d8dbe4b5b53706ba6ceaff6aa9f1422f8f7c5a8027bf26c56"
+    },
+    {
+      "id": "quick-sw-54",
+      "before_revision": "3a50630933b57cf1b9862ad9214c322ca8a67a36d23daff4d50a1895b8cfe486",
+      "after_revision": "a512ac96ad4490a01347c137dd578b7090bef4a0d7b9ee2a9e84ebd0bb8abdcd"
+    },
+    {
+      "id": "quick-sw-56",
+      "before_revision": "6e1678b3eb5a02081cbc6e78427852dd487f3038b5da3cf9515af174d29eb8df",
+      "after_revision": "f2f4417648cf46a9994b6bb395bfe370b441a709fdbb2b570e358580ebf7429f"
+    },
+    {
+      "id": "quick-sw-59",
+      "before_revision": "f0896379a566782b5cb36c59fa8000b66cb2d33c1bd20db1317c3cea9110cf0a",
+      "after_revision": "c6df4dadeb32ef01fbafaf72360956c94293e78063904252b0831324aa405c97"
+    },
+    {
+      "id": "quick-hw-101",
+      "before_revision": "6fe1e99a60ce3cff27cc310ebb913f61f23d55e13d98f8dede25627e563fe823",
+      "after_revision": "2995466dd76d0ee793be269010cec87bf010418d44cc1b9850d4a97f235e6b14"
+    },
+    {
+      "id": "quick-hw-102",
+      "before_revision": "7fe63ad8845d124f5fa9195cb3ccfece2911db39a5ee383d61aa95e466da829a",
+      "after_revision": "64b3c4a3a5e926a04b8fc2747466b2f97be189df572eae93facb51dae7f716ae"
+    },
+    {
+      "id": "quick-hw-104",
+      "before_revision": "ff60939492331bf10d8fc0d99bc1b02afb7a2b5e3b3fee35b1c16cdcf5d8dabe",
+      "after_revision": "8e8229fbd65011cae01ee24449a1c84ff3c009a2b30e326906a304963f2e3f1e"
+    },
+    {
+      "id": "quick-hw-114",
+      "before_revision": "1061eae2dba0b0c9f7eb85b0208c47e7b778803f729675315fac63dc6a358cd9",
+      "after_revision": "ac7cad62179bbb46c1842fa4ba2f7cd1830d17a2b2edfd9ebace3b5241832255"
+    },
+    {
+      "id": "quick-hw-116",
+      "before_revision": "e7c1d057dd69e169393335fae8404a9e53500000a77355b913cb073cd348511e",
+      "after_revision": "97d38b1d3f8f05efad802fcada374399b7a1a0bba5dec448ab3b21137b215fcf"
+    },
+    {
+      "id": "quick-hw-117",
+      "before_revision": "3d4202027fb9af03c488b059b2aa18b146e48a55f017a801e69781bfba01d497",
+      "after_revision": "c3f72c60efcede9ab7fc937aec7a3ae3fda41c06c4b75be9e46fd0e1c5335477"
+    },
+    {
+      "id": "quick-hw-119",
+      "before_revision": "6d37bbeee01570ea31f8cd84c434057a014aec341c9e23d93cee4e9c7eb9fc8e",
+      "after_revision": "e26b576a9fc7dbbc027326ac617e3db48d6d66b34ca8f8a1e38c6c4e8b296b5b"
+    },
+    {
+      "id": "quick-hw-126",
+      "before_revision": "1fdd50ad4e3b064bc971db82df1b460e8ef99a9c743cac184563c648b88d428b",
+      "after_revision": "adc914eb2f2d49c6bd780fffae70b95e6de5886c779a3303802d7705b6265feb"
+    },
+    {
+      "id": "quick-hw-130",
+      "before_revision": "a20b74002f22c296fc2262cdd855081612ad5673ec1f70ae8a84ff66346af397",
+      "after_revision": "c06b65659c13c5f92ceda248fbf7704bf00a47731440fcd9e773da9e3d9117dc"
+    },
+    {
+      "id": "quick-hw-133",
+      "before_revision": "0b4b8019a6c03c93da2cadda1b40a1ead2d7f24861e214f1402604977269163f",
+      "after_revision": "4c0b37b0169d324375ca5ed5749be61a4e5543b15d62805ed421e8e97e767202"
+    },
+    {
+      "id": "quick-hw-138",
+      "before_revision": "bad7a14d23c1d3ed593a425dbc1cf7e01b670c99ee0d7a20b1592ee096bfa4f6",
+      "after_revision": "1fb18e50b9386cd182d5e0e6f7a150f7c296b0d3479effceeb435b535e9841c1"
+    },
+    {
+      "id": "quick-hw-140",
+      "before_revision": "e6b979732d6c887650cd4b0c36dc35aa3bec3ed552c395a1ba801c971f1efc9a",
+      "after_revision": "70dfe5f3c8e78ef9c022788a9fcab9e1a42662e8876864f78bf6afb4475dca74"
+    },
+    {
+      "id": "quick-hw-141",
+      "before_revision": "c6f9899b50b61426bab1fc01724583751528de8b8616179d8828cac13badfca2",
+      "after_revision": "ebbcaabf39e1f18a8e9899c82ce872616261dd81c40a1366db2108a897068b6a"
+    },
+    {
+      "id": "quick-hw-143",
+      "before_revision": "73b08b4b4234888dc4d04f46407536c718b3a11328a25dda48970457595f94e2",
+      "after_revision": "9f51de90ee84ae2064617357c688b8d0e9d7a177eaaecd371e736825223ab557"
+    },
+    {
+      "id": "quick-hw-145",
+      "before_revision": "6c849a460d632332ba98ccc6b28ef32a4b8022d5cc7d9bb296488ab152e45125",
+      "after_revision": "58d9558bd6390f4b9939bea8b9f67c97ab87d7d05fc2e9b4601da72c9a48940d"
+    },
+    {
+      "id": "quick-hw-152",
+      "before_revision": "ff16734dc15e661035ccd5d827baf5084505b94e25829b7578e218112f310d7f",
+      "after_revision": "183972e3bcc42cca73331b6d0f1bac08586ec2f590a53cd6ffd27bb57180dd07"
+    },
+    {
+      "id": "quick-hw-153",
+      "before_revision": "10fdd69ddc2ce73db0346034e516cb50c6b22b22c28f4473a4fdf74043ab885d",
+      "after_revision": "df685f578c8dc8e85a0347a282b983a69181bf463b585182e398e51ab498f909"
+    },
+    {
+      "id": "quick-hw-154",
+      "before_revision": "76083922420d773eee033b84af5c371909afa6294b92a59e71a4d0db0601d8b8",
+      "after_revision": "71433022fa5936ac4ab5c7a09221ed81f3870acd32017db18f10a74f6c7c4fb5"
+    },
+    {
+      "id": "quick-hw-155",
+      "before_revision": "9e0a2b833ed4ba678e532a17f1e1228dbd35edb5116f5d1eda67424d55b34342",
+      "after_revision": "eaef38b0e5d46f0ea413c700b466e06605cee0189d84a76c2767366f888d6263"
+    },
+    {
+      "id": "quick-hw-156",
+      "before_revision": "81f808ac43d7cc6f99efdb6bc5e2a1fda8aa5c267fdffea867711d60b9284693",
+      "after_revision": "e25a8fce964bdc698bd22ac76e3eac781f5f950a53bb510bbda115383ca527d1"
+    },
+    {
+      "id": "quick-hw-157",
+      "before_revision": "0f442130828c2bf53d8db17c5cb29680e46758a1e2a8a87d9e6c071ba9f117dd",
+      "after_revision": "073c10946a36234c55e0d8a2b407198a2005c850390651472366d413ddf079c8"
+    },
+    {
+      "id": "quick-hw-158",
+      "before_revision": "ca05a9d08b08b546fc13242006edff1792c7f3c752e27c74c993334c4d1a9dbc",
+      "after_revision": "eea5c487fb21351a5be6b78d3fa0edb21f768f6ca7566ed9d52aa436cd78022d"
+    },
+    {
+      "id": "quick-hw-159",
+      "before_revision": "e2b9e16f2287d0809a372b8aa25d9a4e537299de1f535d3f15d4d22a3b7023d8",
+      "after_revision": "3648ac7c452d32bec3c289add9ca5b10ac09cadcf0b4ad40f08bf80b33873d51"
+    },
+    {
+      "id": "quick-hw-161",
+      "before_revision": "68ba5761ba9ebd385c7c478a74b04e01052d187fadaaacd1309b4f9635f5b6ee",
+      "after_revision": "00cbc3d3018bcbe53283fac860783a0c66bf6b505282d333a60b8fc73ae213b4"
+    },
+    {
+      "id": "quick-hw-162",
+      "before_revision": "74dec28d5c96df3b6a29f719cb9444a02b40fd19f8d229ab51bb5272fda4c2a7",
+      "after_revision": "39e21d3b189f372efa0b848ab1dd4b17516b9d5776ca0539bdb317ae1d310ffa"
+    },
+    {
+      "id": "quick-hw-166",
+      "before_revision": "44286ab247076e506fdc4c9b58b98daa75dcf2a56e1d8fbaea28af2cf0845050",
+      "after_revision": "56e3c5fc63b7484fa38ce8af4ae560d802321c070dd5191e1f59710b8b34e190"
+    },
+    {
+      "id": "quick-hw-167",
+      "before_revision": "f7ae30818b45c116143aaabb1888a33fcfeb39c0a4f87b1d52958dd00d15b6c3",
+      "after_revision": "5a5addded03df8f5ec95f20e7a791a7b6796425610f1452040eba41992c8dd9f"
+    },
+    {
+      "id": "quick-hw-168",
+      "before_revision": "313022576c7212360137c6661235455f86cb05873c7b6bcfd52c2d59869ae5e4",
+      "after_revision": "3437449d0fc1454f2b0ba67de6c2b20fce9e03d93b87563d810b749d0a260a0a"
+    },
+    {
+      "id": "quick-hw-172",
+      "before_revision": "f9ed004fab828a351f191173c63b792cfac514eafaf315d1ae609f5606566455",
+      "after_revision": "144f76d04f8e121099a19d1ee158218b9101fd79007da2c8af3043f0b43f2f96"
+    },
+    {
+      "id": "quick-hw-175",
+      "before_revision": "ad27ebd5ace6b3cb7c90d3d1b5abcb43402d5e0219abc7733e83463be731be9e",
+      "after_revision": "98245e223703a551f0ed165f7bdc6887f45dc6b8d0d291ba6212e5e621bf7790"
+    },
+    {
+      "id": "quick-hw-177",
+      "before_revision": "616fb7063aa7cc623b630419e81cd26343229d404332f630ee7fe2b87c983881",
+      "after_revision": "ac1fa469943efdb08a8b24024bf8915f8201884a1b8d6a2064c6b8365ee34467"
+    },
+    {
+      "id": "quick-hw-178",
+      "before_revision": "8547ad2b1d3e452c89e8be3b313b40a7bd6699dfa6d93f291c17e22cb8e3cdc0",
+      "after_revision": "3f0d0a49f253fce824f640b28dd7e6ee6547493dfb8cd38bcd348af41974ae8e"
+    },
+    {
+      "id": "quick-hw-183",
+      "before_revision": "4823d1563e574b6d77cf64869594047ed0dcc873f2ecc6a8c6709344b531fc5b",
+      "after_revision": "63d39a9bfa7642d7127e90ca1b279cf30963b6f6efd17b293f50032c1ff1d79b"
+    },
+    {
+      "id": "quick-hw-185",
+      "before_revision": "0df9b09fae6761d64137f9d64f0502743f31a18143c2daf34a9b8749e1b8d954",
+      "after_revision": "628296e58dd2919ec68495644e99604c494aafed43e803dfe8b25185e75d32f7"
+    },
+    {
+      "id": "quick-hw-187",
+      "before_revision": "cf37b6303b95669a419955b9ee23ffa5a2effbef6a380f3daa4005216b7ce0c5",
+      "after_revision": "8389c7ca4880010843dfb41949cae4b976184f588a58d0ebd365cef450f4394b"
+    },
+    {
+      "id": "quick-hw-190",
+      "before_revision": "626d88a0a2f71a2a432256ecaaf033879b12ddb0f07ec629c65b35e5e3754084",
+      "after_revision": "38742ce75d2c5dfeb6764f976e0675cafee2d85291228fff1fe33748ce82665c"
+    },
+    {
+      "id": "quick-hw-192",
+      "before_revision": "04d1cd4a5a498c3024429bd8462e00c5abdbbb558cdcd589a1d52da2c102e109",
+      "after_revision": "31d13fd61beaf23c4d3bae3ba715d834c257d76534d7d90c00ea9d118e1d77d8"
+    },
+    {
+      "id": "quick-hw-198",
+      "before_revision": "dd197188938130c1a66b8a3daecb1d50bc72d1f078213fce1fa7f2608011c917",
+      "after_revision": "882a2082668e830ae67f46ca98d262a5712de3b524094d5d87fc0941f50966fb"
+    },
+    {
+      "id": "quick-hw-200",
+      "before_revision": "cc062c08419ee104e99e523f0b860a3678ce6a199c3061c49d1b9dbe85f909d4",
+      "after_revision": "7c8f5953cdcee14c45b1359b3a99ebb97abbde3ac38c718d61b89c1bd2142f2f"
+    },
+    {
+      "id": "quick-hw-201",
+      "before_revision": "ed2ed5a8ce2e16b8508cfbce9281e8771bcdd39d49eb378a27239796d7b60360",
+      "after_revision": "2f99ead3810423e3b9cf897baa85c749afb8634a309644ea534e0c53fecf3e60"
+    },
+    {
+      "id": "quick-hw-203",
+      "before_revision": "d120de05ba7f9351731b8a17aba95a29894982094a3fad17352f119cc7ebb3b0",
+      "after_revision": "e42f9712241f1e2e344b5ba6df1ea7cd38e6d23358d0453cc4b56cf8ee22859c"
+    },
+    {
+      "id": "quick-hw-206",
+      "before_revision": "f28ba6b0c22cda0cff9f241dedbc1d9e96965167a00afb243e31bdf06b1b4bc5",
+      "after_revision": "19279952d3bbf74a52df32672e8a1ecbe82c8a8bce3413ef3b69fe97a609eb9e"
+    },
+    {
+      "id": "quick-hw-207",
+      "before_revision": "a0a8f641915560ffa137cabb233d8c64070dbcec5bf9326702ae776e022f249e",
+      "after_revision": "07a0a813322919836d2cc4236a5c26b5d13aec67180261ce28182c61dfa04109"
+    },
+    {
+      "id": "quick-hw-208",
+      "before_revision": "6169519d5243fe1ea17fd9e93bae471f7ce14c4e452d03b6a4364cc7a651b983",
+      "after_revision": "92753565453b8d0799b5b32c20425022c031b78aadc9687e34b5b93be2f125a7"
+    },
+    {
+      "id": "quick-hw-220",
+      "before_revision": "056599f2a71b05ed44e1a5e4bf0ecae07ca80cad79c732fd30c1238d56ac0ddd",
+      "after_revision": "015677c2824e0d64a05a0cfc86fb42de23f36a8b3635fd450596e88ee78a0b38"
+    },
+    {
+      "id": "quick-hw-222",
+      "before_revision": "cd1b9da60c20c9ddeabee13a10c5c662fc08ceabea20b797d63be127c967b7e6",
+      "after_revision": "83c2fc9b84b541b3f8f788a39d78639bcd987abb65086eb198baedb2db6b424b"
+    },
+    {
+      "id": "quick-hw-223",
+      "before_revision": "752ae4126ec9739cf5cc4de3a6f5b255ffdfeef36c99d073f138b6ea44c083a3",
+      "after_revision": "b92f945b04360cc1f998508dbdb73bd68cd9e3b6a03ef665043cfa3d199a6aed"
+    },
+    {
+      "id": "quick-hw-228",
+      "before_revision": "bfc6590a82ba5ec97085d53912ad4489f63c1b5e61dbb9ed6d4ccc8645b4ccf4",
+      "after_revision": "cf2e7e19b528b749e37eccd3c8afc9512dbb92f74b5e62a889cefdb5c6733d9f"
+    },
+    {
+      "id": "quick-hw-231",
+      "before_revision": "05e2c4af9b02e6879c706c5aafaa9e02570b2f57f20b4fa6f1595b8951a45160",
+      "after_revision": "ea6c4028cb7c5b08b901a6168e9d8051e0670799c1097dbc7431e1e2b3a81147"
+    },
+    {
+      "id": "quick-hw-233",
+      "before_revision": "8f15d5aed330668e637f6ff6f9080ad0658f355306ff61da5d1ec244dbe5c797",
+      "after_revision": "756e9f2e6e38646b510c02422242462db7f3ddb36400fd5ef9ec7b0ac33ae65e"
+    },
+    {
+      "id": "quick-hw-236",
+      "before_revision": "addda3cc67527a41cd97e93fe23e9db231aad0a7aba781faaf32279e603ae722",
+      "after_revision": "89c63f4bd02a94054549f62c1626581d47170557e99fe45864163d3136467d23"
+    },
+    {
+      "id": "quick-hw-237",
+      "before_revision": "dfb41260f76fb96201542edc2b9df3b9fc5cf22cbda4ec0e7f53b9009b86077f",
+      "after_revision": "a2657a01972b78674c55823e3ebd8b3a1112fb4096c56e431ef004f06aab967e"
+    },
+    {
+      "id": "quick-hw-238",
+      "before_revision": "cfd93c0004bf855289bab617534799149be5e1da2213b5c39af970eb010a7e43",
+      "after_revision": "669dab5fb1781fdd9b0049b0211b112723f152c80e6939e5536f80d12a4e50e5"
+    },
+    {
+      "id": "quick-hw-239",
+      "before_revision": "c2783fccc1ccf66f73c1ef2193259408790f1bf9bd537b88ec62b5db2b2e15a9",
+      "after_revision": "c9647efccd0d8569935971bc51c35914e250cd89dcc009a51ed67da1bdedc4d4"
+    },
+    {
+      "id": "quick-hw-245",
+      "before_revision": "1d782ba497d8413a4b10941e4ba758c62b20824105261d1da33addac5d71b3e3",
+      "after_revision": "1b991be285e9f623a126bd9bb9ed7ab18636f3a1e4df168e916b9f0605c0e169"
+    },
+    {
+      "id": "quick-hw-62",
+      "before_revision": "d1968e7d44c705daebebe11c94a0f06d2986f4bec774d323d0871902ccaabb80",
+      "after_revision": "9bdfb04c29a031d21b3a57e0db021c6d72ac22c58a82f86a2df4a12d51221d2f"
+    },
+    {
+      "id": "quick-hw-67",
+      "before_revision": "d07fd81cb7fe331e0715c6f40bd41fb7faf4499f09288f3521a308fb75d6db72",
+      "after_revision": "d769fccff746d93c60c075b1fd2601651d43e4b0f82355f9cb4c47dc30cf8015"
+    },
+    {
+      "id": "quick-hw-88",
+      "before_revision": "3590175531bd48a4c19cccd26e792da27c5e75291a7b2189878c3e60919a7b62",
+      "after_revision": "66f6b82eadc7c00813271196310cb1bfb228fe7a6a3359cf74552564605f2721"
+    },
+    {
+      "id": "quick-hw-91",
+      "before_revision": "519e6d0b90e87e305cc7ca4fa085749ca91e79f96bd07ec59805e07edd76070a",
+      "after_revision": "e824d054fb38d12a11d3bc2320d2279c629f0dc6b33abd2d342a9e51c245dbc0"
+    },
+    {
+      "id": "quick-hw-92",
+      "before_revision": "1c8789b9a57c8fe8e8902e599d61e2aff7ad7915b0e0f41e31317974254d6957",
+      "after_revision": "15827bc3e7744b3af854b8cc84bbdfc46cd33ff8dc26d287b4cca03bc2d552c9"
+    },
+    {
+      "id": "quick-hw-96",
+      "before_revision": "e34f701d11ce33da039dd78d47fb2d38a3f5cfe857d7ceebab526df71885f88d",
+      "after_revision": "72cc623177dab22eb6d9378067e5b1f58fb82fefa765efa6df255a6a518229a6"
+    },
+    {
+      "id": "quick-hw-23",
+      "before_revision": "5863476e43b4351ae9c024741632f0a5533f4ee4ec213873493f8b0376d3f709",
+      "after_revision": "06583ba1ef1db51d01ddf62047527011e734bc84fdff859880b7e1fb458b2981"
+    },
+    {
+      "id": "quick-hw-24",
+      "before_revision": "83da631e85e5318c927d964ea02927b47941b4c633e5b7c09fbe47fc22064043",
+      "after_revision": "a2dd51a7b18b45b45cbd220269cdc8d41812e162fc4f6aaaf0c95cba6c98f5e2"
+    },
+    {
+      "id": "quick-hw-25",
+      "before_revision": "510f06faafbf8e6f78c6fd11b3cdc861f23f979d4a7c6e1d524f27efa1198289",
+      "after_revision": "7b2cdb7e698fd0af1adf0a3b12010ecd39af5f6872b7d7e041a938cc0b731db5"
+    },
+    {
+      "id": "quick-hw-26",
+      "before_revision": "38118137af16bfa434517db0a7d7629f853b93b8e14fdd323b8ae645efbf2438",
+      "after_revision": "71417886812d9ceef97a3a4f95baf929755043169f92002b89a78a52da43679e"
+    },
+    {
+      "id": "quick-hw-27",
+      "before_revision": "c8a949a70ad6873708bf4854d26237c6d23ce17e06cde921b51cb98438a121fd",
+      "after_revision": "6d72db18b5d1be61296ccf19e2945e9130d66b2466584a07cdf1bb4493698cfb"
+    },
+    {
+      "id": "quick-hw-37",
+      "before_revision": "63a5ee4355e90348c37c4fd37722a50a60ba3cf2f0e746db409c736536f894d6",
+      "after_revision": "40e9313eb1984a5888c9bc8121ebdfda87c2e1ad62b11bda4c3aed7ac2d995b9"
+    },
+    {
+      "id": "quick-hw-40",
+      "before_revision": "b428c06f36d377390aed63ad8804c8dd696482e9277a45a367f62b8e287e7820",
+      "after_revision": "48c5b55484c629b6acfb99fe50922af9e00bf12a0b65ecd072153b6387df5ea7"
+    },
+    {
+      "id": "quick-hw-41",
+      "before_revision": "686ecb829c5a35adf2b6bff017b5b8faff6b01a71f247a8eab7d5caa2b381992",
+      "after_revision": "31a757922bd9b467e5ab4316414744e6315bce5741df28d48024fb84541aaa02"
+    },
+    {
+      "id": "quick-hw-42",
+      "before_revision": "b974fe4c9638cb38ece383d8f4a43332027ec1b67caf1ec40a870c0cd8161fcf",
+      "after_revision": "aea82385640068e15ed4ba305ab1e96c79fb9e7a1dae95272b6b376374bc2664"
+    },
+    {
+      "id": "quick-hw-45",
+      "before_revision": "ce21e840a95028042db18e0e30ae3a87d49007f4ce40b279c685afa7b526fe4b",
+      "after_revision": "a1b49144e5b3f2634de2a4f485b4b768a9c035e3d41ba12f086eafb07fdc1a17"
+    },
+    {
+      "id": "quick-hw-48",
+      "before_revision": "68dae0a89f04e351c5011a130fd3e8b513171a52b5fdd17f5e82f58caea419d1",
+      "after_revision": "d2c97547a8d657316202933eae92ed9d5f6796fff327d24282ebe1656f297c5a"
+    },
+    {
+      "id": "quick-hw-53",
+      "before_revision": "d0fa016a3e1943bf0b578abcb326f554ecacac758d917637f3b442f24c2e6900",
+      "after_revision": "d9dfcb96c88481bd9a86fbc1ba482bf6967fe7790186bdbb8e171bc37dd55694"
+    },
+    {
+      "id": "quick-hw-54",
+      "before_revision": "bf04b32b0e574374820a3243d86865101be285a3b59ff0cf8b1afbe02e0acc0a",
+      "after_revision": "392eacb60a9bc7d41fa91879a82f1fdc7625d580837416b8db159d943532d6cb"
+    },
+    {
+      "id": "quick-hw-55",
+      "before_revision": "32015cb767870e7c6185669c59b2389fc4c879d7bdaf19aa4c884c301bc23167",
+      "after_revision": "6322af683bd8bd07bb1a393eba30c68120c7804c255e1c7e49f2242d380a7db8"
+    },
+    {
+      "id": "quick-hw-59",
+      "before_revision": "7197b6fa575eefcbe8033b228a8f60441f03dee999e3df4bcaf30e08c7b4618f",
+      "after_revision": "34b78ef1045e3f6f190eef8285c85dc6db1f849fc1bb261bc3d09a2b1185c423"
+    },
+    {
+      "id": "quick-sw-108",
+      "before_revision": "6cd28d333e0c0db40e86438769df92e7480e3fdc2601e3eb41cd80172a2f6f27",
+      "after_revision": "74ccc1136214202671f92cfd36dc863c15edaf3cded8b36b57b5949a0a42bb89"
+    },
+    {
+      "id": "quick-sw-138",
+      "before_revision": "8570c8e60ba81744455a7999376bdd9a7350daf21abd2b7d8285bb7526db7520",
+      "after_revision": "221ccb7e382d5240414fe688823d486e2d7e0c7d008f6425f49561127a93df76"
+    },
+    {
+      "id": "quick-sw-140",
+      "before_revision": "884d06bde18a7304ae9915888d6c5b1ec4ab5946ea692c0854c74e024d847027",
+      "after_revision": "4414d463d6c96c74240c669e357ce3c5fa7daa68eeda1aeeb68c4dbf9cd36440"
+    },
+    {
+      "id": "quick-sw-141",
+      "before_revision": "a26aba91b812f4fa9d537fdb1d07a55a46650853d94c8e5483afebef34fdd3c2",
+      "after_revision": "a8e139fd97fe04931239b6d2677bd73aba94d3c00ade671f7ceb475d8b05c1b1"
+    },
+    {
+      "id": "quick-sw-142",
+      "before_revision": "a6f106ea0df9bac2950dc39e808daa64322914f1ec57431e060780df9751585d",
+      "after_revision": "cfdd743cd6ebcc20f2d09f99ffbdb91226838290775d0d2ab09165fb8d032718"
+    },
+    {
+      "id": "quick-sw-143",
+      "before_revision": "2eecacc5f315ed18a1cbf8bd91efb43fbb3dd4188ba0cc80b2c8388cbd194cb8",
+      "after_revision": "3c97adfb4518d5a00e872a475e4c07aae9ce35b5931115f9e30b832cabc4dfdf"
+    },
+    {
+      "id": "quick-sw-144",
+      "before_revision": "3378f985faf14cba58c88be2d13008c70ab535fe9e1717742a333ef77bd68d78",
+      "after_revision": "e3028741f163f201aadea1367b0669fe304a84c17d270ea0078f9c14ff8bbd03"
+    },
+    {
+      "id": "quick-sw-145",
+      "before_revision": "05652d86aa88bf88cb874770e45a2c64017999946d2b56d01233e9510875b8af",
+      "after_revision": "c3ef567cf92517a5947064e43e918f066f272c3e8bab2baae2df346188236d64"
+    },
+    {
+      "id": "quick-sw-147",
+      "before_revision": "87e439900347009cf3d2b1c195d38282207680d2a7549f10c140d2f637068298",
+      "after_revision": "ad114e827a32bb4bbb881ba454661d94241c5b09ec797b6600222371160f9a6b"
+    },
+    {
+      "id": "quick-sw-149",
+      "before_revision": "4c0825c92ce04eb06d1f08aa358751f5322799d3ea5661e8641ed7dbbae617a2",
+      "after_revision": "5de9fd285b025003f37f20ae4b7bd2aacf5edd58a0a0db023c60dc0ca28352b4"
+    },
+    {
+      "id": "quick-sw-150",
+      "before_revision": "08994bb5af31d14319be1574943af371524a251191b67a8f04318beca1aba6d9",
+      "after_revision": "c1b91f11e71f9e9525953b6ea84fbf18f293bcb17a13af583f8682120f3e422b"
+    },
+    {
+      "id": "quick-sw-151",
+      "before_revision": "0302b3d4fbfbac9e8ebfe64d83faa5b0134f3a22e44aa2646b7075daf524d870",
+      "after_revision": "36112c21de035c87fa2d0e87b6302c8c3a2ffd7276d38ba43f85a9fec0a0f646"
+    },
+    {
+      "id": "quick-sw-153",
+      "before_revision": "c0293af3098a9363b374e18c3035398b4ffcd2e97b6eebc48c1000ebe6248014",
+      "after_revision": "a3b4b5512ef8f2f209b4c6ea983576bef3e48f76e076fa9ed6539b4bf7089d03"
+    },
+    {
+      "id": "quick-sw-154",
+      "before_revision": "7cf7c82fd81f171f9c8905d0926895fde87078c5cf27ccbd65618f43107ded70",
+      "after_revision": "055d97986d75599a90a7d621ca6537e6ef4c06f1cdbdc88f466c6c99a8506913"
+    },
+    {
+      "id": "quick-sw-155",
+      "before_revision": "d1f9cd3ce6d7076c232cde943a2f48b62b025175606b4d6526dd0712c0700f9a",
+      "after_revision": "120b6bbe82d643b5f2da5c89a6ca8d2b15d1c72774077f1d071dff69a175d98e"
+    },
+    {
+      "id": "quick-sw-156",
+      "before_revision": "37fc8fcd8db630ca02d397a6776c4ec8027810489fd775f380f3ad4589cf5094",
+      "after_revision": "a11a782d1932ed359f6fb011a11c8b0724d3b40af8d642f559a00ad930e28b9a"
+    },
+    {
+      "id": "quick-sw-157",
+      "before_revision": "5df92c406dc7a5e2ad66a4d43f7b80565cfecf26a8baa3fed28e0ce1ac25b87e",
+      "after_revision": "9819efa6e4ca72b7a5b89d8738265d8ac4128a8d63a6bfc8cf28de2bcbf9a375"
+    },
+    {
+      "id": "quick-sw-159",
+      "before_revision": "a8c746bf47147a9fa91ab2e327c08d9020efa22ba72501231956dc458be6fb05",
+      "after_revision": "9e5223941552c833f619cdededd1caa36baae5a26d599a30fd2141f952e7266f"
+    },
+    {
+      "id": "quick-sw-160",
+      "before_revision": "48320b6ad0b28047319b03fe8dd0fb3e4f4420a472521ef5c081583b5ebb4b62",
+      "after_revision": "129f9d1b7731a47770fa5c73cc2d82886a12c2c67a36c6b8b244f28e049daa34"
+    },
+    {
+      "id": "quick-sw-161",
+      "before_revision": "58e78db4003c5bd0ce61557287c6ebfd47084f79d7c1ed7a5d0cd986712be306",
+      "after_revision": "5407108807ebc5367e1cc6f850f97a8045f79f39d4c4a9db6c8c8cc0e25fd68e"
+    },
+    {
+      "id": "quick-sw-163",
+      "before_revision": "cfe22dc2734cc6ebb14b1baf04e21a03952d6466e26ae14f6b5685cd5dd06bb7",
+      "after_revision": "03e97b41fac921f9e1ca08fbac9155e9eb91aa4f4c9cab57b37374aef94001ab"
+    },
+    {
+      "id": "quick-sw-164",
+      "before_revision": "bde9dfc8d51231143da2c591ffecd9d25092a63a7e9e2afd2e426c73be1d16de",
+      "after_revision": "f67a8559a3a483f05dafe666ef733ec42631db16fdfa93396930473aa4de00a9"
+    },
+    {
+      "id": "quick-sw-166",
+      "before_revision": "a096238e15ae7d6dad16f4e8491f2662b8269b4830373a9fddfb42715eecf2dc",
+      "after_revision": "672f27c39c75f55dcfe435467e4651181d667c872e2181282124a4bac5a4b4ab"
+    },
+    {
+      "id": "quick-sw-167",
+      "before_revision": "969c52201de2ccbd3d087004e2df0fe143fea275fda4b466e96e05a38dac337e",
+      "after_revision": "9ae0adff3cf9622818502597359910235cb16333528e871ce97c2a645be188f9"
+    },
+    {
+      "id": "quick-sw-171",
+      "before_revision": "23fe1881d5e436133e4cd7e9e2918edbd577b329b3a1778f694afdca3277d24f",
+      "after_revision": "d1bb3c1c7444f43f0250895268f06434f80de639bc3f337792457638e292687c"
+    },
+    {
+      "id": "quick-sw-173",
+      "before_revision": "360b9a0f258f74dd622ed271b6a65f4e513f4f9671cb87c3e7beca938b4b73fa",
+      "after_revision": "a8619be53be0056322cc984b7585fd626a695c0a2d5b4092a4caa14c56b0db20"
+    },
+    {
+      "id": "quick-sw-175",
+      "before_revision": "c68112e3c4b3c08057f0a2a2234e9c3e6df4367be58893931fe6324507e3c3f9",
+      "after_revision": "d59901444c89c72fe5c64709a47489d28d96110bbc7e98be0cfafbefeccb16c6"
+    },
+    {
+      "id": "quick-sw-176",
+      "before_revision": "6658bba3cd02a4018034915981b0a5a4d4b35b2fc0a1c0da4bd0e28c5ff74af4",
+      "after_revision": "56d65058cb49af1e6d81f21d011c076979bdd78670950f765cc0388016c6a505"
+    },
+    {
+      "id": "quick-sw-202",
+      "before_revision": "6fdfd28386761eae5051ea5be2d679fe05196c17014dc72c8cb54242921b8301",
+      "after_revision": "4fb9228d56e7df7f556d8029c95f0ea26cc18d19d37b15cc206c615f48a45cc1"
+    },
+    {
+      "id": "quick-sw-208",
+      "before_revision": "a9def3ca1feeab52a7401de71338509055660edebe7c94a9dccd08733c522f7f",
+      "after_revision": "e9a62b9283ef217999d400319dab7d8a46006fd9e5888d5e0315ac80650e7357"
+    },
+    {
+      "id": "quick-sw-209",
+      "before_revision": "6ddf28b1a143f6236650349e85bf2de0624e20d6c06691bd0957cbe421ef534d",
+      "after_revision": "caacb45eaea071fa5feb2623ee6145e43758d6129534152f20954dac06ff2a2d"
+    },
+    {
+      "id": "quick-sw-217",
+      "before_revision": "0689e526fdf3b6adf948770bd945aa2cb9d39071ddce07e0bfbac49ca4a526d4",
+      "after_revision": "b1f30509d7278828c1dacba6f447697746b8d3e7a589451d2da40888f5b7f6ea"
+    },
+    {
+      "id": "quick-sw-220",
+      "before_revision": "eb54db5aa08100f15c9921fc8d61a4c3871041cd6c1a93f530a8f6703a1156fa",
+      "after_revision": "23203dbf238dbaea0bebd4566944aecd091ac98abc97d36d4ff9efa7e50f43d0"
+    },
+    {
+      "id": "quick-sw-222",
+      "before_revision": "c44b1625da8be9db8089c168631e91d32d7ef7e10bebc82295d946b0158b33ac",
+      "after_revision": "983f5c5c531a1d4e2c437f4399bdfd50db081bd239ea791c623532b53c4c0c57"
+    },
+    {
+      "id": "quick-sw-224",
+      "before_revision": "1523fb6f1d7ea91c040576967f39b01fb35d3d41ed232dfe60f799699d334a27",
+      "after_revision": "810229d50cf9331f9a393c28b6845b8c20a55a5a61d4087b2ee62f52ef574c84"
+    },
+    {
+      "id": "quick-sw-231",
+      "before_revision": "409fd614364d36e6af23bd27b5a8e82dbffe791501f4fee41e5f66047c8fb93a",
+      "after_revision": "faccbfb1c05cc1a5d01d7b47820bed2e47117ee35b59a0a79e7050360e7455c4"
+    },
+    {
+      "id": "quick-sw-61",
+      "before_revision": "b52ab11320d79a463868d6e00161ed14eca27d088ae7a98e425571dfed3ecf32",
+      "after_revision": "72fd7a6af78a44d59a4e35ab71908d024311c531db3398fd3f20a50814fa5349"
+    },
+    {
+      "id": "quick-sw-62",
+      "before_revision": "906e036cc7afad3479964901b2ab46a242f6ecfda30f68647416c529d3d5a147",
+      "after_revision": "ff39075bb813c80cac9ae9fe52b506688ef079b5ccfae97a4b889a6699629d5c"
+    },
+    {
+      "id": "quick-sw-67",
+      "before_revision": "cc37e5e8365bf32e1801f8b587ef221f205c550bf213da7f515e3e2113f91b1e",
+      "after_revision": "a87148762efc6a15e9bd5056c59b58edaca2e3668818a85f34e4b88ddc277f2d"
+    },
+    {
+      "id": "quick-sw-68",
+      "before_revision": "cae3da66a477268f7bd736838459a5b82f932477a430d3c8548ce6e1c3c23ca5",
+      "after_revision": "4e018ea750befcb55eca3bf3636c4fd6709752f0ba33e43941c2aff3d04fecca"
+    },
+    {
+      "id": "quick-sw-69",
+      "before_revision": "8d182af88fdb9c44c119961f075f5440bac81ac887eba7cab7addd7670dc5919",
+      "after_revision": "06b7a6afc9c2f8efffc78aabd95044a7dfa241992d35fa4211c2a3d90a825536"
+    },
+    {
+      "id": "quick-sw-71",
+      "before_revision": "e31d6d2189e8315aff3d8946fc0d7f56cfb64bc9bb484e2336b4dd7fc853b5f6",
+      "after_revision": "4d2308fd36b04d1fdc65db97c3a5232a547af2246f45399c7e5cec69653dfc8b"
+    },
+    {
+      "id": "quick-sw-78",
+      "before_revision": "ac4e33c8b0206e6d9d0fe638ea5450d1ff70232945fc23bf2d17a68083a90471",
+      "after_revision": "9803ef1856788817b8c09055e58f830926b1a8153155e66087782aa4bfd1f451"
+    },
+    {
+      "id": "quick-sw-83",
+      "before_revision": "2339f3d2cee351ab49618ab9e91323e402b4b42c2faf2b493ce4b0a10f6904ab",
+      "after_revision": "8f909af7a7fcf2aed2dc983d7819f12ed11b4c552b8aa5c9ec7eff590f918e5f"
+    },
+    {
+      "id": "quick-sw-87",
+      "before_revision": "fc9c57e4993ca4176467452ee7eb072164c2a76a2d44cbd90a3021faf8f1e0a1",
+      "after_revision": "418891b69492d928fe00d3e4a5d531cc8a6f7a3e5c0443aab5ce8ff4cb6ab8f8"
+    },
+    {
+      "id": "quick-sw-88",
+      "before_revision": "e362a63b3b5d4426a5df60704b8c68e49ce7d29082731c8ba21d943142a7a6bc",
+      "after_revision": "49583add74e30fb81e57b0797be1886daf83dcf0bb64cd96864f49df0fed4486"
+    }
+  ],
+  "unchanged_nonprose_sha256": "8c9e7448fddbe52e26174f53c8835dff4620abe23ed9c8636741ee4797c0853c",
+  "unchanged_nonprose_verified": true,
+  "changes": [
+    {
+      "file": "fundamentals-code-250.json",
+      "id": "quick-sw-119",
+      "field": "prompt",
+      "language": "he",
+      "before": "במערך [1,4,1,4] מחפשים סכום 5. כמה זוגות אינדקסים i<j מתאימים, וכמה זוגות ערכים שונים? מדוע קבוצת ערכים לבדה אינה מספיקה לספירת זוגות האינדקסים?",
+      "after": "במערך [1, 4, 1, 4] מחפשים סכום 5. כמה זוגות אינדקסים i<j מתאימים, וכמה זוגות ערכים שונים? מדוע קבוצת ערכים לבדה אינה מספיקה לספירת זוגות האינדקסים?"
+    },
+    {
+      "file": "fundamentals-code-250.json",
+      "id": "quick-sw-119",
+      "field": "prompt",
+      "language": "en",
+      "before": "In [1,4,1,4], the target sum is 5. How many index pairs i<j qualify, and how many distinct value pairs? Why is a set of values insufficient for counting index pairs?",
+      "after": "In [1, 4, 1, 4], the target sum is 5. How many index pairs i<j qualify, and how many distinct value pairs? Why is a set of values insufficient for counting index pairs?"
+    },
+    {
+      "file": "fundamentals-code-250.json",
+      "id": "quick-sw-119",
+      "field": "answer",
+      "language": "he",
+      "before": "יש ארבעה זוגות אינדקסים: כל אחד משני מופעי 1 מתאים לכל אחד משני מופעי 4. יש רק זוג ערכים אחד, {1,4}. קבוצת ערכים מאבדת את מספר ההופעות. בסריקה משמאל לימין מוסיפים לכל איבר את מספר המשלימים שכבר נראו, ורק אחר כך מעדכנים את תדירותו; כך לא משתמשים באיבר פעמיים.",
+      "after": "יש ארבעה זוגות אינדקסים: כל אחד משני מופעי 1 מתאים לכל אחד משני מופעי 4. יש רק זוג ערכים אחד, {1, 4}. קבוצת ערכים מאבדת את מספר ההופעות. בסריקה משמאל לימין מוסיפים לכל איבר את מספר המשלימים שכבר נראו, ורק אחר כך מעדכנים את תדירותו; כך לא משתמשים באיבר פעמיים."
+    },
+    {
+      "file": "fundamentals-code-250.json",
+      "id": "quick-sw-119",
+      "field": "answer",
+      "language": "en",
+      "before": "There are four index pairs: either occurrence of 1 can pair with either occurrence of 4. There is one distinct value pair, {1,4}. A set loses multiplicities. When scanning left to right, add the number of earlier complements before updating the current value's frequency; this prevents pairing an item with itself.",
+      "after": "There are four index pairs: either occurrence of 1 can pair with either occurrence of 4. There is one distinct value pair, {1, 4}. A set loses multiplicities. When scanning left to right, add the number of earlier complements before updating the current value's frequency; this prevents pairing an item with itself."
+    },
+    {
+      "file": "fundamentals-code-250.json",
+      "id": "quick-sw-124",
+      "field": "prompt",
+      "language": "he",
+      "before": "במחרוזת ([)] יש מספר שווה של פותחים וסוגרים מכל סוג. מדוע היא בכל זאת אינה תקינה? איזה מידע צריך לשמור בזמן הסריקה?",
+      "after": "במחרוזת `([)]` יש מספר שווה של פותחים וסוגרים מכל סוג. מדוע היא בכל זאת אינה תקינה? איזה מידע צריך לשמור בזמן הסריקה?"
+    },
+    {
+      "file": "fundamentals-code-250.json",
+      "id": "quick-sw-124",
+      "field": "prompt",
+      "language": "en",
+      "before": "The string ([)] has equal opening and closing counts of each type. Why is it invalid anyway? What information must a scan retain?",
+      "after": "The string `([)]` has equal opening and closing counts of each type. Why is it invalid anyway? What information must a scan retain?"
+    },
+    {
+      "file": "fundamentals-code-250.json",
+      "id": "quick-sw-124",
+      "field": "answer",
+      "language": "he",
+      "before": "כאשר מגיעים ל־), הסוגר הפותח האחרון שעדיין לא נסגר הוא [, שאינו מתאים. שומרים מחסנית של פותחים שטרם נסגרו. כל סוגר חייב להתאים לראש המחסנית ולהסירו; מחסנית ריקה בזמן סגירה או סוג שגוי פוסלים מיד. בסוף המחסנית חייבת להיות ריקה. מונים לבדם מאבדים את סדר הקינון.",
+      "after": "כאשר מגיעים ל־`)`, הסוגר הפותח האחרון שעדיין לא נסגר הוא `[`, שאינו מתאים. שומרים מחסנית של פותחים שטרם נסגרו. כל סוגר חייב להתאים לראש המחסנית ולהסירו; מחסנית ריקה בזמן סגירה או סוג שגוי פוסלים מיד. בסוף המחסנית חייבת להיות ריקה. מונים לבדם מאבדים את סדר הקינון."
+    },
+    {
+      "file": "fundamentals-code-250.json",
+      "id": "quick-sw-124",
+      "field": "answer",
+      "language": "en",
+      "before": "At ), the most recent unmatched opener is [, which does not match. Keep a stack of unmatched openers. Each closer must match and remove its top; an empty stack on closing or a wrong type immediately invalidates the string. The stack must be empty at the end. Counts alone lose nesting order.",
+      "after": "At `)`, the most recent unmatched opener is `[`, which does not match. Keep a stack of unmatched openers. Each closer must match and remove its top; an empty stack on closing or a wrong type immediately invalidates the string. The stack must be empty at the end. Counts alone lose nesting order."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-180",
+      "field": "prompt",
+      "language": "he",
+      "before": "במערך [0,0,0,0] מחפשים שלשות מסכום אפס, עם שלושה אינדקסים שונים. כמה שלשות אינדקסים קיימות, וכמה שלשות ערכים שונות? מה צריך לדלג במימוש ממוין שמדפיס שלשות ערכים בלבד?",
+      "after": "במערך [0, 0, 0, 0] מחפשים שלשות מסכום אפס, עם שלושה אינדקסים שונים. כמה שלשות אינדקסים קיימות, וכמה שלשות ערכים שונות? על מה צריך לדלג במימוש ממוין שמדפיס שלשות ערכים בלבד?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-180",
+      "field": "prompt",
+      "language": "en",
+      "before": "In [0,0,0,0], seek zero-sum triples using three distinct indices. How many index triples exist, and how many distinct value triples? What must a sorted implementation skip when printing value triples only?",
+      "after": "In [0, 0, 0, 0], seek zero-sum triples using three distinct indices. How many index triples exist, and how many distinct value triples? What must a sorted implementation skip when printing value triples only?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-180",
+      "field": "answer",
+      "language": "he",
+      "before": "יש ארבע בחירות אינדקסים, אבל שלשת ערכים אחת: (0,0,0). כדי להדפיס ערכים ייחודיים מדלגים על ערך עוגן שכבר טופל; לאחר מציאת שלשה מקדמים גם את שני המצביעים מעבר לערכים שווים. אסור להסיר מראש כפילויות מהמערך: ייתכן שצריך כמה הופעות של אותו ערך בשלשה אחת.",
+      "after": "יש ארבע בחירות אינדקסים, אבל שלשת ערכים אחת: (0, 0, 0). כדי להדפיס ערכים ייחודיים מדלגים על ערך עוגן שכבר טופל; לאחר מציאת שלשה מקדמים גם את שני המצביעים מעבר לערכים שווים. אסור להסיר מראש כפילויות מהמערך: ייתכן שצריך כמה הופעות של אותו ערך בשלשה אחת."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-180",
+      "field": "answer",
+      "language": "en",
+      "before": "There are four index choices but one value triple: (0,0,0). Skip an anchor value already processed; after a match, advance both pointers past equal values. Do not deduplicate the input beforehand: a valid triple may require several occurrences of the same value.",
+      "after": "There are four index choices but one value triple: (0, 0, 0). Skip an anchor value already processed; after a match, advance both pointers past equal values. Do not deduplicate the input beforehand: a valid triple may require several occurrences of the same value."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-184",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחשבים ביטוי postfix בעזרת מחסנית. לפני פעולת חיסור נמצאים בה [8,3], מלמטה למעלה. מה סדר שליפת האופרנדים ומה התוצאה? מדוע טעות בסדר עלולה להסתתר בבדיקות שכוללות רק חיבור?",
+      "after": "מחשבים ביטוי postfix בעזרת מחסנית. לפני פעולת חיסור נמצאים בה [8, 3], מלמטה למעלה. מה סדר שליפת האופרנדים ומה התוצאה? מדוע טעות בסדר עלולה להסתתר בבדיקות שכוללות רק חיבור?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-184",
+      "field": "prompt",
+      "language": "en",
+      "before": "A postfix evaluator uses a stack. Immediately before subtraction, its contents are [8,3] from bottom to top. Which operand is popped first, and what result is pushed? Why can addition-only tests hide an operand-order bug?",
+      "after": "A postfix evaluator uses a stack. Immediately before subtraction, its contents are [8, 3] from bottom to top. Which operand is popped first, and what result is pushed? Why can addition-only tests hide an operand-order bug?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-185",
+      "field": "prompt",
+      "language": "he",
+      "before": "למחסנית נדחפים 5,2,2. אחרי שליפה אחת, מה המינימום? כיצד שמירת המינימום של כל קידומת מונעת איבוד מידע כשמופיעים ערכי מינימום שווים? כל פעולת מחסנית נדרשת בזמן קבוע.",
+      "after": "למחסנית נדחפים 5, 2, 2. אחרי שליפה אחת, מה המינימום? כיצד שמירת המינימום של כל קידומת מונעת איבוד מידע כשמופיעים ערכי מינימום שווים? כל פעולת מחסנית נדרשת בזמן קבוע."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-185",
+      "field": "prompt",
+      "language": "en",
+      "before": "Push 5,2,2 onto a stack, then pop once. What is the minimum? How does retaining each prefix minimum avoid losing information when equal minima repeat? Every stack operation must take constant time.",
+      "after": "Push 5, 2, 2 onto a stack, then pop once. What is the minimum? How does retaining each prefix minimum avoid losing information when equal minima repeat? Every stack operation must take constant time."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-185",
+      "field": "answer",
+      "language": "he",
+      "before": "המינימום נשאר 2. ליד כל איבר שומרים את המינימום עד אליו: (5,5),(2,2),(2,2). בשליפה מסירים זוג אחד בלבד, והזוג הקודם חושף את המינימום הנכון. כך Push, Pop, Top ו־FindMin נשארות בזמן קבוע, במחיר מקום ליניארי. למחסנית ריקה צריך להגדיר שגיאה או ערך חסר.",
+      "after": "המינימום נשאר 2. ליד כל איבר שומרים את המינימום עד אליו: (5, 5), (2, 2), (2, 2). בשליפה מסירים זוג אחד בלבד, והזוג הקודם חושף את המינימום הנכון. כך Push, Pop, Top ו־FindMin נשארות בזמן קבוע, במחיר מקום ליניארי. למחסנית ריקה צריך להגדיר שגיאה או ערך חסר."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-185",
+      "field": "answer",
+      "language": "en",
+      "before": "The minimum remains 2. Store each item with its prefix minimum: (5,5),(2,2),(2,2). Popping removes only the last pair, exposing the previous correct minimum. Push, Pop, Top and FindMin stay constant-time using linear space. Empty-stack behavior must explicitly be an error or an absent result.",
+      "after": "The minimum remains 2. Store each item with its prefix minimum: (5, 5), (2, 2), (2, 2). Popping removes only the last pair, exposing the previous correct minimum. Push, Pop, Top and FindMin stay constant-time using linear space. Empty-stack behavior must explicitly be an error or an absent result."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-188",
+      "field": "answer",
+      "language": "he",
+      "before": "לאפס נדרש הטקסט \"0\" ועוד תו סיום, כלומר שני תאים. ל־8 נדרש \"1000\" ועוד תו סיום, כלומר חמישה. באופן כללי הקיבולת היא max(1,bit_length(n))+1. יש לבדוק קיבולת לפני כתיבה, ולהגדיר בנפרד אם רוחב קבוע ואפסים מובילים נדרשים.",
+      "after": "לאפס נדרש הטקסט \"0\" ועוד תו סיום, כלומר שני תאים. ל־8 נדרש \"1000\" ועוד תו סיום, כלומר חמישה. באופן כללי הקיבולת היא max(1, bit_length(n))+1. יש לבדוק קיבולת לפני כתיבה, ולהגדיר בנפרד אם רוחב קבוע ואפסים מובילים נדרשים."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-188",
+      "field": "answer",
+      "language": "en",
+      "before": "Zero needs \"0\" plus the terminator: two slots. Eight needs \"1000\" plus the terminator: five. In general use max(1,bit_length(n))+1. Check capacity before writing, and separately specify whether fixed-width leading zeros are required.",
+      "after": "Zero needs \"0\" plus the terminator: two slots. Eight needs \"1000\" plus the terminator: five. In general use max(1, bit_length(n))+1. Check capacity before writing, and separately specify whether fixed-width leading zeros are required."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-189",
+      "field": "title",
+      "language": "he",
+      "before": "השלמה פורשת רק את התג המתאים",
+      "after": "השלמה מסירה רק את התג המתאים"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-189",
+      "field": "answer",
+      "language": "he",
+      "before": "לא. ACK של A מסיר רק את הרשומה של A; הכתיבה B ל־7 עדיין חוסמת. שומרים מיפוי תג→כתובת ומחפשים התנגשות בין הרשומות שנותרו. תג לא מוכר או שכבר נפרש אינו מוחק פעולה אחרת. שימוש חוזר בין אצוות דורש גם מניעת ACK ישן מאוחר, למשל באמצעות מספר דור.",
+      "after": "לא. ACK של A מסיר רק את הרשומה של A; הכתיבה B ל־7 עדיין חוסמת. שומרים מיפוי תג→כתובת ומחפשים התנגשות בין הרשומות שנותרו. תג לא מוכר או שכבר הוסר אינו מוחק פעולה אחרת. שימוש חוזר בין אצוות דורש גם מניעת ACK ישן מאוחר, למשל באמצעות מספר דור."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-190",
+      "field": "answer",
+      "language": "he",
+      "before": "הכניסה היא 2. משאירים מצביע ב־3 ומאפסים את האחר ל־0; אחרי צעדים שווים מתקבלים (1,4),(2,2). במפגש הראשון המהיר עבר מרחק כפול, ולכן מרחק האיטי כפולה של אורך המעגל. אם אורך הזנב μ וההיסט במעגל x, מתקיים μ+x≡0 מודולו אורך המעגל. איפוס אחד משחזר את פער המופע הדרוש.",
+      "after": "הכניסה היא 2. משאירים מצביע ב־3 ומאפסים את האחר ל־0; אחרי צעדים שווים מתקבלים (1, 4), (2, 2). במפגש הראשון המהיר עבר מרחק כפול, ולכן מרחק האיטי כפולה של אורך המעגל. אם אורך הזנב μ וההיסט במעגל x, מתקיים μ+x≡0 מודולו אורך המעגל. איפוס אחד משחזר את פער המופע הדרוש."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-190",
+      "field": "answer",
+      "language": "en",
+      "before": "Entry is 2. Leave one pointer at 3 and reset the other to 0; equal steps give (1,4),(2,2). At first meeting, fast traveled twice as far, so slow’s distance is a multiple of cycle length. With tail length μ and cycle offset x, μ+x≡0 modulo cycle length. Resetting one pointer recovers the required phase relationship.",
+      "after": "Entry is 2. Leave one pointer at 3 and reset the other to 0; equal steps give (1, 4), (2, 2). At first meeting, fast traveled twice as far, so slow’s distance is a multiple of cycle length. With tail length μ and cycle offset x, μ+x≡0 modulo cycle length. Resetting one pointer recovers the required phase relationship."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-192",
+      "field": "prompt",
+      "language": "he",
+      "before": "בהקצאה, הציון הוא (מספר מקבלי העדפה, מספר מקבלי העדפה ראשונה), בהשוואה לקסיקוגרפית. איזו תוצאה עדיפה: (3,3) או (4,2)? מה הטעות במקסום הבחירות הראשונות לפני מספר האנשים שמקבלים משהו רצוי?",
+      "after": "בהקצאה, הציון הוא (מספר מקבלי העדפה, מספר מקבלי העדפה ראשונה), בהשוואה לקסיקוגרפית. איזו תוצאה עדיפה: (3, 3) או (4, 2)? מה הטעות במקסום הבחירות הראשונות לפני מספר האנשים שמקבלים משהו רצוי?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-192",
+      "field": "prompt",
+      "language": "en",
+      "before": "An assignment is scored lexicographically by (people receiving an acceptable choice, people receiving their first choice). Which score wins: (3,3) or (4,2)? What goes wrong if first choices are maximized before the number served?",
+      "after": "An assignment is scored lexicographically by (people receiving an acceptable choice, people receiving their first choice). Which score wins: (3, 3) or (4, 2)? What goes wrong if first choices are maximized before the number served?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-192",
+      "field": "answer",
+      "language": "he",
+      "before": "הציון (4,2) עדיף: קודם משווים את הרכיב הראשון ורק בשוויון את השני. סדר הפוך משנה את בעיית האופטימיזציה ועלול להשאיר אדם ללא הקצאה כדי לשפר דירוג אצל אחרים. חייבים עדיין לבדוק בנפרד שכל הקצאה חוקית ואינה משתמשת באותו משאב פעמיים.",
+      "after": "הציון (4, 2) עדיף: קודם משווים את הרכיב הראשון ורק בשוויון את השני. סדר הפוך משנה את בעיית האופטימיזציה ועלול להשאיר אדם ללא הקצאה כדי לשפר דירוג אצל אחרים. חייבים עדיין לבדוק בנפרד שכל הקצאה חוקית ואינה משתמשת באותו משאב פעמיים."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-192",
+      "field": "answer",
+      "language": "en",
+      "before": "(4,2) wins: compare the first component, using the second only on a tie. Reversing priority changes the optimization problem and may leave someone unserved to improve others’ ranks. Feasibility still needs separate checks, including no resource being assigned twice.",
+      "after": "(4, 2) wins: compare the first component, using the second only on a tie. Reversing priority changes the optimization problem and may leave someone unserved to improve others’ ranks. Feasibility still needs separate checks, including no resource being assigned twice."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-193",
+      "field": "prompt",
+      "language": "he",
+      "before": "משימה דורשת שני עובדים בקטע [1,3), ואחרת שלושה בקטע [3,5). העובדים ניתנים להחלפה מיידית, בלי זמני מעבר. כמה עובדים מספיקים? כיצד כלל קטעים חצי־פתוחים משנה את עיבוד האירועים בזמן 3?",
+      "after": "משימה דורשת שני עובדים בקטע [1, 3), ואחרת שלושה בקטע [3, 5). העובדים ניתנים להחלפה מיידית, בלי זמני מעבר. כמה עובדים מספיקים? כיצד כלל קטעים חצי־פתוחים משנה את עיבוד האירועים בזמן 3?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-193",
+      "field": "prompt",
+      "language": "en",
+      "before": "One task needs two workers during [1,3), another three during [3,5). Workers can switch immediately with no travel time. How many suffice? How does the half-open convention affect simultaneous events at time 3?",
+      "after": "One task needs two workers during [1, 3), another three during [3, 5). Workers can switch immediately with no travel time. How many suffice? How does the half-open convention affect simultaneous events at time 3?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-194",
+      "field": "prompt",
+      "language": "he",
+      "before": "מאפסים כל שורה ועמודה שמכילות אפס במטריצה המקורית. עבור [[1,0],[3,4]], למה אסור לאפס את התא הראשון ואז להתייחס אליו כאפס מקורי? קוד הדוגמה מחזיר מטריצה חדשה ואינו מבטיח מקום עזר קבוע.",
+      "after": "מאפסים כל שורה ועמודה שמכילות אפס במטריצה המקורית. עבור [[1, 0], [3, 4]], למה אסור לאפס את התא הראשון ואז להתייחס אליו כאפס מקורי? קוד הדוגמה מחזיר מטריצה חדשה ואינו מבטיח מקום עזר קבוע."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-194",
+      "field": "prompt",
+      "language": "en",
+      "before": "Zero every row and column containing an original matrix zero. For [[1,0],[3,4]], why must a newly written zero not trigger another column? The example returns a new matrix and does not claim constant auxiliary space.",
+      "after": "Zero every row and column containing an original matrix zero. For [[1, 0], [3, 4]], why must a newly written zero not trigger another column? The example returns a new matrix and does not claim constant auxiliary space."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-194",
+      "field": "answer",
+      "language": "he",
+      "before": "רק השורה העליונה והעמודה הימנית מסומנות במקור, ולכן התוצאה [[0,0],[3,0]]. אם האפס החדש בשמאל למעלה מפעיל גם את העמודה השמאלית, מוחקים בטעות את 3. אוספים סימוני שורות ועמודות לפני כתיבה. המימוש משתמש בזמן ליניארי במספר התאים ובמקום עבור הפלט והסימונים.",
+      "after": "רק השורה העליונה והעמודה הימנית מסומנות במקור, ולכן התוצאה [[0, 0], [3, 0]]. אם האפס החדש בשמאל למעלה מפעיל גם את העמודה השמאלית, מוחקים בטעות את 3. אוספים סימוני שורות ועמודות לפני כתיבה. המימוש משתמש בזמן ליניארי במספר התאים ובמקום עבור הפלט והסימונים."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-194",
+      "field": "answer",
+      "language": "en",
+      "before": "Only the top row and right column are originally marked, producing [[0,0],[3,0]]. Letting the new top-left zero trigger the left column incorrectly erases 3. Collect row and column markers before writing. This implementation takes time linear in cell count and space for output and markers.",
+      "after": "Only the top row and right column are originally marked, producing [[0, 0], [3, 0]]. Letting the new top-left zero trigger the left column incorrectly erases 3. Collect row and column markers before writing. This implementation takes time linear in cell count and space for output and markers."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-199",
+      "field": "prompt",
+      "language": "he",
+      "before": "שני ערכים שונים a,b חסרים מטווח 1..n ללא חזרות. מעבר יחיד נותן הפרשי סכומים S=a+b ו־Q=a²+b². מדוע 2Q-S² מאפשר לשחזר את החסרים, ולמה לא כדאי להשתמש בשורש נקודה צפה? הסיכומים מדויקים.",
+      "after": "שני ערכים שונים a, b חסרים מטווח 1..n ללא חזרות. מעבר יחיד נותן הפרשי סכומים S=a+b ו־Q=a²+b². מדוע 2Q-S² מאפשר לשחזר את החסרים, ולמה לא כדאי להשתמש בשורש נקודה צפה? הסיכומים מדויקים."
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-199",
+      "field": "prompt",
+      "language": "en",
+      "before": "Two distinct values a,b are missing from 1..n without duplicates. One pass yields exact differences S=a+b and Q=a²+b². Why does 2Q-S² recover the omissions, and why avoid a floating-point square root?",
+      "after": "Two distinct values a, b are missing from 1..n without duplicates. One pass yields exact differences S=a+b and Q=a²+b². Why does 2Q-S² recover the omissions, and why avoid a floating-point square root?"
+    },
+    {
+      "file": "fundamentals-code-400.json",
+      "id": "quick-sw-200",
+      "field": "prompt",
+      "language": "he",
+      "before": "לזרם מוסיפים תו אחד בכל פעם. רק סוגריים עגולים חשובים, ושאר התווים מתעלמים. אחרי \")(\" מספר הפותחים והסוגרים שווה. מדוע הקידומת עדיין אינה חוקית, ואיזה מידע דרוש בנוסף לעומק? אין פעולת מחיקה או undo.",
+      "after": "לזרם מוסיפים תו אחד בכל פעם. רק סוגריים עגולים חשובים, ומשאר התווים מתעלמים. אחרי \")(\" מספר הפותחים והסוגרים שווה. מדוע הקידומת עדיין אינה חוקית, ואיזה מידע דרוש בנוסף לעומק? אין פעולת מחיקה או undo."
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-237",
+      "field": "prompt",
+      "language": "en",
+      "before": "Extend a permutation without repetition to a W-wide, H-high pixel screen, where W,H>0. How does a uniform permutation of indices 0 through WH−1 become a coordinate sequence without repeats? When must generation stop?",
+      "after": "Extend a permutation without repetition to a W-wide, H-high pixel screen, where W, H>0. How does a uniform permutation of indices 0 through WH−1 become a coordinate sequence without repeats? When must generation stop?"
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-239",
+      "field": "answer",
+      "language": "en",
+      "before": "Returns copy lists of lengths 0+1+…+(n−1), giving quadratic time. An accumulator receiving each Head by constant-time prepending performs n insertions, giving linear time. That requires node construction or prepending in the interface; recursion alone does not guarantee linear complexity.",
+      "after": "During recursion unwinding, lists are copied with lengths 0+1+…+(n−1), giving quadratic time. An accumulator receiving each Head by constant-time prepending performs n insertions, giving linear time. That requires node construction or prepending in the interface; recursion alone does not guarantee linear complexity."
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-246",
+      "field": "prompt",
+      "language": "he",
+      "before": "במערך [9,9,7,7,7] מחפשים את שני הערכים השונים הגדולים ביותר ואת שכיחותם. מה התשובה? מדוע שני תאים בעלי ערך 9 אינם מספיקים, ומה עושים אם יש רק ערך שונה אחד?",
+      "after": "במערך [9, 9, 7, 7, 7] מחפשים את שני הערכים השונים הגדולים ביותר ואת שכיחותם. מה התשובה? מדוע שני תאים בעלי ערך 9 אינם מספיקים, ומה עושים אם יש רק ערך שונה אחד?"
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-246",
+      "field": "prompt",
+      "language": "en",
+      "before": "For [9,9,7,7,7], find the two greatest distinct values and their frequencies. What is returned? Why are two entries holding 9 insufficient, and what if only one distinct value exists?",
+      "after": "For [9, 9, 7, 7, 7], find the two greatest distinct values and their frequencies. What is returned? Why are two entries holding 9 insufficient, and what if only one distinct value exists?"
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-246",
+      "field": "answer",
+      "language": "he",
+      "before": "מחזירים (9,2) ו־(7,3). שתי הופעות של 9 מגדילות את שכיחות המקסימום, ואינן מגדירות מקום שני. במעבר יחיד שומרים שני ערכים שונים ומוניהם, ומעבירים את המקסימום הישן למקום שני כשמגיע גדול חדש. אם אין ערך שני, מחזירים סימון היעדר מפורש ולא מספר מומצא כגון 0.",
+      "after": "מחזירים (9, 2) ו־(7, 3). שתי הופעות של 9 מגדילות את שכיחות המקסימום, ואינן מגדירות מקום שני. במעבר יחיד שומרים שני ערכים שונים ומוניהם, ומעבירים את המקסימום הישן למקום שני כשמגיע גדול חדש. אם אין ערך שני, מחזירים סימון היעדר מפורש ולא מספר מומצא כגון 0."
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-246",
+      "field": "answer",
+      "language": "en",
+      "before": "Return (9,2) and (7,3). Repeated 9 increments the maximum's frequency rather than creating second place. A one-pass solution keeps two distinct values and counts, moving the old maximum into second place when a larger value arrives. If a second value is absent, return an explicit absence marker, not an invented number such as 0.",
+      "after": "Return (9, 2) and (7, 3). Repeated 9 increments the maximum's frequency rather than creating second place. A one-pass solution keeps two distinct values and counts, moving the old maximum into second place when a larger value arrives. If a second value is absent, return an explicit absence marker, not an invented number such as 0."
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-247",
+      "field": "prompt",
+      "language": "he",
+      "before": "נדרש להחזיר ערך שכיח במערך מספרים. ב־[4,2,4,2] שני ערכים שווים בשכיחות. הגדירו שבשוויון בוחרים את הערך הקטן ביותר, ובקלט ריק מחזירים None. מדוע צריך לכתוב את כלל השוויון במפורש?",
+      "after": "נדרש להחזיר ערך שכיח במערך מספרים. ב־[4, 2, 4, 2] שני ערכים שווים בשכיחות. הגדירו שבשוויון בוחרים את הערך הקטן ביותר, ובקלט ריק מחזירים None. מדוע צריך לכתוב את כלל השוויון במפורש?"
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-247",
+      "field": "prompt",
+      "language": "en",
+      "before": "Return an array's mode. In [4,2,4,2], two values tie in frequency. Choose the smaller value on a tie and return None for empty input. Why must the tie rule be explicit?",
+      "after": "Return an array's mode. In [4, 2, 4, 2], two values tie in frequency. Choose the smaller value on a tie and return None for empty input. Why must the tie rule be explicit?"
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-249",
+      "field": "prompt",
+      "language": "he",
+      "before": "פיקסלים בשורה נארזים בבייטים; פיקסל x משתמש בביט x%8, מה־LSB. איך מדליקים טווח חצי־פתוח [x,x+length) בלי לשנות פיקסלים מחוץ לטווח? ההתחלה והאורך חוקיים, והשורה בת מספר שלם של בייטים.",
+      "after": "פיקסלים בשורה נארזים בבייטים; פיקסל x משתמש בביט x%8, מה־LSB. איך מדליקים טווח חצי־פתוח [x, x+length) בלי לשנות פיקסלים מחוץ לטווח? ההתחלה והאורך חוקיים, והשורה בת מספר שלם של בייטים."
+    },
+    {
+      "file": "fundamentals-code-500.json",
+      "id": "quick-sw-249",
+      "field": "prompt",
+      "language": "en",
+      "before": "A row packs pixels into bytes; pixel x uses bit x%8, starting at the LSB. Set the half-open range [x,x+length) without changing outside pixels. Start and length are valid, and the row contains a whole number of bytes.",
+      "after": "A row packs pixels into bytes; pixel x uses bit x%8, starting at the LSB. Set the half-open range [x, x+length) without changing outside pixels. Start and length are valid, and the row contains a whole number of bytes."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-91",
+      "field": "prompt",
+      "language": "he",
+      "before": "הרשומות הן [('A',2),('B',1),('C',2)]. מיינו לפי המספר בסדר עולה, כך שרשומות עם מספר שווה ישמרו על סדרן המקורי. כתבו פונקציה שמחזירה רשימה חדשה.",
+      "after": "הרשומות הן [('A', 2), ('B', 1), ('C', 2)]. מיינו לפי המספר בסדר עולה, כך שרשומות עם מספר שווה ישמרו על סדרן המקורי. כתבו פונקציה שמחזירה רשימה חדשה."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-91",
+      "field": "prompt",
+      "language": "en",
+      "before": "Records are [('A',2),('B',1),('C',2)]. Sort by number in ascending order, preserving original order among equal numbers. Write a function returning a new list.",
+      "after": "Records are [('A', 2), ('B', 1), ('C', 2)]. Sort by number in ascending order, preserving original order among equal numbers. Write a function returning a new list."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-91",
+      "field": "answer",
+      "language": "he",
+      "before": "התוצאה היא [('B',1),('A',2),('C',2)]. מיון יציב שומר ש־A יישאר לפני C, כי המספרים שלהם שווים. sorted של פייתון יציב; key בוחר את המספר בלי להוסיף את השם כשובר שוויון.",
+      "after": "התוצאה היא [('B', 1), ('A', 2), ('C', 2)]. מיון יציב שומר ש־A יישאר לפני C, כי המספרים שלהם שווים. sorted של פייתון יציב; key בוחר את המספר בלי להוסיף את השם כשובר שוויון."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-91",
+      "field": "answer",
+      "language": "en",
+      "before": "The result is [('B',1),('A',2),('C',2)]. A stable sort keeps A before C because their numbers match. Python's sorted is stable; key selects the number without adding the name as a tie-breaker.",
+      "after": "The result is [('B', 1), ('A', 2), ('C', 2)]. A stable sort keeps A before C because their numbers match. Python's sorted is stable; key selects the number without adding the name as a tie-breaker."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-92",
+      "field": "prompt",
+      "language": "he",
+      "before": "בערבוב Fisher–Yates של [A,B,C], מתחילים באינדקס 2 ומחליפים אותו עם אינדקס אקראי. האם לבחור מבין 0,1 בלבד, או מבין 0,1,2? בהמשך מטפלים רק באינדקסים 0 ו־1.",
+      "after": "בערבוב Fisher–Yates של [A, B, C], מתחילים באינדקס 2 ומחליפים אותו עם אינדקס אקראי. האם לבחור מבין 0, 1 בלבד, או מבין 0, 1, 2? בהמשך מטפלים רק באינדקסים 0 ו־1."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-92",
+      "field": "prompt",
+      "language": "en",
+      "before": "In Fisher–Yates shuffling of [A,B,C], first swap index 2 with a random index. Should the choices be just 0,1 or all of 0,1,2? Later steps touch only indices 0 and 1.",
+      "after": "In Fisher–Yates shuffling of [A, B, C], first swap index 2 with a random index. Should the choices be just 0, 1 or all of 0, 1, 2? Later steps touch only indices 0 and 1."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-92",
+      "field": "answer",
+      "language": "he",
+      "before": "בוחרים באופן אחיד מבין 0,1,2, כולל החלפה עצמית. בלי האפשרות 2, האיבר C מוכרח לעזוב את המקום האחרון ולא יוכל לחזור אליו; לכן חלק מהסידורים אינם אפשריים. בכל שלב i בוחרים באופן אחיד ועצמאי מתוך 0 עד i, כולל i.",
+      "after": "בוחרים באופן אחיד מבין 0, 1, 2, כולל החלפה עצמית. בלי האפשרות 2, האיבר C מוכרח לעזוב את המקום האחרון ולא יוכל לחזור אליו; לכן חלק מהסידורים אינם אפשריים. בכל שלב i בוחרים באופן אחיד ועצמאי מתוך 0 עד i, כולל i."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-92",
+      "field": "answer",
+      "language": "en",
+      "before": "Choose uniformly from 0,1,2, including a self-swap. Excluding 2 forces C out of the final position, with no later chance to return, making some permutations impossible. At each step i, choose uniformly and independently from 0 through i inclusive.",
+      "after": "Choose uniformly from 0, 1, 2, including a self-swap. Excluding 2 forces C out of the final position, with no later chance to return, making some permutations impossible. At each step i, choose uniformly and independently from 0 through i inclusive."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-96",
+      "field": "answer",
+      "language": "he",
+      "before": "מחשבים פעם אחת את סכום החלון הראשון. בכל הזזה מחסרים את האיבר שיצא ומוסיפים את האיבר שנכנס. למשל, ברשימה [2,5,1] וב־k=2 מתקבלים 7 ואז 7−2+1=6. גם ערכים שליליים מותרים.",
+      "after": "מחשבים פעם אחת את סכום החלון הראשון. בכל הזזה מחסרים את האיבר שיצא ומוסיפים את האיבר שנכנס. למשל, ברשימה [2, 5, 1] וב־k=2 מתקבלים 7 ואז 7−2+1=6. גם ערכים שליליים מותרים."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-96",
+      "field": "answer",
+      "language": "en",
+      "before": "Sum the first window once. Each move subtracts the departing item and adds the arriving item. For [2,5,1] with k=2, the sums are 7 and then 7−2+1=6. Negative values also work.",
+      "after": "Sum the first window once. Each move subtracts the departing item and adds the arriving item. For [2, 5, 1] with k=2, the sums are 7 and then 7−2+1=6. Negative values also work."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-100",
+      "field": "prompt",
+      "language": "he",
+      "before": "כתבו פונקציה שמסכמת את השלמים מ־1 עד n כולל n, עבור n שלם לא שלילי. עבור n=0 התוצאה 0. האם range(1,n) כולל את כל האיברים הדרושים?",
+      "after": "כתבו פונקציה שמסכמת את השלמים מ־1 עד n כולל n, עבור n שלם לא שלילי. עבור n=0 התוצאה 0. האם range(1, n) כולל את כל האיברים הדרושים?"
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-100",
+      "field": "prompt",
+      "language": "en",
+      "before": "Sum the integers from 1 through n inclusive, where n is a nonnegative integer. For n=0 return 0. Does range(1,n) include every required item?",
+      "after": "Sum the integers from 1 through n inclusive, where n is a nonnegative integer. For n=0 return 0. Does range(1, n) include every required item?"
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-100",
+      "field": "answer",
+      "language": "he",
+      "before": "לא: range אינו כולל את גבול העצירה. משתמשים ב־range(1,n+1), כך שהאיבר האחרון הוא n. כש־n=0 מתקבל טווח ריק, ו־sum שלו מחזיר 0.",
+      "after": "לא: range אינו כולל את גבול העצירה. משתמשים ב־range(1, n+1), כך שהאיבר האחרון הוא n. כש־n=0 מתקבל טווח ריק, ו־sum שלו מחזיר 0."
+    },
+    {
+      "file": "fundamentals-code-expansion.json",
+      "id": "quick-sw-100",
+      "field": "answer",
+      "language": "en",
+      "before": "No: range excludes its stopping boundary. Use range(1,n+1), making n the last item. When n=0, the range is empty and sum returns 0.",
+      "after": "No: range excludes its stopping boundary. Use range(1, n+1), making n the last item. When n=0, the range is empty and sum returns 0."
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-01",
+      "field": "prompt",
+      "language": "en",
+      "before": "A coin is in exactly one of boxes A, B, C. A says “not in A,” B says “in A,” and C says “not in B.” Exactly one statement is true. Where is the coin?",
+      "after": "A coin is in exactly one of boxes A, B, C. A says “not in A, ” B says “in A, ” and C says “not in B.” Exactly one statement is true. Where is the coin?"
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-39",
+      "field": "prompt",
+      "language": "he",
+      "before": "ברשימה [2,3,1,4] נתון מערך P=[0,2,5,6,10], שבו P[k] הוא סכום k האיברים הראשונים. מה סכום האיברים באינדקסים 1 עד 2 כולל, ואילו שני תאי P מספיקים? האינדקסים מתחילים ב־0.",
+      "after": "ברשימה [2, 3, 1, 4] נתון מערך P=[0, 2, 5, 6, 10], שבו P[k] הוא סכום k האיברים הראשונים. מה סכום האיברים באינדקסים 1 עד 2 כולל, ואילו שני תאי P מספיקים? האינדקסים מתחילים ב־0."
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-39",
+      "field": "prompt",
+      "language": "en",
+      "before": "For [2,3,1,4], P=[0,2,5,6,10] stores P[k], the sum of the first k items. What is the sum at indices 1 through 2 inclusive, and which two P entries suffice? Indices start at 0.",
+      "after": "For [2, 3, 1, 4], P=[0, 2, 5, 6, 10] stores P[k], the sum of the first k items. What is the sum at indices 1 through 2 inclusive, and which two P entries suffice? Indices start at 0."
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-54",
+      "field": "answer",
+      "language": "he",
+      "before": "ל־7 אי אפשר: בלי 5 נקבל רק 0,3,6 לפני שעוברים אותו; עם 5 נותר להוסיף 2, שאינו אפשרי. ל־8 אפשר להגיע באמצעות 3+5.",
+      "after": "ל־7 אי אפשר: בלי 5 נקבל רק 0, 3, 6 לפני שעוברים אותו; עם 5 נותר להוסיף 2, שאינו אפשרי. ל־8 אפשר להגיע באמצעות 3+5."
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-54",
+      "field": "answer",
+      "language": "en",
+      "before": "7 is impossible: without a 5, the only totals before passing it are 0,3,6; with a 5, the remaining 2 cannot be added. Reach 8 using 3+5.",
+      "after": "7 is impossible: without a 5, the only totals before passing it are 0, 3, 6; with a 5, the remaining 2 cannot be added. Reach 8 using 3+5."
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-56",
+      "field": "answer",
+      "language": "he",
+      "before": "1/2. התוצאות הזוגיות הן 2,4,6: שלוש מתוך שש תוצאות שוות הסתברות.",
+      "after": "1/2. התוצאות הזוגיות הן 2, 4, 6: שלוש מתוך שש תוצאות שוות הסתברות."
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-56",
+      "field": "answer",
+      "language": "en",
+      "before": "1/2. The even results are 2,4,6: three of six equally likely outcomes.",
+      "after": "1/2. The even results are 2, 4, 6: three of six equally likely outcomes."
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-59",
+      "field": "prompt",
+      "language": "he",
+      "before": "מישהו בדק את המספרים הראשוניים 3,5,7,11 והסיק שכל מספר ראשוני הוא אי־זוגי. איך מפריכים את הטענה בעזרת מספר אחד?",
+      "after": "מישהו בדק את המספרים הראשוניים 3, 5, 7, 11 והסיק שכל מספר ראשוני הוא אי־זוגי. איך מפריכים את הטענה בעזרת מספר אחד?"
+    },
+    {
+      "file": "fundamentals-code-logic.json",
+      "id": "quick-sw-59",
+      "field": "prompt",
+      "language": "en",
+      "before": "Someone checks the primes 3,5,7,11 and concludes that every prime is odd. How can one number disprove the claim?",
+      "after": "Someone checks the primes 3, 5, 7, 11 and concludes that every prime is odd. How can one number disprove the claim?"
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-101",
+      "field": "answer",
+      "language": "he",
+      "before": "עם ביטים במשקל 8. המחבר מקיים `A+B+C=S+2K`, ולכן `4(A+B+C)=4S+8K`. למשל שלושה אחדות מייצגים 12: סכום 1 במשקל 4 ונשא 1 במשקל 8. כדי לשמר את הערך, כניסות של מחבר רגיל באותו שלב צריכות להשתייך לאותו משקל.",
+      "after": "עם ביטים במשקל 8. המחבר מקיים `A+B+C=S+2K`, ולכן `4(A+B+C)=4S+8K`. למשל שלוש אחדות מייצגים 12: סכום 1 במשקל 4 ונשא 1 במשקל 8. כדי לשמר את הערך, כניסות של מחבר רגיל באותו שלב צריכות להשתייך לאותו משקל."
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-102",
+      "field": "answer",
+      "language": "he",
+      "before": "אם A=B=0, הנשיאה היא 0 בלי קשר ל־Cin. אם A=B=1, הנשיאה היא 1. אם A שונה מ־B, כבר יש בדיוק אחד אחד, ולכן Cin קובע אם הסכום מגיע ל־2. נגדיר `P=A XOR B`: אם P=1 בוחרים Cin, ואחרת בוחרים A.",
+      "after": "אם A=B=0, הנשיאה היא 0 בלי קשר ל־Cin. אם A=B=1, הנשיאה היא 1. אם A שונה מ־B, כבר יש בדיוק ביט אחד שערכו 1, ולכן Cin קובע אם הסכום מגיע ל־2. נגדיר `P=A XOR B`: אם P=1 בוחרים Cin, ואחרת בוחרים A."
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-102",
+      "field": "answer",
+      "language": "en",
+      "before": "If A=B=0, carry is 0 regardless of Cin. If A=B=1, carry is 1. If A differs from B, exactly one is already present, so Cin decides whether the total reaches 2. Set `P=A XOR B`: select Cin when P=1, otherwise select A.",
+      "after": "If A=B=0, carry is 0 regardless of Cin. If A=B=1, carry is 1. If A differs from B, exactly one of them is 1, so Cin decides whether the total reaches 2. Set `P=A XOR B`: select Cin when P=1, otherwise select A."
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-104",
+      "field": "answer",
+      "language": "he",
+      "before": "מתקבל XOR בארבעה שערים. עבור A,B בסדר 00,01,10,11 הפלט הוא 0,1,1,0. השער t משותף לשני הענפים; אין צורך לבנות אותו פעמיים. זהו מימוש לוגי, ללא טענה על תזמון פיזי או גליצ׳ים.",
+      "after": "מתקבל XOR בארבעה שערים. עבור A, B בסדר 00, 01, 10, 11 הפלט הוא 0, 1, 1, 0. השער t משותף לשני הענפים; אין צורך לבנות אותו פעמיים. זהו מימוש לוגי, ללא טענה על תזמון פיזי או גליצ׳ים."
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-104",
+      "field": "answer",
+      "language": "en",
+      "before": "This builds XOR with four gates. For A,B in order 00,01,10,11, the output is 0,1,1,0. The t gate feeds both branches and need not be built twice. This is a logical construction, with no claim about physical timing or glitches.",
+      "after": "This builds XOR with four gates. For A, B in order 00, 01, 10, 11, the output is 0, 1, 1, 0. The t gate feeds both branches and need not be built twice. This is a logical construction, with no claim about physical timing or glitches."
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-114",
+      "field": "prompt",
+      "language": "he",
+      "before": "גלאי מוציא 1 אם לפחות שלוש מתוך עשר הדגימות האחרונות הן 1. לפי החוזה, לפני ההתחלה ההיסטוריה מלאה באפסים. אחרי דגימות 1,1,1, האם כבר מותר לפלט להיות 1?",
+      "after": "גלאי מוציא 1 אם לפחות שלוש מתוך עשר הדגימות האחרונות הן 1. לפי החוזה, לפני ההתחלה ההיסטוריה מלאה באפסים. אחרי דגימות 1, 1, 1, האם כבר מותר לפלט להיות 1?"
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-114",
+      "field": "prompt",
+      "language": "en",
+      "before": "A detector outputs 1 when at least three of the last ten samples are 1. Its contract initializes pre-start history to zeros. After samples 1,1,1, may output already be 1?",
+      "after": "A detector outputs 1 when at least three of the last ten samples are 1. Its contract initializes pre-start history to zeros. After samples 1, 1, 1, may output already be 1?"
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-116",
+      "field": "prompt",
+      "language": "he",
+      "before": "הדרישה היא Y=1 כשיש לפחות שלוש אחדות בחלון. מימוש שגוי בודק count==3. בדיקות עם ספירות 0,2,3 עברו. איזו ספירה נוספת תגלה את השגיאה?",
+      "after": "הדרישה היא Y=1 כשיש לפחות שלוש אחדות בחלון. מימוש שגוי בודק count==3. בדיקות עם ספירות 0, 2, 3 עברו. איזו ספירה נוספת תגלה את השגיאה?"
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-116",
+      "field": "prompt",
+      "language": "en",
+      "before": "Y must be 1 for at least three ones in a window. A faulty implementation uses count==3. Tests at counts 0,2,3 passed. What additional count reveals the error?",
+      "after": "Y must be 1 for at least three ones in a window. A faulty implementation uses count==3. Tests at counts 0, 2, 3 passed. What additional count reveals the error?"
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-117",
+      "field": "prompt",
+      "language": "he",
+      "before": "רוצים לפחות שלוש אחדות בכל חלון נע של עשר דגימות. מימוש מאפס את הספירה אחרי דגימות 10,20,30. בדגימות 9,10,11 יש 1 ובכל האחרות 0. מה צריך להיות הפלט בדגימה 11?",
+      "after": "רוצים לפחות שלוש אחדות בכל חלון נע של עשר דגימות. מימוש מאפס את הספירה אחרי דגימות 10, 20, 30. בדגימות 9, 10, 11 יש 1 ובכל האחרות 0. מה צריך להיות הפלט בדגימה 11?"
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-117",
+      "field": "prompt",
+      "language": "en",
+      "before": "Detect at least three ones in each sliding ten-sample window. An implementation clears its count after samples 10,20,30. Samples 9,10,11 are 1 and all others 0. What should output be at sample 11?",
+      "after": "Detect at least three ones in each sliding ten-sample window. An implementation clears its count after samples 10, 20, 30. Samples 9, 10, 11 are 1 and all others 0. What should output be at sample 11?"
+    },
+    {
+      "file": "fundamentals-hardware-250.json",
+      "id": "quick-hw-119",
+      "field": "answer",
+      "language": "he",
+      "before": "לא. גם כתובות שמשתפות תא יקראו 1, כי כולן קיבלו אותו ערך. כדי לחשוף חפיפה צריך ליצור ביניהן הבדל: למשל לכתוב לכתובת אחת 0 ולאחרת 1, ואז לבדוק שלא דרסו זו את זו. מיפוי הקריאה והכתיבה מניחים יציב.",
+      "after": "לא. גם כתובות שמשתפות תא יקראו 1, כי כולן קיבלו אותו ערך. כדי לחשוף חפיפה צריך ליצור ביניהן הבדל: למשל לכתוב לכתובת אחת 0 ולאחרת 1, ואז לבדוק שלא דרסו זו את זו. מניחים שמיפוי הקריאה והכתיבה יציב."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-126",
+      "field": "prompt",
+      "language": "he",
+      "before": "נמדדה קבועת זמן tau=2 ms. איזה C ב־µF מתאים אם R=1kΩ? R אינו ידוע מהעקומה לבדה.",
+      "after": "נמדד קבוע זמן tau=2 ms. איזה C ב־µF מתאים אם R=1kΩ? R אינו ידוע מהעקומה לבדה."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-130",
+      "field": "answer",
+      "language": "en",
+      "before": "6. The model permits overshoot:add the same step to C. Physical protection may limit it and change capacitor history.",
+      "after": "6. The model permits overshoot: add the same step to C. Physical protection may limit it and change capacitor history."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-133",
+      "field": "answer",
+      "language": "he",
+      "before": "זיהום קבוע של החומר. השתלת מזהמים יוצרת אזור חומר מסומם; מתח שער יוצר שכבת היפוך הפיכה ואינו מחליף את הרכב המזהמים.",
+      "after": "סימום קבוע של החומר. השתלת מזהמים יוצרת אזור חומר מסומם; מתח שער יוצר שכבת היפוך הפיכה ואינו מחליף את הרכב המזהמים."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-138",
+      "field": "answer",
+      "language": "en",
+      "before": "0.5. Both conducting paths create current without switching:I=VDD/(Rup+Rdown). This resistance illustration is not an exact MOS model.",
+      "after": "0.5. Both conducting paths create current without switching: I=VDD/(Rup+Rdown). This resistance illustration is not an exact MOS model."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-140",
+      "field": "prompt",
+      "language": "he",
+      "before": "ב־LC אידאלי, V0=2V, C=1F, L=1H וזרם התחלתי 0. ברבע מחזור ראשון מתח הקבל 0. מהו זרם הסליל החיובי כלפי מטה?",
+      "after": "ב־LC אידאלי, V0=2V, C=1F, L=1H וזרם התחלתי 0. ברבע מחזור ראשון מתח הקבל 0. מהו זרם הסליל, כשהכיוון החיובי מוגדר כלפי מטה?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-141",
+      "field": "answer",
+      "language": "en",
+      "before": "-1. vC=V0 cos(ωt). At half a period cos(π)=−1:energy is back in the capacitor with reversed polarity.",
+      "after": "-1. vC=V0 cos(ωt). At half a period cos(π)=−1: energy is back in the capacitor with reversed polarity."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-143",
+      "field": "prompt",
+      "language": "he",
+      "before": "מודל באפר:Rs=10, Cin=1, Rb=1, CL=20, tb=2, ביחידות עקביות. מה אומדן ההשהיה ln(2)(RsCin+RbCL)+tb?",
+      "after": "מודל באפר: Rs=10, Cin=1, Rb=1, CL=20, tb=2, ביחידות עקביות. מה אומדן ההשהיה ln(2)(RsCin+RbCL)+tb?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-143",
+      "field": "prompt",
+      "language": "en",
+      "before": "Buffer model:Rs=10, Cin=1, Rb=1, CL=20, tb=2, in consistent units. What is ln(2)(RsCin+RbCL)+tb?",
+      "after": "Buffer model: Rs=10, Cin=1, Rb=1, CL=20, tb=2, in consistent units. What is ln(2)(RsCin+RbCL)+tb?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-145",
+      "field": "prompt",
+      "language": "he",
+      "before": "לד טורי:Vs=5V, Vf=2V, נפילת דרייבר Vd=0V וזרם רצוי 3 mA. איזה נגד ב־kΩ נותן המודל האידאלי?",
+      "after": "לד טורי: Vs=5V, Vf=2V, נפילת דרייבר Vd=0V וזרם רצוי 3 mA. איזה נגד ב־kΩ נותן המודל האידאלי?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-145",
+      "field": "prompt",
+      "language": "en",
+      "before": "Series LED:Vs=5V, Vf=2V, driver drop Vd=0V, target current 3 mA. What resistor in kΩ follows the ideal model?",
+      "after": "Series LED: Vs=5V, Vf=2V, driver drop Vd=0V, target current 3 mA. What resistor in kΩ follows the ideal model?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-152",
+      "field": "prompt",
+      "language": "he",
+      "before": "להערכת חפיפה בלבד, מעבר הקורבן פעיל ב־[1, 4]ns ומעבר השכן ב־[2, 5]ns. כמה ns חופפים? אין כאן חישוב delay פיזי.",
+      "after": "להערכת חפיפה בלבד, מעבר הקורבן פעיל ב־[1, 4] ns ומעבר השכן ב־[2, 5] ns. כמה ns חופפים? אין כאן חישוב delay פיזי."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-152",
+      "field": "prompt",
+      "language": "en",
+      "before": "For overlap accounting only, the victim transition spans[1, 4]ns and the aggressor spans[2, 5]ns. How many ns overlap? This is not physical delay.",
+      "after": "For overlap accounting only, the victim transition spans [1, 4] ns and the aggressor spans [2, 5] ns. How many ns overlap? This is not physical delay."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-153",
+      "field": "prompt",
+      "language": "he",
+      "before": "במודל מעבר נגדי, Ceff=Cg+2 Cc. לפני מגן:Cg=2, Cc=2; אחריו:Cg=3, Cc=0.5. מה השינוי Ceff_after−Ceff_before?",
+      "after": "במודל מעבר נגדי, Ceff=Cg+2 Cc. לפני מגן: Cg=2, Cc=2; אחריו: Cg=3, Cc=0.5. מה השינוי Ceff_after−Ceff_before?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-153",
+      "field": "prompt",
+      "language": "en",
+      "before": "For opposite ramps, Ceff=Cg+2 Cc. Before shielding:Cg=2, Cc=2; afterward:Cg=3, Cc=0.5. What is Ceff_after−Ceff_before?",
+      "after": "For opposite ramps, Ceff=Cg+2 Cc. Before shielding: Cg=2, Cc=2; afterward: Cg=3, Cc=0.5. What is Ceff_after−Ceff_before?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-154",
+      "field": "prompt",
+      "language": "he",
+      "before": "דוגמים x(t)=sin(2π·1t+φ), ב־fs=2·1 וב־φ=0π. מה ארבע הדגימות עבור n=0, 1, 2, 3?",
+      "after": "דוגמים x(t)=sin(2π·1t+φ), ב־fs=2·1 וב־φ=0π. מהן ארבע הדגימות עבור n=0, 1, 2, 3?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-155",
+      "field": "prompt",
+      "language": "he",
+      "before": "קוסינוס בתדר 18 kHz נדגם ב־fs=20 kHz. מה תדר ה־alias החיובי בתחום 0..fs/2? נניח דגימה אחידה אידאלית.",
+      "after": "קוסינוס בתדר 18 kHz נדגם ב־fs=20 kHz. מה תדר ה־alias הלא־שלילי בתחום 0..fs/2? נניח דגימה אחידה אידאלית."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-156",
+      "field": "prompt",
+      "language": "he",
+      "before": "לפס ממשי חיובי(90, 110), ובחירת m=5>1, מה גבולות חלון fs:2 fh/m < fs < 2 fl/(m−1)? הגבולות עצמם אינם כלולים.",
+      "after": "לפס ממשי חיובי (90, 110), ובחירת m=5>1, מה גבולות חלון fs: 2 fh/m < fs < 2 fl/(m−1)? הגבולות עצמם אינם כלולים."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-156",
+      "field": "prompt",
+      "language": "en",
+      "before": "For positive real band(90, 110) and m=5>1, what are the bounds of 2 fh/m < fs < 2 fl/(m−1)? Endpoints are excluded.",
+      "after": "For positive real band (90, 110) and m=5>1, what are the bounds of 2 fh/m < fs < 2 fl/(m−1)? Endpoints are excluded."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-157",
+      "field": "prompt",
+      "language": "he",
+      "before": "החוזה דורש חלון פתוח לפס(90, 110), m=5:2 fh/m < fs < 2 fl/(m−1). האם fs=44.5 נמצא בתוכו?",
+      "after": "החוזה דורש חלון פתוח לפס (90, 110), m=5: 2 fh/m < fs < 2 fl/(m−1). האם fs=44.5 נמצא בתוכו?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-157",
+      "field": "prompt",
+      "language": "en",
+      "before": "The contract requires the open interval for band(90, 110), m=5:2 fh/m < fs < 2 fl/(m−1). Is fs=44.5 inside?",
+      "after": "The contract requires the open interval for band (90, 110), m=5: 2 fh/m < fs < 2 fl/(m−1). Is fs=44.5 inside?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-157",
+      "field": "answer",
+      "language": "he",
+      "before": "בתוך החלון הפתוח שנבחר. בודקים את שתי אי־השוויונות בקפדנות. שוויון אינו עונה לחוזה הפתוח; בפס סגור טוני קצה עלולים להיות בלתי נבדלים.",
+      "after": "בתוך החלון הפתוח שנבחר. בודקים את שני אי־השוויונות בקפדנות. שוויון אינו עונה לחוזה הפתוח; בפס סגור טוני קצה עלולים להיות בלתי נבדלים."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-158",
+      "field": "prompt",
+      "language": "en",
+      "before": "An 8-data-bit word stores one parity bit. Parity is wrong and exactly one data bit flipped. How many fault positions remain compatible with parity alone?",
+      "after": "A word containing 8 data bits stores one parity bit. Parity is wrong and exactly one data bit flipped. How many fault positions remain compatible with parity alone?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-159",
+      "field": "prompt",
+      "language": "he",
+      "before": "ל־8 ביטי מידע נדרשת תיקון תקלה יחידה בכל המילה, כולל ביטי הבדיקה. מה r המינימלי המקיים 2^r≥1+8+r?",
+      "after": "ל־8 ביטי מידע נדרש תיקון תקלה יחידה בכל המילה, כולל ביטי הבדיקה. מה r המינימלי המקיים 2^r≥1+8+r?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-161",
+      "field": "prompt",
+      "language": "he",
+      "before": "ב־SECDED, לכל היותר 2 תקלות. סינדרום S=0, וזוגיות כוללת שגויה P=0. מה האבחנה? S מתייחס למילת Hamming ללא הביט הכולל.",
+      "after": "ב־SECDED, לכל היותר 2 תקלות. סינדרום S=0, ודגל שגיאת הזוגיות הכוללת הוא P=0. מה האבחנה? S מתייחס למילת Hamming ללא הביט הכולל."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-161",
+      "field": "prompt",
+      "language": "en",
+      "before": "In SECDED, at most 2 faults:syndrome S=0, bad overall parity P=0. What is the diagnosis? S excludes the overall parity bit.",
+      "after": "In SECDED, at most 2 faults: syndrome S=0, overall parity-error flag P=0. What is the diagnosis? S excludes the overall parity bit."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-162",
+      "field": "answer",
+      "language": "he",
+      "before": "ללא שגיאה תחת הבטחת יחיד. 0 מציין ללא שגיאה תחת ההבטחה, 1..12 מאפשרים תיקון.13..15 אינם מיקומי מילה ולכן מצביעים על מצב מחוץ למודל.",
+      "after": "ללא שגיאה תחת הבטחת יחיד. 0 מציין ללא שגיאה תחת ההבטחה, 1..12 מאפשרים תיקון. 13..15 אינם מיקומי מילה ולכן מצביעים על מצב מחוץ למודל."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-162",
+      "field": "answer",
+      "language": "en",
+      "before": "No error under the single-error promise. 0 means no error under the promise; 1..12 locate a correction.13..15 are not stored positions and must be rejected as outside the model.",
+      "after": "No error under the single-error promise. 0 means no error under the promise; 1..12 locate a correction. 13..15 are not stored positions and must be rejected as outside the model."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-166",
+      "field": "prompt",
+      "language": "he",
+      "before": "במצב ISSUE:פקודה accepted=1, והשלמה תואמת done=1 באותה חזית. החוזה מתיר זאת. לאיזה מצב עוברים? accepted=0 מחייב done=0.",
+      "after": "במצב ISSUE: פקודה accepted=1, והשלמה תואמת done=1 באותה חזית. החוזה מתיר זאת. לאיזה מצב עוברים? accepted=0 מחייב done=0."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-166",
+      "field": "answer",
+      "language": "he",
+      "before": "RESP: לשמור תגובה. כשקבלה והשלמה חופפות שומרים תגובה ונכנסים RESP. מעבר עיוור ל־WAIT עלול להחמיץ את האירוע היחיד.",
+      "after": "RESP: לשמור תגובה. כשקבלה והשלמה חופפות שומרים תגובה ונכנסים ל־RESP. מעבר עיוור ל־WAIT עלול להחמיץ את האירוע היחיד."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-167",
+      "field": "prompt",
+      "language": "en",
+      "before": "READ and WRITE request continuously. Round-robin accepts 4 requests, starting withR. Each operation and response completes before the next arbitration. What is the acceptance order?",
+      "after": "READ and WRITE request continuously. Round-robin accepts 4 requests, starting with R. Each operation and response completes before the next arbitration. What is the acceptance order?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-168",
+      "field": "prompt",
+      "language": "he",
+      "before": "בקר מסוריאל אינו מקבל פעולה נוספת עד שתגובת הקודמת נצרכת בחזית 3. הוא חוזר ל־IDLE אחריה. באיזו חזית מוקדמת אפשר לקבל בקשה חדשה?",
+      "after": "בקר שמבצע פעולות בזו אחר זו אינו מקבל פעולה נוספת עד שתגובת הקודמת נצרכת בחזית 3. הוא חוזר ל־IDLE אחריה. באיזו חזית מוקדמת אפשר לקבל בקשה חדשה?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-172",
+      "field": "prompt",
+      "language": "en",
+      "before": "A component holds n=0 and s=n². What must be added to s to obtain(n+1)² without multiplication?",
+      "after": "A component holds n=0 and s=n². What must be added to s to obtain (n+1)² without multiplication?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-172",
+      "field": "answer",
+      "language": "en",
+      "before": "1. The identity(n+1)²=n²+2n+1 gives the odd increment 2n+1. Appending 1 to n in binary encodes that value.",
+      "after": "1. The identity (n+1)²=n²+2n+1 gives the odd increment 2n+1. Appending 1 to n in binary encodes that value."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-175",
+      "field": "prompt",
+      "language": "he",
+      "before": "בהחלפה על אוגרים נפרדים, X=3, Y=5. מבצעים X←X XOR Y, אחר כך Y←X XOR Y, אחר כך X←X XOR Y, בחזיתות נפרדות. מה X, Y אחרי 1 חזיתות?",
+      "after": "בהחלפה על אוגרים נפרדים, X=3, Y=5. מבצעים X←X XOR Y, אחר כך Y←X XOR Y, אחר כך X←X XOR Y, בחזיתות נפרדות. מה X, Y לאחר מספר חזיתות השווה ל־1?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-175",
+      "field": "prompt",
+      "language": "en",
+      "before": "With separate registers, X=3, Y=5, perform X←X XOR Y, then Y←X XOR Y, then X←X XOR Y on separate edges. What is X, Y after 1 edges?",
+      "after": "With separate registers, X=3, Y=5, perform X←X XOR Y, then Y←X XOR Y, then X←X XOR Y on separate edges. What is X, Y after a total of 1 clock edge?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-177",
+      "field": "prompt",
+      "language": "he",
+      "before": "מונה 4 ביטים ו־FF גבוה יוצרים מונה modulo 32. לפני החזית המורחב הוא 15; הגבוה מתהפך כשהנמוך הישן 15. מה הערך אחרי 1 חזיתות?",
+      "after": "מונה 4 ביטים ו־FF גבוה יוצרים מונה modulo 32. לפני החזית המורחב הוא 15; הגבוה מתהפך כשהנמוך הישן 15. מה הערך לאחר מספר חזיתות השווה ל־1?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-177",
+      "field": "prompt",
+      "language": "en",
+      "before": "A 4-bit counter and high FF form modulo 32. The initial extended count is 15; high toggles when old low=15. What follows 1 edges?",
+      "after": "A 4-bit counter and high FF form modulo 32. The initial extended count is 15; high toggles when old low=15. What is the value after a total of 1 clock edge?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-178",
+      "field": "prompt",
+      "language": "he",
+      "before": "משווים מילים לא מסומנות בנות 4 ביטים:A=8, B=7. הביטים הנמוכים אינם רשאים לגבור על הבדל גבוה יותר. מה היחס?",
+      "after": "משווים מילים ללא סימן בנות 4 ביטים: A=8, B=7. הביטים הנמוכים אינם רשאים לגבור על הבדל גבוה יותר. מה היחס?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-183",
+      "field": "prompt",
+      "language": "en",
+      "before": "Compute exact 13x as(x<<3)+(x<<2)+x. For x=0, what is the result? Fixed shifts may be wiring.",
+      "after": "Compute exact 13x as (x<<3)+(x<<2)+x. For x=0, what is the result? Fixed shifts may be wiring."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-185",
+      "field": "prompt",
+      "language": "he",
+      "before": "התבנית בת 2 הביטים היא הערך העשרוני 3, ומפורשת במשלים לשתיים. מה הריבוע המתמטי המדויק שלה? זהו פירוש חתום, לא unsigned.",
+      "after": "התבנית בת 2 הביטים היא הערך העשרוני 3, ומפורשת במשלים לשתיים. מה הריבוע המתמטי המדויק שלה? זהו פירוש מסומן, לא unsigned."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-187",
+      "field": "answer",
+      "language": "he",
+      "before": "ZO. ביט ראשון יוצר רצף באורך 1:אפס עובר ל־ZO ואחד ל־OO. הרצף המדומה באורך 0 אינו מדווח כשגיאה.",
+      "after": "ZO. ביט ראשון יוצר רצף באורך 1: אפס עובר ל־ZO ואחד ל־OO. הרצף המדומה באורך 0 אינו מדווח כשגיאה."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-187",
+      "field": "answer",
+      "language": "en",
+      "before": "ZO. The first bit starts a length 1 run:zero enters ZO, one enters OO. The virtual length 0 history causes no error.",
+      "after": "ZO. The first bit starts a length 1 run: zero enters ZO, one enters OO. The virtual length 0 history causes no error."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-190",
+      "field": "prompt",
+      "language": "he",
+      "before": "אוגר זוכה מתחיל ריק. בכל צעד מגיע לכל היותר מסיים אחד; - פירושו אין מסיים. הרצף הוא-, A, B. מי צריך להישאר שמור?",
+      "after": "אוגר זוכה מתחיל ריק. בכל צעד מגיע לכל היותר מסיים אחד; - פירושו אין מסיים. הרצף הוא -, A, B. מי צריך להישאר שמור?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-190",
+      "field": "prompt",
+      "language": "en",
+      "before": "A winner register starts empty. At most one finisher arrives per step; - means none. The sequence is-, A, B. Who must remain stored?",
+      "after": "A winner register starts empty. At most one finisher arrives per step; - means none. The sequence is -, A, B. Who must remain stored?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-192",
+      "field": "prompt",
+      "language": "en",
+      "before": "Two ordered sensors, one person, no missed samples:trace 00, 10, 00 ends on the starting side. What is the net occupancy change?",
+      "after": "Two ordered sensors, one person, no missed samples: trace 00, 10, 00 ends on the starting side. What is the net occupancy change?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-198",
+      "field": "prompt",
+      "language": "he",
+      "before": "שני בלוקים שווי אורך הם[1, 9] ו־[2, 8]. פעולת compare-split ממיינת את האיחוד ומחזירה לבלוק הראשון את החצי הנמוך. מה נשאר בו?",
+      "after": "שני בלוקים שווי אורך הם [1, 9] ו־[2, 8]. פעולת compare-split ממיינת את האיחוד ומחזירה לבלוק הראשון את החצי הנמוך. מה נשאר בו?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-198",
+      "field": "prompt",
+      "language": "en",
+      "before": "Equal-length blocks are[1, 9]and[2, 8]. Compare-split sorts their union and returns the lower half to the first block. What remains there?",
+      "after": "Equal-length blocks are [1, 9] and [2, 8]. Compare-split sorts their union and returns the lower half to the first block. What remains there?"
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-200",
+      "field": "prompt",
+      "language": "he",
+      "before": "מרפדים רשימת אמת[1, 200] בערך sentinel=100, ממיינים ועורכים חיתוך לאורך המקורי. מה הפלט בפועל? אין תג שמבדיל ריפוד מנתון.",
+      "after": "מרפדים רשימת נתונים [1, 200] בערך sentinel=100, ממיינים ועורכים חיתוך לאורך המקורי. מה הפלט בפועל? אין תג שמבדיל ריפוד מנתון."
+    },
+    {
+      "file": "fundamentals-hardware-400.json",
+      "id": "quick-hw-200",
+      "field": "prompt",
+      "language": "en",
+      "before": "Pad real data[1, 200]with sentinel=100, sort, and keep the original length. What output actually remains? No tag separates padding from real data.",
+      "after": "Pad real data [1, 200] with sentinel=100, sort, and keep the original length. What output actually remains? No tag separates padding from real data."
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-201",
+      "field": "prompt",
+      "language": "he",
+      "before": "מסובבים את המילה הבלתי מסומנת 1001 ברוחב 4 ימינה ב־1 מקומות, באופן מעגלי. מה ערך הפלט העשרוני?",
+      "after": "מסובבים את המילה ללא סימן 1001 ברוחב 4 ימינה במספר מקומות השווה ל־1, באופן מעגלי. מה ערך הפלט העשרוני?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-201",
+      "field": "prompt",
+      "language": "en",
+      "before": "Rotate unsigned 1001, width 4, right by 1 positions cyclically. What is the decimal output?",
+      "after": "Rotate unsigned 1001, width 4, right by 1 position cyclically. What is the decimal output?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-203",
+      "field": "prompt",
+      "language": "he",
+      "before": "מסובב מעגלי ברוחב 4, חזקה של 2, בנוי בשלבי סיבוב מותנה 1,2 וכן הלאה עד 2. בכל שלב MUX של ביט אחד לכל ביט. כמה רכיבי MUX 2:1 יש בסך הכול?",
+      "after": "מסובב מעגלי ברוחב 4, חזקה של 2, בנוי בשלבי סיבוב מותנה 1, 2 וכן הלאה עד 2. בכל שלב MUX של ביט אחד לכל ביט. כמה רכיבי MUX 2:1 יש בסך הכול?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-203",
+      "field": "prompt",
+      "language": "en",
+      "before": "A width-4 cyclic rotator, a power of 2, uses conditional rotation stages 1,2 and so on through 2. Each stage has one single-bit MUX per bit. How many 2:1 MUXes are used in total?",
+      "after": "A width-4 cyclic rotator, a power of 2, uses conditional rotation stages 1, 2 and so on through 2. Each stage has one single-bit MUX per bit. How many 2:1 MUXes are used in total?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-206",
+      "field": "title",
+      "language": "he",
+      "before": "מי סיבית הבחירה הגבוהה",
+      "after": "מהי סיבית הבחירה הגבוהה?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-206",
+      "field": "title",
+      "language": "en",
+      "before": "Which select bit is high-order",
+      "after": "Which select bit is high-order?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-207",
+      "field": "prompt",
+      "language": "he",
+      "before": "MUX 4:1 אידאלי ללא השהיה מחזיק D0..D3=[0,1,1,0]. הבחירה משתנה מ־00 ל־11: S0 עולה בזמן 1 ns ו־S1 בזמן 4 ns. לכמה ns הפלט יהיה 1 בין שני מצבי הקצה?",
+      "after": "MUX 4:1 אידאלי ללא השהיה מחזיק D0..D3=[0, 1, 1, 0]. הבחירה משתנה מ־00 ל־11: S0 עולה בזמן 1 ns ו־S1 בזמן 4 ns. לכמה ns הפלט יהיה 1 בין שני מצבי הקצה?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-207",
+      "field": "prompt",
+      "language": "en",
+      "before": "An ideal zero-delay 4:1 MUX holds D0..D3=[0,1,1,0]. Selection changes from 00 to 11: S0 rises at 1 ns and S1 at 4 ns. For how many ns is output 1 between the endpoint states?",
+      "after": "An ideal zero-delay 4:1 MUX holds D0..D3=[0, 1, 1, 0]. Selection changes from 00 to 11: S0 rises at 1 ns and S1 at 4 ns. For how many ns is output 1 between the endpoint states?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-208",
+      "field": "prompt",
+      "language": "he",
+      "before": "במודל סף למהפך CMOS, VDD=4 V ומתח שני השערים 0 V. ספי ההולכה הם Vtn=1 V ו־|Vtp|=1 V. הולכה דורשת מתח שער־מקור שעובר ממש את הסף המתאים. מה [PMOS מוליך,NMOS מוליך], בביטי 0/1?",
+      "after": "במודל סף למהפך CMOS, VDD=4 V ומתח שני השערים 0 V. ספי ההולכה הם Vtn=1 V ו־|Vtp|=1 V. הולכה דורשת מתח שער־מקור שעובר ממש את הסף המתאים. מה [PMOS מוליך, NMOS מוליך], בביטי 0/1?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-208",
+      "field": "prompt",
+      "language": "en",
+      "before": "In a CMOS inverter threshold model, VDD=4 V and both gates are at 0 V. Thresholds are Vtn=1 V and |Vtp|=1 V. Conduction requires gate-source magnitude strictly beyond the relevant threshold. What is [PMOS on,NMOS on] as 0/1 bits?",
+      "after": "In a CMOS inverter threshold model, VDD=4 V and both gates are at 0 V. Thresholds are Vtn=1 V and |Vtp|=1 V. Conduction requires gate-source magnitude strictly beyond the relevant threshold. What is [PMOS on, NMOS on] as 0/1 bits?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-220",
+      "field": "prompt",
+      "language": "he",
+      "before": "גלאי חופף 0101 מקבל מדגמי [Valid,ביט]: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. במחזור לא תקף המצב מוחזק והפלט 0. באילו מחזורי שעון פיזיים, ממוספרים מ־1, יופק פולס? המצב בתחילה ריק.",
+      "after": "גלאי חופף 0101 מקבל מדגמי [Valid, ביט]: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. במחזור לא תקף המצב מוחזק והפלט 0. באילו מחזורי שעון פיזיים, ממוספרים מ־1, יופק פולס? המצב בתחילה ריק."
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-220",
+      "field": "prompt",
+      "language": "en",
+      "before": "An overlapping 0101 detector receives [Valid,bit] samples: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. On invalid cycles state holds and output is 0. At which physical clock cycles, numbered from 1, does a pulse occur? Start with empty history.",
+      "after": "An overlapping 0101 detector receives [Valid, bit] samples: [[1, 0], [0, 1], [1, 1], [1, 0], [1, 1]]. On invalid cycles state holds and output is 0. At which physical clock cycles, numbered from 1, does a pulse occur? Start with empty history."
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-222",
+      "field": "prompt",
+      "language": "he",
+      "before": "מונה רצף התאמות מתחיל ב־0, מול ערך שמור 5. מדגמים [Valid,נתון] הם [[1, 5], [0, 2], [1, 5]]. אי־התאמה תקפה מאפסת; Valid=0 מקפיא. מה המונה בסוף?",
+      "after": "מונה רצף התאמות מתחיל ב־0, מול ערך שמור 5. מדגמים [Valid, נתון] הם [[1, 5], [0, 2], [1, 5]]. אי־התאמה תקפה מאפסת; Valid=0 מקפיא. מה המונה בסוף?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-222",
+      "field": "prompt",
+      "language": "en",
+      "before": "A matching-streak counter starts at 0 with reference 5. Samples [Valid,data] are [[1, 5], [0, 2], [1, 5]]. A valid mismatch resets; Valid=0 holds. What is the final count?",
+      "after": "A matching-streak counter starts at 0 with reference 5. Samples [Valid, data] are [[1, 5], [0, 2], [1, 5]]. A valid mismatch resets; Valid=0 holds. What is the final count?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-223",
+      "field": "prompt",
+      "language": "he",
+      "before": "שני ערכים שמורים הם [5, 5]. מדגמים [Valid,נתון] הם [[1, 5], [1, 2]]. משווים לשניהם במקביל, ומקבלים הצלחה אם לפחות השוואה אחת שווה. כמה הצלחות תקפות יש?",
+      "after": "שני ערכים שמורים הם [5, 5]. מדגמים [Valid, נתון] הם [[1, 5], [1, 2]]. משווים לשניהם במקביל, ומקבלים הצלחה אם לפחות השוואה אחת שווה. כמה הצלחות תקפות יש?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-223",
+      "field": "prompt",
+      "language": "en",
+      "before": "Two stored references are [5, 5]. Samples [Valid,data] are [[1, 5], [1, 2]]. Compare both in parallel and accept a match if either equals the sample. How many valid matches occur?",
+      "after": "Two stored references are [5, 5]. Samples [Valid, data] are [[1, 5], [1, 2]]. Compare both in parallel and accept a match if either equals the sample. How many valid matches occur?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-228",
+      "field": "prompt",
+      "language": "he",
+      "before": "רק החבילות שהושלמו נכללות בממוצע. זוגות [כניסה,יציאה] שלהן הם [[0, 4], [1, 7]]. מה זמן השהייה הממוצע? חבילות פעילות אינן כלולות. התוצאה שלמה.",
+      "after": "רק החבילות שהושלמו נכללות בממוצע. זוגות [כניסה, יציאה] שלהן הם [[0, 4], [1, 7]]. מה זמן השהייה הממוצע? חבילות פעילות אינן כלולות. התוצאה שלמה."
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-228",
+      "field": "prompt",
+      "language": "en",
+      "before": "Only completed packets enter this mean. Their [arrival,departure] pairs are [[0, 4], [1, 7]]. What is mean residence time? Active packets are excluded. The result is an integer.",
+      "after": "Only completed packets enter this mean. Their [arrival, departure] pairs are [[0, 4], [1, 7]]. What is mean residence time? Active packets are excluded. The result is an integer."
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-231",
+      "field": "prompt",
+      "language": "he",
+      "before": "בזיכרון סינכרוני read_data הישן הוא 3. כש־re_en=0 היציאה מחזיקה ערך ו־Valid=0; כש־re_en=1 נלכד 7 ו־Valid=1. כעת re_en=0. מה [read_data,Valid] אחרי החזית?",
+      "after": "בזיכרון סינכרוני read_data הישן הוא 3. כש־re_en=0 היציאה מחזיקה ערך ו־Valid=0; כש־re_en=1 נלכד 7 ו־Valid=1. כעת re_en=0. מה [read_data, Valid] אחרי החזית?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-231",
+      "field": "prompt",
+      "language": "en",
+      "before": "A synchronous memory's old read_data is 3. With re_en=0 it holds data and sets Valid=0; with re_en=1 it captures 7 and sets Valid=1. Now re_en=0. What is [read_data,Valid] after the edge?",
+      "after": "A synchronous memory's old read_data is 3. With re_en=0 it holds data and sets Valid=0; with re_en=1 it captures 7 and sets Valid=1. Now re_en=0. What is [read_data, Valid] after the edge?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-233",
+      "field": "prompt",
+      "language": "en",
+      "before": "Build four memory words, each 8 bits wide, plus 1 word-wide output registers. Ignore Valid and control. How many data-storage FFs are required?",
+      "after": "Build four memory words, each 8 bits wide, plus 1 word-wide output register. Ignore Valid and control. How many data-storage FFs are required?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-236",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחבר carry-select מחבר A=3 ו־B=1, כל אחד 4 ביטים. מחלקים לשתי קבוצות של 2 ביטים, עם carry-in כללי אפס. הקבוצה הגבוהה מחשבת מראש עם נשא 0 ועם 1. מה [שני ביטי סכום גבוהים כערך עשרוני,נשא סופי] אחרי בחירה לפי הקבוצה הנמוכה?",
+      "after": "מחבר carry-select מחבר A=3 ו־B=1, כל אחד 4 ביטים. מחלקים לשתי קבוצות של 2 ביטים, עם carry-in כללי אפס. הקבוצה הגבוהה מחשבת מראש עם נשא 0 ועם 1. מה [שני ביטי סכום גבוהים כערך עשרוני, נשא סופי] אחרי בחירה לפי הקבוצה הנמוכה?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-236",
+      "field": "prompt",
+      "language": "en",
+      "before": "A carry-select adder adds 4-bit A=3 and B=1 in two 2-bit groups, with initial carry-in zero. The high group precomputes carry-in 0 and 1. What is [high two sum bits as decimal,final carry] after selection by the low group?",
+      "after": "A carry-select adder adds 4-bit A=3 and B=1 in two 2-bit groups, with initial carry-in zero. The high group precomputes carry-in 0 and 1. What is [high two sum bits as decimal, final carry] after selection by the low group?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-237",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחברים מילים ברוחב 4: A=6, B=9. מגדירים G כנשא החוצה עם carry-in=0, ו־P=1 רק אם הנשיאה החוצה שווה ל־carry-in עבור שתי אפשרויותיו. מה [P,G] של כל הקבוצה?",
+      "after": "מחברים מילים ברוחב 4: A=6, B=9. מגדירים G כנשא החוצה עם carry-in=0, ו־P=1 רק אם הנשיאה החוצה שווה ל־carry-in עבור שתי אפשרויותיו. מה [P, G] של כל הקבוצה?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-237",
+      "field": "prompt",
+      "language": "en",
+      "before": "Add width-4 words A=6 and B=9. G is carry-out with carry-in=0; P=1 only if carry-out equals carry-in for both possible inputs. What is the whole group's [P,G]?",
+      "after": "Add width-4 words A=6 and B=9. G is carry-out with carry-in=0; P=1 only if carry-out equals carry-in for both possible inputs. What is the whole group's [P, G]?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-238",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחברים מספר בלתי מסומן בן 2 ביטים למספר בלתי מסומן בן 4 ביטים. מה רוחב הפלט המזערי ששומר כל סכום אפשרי ללא גלישה?",
+      "after": "מחברים מספר ללא סימן בן 2 ביטים למספר ללא סימן בן 4 ביטים. מה רוחב הפלט המזערי ששומר כל סכום אפשרי ללא גלישה?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-239",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחשבים ממוצע של מספרים בלתי מסומנים A=2, B=5, עם חיבור ברוחב מספיק. נדרש עיגול כלפי מעלה. מה הפלט השלם?",
+      "after": "מחשבים ממוצע של מספרים ללא סימן A=2, B=5, עם חיבור ברוחב מספיק. נדרש עיגול כלפי מעלה. מה הפלט השלם?"
+    },
+    {
+      "file": "fundamentals-hardware-500.json",
+      "id": "quick-hw-245",
+      "field": "prompt",
+      "language": "he",
+      "before": "למילה בלתי מסומנת ברוחב 4 ו־x>0, מחזירים floor(log2(x)). כמה ביטי פלט מספיקים לכל התוצאות? אינדיקציית x=0 נשמרת בנפרד.",
+      "after": "למילה ללא סימן ברוחב 4 ו־x>0, מחזירים floor(log2(x)). כמה ביטי פלט מספיקים לכל התוצאות? אינדיקציית x=0 נשמרת בנפרד."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-62",
+      "field": "answer",
+      "language": "he",
+      "before": "`S=A XOR B` ו־`C=A AND B`. הסכומים האפשריים הם 0,1,2: ביט הסכום הוא הזוגיות, ונשא נוצר רק ב־1+1. זהו מחבר למחצה, Half Adder.",
+      "after": "`S=A XOR B` ו־`C=A AND B`. הסכומים האפשריים הם 0, 1, 2: ביט הסכום הוא הזוגיות, ונשא נוצר רק ב־1+1. זהו מחבר למחצה, Half Adder."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-62",
+      "field": "answer",
+      "language": "en",
+      "before": "`S=A XOR B` and `C=A AND B`. Possible sums are 0,1,2: the sum bit is parity, while carry occurs only for 1+1. This is a half adder.",
+      "after": "`S=A XOR B` and `C=A AND B`. Possible sums are 0, 1, 2: the sum bit is parity, while carry occurs only for 1+1. This is a half adder."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-67",
+      "field": "answer",
+      "language": "he",
+      "before": "לא. כש־C=0, גם X התקין הוא 0 ואין הבדל. כש־C=1, הגורם NOT C כופה Y=0 גם בתקין וגם בתקול. לכן אין צירוף A,B,C שמבדיל דרך Y; מדובר בתקלה שאינה נצפית במוצא הזה.",
+      "after": "לא. כש־C=0, גם X התקין הוא 0 ואין הבדל. כש־C=1, הגורם NOT C כופה Y=0 גם בתקין וגם בתקול. לכן אין צירוף A, B, C שמבדיל דרך Y; מדובר בתקלה שאינה נצפית במוצא הזה."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-67",
+      "field": "answer",
+      "language": "en",
+      "before": "No. When C=0, healthy X is already 0. When C=1, the NOT C factor forces Y=0 in both circuits. No A,B,C combination distinguishes them through Y; this fault is unobservable at that output.",
+      "after": "No. When C=0, healthy X is already 0. When C=1, the NOT C factor forces Y=0 in both circuits. No A, B, C combination distinguishes them through Y; this fault is unobservable at that output."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-88",
+      "field": "prompt",
+      "language": "he",
+      "before": "FIFO מלא מכיל A,B,C לפי סדר היציאה. החוזה מאפשר קריאה וכתיבה יחד במלא, וקורא את הנתון הישן לפני דריסה. באותה חזית קוראים וכותבים X. מה יוצא ומה נשאר?",
+      "after": "FIFO מלא מכיל A, B, C לפי סדר היציאה. החוזה מאפשר קריאה וכתיבה יחד במלא, וקורא את הנתון הישן לפני דריסה. באותה חזית קוראים וכותבים X. מה יוצא ומה נשאר?"
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-88",
+      "field": "prompt",
+      "language": "en",
+      "before": "A full FIFO contains A,B,C in output order. Its contract accepts simultaneous read/write when full and reads old data before overwrite. One edge reads and writes X. What is returned, and what remains?",
+      "after": "A full FIFO contains A, B, C in output order. Its contract accepts simultaneous read/write when full and reads old data before overwrite. One edge reads and writes X. What is returned, and what remains?"
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-91",
+      "field": "answer",
+      "language": "he",
+      "before": "`7, 7, 7`. הרוויה חוסמת את ההגדלה בקצה העליון. מונה מחזורי רגיל היה נותן 7,0,1; עצם הרוחב בן 3 ביטים אינו מגדיר אם החוזה הוא גלישה או רוויה.",
+      "after": "`7, 7, 7`. הרוויה חוסמת את ההגדלה בקצה העליון. מונה מחזורי רגיל היה נותן 7, 0, 1; עצם הרוחב בן 3 ביטים אינו מגדיר אם החוזה הוא גלישה או רוויה."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-91",
+      "field": "answer",
+      "language": "en",
+      "before": "`7, 7, 7`. Saturation blocks increments at the upper limit. A wrapping counter would give 7,0,1; having three bits alone does not specify whether the contract is wraparound or saturation.",
+      "after": "`7, 7, 7`. Saturation blocks increments at the upper limit. A wrapping counter would give 7, 0, 1; having three bits alone does not specify whether the contract is wraparound or saturation."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-92",
+      "field": "prompt",
+      "language": "he",
+      "before": "מונה בינארי בן 3 ביטים עולה כשהכניסות inc,dec הן 10, יורד ב־01 ושומר ב־00 או 11. מתי ביט Q1, שמשקלו 2, צריך להתהפך? Q0 הוא הביט הנמוך.",
+      "after": "מונה בינארי בן 3 ביטים עולה כשהכניסות inc, dec הן 10, יורד ב־01 ושומר ב־00 או 11. מתי ביט Q1, שמשקלו 2, צריך להתהפך? Q0 הוא הביט הנמוך."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-92",
+      "field": "prompt",
+      "language": "en",
+      "before": "A 3-bit binary counter increments for inc,dec=10, decrements for 01, and holds for 00 or 11. When should Q1, the weight-2 bit, toggle? Q0 is the low bit.",
+      "after": "A 3-bit binary counter increments for inc, dec=10, decrements for 01, and holds for 00 or 11. When should Q1, the weight-2 bit, toggle? Q0 is the low bit."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-96",
+      "field": "answer",
+      "language": "he",
+      "before": "לייצוג השארית המתמטית נשתמש ב־`r_next=(r+x×w) modulo 3`. המשקל w מתחיל ב־1 ומתעדכן ל־2w modulo 3, ולכן מתחלף 1,2,1,2. במימוש הישיר הזה שומרים גם את שלב המשקל. קידוד מצב אחר יכול לבדוק התחלקות בלי לשמור את השלב במפורש.",
+      "after": "לייצוג השארית המתמטית נשתמש ב־`r_next=(r+x×w) modulo 3`. המשקל w מתחיל ב־1 ומתעדכן ל־2w modulo 3, ולכן מתחלף 1, 2, 1, 2. במימוש הישיר הזה שומרים גם את שלב המשקל. קידוד מצב אחר יכול לבדוק התחלקות בלי לשמור את השלב במפורש."
+    },
+    {
+      "file": "fundamentals-hardware-expansion.json",
+      "id": "quick-hw-96",
+      "field": "answer",
+      "language": "en",
+      "before": "For the actual numerical remainder, use `r_next=(r+x×w) modulo 3`. Start w=1 and update w to 2w modulo 3, alternating weights 1,2,1,2. This direct representation also retains weight phase. A different state encoding can test divisibility without explicitly retaining that phase.",
+      "after": "For the actual numerical remainder, use `r_next=(r+x×w) modulo 3`. Start w=1 and update w to 2w modulo 3, alternating weights 1, 2, 1, 2. This direct representation also retains weight phase. A different state encoding can test divisibility without explicitly retaining that phase."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-23",
+      "field": "prompt",
+      "language": "he",
+      "before": "מכונה מתחילה ב־OFF. בכל חזית שעון, t=1 מחליף מצב ו־t=0 משאיר אותו. הנורה דולקת רק ב־ON. מה המצב אחרי הקלטים 1,0,1?",
+      "after": "מכונה מתחילה ב־OFF. בכל חזית שעון, t=1 מחליף מצב ו־t=0 משאיר אותו. הנורה דולקת רק ב־ON. מה המצב אחרי הקלטים 1, 0, 1?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-23",
+      "field": "prompt",
+      "language": "en",
+      "before": "A machine starts in OFF. At each clock edge, t=1 toggles the state and t=0 holds it. The light is on only in ON. What are the states after inputs 1,0,1?",
+      "after": "A machine starts in OFF. At each clock edge, t=1 toggles the state and t=0 holds it. The light is on only in ON. What are the states after inputs 1, 0, 1?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-24",
+      "field": "prompt",
+      "language": "he",
+      "before": "המצב LOW או HIGH שומר את x הקודם, ומתחילים ב־LOW. רוצים y=1 רק כש־x הנוכחי הוא 1 והקודם היה 0. בתרשים התווית היא x/y. מהם המוצאים עבור 1,1,0,1?",
+      "after": "המצב LOW או HIGH שומר את x הקודם, ומתחילים ב־LOW. רוצים y=1 רק כש־x הנוכחי הוא 1 והקודם היה 0. בתרשים התווית היא x/y. מהם המוצאים עבור 1, 1, 0, 1?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-24",
+      "field": "prompt",
+      "language": "en",
+      "before": "LOW or HIGH stores the previous x, starting in LOW. We want y=1 only when current x is 1 and previous x was 0. Diagram labels are x/y. What outputs correspond to 1,1,0,1?",
+      "after": "LOW or HIGH stores the previous x, starting in LOW. We want y=1 only when current x is 1 and previous x was 0. Diagram labels are x/y. What outputs correspond to 1, 1, 0, 1?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-25",
+      "field": "prompt",
+      "language": "he",
+      "before": "קוראים ביט x בכל חזית שעון. מתחילים ב־EVEN: מספר ערכי ה־1 שנקראו הוא זוגי. ODD מציין מספר אי־זוגי. מה המצבים אחרי הקלטים 1,0,1,1?",
+      "after": "קוראים ביט x בכל חזית שעון. מתחילים ב־EVEN: מספר ערכי ה־1 שנקראו הוא זוגי. ODD מציין מספר אי־זוגי. מה המצבים אחרי הקלטים 1, 0, 1, 1?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-25",
+      "field": "prompt",
+      "language": "en",
+      "before": "Read bit x at each clock edge. Start in EVEN: the number of 1s read is even. ODD means the count is odd. What states follow inputs 1,0,1,1?",
+      "after": "Read bit x at each clock edge. Start in EVEN: the number of 1s read is even. ODD means the count is odd. What states follow inputs 1, 0, 1, 1?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-26",
+      "field": "prompt",
+      "language": "he",
+      "before": "דוגמים x בחזית עולה. ZERO: אין 1 בסוף הרצף; ONE: יש 1 אחד בסוף; TWO: לפחות שניים רצופים בסוף. מתחילים ב־ZERO. המוצא 1 רק ב־TWO. מה המוצא אחרי כל קלט ב־1,0,1,1,0?",
+      "after": "דוגמים x בחזית עולה. ZERO: אין 1 בסוף הרצף; ONE: יש 1 אחד בסוף; TWO: לפחות שניים רצופים בסוף. מתחילים ב־ZERO. המוצא 1 רק ב־TWO. מה המוצא אחרי כל קלט ב־1, 0, 1, 1, 0?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-26",
+      "field": "prompt",
+      "language": "en",
+      "before": "Sample x on rising edges. ZERO means no trailing 1; ONE means one trailing 1; TWO means at least two trailing 1s. Start in ZERO. Output is 1 only in TWO. What is the output after each input in 1,0,1,1,0?",
+      "after": "Sample x on rising edges. ZERO means no trailing 1; ONE means one trailing 1; TWO means at least two trailing 1s. Start in ZERO. Output is 1 only in TWO. What is the output after each input in 1, 0, 1, 1, 0?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-27",
+      "field": "prompt",
+      "language": "he",
+      "before": "מכונה מתחילה ב־WAIT, עם מוצא 0. בחזית עולה שבה p=1 עוברים ל־SET, עם מוצא 1, ונשארים שם עד איפוס. אין איפוס ברצף 0,1,0. מהם המוצאים אחרי החזיתות?",
+      "after": "מכונה מתחילה ב־WAIT, עם מוצא 0. בחזית עולה שבה p=1 עוברים ל־SET, עם מוצא 1, ונשארים שם עד איפוס. אין איפוס ברצף 0, 1, 0. מהם המוצאים אחרי החזיתות?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-27",
+      "field": "prompt",
+      "language": "en",
+      "before": "A machine starts in WAIT, with output 0. A rising edge with p=1 moves it to SET, with output 1, where it stays until reset. With no reset during 0,1,0, what are the outputs after the edges?",
+      "after": "A machine starts in WAIT, with output 0. A rising edge with p=1 moves it to SET, with output 1, where it stays until reset. With no reset during 0, 1, 0, what are the outputs after the edges?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-37",
+      "field": "answer",
+      "language": "he",
+      "before": "בשני שערים מתקבל `NOT (NOT A) = A`. בשלושה שערים מתקבל `NOT A`. כל זוג שלילות מבטל זו את זו מבחינת הערך הלוגי לאחר ההתייצבות.",
+      "after": "בשני שערים מתקבל `NOT (NOT A) = A`. בשלושה שערים מתקבל `NOT A`. שתי שלילות מבטלות זו את זו מבחינת הערך הלוגי לאחר ההתייצבות."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-40",
+      "field": "answer",
+      "language": "he",
+      "before": "המשקלים משמאל לימין הם 16,8,4,2,1. מחברים רק משקלים שהביט שלהם 1: `16+4+2=22`.",
+      "after": "המשקלים משמאל לימין הם 16, 8, 4, 2, 1. מחברים רק משקלים שהביט שלהם 1: `16+4+2=22`."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-40",
+      "field": "answer",
+      "language": "en",
+      "before": "The weights from left to right are 16,8,4,2,1. Add only weights whose bits are 1: `16+4+2=22`.",
+      "after": "The weights from left to right are 16, 8, 4, 2, 1. Add only weights whose bits are 1: `16+4+2=22`."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-41",
+      "field": "prompt",
+      "language": "he",
+      "before": "ייצגו את המספר הלא מסומן 37 בשישה ביטים. אפשר להיעזר במשקלים 32,16,8,4,2,1.",
+      "after": "ייצגו את המספר הלא מסומן 37 בשישה ביטים. אפשר להיעזר במשקלים 32, 16, 8, 4, 2, 1."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-41",
+      "field": "prompt",
+      "language": "en",
+      "before": "Represent unsigned 37 using six bits. You may use weights 32,16,8,4,2,1.",
+      "after": "Represent unsigned 37 using six bits. You may use weights 32, 16, 8, 4, 2, 1."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-41",
+      "field": "answer",
+      "language": "he",
+      "before": "`37=32+4+1`, ולכן הייצוג הוא `100101`. רק הביטים שמשקלם 32,4,1 דולקים.",
+      "after": "`37=32+4+1`, ולכן הייצוג הוא `100101`. רק הביטים שמשקלם 32, 4, 1 דולקים."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-41",
+      "field": "answer",
+      "language": "en",
+      "before": "`37=32+4+1`, so the representation is `100101`. Only the bits with weights 32,4,1 are set.",
+      "after": "`37=32+4+1`, so the representation is `100101`. Only the bits with weights 32, 4, 1 are set."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-42",
+      "field": "prompt",
+      "language": "he",
+      "before": "מהו 1110 כמספר לא מסומן, ומהו כמספר מסומן בן 4 ביטים במשלים ל־2? במקרה המסומן משקלי הביטים הם ‎-8,4,2,1.",
+      "after": "מהו 1110 כמספר לא מסומן, ומהו כמספר מסומן בן 4 ביטים במשלים ל־2? במקרה המסומן משקלי הביטים הם ‎-8, 4, 2, 1."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-42",
+      "field": "prompt",
+      "language": "en",
+      "before": "What is 1110 as an unsigned number, and as a signed 4-bit two’s-complement number? In the signed case, the weights are -8,4,2,1.",
+      "after": "What is 1110 as an unsigned number, and as a signed 4-bit two’s-complement number? In the signed case, the weights are -8, 4, 2, 1."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-45",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחברים ביטים A=1 ו־B=1 ונשא נכנס Cin=1. התוצאה נכתבת בשני ביטים Cout,S. מה הם?",
+      "after": "מחברים ביטים A=1 ו־B=1 ונשא נכנס Cin=1. התוצאה נכתבת בשני ביטים Cout, S. מה הם?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-45",
+      "field": "prompt",
+      "language": "en",
+      "before": "Add bits A=1 and B=1 with carry-in Cin=1. Write the result as two bits Cout,S. What are they?",
+      "after": "Add bits A=1 and B=1 with carry-in Cin=1. Write the result as two bits Cout, S. What are they?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-48",
+      "field": "prompt",
+      "language": "he",
+      "before": "מונה בן 3 ביטים מתחיל ב־011. בכל חזית עולה הוא מוסיף 1 אם EN=1, ואחרת שומר את ערכו. אין איפוס. מהם הערכים אחרי EN=1,0,1,1?",
+      "after": "מונה בן 3 ביטים מתחיל ב־011. בכל חזית עולה הוא מוסיף 1 אם EN=1, ואחרת שומר את ערכו. אין איפוס. מהם הערכים אחרי EN=1, 0, 1, 1?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-48",
+      "field": "prompt",
+      "language": "en",
+      "before": "A 3-bit counter starts at 011. On each rising edge it increments if EN=1, otherwise it holds. Reset is inactive. What values follow EN=1,0,1,1?",
+      "after": "A 3-bit counter starts at 011. On each rising edge it increments if EN=1, otherwise it holds. Reset is inactive. What values follow EN=1, 0, 1, 1?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-53",
+      "field": "prompt",
+      "language": "he",
+      "before": "שלושה פליפ-פלופי D חולקים חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000. ערכי x בחזיתות הם 1,0,0,0, ללא איפוס נוסף. מה נשמר אחרי כל חזית?",
+      "after": "שלושה פליפ-פלופי D חולקים חזית עולה: D1=x, D2=Q1, D3=Q2. מתחילים ב־Q1Q2Q3=000. ערכי x בחזיתות הם 1, 0, 0, 0, ללא איפוס נוסף. מה נשמר אחרי כל חזית?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-53",
+      "field": "prompt",
+      "language": "en",
+      "before": "Three D flip-flops share a rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=000. The sampled x values are 1,0,0,0, with no further reset. What is stored after each edge?",
+      "after": "Three D flip-flops share a rising edge: D1=x, D2=Q1, D3=Q2. Start at Q1Q2Q3=000. The sampled x values are 1, 0, 0, 0, with no further reset. What is stored after each edge?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-54",
+      "field": "prompt",
+      "language": "he",
+      "before": "מתחילים ב־READY. בחזית עולה, r=1 במצב READY מתחיל פעולה ועובר ל־BUSY; ב־BUSY מתעלמים מ־r וממתינים ל־d=1. מה המצבים אחרי זוגות הקלט (r,d): (1,0),(1,0),(0,1)?",
+      "after": "מתחילים ב־READY. בחזית עולה, r=1 במצב READY מתחיל פעולה ועובר ל־BUSY; ב־BUSY מתעלמים מ־r וממתינים ל־d=1. מה המצבים אחרי זוגות הקלט (r, d): (1, 0), (1, 0), (0, 1)?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-54",
+      "field": "prompt",
+      "language": "en",
+      "before": "Start in READY. At a rising edge, r=1 in READY starts work and enters BUSY; BUSY ignores r and waits for d=1. What states follow input pairs (r,d): (1,0),(1,0),(0,1)?",
+      "after": "Start in READY. At a rising edge, r=1 in READY starts work and enters BUSY; BUSY ignores r and waits for d=1. What states follow input pairs (r, d): (1, 0), (1, 0), (0, 1)?"
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-55",
+      "field": "prompt",
+      "language": "he",
+      "before": "בכל חזית עולה, c=1 מציין מטבע אחד ו־c=0 שאין מטבע. מוצר עולה שני מטבעות, וללא עודף. מתחילים ב־EMPTY; ONE מציין מטבע שמור. מהו y, אישור הוצאת מוצר, עבור 1,0,1,1? תווית בתרשים: c/y.",
+      "after": "בכל חזית עולה, c=1 מציין מטבע אחד ו־c=0 שאין מטבע. מוצר עולה שני מטבעות, וללא עודף. מתחילים ב־EMPTY; ONE מציין מטבע שמור. מהו y, אישור הוצאת מוצר, עבור 1, 0, 1, 1? תווית בתרשים: c/y."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-55",
+      "field": "prompt",
+      "language": "en",
+      "before": "At each rising edge, c=1 means one coin and c=0 means no coin. A product costs two coins, with no change. Start in EMPTY; ONE means one stored coin. What are dispense outputs y for 1,0,1,1? Diagram labels are c/y.",
+      "after": "At each rising edge, c=1 means one coin and c=0 means no coin. A product costs two coins, with no change. Start in EMPTY; ONE means one stored coin. What are dispense outputs y for 1, 0, 1, 1? Diagram labels are c/y."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-59",
+      "field": "prompt",
+      "language": "he",
+      "before": "דוגמים x בכל חזית. ZERO פירושו שהביט הקודם 0, ו־ONE שהקודם 1; מתחילים ב־ZERO. y=1 בכל זוג 11, כולל חפיפה. מהם המוצאים עבור 1,1,1,0,1? תוויות התרשים הן x/y.",
+      "after": "דוגמים x בכל חזית. ZERO פירושו שהביט הקודם 0, ו־ONE שהקודם 1; מתחילים ב־ZERO. y=1 בכל זוג 11, כולל חפיפה. מהם המוצאים עבור 1, 1, 1, 0, 1? תוויות התרשים הן x/y."
+    },
+    {
+      "file": "fundamentals-hardware.json",
+      "id": "quick-hw-59",
+      "field": "prompt",
+      "language": "en",
+      "before": "Sample x at each edge. ZERO means the previous bit was 0; ONE means it was 1. Start in ZERO. Output y=1 for each pair 11, including overlaps. What outputs follow 1,1,1,0,1? Diagram labels are x/y.",
+      "after": "Sample x at each edge. ZERO means the previous bit was 0; ONE means it was 1. Start in ZERO. Output y=1 for each pair 11, including overlaps. What outputs follow 1, 1, 1, 0, 1? Diagram labels are x/y."
+    },
+    {
+      "file": "fundamentals-reasoning-250.json",
+      "id": "quick-sw-108",
+      "field": "prompt",
+      "language": "he",
+      "before": "צלחת אופקית מאוזנת נתמכת בנקודה (0,0) ללא מומנט מהתמיכה. מניחים שתי מסות שוות ב־(−1,1) וב־(1,1). האם ביטול קואורדינטות x מבטיח שהצלחת תישאר מאוזנת סטטית?",
+      "after": "צלחת אופקית מאוזנת נתמכת בנקודה (0, 0) ללא מומנט מהתמיכה. מניחים שתי מסות שוות ב־(−1, 1) וב־(1, 1). האם ביטול קואורדינטות x מבטיח שהצלחת תישאר מאוזנת סטטית?"
+    },
+    {
+      "file": "fundamentals-reasoning-250.json",
+      "id": "quick-sw-108",
+      "field": "prompt",
+      "language": "en",
+      "before": "A balanced horizontal plate has a point support at (0,0) supplying no torque. Place equal masses at (−1,1) and (1,1). Does cancellation of the x coordinates guarantee continued static balance?",
+      "after": "A balanced horizontal plate has a point support at (0, 0) supplying no torque. Place equal masses at (−1, 1) and (1, 1). Does cancellation of the x coordinates guarantee continued static balance?"
+    },
+    {
+      "file": "fundamentals-reasoning-250.json",
+      "id": "quick-sw-108",
+      "field": "answer",
+      "language": "he",
+      "before": "לא. סכום ה־x הוא 0, אבל סכום ה־y הוא 2. שתי המסות נמצאות באותו צד בכיוון y, ולכן מרכז המסה הנוסף אינו מעל התמיכה. עבור מסות שוות צריך שסכום שני רכיבי המיקום יהיה (0,0), ולא רק רכיב אחד.",
+      "after": "לא. סכום ה־x הוא 0, אבל סכום ה־y הוא 2. שתי המסות נמצאות באותו צד בכיוון y, ולכן מרכז המסה הנוסף אינו מעל התמיכה. עבור מסות שוות צריך שסכום שני רכיבי המיקום יהיה (0, 0), ולא רק רכיב אחד."
+    },
+    {
+      "file": "fundamentals-reasoning-250.json",
+      "id": "quick-sw-108",
+      "field": "answer",
+      "language": "en",
+      "before": "No. The x sum is 0, but the y sum is 2. Both masses lie on the same side in the y direction, so their combined centre of mass is not above the support. For equal masses, both position components must sum to (0,0), not just one.",
+      "after": "No. The x sum is 0, but the y sum is 2. Both masses lie on the same side in the y direction, so their combined centre of mass is not above the support. For equal masses, both position components must sum to (0, 0), not just one."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-138",
+      "field": "takeaway",
+      "language": "he",
+      "before": "גבול מושג במגמה אינו בהכרח ערך שאפשר להשיג בפעולה סופית.",
+      "after": "ערך גבולי שמתקרבים אליו אינו בהכרח ערך שאפשר להשיג בפעולה סופית."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-140",
+      "field": "takeaway",
+      "language": "en",
+      "before": "A physical average is weighted by the conserved quantity;simple averaging requires equal weights.",
+      "after": "A physical average is weighted by the conserved quantity; simple averaging requires equal weights."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-141",
+      "field": "prompt",
+      "language": "he",
+      "before": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר 1 מעלות לדקה; התערובת לא ידוע. איזה סיום חם יותר?",
+      "after": "משווים הוספת חלב בתחילת דקה להוספתו בסופה. קיבולי החום הם קפה=3, חלב=1; החלב נשמר בטמפרטורה קבועה. הקפה לבדו מתקרר בקצב של מעלה אחת לדקה; קצב קירור התערובת הוא לא ידוע. איזה סיום חם יותר?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-141",
+      "field": "prompt",
+      "language": "en",
+      "before": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degrees/minute; mixture rate is unknown. Which finishes warmer?",
+      "after": "Compare adding milk before versus after one minute. Heat capacities: coffee=3, milk=1; milk stays at fixed temperature. Coffee alone cools 1 degree/minute; mixture rate is unknown. Which finishes warmer?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-141",
+      "field": "answer",
+      "language": "en",
+      "before": "Insufficient information. Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined;linearity alone does not specify it.",
+      "after": "Insufficient information. Compare mixture cooling with the coffee's weighted cooling contribution. Without the mixture rate, the comparison is undetermined; linearity alone does not specify it."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-142",
+      "field": "prompt",
+      "language": "en",
+      "before": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes first reach height 4? Stop immediately at contact.",
+      "after": "A climber starts at height 0, climbs at 3 units/minute for one minute, then slips 1 during a one-minute rest. The cycle repeats continuously. At what time in minutes does the climber first reach height 4? Stop immediately at contact."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-143",
+      "field": "prompt",
+      "language": "he",
+      "before": "בודקים רק בטיקים שלמים t=0,1,2,... . מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־10 ויורד 3. באיזה טיק הם באותו אינדקס?",
+      "after": "בודקים רק בטיקים שלמים `t=0, 1, 2, ...`. מצביע שמאל מתחיל ב־0 ומתקדם 2 בכל טיק; ימין מתחיל ב־10 ויורד 3. באיזה טיק הם באותו אינדקס?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-143",
+      "field": "prompt",
+      "language": "en",
+      "before": "Observe only integer ticks t=0,1,2,... . Left starts at 0 and advances 2 per tick; right starts at 10 and decreases 3. At which tick do they occupy the same index?",
+      "after": "Observe only integer ticks `t=0, 1, 2, ...`. Left starts at 0 and advances 2 per tick; right starts at 10 and decreases 3. At which tick do they occupy the same index?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-144",
+      "field": "answer",
+      "language": "en",
+      "before": "No unique next number. A finite prefix is not a rule. Apply an explicit recurrence when supplied;otherwise different continuations can share the same past.",
+      "after": "No unique next number. A finite prefix is not a rule. Apply an explicit recurrence when supplied; otherwise different continuations can share the same past."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-145",
+      "field": "takeaway",
+      "language": "en",
+      "before": "Specify which quantity must match;equal label sums do not determine geometry.",
+      "after": "Specify which quantity must match; equal label sums do not determine geometry."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-147",
+      "field": "prompt",
+      "language": "en",
+      "before": "A circular table holds only a radius-1 central coin. An equal opponent coin is 2 from center;reply at its opposite point. All positions fit table boundaries;tangency is allowed. Is the opponent move legal, and does the new pair overlap?",
+      "after": "A circular table holds only a radius-1 central coin. An equal opponent coin is 2 from center; reply at its opposite point. All positions fit table boundaries; tangency is allowed. Is the opponent move legal, and does the new pair overlap?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-149",
+      "field": "answer",
+      "language": "en",
+      "before": "Level falls. While carried, the object displaced water by weight. Sinking leaves only its volume;floating retains the same weight-based displacement.",
+      "after": "Level falls. While carried, the object displaced water by weight. Sinking leaves only its volume; floating retains the same weight-based displacement."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-150",
+      "field": "prompt",
+      "language": "he",
+      "before": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז כדור אחיד מתוכה. גדלי התיבות הם A=1, B=99. מה הסיכוי לבחור כדור מסוים שסומן ב־A?",
+      "after": "בוחרים תיבה בסיכוי 1/2 לכל אחת, ואז בוחרים כדור מתוכה באופן אחיד. גדלי התיבות הם A=1, B=99. מה הסיכוי לבחור כדור מסוים שסומן ב־A?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-150",
+      "field": "prompt",
+      "language": "en",
+      "before": "Choose either urn with probability 1/2, then a uniform ball within it. Urn sizes are A=1, B=99. What is the probability of selecting one particular marked ball in A?",
+      "after": "Choose either urn with probability 1/2, then a ball uniformly at random within it. Urn sizes are A=1, B=99. What is the probability of selecting one particular marked ball in A?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-151",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחלקים 100 כדורים לשתי תיבות, A בגודל 2. בוחרים תיבה אחיד ואז כדור אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?",
+      "after": "מחלקים 100 כדורים לשתי תיבות, A בגודל 2. בוחרים תיבה באופן אחיד ואז כדור מתוכה באופן אחיד. רוצים להחליף לבן ב־A באדום מ־B; כששתיהן לא ריקות מובטח ששני הכדורים קיימים. הגדלים נשמרים. איך ההחלפה משפיעה על סיכוי אדום, או שאינה מוגדרת?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-153",
+      "field": "takeaway",
+      "language": "en",
+      "before": "An added possible state needs its own signature;the empty code is no longer free for a bottle.",
+      "after": "An added possible state needs its own signature; the empty code is no longer free for a bottle."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-154",
+      "field": "prompt",
+      "language": "he",
+      "before": "בדיוק אחד מ־4 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 23? לפני הופעת תוצאה כולם שליליים.",
+      "after": "בדיוק אחד מ־4 בקבוקים מורעל. לכל בקבוק קוד בדיקות ייחודי. כל הבדיקות מתחילות בזמן 0, ותוצאה מופיעה בדיוק 24 שעות אחר כך. כמה תבניות נצפות שונות ייתכנו בזמן 23? לפני הופעת תוצאה כל תוצאות הבדיקות שליליות."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-155",
+      "field": "prompt",
+      "language": "en",
+      "before": "Split 1000 hat wearers into groups of 3;merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?",
+      "after": "Split 1000 hat wearers into groups of 3; merge a remainder of 1 or 2 into the final group. Each leader signals parity and every follower knows their color. How many correct answers are guaranteed without counting leaders?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-156",
+      "field": "prompt",
+      "language": "en",
+      "before": "There are 3 binary-hat wearers with no color quota. They speak rear-to-front;each sees only ahead and hears earlier answers. Prior coordination is allowed;each says one color word. What maximum correct-answer count can be guaranteed for every coloring?",
+      "after": "There are 3 binary-hat wearers with no color quota. They speak rear-to-front; each sees only ahead and hears earlier answers. Prior coordination is allowed; each says one color word. What maximum correct-answer count can be guaranteed for every coloring?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-156",
+      "field": "answer",
+      "language": "en",
+      "before": "2. The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible:flipping only the first hat leaves that speaker's information unchanged.",
+      "after": "2. The first speaker's parity lets every follower decode their color. Guaranteeing all is impossible: flipping only the first hat leaves that speaker's information unchanged."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-157",
+      "field": "prompt",
+      "language": "he",
+      "before": "שלושה צבעי כובעים מקודדים 0,1,2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 2. כל תרומות הקבוצה פרט לכובעך ידועות: [1]. מה צבעך המקודד?",
+      "after": "שלושה צבעי כובעים מקודדים 0, 1, 2. הודעה אמינה אומרת שסכום קבוצת הכובעים מודולו 3 הוא 2. כל תרומות הקבוצה פרט לכובעך ידועות: [1]. מה צבעך המקודד?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-157",
+      "field": "prompt",
+      "language": "en",
+      "before": "Three hat colors are encoded 0,1,2. A reliable message says the group's color sum modulo 3 is 2. Every contribution except your hat is known: [1]. What is your encoded color?",
+      "after": "Three hat colors are encoded 0, 1, 2. A reliable message says the group's color sum modulo 3 is 2. Every contribution except your hat is known: [1]. What is your encoded color?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-159",
+      "field": "answer",
+      "language": "en",
+      "before": "8. The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat;spouse counts complement to 2n−2.",
+      "after": "8. The maximum-count respondent must be married to the zero-count respondent. Remove that pair and repeat; spouse counts complement to 2n−2."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-160",
+      "field": "prompt",
+      "language": "en",
+      "before": "Actually 3 hats are red. Each reasoner sees only others. At least one red is publicly announced;everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?",
+      "after": "Actually 3 hats are red. Each reasoner sees only others. At least one red is publicly announced; everyone reasons logically and hears silence in simultaneous rounds. A person declares red only when certain. Rounds start at 1. In which round is the first declaration?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-161",
+      "field": "prompt",
+      "language": "en",
+      "before": "A camel moves inventory requiring 3 loads along a short segment. It goes forward with each load and returns only to collect the next;there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?",
+      "after": "A camel moves inventory requiring 3 loads along a short segment. It goes forward with each load and returns only to collect the next; there is no final return. It eats one banana per distance unit. How many bananas per unit of progress?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-163",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחברים את הנקודות בסדר הנתון וסוגרים לראשונה: [[0, 3], [2, -3], [-3, 1], [3, 1], [-2, -3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי.",
+      "after": "מחברים את הנקודות בסדר הנתון וסוגרים את המסלול בחזרה לנקודה הראשונה: [[0, 3], [2, -3], [-3, 1], [3, 1], [-2, -3]]. איזה סיווג מוצדק? פניות באותו סימן לבדן אינן מבטיחות שאין חיתוך עצמי."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-164",
+      "field": "title",
+      "language": "he",
+      "before": "קמירות חלשה וממש אינן אותה דרישה",
+      "after": "קמירות חלשה וקמירות ממש אינן אותה דרישה"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-164",
+      "field": "prompt",
+      "language": "en",
+      "before": "Ordered boundary vertices: [[0, 0], [1, 0], [2, 0], [2, 2], [0, 2]]. Strict convexity requires same-sign nonzero turns;weak convexity permits zero turns along an edge. How is this boundary classified?",
+      "after": "Ordered boundary vertices: [[0, 0], [1, 0], [2, 0], [2, 2], [0, 2]]. Strict convexity requires same-sign nonzero turns; weak convexity permits zero turns along an edge. How is this boundary classified?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-164",
+      "field": "takeaway",
+      "language": "en",
+      "before": "An equality case may be valid under one definition and invalid under another;define it explicitly.",
+      "after": "An equality case may be valid under one definition and invalid under another; define it explicitly."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-166",
+      "field": "prompt",
+      "language": "en",
+      "before": "Four switches surround a square table;1 means ON. Two descriptions are 1100 and 1010, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?",
+      "after": "Four switches surround a square table; 1 means ON. Two descriptions are 1100 and 1010, read in the same direction. Only quarter-turn rotations, not reflections, are allowed. Are they the same state up to rotation?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-167",
+      "field": "prompt",
+      "language": "he",
+      "before": "מטרה מסתתרת באחד משני שיחים 0,1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 1]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר.",
+      "after": "מטרה מסתתרת באחד משני שיחים 0, 1. אחרי כל חיפוש שמחטיא היא חייבת לעבור לשיח השני. סדר החיפושים הוא [0, 1]. כמה מיקומי התחלה יכולים להתחמק מכל החיפושים? אם נתפסה התהליך נגמר."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-171",
+      "field": "prompt",
+      "language": "en",
+      "before": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 1/4;after a miss it is 3/4. Deliberately missing gives the same miss continuation. Which action is better?",
+      "after": "Your goal is eventual victory. An attempted hit succeeds with probability 1/2. After a hit your continuation win chance is 1/4; after a miss it is 3/4. Deliberately missing gives the same miss continuation. Which action is better?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-173",
+      "field": "prompt",
+      "language": "he",
+      "before": "בוחרים תיבה A או B בסיכוי 1/2 ואז כדור אחיד. כמויות (אדומים, לבנים): A=(1,0), B=(49,50). נצפה אדום. מה הסיכוי שנבחרה A?",
+      "after": "בוחרים תיבה A או B בסיכוי 1/2 ואז בוחרים כדור באופן אחיד. כמויות (אדומים, לבנים): A=(1, 0), B=(49, 50). נצפה אדום. מה הסיכוי שנבחרה A?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-173",
+      "field": "prompt",
+      "language": "en",
+      "before": "Choose urn A or B with probability 1/2, then a uniform ball. Counts (red, white): A=(1,0), B=(49,50). A red was observed. What is the probability A was chosen?",
+      "after": "Choose urn A or B with probability 1/2, then a ball uniformly at random. Counts (red, white): A=(1, 0), B=(49, 50). A red was observed. What is the probability A was chosen?"
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-175",
+      "field": "answer",
+      "language": "en",
+      "before": "7. A tilt leaves the lighter pan's candidates;balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch.",
+      "after": "7. A tilt leaves the lighter pan's candidates; balance leaves the unweighed. More than 3 candidates cannot be resolved in the single remaining weighing. Plan for the worst branch."
+    },
+    {
+      "file": "fundamentals-reasoning-400.json",
+      "id": "quick-sw-176",
+      "field": "prompt",
+      "language": "he",
+      "before": "מונה משותף מתחיל ב־0. לכל A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת העותק+1. סדר הפעולות הוא ['RA', 'RB', 'WA', 'WB']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד.",
+      "after": "מונה משותף מתחיל ב־0. לכל אחד מ־A ו־B שתי פעולות: R קוראת את המונה לעותק מקומי, W כותבת את העותק+1. סדר הפעולות הוא ['RA', 'RB', 'WA', 'WB']. מה הערך הסופי? הקריאה והכתיבה אינן פעולה אטומית יחד."
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-202",
+      "field": "answer",
+      "language": "he",
+      "before": "1. לכל A=a, הממוצע של B הוא a/2. ממוצעים שוב לפי התפלגות A; אי־תלות אינה נדרשת.",
+      "after": "1. לכל A=a, הממוצע של B הוא a/2. מחשבים שוב ממוצע לפי התפלגות A; אי־תלות אינה נדרשת."
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-208",
+      "field": "prompt",
+      "language": "he",
+      "before": "מועמדים מקודדים 0,1,2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?",
+      "after": "מועמדים מקודדים 0, 1, 2. אם reverse=0, הרוב מעדיף 0 על 1, 1 על 2, ו־2 על 0; אם reverse=1 כל הכיוונים הפוכים. כאן reverse=0. מועמד 0 ממתין לגמר מול מנצח עימות שני האחרים. מי זוכה?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-208",
+      "field": "prompt",
+      "language": "en",
+      "before": "Candidates are 0,1,2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 0 waits for the winner between the other two. Who wins the final?",
+      "after": "Candidates are 0, 1, 2. With reverse=0, majorities prefer 0 over 1, 1 over 2, and 2 over 0; reverse=1 reverses every edge. Here reverse=0. Candidate 0 waits for the winner between the other two. Who wins the final?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-209",
+      "field": "prompt",
+      "language": "he",
+      "before": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x,m−x,m−x,x,x,m−x. כאן m=5, x=1. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?",
+      "after": "מספרי המצביעים לפי הדירוגים ABC, ACB, BAC, BCA, CAB, CBA הם בהתאמה x, m−x, m−x, x, x, m−x. כאן m=5, x=1. כל מצביע מעדיף מועמד מוקדם בדירוג. מה ההפרש המוחלט בקולות בעימות A מול B?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-209",
+      "field": "prompt",
+      "language": "en",
+      "before": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x,m−x,m−x,x,x,m−x. Here m=5, x=1. Earlier means preferred. What is the absolute vote margin in A versus B?",
+      "after": "Voter counts for rankings ABC, ACB, BAC, BCA, CAB, CBA are x, m−x, m−x, x, x, m−x. Here m=5, x=1. Earlier means preferred. What is the absolute vote margin in A versus B?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-217",
+      "field": "prompt",
+      "language": "he",
+      "before": "תיבה מלבנית בעלת מקצועות 1,1,1. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b,c), (a+c,b), (b+c,a). מה ריבוע אורך המסלול הקצר מביניהן?",
+      "after": "תיבה מלבנית בעלת מקצועות 1, 1, 1. יש לעבור בין קודקודים נגדיים רק על המשטח. משווים את שלוש הפריסות המלבניות עם צלעות (a+b, c), (a+c, b), (b+c, a). מה ריבוע אורך המסלול הקצר מביניהן?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-217",
+      "field": "prompt",
+      "language": "en",
+      "before": "A rectangular box has edge lengths 1,1,1. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b,c), (a+c,b), (b+c,a). What is the squared length of the shortest route among them?",
+      "after": "A rectangular box has edge lengths 1, 1, 1. Travel between opposite vertices on its surface. Compare the three rectangular unfoldings with sides (a+b, c), (a+c, b), (b+c, a). What is the squared length of the shortest route among them?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-220",
+      "field": "prompt",
+      "language": "he",
+      "before": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a,b] ברשימה [[0, 1]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?",
+      "after": "יש 3 סוסים שונים במהירויות שונות. כל זוג [a, b] ברשימה [[0, 1]] אומר ש־a מהיר מ־b. אין מידע נוסף. כמה דירוגי מהירות מלאים מתאימים לכל ההשוואות?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-220",
+      "field": "prompt",
+      "language": "en",
+      "before": "There are 3 horses with distinct speeds. Each pair [a,b] in [[0, 1]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?",
+      "after": "There are 3 horses with distinct speeds. Each pair [a, b] in [[0, 1]] states that a is faster than b. Nothing else is known. How many complete speed rankings satisfy all comparisons?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-222",
+      "field": "prompt",
+      "language": "he",
+      "before": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A,B הם 1,4; משקלי החשיבות שלהם 1,10. אם CA,CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?",
+      "after": "שרת יחיד מבצע ללא הפסקה שתי משימות זמינות בזמן 0. משכי A, B הם 1, 4; משקלי החשיבות שלהם 1, 10. אם CA, CB זמני הסיום, מה הערך המזערי של wa·CA+wb·CB?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-222",
+      "field": "prompt",
+      "language": "en",
+      "before": "One server processes two jobs available at time 0 without preemption. Durations A,B are 1,4; importance weights are 1,10. If CA,CB are completion times, what is the minimum wa·CA+wb·CB?",
+      "after": "One server processes two jobs available at time 0 without preemption. Durations A, B are 1, 4; importance weights are 1, 10. If CA, CB are completion times, what is the minimum wa·CA+wb·CB?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-224",
+      "field": "prompt",
+      "language": "he",
+      "before": "כל שורה ב־[[0, 0], [0, 1], [1, 0], [1, 1]] היא תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?",
+      "after": "כל שורה ב־[[0, 0], [0, 1], [1, 0], [1, 1]] מציגה תוצאות בינאריות חזויות של מצב נסתר, אחת לכל מדידה. המדידות אמינות ונבחרות מראש. מה מספר העמודות המזערי שמאפשר לזהות בוודאות איזו שורה נכונה?"
+    },
+    {
+      "file": "fundamentals-reasoning-500.json",
+      "id": "quick-sw-231",
+      "field": "prompt",
+      "language": "he",
+      "before": "מחלקים 3 כדורים אדומים ו־3 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד אחיד ואז כדור אחיד מתוכו. מה ההסתברות המרבית לקבל אדום?",
+      "after": "מחלקים 3 כדורים אדומים ו־3 לבנים בין שני כדים לא ריקים, ללא הוספה או השמטה. בוחרים כד באופן אחיד ואז כדור מתוכו באופן אחיד. מה ההסתברות המרבית לקבל אדום?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-61",
+      "field": "prompt",
+      "language": "he",
+      "before": "מתי אמצע הקטע בין שתי נקודות עם קואורדינטות שלמות הוא גם נקודה שלמה? בדקו את (2,5) ו־(8,1). האם צריך לבדוק רק את סכום כל הקואורדינטות?",
+      "after": "מתי אמצע הקטע בין שתי נקודות עם קואורדינטות שלמות הוא גם נקודה שלמה? בדקו את (2, 5) ו־(8, 1). האם צריך לבדוק רק את סכום כל הקואורדינטות?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-61",
+      "field": "prompt",
+      "language": "en",
+      "before": "When is the midpoint of two integer-coordinate points also an integer-coordinate point? Check (2,5) and (8,1). Is checking the sum of all coordinates enough?",
+      "after": "When is the midpoint of two integer-coordinate points also an integer-coordinate point? Check (2, 5) and (8, 1). Is checking the sum of all coordinates enough?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-61",
+      "field": "answer",
+      "language": "he",
+      "before": "בכל קואורדינטה בנפרד, שני הערכים צריכים להיות באותה זוגיות. כאן האמצע הוא (5,3). סכום כולל זוגי אינו מספיק: ל־(1,2) ול־(2,1) סכום כולל 6, אבל האמצע הוא (1.5,1.5).",
+      "after": "בכל קואורדינטה בנפרד, שני הערכים צריכים להיות באותה זוגיות. כאן האמצע הוא (5, 3). סכום כולל זוגי אינו מספיק: ל־(1, 2) ול־(2, 1) סכום כולל 6, אבל האמצע הוא (1.5, 1.5)."
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-61",
+      "field": "answer",
+      "language": "en",
+      "before": "The two values must have the same parity in every coordinate separately. Here the midpoint is (5,3). An even total sum is insufficient: (1,2) and (2,1) total 6, but their midpoint is (1.5,1.5).",
+      "after": "The two values must have the same parity in every coordinate separately. Here the midpoint is (5, 3). An even total sum is insufficient: (1, 2) and (2, 1) total 6, but their midpoint is (1.5, 1.5)."
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-62",
+      "field": "prompt",
+      "language": "he",
+      "before": "בדיוק בקבוק אחד מבין A,B,C,D מזוהם. בדיקת תערובת חיובית בדיוק כשיש בה מהבקבוק המזוהם. מותר לערבב דגימות. כיצד שתי בדיקות במקביל יזהו את הבקבוק?",
+      "after": "בדיוק בקבוק אחד מבין A, B, C, D מזוהם. בדיקת תערובת חיובית בדיוק כשיש בה מהבקבוק המזוהם. מותר לערבב דגימות. כיצד שתי בדיקות במקביל יזהו את הבקבוק?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-62",
+      "field": "prompt",
+      "language": "en",
+      "before": "Exactly one of bottles A,B,C,D is contaminated. A pooled test is positive exactly when it contains a sample from the contaminated bottle. Mixing is allowed. How can two simultaneous tests identify the bottle?",
+      "after": "Exactly one of bottles A, B, C, D is contaminated. A pooled test is positive exactly when it contains a sample from the contaminated bottle. Mixing is allowed. How can two simultaneous tests identify the bottle?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-67",
+      "field": "prompt",
+      "language": "he",
+      "before": "במחרוזת ספרות מותרות רק הזוגות הסמוכים 12 ו־23. המחרוזת חייבת להתחיל ב־1. האם אפשר לבנות מחרוזת באורך ארבע? מותר לחזור על ספרות אם הכללים מאפשרים.",
+      "after": "במחרוזת ספרות מותרים רק הזוגות הסמוכים 12 ו־23. המחרוזת חייבת להתחיל ב־1. האם אפשר לבנות מחרוזת באורך ארבע? מותר לחזור על ספרות אם הכללים מאפשרים."
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-68",
+      "field": "prompt",
+      "language": "he",
+      "before": "במשחק מתחילים כעת מסכום 8. כל שחקן בתורו מוסיף 1,2 או 3. מי שמגיע בדיוק ל־12 מנצח, ואסור לעבור אותו. האם מי שתורו כעת יכול להבטיח ניצחון?",
+      "after": "במשחק מתחילים כעת מסכום 8. כל שחקן בתורו מוסיף 1, 2 או 3. מי שמגיע בדיוק ל־12 מנצח, ואסור לעבור אותו. האם מי שתורו כעת יכול להבטיח ניצחון?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-68",
+      "field": "prompt",
+      "language": "en",
+      "before": "A game currently has total 8. Players alternate adding 1,2, or 3. Reaching exactly 12 wins; overshooting is forbidden. Can the player whose turn it is now force a win?",
+      "after": "A game currently has total 8. Players alternate adding 1, 2, or 3. Reaching exactly 12 wins; overshooting is forbidden. Can the player whose turn it is now force a win?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-69",
+      "field": "answer",
+      "language": "he",
+      "before": "9 דקות: החצייה המשותפת אורכת max(2,7)=7 דקות, והחזרה עוד 2. לא מחברים 2+7 עבור החצייה יחד, כי שני האנשים נעים במקביל.",
+      "after": "9 דקות: החצייה המשותפת אורכת max(2, 7)=7 דקות, והחזרה עוד 2. לא מחברים 2+7 עבור החצייה יחד, כי שני האנשים נעים במקביל."
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-69",
+      "field": "answer",
+      "language": "en",
+      "before": "9 minutes: the shared crossing takes max(2,7)=7 minutes, and the return takes another 2. Do not add 2+7 for the shared crossing, because both people move simultaneously.",
+      "after": "9 minutes: the shared crossing takes max(2, 7)=7 minutes, and the return takes another 2. Do not add 2+7 for the shared crossing, because both people move simultaneously."
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-71",
+      "field": "takeaway",
+      "language": "en",
+      "before": "For “at least one,” calculating “none” and subtracting from one is often simpler.",
+      "after": "For “at least one, ” calculating “none” and subtracting from one is often simpler."
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-78",
+      "field": "answer",
+      "language": "he",
+      "before": "בודקים מלמטה למעלה: 1,2,3,4, עד שבירה או עד הסוף. במקרה הגרוע נדרשות 4 הפלות. דילוג על קומה לא בדוקה מסוכן: אם הכדור יישבר מעליה, לא יישאר כלי שיבדיל בין קומות השבירה האפשריות.",
+      "after": "בודקים מלמטה למעלה: 1, 2, 3, 4, עד שבירה או עד הסוף. במקרה הגרוע נדרשות 4 הפלות. דילוג על קומה לא בדוקה מסוכן: אם הכדור יישבר מעליה, לא יישאר כלי שיבדיל בין קומות השבירה האפשריות."
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-78",
+      "field": "answer",
+      "language": "en",
+      "before": "Test upward: 1,2,3,4, stopping on breakage or after the last floor. The worst case takes 4 drops. Skipping an untested floor is unsafe: if the ball breaks above it, no tool remains to distinguish the possible threshold floors.",
+      "after": "Test upward: 1, 2, 3, 4, stopping on breakage or after the last floor. The worst case takes 4 drops. Skipping an untested floor is unsafe: if the ball breaks above it, no tool remains to distinguish the possible threshold floors."
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-83",
+      "field": "prompt",
+      "language": "he",
+      "before": "שלושה בתים נמצאים על ישר בנקודות 0,4,10. בוחרים נקודת מפגש על אותו ישר. היכן סכום מרחקי ההליכה של שלושתם יהיה הקטן ביותר?",
+      "after": "שלושה בתים נמצאים על ישר בנקודות 0, 4, 10. בוחרים נקודת מפגש על אותו ישר. היכן סכום מרחקי ההליכה של שלושתם יהיה הקטן ביותר?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-83",
+      "field": "prompt",
+      "language": "en",
+      "before": "Three houses lie on a line at 0,4,10. Choose a meeting point on the same line. Where is the sum of all three walking distances smallest?",
+      "after": "Three houses lie on a line at 0, 4, 10. Choose a meeting point on the same line. Where is the sum of all three walking distances smallest?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-87",
+      "field": "prompt",
+      "language": "he",
+      "before": "צריך לשלם בדיוק 6 בעזרת מטבעות בערכים 1,3,4, עם מלאי בלתי מוגבל. המטרה היא להשתמש בכמה שפחות מטבעות. האם בחירת המטבע הגדול ביותר שאינו עובר את הסכום שנותר תמיד נותנת פתרון מיטבי?",
+      "after": "צריך לשלם בדיוק 6 בעזרת מטבעות בערכים 1, 3, 4, עם מלאי בלתי מוגבל. המטרה היא להשתמש בכמה שפחות מטבעות. האם בחירת המטבע הגדול ביותר שאינו עובר את הסכום שנותר תמיד נותנת פתרון מיטבי?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-87",
+      "field": "prompt",
+      "language": "en",
+      "before": "Pay exactly 6 using unlimited coins of values 1,3,4. Minimize the number of coins. Does repeatedly choosing the largest coin that fits the remaining amount always give an optimal solution?",
+      "after": "Pay exactly 6 using unlimited coins of values 1, 3, 4. Minimize the number of coins. Does repeatedly choosing the largest coin that fits the remaining amount always give an optimal solution?"
+    },
+    {
+      "file": "fundamentals-reasoning-expansion.json",
+      "id": "quick-sw-88",
+      "field": "takeaway",
+      "language": "en",
+      "before": "Before sorting by “beats” or “preferred,” check that the relation is consistent and acyclic.",
+      "after": "Before sorting by “beats” or “preferred, ” check that the relation is consistent and acyclic."
+    }
+  ],
+  "notes": [
+    "Options are not present in the Fundamentals schema.",
+    "Code, diagrams, IDs, topics and interview links are unchanged.",
+    "SECDED quick-hw-161 explicitly labels P as the parity-error flag; S=0/P=0 and the no-error answer remain unchanged.",
+    "No human review, publication attestation, rating or live database state was changed. Content revisions must be regenerated by integration.",
+    "This audit records coverage and corrections; it does not assert that no possible language defect remains."
+  ]
+}

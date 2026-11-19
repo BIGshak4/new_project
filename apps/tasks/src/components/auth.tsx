@@ -26,9 +26,7 @@ export function Auth({
     : "";
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
-    [mode, setMode] = useState<"login" | "signup">("login"),
     [busy, setBusy] = useState(false),
-    [message, setMessage] = useState(""),
     [error, setError] = useState("");
   useEffect(() => {
     return observeAuthUser(supabase.auth, (next) => {
@@ -70,25 +68,12 @@ export function Auth({
     e.preventDefault();
     setBusy(true);
     setError("");
-    setMessage("");
     const credentials = { email: email.trim(), password };
     // The Auth component remains mounted while signed in; do not retain a reusable password.
     setPassword("");
     try {
-      const result =
-        mode === "login"
-          ? await supabase.auth.signInWithPassword(credentials)
-          : await supabase.auth.signUp({
-              ...credentials,
-              options: { emailRedirectTo: window.location.origin },
-            });
+      const result = await supabase.auth.signInWithPassword(credentials);
       if (result.error) throw result.error;
-      if (mode === "signup" && !result.data.session)
-        setMessage(
-          he
-            ? "נשלח מייל לאימות החשבון. אשרו אותו ואז התחברו כאן."
-            : "Check your email to confirm your account, then sign in here.",
-        );
     } catch (err) {
       const code = (err as { code?: string }).code;
       setError(
@@ -173,13 +158,7 @@ export function Auth({
         ) : (
           <form className="auth-form" onSubmit={submit}>
             <h2>
-              {mode === "login"
-                ? he
-                  ? "טוב שחזרתם."
-                  : "Welcome back."
-                : he
-                  ? "מתחילים כאן."
-                  : "Start here."}
+              {he ? "טוב שחזרתם." : "Welcome back."}
             </h2>
             <p>
               {he
@@ -205,9 +184,7 @@ export function Auth({
               {he ? "סיסמה" : "Password"}
               <input
                 type="password"
-                autoComplete={
-                  mode === "login" ? "current-password" : "new-password"
-                }
+                autoComplete="current-password"
                 required
                 minLength={8}
                 value={password}
@@ -220,46 +197,30 @@ export function Auth({
                 {error}
               </p>
             )}
-            {message && (
-              <p className="notice" role="status">
-                {message}
-              </p>
-            )}
             <button className="primary" disabled={busy}>
               {busy
                 ? he
                   ? "רגע…"
                   : "One moment…"
-                : mode === "login"
-                  ? he
-                    ? "כניסה לסביבת העבודה"
-                    : "Sign in"
-                  : he
-                    ? "יצירת חשבון"
-                    : "Create account"}
+                : he
+                  ? "כניסה לסביבת העבודה"
+                  : "Sign in"}
               <ArrowRight size={17} />
             </button>
-            <button
-              type="button"
+            <a
+              href="https://muxijobrun.com/#signup"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-button"
-              onClick={() => {
-                setMode(mode === "login" ? "signup" : "login");
-                setError("");
-                setMessage("");
-              }}
             >
-              {mode === "login"
-                ? he
-                  ? "כניסה ראשונה? צרו חשבון"
-                  : "First time? Create an account"
-                : he
-                  ? "כבר יש חשבון? התחברו"
-                  : "Already have an account? Sign in"}
-            </button>
+              {he
+                ? "כניסה ראשונה? הרשמה באתר הראשי (בלשונית חדשה)"
+                : "First time? Sign up on the main site (new tab)"}
+            </a>
             <p className="small muted">
               {he
-                ? "יצירת חשבון אינה מעניקה גישה אוטומטית לנתוני הצוות."
-                : "Creating an account does not automatically grant access to team data."}
+                ? "אחרי ההרשמה ואישור המייל, חזרו לכאן והתחברו. יצירת חשבון אינה מעניקה גישה אוטומטית לנתוני הצוות."
+                : "After signing up and confirming your email, return here and sign in. Creating an account does not automatically grant access to team data."}
             </p>
           </form>
         )}

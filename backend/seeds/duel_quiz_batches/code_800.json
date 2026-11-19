@@ -1,0 +1,2552 @@
+[
+  {
+    "key": "quick-sw-386-v1",
+    "source_key": "quick-sw-386",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אחרי שכפול, העותקים ממוספרים מאפס לפי סדר המקור. יעדי random לפי אינדקס הם [2,2,1]. מתחילים בהעתק 0 ועוקבים אחר 2 קישורים. מה אינדקס היעד? ‎-1 מסמן קישור ריק ונשאר ריק.",
+      "en": "Clones are numbered from zero in original order. Their random targets by index are [2,2,1]. Start at clone 0 and follow 2 links. What index results? A null link is -1 and stays null."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "explanation": {
+      "he": "המסלול בעותק הוא 0 → 2 → 1. כל צעד קורא את היעד של החוליה הנוכחית.",
+      "en": "The cloned path is 0 → 2 → 1. Each step reads the current node's target."
+    }
+  },
+  {
+    "key": "quick-sw-386-v2",
+    "source_key": "quick-sw-386",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אחרי שכפול, העותקים ממוספרים מאפס לפי סדר המקור. יעדי random לפי אינדקס הם [0,0]. מתחילים בהעתק 0 ועוקבים אחר 3 קישורים. מה אינדקס היעד? ‎-1 מסמן קישור ריק ונשאר ריק.",
+      "en": "Clones are numbered from zero in original order. Their random targets by index are [0,0]. Start at clone 0 and follow 3 links. What index results? A null link is -1 and stays null."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "explanation": {
+      "he": "המסלול בעותק הוא 0 → 0 → 0 → 0. כל צעד קורא את היעד של החוליה הנוכחית.",
+      "en": "The cloned path is 0 → 0 → 0 → 0. Each step reads the current node's target."
+    }
+  },
+  {
+    "key": "quick-sw-386-v3",
+    "source_key": "quick-sw-386",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אחרי שכפול, העותקים ממוספרים מאפס לפי סדר המקור. יעדי random לפי אינדקס הם [2,2,-1]. מתחילים בהעתק 1 ועוקבים אחר 2 קישורים. מה אינדקס היעד? ‎-1 מסמן קישור ריק ונשאר ריק.",
+      "en": "Clones are numbered from zero in original order. Their random targets by index are [2,2,-1]. Start at clone 1 and follow 2 links. What index results? A null link is -1 and stays null."
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "explanation": {
+      "he": "המסלול בעותק הוא 1 → 2 → -1. כל צעד קורא את היעד של החוליה הנוכחית.",
+      "en": "The cloned path is 1 → 2 → -1. Each step reads the current node's target."
+    }
+  },
+  {
+    "key": "quick-sw-386-v4",
+    "source_key": "quick-sw-386",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אחרי שכפול, העותקים ממוספרים מאפס לפי סדר המקור. יעדי random לפי אינדקס הם [1,2,0]. מתחילים בהעתק 0 ועוקבים אחר 4 קישורים. מה אינדקס היעד? ‎-1 מסמן קישור ריק ונשאר ריק.",
+      "en": "Clones are numbered from zero in original order. Their random targets by index are [1,2,0]. Start at clone 0 and follow 4 links. What index results? A null link is -1 and stays null."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "explanation": {
+      "he": "המסלול בעותק הוא 0 → 1 → 2 → 0 → 1. כל צעד קורא את היעד של החוליה הנוכחית.",
+      "en": "The cloned path is 0 → 1 → 2 → 0 → 1. Each step reads the current node's target."
+    }
+  },
+  {
+    "key": "quick-sw-386-v5",
+    "source_key": "quick-sw-386",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "אחרי שכפול, העותקים ממוספרים מאפס לפי סדר המקור. יעדי random לפי אינדקס הם [2,-1,0]. מתחילים בהעתק 1 ועוקבים אחר 0 קישורים. מה אינדקס היעד? ‎-1 מסמן קישור ריק ונשאר ריק.",
+      "en": "Clones are numbered from zero in original order. Their random targets by index are [2,-1,0]. Start at clone 1 and follow 0 links. What index results? A null link is -1 and stays null."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "explanation": {
+      "he": "המסלול בעותק הוא 1. כל צעד קורא את היעד של החוליה הנוכחית.",
+      "en": "The cloned path is 1. Each step reads the current node's target."
+    }
+  },
+  {
+    "key": "quick-sw-387-v1",
+    "source_key": "quick-sw-387",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מכניסים לעץ חיפוש ריק, לפי הסדר, את [9,4,7,6]. מה המפתח שיופיע מיד אחרי 7 בסריקה לפי סדר עולה? החזירו ‎-1 אם זה המפתח האחרון.",
+      "en": "Insert [9,4,7,6] into an empty search tree in that order. Which key comes immediately after 7 during inorder traversal? Return -1 for the last key."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "explanation": {
+      "he": "סדר הביקור הוא [4,6,7,9]. מחפשים את המפתח הבא אחרי 7, ולכן התוצאה היא 9.",
+      "en": "The traversal order is [4,6,7,9]. Looking just past 7 gives 9."
+    }
+  },
+  {
+    "key": "quick-sw-387-v2",
+    "source_key": "quick-sw-387",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מכניסים לעץ חיפוש ריק, לפי הסדר, את [8,12,10,9]. מה המפתח שיופיע מיד אחרי 8 בסריקה לפי סדר עולה? החזירו ‎-1 אם זה המפתח האחרון.",
+      "en": "Insert [8,12,10,9] into an empty search tree in that order. Which key comes immediately after 8 during inorder traversal? Return -1 for the last key."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "explanation": {
+      "he": "סדר הביקור הוא [8,9,10,12]. מחפשים את המפתח הבא אחרי 8, ולכן התוצאה היא 9.",
+      "en": "The traversal order is [8,9,10,12]. Looking just past 8 gives 9."
+    }
+  },
+  {
+    "key": "quick-sw-387-v3",
+    "source_key": "quick-sw-387",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מכניסים לעץ חיפוש ריק, לפי הסדר, את [4,1,6]. מה המפתח שיופיע מיד אחרי 6 בסריקה לפי סדר עולה? החזירו ‎-1 אם זה המפתח האחרון.",
+      "en": "Insert [4,1,6] into an empty search tree in that order. Which key comes immediately after 6 during inorder traversal? Return -1 for the last key."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "explanation": {
+      "he": "סדר הביקור הוא [1,4,6]. מחפשים את המפתח הבא אחרי 6, ולכן התוצאה היא -1.",
+      "en": "The traversal order is [1,4,6]. Looking just past 6 gives -1."
+    }
+  },
+  {
+    "key": "quick-sw-387-v4",
+    "source_key": "quick-sw-387",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מכניסים לעץ חיפוש ריק, לפי הסדר, את [3]. מה המפתח שיופיע מיד אחרי 3 בסריקה לפי סדר עולה? החזירו ‎-1 אם זה המפתח האחרון.",
+      "en": "Insert [3] into an empty search tree in that order. Which key comes immediately after 3 during inorder traversal? Return -1 for the last key."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "explanation": {
+      "he": "סדר הביקור הוא [3]. מחפשים את המפתח הבא אחרי 3, ולכן התוצאה היא -1.",
+      "en": "The traversal order is [3]. Looking just past 3 gives -1."
+    }
+  },
+  {
+    "key": "quick-sw-387-v5",
+    "source_key": "quick-sw-387",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מכניסים לעץ חיפוש ריק, לפי הסדר, את [10,5,12,3]. מה המפתח שיופיע מיד אחרי 3 בסריקה לפי סדר עולה? החזירו ‎-1 אם זה המפתח האחרון.",
+      "en": "Insert [10,5,12,3] into an empty search tree in that order. Which key comes immediately after 3 during inorder traversal? Return -1 for the last key."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "explanation": {
+      "he": "סדר הביקור הוא [3,5,10,12]. מחפשים את המפתח הבא אחרי 3, ולכן התוצאה היא 5.",
+      "en": "The traversal order is [3,5,10,12]. Looking just past 3 gives 5."
+    }
+  },
+  {
+    "key": "quick-sw-388-v1",
+    "source_key": "quick-sw-388",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתחום 1..7 כולל, היסטוריית ההגרלות מהישנה לחדשה היא [2,5]. מסירים את חמש התוצאות האחרונות או את כולן אם היו פחות. איזה ערך נמצא באינדקס 2 ברשימת המותרים הממוינת מאפס?",
+      "en": "In inclusive range 1..7, history from oldest to newest is [2,5]. Exclude the last five draws, or all draws so far if fewer. Which eligible value has zero-based index 2 in sorted order?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "explanation": {
+      "he": "לאחר הסרת חלון ההיסטוריה מתקבלת הרשימה [1,3,4,6,7]. קוראים ממנה את האיבר באינדקס 2.",
+      "en": "Removing the history window leaves [1,3,4,6,7]. Read the entry at index 2."
+    }
+  },
+  {
+    "key": "quick-sw-388-v2",
+    "source_key": "quick-sw-388",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתחום 5..10 כולל, היסטוריית ההגרלות מהישנה לחדשה היא [7,9,5,10,6]. מסירים את חמש התוצאות האחרונות או את כולן אם היו פחות. איזה ערך נמצא באינדקס 0 ברשימת המותרים הממוינת מאפס?",
+      "en": "In inclusive range 5..10, history from oldest to newest is [7,9,5,10,6]. Exclude the last five draws, or all draws so far if fewer. Which eligible value has zero-based index 0 in sorted order?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "explanation": {
+      "he": "לאחר הסרת חלון ההיסטוריה מתקבלת הרשימה [8]. קוראים ממנה את האיבר באינדקס 0.",
+      "en": "Removing the history window leaves [8]. Read the entry at index 0."
+    }
+  },
+  {
+    "key": "quick-sw-388-v3",
+    "source_key": "quick-sw-388",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתחום 2..8 כולל, היסטוריית ההגרלות מהישנה לחדשה היא []. מסירים את חמש התוצאות האחרונות או את כולן אם היו פחות. איזה ערך נמצא באינדקס 6 ברשימת המותרים הממוינת מאפס?",
+      "en": "In inclusive range 2..8, history from oldest to newest is []. Exclude the last five draws, or all draws so far if fewer. Which eligible value has zero-based index 6 in sorted order?"
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "explanation": {
+      "he": "לאחר הסרת חלון ההיסטוריה מתקבלת הרשימה [2,3,4,5,6,7,8]. קוראים ממנה את האיבר באינדקס 6.",
+      "en": "Removing the history window leaves [2,3,4,5,6,7,8]. Read the entry at index 6."
+    }
+  },
+  {
+    "key": "quick-sw-388-v4",
+    "source_key": "quick-sw-388",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתחום 0..7 כולל, היסטוריית ההגרלות מהישנה לחדשה היא [4,1,5,2,6,3]. מסירים את חמש התוצאות האחרונות או את כולן אם היו פחות. איזה ערך נמצא באינדקס 1 ברשימת המותרים הממוינת מאפס?",
+      "en": "In inclusive range 0..7, history from oldest to newest is [4,1,5,2,6,3]. Exclude the last five draws, or all draws so far if fewer. Which eligible value has zero-based index 1 in sorted order?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "explanation": {
+      "he": "לאחר הסרת חלון ההיסטוריה מתקבלת הרשימה [0,4,7]. קוראים ממנה את האיבר באינדקס 1.",
+      "en": "Removing the history window leaves [0,4,7]. Read the entry at index 1."
+    }
+  },
+  {
+    "key": "quick-sw-388-v5",
+    "source_key": "quick-sw-388",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתחום 8..14 כולל, היסטוריית ההגרלות מהישנה לחדשה היא [14,13,12,11,10]. מסירים את חמש התוצאות האחרונות או את כולן אם היו פחות. איזה ערך נמצא באינדקס 1 ברשימת המותרים הממוינת מאפס?",
+      "en": "In inclusive range 8..14, history from oldest to newest is [14,13,12,11,10]. Exclude the last five draws, or all draws so far if fewer. Which eligible value has zero-based index 1 in sorted order?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "explanation": {
+      "he": "לאחר הסרת חלון ההיסטוריה מתקבלת הרשימה [8,9]. קוראים ממנה את האיבר באינדקס 1.",
+      "en": "Removing the history window leaves [8,9]. Read the entry at index 1."
+    }
+  },
+  {
+    "key": "quick-sw-389-v1",
+    "source_key": "quick-sw-389",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערך הוא [4,7,9,2] והאינדקסים מתחילים באפס. מעתיקים 3 ערכים מאינדקס 0 לאינדקס 1 לפי ערכי המקור שלפני ההעתקה. איזה ערך יישב באינדקס 3?",
+      "en": "Array [4,7,9,2] is indexed from zero. Copy 3 cells from index 0 to index 1, using the original source values. What value ends up at index 3?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "explanation": {
+      "he": "הערכים המועתקים הם [4,7,9]. לאחר הכתיבה המערך הוא [4,4,7,9].",
+      "en": "The copied values are [4,7,9]. After the writes the array is [4,4,7,9]."
+    }
+  },
+  {
+    "key": "quick-sw-389-v2",
+    "source_key": "quick-sw-389",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערך הוא [3,8,4,6] והאינדקסים מתחילים באפס. מעתיקים 3 ערכים מאינדקס 1 לאינדקס 0 לפי ערכי המקור שלפני ההעתקה. איזה ערך יישב באינדקס 1?",
+      "en": "Array [3,8,4,6] is indexed from zero. Copy 3 cells from index 1 to index 0, using the original source values. What value ends up at index 1?"
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "הערכים המועתקים הם [8,4,6]. לאחר הכתיבה המערך הוא [8,4,6,6].",
+      "en": "The copied values are [8,4,6]. After the writes the array is [8,4,6,6]."
+    }
+  },
+  {
+    "key": "quick-sw-389-v3",
+    "source_key": "quick-sw-389",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערך הוא [9,2,7] והאינדקסים מתחילים באפס. מעתיקים 0 ערכים מאינדקס 0 לאינדקס 2 לפי ערכי המקור שלפני ההעתקה. איזה ערך יישב באינדקס 2?",
+      "en": "Array [9,2,7] is indexed from zero. Copy 0 cells from index 0 to index 2, using the original source values. What value ends up at index 2?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "explanation": {
+      "he": "הערכים המועתקים הם []. לאחר הכתיבה המערך הוא [9,2,7].",
+      "en": "The copied values are []. After the writes the array is [9,2,7]."
+    }
+  },
+  {
+    "key": "quick-sw-389-v4",
+    "source_key": "quick-sw-389",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערך הוא [1,5,8,2] והאינדקסים מתחילים באפס. מעתיקים 2 ערכים מאינדקס 1 לאינדקס 1 לפי ערכי המקור שלפני ההעתקה. איזה ערך יישב באינדקס 2?",
+      "en": "Array [1,5,8,2] is indexed from zero. Copy 2 cells from index 1 to index 1, using the original source values. What value ends up at index 2?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "explanation": {
+      "he": "הערכים המועתקים הם [5,8]. לאחר הכתיבה המערך הוא [1,5,8,2].",
+      "en": "The copied values are [5,8]. After the writes the array is [1,5,8,2]."
+    }
+  },
+  {
+    "key": "quick-sw-389-v5",
+    "source_key": "quick-sw-389",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערך הוא [7,9,3,2,5] והאינדקסים מתחילים באפס. מעתיקים 2 ערכים מאינדקס 0 לאינדקס 3 לפי ערכי המקור שלפני ההעתקה. איזה ערך יישב באינדקס 4?",
+      "en": "Array [7,9,3,2,5] is indexed from zero. Copy 2 cells from index 0 to index 3, using the original source values. What value ends up at index 4?"
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "explanation": {
+      "he": "הערכים המועתקים הם [7,9]. לאחר הכתיבה המערך הוא [7,9,3,7,9].",
+      "en": "The copied values are [7,9]. After the writes the array is [7,9,3,7,9]."
+    }
+  },
+  {
+    "key": "quick-sw-390-v1",
+    "source_key": "quick-sw-390",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ביחידות mV, עוברים מ־0 עד 10 בצעד 3, בלי לבדוק את שני הקצוות. המתחים הכושלים הם [2,6,9]. מהו מתח הכשל הראשון שנמדד? החזירו ‎-1 אם לא נמדד כשל.",
+      "en": "In mV, sweep from 0 to 10 with step 3, excluding both endpoints. Failing voltages are [2,6,9]. Which failing voltage is measured first? Return -1 if none is measured."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "explanation": {
+      "he": "נקודות הרשת לפי סדר המדידה הן [3,6,9]. השוואה לרשימת הכשלים נותנת 6.",
+      "en": "The grid points in measurement order are [3,6,9]. Checking them against the failures gives 6."
+    }
+  },
+  {
+    "key": "quick-sw-390-v2",
+    "source_key": "quick-sw-390",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ביחידות mV, עוברים מ־2 עד 12 בצעד 2, בלי לבדוק את שני הקצוות. המתחים הכושלים הם [2,12]. מהו מתח הכשל הראשון שנמדד? החזירו ‎-1 אם לא נמדד כשל.",
+      "en": "In mV, sweep from 2 to 12 with step 2, excluding both endpoints. Failing voltages are [2,12]. Which failing voltage is measured first? Return -1 if none is measured."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "explanation": {
+      "he": "נקודות הרשת לפי סדר המדידה הן [4,6,8,10]. השוואה לרשימת הכשלים נותנת -1.",
+      "en": "The grid points in measurement order are [4,6,8,10]. Checking them against the failures gives -1."
+    }
+  },
+  {
+    "key": "quick-sw-390-v3",
+    "source_key": "quick-sw-390",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ביחידות mV, עוברים מ־0 עד 9 בצעד 2, בלי לבדוק את שני הקצוות. המתחים הכושלים הם [8,2]. מהו מתח הכשל הראשון שנמדד? החזירו ‎-1 אם לא נמדד כשל.",
+      "en": "In mV, sweep from 0 to 9 with step 2, excluding both endpoints. Failing voltages are [8,2]. Which failing voltage is measured first? Return -1 if none is measured."
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "explanation": {
+      "he": "נקודות הרשת לפי סדר המדידה הן [2,4,6,8]. השוואה לרשימת הכשלים נותנת 2.",
+      "en": "The grid points in measurement order are [2,4,6,8]. Checking them against the failures gives 2."
+    }
+  },
+  {
+    "key": "quick-sw-390-v4",
+    "source_key": "quick-sw-390",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ביחידות mV, עוברים מ־5 עד 7 בצעד 4, בלי לבדוק את שני הקצוות. המתחים הכושלים הם [6]. מהו מתח הכשל הראשון שנמדד? החזירו ‎-1 אם לא נמדד כשל.",
+      "en": "In mV, sweep from 5 to 7 with step 4, excluding both endpoints. Failing voltages are [6]. Which failing voltage is measured first? Return -1 if none is measured."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "explanation": {
+      "he": "נקודות הרשת לפי סדר המדידה הן []. השוואה לרשימת הכשלים נותנת -1.",
+      "en": "The grid points in measurement order are []. Checking them against the failures gives -1."
+    }
+  },
+  {
+    "key": "quick-sw-390-v5",
+    "source_key": "quick-sw-390",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "ביחידות mV, עוברים מ־1 עד 11 בצעד 3, בלי לבדוק את שני הקצוות. המתחים הכושלים הם [7]. מהו מתח הכשל הראשון שנמדד? החזירו ‎-1 אם לא נמדד כשל.",
+      "en": "In mV, sweep from 1 to 11 with step 3, excluding both endpoints. Failing voltages are [7]. Which failing voltage is measured first? Return -1 if none is measured."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "explanation": {
+      "he": "נקודות הרשת לפי סדר המדידה הן [4,7,10]. השוואה לרשימת הכשלים נותנת 7.",
+      "en": "The grid points in measurement order are [4,7,10]. Checking them against the failures gives 7."
+    }
+  },
+  {
+    "key": "quick-sw-391-v1",
+    "source_key": "quick-sw-391",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערכים הם [1,8] ו־[3,11]. בוחרים ערך אחד מכל מערך. מהו ההפרש המוחלט הקטן ביותר שאפשר לקבל?",
+      "en": "Arrays are [1,8] and [3,11]. Choose one value from each array. What is the smallest attainable absolute difference?"
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי שממיינים ומשווים שכנים ממערכים שונים, זוג קרוב ביותר הוא 1 ו־3. ההפרש המוחלט שלו הוא 2.",
+      "en": "Sorting and comparing neighbors from different arrays gives a closest pair of 1 and 3. Its absolute difference is 2."
+    }
+  },
+  {
+    "key": "quick-sw-391-v2",
+    "source_key": "quick-sw-391",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערכים הם [4,4] ו־[4,9]. בוחרים ערך אחד מכל מערך. מהו ההפרש המוחלט הקטן ביותר שאפשר לקבל?",
+      "en": "Arrays are [4,4] and [4,9]. Choose one value from each array. What is the smallest attainable absolute difference?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי שממיינים ומשווים שכנים ממערכים שונים, זוג קרוב ביותר הוא 4 ו־4. ההפרש המוחלט שלו הוא 0.",
+      "en": "Sorting and comparing neighbors from different arrays gives a closest pair of 4 and 4. Its absolute difference is 0."
+    }
+  },
+  {
+    "key": "quick-sw-391-v3",
+    "source_key": "quick-sw-391",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערכים הם [-8,-1] ו־[2,12]. בוחרים ערך אחד מכל מערך. מהו ההפרש המוחלט הקטן ביותר שאפשר לקבל?",
+      "en": "Arrays are [-8,-1] and [2,12]. Choose one value from each array. What is the smallest attainable absolute difference?"
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "10",
+        "en": "10"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי שממיינים ומשווים שכנים ממערכים שונים, זוג קרוב ביותר הוא -1 ו־2. ההפרש המוחלט שלו הוא 3.",
+      "en": "Sorting and comparing neighbors from different arrays gives a closest pair of -1 and 2. Its absolute difference is 3."
+    }
+  },
+  {
+    "key": "quick-sw-391-v4",
+    "source_key": "quick-sw-391",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערכים הם [15] ו־[1,7]. בוחרים ערך אחד מכל מערך. מהו ההפרש המוחלט הקטן ביותר שאפשר לקבל?",
+      "en": "Arrays are [15] and [1,7]. Choose one value from each array. What is the smallest attainable absolute difference?"
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "14",
+        "en": "14"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי שממיינים ומשווים שכנים ממערכים שונים, זוג קרוב ביותר הוא 15 ו־7. ההפרש המוחלט שלו הוא 8.",
+      "en": "Sorting and comparing neighbors from different arrays gives a closest pair of 15 and 7. Its absolute difference is 8."
+    }
+  },
+  {
+    "key": "quick-sw-391-v5",
+    "source_key": "quick-sw-391",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "המערכים הם [17,2,30] ו־[10,28]. בוחרים ערך אחד מכל מערך. מהו ההפרש המוחלט הקטן ביותר שאפשר לקבל?",
+      "en": "Arrays are [17,2,30] and [10,28]. Choose one value from each array. What is the smallest attainable absolute difference?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "13",
+        "en": "13"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי שממיינים ומשווים שכנים ממערכים שונים, זוג קרוב ביותר הוא 30 ו־28. ההפרש המוחלט שלו הוא 2.",
+      "en": "Sorting and comparing neighbors from different arrays gives a closest pair of 30 and 28. Its absolute difference is 2."
+    }
+  },
+  {
+    "key": "quick-sw-392-v1",
+    "source_key": "quick-sw-392",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתיאור עץ בינארי בסדר תחילי, כל אות יוצרת צומת עם שני מקומות לילדים וכל # מציין מקום ריק. כמה מקומות נותרו פתוחים אחרי קריאת הרצף A B # #?",
+      "en": "In a preorder binary-tree encoding each letter creates a node with two child slots and # marks a null slot. How many slots are open after reading A B # #?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "מתחילים במקום אחד. 2 צמתים מוסיפים מקום נטו כל אחד, ו־2 סמנים ריקים סוגרים מקום כל אחד. נותרו 1.",
+      "en": "Start with one slot. Each of the 2 nodes adds one net slot, and each of the 2 null markers closes one. That leaves 1."
+    }
+  },
+  {
+    "key": "quick-sw-392-v2",
+    "source_key": "quick-sw-392",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתיאור עץ בינארי בסדר תחילי, כל אות יוצרת צומת עם שני מקומות לילדים וכל # מציין מקום ריק. כמה מקומות נותרו פתוחים אחרי קריאת הרצף #?",
+      "en": "In a preorder binary-tree encoding each letter creates a node with two child slots and # marks a null slot. How many slots are open after reading #?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "explanation": {
+      "he": "מתחילים במקום אחד. 0 צמתים מוסיפים מקום נטו כל אחד, ו־1 סמנים ריקים סוגרים מקום כל אחד. נותרו 0.",
+      "en": "Start with one slot. Each of the 0 nodes adds one net slot, and each of the 1 null markers closes one. That leaves 0."
+    }
+  },
+  {
+    "key": "quick-sw-392-v3",
+    "source_key": "quick-sw-392",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתיאור עץ בינארי בסדר תחילי, כל אות יוצרת צומת עם שני מקומות לילדים וכל # מציין מקום ריק. כמה מקומות נותרו פתוחים אחרי קריאת הרצף A B C?",
+      "en": "In a preorder binary-tree encoding each letter creates a node with two child slots and # marks a null slot. How many slots are open after reading A B C?"
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "explanation": {
+      "he": "מתחילים במקום אחד. 3 צמתים מוסיפים מקום נטו כל אחד, ו־0 סמנים ריקים סוגרים מקום כל אחד. נותרו 4.",
+      "en": "Start with one slot. Each of the 3 nodes adds one net slot, and each of the 0 null markers closes one. That leaves 4."
+    }
+  },
+  {
+    "key": "quick-sw-392-v4",
+    "source_key": "quick-sw-392",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתיאור עץ בינארי בסדר תחילי, כל אות יוצרת צומת עם שני מקומות לילדים וכל # מציין מקום ריק. כמה מקומות נותרו פתוחים אחרי קריאת הרצף A # B # #?",
+      "en": "In a preorder binary-tree encoding each letter creates a node with two child slots and # marks a null slot. How many slots are open after reading A # B # #?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "מתחילים במקום אחד. 2 צמתים מוסיפים מקום נטו כל אחד, ו־3 סמנים ריקים סוגרים מקום כל אחד. נותרו 0.",
+      "en": "Start with one slot. Each of the 2 nodes adds one net slot, and each of the 3 null markers closes one. That leaves 0."
+    }
+  },
+  {
+    "key": "quick-sw-392-v5",
+    "source_key": "quick-sw-392",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "בתיאור עץ בינארי בסדר תחילי, כל אות יוצרת צומת עם שני מקומות לילדים וכל # מציין מקום ריק. כמה מקומות נותרו פתוחים אחרי קריאת הרצף A A #?",
+      "en": "In a preorder binary-tree encoding each letter creates a node with two child slots and # marks a null slot. How many slots are open after reading A A #?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "explanation": {
+      "he": "מתחילים במקום אחד. 2 צמתים מוסיפים מקום נטו כל אחד, ו־1 סמנים ריקים סוגרים מקום כל אחד. נותרו 2.",
+      "en": "Start with one slot. Each of the 2 nodes adds one net slot, and each of the 1 null markers closes one. That leaves 2."
+    }
+  },
+  {
+    "key": "quick-sw-393-v1",
+    "source_key": "quick-sw-393",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערכו של הביטוי בסימון סופי 7 2 - 3 *? כל מספר הוא אסימון שלם וכל חילוק בביטוי מדויק.",
+      "en": "What is the value of the postfix expression 7 2 - 3 *? Each number is one token and any division in the expression is exact."
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-15",
+        "en": "-15"
+      },
+      {
+        "he": "13",
+        "en": "13"
+      },
+      {
+        "he": "15",
+        "en": "15"
+      }
+    ],
+    "explanation": {
+      "he": "בכל פעולה שולפים קודם את האופרנד הימני. לפי סדר הפעולות מתקבל (7 - 2) = 5, (5 * 3) = 15.",
+      "en": "Pop the right operand first for each operator. The operations are (7 - 2) = 5, (5 * 3) = 15."
+    }
+  },
+  {
+    "key": "quick-sw-393-v2",
+    "source_key": "quick-sw-393",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערכו של הביטוי בסימון סופי 9 6 2 / -? כל מספר הוא אסימון שלם וכל חילוק בביטוי מדויק.",
+      "en": "What is the value of the postfix expression 9 6 2 / -? Each number is one token and any division in the expression is exact."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "-6",
+        "en": "-6"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "בכל פעולה שולפים קודם את האופרנד הימני. לפי סדר הפעולות מתקבל (6 / 2) = 3, (9 - 3) = 6.",
+      "en": "Pop the right operand first for each operator. The operations are (6 / 2) = 3, (9 - 3) = 6."
+    }
+  },
+  {
+    "key": "quick-sw-393-v3",
+    "source_key": "quick-sw-393",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערכו של הביטוי בסימון סופי 2 7 - 3 +? כל מספר הוא אסימון שלם וכל חילוק בביטוי מדויק.",
+      "en": "What is the value of the postfix expression 2 7 - 3 +? Each number is one token and any division in the expression is exact."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "-8",
+        "en": "-8"
+      },
+      {
+        "he": "-2",
+        "en": "-2"
+      },
+      {
+        "he": "8",
+        "en": "8"
+      }
+    ],
+    "explanation": {
+      "he": "בכל פעולה שולפים קודם את האופרנד הימני. לפי סדר הפעולות מתקבל (2 - 7) = -5, (-5 + 3) = -2.",
+      "en": "Pop the right operand first for each operator. The operations are (2 - 7) = -5, (-5 + 3) = -2."
+    }
+  },
+  {
+    "key": "quick-sw-393-v4",
+    "source_key": "quick-sw-393",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערכו של הביטוי בסימון סופי 12 3 / 2 /? כל מספר הוא אסימון שלם וכל חילוק בביטוי מדויק.",
+      "en": "What is the value of the postfix expression 12 3 / 2 /? Each number is one token and any division in the expression is exact."
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "explanation": {
+      "he": "בכל פעולה שולפים קודם את האופרנד הימני. לפי סדר הפעולות מתקבל (12 / 3) = 4, (4 / 2) = 2.",
+      "en": "Pop the right operand first for each operator. The operations are (12 / 3) = 4, (4 / 2) = 2."
+    }
+  },
+  {
+    "key": "quick-sw-393-v5",
+    "source_key": "quick-sw-393",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מה ערכו של הביטוי בסימון סופי 4 4 - 5 *? כל מספר הוא אסימון שלם וכל חילוק בביטוי מדויק.",
+      "en": "What is the value of the postfix expression 4 4 - 5 *? Each number is one token and any division in the expression is exact."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "20",
+        "en": "20"
+      },
+      {
+        "he": "-5",
+        "en": "-5"
+      }
+    ],
+    "explanation": {
+      "he": "בכל פעולה שולפים קודם את האופרנד הימני. לפי סדר הפעולות מתקבל (4 - 4) = 0, (0 * 5) = 0.",
+      "en": "Pop the right operand first for each operator. The operations are (4 - 4) = 0, (0 * 5) = 0."
+    }
+  },
+  {
+    "key": "quick-sw-394-v1",
+    "source_key": "quick-sw-394",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה סידורים שונים של כל אותיות ABBA מתחילים בקידומת B? עותקים של אותה אות נחשבים זהים.",
+      "en": "How many distinct arrangements of all letters of ABBA start with prefix B? Copies of the same letter are indistinguishable."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "explanation": {
+      "he": "מקבעים את הקידומת ומסדרים רק את האותיות שנותרו. קבוצת התוצאות היא BAAB, BABA, BBAA.",
+      "en": "Fix the prefix and arrange only the remaining letters. The resulting set is BAAB, BABA, BBAA."
+    }
+  },
+  {
+    "key": "quick-sw-394-v2",
+    "source_key": "quick-sw-394",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה סידורים שונים של כל אותיות ABCD מתחילים בקידומת AB? עותקים של אותה אות נחשבים זהים.",
+      "en": "How many distinct arrangements of all letters of ABCD start with prefix AB? Copies of the same letter are indistinguishable."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      }
+    ],
+    "explanation": {
+      "he": "מקבעים את הקידומת ומסדרים רק את האותיות שנותרו. קבוצת התוצאות היא ABCD, ABDC.",
+      "en": "Fix the prefix and arrange only the remaining letters. The resulting set is ABCD, ABDC."
+    }
+  },
+  {
+    "key": "quick-sw-394-v3",
+    "source_key": "quick-sw-394",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה סידורים שונים של כל אותיות AAAA מתחילים בקידומת AA? עותקים של אותה אות נחשבים זהים.",
+      "en": "How many distinct arrangements of all letters of AAAA start with prefix AA? Copies of the same letter are indistinguishable."
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "explanation": {
+      "he": "מקבעים את הקידומת ומסדרים רק את האותיות שנותרו. קבוצת התוצאות היא AAAA.",
+      "en": "Fix the prefix and arrange only the remaining letters. The resulting set is AAAA."
+    }
+  },
+  {
+    "key": "quick-sw-394-v4",
+    "source_key": "quick-sw-394",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה סידורים שונים של כל אותיות AABC מתחילים בקידומת BB? עותקים של אותה אות נחשבים זהים.",
+      "en": "How many distinct arrangements of all letters of AABC start with prefix BB? Copies of the same letter are indistinguishable."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "מקבעים את הקידומת ומסדרים רק את האותיות שנותרו. קבוצת התוצאות היא ∅.",
+      "en": "Fix the prefix and arrange only the remaining letters. The resulting set is ∅."
+    }
+  },
+  {
+    "key": "quick-sw-394-v5",
+    "source_key": "quick-sw-394",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "כמה סידורים שונים של כל אותיות ABC מתחילים בקידומת ABC? עותקים של אותה אות נחשבים זהים.",
+      "en": "How many distinct arrangements of all letters of ABC start with prefix ABC? Copies of the same letter are indistinguishable."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      }
+    ],
+    "explanation": {
+      "he": "מקבעים את הקידומת ומסדרים רק את האותיות שנותרו. קבוצת התוצאות היא ABC.",
+      "en": "Fix the prefix and arrange only the remaining letters. The resulting set is ABC."
+    }
+  },
+  {
+    "key": "quick-sw-395-v1",
+    "source_key": "quick-sw-395",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במחסום רב־פעמי חוט זוכר שהגיע בסבב 5. קריאות מספר הסבב תחת המנעול הן [5,5,6]. מה האינדקס הראשון שבו מותר לחוט להמשיך? האינדקסים מתחילים באפס. החזירו ‎-1 אם טרם נצפה שינוי.",
+      "en": "At a reusable barrier a thread saved generation 5 on arrival. Its readings under the lock are [5,5,6]. At what zero-based index may it first continue? Return -1 if it has yet to observe a change."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      }
+    ],
+    "explanation": {
+      "he": "באינדקס 2 נקרא הסבב 6. זו הקריאה הראשונה ששונה מהסבב השמור 5.",
+      "en": "Index 2 reads generation 6, the first reading different from the saved generation 5."
+    }
+  },
+  {
+    "key": "quick-sw-395-v2",
+    "source_key": "quick-sw-395",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במחסום רב־פעמי חוט זוכר שהגיע בסבב 3. קריאות מספר הסבב תחת המנעול הן [4]. מה האינדקס הראשון שבו מותר לחוט להמשיך? האינדקסים מתחילים באפס. החזירו ‎-1 אם טרם נצפה שינוי.",
+      "en": "At a reusable barrier a thread saved generation 3 on arrival. Its readings under the lock are [4]. At what zero-based index may it first continue? Return -1 if it has yet to observe a change."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "explanation": {
+      "he": "באינדקס 0 נקרא הסבב 4. זו הקריאה הראשונה ששונה מהסבב השמור 3.",
+      "en": "Index 0 reads generation 4, the first reading different from the saved generation 3."
+    }
+  },
+  {
+    "key": "quick-sw-395-v3",
+    "source_key": "quick-sw-395",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במחסום רב־פעמי חוט זוכר שהגיע בסבב 0. קריאות מספר הסבב תחת המנעול הן [0,0]. מה האינדקס הראשון שבו מותר לחוט להמשיך? האינדקסים מתחילים באפס. החזירו ‎-1 אם טרם נצפה שינוי.",
+      "en": "At a reusable barrier a thread saved generation 0 on arrival. Its readings under the lock are [0,0]. At what zero-based index may it first continue? Return -1 if it has yet to observe a change."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "explanation": {
+      "he": "באף בדיקה לא נצפה שינוי במספר הסבב, ולכן אין עדיין אישור להמשיך.",
+      "en": "No observation shows a changed generation, so the thread has no evidence yet that it may continue."
+    }
+  },
+  {
+    "key": "quick-sw-395-v4",
+    "source_key": "quick-sw-395",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במחסום רב־פעמי חוט זוכר שהגיע בסבב 9. קריאות מספר הסבב תחת המנעול הן []. מה האינדקס הראשון שבו מותר לחוט להמשיך? האינדקסים מתחילים באפס. החזירו ‎-1 אם טרם נצפה שינוי.",
+      "en": "At a reusable barrier a thread saved generation 9 on arrival. Its readings under the lock are []. At what zero-based index may it first continue? Return -1 if it has yet to observe a change."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "-1",
+        "en": "-1"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "explanation": {
+      "he": "באף בדיקה לא נצפה שינוי במספר הסבב, ולכן אין עדיין אישור להמשיך.",
+      "en": "No observation shows a changed generation, so the thread has no evidence yet that it may continue."
+    }
+  },
+  {
+    "key": "quick-sw-395-v5",
+    "source_key": "quick-sw-395",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "במחסום רב־פעמי חוט זוכר שהגיע בסבב 12. קריאות מספר הסבב תחת המנעול הן [12,13]. מה האינדקס הראשון שבו מותר לחוט להמשיך? האינדקסים מתחילים באפס. החזירו ‎-1 אם טרם נצפה שינוי.",
+      "en": "At a reusable barrier a thread saved generation 12 on arrival. Its readings under the lock are [12,13]. At what zero-based index may it first continue? Return -1 if it has yet to observe a change."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "13",
+        "en": "13"
+      }
+    ],
+    "explanation": {
+      "he": "באינדקס 1 נקרא הסבב 13. זו הקריאה הראשונה ששונה מהסבב השמור 12.",
+      "en": "Index 1 reads generation 13, the first reading different from the saved generation 12."
+    }
+  },
+  {
+    "key": "quick-sw-396-v1",
+    "source_key": "quick-sw-396",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך האחסון של מחסנית מופיעים [0,0,0] וגודלה הפעיל 0. האיברים הפעילים מתחילים באינדקס אפס. כמה עותקים של 0 נמצאים במחסנית?",
+      "en": "A stack's backing array is [0,0,0] and its active size is 0. Active entries start at index zero. How many occurrences of 0 are in the stack?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "סורקים את התחילית הפעילה [] וסופרים רק את ההתאמות בתוכה.",
+      "en": "Scan the active prefix [] and count matches only inside it."
+    }
+  },
+  {
+    "key": "quick-sw-396-v2",
+    "source_key": "quick-sw-396",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך האחסון של מחסנית מופיעים [2,2,1,2] וגודלה הפעיל 2. האיברים הפעילים מתחילים באינדקס אפס. כמה עותקים של 2 נמצאים במחסנית?",
+      "en": "A stack's backing array is [2,2,1,2] and its active size is 2. Active entries start at index zero. How many occurrences of 2 are in the stack?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "explanation": {
+      "he": "סורקים את התחילית הפעילה [2,2] וסופרים רק את ההתאמות בתוכה.",
+      "en": "Scan the active prefix [2,2] and count matches only inside it."
+    }
+  },
+  {
+    "key": "quick-sw-396-v3",
+    "source_key": "quick-sw-396",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך האחסון של מחסנית מופיעים [1,3,3] וגודלה הפעיל 1. האיברים הפעילים מתחילים באינדקס אפס. כמה עותקים של 3 נמצאים במחסנית?",
+      "en": "A stack's backing array is [1,3,3] and its active size is 1. Active entries start at index zero. How many occurrences of 3 are in the stack?"
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "סורקים את התחילית הפעילה [1] וסופרים רק את ההתאמות בתוכה.",
+      "en": "Scan the active prefix [1] and count matches only inside it."
+    }
+  },
+  {
+    "key": "quick-sw-396-v4",
+    "source_key": "quick-sw-396",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך האחסון של מחסנית מופיעים [5,1,5,5] וגודלה הפעיל 4. האיברים הפעילים מתחילים באינדקס אפס. כמה עותקים של 5 נמצאים במחסנית?",
+      "en": "A stack's backing array is [5,1,5,5] and its active size is 4. Active entries start at index zero. How many occurrences of 5 are in the stack?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "explanation": {
+      "he": "סורקים את התחילית הפעילה [5,1,5,5] וסופרים רק את ההתאמות בתוכה.",
+      "en": "Scan the active prefix [5,1,5,5] and count matches only inside it."
+    }
+  },
+  {
+    "key": "quick-sw-396-v5",
+    "source_key": "quick-sw-396",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "במערך האחסון של מחסנית מופיעים [2,0,9,0] וגודלה הפעיל 3. האיברים הפעילים מתחילים באינדקס אפס. כמה עותקים של 0 נמצאים במחסנית?",
+      "en": "A stack's backing array is [2,0,9,0] and its active size is 3. Active entries start at index zero. How many occurrences of 0 are in the stack?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "explanation": {
+      "he": "סורקים את התחילית הפעילה [2,0,9] וסופרים רק את ההתאמות בתוכה.",
+      "en": "Scan the active prefix [2,0,9] and count matches only inside it."
+    }
+  },
+  {
+    "key": "quick-sw-397-v1",
+    "source_key": "quick-sw-397",
+    "variant": 1,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בשורת תמונה ברוחב 10, העמודות ממוספרות מאפס. מתחילים בעמודה 1 ומתקדמים בצעד 4. כמה נקודות דגימה נמצאות בשורה?",
+      "en": "In a row of width 10, columns start at zero. Sampling starts at column 1 and advances by 4. How many sample points lie inside the row?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "העמודות הנדגמות בתוך התמונה הן [1,5,9]. עוצרים לפני עמודה 10.",
+      "en": "The sampled columns inside the image are [1,5,9]. Stop before column 10."
+    }
+  },
+  {
+    "key": "quick-sw-397-v2",
+    "source_key": "quick-sw-397",
+    "variant": 2,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בשורת תמונה ברוחב 9, העמודות ממוספרות מאפס. מתחילים בעמודה 1 ומתקדמים בצעד 4. כמה נקודות דגימה נמצאות בשורה?",
+      "en": "In a row of width 9, columns start at zero. Sampling starts at column 1 and advances by 4. How many sample points lie inside the row?"
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "explanation": {
+      "he": "העמודות הנדגמות בתוך התמונה הן [1,5]. עוצרים לפני עמודה 9.",
+      "en": "The sampled columns inside the image are [1,5]. Stop before column 9."
+    }
+  },
+  {
+    "key": "quick-sw-397-v3",
+    "source_key": "quick-sw-397",
+    "variant": 3,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בשורת תמונה ברוחב 4, העמודות ממוספרות מאפס. מתחילים בעמודה 3 ומתקדמים בצעד 6. כמה נקודות דגימה נמצאות בשורה?",
+      "en": "In a row of width 4, columns start at zero. Sampling starts at column 3 and advances by 6. How many sample points lie inside the row?"
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "explanation": {
+      "he": "העמודות הנדגמות בתוך התמונה הן [3]. עוצרים לפני עמודה 4.",
+      "en": "The sampled columns inside the image are [3]. Stop before column 4."
+    }
+  },
+  {
+    "key": "quick-sw-397-v4",
+    "source_key": "quick-sw-397",
+    "variant": 4,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בשורת תמונה ברוחב 5, העמודות ממוספרות מאפס. מתחילים בעמודה 5 ומתקדמים בצעד 1. כמה נקודות דגימה נמצאות בשורה?",
+      "en": "In a row of width 5, columns start at zero. Sampling starts at column 5 and advances by 1. How many sample points lie inside the row?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "explanation": {
+      "he": "העמודות הנדגמות בתוך התמונה הן []. עוצרים לפני עמודה 5.",
+      "en": "The sampled columns inside the image are []. Stop before column 5."
+    }
+  },
+  {
+    "key": "quick-sw-397-v5",
+    "source_key": "quick-sw-397",
+    "variant": 5,
+    "topic": "python",
+    "status": "draft",
+    "prompt": {
+      "he": "בשורת תמונה ברוחב 8, העמודות ממוספרות מאפס. מתחילים בעמודה 0 ומתקדמים בצעד 1. כמה נקודות דגימה נמצאות בשורה?",
+      "en": "In a row of width 8, columns start at zero. Sampling starts at column 0 and advances by 1. How many sample points lie inside the row?"
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "8",
+        "en": "8"
+      },
+      {
+        "he": "7",
+        "en": "7"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "explanation": {
+      "he": "העמודות הנדגמות בתוך התמונה הן [0,1,2,3,4,5,6,7]. עוצרים לפני עמודה 8.",
+      "en": "The sampled columns inside the image are [0,1,2,3,4,5,6,7]. Stop before column 8."
+    }
+  },
+  {
+    "key": "quick-sw-398-v1",
+    "source_key": "quick-sw-398",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רוחב הבסיס של פירמידת כוכבים הוא 1. רוחבי השורות מלמעלה הם האי־זוגיים העוקבים שמתחילים ב־1. מדלגים על 0 שורות ראשונות. כמה כוכבים מודפסים בפועל?",
+      "en": "A star pyramid has base width 1. Its row widths are consecutive odd numbers starting at 1. Skip the first 0 rows. How many stars are actually printed?"
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "רוחבי השורות שמודפסות הם [1]. סכומם הוא 1.",
+      "en": "The printed row widths are [1]. Their sum is 1."
+    }
+  },
+  {
+    "key": "quick-sw-398-v2",
+    "source_key": "quick-sw-398",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רוחב הבסיס של פירמידת כוכבים הוא 5. רוחבי השורות מלמעלה הם האי־זוגיים העוקבים שמתחילים ב־1. מדלגים על 0 שורות ראשונות. כמה כוכבים מודפסים בפועל?",
+      "en": "A star pyramid has base width 5. Its row widths are consecutive odd numbers starting at 1. Skip the first 0 rows. How many stars are actually printed?"
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "5",
+        "en": "5"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "15",
+        "en": "15"
+      }
+    ],
+    "explanation": {
+      "he": "רוחבי השורות שמודפסות הם [1,3,5]. סכומם הוא 9.",
+      "en": "The printed row widths are [1,3,5]. Their sum is 9."
+    }
+  },
+  {
+    "key": "quick-sw-398-v3",
+    "source_key": "quick-sw-398",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רוחב הבסיס של פירמידת כוכבים הוא 7. רוחבי השורות מלמעלה הם האי־זוגיים העוקבים שמתחילים ב־1. מדלגים על 2 שורות ראשונות. כמה כוכבים מודפסים בפועל?",
+      "en": "A star pyramid has base width 7. Its row widths are consecutive odd numbers starting at 1. Skip the first 2 rows. How many stars are actually printed?"
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "10",
+        "en": "10"
+      },
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "12",
+        "en": "12"
+      }
+    ],
+    "explanation": {
+      "he": "רוחבי השורות שמודפסות הם [5,7]. סכומם הוא 12.",
+      "en": "The printed row widths are [5,7]. Their sum is 12."
+    }
+  },
+  {
+    "key": "quick-sw-398-v4",
+    "source_key": "quick-sw-398",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רוחב הבסיס של פירמידת כוכבים הוא 9. רוחבי השורות מלמעלה הם האי־זוגיים העוקבים שמתחילים ב־1. מדלגים על 4 שורות ראשונות. כמה כוכבים מודפסים בפועל?",
+      "en": "A star pyramid has base width 9. Its row widths are consecutive odd numbers starting at 1. Skip the first 4 rows. How many stars are actually printed?"
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "9",
+        "en": "9"
+      },
+      {
+        "he": "25",
+        "en": "25"
+      },
+      {
+        "he": "16",
+        "en": "16"
+      },
+      {
+        "he": "5",
+        "en": "5"
+      }
+    ],
+    "explanation": {
+      "he": "רוחבי השורות שמודפסות הם [9]. סכומם הוא 9.",
+      "en": "The printed row widths are [9]. Their sum is 9."
+    }
+  },
+  {
+    "key": "quick-sw-398-v5",
+    "source_key": "quick-sw-398",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "רוחב הבסיס של פירמידת כוכבים הוא 3. רוחבי השורות מלמעלה הם האי־זוגיים העוקבים שמתחילים ב־1. מדלגים על 2 שורות ראשונות. כמה כוכבים מודפסים בפועל?",
+      "en": "A star pyramid has base width 3. Its row widths are consecutive odd numbers starting at 1. Skip the first 2 rows. How many stars are actually printed?"
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "explanation": {
+      "he": "רוחבי השורות שמודפסות הם []. סכומם הוא 0.",
+      "en": "The printed row widths are []. Their sum is 0."
+    }
+  },
+  {
+    "key": "quick-sw-399-v1",
+    "source_key": "quick-sw-399",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מקטעי הטקסט [\"re\",\"d red\"] מגיעים לפי הסדר. מחברים אותם בלי להוסיף תו ומפצלים למילים לפי רווחים. כמה מילים שוות בדיוק ל־red? גודל האות וסימני הפיסוק נשמרים.",
+      "en": "Receive text chunks [\"re\",\"d red\"] in order. Concatenate them without adding characters, then split on whitespace. How many whole tokens equal red? Case and punctuation are significant."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי החיבור מתקבל רצף המילים [\"red\",\"red\"]. סופרים רק התאמות מלאות למילה red.",
+      "en": "After concatenation the tokens are [\"red\",\"red\"]. Count only complete matches for red."
+    }
+  },
+  {
+    "key": "quick-sw-399-v2",
+    "source_key": "quick-sw-399",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מקטעי הטקסט [\" cat\",\"alog cat\"] מגיעים לפי הסדר. מחברים אותם בלי להוסיף תו ומפצלים למילים לפי רווחים. כמה מילים שוות בדיוק ל־cat? גודל האות וסימני הפיסוק נשמרים.",
+      "en": "Receive text chunks [\" cat\",\"alog cat\"] in order. Concatenate them without adding characters, then split on whitespace. How many whole tokens equal cat? Case and punctuation are significant."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי החיבור מתקבל רצף המילים [\"catalog\",\"cat\"]. סופרים רק התאמות מלאות למילה cat.",
+      "en": "After concatenation the tokens are [\"catalog\",\"cat\"]. Count only complete matches for cat."
+    }
+  },
+  {
+    "key": "quick-sw-399-v3",
+    "source_key": "quick-sw-399",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מקטעי הטקסט [\"UP low up\",\"! Up\"] מגיעים לפי הסדר. מחברים אותם בלי להוסיף תו ומפצלים למילים לפי רווחים. כמה מילים שוות בדיוק ל־up? גודל האות וסימני הפיסוק נשמרים.",
+      "en": "Receive text chunks [\"UP low up\",\"! Up\"] in order. Concatenate them without adding characters, then split on whitespace. How many whole tokens equal up? Case and punctuation are significant."
+    },
+    "correct": 0,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי החיבור מתקבל רצף המילים [\"UP\",\"low\",\"up!\",\"Up\"]. סופרים רק התאמות מלאות למילה up.",
+      "en": "After concatenation the tokens are [\"UP\",\"low\",\"up!\",\"Up\"]. Count only complete matches for up."
+    }
+  },
+  {
+    "key": "quick-sw-399-v4",
+    "source_key": "quick-sw-399",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מקטעי הטקסט [\"to \",\"to\",\" to\"] מגיעים לפי הסדר. מחברים אותם בלי להוסיף תו ומפצלים למילים לפי רווחים. כמה מילים שוות בדיוק ל־to? גודל האות וסימני הפיסוק נשמרים.",
+      "en": "Receive text chunks [\"to \",\"to\",\" to\"] in order. Concatenate them without adding characters, then split on whitespace. How many whole tokens equal to? Case and punctuation are significant."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי החיבור מתקבל רצף המילים [\"to\",\"to\",\"to\"]. סופרים רק התאמות מלאות למילה to.",
+      "en": "After concatenation the tokens are [\"to\",\"to\",\"to\"]. Count only complete matches for to."
+    }
+  },
+  {
+    "key": "quick-sw-399-v5",
+    "source_key": "quick-sw-399",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "מקטעי הטקסט [\"no\",\" \",\"no\",\"w\"] מגיעים לפי הסדר. מחברים אותם בלי להוסיף תו ומפצלים למילים לפי רווחים. כמה מילים שוות בדיוק ל־no? גודל האות וסימני הפיסוק נשמרים.",
+      "en": "Receive text chunks [\"no\",\" \",\"no\",\"w\"] in order. Concatenate them without adding characters, then split on whitespace. How many whole tokens equal no? Case and punctuation are significant."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "אחרי החיבור מתקבל רצף המילים [\"no\",\"now\"]. סופרים רק התאמות מלאות למילה no.",
+      "en": "After concatenation the tokens are [\"no\",\"now\"]. Count only complete matches for no."
+    }
+  },
+  {
+    "key": "quick-sw-400-v1",
+    "source_key": "quick-sw-400",
+    "variant": 1,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "משחלפים את המטריצה [[1]] סביב האלכסון הראשי. כמה זוגות סימטריים מחוץ לאלכסון מכילים ערכים שונים ולכן משנים את תוכנם בהחלפה? כל זוג נספר פעם אחת.",
+      "en": "Transpose [[1]] across its main diagonal. How many off-diagonal symmetric pairs have unequal values, so swapping changes their contents? Count each pair once."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      }
+    ],
+    "explanation": {
+      "he": "באינדקסים מאפס, המיקומים מעל האלכסון ששונים מהתא המשתקף הם [].",
+      "en": "With zero-based indices, the positions above the diagonal that differ from their reflections are []."
+    }
+  },
+  {
+    "key": "quick-sw-400-v2",
+    "source_key": "quick-sw-400",
+    "variant": 2,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "משחלפים את המטריצה [[1,4],[3,1]] סביב האלכסון הראשי. כמה זוגות סימטריים מחוץ לאלכסון מכילים ערכים שונים ולכן משנים את תוכנם בהחלפה? כל זוג נספר פעם אחת.",
+      "en": "Transpose [[1,4],[3,1]] across its main diagonal. How many off-diagonal symmetric pairs have unequal values, so swapping changes their contents? Count each pair once."
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      }
+    ],
+    "explanation": {
+      "he": "באינדקסים מאפס, המיקומים מעל האלכסון ששונים מהתא המשתקף הם [[0,1]].",
+      "en": "With zero-based indices, the positions above the diagonal that differ from their reflections are [[0,1]]."
+    }
+  },
+  {
+    "key": "quick-sw-400-v3",
+    "source_key": "quick-sw-400",
+    "variant": 3,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "משחלפים את המטריצה [[1,2],[2,3]] סביב האלכסון הראשי. כמה זוגות סימטריים מחוץ לאלכסון מכילים ערכים שונים ולכן משנים את תוכנם בהחלפה? כל זוג נספר פעם אחת.",
+      "en": "Transpose [[1,2],[2,3]] across its main diagonal. How many off-diagonal symmetric pairs have unequal values, so swapping changes their contents? Count each pair once."
+    },
+    "correct": 1,
+    "choices": [
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "0",
+        "en": "0"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "4",
+        "en": "4"
+      }
+    ],
+    "explanation": {
+      "he": "באינדקסים מאפס, המיקומים מעל האלכסון ששונים מהתא המשתקף הם [].",
+      "en": "With zero-based indices, the positions above the diagonal that differ from their reflections are []."
+    }
+  },
+  {
+    "key": "quick-sw-400-v4",
+    "source_key": "quick-sw-400",
+    "variant": 4,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "משחלפים את המטריצה [[1,2,3],[7,4,5],[8,9,6]] סביב האלכסון הראשי. כמה זוגות סימטריים מחוץ לאלכסון מכילים ערכים שונים ולכן משנים את תוכנם בהחלפה? כל זוג נספר פעם אחת.",
+      "en": "Transpose [[1,2,3],[7,4,5],[8,9,6]] across its main diagonal. How many off-diagonal symmetric pairs have unequal values, so swapping changes their contents? Count each pair once."
+    },
+    "correct": 2,
+    "choices": [
+      {
+        "he": "6",
+        "en": "6"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "9",
+        "en": "9"
+      }
+    ],
+    "explanation": {
+      "he": "באינדקסים מאפס, המיקומים מעל האלכסון ששונים מהתא המשתקף הם [[0,1],[0,2],[1,2]].",
+      "en": "With zero-based indices, the positions above the diagonal that differ from their reflections are [[0,1],[0,2],[1,2]]."
+    }
+  },
+  {
+    "key": "quick-sw-400-v5",
+    "source_key": "quick-sw-400",
+    "variant": 5,
+    "topic": "algorithms",
+    "status": "draft",
+    "prompt": {
+      "he": "משחלפים את המטריצה [[0,1,2],[1,0,3],[4,5,0]] סביב האלכסון הראשי. כמה זוגות סימטריים מחוץ לאלכסון מכילים ערכים שונים ולכן משנים את תוכנם בהחלפה? כל זוג נספר פעם אחת.",
+      "en": "Transpose [[0,1,2],[1,0,3],[4,5,0]] across its main diagonal. How many off-diagonal symmetric pairs have unequal values, so swapping changes their contents? Count each pair once."
+    },
+    "correct": 3,
+    "choices": [
+      {
+        "he": "4",
+        "en": "4"
+      },
+      {
+        "he": "3",
+        "en": "3"
+      },
+      {
+        "he": "1",
+        "en": "1"
+      },
+      {
+        "he": "2",
+        "en": "2"
+      }
+    ],
+    "explanation": {
+      "he": "באינדקסים מאפס, המיקומים מעל האלכסון ששונים מהתא המשתקף הם [[0,2],[1,2]].",
+      "en": "With zero-based indices, the positions above the diagonal that differ from their reflections are [[0,2],[1,2]]."
+    }
+  }
+]

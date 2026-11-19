@@ -1,5 +1,18 @@
 # JobRun deployment and access
 
+> Historical hosting guide, recorded 20 September 2026. Ordinary production
+> releases now use the dedicated `production` branch and the signed VPS route in
+> [PRODUCTION.md](../deploy/selfhost/PRODUCTION.md). The canonical app origins
+> are `muxijobrun.com` and `tasks.muxijobrun.com`; see that runbook for Tasks
+> cutover status. Netlify site IDs and commands below apply only to the retained
+> old hosting. The Free-plan/billing statements below are historical and do not
+> establish the current subscription or cancellation state. Supabase data and
+> access policies continue in the same project.
+> On 14 November, builds were stopped on both sites and the legacy deployment
+> workflows were disabled. Copies remain pending the user's new Tasks login
+> confirmation; neither runtime nor rollback depends on Netlify. Do not run the
+> historical deployment commands below as the ordinary release procedure.
+
 Updated: 20 September 2026.
 
 ## Live applications

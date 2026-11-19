@@ -43,6 +43,7 @@ import {
   Zap,
 } from "lucide-react";
 import { emptyCircuit, type Circuit } from "../../lib/circuit";
+import { CodeWorkspace } from "../../components/code-workspace";
 import type { AnswerLanguage } from "../../lib/technical-answer";
 import {
   categoryLabel,
@@ -1178,7 +1179,14 @@ function Practice({
                 </div>
               </>
             ) : draft.tab === "code" ? (
-              <>
+              <CodeWorkspace lang={lang} question={{
+                title: t(...q.title),
+                content: <>
+                  <p className={s.prompt}>{t(...q.prompt)}</p>
+                  <pre className="code-block" dir="ltr"><code>{q.code}</code></pre>
+                  {q.id === "xor" && <CircuitMoment t={t} />}
+                </>,
+              }}>
                 <div className={s.codeToolbar}>
                   <label htmlFor="code-lang">{t("שפת קוד", "Language")}</label>
                   <select
@@ -1224,7 +1232,7 @@ function Practice({
                     "Tab indents. Press Escape, then Tab to leave the editor.",
                   )}
                 </p>
-              </>
+              </CodeWorkspace>
             ) : draft.tab === "circuit" ? (
               <div className={s.circuitEditor}>
                 <CircuitEditor

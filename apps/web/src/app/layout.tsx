@@ -17,6 +17,7 @@ import { UserInboxProvider } from "../components/user-inbox";
 import { PersonalHelper } from "../components/personal-helper/personal-helper";
 import { MemberTour } from "../components/tour/member-tour";
 import "../components/tour/member-tour.css";
+import "../components/code-workspace.css";
 
 // Ion is the production face. Older gallery faces remain available without preloading them.
 const serif = Frank_Ruhl_Libre({

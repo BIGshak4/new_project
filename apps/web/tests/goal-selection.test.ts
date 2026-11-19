@@ -28,6 +28,13 @@ test("every plan-affecting field refreshes the program, while reordered role chi
 
 const origin = "https://jobrun.example";
 
+test("a founder opening a reported question keeps that question through sign-in", () => {
+  const url = new URL("/?from=tasks&view=library&question=q-01", origin);
+  for (const signedInNow of [true, false]) {
+    assert.equal(personalAreaEntryUrl(url, "", "navigate", signedInNow), "/?view=library&question=q-01");
+  }
+});
+
 test("entry and reload start at home even from a previously focused question, interview, game or shop", () => {
   for (const path of ["/", "/?view=library&nav=1", "/?view=library&question=q&source=retry", "/?view=history&attempt=a#feedback",
     "/?view=interview&interview=i&duration=30", "/?view=fundamentals&quick=quick-hw-01", "/games?duel=d", "/games/shop#my-character"]) {

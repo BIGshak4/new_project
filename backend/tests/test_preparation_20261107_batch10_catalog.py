@@ -6,6 +6,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
+
 import pytest
 
 from app.engine.catalog import load_catalog
@@ -58,7 +60,7 @@ def test_all270_old_records1557_assets_and_bilingual_content_remain_hash_bound()
     assert not BATCH1107B10_BASELINE['source_only_ids']
     assert_pre_batch1107b10_archive(current_archive)
     assets=read(SEEDS/'preparation_uploads.json')['files']
-    assert len(assets)==1837
+    assert len(assets)==2339
     assert_pre_batch1107b10_assets(assets)
     localized={}
     for path in (SEEDS/'preparation_localization').glob('*.json'):
@@ -74,7 +76,7 @@ def test_all270_old_records1557_assets_and_bilingual_content_remain_hash_bound()
 
 def test_complete_bilingual_content_and_answer_media_are_still_gated():
     catalog=load_catalog(SEEDS)
-    assert len(catalog.questions)== 340
+    assert len(catalog.questions)== 415
     selected={q.assets.get('preparation_id'):q for q in catalog.questions.values()
               if q.assets.get('preparation_id') in NEW|VARIANTS}
     assert set(selected)==NEW|VARIANTS
@@ -114,11 +116,16 @@ def test_completeness_audit_covers_every_prior_record_and_names_only_two_needed_
 def test_short_banks_and_attestation_registry_are_unchanged():
     baseline=BATCH1107B10_BASELINE
     for name,expected in baseline['short_card_source_sha256'].items():
-        assert digest(read(ROOT/'apps/web/src/content'/name))==expected
+        assert digest(before_current_copy('fundamentals', name, read(ROOT/'apps/web/src/content'/name)))==expected
     for name,key in [('fundamentals_catalog.json','fundamentals_catalog_sha256'),
                      ('duel_quiz.json','quiz_bank_sha256'),
                      ('solution_review_attestations.json','review_registry_canonical_sha256')]:
-        assert digest(read(SEEDS/name))==baseline[key]
+        actual = read(SEEDS / name)
+        if name == 'fundamentals_catalog.json':
+            actual = before_current_fundamentals_manifest(actual)
+        elif name == 'duel_quiz.json':
+            actual = before_current_copy('quiz', name, actual)
+        assert digest(actual) == baseline[key]
 
 
 @pytest.mark.parametrize('mutation',['title','hint','prompt','version','media','digest','asset_ordinal'])

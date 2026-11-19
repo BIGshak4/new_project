@@ -7,7 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Annotated
 
-from pydantic import field_validator
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
@@ -56,12 +56,13 @@ class Settings(BaseSettings):
     stripe_price_premium: str | None = None            # ... and "premium" (50 a day)
     require_payment: bool = False
     billing_free_option_visible: bool = True
-    site_url: str = "https://jobrun-practice.netlify.app"   # where Stripe sends the user back
+    site_url: str = "https://muxijobrun.com"   # where Stripe sends the user back
 
-    # Browser origins allowed to call the API directly (the Netlify sites). Comma-separated.
+    # Browser origins allowed to call the API directly. Comma-separated.
     allowed_origins: Annotated[list[str], NoDecode] = []      # plain comma-separated, not JSON
     # Attempts a user may start per UTC day. Fails gracefully with 429, never silently.
     daily_attempt_limit: int = 30
+    monthly_feedback_limit: int = Field(default=200, ge=0)
     # What one user's model calls may cost us in a calendar month, in shekels (Shaked, 2026-11-14: "no more than
     # 10 - 15 shekels"); at the ceiling no new attempt or interview opens until the 1st. 0 = no ceiling. Measured
     # from usage_event, so it holds whatever the models cost. USD_TO_ILS turns the recorded dollars into shekels.

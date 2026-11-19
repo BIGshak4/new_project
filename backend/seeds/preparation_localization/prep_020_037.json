@@ -105,7 +105,7 @@
     "edge_cases": {
       "he": [
         "מסלול הבחירה עשוי לשלוט בזמן ההגעה לעומת מסלולי הנתונים",
-        "ה־MUXים פועלים במקביל",
+        "ה־MUX ים פועלים במקביל",
         "היפוך אות הבחירה מחליף את זיווג האופרנדים",
         "שינוי בקלט הקופסה השחורה עשוי להיות מסלול כוזב מבחינה פונקציונלית; הפונקציה אינה ידועה",
         "לא נתון רגיסטר קולט",
@@ -143,7 +143,7 @@
     "common_mistakes": {
       "he": [
         "התעלמות מתזמון כניסת הבחירה של MUX",
-        "חיבור השהיות של MUXים מקבילים כאילו הם בטור",
+        "חיבור השהיות של MUX ים מקבילים כאילו הם בטור",
         "החמצת היפוך הבחירה הימנית",
         "פירוש חוטים מצטלבים כצומת חיבור",
         "שכפול המכפל תוך טענה שמלאי הרכיבים לא השתנה",
@@ -319,7 +319,7 @@
         "Complexity assumes O(1) bounded RNG and word-array operations; counts output items, not decimal characters.",
         "Part (a) includes permission to use an array; solutions need not use different structures.",
         "In the supplied-array variant, both endpoints of rand_range(min, max) are inclusive; reuse the existing array and do not require every cell to change.",
-        "Persistent state initialized once; call101 fails. Uniformity assumes independent uniform raw draws."
+        "Persistent state initialized once; call 101 fails. Uniformity assumes independent uniform raw draws."
       ]
     },
     "optimality": {
@@ -351,7 +351,7 @@
         "Self swaps must be allowed",
         "Inclusive rand bounds vs zero-based indexing",
         "Biased random source preserves uniqueness but not uniformity",
-        "RAND_MAX rejected, active size 1 skips draws, call101 leaves out unchanged, separate bags keep separate state."
+        "RAND_MAX rejected, active size 1 skips draws, call 101 leaves out unchanged, separate bags keep separate state."
       ]
     },
     "verification": {
@@ -392,7 +392,7 @@
         },
         "Existing-array variant: 5,914 exhaustive paths for lengths 0–7, in-place identity, exact bounds, 10 boundary runs and 99 draws at length 100 passed. This does not test RNG quality.",
         "Additional 2026-10-21 checks: all 5,914 indexed choice paths for lengths 0..7 using object identity, six paths for three values including a duplicate, and ten object boundary cases. Array identity, element identities and multiplicities preserved. No RNG-quality test.",
-        "Added771 exhaustive draw paths for empty through six-cell screens, checking coordinate bounds and no repetition.",
+        "Added 771 exhaustive draw paths for empty through six-cell screens, checking coordinate bounds and no repetition.",
         "372 small bucket domains checked for conditional balance; native C11 compilation and execution passed 6,665 uniqueness, rejection and exhaustion checks in the native report."
       ]
     },
@@ -475,7 +475,7 @@
           ]
         },
         "וריאציה: מאה תוצאות ממחולל C המשתמש ב־ rand": {
-          "prompt": "### וריאציה: מאה תוצאות שונות מפונקציה בשפת C\nבעזרת rand ממשו פונקציה ב־ C שמחזירה בכל קריאה מספר בתחום 1..100, כך שמאה הקריאות הראשונות יחזירו את כל המספרים ללא חזרה.\n\nהשלמת חוזה: C11, מצב Shuffle100 שמאותחל פעם אחת ומועבר לכל קריאה. shuffle100_next מחזירה bool וכותבת את המספר ב־ out בהצלחה; אחרי מאה תוצאות היא מחזירה false ואינה משנה out. אין ערבוב מחדש אוטומטי. rand מחזירה 0..RAND_MAX; אין להשתמש ב־ rand(m) דמיונית. כדי להוכיח אחידות מניחים במפורש דגימות גולמיות אחידות ועצמאיות; C אינה מבטיחה זאת לכל מימוש rand. שפרו את המרת הטווח כך שלא תוסיף הטיית מודולו, והסבירו את עלות הדחייה ואת ההבדל בין אי־חזרה לבין אחידות.",
+          "prompt": "### וריאציה: מאה תוצאות שונות מפונקציה בשפת C\nבעזרת rand ממשו פונקציה ב־ C שמחזירה בכל קריאה מספר בתחום 1..100, כך שמאה הקריאות הראשונות יחזירו את כל המספרים ללא חזרה.\n\nהשלמת חוזה: C11, מצב Shuffle100 שמאותחל פעם אחת ומועבר לכל קריאה. shuffle 100_next מחזירה bool וכותבת את המספר ב־ out בהצלחה; אחרי מאה תוצאות היא מחזירה false ואינה משנה out. אין ערבוב מחדש אוטומטי. rand מחזירה 0..RAND_MAX; אין להשתמש ב־ rand(m) דמיונית. כדי להוכיח אחידות מניחים במפורש דגימות גולמיות אחידות ועצמאיות; C אינה מבטיחה זאת לכל מימוש rand. שפרו את המרת הטווח כך שלא תוסיף הטיית מודולו, והסבירו את עלות הדחייה ואת ההבדל בין אי־חזרה לבין אחידות.",
           "hints": [
             "למה צריך מצב שנשמר בין הקריאות?",
             "שמרו מאגר של מספרים שטרם הוחזרו; בחרו מתוכו והוציאו בהחלפה עם הקצה.",
@@ -493,7 +493,7 @@
           ]
         },
         "Variant: one hundred C generator outputs using rand": {
-          "prompt": "### Variant: one hundred distinct results from a C function\nUsing rand, implement a C function returning 1..100 so the first 100 calls produce every number once.\n\nChosen contract: C11, a Shuffle100 state initialized once and supplied to each call. shuffle100_next returns bool and writes out on success; after 100 outputs it returns false without changing out. No automatic reshuffle. rand returns 0..RAND_MAX, not a fictional rand(m). A uniformity proof explicitly assumes independent uniform raw draws; the C standard does not promise that for every rand implementation. Avoid adding modulo bias during range conversion and explain rejection cost and uniqueness versus uniformity.",
+          "prompt": "### Variant: one hundred distinct results from a C function\nUsing rand, implement a C function returning 1..100 so the first 100 calls produce every number once.\n\nChosen contract: C11, a Shuffle100 state initialized once and supplied to each call. shuffle 100_next returns bool and writes out on success; after 100 outputs it returns false without changing out. No automatic reshuffle. rand returns 0..RAND_MAX, not a fictional rand(m). A uniformity proof explicitly assumes independent uniform raw draws; the C standard does not promise that for every rand implementation. Avoid adding modulo bias during range conversion and explain rejection cost and uniqueness versus uniformity.",
           "hints": [
             "Why must state survive between calls?",
             "Keep unreturned values, select one and remove it by swapping with the active boundary.",
@@ -1682,8 +1682,8 @@
   "PREP-031": {
     "assumptions": {
       "he": [
-        "לפתרון העיקרי משמשים MUXים רגילים ולא מהפכים בגודל 2:1; הגודל אינו מוגדר במקור.",
-        "זמינים רק a,b המקוריים, אפס קבוע ומוצאי MUXים קודמים; החיווט קומבינטורי וללא מעגלים.",
+        "לפתרון העיקרי משמשים MUX ים רגילים ולא מהפכים בגודל 2:1; הגודל אינו מוגדר במקור.",
+        "זמינים רק a,b המקוריים, אפס קבוע ומוצאי MUX ים קודמים; החיווט קומבינטורי וללא מעגלים.",
         "ערכי אמת בינאריים רגילים ו־fanout ללא הגבלה.",
         "וריאנט התזמון משתמש באותה רשת קבוע־אפס; שתי הננו־שניות נבחנות בנפרד כנתון לכל המסלול או לכל מוקס. פליפ-פלופים בחזיתות עולות עוקבות, מסלול חד־מחזורי והגדרת סטייה מפורשת."
       ],
@@ -1697,7 +1697,7 @@
     "optimality": {
       "he": {
         "criterion": "מספר רכיבי ה־MUX המותרים",
-        "result": "שני MUXים מסוג 2:1; MUX אחד מסוג 4:1 אם הוא מותר.",
+        "result": "שני MUX ים מסוג 2:1; MUX אחד מסוג 4:1 אם הוא מותר.",
         "proof": "חלוקה למקרים לפי כל אותות הבחירה האפשריים של MUX יחיד: 0,a,b; אף אחד מהם אינו מספק את קופקטור המשלים הנדרש באמצעות הנתונים המקוריים.",
         "scope": "מספר רכיבים בגודל MUX מוגדר, ללא משלימים או קבועים נוספים; אין טענה לשטח/תזמון פיזי.",
         "batch30_variant": "500 MHz הוא גבול אידאלי רק ל־2 ns לכל המסלול ללא תקורות; שתי רמות של 2 ns נותנות 250 MHz באותן הנחות. אין טענת תדר פיזי מיטבי או שיפור מובטח בחלוקה לשלבים."
@@ -1785,7 +1785,7 @@
         "batch30_variant": "הצילום הנוסף אינו אומר אם 2 ns הם השהיית מוקס, כל המסלול, זמן אופייני או מרבי; אינו נותן פליפ-פלופים, חיווט, תקורות, קבועים זמינים או תקציב השהיה במחזורים. הענפים והמודל כאן הם הנחות והגדרות מפורשות."
       },
       "en": {
-        "batch30_variant": "The added source does not identify MUX versus complete-path delay, typical versus maximum delay, registers, routing, overheads, available constants or cycle-latency budget. Branches and the timing model are explicit explicit assumptions."
+        "batch30_variant": "The added source does not identify MUX versus complete-path delay, typical versus maximum delay, registers, routing, overheads, available constants or cycle-latency budget. Branches and the timing model are explicit assumptions."
       }
     },
     "prompt_variants": {
@@ -2066,7 +2066,7 @@
       "he": [
         "ספירת שלבי ripple כמחזורי שעון",
         "התעלמות מהשהיית MUX ומשטחו",
-        "ספירת MUX חד־ביטי אחד במקום אוטובוס של MUXים",
+        "ספירת MUX חד־ביטי אחד במקום אוטובוס של MUX ים",
         "השמטת carry-out בלי לשנות את המפרט",
         "בלבול בין רמות רקורסיה לבלוקים בטור",
         "טענה שעוד רמות תמיד משפרות את הזמן",
@@ -2190,7 +2190,7 @@
         "result": "Theta(ab), תואם לחסם התחתון של ab פעולות הגדלת הפלט בקלטים חיוביים.",
         "scope": "אין טענה למספר פקודות מדויק מינימלי; מודל של מכונה עם ארבעה רגיסטרים.",
         "כפל עם איפוס וקפיצה לפי רגיסטר": "a=0: O(1); a>0: Θ(ab+b+1). ארבעה רגיסטרים; לא מינימום פקודות מדויק.",
-        "וריאציה: קפיצה לפי אוגר, ללא CLEAR ובלי הנחת עזר מאופס": "עלות כוללת כוללת את d_R2+d_T בנוסף לעלות החיבור החוזר; ארבעה אוגרים, ללא טענה למינימום מדויק."
+        "וריאציה: קפיצה לפי אוגר, ללא CLEAR ובלי הנחת עזר מאופס": "העלות הכוללת כוללת את d_R2+d_T בנוסף לעלות החיבור החוזר; ארבעה אוגרים, ללא טענה למינימום מדויק."
       },
       "en": {
         "criterion": "Asymptotic unit-instruction execution time",
@@ -2306,7 +2306,7 @@
         "ביט תקף אחד לכל חזית פעילה; המוצא נקבע לאחר צריכת הביט.",
         "עמימות לגבי אפס מתועדת בשתי פרשנויות נפרדות.",
         "מכונת Moore עם reset מפורש.",
-        "וריאציית MSB: ביט חדש נוסף משמאל במשקל2^k; ביט תקף בחזית; אפס מתחלק; seen מבדיל מצב לפני קלט; reset ל־S0.",
+        "וריאציית MSB: ביט חדש נוסף משמאל במשקל 2^k; ביט תקף בחזית; אפס מתחלק; seen מבדיל מצב לפני קלט; reset ל־S0.",
         "ביט בכל חזית; zero מתחלק; קידומת ריקה אינה תקפה; השהיה נוספת אחת."
       ],
       "en": [
@@ -2314,19 +2314,19 @@
         "One valid bit per active edge; output after consuming bit.",
         "Zero ambiguity documented as two separate interpretations.",
         "Moore FSM with explicit reset.",
-        "MSB variant: new leftmost bit has weight2^k; edge acceptance; zero is divisible; seen distinguishes pre-input; reset S0.",
+        "MSB variant: new leftmost bit has weight 2^k; edge acceptance; zero is divisible; seen distinguishes pre-input; reset S0.",
         "One bit per edge, zero divisible, empty prefix invalid, one additional output cycle."
       ]
     },
     "source_ambiguities": {
       "he": [
         "פלט הדוגמה הראשונה אינו כולל אפס, אף שאפס מתחלק בשלוש מבחינה מתמטית.",
-        "מקור13 מוסיף במפורש משמאל/MSB בניגוד לצירוף מימין במקור הישן; נשמר כווריאציה. אפס ותוקף קדם־נתון הובהרו בעריכה.",
+        "מקור 13 מוסיף במפורש משמאל/MSB בניגוד לצירוף מימין במקור הישן; נשמר כווריאציה. אפס ותוקף קדם־נתון הובהרו בעריכה.",
         "זמן t הוגדר כאן כדגימה שאחרי החזית; קידומת קודמת ריקה מדווחת 0 במפורש."
       ],
       "en": [
         "First example output excludes zero although zero is mathematically divisible by three.",
-        "Source13 explicitly says left/MSB, unlike original right appending; preserved as a variant. Zero and pre-input validity are clarified editorially.",
+        "Source 13 explicitly says left/MSB, unlike original right appending; preserved as a variant. Zero and pre-input validity are clarified editorially.",
         "Time t means the sample after an edge; an empty previous prefix explicitly produces zero."
       ]
     },
@@ -2422,7 +2422,7 @@
         "checked_on": "2026-09-29",
         "script_path": "solutions/register_prep_036.py",
         "method": "כל 8191 המילים הבינאריות באורכים 0..12, 90114 דגימות קידומת, שתי הפרשנויות מול חשבון של מספרים שלמים; סיומות המבחינות בין כל זוג מצבים ונגישות; הדוגמה המקורית המדויקת עבור הפרשנות החיובית.",
-        "batch20_extension": "וריאציית שמאל:32,767 רצפים עד אורך14 ו־425,986 קידומות עם אינווריאנט מספרי, השוואת כיוונים, hold/reset. כל דגלי החלוקה זהים לשיטת צירוף מימין בתחום הנבדק, כנדרש גם מההוכחה. אימות RTL שבוצע בפועל: prep036_left_mod3 קומפל והורץ מול assertions בכל511 הרצפים באורכים0..8, עם3,586 קידומות ואינווריאנט מספרי, seen, hold ו־reset. טווח0..14 הוא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
+        "batch20_extension": "וריאציית שמאל:32,767 רצפים עד אורך 14 ו־425,986 קידומות עם אינווריאנט מספרי, השוואת כיוונים, hold/reset. כל דגלי החלוקה זהים לשיטת צירוף מימין בתחום הנבדק, כנדרש גם מההוכחה. אימות RTL שבוצע בפועל: prep036_left_mod3 קומפל והורץ מול assertions בכל 511 הרצפים באורכים 0..8, עם 3,586 קידומות ואינווריאנט מספרי, seen, hold ו־reset. טווח 0..14 הוא בדיקת Python נפרדת. זהו אימות סימולציה עם assertions, ללא סינתזה, מדידת תזמון/הספק או בדיקת חומרה פיזית. ההרצה הגדולה הראשונית הסתיימה ב־timeout; רק ההרצה המוגבלת הושלמה.",
         "חלוקה ב־3 עם ביט חדש משמאל ופלט מושהה": [
           "בנייה עצמאית של N, בדיקת הנרמול והשוואה לקידומת הקודמת בכל חזית; reset ו־warmup.",
           "ראיית סימולציה נפרדת: רתמת SystemVerilog הודרה והורצה ב־Icarus בסביבה מבודדת; חלק התרגיל בדק 18,434 מקרי מודל. הדוח הוא checks/night1107n30-native-verification.json. אין זו בדיקת נתב אמיתי, STA או אישור חומרה."
@@ -2433,7 +2433,7 @@
         "checked_on": "2026-09-29",
         "script_path": "solutions/register_prep_036.py",
         "method": "All 8191 binary words of length 0..12, 90114 prefix samples, both interpretations against integer arithmetic; pairwise state-distinguishing suffixes and reachability; exact supplied example for positive interpretation.",
-        "batch20_extension": "Left variant:32,767 streams up to length14 and425,986 prefixes with numeric invariant, direction comparison and hold/reset. Divisibility flags match right-append throughout, as also proved. Actual RTL validation: prep036_left_mod3 compiled and passed assertions on all511 streams of lengths0..8, with3,586 numeric-invariant prefixes plus seen, hold and reset. Lengths0..14 were separately checked in Python. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed.",
+        "batch20_extension": "Left variant:32,767 streams up to length 14 and 425,986 prefixes with numeric invariant, direction comparison and hold/reset. Divisibility flags match right-append throughout, as also proved. Actual RTL validation: prep036_left_mod3 compiled and passed assertions on all 511 streams of lengths 0..8, with 3,586 numeric-invariant prefixes plus seen, hold and reset. Lengths 0..14 were separately checked in Python. This is assertion-based simulation, without synthesis, physical timing/power measurement or hardware testing. An initial larger run timed out; only the bounded RTL run completed.",
         "New-MSB divisibility by three with a delayed output": [
           "Independently construct N, check normalization, and compare with the previous prefix at each edge, including reset and warmup.",
           "Separate native evidence: the SystemVerilog harness was compiled and run with Icarus in an isolated environment; this exercise contributed 18,434 model cases. Evidence: checks/night1107n30-native-verification.json. This is not real-router validation, STA or hardware signoff."
@@ -2442,36 +2442,36 @@
     },
     "edge_cases": {
       "he": [
-        "לפני נתון ראשון לעומת נתון0; רצף אפסים; הוספת0 כ־MSB משאירה N אך משנה k;1,0 נותן N=1 ולא2; idle אינו מגדיל k.",
+        "לפני נתון ראשון לעומת נתון 0; רצף אפסים; הוספת 0 כ־MSB משאירה N אך משנה k;1,0 נותן N=1 ולא 2; idle אינו מגדיל k.",
         "ביט ראשון 0 או 1; אפסים רצופים; מעבר אל וממספר שמתחלק; reset באמצע."
       ],
       "en": [
-        "Before first input versus accepted zero; all zeros; a new zero MSB holds N but advances k;1,0 gives N=1 rather than2; idle does not advance k.",
+        "Before first input versus accepted zero; all zeros; a new zero MSB holds N but advances k;1,0 gives N=1 rather than 2; idle does not advance k.",
         "First zero/one, repeated zeros, entering/leaving divisible prefixes, and mid-stream reset."
       ]
     },
     "common_mistakes": {
       "he": [
-        "להשתמש בנוסחת2N+b כדי לתאר הוספה משמאל.",
+        "להשתמש בנוסחת 2N+b כדי לתאר הוספה משמאל.",
         "להסיק נכונות של כיוון הבנייה מבדיקת דגל בלבד: כאן שני הכיוונים תמיד מסכימים על התחלקות.",
         "לחשוב ש־s הוא השארית הרגילה N mod3 במקום השארית המנורמלת.",
         "עדכון פלט מהמצב החדש במקום הישן, הכרזה שהריקה תקפה, או הוספת enable בלי להגדיר יחידות השהיה."
       ],
       "en": [
-        "Using2N+b to describe left insertion.",
+        "Using 2N+b to describe left insertion.",
         "Inferring direction correctness from flags alone: both directions always agree on divisibility here.",
         "Interpreting s as ordinary N mod3 instead of the normalized remainder.",
         "Using new rather than old state for output, accepting the empty prefix, or adding enable without defining latency units."
       ]
     },
     "interview_answer": {
-      "he": "בגרסת MSB החדש משמאל אשתמש ב־s=N2^(−k) mod3; המעבר הוא2(s+b) mod3. שלושה מצבים מספיקים, ו־seen מונע תשובה לפני קלט. אבדוק אינווריאנט מספרי כי דגלי הכיוונים זהים.\n\nאני מנרמל את השארית כדי לא לשמור חזקה, ומוסיף FF שמקבל את בדיקת השארית הישנה. seen מונע פלט שגוי לפני שהייתה קידומת אמיתית.",
-      "en": "For new-left-MSB input use s=N2^(−k) mod3 with transition2(s+b) mod3. Three states suffice, with seen for pre-input validity. Check the numeric invariant because directional flags coincide.\n\nNormalize the remainder to avoid storing a growing power, then register the old remainder test. Seen suppresses an empty-prefix result."
+      "he": "בגרסת MSB החדש משמאל אשתמש ב־s=N2^(−k) mod3; המעבר הוא 2(s+b) mod3. שלושה מצבים מספיקים, ו־seen מונע תשובה לפני קלט. אבדוק אינווריאנט מספרי כי דגלי הכיוונים זהים.\n\nאני מנרמל את השארית כדי לא לשמור חזקה, ומוסיף FF שמקבל את בדיקת השארית הישנה. seen מונע פלט שגוי לפני שהייתה קידומת אמיתית.",
+      "en": "For new-left-MSB input use s=N2^(−k) mod3 with transition 2(s+b) mod3. Three states suffice, with seen for pre-input validity. Check the numeric invariant because directional flags coincide.\n\nNormalize the remainder to avoid storing a growing power, then register the old remainder test. Seen suppresses an empty-prefix result."
     },
     "solution_extensions": {
       "he": {
         "question": "האם אותו נרמול עובד לחלוקה ב־5?",
-        "direction": "כן, כי2 הפיך מודולו5:2^(−1)=3, ולכן next_s=3(s+b) mod5. אין להסיק שכיווני הקבלה יתנו אותו דגל לכל קידומת; המיוחד ל־3 הוא2^2=1.",
+        "direction": "כן, כי 2 הפיך מודולו 5:2^(−1)=3, ולכן next_s=3(s+b) mod5. אין להסיק שכיווני הקבלה יתנו אותו דגל לכל קידומת; המיוחד ל־3 הוא 2^2=1.",
         "integration": "מוכן בתוכן; אינו מחובר לתור אינטראקטיבי.",
         "חלוקה ב־3 עם ביט חדש משמאל ופלט מושהה": [
           {
@@ -2482,8 +2482,8 @@
         ]
       },
       "en": {
-        "question": "Does normalization also work modulo5?",
-        "direction": "Yes: inverse(2) modulo5 is3, giving next_s=3(s+b) mod5. Do not assume both directions give identical prefix flags; the modulo3 argument uses2^2=1.",
+        "question": "Does normalization also work modulo 5?",
+        "direction": "Yes: inverse(2) modulo 5 is 3, giving next_s=3(s+b) mod5. Do not assume both directions give identical prefix flags; the modulo 3 argument uses 2^2=1.",
         "integration": "Prepared in content; not connected to the interactive queue.",
         "New-MSB divisibility by three with a delayed output": [
           {
@@ -2626,7 +2626,7 @@
         "append_stream": {
           "prompt": "### Extension: status after each appended symbol\nThe additional source describes symbols pushed into a stack and asks for 0/1 at every moment. Interpret push as appending in arrival order, not reading an existing stack top-down. This extension treats only() as brackets and ignores other characters; the original three-type contract remains.\n\nfeed accepts one character and returns 1 exactly when the entire prefix so far is balanced and valid. Empty input is valid; unmatched openers yield 0 now even when completion remains possible. An unmatched close cannot be repaired by appending. Provide reset/valid but do not invent a removal operation; explain separately what pop would require.",
           "hints": [
-            "Does prefix\"(\" count as valid now or only completable? Define the output.",
+            "Does prefix \"(\" count as valid now or only completable? Define the output.",
             "One bracket type needs a depth counter plus whether an unmatched close ever occurred.",
             "After append, valid means not broken and depth 0. Prefix failure remains until reset; undo requires previous-state information."
           ],

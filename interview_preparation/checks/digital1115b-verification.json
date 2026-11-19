@@ -1,0 +1,19 @@
+{
+  "result": "passed",
+  "python_highest_bit_inputs": 65536,
+  "python_comparator_inputs": 16,
+  "python_full_carry_means": 8190,
+  "omitted_vector_counterexamples": 16,
+  "native_simulator": "Icarus Verilog 13.0 MSYS2 ucrt64",
+  "native_exit_code": 0,
+  "native_stdout": "PASS pe=65536 compare=16 mean=258 shift_commands=2048 shift_steps=7168 fib_edges=102\nC:\\Projects\\Job_Run\\intake-20261115b\\interview_preparation\\checks\\digital1115b_tb.sv:82: $finish called at 99936750 (1ps)",
+  "native_source_sha256": {
+    "solutions/prep_349_priority_encoder_1115b.sv": "36d04dedc2b205ea406fa689cbc615166a5b0982f9efbba24f9fe4f7feeebdf7",
+    "solutions/prep_350_programmable_shift_1115b.sv": "ce94e61eda9ac5d33d6207132e4a6cd2bdbeca78e2f26b23fb29b36dcff0fab1",
+    "solutions/prep_110_mux_comparator_1115b.sv": "8eb15a0585c025f8f3aac6fdad8722deeeff67cb6dc8ea67eb5d890dc8881eb2",
+    "solutions/prep_058_full_carry_mean_1115b.sv": "165ebe89e2b062a3cb34efc2b60463e6ae25e3492606a6f98394fd6383646b16",
+    "solutions/prep_044_source_fibonacci_1115b.sv": "1128c3e367c5d738f581fda5fd90efb3dba5cdd15a7ad6be7dc0f71b5dfdfb29",
+    "checks/digital1115b_tb.sv": "43e56f686cf57a895c05482c33fe25998cad876da975a7437bd62acc094a2d05"
+  },
+  "scope": "Actual compiled SystemVerilog event simulation plus independent Python models; no physical synthesis or signoff."
+}

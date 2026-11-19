@@ -11,6 +11,7 @@ import re
 from pathlib import Path
 
 from tests.difficulty_history import before_difficulty_review
+from tests.copy_november12_history import before_700_quiz_additions, is_post_500_addition
 from tests.preparation_november7_history import baseline, before_batch1107_compiled
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -62,7 +63,7 @@ def code_blocks(question):
 def test_all_long_question_identities_grading_and_code_are_unchanged():
     expected = read(FIXTURE)
     questions = sorted(long_questions(), key=lambda q: q["key"])
-    assert len(questions) == 340
+    assert len(questions) == 415
     previous = [before_batch1107_compiled(q) if q.get("assets", {}).get("preparation_id") else before_difficulty_review(q)
                 for q in questions if not q.get("assets", {}).get("preparation_id")
                 or q["assets"]["preparation_id"] in baseline()["records"]]
@@ -79,11 +80,14 @@ def test_short_identity_code_and_quiz_correct_choices_survive_copy_changes():
     expected = read(FIXTURE)
     cards = [q for path in (ROOT / "apps/web/src/content").glob("fundamentals-*.json")
              if path.name != "fundamentals-revisions.json" for q in read(path)]
+    assert len(cards) == 800
+    cards = [card for card in cards if not is_post_500_addition(card["id"])]
     assert len(cards) == 500
     controls_only = [{k: v for k, v in q.items() if k not in ("title", "prompt", "answer", "takeaway")}
                      for q in sorted(cards, key=lambda q: q["id"])]
     assert digest(controls_only) == expected["short_controls_sha256"]
-    quiz = read(ROOT / "backend/seeds/duel_quiz.json")["questions"]
+    bank = read(ROOT / "backend/seeds/duel_quiz.json")
+    quiz = before_700_quiz_additions("duel_quiz.json", bank)["questions"]
     quiz_controls = [{k: q.get(k) for k in ("key", "source_key", "variant", "topic", "correct", "status")}
                      for q in sorted(quiz, key=lambda q: q["key"])]
     assert len(quiz) == 2540

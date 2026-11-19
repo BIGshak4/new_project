@@ -49,23 +49,27 @@ async def test_buy_debits_once_and_skin_must_be_owned_before_equipping(service):
         await svc.save(user, wanted)
     assert denied.value.code == "forbidden"
     one, two = await asyncio.gather(svc.buy(user, "aurora"), svc.buy(user, "aurora"))
-    assert one["balance"] == two["balance"] == 30
+    assert one["balance"] == two["balance"] == 40
     assert one["owned_skins"] == ["aurora", "classic"]
     assert (await svc.save(user, wanted))["avatar"] == wanted
     assert (await svc.get(other))["owned_skins"] == ["classic"]
     assert len([r for r in store.coin_ledger if r["kind"] == "spend"]) == 1
-    assert await svc.public_configs([user, other]) == {str(user): wanted, str(other): DEFAULT_AVATAR}
+    assert await svc.duel_players([user, other]) == {
+        str(user): {"avatar": wanted, "username": None}, str(other): {"avatar": DEFAULT_AVATAR, "username": None}}
 
 
 async def test_competing_spends_cannot_overdraw_and_failures_do_not_grant_a_skin(service):
     svc, store = service
     user = uuid.uuid4()
     await svc.get(user)
-    results = await asyncio.gather(svc.buy(user, "negative_feedback"), svc.buy(user, "binary_people"), return_exceptions=True)
+    results = await asyncio.gather(
+        svc.buy(user, "negative_feedback"), svc.buy(user, "binary_people"), svc.buy(user, "gate_keeper"),
+        return_exceptions=True,
+    )
     assert sum(isinstance(r, ApiError) and r.status == 402 for r in results) == 1
     view = await svc.get(user)
-    assert view["balance"] == 10 and len(view["owned_skins"]) == 2
-    assert len([r for r in store.coin_ledger if r["kind"] == "spend"]) == 1
+    assert view["balance"] == 10 and len(view["owned_skins"]) == 3
+    assert len([r for r in store.coin_ledger if r["kind"] == "spend"]) == 2
     another = uuid.uuid4()
     await svc.get(another)
     store.failures.add("save_avatar")
@@ -116,7 +120,7 @@ async def test_http_identity_validation_and_opponent_cosmetics(monkeypatch):
         assert (await client.put(base, headers=a, json={**DEFAULT_AVATAR, "user_id": str(uuid.uuid4())})).status_code == 422
         assert (await client.put(base, headers=b, json={**DEFAULT_AVATAR, "skin": "gold"})).status_code == 403
         purchased = await client.post(base + "/buy", headers=a, json={"skin": "aurora"})
-        assert purchased.status_code == 200 and purchased.json()["balance"] == 30
+        assert purchased.status_code == 200 and purchased.json()["balance"] == 40
         wanted = {"component": "and", "color": "sky", "skin": "aurora"}
         assert (await client.put(base, headers=a, json=wanted)).json()["avatar"] == wanted
         assert (await client.get(base, headers=b)).json()["owned_skins"] == ["classic"]
@@ -150,7 +154,7 @@ async def test_onboarding_is_free_durable_and_preserves_owned_skin_on_skip(servi
     await svc.save(user, {"component": "xor", "color": "rose", "skin": "gold"})
     skipped = await svc.complete_onboarding(user)
     assert skipped["avatar"] == {"component": "xor", "color": "rose", "skin": "gold"}
-    assert skipped["onboarding_completed"] is True and skipped["balance"] == 30
+    assert skipped["onboarding_completed"] is True and skipped["balance"] == 40
     assert (await svc.get(user))["onboarding_completed"] is True
     another = uuid.uuid4()
     assert (await svc.complete_onboarding(another))["avatar"] == DEFAULT_AVATAR
@@ -162,9 +166,9 @@ async def test_generic_and_meme_prices_are_authoritative_and_legacy_ownership_su
     svc, store = service
     prices = {item["key"]: item["price"] for item in svc.catalog["skins"]}
     assert prices["classic"] == 0
-    assert all(prices[key] == 20 for key in ("aurora", "circuit", "cosmic", "gold"))
+    assert all(prices[key] == 10 for key in ("aurora", "circuit", "cosmic", "gold"))
     memes = {"negative_feedback", "works_on_my_machine", "binary_people", "gate_keeper", "sleep_not_found", "resistance_futile"}
-    assert all(prices[key] == 40 for key in memes)
+    assert all(prices[key] == 20 for key in memes)
     user = uuid.uuid4()
     # An old purchase remains owned and is never repurchased/refunded just because prices changed.
     store.avatars[user] = {**DEFAULT_AVATAR, "skin": "cosmic", "owned_skins": ["classic", "cosmic"], "onboarding_completed": True}

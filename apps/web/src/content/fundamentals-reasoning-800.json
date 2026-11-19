@@ -1,0 +1,807 @@
+[
+  {
+    "id": "quick-sw-351",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-374"
+    ],
+    "title": {
+      "he": "הגדלה שונה למודל ולציור",
+      "en": "Copying at unequal magnifications"
+    },
+    "prompt": {
+      "he": "מודל ברוחב 8 ס״מ נראה דרך הגדלה אופקית פי 3. את הקנבס רואים בהגדלה פי 2. מה יהיה רוחב הציור בס״מ כששני הרוחבים הנראים ישתוו?",
+      "en": "A model of width 8 cm is viewed with horizontal magnification 3. The canvas is viewed with magnification 2. How wide in cm will the painting be when the apparent widths match?"
+    },
+    "answer": {
+      "he": "הרוחב הנראה של המודל הוא 8 × 3. מחלקים בהגדלה של הקנבס, 2, ומקבלים רוחב פיזי של 12 ס״מ.",
+      "en": "The model appears 8 × 3 cm wide. Dividing by the canvas magnification of 2 gives a physical width of 12 cm."
+    },
+    "takeaway": {
+      "he": "כותבים את תנאי השוויון במרחב הנראה ואז ממירים ליחידות פיזיות.",
+      "en": "Equate the apparent sizes before converting back to physical units."
+    }
+  },
+  {
+    "id": "quick-sw-352",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-375"
+    ],
+    "title": {
+      "he": "כמה זמן נוסף בגלל העומס?",
+      "en": "How much time did congestion add?"
+    },
+    "prompt": {
+      "he": "קטע כביש שאורכו 12 ק״מ ארך היום 20 דקות. המהירות באותו קטע בכביש פנוי היא 60 קמ״ש. כמה דקות נוספו לזמן הנסיעה לעומת כביש פנוי?",
+      "en": "A 12 km road segment took 20 minutes today. Its free-flow speed is 60 km/h. How many minutes did congestion add relative to the free-flow trip?"
+    },
+    "answer": {
+      "he": "זמן הנסיעה בכביש פנוי בדקות הוא 60 × 12 / 60. הפחתתו מ־20 נותנת עיכוב של 8 דקות.",
+      "en": "Free-flow time in minutes is 60 × 12 / 60. Subtracting it from 20 gives a delay of 8 minutes."
+    },
+    "takeaway": {
+      "he": "עיכוב ביחס לזמן ייחוס יכול להצטבר גם תוך כדי תנועה.",
+      "en": "Delay relative to a baseline can accumulate while the vehicle is moving."
+    }
+  },
+  {
+    "id": "quick-sw-353",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-376"
+    ],
+    "title": {
+      "he": "חלוקה אחידה כשסוג האסימון נסתר",
+      "en": "Equal shares from hidden token types"
+    },
+    "prompt": {
+      "he": "ידוע שבאוסף יש 4 אסימונים מסוג A ועוד 2 מסוג B, אך אי אפשר לזהות אותם. לוקחים מכל אסימון אותו חלק. איזה חלק מכל אסימון יש לקחת כדי שכמות החומר מסוג A, ביחידות של אסימון שלם, תהיה 1?",
+      "en": "A collection contains 4 tokens of type A and 2 of type B, with hidden labels. The same fraction is taken from every token. Which fraction makes the amount of type A, measured in whole-token units, equal to 1?"
+    },
+    "answer": {
+      "he": "אם החלק מכל אסימון הוא f, הכמות מסוג A היא 4 × f. כדי לקבל 1, מחלקים ב־4 ומקבלים 1/4.",
+      "en": "Taking fraction f of each token collects 4 × f units of A. Dividing the target 1 by 4 gives 1/4."
+    },
+    "takeaway": {
+      "he": "איסוף אותו חלק מכל פריט שומר על הרכב האוסף.",
+      "en": "Taking the same fraction of every item preserves the composition."
+    }
+  },
+  {
+    "id": "quick-sw-354",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "title": {
+      "he": "מתי תווית יכולה להופיע שוב?",
+      "en": "When can a label return?"
+    },
+    "prompt": {
+      "he": "בכל הגרלה בוחרים באופן אחיד מבין 8 תוויות, למעט 3 התוצאות האחרונות. בדיוק 3 תוצאות שונות התקבלו מאז שהתווית X הופיעה. מה ההסתברות לקבל X בהגרלה הבאה?",
+      "en": "Each draw is uniform over 8 labels excluding the last 3 results. Exactly 3 distinct results have occurred since label X last appeared. What is the probability of X on the next draw?"
+    },
+    "answer": {
+      "he": "התווית X כבר מחוץ לחלון. מספר התוויות המותרות הוא 8 פחות 3, ורק אחת מהן היא X. מכאן שההסתברות היא 1/5.",
+      "en": "X has left the exclusion window. There are 8 minus 3 eligible labels, exactly one of which is X. The probability is 1/5."
+    },
+    "takeaway": {
+      "he": "הסיכוי בהגרלה מותנה בקבוצת התוויות הזמינות כרגע.",
+      "en": "The draw probability depends on the currently eligible labels."
+    }
+  },
+  {
+    "id": "quick-sw-355",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "title": {
+      "he": "ספירת רצפים עם איסור חזרה",
+      "en": "Counting sequences with a repeat exclusion"
+    },
+    "prompt": {
+      "he": "מתחילים בהיסטוריה ריקה, עם 4 סמלים. בכל צעד אסור לבחור סמל שהופיע ב־2 הצעדים האחרונים. כמה רצפים שונים באורך 4 אפשר ליצור?",
+      "en": "Start with an empty history and 4 symbols. At each step, exclude symbols seen in the last 2 steps. How many different sequences of length 4 are possible?"
+    },
+    "answer": {
+      "he": "בצעד הראשון יש 4 אפשרויות. אחרי j צעדים נגרעות min(j, 2) אפשרויות. כפל מספרי האפשרויות לאורך 4 הצעדים נותן 48 רצפים.",
+      "en": "The first step allows 4 choices. After j steps, min(j, 2) choices are excluded. Multiplying the choices across 4 steps gives 48 sequences."
+    },
+    "takeaway": {
+      "he": "לפני שהחלון מתמלא, מספר האפשרויות משתנה בכל צעד.",
+      "en": "The number of choices changes while the exclusion window fills."
+    }
+  },
+  {
+    "id": "quick-sw-356",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-372"
+    ],
+    "title": {
+      "he": "חלון שהופך את ההמשך לקבוע",
+      "en": "When the exclusion window forces a cycle"
+    },
+    "prompt": {
+      "he": "יש 4 כרטיסים הממוספרים מ־1 עד 4. אי אפשר לבחור שוב כרטיס שהופיע ב־3 הבחירות האחרונות. הבחירות הראשונות היו כל הכרטיסים בסדר עולה. איזה מספר יופיע בבחירה ה־6?",
+      "en": "There are 4 cards numbered 1 through 4. No card from the previous 3 picks may be chosen. The first picks were all the cards in increasing order. Which number appears on pick 6?"
+    },
+    "answer": {
+      "he": "החלון חוסם 3 מתוך 4 הכרטיסים. בכל תור יוצא ממנו בדיוק הכרטיס הבא בסדר המקורי, ולכן הסדרה מחזורית. בבחירה ה־6 מתקבל 2.",
+      "en": "The window blocks 3 of the 4 cards. Each turn releases the next card in the original order, so the sequence cycles. Pick 6 gives 2."
+    },
+    "takeaway": {
+      "he": "כשרק תוצאה אחת מותרת, ההמשך נקבע גם אם הבחירות הראשונות היו אקראיות.",
+      "en": "Once only one outcome is legal, the continuation is determined even after a random start."
+    }
+  },
+  {
+    "id": "quick-sw-357",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "title": {
+      "he": "מתדלוקים ביום למספר תחנות",
+      "en": "From daily refuels to a station count"
+    },
+    "prompt": {
+      "he": "במודל לעיר דרושים 1000 תדלוקים ביום. בכל תחנה 4 עמדות, וכל עמדה משלימה 8 תדלוקים בשעה במשך 10 שעות. מה מספר התחנות השלם המזערי שיכול לספק את הביקוש?",
+      "en": "A model city needs 1000 refuels per day. Each station has 4 pumps, each serving 8 cars per hour for 10 hours. What is the minimum whole number of stations with adequate daily capacity?"
+    },
+    "answer": {
+      "he": "הקיבולת היומית של תחנה היא 4 × 8 × 10. מחלקים את 1000 בקיבולת ומעגלים כלפי מעלה. נדרשות 4 תחנות.",
+      "en": "Daily capacity per station is 4 × 8 × 10. Divide 1000 by that capacity and round up. This requires 4 stations."
+    },
+    "takeaway": {
+      "he": "מחשבים ביקוש והספק באותן יחידות זמן.",
+      "en": "Express demand and capacity over the same time interval."
+    }
+  },
+  {
+    "id": "quick-sw-358",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-358"
+    ],
+    "title": {
+      "he": "איזה תרחיש דורש הכי הרבה תחנות?",
+      "en": "Which scenario needs the most sites?"
+    },
+    "prompt": {
+      "he": "הביקוש היומי הוא בין 400 ל־600 ביקורים. הקיבולת לתחנה היא בין 80 ל־120 ביקורים ביום. בהנחה שכל צירוף אפשרי, מה מספר התחנות המזערי שיספיק בוודאות?",
+      "en": "Daily demand ranges from 400 to 600 visits. Capacity per station ranges from 80 to 120 visits per day. Any combination is possible. What is the smallest number of stations sufficient in the worst case?"
+    },
+    "answer": {
+      "he": "מצרפים את הביקוש המרבי 600 לקיבולת המזערית 80. חלוקה ועיגול כלפי מעלה נותנים 8 תחנות.",
+      "en": "Pair maximum demand 600 with minimum capacity 80. Divide and round up to get 8 stations."
+    },
+    "takeaway": {
+      "he": "חסם שמבטיח כיסוי מחייב לשלב את הקצוות המחמירים יחד.",
+      "en": "A guaranteed capacity bound must account for the adverse extremes together."
+    }
+  },
+  {
+    "id": "quick-sw-359",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "title": {
+      "he": "קריאת המשקל מקודדת את מספר השק",
+      "en": "A scale reading encodes a bag number"
+    },
+    "prompt": {
+      "he": "משק שמספרו j נלקחו j מטבעות. רק בשק אחד משקל כל מטבע שונה מהרגיל ב־2 גרם, כולל הסימן. הסכום שנמדד הוא 158 גרם במקום 150 גרם. מה מספר השק החריג?",
+      "en": "Exactly j coins were taken from bag j. In just one bag, each coin differs from normal by 2 grams, including the sign. The reading is 158 grams instead of 150 grams. Which bag is unusual?"
+    },
+    "answer": {
+      "he": "ההפרש בין 158 ל־150 נוצר כולו בשק החריג. חלוקתו בהפרש למטבע, 2, מחזירה את מספר השק 4.",
+      "en": "The entire difference between 158 and 150 comes from the unusual bag. Dividing by the signed per-coin difference 2 gives bag 4."
+    },
+    "takeaway": {
+      "he": "מספר מטבעות שונה מכל שק הופך את הפרש המשקל לחתימה.",
+      "en": "Distinct sample counts turn the mass difference into a bag signature."
+    }
+  },
+  {
+    "id": "quick-sw-360",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-344"
+    ],
+    "title": {
+      "he": "שק שלא משתתף גם הוא משאיר סימן",
+      "en": "An unsampled bag also leaves a signature"
+    },
+    "prompt": {
+      "he": "בדיוק אחד מבין 5 שקים מכיל מטבעות כבדים יותר בהפרש ידוע. יש די מטבעות בכל שק ומשקל דיגיטלי מדויק לשקילה אחת. מותר לדגום אפס מטבעות משק. כמה מטבעות יש לשקול לכל הפחות כדי לזהות תמיד את השק?",
+      "en": "Exactly one of 5 bags contains coins heavier by a known amount. Each bag has enough coins. You get one exact digital weighing and may sample zero coins from a bag. What is the fewest total coins needed to always identify the bag?"
+    },
+    "answer": {
+      "he": "כל שני שקים שנדגמו באותה כמות היו מפיקים אותה סטייה. לכן בוחרים 5 כמויות שונות, החל מאפס. סכומן המזערי הוא 10.",
+      "en": "Two bags with the same sample count would produce the same deviation. Use 5 distinct counts starting at zero. Their minimum sum is 10."
+    },
+    "takeaway": {
+      "he": "גם תוצאה ללא סטייה נושאת מידע כשמובטח שיש שק חריג.",
+      "en": "A zero deviation carries information when an unusual bag is guaranteed."
+    }
+  },
+  {
+    "id": "quick-sw-361",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "title": {
+      "he": "כמה משתתפים עולים בלי משחק?",
+      "en": "How many entrants receive an opening bye?"
+    },
+    "prompt": {
+      "he": "בטורניר הדחה יש 13 משתתפים. משבצים אותם בטבלה המזערית שמספר המקומות בה הוא חזקה של 2. כל מקום ריק משובץ מול משתתף בסיבוב הראשון. כמה משתתפים עולים אוטומטית?",
+      "en": "A knockout tournament has 13 entrants. Use the smallest bracket with a power-of-2 number of slots. Each empty slot faces an entrant in the opening round. How many entrants receive a bye?"
+    },
+    "answer": {
+      "he": "מכפילים את גודל הטבלה עד שיש מקום ל־13. מספר המקומות הפנויים שווה למספר העולים אוטומטית, והוא 3.",
+      "en": "Double the bracket size until it fits 13. Each unfilled slot gives one automatic advance, for 3 byes."
+    },
+    "takeaway": {
+      "he": "מקום ריק בטבלה מאפשר עלייה בלי להדיח שחקן.",
+      "en": "An empty slot advances one entrant without eliminating anyone."
+    }
+  },
+  {
+    "id": "quick-sw-362",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-317"
+    ],
+    "title": {
+      "he": "מי נשאר אחרי כמה סיבובים?",
+      "en": "How many survive several rounds?"
+    },
+    "prompt": {
+      "he": "מתוך 13 משתתפים מזווגים בכל סיבוב כמה שיותר זוגות. בכל משחק יש מודח אחד, ומשתתף בודד עולה אוטומטית. כמה משתתפים נשארים אחרי 2 סיבובים?",
+      "en": "Starting with 13 entrants, form as many pairs as possible each round. Each match eliminates one entrant, and an unpaired entrant advances. How many entrants remain after 2 rounds?"
+    },
+    "answer": {
+      "he": "בכל סיבוב שורד אחד מכל זוג, וגם המשתתף הבודד אם יש כזה. חצייה בעיגול מעלה, 2 פעמים החל מ־13, משאירה 4.",
+      "en": "One survives from each pair, as does a possible unpaired entrant. Halving 13 with upward rounding for 2 rounds leaves 4."
+    },
+    "takeaway": {
+      "he": "אם מספר המשתתפים אי־זוגי, מעגלים את מחציתו כלפי מעלה כדי לספור את השורדים.",
+      "en": "An odd field rounds the survivor count upward."
+    }
+  },
+  {
+    "id": "quick-sw-363",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "title": {
+      "he": "קפיצה במספר האפסים של עצרת",
+      "en": "A jump in factorial trailing zeros"
+    },
+    "prompt": {
+      "he": "במעבר מהעצרת של 24 לעצרת של 25, כמה אפסים חדשים מתווספים בסוף הכתיב העשרוני?",
+      "en": "Going from 24 factorial to 25 factorial, how many new trailing zeros appear in decimal?"
+    },
+    "answer": {
+      "he": "הגורם החדש במכפלה הוא 25. בזוגות שיוצרים 10 יש עודף של גורמי 2, לכן סופרים כמה פעמים 5 מחלק את הגורם החדש. התוספת היא 2.",
+      "en": "The new factor is 25. Factors of 2 are already plentiful for forming pairs that make 10. Count how many times 5 divides the new factor. The increase is 2."
+    },
+    "takeaway": {
+      "he": "מכפלה אחת יכולה להוסיף כמה אפסים כשיש בה כמה גורמים של 5.",
+      "en": "One new factor can add several zeros when it contains several factors of 5."
+    }
+  },
+  {
+    "id": "quick-sw-364",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-319"
+    ],
+    "title": {
+      "he": "אפסים בסוף העצרת בבסיס מורכב",
+      "en": "Trailing zeros in a composite base"
+    },
+    "prompt": {
+      "he": "כותבים את 8! בבסיס 12. כמה אפסים מופיעים ברצף בסוף הייצוג?",
+      "en": "Write 8! in base 12. How many consecutive zeros appear at the end?"
+    },
+    "answer": {
+      "he": "כל אפס דורש גורם שלם של 12 במכפלה. מפרקים את הבסיס לגורמים ראשוניים ובודקים כמה קבוצות מלאות אפשר להרכיב מתוך 8!. מתקבלות 2 קבוצות.",
+      "en": "Each trailing zero needs one complete factor of 12. Factor the base into primes and count how many complete groups are available in 8!. There are 2 groups."
+    },
+    "takeaway": {
+      "he": "הגורם שמספיק למספר הקבוצות הקטן ביותר קובע את מספר האפסים.",
+      "en": "The limiting prime factor determines the number of trailing zeros."
+    }
+  },
+  {
+    "id": "quick-sw-365",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-316"
+    ],
+    "title": {
+      "he": "השוואה על ידי מעבר לבסיס משותף",
+      "en": "Comparing powers using a shared base"
+    },
+    "prompt": {
+      "he": "ידוע כי A = 8^5 וכי B = 4^7. שני הבסיסים הם חזקות של 2. מה המנה A/B המדויקת?",
+      "en": "Let A = 8^5 and B = 4^7. Both bases are powers of 2. What is the exact ratio A/B?"
+    },
+    "answer": {
+      "he": "ממירים את שני הביטויים לחזקות של 2. בחילוק מחסרים את המעריכים לאחר ההמרה. כך מתקבלת המנה 2.",
+      "en": "Rewrite both terms as powers of 2. Dividing subtracts their exponents after conversion. The resulting ratio is 2."
+    },
+    "takeaway": {
+      "he": "המרת בסיס קודמת לביצוע פעולות במעריכים.",
+      "en": "Convert to a common base before combining exponents."
+    }
+  },
+  {
+    "id": "quick-sw-366",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "title": {
+      "he": "כמה אתרים בדקו שני רובוטים?",
+      "en": "How many sites did two robots check?"
+    },
+    "prompt": {
+      "he": "שני רובוטים מתחילים באתרים 0 ו־3 על ישר של שלמים. שניהם נעים 5 צעדים ימינה ובודקים גם את אתרי ההתחלה וגם כל אתר בדרך. כמה אתרים שונים נבדקו?",
+      "en": "Two robots start at sites 0 and 3 on an integer line. Both move 5 steps right, checking their starts and every site they visit. How many distinct sites have been checked?"
+    },
+    "answer": {
+      "he": "כל רובוט מבקר ב־5 + 1 אתרים. סופרים את האיחוד של שני הקטעים, כך שאתרי חפיפה נספרים פעם אחת. מתקבלים 9 אתרים.",
+      "en": "Each robot visits 5 + 1 sites. Take the union of their two intervals, counting any overlap once. This gives 9 sites."
+    },
+    "takeaway": {
+      "he": "תנועה זהה משמרת את המרחק, אבל המסלולים עדיין עשויים לחפוף.",
+      "en": "Lockstep motion preserves separation, but visited paths can still overlap."
+    }
+  },
+  {
+    "id": "quick-sw-367",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-315"
+    ],
+    "title": {
+      "he": "הדרך חזרה בחיפוש בשני כיוונים",
+      "en": "Return travel in a two-sided search"
+    },
+    "prompt": {
+      "he": "רובוט מתחיל ב־0. בכל גיחה שהסתיימה הוא חזר לנקודת ההתחלה. אורכי ההלוך בגיחות שהסתיימו הם [1, 2, 4]. בגיחה הבאה הוא מוצא מטרה אחרי 5 צעדים ועוצר מיד. כמה צעדים צעד בסך הכול?",
+      "en": "A robot starts at 0 and returns to its start after each completed excursion. Outward lengths of completed excursions are [1, 2, 4]. On the next excursion it finds its target after 5 steps and stops immediately. How many steps did it walk in total?"
+    },
+    "answer": {
+      "he": "בגיחות שברשימה [1, 2, 4] משלמים גם על החזרה. רק 5 הצעדים של הגיחה האחרונה נספרים פעם אחת. סך המרחק הוא 19.",
+      "en": "Each excursion in [1, 2, 4] includes the return trip. Only the last 5 steps are paid once. Total travel is 19."
+    },
+    "takeaway": {
+      "he": "מרחק מההתחלה ואורך המסלול שבוצע הם גדלים שונים.",
+      "en": "Displacement from the start and total distance traveled are different quantities."
+    }
+  },
+  {
+    "id": "quick-sw-368",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "title": {
+      "he": "כמה תצוגות שעון משתמשות בשתי ספרות לכל היותר?",
+      "en": "Clock displays with at most two digits"
+    },
+    "prompt": {
+      "he": "שעון מציג שעות, דקות ושניות עם אפסים מובילים. בין 11:11:08 ל־11:11:15, כולל שני הקצוות, בכמה תצוגות מופיעות לכל היותר שתי ספרות שונות?",
+      "en": "A clock shows hours, minutes and seconds with leading zeros. Between 11:11:08 and 11:11:15, including both endpoints, how many displays use at most two distinct digits?"
+    },
+    "answer": {
+      "he": "בודקים כל שנייה בטווח, כולל הקצוות. שומרים את האפסים המובילים ומתעלמים מהנקודתיים. רק 6 תצוגות עומדות בתנאי.",
+      "en": "Check each second in the inclusive interval, preserving leading zeros and ignoring colons. Exactly 6 displays qualify."
+    },
+    "takeaway": {
+      "he": "ספרה שמופיעה כמה פעמים עדיין תופסת מקום אחד בקבוצת הספרות.",
+      "en": "Repeated occurrences of a digit still count as one distinct digit."
+    }
+  },
+  {
+    "id": "quick-sw-369",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-330"
+    ],
+    "title": {
+      "he": "כמה ערכי דקות מותר להציג?",
+      "en": "How many minute fields are legal?"
+    },
+    "prompt": {
+      "he": "בשעון שמציג שעות ודקות, השעה קבועה על 18. הספרות היחידות המותרות בכל התצוגה הן 1 ו־8. כמה ערכי דקות תקינים אפשר להציג בשעה זו?",
+      "en": "On a clock displaying hours and minutes, the hour is fixed at 18. The only digits allowed anywhere are 1 and 8. How many valid minute fields can appear in that hour?"
+    },
+    "answer": {
+      "he": "ספרת העשרות של הדקות חייבת להיות בין 0 ל־5. לספרת היחידות מותרת כל אחת משתי הספרות. כפל מספר האפשרויות לכל מקום נותן 2.",
+      "en": "The minute tens digit must lie between 0 and 5. Either allowed digit may occupy the units place. Multiplying the choices at the two positions gives 2."
+    },
+    "takeaway": {
+      "he": "בתצוגה עם שדות זמן, לתפקיד הספרה יש השפעה על הטווח שלה.",
+      "en": "A digit's position in a time field constrains its allowed range."
+    }
+  },
+  {
+    "id": "quick-sw-370",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "title": {
+      "he": "מסלולים שחייבים לעבור בנקודה",
+      "en": "Paths through a required point"
+    },
+    "prompt": {
+      "he": "יוצאים מ־(0,0) אל (3,3) בצעדים של יחידה ימינה או למעלה. כמה מסלולים עוברים בנקודה (1,1)?",
+      "en": "Travel from (0,0) to (3,3) using unit steps right or up. How many paths pass through (1,1)?"
+    },
+    "answer": {
+      "he": "בוחרים את סדר הצעדים עד (1,1) ואת סדרם ממנה אל (3,3). כל בחירה בחלק הראשון מתחברת לכל בחירה בשני. מכפלת הספירות היא 12.",
+      "en": "Choose the order of steps to (1,1), then the order from there to (3,3). Any first segment can join any second segment. Multiplying their counts gives 12."
+    },
+    "takeaway": {
+      "he": "נקודת חובה מפרקת את המסלול לשני חלקים שאפשר לצרף בחופשיות.",
+      "en": "A required checkpoint splits a path into two freely combinable pieces."
+    }
+  },
+  {
+    "id": "quick-sw-371",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-300"
+    ],
+    "title": {
+      "he": "מסלולים שעוקפים נקודה חסומה",
+      "en": "Paths avoiding a blocked point"
+    },
+    "prompt": {
+      "he": "ברשת אפשר לנוע יחידה ימינה או למעלה בלבד. כמה מסלולים מ־(0,0) אל (3,3) נמנעים מהנקודה החסומה (1,2)?",
+      "en": "On a grid, each move goes one unit right or up. How many paths from (0,0) to (3,3) avoid the blocked point (1,2)?"
+    },
+    "answer": {
+      "he": "ממספר כל המסלולים מפחיתים את מספר המסלולים דרך (1,2). כל מסלול כזה עובר בנקודה פעם אחת. נותרו 11 מסלולים.",
+      "en": "Subtract the paths through (1,2) from all paths. Such a path visits that point exactly once. This leaves 11 paths."
+    },
+    "takeaway": {
+      "he": "קל לספור קבוצה באמצעות הסרת המקרים המשלימים.",
+      "en": "A complement count removes disallowed cases from the total."
+    }
+  },
+  {
+    "id": "quick-sw-372",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "title": {
+      "he": "חפיפה מותרת, שכנות קרובה אסורה",
+      "en": "Coincidence is legal but near neighbors conflict"
+    },
+    "prompt": {
+      "he": "דגימות משני צבעים נמצאות על אותה שורה. מיקומי האדומות הם [0, 4] ומיקומי הירוקות הם [0, 2, 4]. זוג בצבעים שונים נפסל רק כשהמרחק חיובי ולכל היותר 2. כמה זוגות נפסלים?",
+      "en": "Two colors of samples lie on one line. Red coordinates are [0, 4] and green coordinates are [0, 2, 4]. An opposite-color pair is invalid only at positive distance at most 2. How many pairs are invalid?"
+    },
+    "answer": {
+      "he": "עוברים על כל צירוף של נקודה אדומה וירוקה. הפרש מוחלט 1 או 2 פוסל אותו, והפרש אפס מותר. מספר הזוגות הפסולים הוא 2.",
+      "en": "For each red–green pair, an absolute difference of 1 or 2 disqualifies it. Zero difference is allowed. The count of invalid pairs is 2."
+    },
+    "takeaway": {
+      "he": "תנאי מרחק עם חריג באפס דורש לבדוק את שני גבולות הטווח.",
+      "en": "A distance bound with a zero exception requires checking both ends of its interval."
+    }
+  },
+  {
+    "id": "quick-sw-373",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-354"
+    ],
+    "title": {
+      "he": "מספר הפיקסלים בכל רמות הפירמידה",
+      "en": "Pixels across all pyramid levels"
+    },
+    "prompt": {
+      "he": "תמונה בגודל 5 × 7 היא רמה 0. בכל אחת מ־2 ההקטנות שומרים את השורות והעמודות שמספריהן זוגיים, החל מאפס. כמה פיקסלים יש בכל הרמות יחד, כולל המקור?",
+      "en": "An image of size 5 × 7 forms level 0. The number of reductions is 2. Each reduction keeps even-indexed rows and columns starting at zero. How many pixels are there across all levels, including the original?"
+    },
+    "answer": {
+      "he": "בכל צעד מחלקים כל ממד ב־2 ומעגלים מעלה. מסכמים גובה כפול רוחב בכל הרמות ומקבלים 51 פיקסלים.",
+      "en": "Divide each dimension by 2, rounding upward at every step. Summing height times width over all levels gives 51 pixels."
+    },
+    "takeaway": {
+      "he": "בתמונה עם ממד אי־זוגי חשוב לדעת מאיזה אינדקס הדגימה מתחילה.",
+      "en": "For an odd dimension, the sampling origin affects the output size."
+    }
+  },
+  {
+    "id": "quick-sw-374",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-355"
+    ],
+    "title": {
+      "he": "לאיזה שקע מתנקזת שורת הגבהים?",
+      "en": "Which sites drain into one sink?"
+    },
+    "prompt": {
+      "he": "גובהי האתרים בשורה הם [1, 4, 3, 2, 0], עם אינדקסים מאפס. מים זורמים לשכן הנמוך ביותר רק אם הוא נמוך מהאתר עצמו. בשוויון בין שני שכנים נמוכים בוחרים בשמאלי. כמה אתרים, כולל השקע עצמו, מתנקזים לאינדקס 4?",
+      "en": "Sites on a line have heights [1, 4, 3, 2, 0], indexed from zero. Water moves to the lowest neighbor only if it is strictly lower than the current site. Ties between two lower neighbors go left. How many sites, including the sink itself, drain to index 4?"
+    },
+    "answer": {
+      "he": "עוקבים מכל אתר אחרי ירידות קפדניות עד לנקודת עצירה. בספירה של כל המסלולים שמסתיימים באינדקס 4 מתקבלים 3 אתרים.",
+      "en": "Follow strict descents from each site until a terminal point. Counting all paths ending at index 4 gives 3 sites."
+    },
+    "takeaway": {
+      "he": "אגן כולל גם אתרים שמגיעים לשקע דרך כמה אתרי ביניים.",
+      "en": "A basin includes sites that reach the sink through intermediate sites."
+    }
+  },
+  {
+    "id": "quick-sw-375",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-012"
+    ],
+    "title": {
+      "he": "התחלה שונה במעגל ההדחות",
+      "en": "Changing the starting point in a circle"
+    },
+    "prompt": {
+      "he": "במעגל יושבים 7 משתתפים ממוספרים 1 עד 7. מתחילים לספור מהמשתתף שמספרו 3 כ־1, מדיחים כל משתתף שני וממשיכים מהבא אחריו. איזה מספר נשאר אחרון?",
+      "en": "A circle contains 7 participants labeled 1 through 7. Count participant 3 as 1, eliminate every second participant, and resume at the next one. Which label survives?"
+    },
+    "answer": {
+      "he": "מתחילים במעגל של משתתף יחיד עם אינדקס 0. כשמגדילים מעגל לגודל m, אינדקס השורד משתנה ל־(index + 2) mod m. בסוף מזיזים את תחילת המספור ל־3. השורד הוא 2.",
+      "en": "Start with survivor index 0 in a circle of one. Growing the circle to size m changes that index to (index + 2) mod m. Then rotate the origin to 3. The surviving label is 2."
+    },
+    "takeaway": {
+      "he": "הזזת נקודת ההתחלה מסובבת את התוצאה באותו מרחק.",
+      "en": "Rotating the starting point rotates the result by the same offset."
+    }
+  },
+  {
+    "id": "quick-sw-376",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-343"
+    ],
+    "title": {
+      "he": "כמה הרכבים עדיין אפשריים אחרי שתיקה?",
+      "en": "How many hidden sets remain after silence?"
+    },
+    "prompt": {
+      "he": "ל־4 משתתפים יש סימון גלוי לכל האחרים בלבד. הוכרז בפומבי שלפחות אחד מסומן. לפי כללי החידה, אם בדיוק j מסומנים, האות הראשון נשמע בסוף סיבוב j. חלפו 2 סיבובים שקטים. כמה קבוצות שונות של משתתפים מסומנים עדיין אפשריות לצופה שרק מאזין?",
+      "en": "At least one of 4 people is marked. Exactly j marked people will produce the first public signal in round j. After 2 silent rounds, how many different sets of marked people are still possible for a listener who sees no marks?"
+    },
+    "answer": {
+      "he": "השתיקה שוללת כל קבוצה שגודלה לכל היותר 2. מונים את תתי־הקבוצות של 4 המשתתפים הגדולות מכך. נותרות 5 קבוצות.",
+      "en": "Silence rules out all sets of size at most 2. Count the subsets of the 4 participants larger than that bound. There are 5 possibilities."
+    },
+    "takeaway": {
+      "he": "מידע על מספר האנשים עדיין משאיר אי־ודאות לגבי זהותם.",
+      "en": "Information about a group size can leave its members' identities undetermined."
+    }
+  },
+  {
+    "id": "quick-sw-377",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-038"
+    ],
+    "title": {
+      "he": "הספרה המשותפת מחברת זוגות",
+      "en": "An overlapping digit connects adjacent pairs"
+    },
+    "prompt": {
+      "he": "בונים מחרוזת באורך 3 ספרות. כל זוג ספרות סמוכות חייב להופיע ברשימה ['12', '21', '23']. אפס מותר בתחילת המחרוזת. כמה מחרוזות אפשר לבנות?",
+      "en": "Build a string of 3 digits. Every adjacent digit pair must belong to ['12', '21', '23']. A leading zero is allowed. How many strings are possible?"
+    },
+    "answer": {
+      "he": "שומרים לכל ספרה את מספר המחרוזות שמסתיימות בה. מוסיפים ספרה רק כשנוצר זוג מהרשימה, ומחברים את הספירות המגיעות לאותה סיומת. באורך 3 מתקבלות 3 מחרוזות.",
+      "en": "Track how many strings end in each digit. Append a digit only along an allowed pair and add the counts arriving at the same ending. At length 3 the total is 3."
+    },
+    "takeaway": {
+      "he": "אי אפשר לבחור זוגות בנפרד מפני שהסוף של זוג אחד הוא ההתחלה של הבא.",
+      "en": "Pairs cannot be chosen independently because one ends where the next starts."
+    }
+  },
+  {
+    "id": "quick-sw-378",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "title": {
+      "he": "מתי הכרעת הרוב שגויה?",
+      "en": "When is a majority decision wrong?"
+    },
+    "prompt": {
+      "he": "שלושה מחשבים קוראים אותו ביט. כל אחד הופך את הביט באופן בלתי תלוי בהסתברות 1/4. מה ההסתברות שהביט שמתקבל בהצבעת רוב שגוי?",
+      "en": "Three computers read the same bit. Each independently flips it with probability 1/4. What is the probability that the majority vote is wrong?"
+    },
+    "answer": {
+      "he": "רוב שגוי מתקבל כששניים טועים או כששלושתם טועים. אם p = 1/4, מחברים 3 × p² × (1−p) ו־p³ ומקבלים 5/32.",
+      "en": "The majority is wrong with exactly two errors or three errors. For p = 1/4, adding 3 × p² × (1−p) and p³ gives 5/32."
+    },
+    "takeaway": {
+      "he": "כדי לסכום הסתברויות יש לחלק את האירוע למקרים זרים.",
+      "en": "Split the event into disjoint cases before adding their probabilities."
+    }
+  },
+  {
+    "id": "quick-sw-379",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-369"
+    ],
+    "title": {
+      "he": "עד כמה אפשר לסמוך על הסכמה מלאה?",
+      "en": "How reliable is unanimous agreement?"
+    },
+    "prompt": {
+      "he": "כל אחד משלושה קוראים הופך ביט משותף באופן בלתי תלוי בהסתברות 1/3. נמסר רק ששלושתם החזירו ביט זהה. מה ההסתברות שהביט שעליו הסכימו שגוי?",
+      "en": "Each of three readers independently flips a shared bit with probability 1/3. You learn only that all three reported the same bit. What is the probability their agreed bit is wrong?"
+    },
+    "answer": {
+      "he": "בהינתן הסכמה נשארים שני מקרים בלבד. משקל הטעות המשותפת הוא p³ ומשקל ההצלחה המשותפת הוא (1−p)³. עבור p = 1/3, חלקה היחסי של הטעות הוא 1/9.",
+      "en": "Agreement leaves only two cases. All errors have weight p³ and all correct readings have weight (1−p)³. For p = 1/3, the share due to error is 1/9."
+    },
+    "takeaway": {
+      "he": "ההסתברות לטעות אחרי תצפית מחושבת רק בתוך המקרים שמתאימים לה.",
+      "en": "After observing agreement, normalize over the cases consistent with it."
+    }
+  },
+  {
+    "id": "quick-sw-380",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-370"
+    ],
+    "title": {
+      "he": "לכסות כל ערוץ פעמיים",
+      "en": "Covering every channel more than once"
+    },
+    "prompt": {
+      "he": "יש 5 ערוצי מדידה. בסבב בודקים לכל היותר 3 ערוצים שונים. כל ערוץ חייב להיבדק ב־2 סבבים שונים. מהו מספר הסבבים המזערי?",
+      "en": "There are 5 measurement channels. Each round can test at most 3 distinct channels. Every channel must be tested in 2 distinct rounds. What is the minimum number of rounds?"
+    },
+    "answer": {
+      "he": "נדרשות 5 × 2 בדיקות. חוזרים ברצף על רשימת הערוצים ומחלקים אותה לקבוצות של עד 3. ערוץ אינו מופיע פעמיים בקבוצה, והחלוקה משיגה את החסם של 4 סבבים.",
+      "en": "There are 5 × 2 required tests. Repeat the channel list and cut it into groups of at most 3. No group repeats a channel, attaining the bound of 4 rounds."
+    },
+    "takeaway": {
+      "he": "חסם לפי קיבולת הופך לתשובה מדויקת רק אחרי שמציגים שיבוץ חוקי.",
+      "en": "A capacity bound becomes exact once a legal schedule achieves it."
+    }
+  },
+  {
+    "id": "quick-sw-381",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-347"
+    ],
+    "title": {
+      "he": "כמה רווחים נדרשים למרכוז הפירמידה?",
+      "en": "How much indentation centers the pyramid?"
+    },
+    "prompt": {
+      "he": "לפירמידת כוכביות ממורכזת יש בסיס ברוחב 7. רוחבי השורות הם 1, 3 וכן הלאה, עד לרוחב הבסיס 7. כמה רווחים מובילים יודפסו בכל השורות יחד? אין רווחים מימין.",
+      "en": "A centered star pyramid has an odd base width of 7. Rows have widths 1, 3 and so on up to 7. How many leading spaces are printed across all rows? There is no right padding."
+    },
+    "answer": {
+      "he": "בשורה הראשונה יש (7−1)/2 רווחים, ובכל שורה הבאה רווח אחד פחות. סכום המספרים עד אפס הוא 6.",
+      "en": "The first row has (7−1)/2 leading spaces; each subsequent row has one fewer. Summing down to zero gives 6."
+    },
+    "takeaway": {
+      "he": "הרחבה בשתי כוכביות מפחיתה רווח אחד בכל צד של המרכז.",
+      "en": "Two extra stars reduce the indentation by one on either side of the center."
+    }
+  },
+  {
+    "id": "quick-sw-382",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-290"
+    ],
+    "title": {
+      "he": "ספירת קשתות בין שכבות של קובייה",
+      "en": "Counting edges between cube layers"
+    },
+    "prompt": {
+      "he": "קודקודי קובייה ב־3 ממדים הם מחרוזות של 3 ביטים. שכנים נבדלים בביט אחד. כמה קשתות מחברות את שכבת המחרוזות עם 1 אחדות לשכבה שבה יש אחד נוסף?",
+      "en": "Vertices of a 3-dimensional cube are strings of 3 bits. Neighbors differ in one bit. How many edges join the layer with 1 ones to the layer with one additional one?"
+    },
+    "answer": {
+      "he": "בוחרים מיקומים ל־1 אחדות בקודקוד הראשון ואז בוחרים אחד מהאפסים להפוך. לכל קשת יש התחלה יחידה בשכבה הנמוכה. מתקבלות 6 קשתות.",
+      "en": "Choose positions for 1 ones at the lower vertex, then select one zero to flip. Each edge has a unique lower endpoint. This counts 6 edges."
+    },
+    "takeaway": {
+      "he": "כיוון השינוי מונע ספירה כפולה של קשתות בין שתי שכבות.",
+      "en": "Orienting the change avoids double-counting edges between layers."
+    }
+  },
+  {
+    "id": "quick-sw-383",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-164"
+    ],
+    "title": {
+      "he": "כמה דרכים לבחור חיבורים וסימנים?",
+      "en": "Counting gaps and operator choices"
+    },
+    "prompt": {
+      "he": "בין 5 ספרות נתונות אפשר להשאיר את הרווח ריק כדי לשרשר אותן או להכניס פלוס או מינוס. רוצים ביטוי עם בדיוק 3 מספרים. כמה בחירות שונות של מיקומים וסימנים קיימות? אין סימן לפני הספרה הראשונה.",
+      "en": "Between 5 given digits, each gap may be left empty for concatenation or filled with plus or minus. Form exactly 3 numbers. How many distinct placements and signs are possible? There is no leading sign."
+    },
+    "answer": {
+      "he": "בוחרים את המקומות שמפרידים בין 3 המספרים מתוך הרווחים שבין הספרות. לכל מקום שנבחר יש שני סימנים אפשריים. בסך הכול יש 24 בחירות.",
+      "en": "Choose the gaps separating the 3 numbers from the gaps between digits. Each selected gap has two sign choices. This gives 24 placements with signs."
+    },
+    "takeaway": {
+      "he": "ספירת ביטויים כתובים שונה מספירת ערכים מספריים שונים.",
+      "en": "Counting written expressions differs from counting distinct numerical values."
+    }
+  },
+  {
+    "id": "quick-sw-384",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-356"
+    ],
+    "title": {
+      "he": "מהי התפוסה ההתחלתית המזערית?",
+      "en": "Minimum initial occupancy from an event log"
+    },
+    "prompt": {
+      "he": "ברשומת חניון כל 1 הוא כניסה וכל −1 הוא יציאה. סדר האירועים הוא [-1, -1, 1, 1]. מהו מספר המכוניות המזערי שחייב להיות בחניון לפני האירוע הראשון כדי שהתפוסה לעולם לא תרד מתחת לאפס? יש די מקומות חנייה.",
+      "en": "In a parking log, 1 means an arrival and −1 a departure. The events in order are [-1, -1, 1, 1]. What is the smallest number of cars the lot could start with while keeping occupancy nonnegative after every event? Capacity is ample."
+    },
+    "answer": {
+      "he": "סוכמים את האירועים מתחילת הרשומה ועד כל נקודה בה. התפוסה ההתחלתית צריכה לכסות את החוסר הגדול ביותר שנוצר בדרך. דרושות 2 מכוניות.",
+      "en": "Sum the events from the start to each point in the log. Initial occupancy must cover the largest deficit anywhere along the way. This requires 2 cars."
+    },
+    "takeaway": {
+      "he": "מאזן סופי אינו בודק אם יציאה מוקדמת הייתה אפשרית.",
+      "en": "The final balance alone cannot show whether an earlier departure was possible."
+    }
+  },
+  {
+    "id": "quick-sw-385",
+    "topic": "reasoning",
+    "interviewIds": [
+      "PREP-353"
+    ],
+    "title": {
+      "he": "שתי רשתות דגימה על אותה שורה",
+      "en": "Two sampling grids on the same row"
+    },
+    "prompt": {
+      "he": "על שורת פיקסלים, דוגם אחד שומר כל כפולה של 3 ודוגם שני כל כפולה של 4, החל מאפס. כמה מיקומים משותפים יש בתחום האינדקסים מ־0 עד 25, כולל הקצוות?",
+      "en": "On a pixel row, one sampler keeps every multiple of 3 and another every multiple of 4, starting at zero. How many positions do they share from index 0 through 25, inclusive?"
+    },
+    "answer": {
+      "he": "הדוגמים נפגשים בכפולות של הכפולה המשותפת המזערית של 3 ו־4. סופרים רק את הכפולות שבטווח הסגור. מתקבלים 3 מיקומים.",
+      "en": "The samplers coincide at multiples of the least common multiple of 3 and 4. Count those in the closed interval. This gives 3 positions."
+    },
+    "takeaway": {
+      "he": "בנוסף למחזור המשותף צריך לבדוק מי מהקצוות נכלל בספירה.",
+      "en": "Alongside the common period, check which interval endpoints are included."
+    }
+  }
+]

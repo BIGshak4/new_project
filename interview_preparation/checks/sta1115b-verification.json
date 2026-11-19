@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "counts": {
+    "absolute_schedule_parameter_cases": 1152,
+    "rc_curve_samples": 6001,
+    "rc_derivative_checks": 100,
+    "rc_threshold_crossings": 3,
+    "visibility_observation_vectors": 512,
+    "visibility_single_cause_checks": 9,
+    "normalized_report_regression_checks": 26
+  },
+  "scope": "Synthetic normalized reports, absolute-schedule arithmetic, an ideal first-order RC model and explicit evidence fixtures. No licensed STA execution or SPICE.",
+  "sha256": {
+    "solutions/inverter_step_rc1115b.py": "44d48e50a3c7ae86004a81ee001f28fa3f35d69a0be8cf143b56037d35404ea8",
+    "solutions/sta_normalized_regression1115b.py": "8e8eba84449b09b97647a782a5cea096ce9ba92a8eed74438f52c70366317edd",
+    "solutions/sta_path_visibility1115b.py": "ef04fd6c8109d6550a8d6e2179ce9e26f6612b976297b0c598d8c381b5b311b7",
+    "solutions/three_launch_timing1115b.py": "e29c83b89b8dc5ec346c71d88cb90855ef2a4060462f9535c2e5caa5d481e2e1"
+  }
+}

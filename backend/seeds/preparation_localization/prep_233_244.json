@@ -74,7 +74,7 @@
         "קלט בינארי של ארבעה ביטים, לוגיקה קומבינטורית ללא שעון."
       ],
       "en": [
-        "AB selects modes00,01,10,11 with A most significant.",
+        "AB selects modes 00,01,10,11 with A most significant.",
         "Four binary data bits; combinational logic without a clock."
       ]
     },
@@ -150,7 +150,7 @@
     },
     "optimality": {
       "he": "מאוזן: 7 MUX ועומק 3. חלופה: 7 MUX ועוד פענוח, עומק D0=1, D1=3 והיתר 4. מינימום התאים והעומק נטען רק במודל עץ בינארי.",
-      "en": "Balanced:7 MUXes, depth3. Alternative:7 plus predecode, depths D0=1,D1=3,others4. Cell/depth lower bounds are scoped to binary merge trees."
+      "en": "Balanced:7 MUXes, depth 3. Alternative:7 plus predecode, depths D0=1,D1=3,others 4. Cell/depth lower bounds are scoped to binary merge trees."
     },
     "verification": {
       "he": "2048 צירופי נתונים ובחירה מול אינדוקס ישיר, וחישוב עצמאי של זמני הגעה. סימולציית RTL מדווחת בנפרד; אין STA פיזי.",
@@ -399,7 +399,7 @@
       "en": "Maintain a reversed prefix and untouched suffix. Save the successor, reverse one link and advance; the final prefix head is the answer.\n\nWith head locate the incoming-link address, bypass and free the target. Without it the predecessor is generally inaccessible; successor-copy is a limited value-level workaround, not identity removal."
     },
     "source_ambiguities": {
-      "he": "המקור אינו קובע סוג רשימה, בעלות או טיפול בריק. נבחרה רשימה חד־כיוונית ללא מעגלים והיפוך צמתים במקום, בלי להחליף את ממשק הרשימה האבסטרקטית.\n\nהמקור אינו מגדיר בעלות או זהות.העריכה מפרידה בין הסרת הקצאה מדויקת להסרת ערך ומבהירה שזנב ללא head אינו ניתן להסרה כללית.",
+      "he": "המקור אינו קובע סוג רשימה, בעלות או טיפול בריק. נבחרה רשימה חד־כיוונית ללא מעגלים והיפוך צמתים במקום, בלי להחליף את ממשק הרשימה האבסטרקטית.\n\nהמקור אינו מגדיר בעלות או זהות. העריכה מפרידה בין הסרת הקצאה מדויקת להסרת ערך ומבהירה שזנב ללא head אינו ניתן להסרה כללית.",
       "en": "The source omits list type, ownership and empty handling. This version chooses an acyclic singly linked list with in-place node reversal, distinct from an immutable abstract-list interface.\n\nThe source omits ownership/identity. This edition separates exact allocation removal from value-level removal and explains why tail-only removal is generally impossible."
     },
     "solution_extensions": {

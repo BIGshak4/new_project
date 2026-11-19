@@ -2,7 +2,7 @@
 
     uv run python scripts/smoke_http.py                       # starts uvicorn on a free port, tests it, stops it
     uv run python scripts/smoke_http.py --url https://...     # tests a deployed instance (stage G / Render)
-    uv run python scripts/smoke_http.py --origin https://jobrun.netlify.app   # the origin to test CORS with
+    uv run python scripts/smoke_http.py --origin https://muxijobrun.com   # the origin to test CORS with
 
 What is checked: /health, /docs, /openapi.json (every /v1 route present), CORS preflight from
 the allowed origin (allowed) and from a stranger (refused), 401 error shape without a token,

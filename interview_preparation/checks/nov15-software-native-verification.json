@@ -1,0 +1,19 @@
+{
+  "result": "passed",
+  "toolchain": "Zig 0.13 cc/c++",
+  "product_cases": 2805,
+  "copy_cases": 514,
+  "variadic_cases": 5,
+  "loop_outputs": 3,
+  "cpp_dispatch_outputs": 2,
+  "mutex": "Source review only; local toolchain lacks C11 threads.h",
+  "java": "Source review only; Java not executed",
+  "sha256": {
+    "solutions/prep_331_product_without_multiply.c": "aad8604ca379eaca139c5d9624ef2663011f5fabd389792117a74e2b8f01c43a",
+    "solutions/prep_332_checked_string_copy.c": "211aff080e691424070f3ebdca040cddb7fcc53fec53768e2065fa0ad5a7d81e",
+    "solutions/prep_336_variadic_sum.c": "e5a0fce6aef6d1ebda48300860410832e33509650661887e1cac4ac377518111",
+    "solutions/prep_335_twenty_hyphens.c": "d80b9021c5b3633ef03c1f8b38935d42b37b9c8aba9cd8b08bc21aa9b8bd139d",
+    "solutions/prep_243_virtual_dispatch.cpp": "fa0694b73b3744d7674cd594842e114f45f8410d6eaf75b794fc336c0746f19b",
+    "solutions/prep_334_mutex_semaphore.c": "8bf538d2dd3d14eeac3512d431a53f3584cc572b78023e475006bc6125b76ffa"
+  }
+}

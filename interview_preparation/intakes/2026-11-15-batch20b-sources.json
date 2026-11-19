@@ -1,0 +1,402 @@
+{
+  "received_on": "2026-11-15",
+  "screenshot_count": 20,
+  "source_count": 20,
+  "new_question_count": 7,
+  "technical_extension_count": 6,
+  "provenance_only_count": 4,
+  "affected_question_count": 17,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-01.png"
+      ],
+      "sha256": "8a60a9e6b932325230c33727e8d8bd189520112df687d568ed2be65467a9c6a2",
+      "original_prompt": "יש שלושה אלים: נקרא להם A, B ו-C. אחד מהם תמיד אומר את האמת (נקרא לו דובר-אמת). אחד מהם תמיד משקר (נקרא לו שקרן). אחד מהם עונה באקראיות: לפעמים אמת, לפעמים שקר (נקרא לו אקראי). אינך יודע איזה מהם הוא מי. כשאתה שואל אותם שאלה של כן/לא, הם עונים במילים דה (da) או ג׳ה (ja), אבל אינך יודע איזו מילה משמעה כן ואיזו לא. מותר לשאול רק שלוש שאלות בסך הכול, ואפשר לבחור למי להפנות כל שאלה. לאחר שלוש שאלות עליך לזהות בוודאות מי דובר האמת, מי השקרן ומי האקראי.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "logic",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-346"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-02.png"
+      ],
+      "sha256": "f55f6aa91ad98f665be9520ab225ee5b1f05c322730e068d2afefaebb835da8f",
+      "original_prompt": "1. קופסה שיש לה כניסת IN וכניסת CLK, איך אפשר לממש מונה של 1 ביט כאשר IN=1 ו-CLK=1 אחרת התוצאה של המונה אינה משתנה. 2. איך אפשר להוסיף כניסת RST כך שכאשר RST=1 לאפס את המונה. 3. איך אפשר להגדיל את המונה ל-2 BIT COUNTER. 4. ל-3 BIT COUNTER. 5. מוסיפים כניסת DEC איך אפשר לשלב אותה כך שכאשר DEC=1 מקטינים המונה, השילוב צריך להיות בלי שימוש במוקסים.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-064"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-03.png"
+      ],
+      "sha256": "2b12d300eb0db295e33fef3766f742ba3c2e16c18cadd78daab0cf0335211b5c",
+      "original_prompt": "נתנו לי ציור של 3 קלטים שנכנסים לרגיסטרים שונים, משם עוברים כל אחד לוגיקה קומבינטורית ואז מתכנסים לשער OR שמעביר את התוצאה לרגיסטר מוצא. שאלו מה הסכנות שקיימות מתנאי SETUP & HOLD, ושאלו מה ההשפעה של SKEW חיובי או שלילי על המערכת.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-176"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-04.png"
+      ],
+      "sha256": "e185980fc336c563a6f821c19e4b2ecb03b65222093782af6a306d910fd643be",
+      "original_prompt": "ממש S-R switch באמצעות D-FF ושערים לוגיים.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "logic",
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-065"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-05.png"
+      ],
+      "sha256": "fe1267fe8ebd2736cee24e62b46d6f48be797554750caa204db920197fe34459",
+      "original_prompt": "כתוב פונקציה שמקבלת בקלט מספר אי-זוגי ומחזירה פירמידה מורכבת מכוכבים כך שהמספר שהתקבל בקלט הוא הבסיס של הפירמידה. פתור ב-2 דרכים שונות. לדוגמה עבור n=5: שורות של כוכב אחד, שלושה כוכבים וחמישה כוכבים, ממורכזות זו מעל זו.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "nvidia",
+        "software"
+      ],
+      "question_ids": [
+        "PREP-347"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-06.png"
+      ],
+      "sha256": "f988ce0d40fb99812a1d9293fb7a421a037e4805c84b9dd50766c22ceebbd1d3",
+      "original_prompt": "1. ממש מבנה פנימי של רכיב Priority Encoder 4 to 2. 2. ממש באמצעות רכיבי Priority Encoder 4 to 2 מהשאלה הקודמת Priority Encoder 16 to 4.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-349"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-07.png"
+      ],
+      "sha256": "4efb82b90ed054ebaeb5377d094faabcc11eaf0b02e99598ceccb0485f1da4cb",
+      "original_prompt": "יש לך רכיב שיודע לתת מינימום ומקסימום של שתי כניסות של מספרים שלמים. תבנה בעזרת מספר רכיבים כאלה רכיב אחד גדול עם 4 כניסות ו-4 יציאות שממיין את המספרים.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-030"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-08.png"
+      ],
+      "sha256": "539a919524a83c6145c6e9426b4c552717166e88a616ea273df88ff7cfc19734",
+      "original_prompt": "יש לך מהפך. הכניסה היא מדרגה. איך תראה היציאה (הפלט)?",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-205"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-09.png"
+      ],
+      "sha256": "ef654eeb8215c717bc8ebb6e96e748aad3bfdbc6792f6fbe8798c8084c2dbe9d",
+      "original_prompt": "תממש SR-FF בעזרת D-FF.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-065"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-10.png"
+      ],
+      "sha256": "6d237979279077c9268c741a8bf9152c9871876d4aeaa95ab01e475988a104e7",
+      "original_prompt": "נתון לוח משבצות אינסופי. מתחילים מנקודה מסוימת עם חץ בכיוון מסוים, ומקבלים מחרוזת המכילה רק M - להתקדם משבצת אחת בכיוון החץ, R - לסובב 90 מעלות עם כיוון השעון, L - לסובב 90 מעלות נגד כיוון השעון. כתוב קוד המקבל מחרוזת תקינה ומחזיר True אם סיימנו באותה נקודה שבה התחלנו, אחרת False. סעיף ב: מוסיפים תו T - לפנות 180 מעלות. מה צריך לשנות בקוד?",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "question_ids": [
+        "PREP-182"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-11.png"
+      ],
+      "sha256": "9afd10f561a54d5666dc45de564fe002f5a5356dabfaeffea70c36724240d4ca",
+      "original_prompt": "ממש SRC, כלומר שיפט רייט רגיסטר שמקבל סיגנל בקרה שאומר לו כמה פעמים לעשות שיפט רייט.",
+      "reported_companies": [
+        "Cisco"
+      ],
+      "source_tags": [
+        "hardware",
+        "logic",
+        "cisco"
+      ],
+      "question_ids": [
+        "PREP-350"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-12.png"
+      ],
+      "sha256": "a58201a1bb6b5e31851e771555f6309886635cbabd8f91544ce434296c1a9878",
+      "original_prompt": "א. ממש באמצעות מוקסים פונקציה המקבלת שני מספרים בינאריים באורך שני ביטים ומחזירה 1 אם המספר הראשון גדול מהשני ואפס אחרת. ב. כמה קומבינציות צריך להזין כדי לבדוק האם כל המוקסים עובדים בצורה תקינה או שחלק מהם מקולקלים?",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-110"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-13.png"
+      ],
+      "sha256": "532b2028fa38db0a6ced21269c8c7b4aaa3f2721a5a82d84c0026782eb0c309f",
+      "original_prompt": "סעיף א: לפתח counter בעל כניסה אחת ויציאה אחת שהתוצאה במוצא נשמרת. דומה למרוץ חלונות. אם המוצא 0 ונכנס 1 התוצאה 1; אם המוצא 1 ונכנס 0 התוצאה 1; אם המוצא 0 ונכנס 0 התוצאה 0; אם המוצא 1 ונכנס 1 התוצאה 10, אך בשבילנו זה 0. סעיף ב: אותו דבר רק שעכשיו יש שתי יציאות, כלומר 10 כן אפשרי וכן ניתן להגיע ל-11 ול-00.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "verification"
+      ],
+      "question_ids": [
+        "PREP-064"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-14.png"
+      ],
+      "sha256": "d0484c65f877a1adc4058d32b585fb779a38dfd1a95f4a892adbfc7ac6b4252d",
+      "original_prompt": "איך היית מתכנן רגרסיה שמשווה תוצאות שני כלים בטיימינג או שתי גרסאות של אותו כלי? לדוגמה השוואה של Fusion-Compiler עם PrimeTime.",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "software",
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-351"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-15.png"
+      ],
+      "sha256": "b2efc4e6cbaef61372e9157734342c1858ad1f7d027e0e590110285e81c2b624",
+      "original_prompt": "מה הן הסיבות שמסלול טיימינג יהיה חסר בריצה אחת של STA (לדוגמה ב-PrimeTime) לעומת אחרת?",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-352"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-16.png"
+      ],
+      "sha256": "b8837e1654ee5de826c0eea19b77ce2d0860f43778bfd15ced795cbd0bb66290",
+      "original_prompt": "כניסה a באורך n ביטים ועוד כניסה נוספת שהיא החיבור a+2 באורך n ביטים נכנסים לקופסה. להוציא את הממוצע בין שני המספרים מהקופסה. לשים לב לביט carry שיוצא מה-FA ויהיה ה-MSB במספר, כך שמספר הביטים תמיד שווה (להתייחס למקרה קצה). ניתן להשתמש בחלק השני של השאלה גם בביט שארית בתור כניסה נפרדת לקופסה. [בשרטוט a ויציאת מחבר a+2 נכנסים לקופסה, וקיים ביט carry נוסף.]",
+      "reported_companies": [
+        "Nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "logic",
+        "mellanox"
+      ],
+      "question_ids": [
+        "PREP-058"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-17.png"
+      ],
+      "sha256": "1834f549090e994fbd0101031cfdf0598850dbc83ad50aff4cddb972a47666e4",
+      "original_prompt": "א. צייר בשערים לוגיים את המערכת שבקוד המצורף. ב. צייר דיאגרמת גלים. ג. מה הקוד מממש? [מודול YYY עם clk,rst,enable. X,Y בני16 ביט. שני always @(posedge clk or negedge rst), איפוס X<=#1 16'b0 ו-Y<=#1 16'b1 כש-rst=0; אם enable==1'b1 מעדכנים X<=#1 Y ו-Y<=#1 Out. assign Out=X+Y. בצילום קיימת גם הצהרת reg ל-Out לצד output wire.]",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "logic",
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-044"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-18.png"
+      ],
+      "sha256": "2cc6ef018f4094ca948b942a0a5677529f9913c572aca58bb91f3f48e2ec07bb",
+      "original_prompt": "בהינתן רשימה מקושרת חד-כיוונית, נרצה למחוק איבר מסוים מתוך הרשימה, לא הראשון ולא האחרון. קיים מצביע לאיבר שנרצה למחוק ויש לבצע את פעולת המחיקה ב-O(1).",
+      "reported_companies": [
+        "Mobileye"
+      ],
+      "source_tags": [
+        "checkpoint",
+        "software",
+        "mobileye"
+      ],
+      "question_ids": [
+        "PREP-348"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-19.png"
+      ],
+      "sha256": "f0b32bd616162a54a77c7c87befb0626e8b46ee1178587eb4a61b14f1fd77bbc",
+      "original_prompt": "נתון מערך של מספרים שלמים. עליך למצוא את המספר החיובי הקטן ביותר שחסר.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-247"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-11-15-batch20b-20.png"
+      ],
+      "sha256": "44d5c5d7232766866aa6c90254798841c98daae975fe31254e3bbb2a6e3523ab",
+      "original_prompt": "שאלות על תנאי SU ו-HOLD, איך מקצרים זמן מחזור, והשפעת הוספת DELAY על כל אחד מהם.",
+      "reported_companies": [
+        "Apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-176"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useId, useRef, useState } from "react";
 import { ChevronDown, ChevronUp, CodeXml, Pencil } from "lucide-react";
 import { BidiText } from "../bidi-text";
+import { CodeWorkspace } from "../code-workspace";
 import { EvaluationPanel } from "../evaluation-panel";
 import { checkMaximumExample, fixedMaximum, starterMaximum, type MaximumCheck } from "../../lib/guest-software-example";
 import styles from "./guest-software-demo.module.css";
@@ -136,7 +137,12 @@ function CodeDemo({ lang, explanation, onAction }: Pick<Props, "lang" | "explana
       <CodeXml size={16} />{he ? (open ? "סגירת עורך הקוד" : "פתיחת עורך הקוד") : (open ? "Close code editor" : "Open code editor")}{open ? <ChevronUp size={15} /> : <ChevronDown size={15} />}</button>
     <div id={region} hidden={!open}>
       {open && <div className={styles.editor}>
-        <div dir="ltr"><CodeEditor value={code} onChange={edit} language="c" disabled={false} label={he ? "קוד למציאת המקסימום" : "Find the maximum in C"} /></div>
+        <CodeWorkspace lang={lang} question={{
+          title: he ? "הערך הגדול במערך" : "Largest value in an array",
+          content: <><p><BidiText>{question[lang]}</BidiText></p><pre className="code-block" dir="ltr"><code>{starterMaximum}</code></pre></>,
+        }}>
+          <CodeEditor value={code} onChange={edit} language="c" disabled={false} label={he ? "קוד למציאת המקסימום" : "Find the maximum in C"} />
+        </CodeWorkspace>
         <p className={styles.note} id="code-keyboard-help">{he ? "העורך מקבל קוד C. ההדגמה בודקת את שורת האתחול בתוך הפונקציה הנתונה." : "Edit the C code. The demo checks the initializer inside this function."}</p>
         <div className={styles.actions}>
           <button type="button" data-muxi-control="guest-code-fix" onClick={() => edit(fixedMaximum)}>{he ? "טעינת התיקון של מוקסי" : "Load Muxi’s repair"}</button>

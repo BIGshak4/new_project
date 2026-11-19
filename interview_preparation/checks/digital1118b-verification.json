@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checked": {
+    "follower_dc_cases": 28,
+    "register_pairs_per_instruction_model": 1364,
+    "register_widths": "1..5 inclusive",
+    "instruction_models": [
+      "register-tested branch",
+      "zero-flag branch"
+    ],
+    "aoi21_switch_vectors": 8,
+    "xor_distinct_vectors": 4,
+    "mux_tree_vectors": 64
+  },
+  "scope": "Educational DC and settled-state Icarus models. Register examples are exact integer simulations.",
+  "sha256": {
+    "solutions/digital1118b.sv": "327b26e8f9924bf5272109258b0177b344c8fb375f3fd9dd93a4f1b6937343e4",
+    "checks/digital1118b_tb.sv": "5d4394bb688f63334fcb777a62ca0d1a42ac219bdda5e194d2005a9aed675ab0",
+    "solutions/digital1118b_models.py": "f55b87590b221dbf072dba91561dc5a6c7594bf7ada9b9090e9cd262b52dfc93",
+    "checks/check_digital1118b.py": "84eef8a9f5a114787591bb6ef0b28bfb564d120c36c9ed541012a5eaaf5804f1"
+  }
+}

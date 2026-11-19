@@ -73,7 +73,7 @@ test("destinations stay on known site routes and preserve cross-page practice in
   for (const [destination, href] of Object.entries(helperDestinations)) {
     const url = new URL(href, "https://jobrun.example");
     assert.equal(url.origin, "https://jobrun.example");
-    assert.ok(["/", "/games", "/games/shop"].includes(url.pathname));
+    assert.ok(["/", "/games", "/games/shop", "/games/daily-puzzle"].includes(url.pathname));
     assert.equal(url.hash, "");
     if (["learn", "library", "fundamentals", "interview"].includes(destination)) {
       assert.equal(readWorkspaceRoute(url.search).route.view, destination, "A category link must open its selected category");

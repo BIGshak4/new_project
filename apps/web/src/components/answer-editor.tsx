@@ -1,9 +1,11 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useId, useState } from "react";
-import { ChevronDown, ChevronUp, CodeXml, MessageSquareText } from "lucide-react";
+import { ChevronDown, ChevronUp, CodeXml, MessageSquareText, Table2 } from "lucide-react";
 import type { Lang } from "./auth";
 import { DictationControls } from "./dictation-controls";
+import { CodeWorkspace } from "./code-workspace";
+import type { CircuitQuestionReference } from "./circuit-editor";
 import { dictationExplanationLimit } from "../lib/speech-dictation";
 import type { CodeExecutionContext } from "./code-execution-panel";
 import {
@@ -17,6 +19,7 @@ import {
 const CodeEditor = dynamic(() => import("./technical-code-editor"), {
   ssr: false,
 });
+const TruthTableEditor = dynamic(() => import("./truth-table-editor").then(module => module.TruthTableEditor));
 const CodeExecutionPanel = dynamic(() => import("./code-execution-panel").then((module) => module.CodeExecutionPanel), { ssr: false });
 export function AnswerEditor({
   value,
@@ -27,6 +30,7 @@ export function AnswerEditor({
   starterCode,
   initiallyShowCode,
   execution,
+  question,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -36,6 +40,7 @@ export function AnswerEditor({
   starterCode: string | null;
   initiallyShowCode?: boolean;
   execution?: CodeExecutionContext;
+  question?: CircuitQuestionReference;
 }) {
   const t = (he: string, en: string) => (lang === "he" ? he : en);
   const id = useId();
@@ -44,12 +49,13 @@ export function AnswerEditor({
     parts.language ?? defaultAnswerLanguage(codeLanguage),
   );
   const [showExplanation, setShowExplanation] = useState(false);
+  const [showTable, setShowTable] = useState(false);
   const [showCode, setShowCode] = useState(initiallyShowCode ?? false);
   // Once opened, keep the editor mounted so folding it preserves undo and cursor state.
   const [codeMounted, setCodeMounted] = useState(initiallyShowCode ?? false);
   const language = parts.language ?? chosenLanguage;
   const update = (explanation: string, code: string, nextLanguage = language) =>
-    onChange(formatTechnicalAnswer(explanation, code, nextLanguage));
+    onChange(formatTechnicalAnswer(explanation, code, nextLanguage, parts.truthTable));
   return (
     <div className="answer-editor">
       <div className="visual-answer-actions" role="group" aria-label={t("כלי כתיבת תשובה", "Answer writing tools")}>
@@ -82,9 +88,22 @@ export function AnswerEditor({
           <CodeXml size={18} aria-hidden="true" />
           {showCode
             ? t("סגירת עורך הקוד והנוסחאות", "Close code and formulas")
-            : t("קוד, נוסחה או טבלת אמת", "Code, formula, or truth table")}
+            : t("קוד או נוסחה", "Code or formula")}
           {!showCode && parts.code.trim() && <span className="small muted">{t("יש תוכן", "Has content")}</span>}
           {showCode ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
+        </button>
+        <button
+          type="button"
+          data-muxi-control="truth-table-open"
+          aria-expanded={showTable}
+          aria-controls={`${id}-truth-table`}
+          disabled={disabled}
+          onClick={() => setShowTable(open => !open)}
+        >
+          <Table2 size={18} aria-hidden="true" />
+          {showTable ? t("סגירת טבלת האמת", "Close truth table") : t("טבלת אמת", "Truth table")}
+          {!showTable && parts.truthTable && <span className="small muted">{t("יש תוכן", "Has content")}</span>}
+          {showTable ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
         </button>
       </div>
       <div id={`${id}-explanation`} hidden={!showExplanation}>
@@ -114,7 +133,7 @@ export function AnswerEditor({
       </div>
       <div id={`${id}-code`} hidden={!showCode}>
         {codeMounted && (
-          <>
+          <CodeWorkspace lang={lang} question={question}>
             <div className="code-toolbar">
               <label>
                 {t("קוד / תוכן טכני", "Code / technical content")}
@@ -134,8 +153,8 @@ export function AnswerEditor({
                     <option value={l} key={l}>
                       {l === "text"
                         ? t(
-                            "נוסחה / טבלה / פסאודו־קוד",
-                            "Formula / table / pseudocode",
+                            "נוסחה / פסאודו־קוד",
+                            "Formula / pseudocode",
                           )
                         : {
                             c: "C",
@@ -184,18 +203,22 @@ export function AnswerEditor({
               )}
             </p>
             {execution && language !== "text" ? <CodeExecutionPanel context={execution} language={language} source={parts.code} lang={lang} disabled={disabled} onUseStarter={(source) => update(parts.explanation, source)} /> : <p className="small muted">{t("הקוד אינו מורץ אוטומטית בזמן העריכה. הרצה זמינה בתרגול עם כפתור הרצה ייעודי.", "Code does not run automatically while editing. Execution is available in practice through a dedicated run button.")}</p>}
-          </>
+          </CodeWorkspace>
         )}
+      </div>
+      <div id={`${id}-truth-table`} hidden={!showTable}>
+        {showTable && <TruthTableEditor value={parts.truthTable} lang={lang} disabled={disabled}
+          onChange={table => onChange(formatTechnicalAnswer(parts.explanation, parts.code, language, table))} />}
       </div>
       <p
         className={`small ${value.length > 20000 ? "answer-limit" : "muted"}`}
         role={value.length > 20000 ? "alert" : undefined}
-        hidden={!value.length && !showExplanation && !showCode}
+        hidden={!value.length && !showExplanation && !showCode && !showTable}
       >
         {value.length.toLocaleString()} / 20,000{" "}
         {t(
-          "תווים · ההסבר והקוד נשמרים יחד",
-          "characters · explanation and code are saved together",
+          "תווים בתשובה",
+          "characters in your answer",
         )}
       </p>
     </div>

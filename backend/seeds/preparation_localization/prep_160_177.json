@@ -77,11 +77,13 @@
     "assumptions": {
       "he": [
         "אותו שעון וחזית, נתיב מחזור אחד; skew חיובי ללכידה מאוחרת.",
-        "מודל זמן מאוחד, זמני מינימום/מקסימום ו־uncertainty נפרדים."
+        "מודל זמן מאוחד, זמני מינימום/מקסימום ו־uncertainty נפרדים.",
+        "בהרחבה יש שלושה אוגרי שיגור, OR אחד ואוגר קליטה. כל ענף בר־רגישות ושעות ההגעה מוגדרות בנפרד."
       ],
       "en": [
         "Same clock/edge, one-cycle path; positive skew means later capture.",
-        "One time unit, explicit min/max delays and separate uncertainties."
+        "One time unit, explicit min/max delays and separate uncertainties.",
+        "The extension uses three launches, one OR and one capture. Every branch is sensitizable and has an explicit launch arrival."
       ]
     },
     "optimality": {
@@ -89,19 +91,21 @@
       "en": "No unique best repair without the path/library; pipelining changes latency and acceleration may hurt hold."
     },
     "verification": {
-      "he": "54 בדיקות מול לוח זמנים מוחלט; הגדלת מחזור עוזרת רק ל־setup במודל.",
-      "en": "54 absolute-schedule checks; a longer period improves only setup in this model."
+      "he": "54 בדיקות מול לוח זמנים מוחלט; הגדלת מחזור עוזרת רק ל־setup במודל. מודל שלושת הענפים נבדק מול לוח זמנים מוחלט לכל זוג skew/השהיה, כולל תוספת השהיה ושינוי מחזור.",
+      "en": "54 absolute-schedule checks; a longer period improves only setup in this model. The three-branch model was compared with absolute arrival/deadline schedules, including added delay and period changes."
     },
     "edge_cases": {
       "he": [
         "skew שלילי או חיובי.",
         "נתיב קצר מאוד מפר hold.",
-        "אפס slack הוא גבול המודל, לא מרווח הנדסי."
+        "אפס slack הוא גבול המודל, לא מרווח הנדסי.",
+        "ענף מהיר עלול להיכשל ב־hold גם כאשר ענף אחר קובע את זמן המחזור."
       ],
       "en": [
         "Negative/positive skew.",
         "A very short path can violate hold.",
-        "Zero slack is a model boundary, not engineering margin."
+        "Zero slack is a model boundary, not engineering margin.",
+        "A fast branch can fail hold even when a different branch determines the period."
       ]
     },
     "common_mistakes": {
@@ -155,7 +159,7 @@
       ],
       "en": [
         "Explicit lumped capacitance and aligned prescribed slopes.",
-        "Positive R, Cg; nonnegative Cc; k is−1,0 or1."
+        "Positive R, Cg; nonnegative Cc; k is−1,0 or 1."
       ]
     },
     "optimality": {
@@ -186,13 +190,13 @@
       ],
       "en": [
         "Claiming coupling only slows signals.",
-        "Assigning2 Cc to every event.",
+        "Assigning 2 Cc to every event.",
         "Ignoring hold or activity windows."
       ]
     },
     "interview_answer": {
       "he": "זרם הצימוד תלוי בנגזרת הפרש המתחים. במודל שיפועים שווים, יחד נותן 0 Cc, שקט 1 Cc ונגד 2 Cc. אבדוק האטת setup וגם האצת hold, ואקטין צימוד או אשנה ניתוב והנעה תוך בדיקה מחודשת.",
-      "en": "Coupling current follows the voltage-difference derivative. Equal ramps give0 Cc,1 Cc or2 Cc for same, quiet or opposite motion. Check setup slowdown and hold speedup, then tune routing, coupling or drive and recheck."
+      "en": "Coupling current follows the voltage-difference derivative. Equal ramps give 0 Cc,1 Cc or 2 Cc for same, quiet or opposite motion. Check setup slowdown and hold speedup, then tune routing, coupling or drive and recheck."
     },
     "source_ambiguities": {
       "he": [
@@ -227,7 +231,7 @@
       ],
       "en": [
         "Charging source disconnects; capacitor and inductor form an isolated loop.",
-        "InitialV0, zero inductor current, ideal positiveL, C."
+        "Initial V0, zero inductor current, ideal positive L, C."
       ]
     },
     "optimality": {
@@ -258,7 +262,7 @@
         "הנחת דעיכה בלי הפסדים."
       ],
       "en": [
-        "Drawing anRC discharge without a resistor.",
+        "Drawing an RC discharge without a resistor.",
         "Leaving the source connected after transfer.",
         "Stopping current at zero capacitor voltage.",
         "Adding decay without losses."
@@ -266,7 +270,7 @@
     },
     "interview_answer": {
       "he": "לאחר ניתוק המקור הקבל והסליל מחליפים אנרגיה. רציפות vC ו־iL נותנת vC=V0 cos(t/sqrtLC), עם קוסינוס לא דועך במודל האידאלי וזרם שמגיע לשיא ברבע מחזור.",
-      "en": "After source disconnection, C andL exchange energy. Continuity gives vC=V0 cos(t/sqrtLC), an undamped ideal cosine with current maximal at a quarter period."
+      "en": "After source disconnection, C and L exchange energy. Continuity gives vC=V0 cos(t/sqrtLC), an undamped ideal cosine with current maximal at a quarter period."
     },
     "source_ambiguities": {
       "he": [
@@ -289,7 +293,7 @@
       "en": [
         {
           "question": "What changes with a small series resistance?",
-          "answer_direction": "The equation gains damping. An underdamped response decays with a shifted frequency determined byR, L, C, not an arbitrary envelope.",
+          "answer_direction": "The equation gains damping. An underdamped response decays with a shifted frequency determined by R, L, C, not an arbitrary envelope.",
           "principle": "Damping requires energy dissipation."
         }
       ]
@@ -377,7 +381,7 @@
       ],
       "en": [
         "Either individual switch changes while the other stays fixed; settled states.",
-        "Low-voltageDC, current limiting and nonfloating inputs."
+        "Low-voltage DC, current limiting and nonfloating inputs."
       ]
     },
     "optimality": {
@@ -483,14 +487,14 @@
       ],
       "en": [
         "Clearing to S0 after detection and losing overlap.",
-        "Clearing after 1010 instead of retaining10.",
+        "Clearing after 1010 instead of retaining 10.",
         "Reversing the target or confusing it with 01011.",
         "Describing a post-edge stored output without adding its register."
       ]
     },
     "interview_answer": {
       "he": "אשמור קידומות ריקה,1,10,101. במצב 101 וקלט 1 אוציא אירוע ואשמור 1; בקלט 0 אשמור 10. כך 1011011 מזהה בביטים 4,7. אבחין בין אירוע Mealy לפולס שנרשם אחרי חזית.",
-      "en": "Track empty,1,10,101. From 101, one emits and keeps 1; zero keeps 10. Thus1011011 detects at 4,7. Distinguish the Mealy event from a registered post-edge pulse."
+      "en": "Track empty,1,10,101. From 101, one emits and keeps 1; zero keeps 10. Thus 1011011 detects at 4,7. Distinguish the Mealy event from a registered post-edge pulse."
     },
     "source_ambiguities": {
       "he": [
@@ -513,7 +517,7 @@
       "en": [
         {
           "question": "What changes if overlap is forbidden?",
-          "answer_direction": "After a full match, reset progress rather than retaining the final1; specify whether partial mismatches retain prefixes.",
+          "answer_direction": "After a full match, reset progress rather than retaining the final 1; specify whether partial mismatches retain prefixes.",
           "principle": "Overlap policy is a contract, not a cosmetic detail."
         }
       ]
@@ -587,7 +591,7 @@
       "en": [
         {
           "question": "What if input is signed two-bit two's complement?",
-          "answer_direction": "Values 0,1,−2,−1 give0,1,4,1. Three bits suffice:y2=a AND NOT b, y1=0, y0=b.",
+          "answer_direction": "Values 0,1,−2,−1 give 0,1,4,1. Three bits suffice:y2=a AND NOT b, y1=0, y0=b.",
           "principle": "The same bit vector can denote a different number."
         }
       ]
@@ -941,7 +945,7 @@
     "solution_extensions": {
       "he": [
         {
-          "question": "ומה אם המחלק הואK כקלט?",
+          "question": "ומה אם המחלק הוא K כקלט?",
           "direction": "אותו רעיון עם מיקום ראשון לכל שארית, אבל המקום גדל עד O(K) או מספר השאריות שנראו.",
           "principle": "קבוע בשאלה המקורית אינו קבוע בהכללה."
         }

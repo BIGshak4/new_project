@@ -280,6 +280,45 @@ def _mentions_variable(node) -> bool:
     return False
 
 
+# The answer editor puts a named table first and keeps the learner's prose and code after it.
+_WRITTEN_TABLE = re.compile(r"^~~~truth-table\n(.*?)\n~~~(?:\n|$)", re.DOTALL)
+
+
+def _submitted_table_column(body: str, variables: list[str], output_name: str | None) -> list[int | str]:
+    lines = body.split("\n")
+    if len(lines) < 3 or not lines[0].startswith("inputs\t") or not lines[1].startswith("outputs\t"):
+        raise BooleanParseError("invalid truth table headers")
+    inputs = [name.strip().casefold() for name in lines[0].split("\t")[1:]]
+    outputs = [name.strip().casefold() for name in lines[1].split("\t")[1:]]
+    expected_inputs = [name.casefold() for name in variables]
+    if len(inputs) > 6 or sorted(inputs) != sorted(expected_inputs):
+        raise BooleanParseError("the input columns must match " + ", ".join(variables))
+    if not 1 <= len(outputs) <= 8 or len(lines) - 2 != 2 ** len(inputs):
+        raise BooleanParseError("unexpected number of rows or outputs")
+    if len(outputs) == 1:
+        output_index = 0
+    elif output_name and outputs.count(output_name.casefold()) == 1:
+        output_index = outputs.index(output_name.casefold())
+    else:
+        raise BooleanParseError("the expected output column could not be identified")
+
+    # Input columns may appear in a different order from the question's variables.
+    positions = [inputs.index(name) for name in expected_inputs]
+    result: list[int | str] = ["-"] * (len(lines) - 2)
+    for row, line in enumerate(lines[2:]):
+        bits, *cells = line.split("\t")
+        if (
+            bits != format(row, f"0{len(inputs)}b")
+            or len(cells) != len(outputs)
+            or any(cell not in {"0", "1", "X", "-"} for cell in cells)
+        ):
+            raise BooleanParseError("invalid truth table row")
+        index = int("".join(bits[pos] for pos in positions), 2)
+        cell = cells[output_index]
+        result[index] = int(cell) if cell in {"0", "1"} else cell
+    return result
+
+
 def check_truth_table(spec: dict, answer: dict | str) -> CheckResult:
     """Compare the candidate's expression or table against the expected function.
 
@@ -295,7 +334,14 @@ def check_truth_table(spec: dict, answer: dict | str) -> CheckResult:
         answer = {"text": answer}
     try:
         if answer.get("text"):
-            got = truth_table(extract_expression(answer["text"], variables, spec.get("output_name")), variables)
+            text = answer["text"]
+            table = _WRITTEN_TABLE.match(text)
+            if table:
+                got = _submitted_table_column(table[1], variables, spec.get("output_name"))
+                if any(want is not None and have == "-" for want, have in zip(expected, got, strict=True)):
+                    raise BooleanParseError("some required output cells are empty")
+            else:
+                got = truth_table(extract_expression(text, variables, spec.get("output_name")), variables)
         elif answer.get("expression"):
             got = truth_table(answer["expression"], variables)
         elif "outputs" in answer:
@@ -409,6 +455,9 @@ def check_numeric(spec: dict, answer: str | float | int | dict) -> CheckResult:
     started = time.perf_counter()
     if isinstance(answer, dict):
         answer = answer.get("value", answer.get("text", ""))
+    if isinstance(answer, str):
+        # Numeric questions grade the written result, never bits from an attached table.
+        answer = _WRITTEN_TABLE.sub("", answer, count=1)
     names = spec.get("output_names") or ([spec["output_name"]] if spec.get("output_name") else [])
     unit = spec.get("unit")
     base_units = {"s", "Hz", "V", "A", "W", "F", "Ω", "ohm", "b", "B", "bit", "bits"}

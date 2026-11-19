@@ -101,11 +101,12 @@ export function Auth({
     if (!user) return;
     await accessCheck.current.run(
       user.id,
-      async () => {
+      async (signal) => {
         const { data, error } = await supabase
           .from("jr_members")
           .select("email,can_manage_tasks")
-          .limit(1);
+          .limit(1)
+          .abortSignal(signal);
         if (error) throw error;
         return !!data?.length && (kind !== "tasks" || !!data[0].can_manage_tasks);
       },

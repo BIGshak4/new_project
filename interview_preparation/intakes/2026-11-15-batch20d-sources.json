@@ -1,0 +1,400 @@
+{
+  "received_on": "2026-11-15",
+  "screenshot_count": 20,
+  "source_count": 20,
+  "new_question_count": 7,
+  "technical_extension_count": 5,
+  "provenance_only_count": 7,
+  "affected_question_count": 19,
+  "sources": [
+    {
+      "screenshot": 1,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-01.png"
+      ],
+      "sha256": "68f994ebc65fceb090afb92bd241fdab2b1e992ed52dd7015526b911a3e1149f",
+      "original_prompt": "לתכנן מחלק תדר ב2, ב4, ב3.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-216",
+        "PREP-010"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 2,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-02.png"
+      ],
+      "sha256": "6a13e8033ce7b7528a6f5fae014ddeee4d1d0642a9d196748a840cded54fda17",
+      "original_prompt": "מקבלים רצף אינסופי של ביטים. עליך להחזיר 1 כאשר מגיע הרצף 1010. כל עוד הרצף לא הגיע, להחזיר 0. לדוגמה: הקלט 0101010001; הפלט 0000101000. הרצף מופיע פעמיים כאשר הפעם השנייה מוכלת בפעם הראשונה.",
+      "reported_companies": [
+        "google"
+      ],
+      "source_tags": [
+        "hardware",
+        "google"
+      ],
+      "question_ids": [
+        "PREP-207"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 3,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-03.png"
+      ],
+      "sha256": "e3478dfb334196d4ae97689e849876a7f0fc1183120c2a0ae696df493ba35ee9",
+      "original_prompt": "בהינתן מערך מספרים וערך x, ממש אלגוריתם שמחזיר את מספר זוגות האיברים במערך שסכומם הוא x.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "c-3",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-089"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 4,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-04.png"
+      ],
+      "sha256": "20e7b2d3fd521e1a180f39a9be37d48154fddc80b812385688a87d6e925e0845",
+      "original_prompt": "נתונה פונקציה Test(voltage) המחזירה ערך בוליאני. כעת נתון start<voltage<stop, ונתון גם step (לא בהכרח אינטגר). ממש פונקציה המחזירה את המתח בו נמצא ה-Fail הראשון במערך. find_failure(start,stop,step).",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-359"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 5,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-05.png"
+      ],
+      "sha256": "910823dab6c9598a890e46d44b7f1b5d6d0bcb0c534b924dc5d90ccf6ea613e3",
+      "original_prompt": "רכיב עם שתי כניסות ויציאה אחת. כניסה אחת היא מספר X והכניסה השנייה היא X+2. היציאה צריכה להוציא את X+1. צריך לממש ולהשתמש בשתי הכניסות רק בעזרת רכיבים לוגיים בסיסיים ומוקס.",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "logic",
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-058"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 6,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-06.png"
+      ],
+      "sha256": "a59e3299462a0df8e173757197c42ff34dc4660c3c5960ec44bec8fe50b1b3bc",
+      "original_prompt": "תאר את מודל ה-OSI מתחילתו ועד סופו. הסבר את התהליך של העברת פקטה ברשת בפירוט.",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-360"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 7,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-07.png"
+      ],
+      "sha256": "0907f552dc1ef453de8417ec03a35704003afc880c2f6536cde91e577cc70a74",
+      "original_prompt": "אם מגדילים את הרוחב של pmos של מהפך איך הוא משפיע על האופיין Vin-Vout? וכנ״ל עבור ה-nmos.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-205"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 8,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-08.png"
+      ],
+      "sha256": "17a1f51346913262071e3bb2904108d2df8d8899d006be159f39c93bd3d36c24",
+      "original_prompt": "צייר טרנזיסטור, להסביר איך הוא עובד. להסביר מאיפה הגיע Vth של הטרנזיסטור ועל מה הוא משפיע, איזה Vt נרצה כדי להקטין הספק סטטי ואיזה אם רוצים להקטין הספק דינאמי.",
+      "reported_companies": [
+        "apple"
+      ],
+      "source_tags": [
+        "hardware",
+        "apple"
+      ],
+      "question_ids": [
+        "PREP-115"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 9,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-09.png"
+      ],
+      "sha256": "24d179b4dd8400cd5f63704e70f6eaf5543d5e52fccccd9fe3eef20f0b4b7997",
+      "original_prompt": "פרט מהם הפרמטרים שמשפיעים על ה-Tpd. הסבר כיצד הם משפיעים, מגדילים/מקטינים ומדוע.",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-365"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 10,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-10.png"
+      ],
+      "sha256": "cf65680743586ca506f74b5b00faca9fab82ad14c0be0afaad2337c1d26b83cf",
+      "original_prompt": "ממש בעזרת שערים לוגיים קופסה אשר מקבלת 8 ביטים בכניסה, ומוציאה אחד בביט השמאלי ביותר (MSB). סעיף נוסף: כל שער לוגי הוא אפס זמן, חוץ משער and שהוא 1 טאו (רק שערי and שמופיעים בפיתרון נספרים). הזמן של הרכיב בפיתרון א׳ הוא 11 טאו. איך אפשר לקצר לפחות מחצי, כלומר לפחות מ-5.5 טאו?",
+      "reported_companies": [
+        "arm"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "arm",
+        "solaredge"
+      ],
+      "question_ids": [
+        "PREP-014"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 11,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-11.png"
+      ],
+      "sha256": "132385a833d7832380f63e2c355d7b80069c8e0658c06251053455c806f07a95",
+      "original_prompt": "ביקשו לממש edge trigger flip flop ו-transparent latch flip flop באמצעות mux 2:1.",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-083"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 12,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-12.png"
+      ],
+      "sha256": "272d895b1ec353c495c0f671650d1ff1ddc6a2a46f2f91f681395ee17f7cfd6a",
+      "original_prompt": "שאלה ראשונה לייצר גוזר עלייה למחזור אחד. שאלה שנייה להשתמש בגוזר שיצרנו כדי ליצור מערכת שבה המוצא יישאר למעלה ל-N מחזורי שעון לאחר עלייה של הכניסה.",
+      "reported_companies": [
+        "amazon"
+      ],
+      "source_tags": [
+        "hardware",
+        "amazon"
+      ],
+      "question_ids": [
+        "PREP-042"
+      ],
+      "decision": "technical_extension"
+    },
+    {
+      "screenshot": 13,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-13.png"
+      ],
+      "sha256": "ad2b7cffb475a7ec529efc868a435220782181a8d44e382121bbca3e1d82519e",
+      "original_prompt": "בהינתן מערך של מחירי מניה ביום מסוים, מצא מתי לקנות ומתי למכור על מנת לקבל רווח מקסימלי.",
+      "reported_companies": [
+        "arm"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia",
+        "arm"
+      ],
+      "question_ids": [
+        "PREP-066"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 14,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-14.png"
+      ],
+      "sha256": "313c652b3d337604e66cebacc0ff8382682996dd05946ae7d5d4b8c1640ae5a4",
+      "original_prompt": "כתבו קוד שמקבל 2 מספרים בינריים לפונקציה (מקבל מהמשתמש), ועל הפונקציה להחזיר מספר שהוא בוודאות לא אחד המספרים שהמשתמש הכניס. אסור להשתמש בתנאים (if).",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-361"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 15,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-15.png"
+      ],
+      "sha256": "1b4aec309d367e836f5c55aa32e910b20f2a7e9cee07efed7a38e3cc813cc67a",
+      "original_prompt": "יש בקר שמקבל באינפוט 2 סיגנלים: Th כאשר טמפרטורת מנוע גבוהה מדי ו-Tl כאשר טמפרטורת המנוע נמוכה מדי. צריך לתכנן רכיב המקבל באינפוט את 2 הסיגנלים האלה וצריך להוציא את המנוע אם לעבוד או להפסיק (ON/OFF).",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "logic",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-363"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 16,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-16.png"
+      ],
+      "sha256": "eae059bb6157bf707f92b6f0001ec62c6411901701844d5cf0b008ba906eec5b",
+      "original_prompt": "בנה פליפלופ באמצעות מוקסים 2:1.",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-083"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 17,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-17.png"
+      ],
+      "sha256": "7156d1489c12a82fa2a4110d678efd38f0991fca54ae4897d5b38a74a25535ad",
+      "original_prompt": "השאלה עוסקת ב-coverage ווריפיקציה של fifo. מה יקרה אם לא נשתמש ב-monitor? שאר הרכיבים קיימים: generator, model, interface, driver.",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "hardware",
+        "verification",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-364"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 18,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-18.png"
+      ],
+      "sha256": "9192f7682808f9dbfdf2dd5887a9e19120df26a3d617b29e4c31f694d3e1ac58",
+      "original_prompt": "נא לכתוב פונקציה שמקבלת 2 מערכים אקראיים, ומחזירה את ההפרש המינימלי בין 2 איברים, כאשר כל איבר ממערך אחר. לדוגמה אם יש בשני המערכים את האיבר 5 אז ההפרש המינימלי הינו 0. ביקשו לכתוב brute force ואז לשפר זמן ריצה.",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "software",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-362"
+      ],
+      "decision": "new_question"
+    },
+    {
+      "screenshot": 19,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-19.png"
+      ],
+      "sha256": "998bfc68ceb0ec015f6dec3402fa1a55145614647e4e0b5320277b6fbe16a36e",
+      "original_prompt": "נתון מספר בינארי. איך יודעים האם הוא מתחלק ב-2? איך יודעים האם הוא מתחלק ב-4? איך יודעים האם הוא מתחלק ב-8?",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "logic",
+        "verification",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-206"
+      ],
+      "decision": "additional_source_existing_question"
+    },
+    {
+      "screenshot": 20,
+      "archive_paths": [
+        "sources/2026-11-15-batch20d-20.png"
+      ],
+      "sha256": "339a051307e2f614af99608ca639044b5ba1a471847cdd3be4e87a4d8d61ace6",
+      "original_prompt": "נתון מספר בינארי. איך יודעים האם הוא מתחלק ב-2? איך יודעים האם הוא מתחלק ב-4? איך יודעים האם הוא מתחלק ב-8?",
+      "reported_companies": [
+        "nvidia"
+      ],
+      "source_tags": [
+        "logic",
+        "verification",
+        "nvidia"
+      ],
+      "question_ids": [
+        "PREP-206"
+      ],
+      "decision": "additional_source_existing_question"
+    }
+  ]
+}

@@ -1,0 +1,887 @@
+{
+  "prep-finite-colored-sampling-grid-validation": {
+    "contract": {
+      "he": "colored_grids_valid(width,height,green,red) מחזירה bool. כל גריד הוא [xstart,ystart,xgap,ygap,xnumdots,ynumdots], כל הפרמטרים שלמים. תחום 0≤x<width,0≤y<height, רוחב/גובה/רווחים/כמויות חיוביים. כל זוג מצבעים שונים חייב להיות בחפיפה מדויקת או במרחק אוקלידי גדול ממש מ־2. קלט לא תקין מחזיר False.",
+      "en": "colored_grids_valid(width,height,green,red) returns bool. A grid is [xstart,ystart,xgap,ygap,xnumdots,ynumdots], all integer parameters. Bounds are 0≤x<width,0≤y<height; dimensions, counts and gaps are positive. Every cross-color pair must coincide or have Euclidean distance strictly greater than 2. Invalid parameters return False."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "colored_grids_valid",
+        "starter": "def colored_grids_valid(width, height, green, red):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              5,
+              5,
+              [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              5,
+              5,
+              [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                0,
+                1,
+                1,
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              5,
+              5,
+              [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                2,
+                0,
+                1,
+                1,
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              5,
+              5,
+              [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                2,
+                1,
+                1,
+                1,
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              5,
+              5,
+              [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                0,
+                2,
+                1,
+                2,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              8,
+              8,
+              [
+                0,
+                0,
+                3,
+                3,
+                3,
+                3
+              ],
+              [
+                0,
+                0,
+                3,
+                3,
+                3,
+                3
+              ]
+            ]
+          },
+          {
+            "args": [
+              8,
+              8,
+              [
+                0,
+                0,
+                2,
+                2,
+                4,
+                4
+              ],
+              [
+                0,
+                0,
+                2,
+                2,
+                4,
+                4
+              ]
+            ]
+          },
+          {
+            "args": [
+              8,
+              8,
+              [
+                0,
+                0,
+                3,
+                3,
+                3,
+                3
+              ],
+              [
+                1,
+                1,
+                3,
+                3,
+                3,
+                3
+              ]
+            ]
+          },
+          {
+            "args": [
+              8,
+              8,
+              [
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
+              ],
+              [
+                4,
+                4,
+                1,
+                1,
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              8,
+              8,
+              [
+                0,
+                0,
+                1,
+                1,
+                0,
+                1
+              ],
+              [
+                4,
+                4,
+                1,
+                1,
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              8,
+              8,
+              [
+                0,
+                0,
+                3,
+                3,
+                4,
+                3
+              ],
+              [
+                4,
+                4,
+                1,
+                1,
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              20,
+              20,
+              [
+                1,
+                1,
+                4,
+                5,
+                4,
+                3
+              ],
+              [
+                3,
+                4,
+                6,
+                5,
+                3,
+                3
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-blur-subsample-pyramid-and-row-streaming": {
+    "contract": {
+      "he": "image_pyramid(image,levels) מחזירה levels+1 תמונות כולל עותק המקור. מטריצה לא ריקה של int ב־0..255; levels שלם לא שלילי. בכל שלב משכפלים שפה, מחשבים סכום שכונת 3×3, מחלקים ב־9 ברצפה אחת ואז שומרים אינדקסי שורה ועמודה זוגיים החל מ־0. החוזה כאן בודק פלט מלא; ניתוח ומימוש זרימה נמצאים בשאלה.",
+      "en": "image_pyramid(image,levels) returns levels+1 images including a source copy. Input is a nonempty rectangular int matrix in 0..255 and a nonnegative integer level count. Replicate edges, sum a 3×3 neighborhood, floor-divide once by 9, then retain even row/column indices starting at 0. This runtime contract checks the full output; streaming design is part of the question."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "image_pyramid",
+        "starter": "def image_pyramid(image, levels):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              [
+                [
+                  0
+                ]
+              ],
+              0
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  255
+                ]
+              ],
+              3
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  9
+                ],
+                [
+                  18,
+                  27
+                ]
+              ],
+              1
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                [
+                  4,
+                  5,
+                  6
+                ],
+                [
+                  7,
+                  8,
+                  9
+                ]
+              ],
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  255,
+                  0,
+                  255,
+                  0
+                ]
+              ],
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0
+                ],
+                [
+                  255
+                ],
+                [
+                  0
+                ],
+                [
+                  255
+                ],
+                [
+                  0
+                ]
+              ],
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  8,
+                  8,
+                  8,
+                  8,
+                  8
+                ],
+                [
+                  8,
+                  8,
+                  8,
+                  8,
+                  8
+                ],
+                [
+                  8,
+                  8,
+                  8,
+                  8,
+                  8
+                ]
+              ],
+              4
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ],
+                [
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15
+                ],
+                [
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23
+                ],
+                [
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31
+                ],
+                [
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39
+                ],
+                [
+                  40,
+                  41,
+                  42,
+                  43,
+                  44,
+                  45,
+                  46,
+                  47
+                ],
+                [
+                  48,
+                  49,
+                  50,
+                  51,
+                  52,
+                  53,
+                  54,
+                  55
+                ],
+                [
+                  56,
+                  57,
+                  58,
+                  59,
+                  60,
+                  61,
+                  62,
+                  63
+                ]
+              ],
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  255,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ],
+              1
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  1,
+                  8
+                ],
+                [
+                  8,
+                  1
+                ]
+              ],
+              1
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  255,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  255
+                ]
+              ],
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  4
+                ]
+              ],
+              8
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-eight-neighbor-plateau-drainage-basins": {
+    "contract": {
+      "he": "basin_sizes(heights) מחזירה רשימת גדלי אגני ניקוז בסדר לא עולה. מטריצה שלמה מלבנית לא ריקה, שמונה שכנים בתוך התחום. מאחדים רכיבי גובה שווה; כל רכיב בוחר שכן גבול נמוך ממש לפי מינימום (גובה,שורה,עמודה), או שהוא שקיעה. תא שייך ליעד השקיעה שאליו שרשרת היציאות מגיעה.",
+      "en": "basin_sizes(heights) returns basin cell counts in nonincreasing order. Use a nonempty rectangular integer matrix and eight in-bounds neighbors. Condense equal-height connected plateaus. Each plateau chooses its strictly lower boundary neighbor by minimum (height,row,column), or is a sink. A cell belongs to the sink reached by its outlet chain."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "basin_sizes",
+        "starter": "def basin_sizes(heights):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              [
+                [
+                  0
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  2,
+                  1,
+                  1
+                ],
+                [
+                  7,
+                  1,
+                  1
+                ],
+                [
+                  9,
+                  6,
+                  3
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  9,
+                  1
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  9,
+                  0
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  1,
+                  9
+                ],
+                [
+                  9,
+                  1
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  0,
+                  9,
+                  0
+                ],
+                [
+                  9,
+                  9,
+                  9
+                ],
+                [
+                  0,
+                  9,
+                  0
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  1
+                ],
+                [
+                  9
+                ],
+                [
+                  0
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  -2,
+                  0,
+                  -1
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                [
+                  6,
+                  5,
+                  4
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  2,
+                  2,
+                  2
+                ],
+                [
+                  2,
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  2,
+                  2
+                ]
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                [
+                  3,
+                  3,
+                  4,
+                  0
+                ],
+                [
+                  4,
+                  3,
+                  4,
+                  4
+                ],
+                [
+                  0,
+                  4,
+                  4,
+                  0
+                ]
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-top-two-distinct-and-mode": {
+    "contract": {
+      "he": "להרחבת סכום הזוג בלבד. ממשו maximum_pair_sum(values) עבור רשימת int טבעיים, כולל אפס. החזירו את הסכום המרבי של שני מיקומים שונים, עם אפשרות לערכים שווים. החזירו None כשיש פחות משני איברים. בצעו מעבר אחד בלי לשנות את הרשימה. Python משתמש במספרים שלמים מדויקים.",
+      "en": "For the pair-sum extension only. Implement maximum_pair_sum(values) for a list of nonnegative exact ints including zero. Return the maximum sum from two distinct positions; values may coincide. Return None for fewer than two elements. Use one traversal without changing the input. Python integers are exact."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "maximum_pair_sum",
+        "starter": "def maximum_pair_sum(values):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              []
+            ]
+          },
+          {
+            "args": [
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                5,
+                5
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                7,
+                1,
+                7
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                4,
+                9,
+                2,
+                9
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                9,
+                8,
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                2,
+                2,
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                4294967295,
+                4294967295
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

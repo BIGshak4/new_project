@@ -1,0 +1,671 @@
+{
+  "prep-first-failure-exact-decimal-voltage-grid": {
+    "contract": {
+      "he": "ממשו first_failure_voltage(start,stop,step,failed_voltages). הפרמטרים הם מחרוזות עשרוניות סופיות, start<stop ו־step>0. הרשת היא start+k*step עם k≥1 וערך קטן ממש מ־stop; start ו־stop מוחרגים. רק מתחים המנויים ב־failed_voltages נכשלים, בלי מונוטוניות. החזירו שבר מצומצם [מונה,מכנה] של הכשל הראשון או None. השוו ערכים עשרוניים בדיוק, בלי שגיאת float.",
+      "en": "Implement first_failure_voltage(start,stop,step,failed_voltages). Parameters are finite decimal strings, start<stop and step>0. Candidates are start+k*step for k≥1 strictly below stop; exclude both endpoints. Only listed failed_voltages fail, without monotonicity. Return the earliest failure as a reduced [numerator,denominator] pair or None. Compare decimal values exactly without float drift."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "first_failure_voltage",
+        "starter": "def first_failure_voltage(start, stop, step, failed_voltages):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              "0",
+              "1",
+              "0.1",
+              [
+                "0.3",
+                "0.8"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "0.3",
+              "0.1",
+              [
+                "0.3"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "1",
+              "0.1",
+              [
+                "0.1"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "1",
+              "0.1",
+              [
+                "0.9"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "1",
+              "0.1",
+              []
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "0.1",
+              "0.1",
+              [
+                "0",
+                "0.1"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "0.09",
+              "0.1",
+              [
+                "0.05"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "-0.35",
+              "0.3",
+              "0.05",
+              [
+                "-0.30",
+                "0.10"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "1.01",
+              "1.5",
+              "0.13",
+              [
+                "1.14",
+                "1.4"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "1",
+              "2",
+              "1",
+              [
+                "1",
+                "2"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "1",
+              "0.2",
+              [
+                "0.3",
+                "1"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "1",
+              "0.2",
+              [
+                "0.6"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "0.4",
+              "0.1",
+              [
+                "3e-1"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "1e20",
+              "100000000000000000001",
+              "0.125",
+              [
+                "100000000000000000000.375"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0.00001",
+              "0.00009",
+              "0.00001",
+              [
+                "0.0000300"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "-1",
+              "0",
+              "0.3",
+              [
+                "-0.7",
+                "-0.1"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "1",
+              "0.1",
+              [
+                "0.4",
+                "0.2"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "2.50",
+              "3.50",
+              "0.25",
+              [
+                "2.50",
+                "3.50"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "-2",
+              "2",
+              "0.5",
+              [
+                "0"
+              ]
+            ]
+          },
+          {
+            "args": [
+              "0",
+              "2",
+              "0.75",
+              [
+                "1.50"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-branch-free-uint32-different-from-two-inputs": {
+    "contract": {
+      "he": "ממשו different_uint32(a,b) עבור int בתחום 0..2**32-1. לתרגול הקנוני בלבד החזירו את הערך היחיד בתחום 0..3 שביט0 שלו הפוך מביט0 ב־a וביט1 שלו הפוך מביט1 ב־b. זהו ערך שונה משניהם. השתמשו בפעולות ביטים ללא תנאים, השוואות, לולאות או טבלאות; בדיקת פלט סופית אינה מוכיחה הגבלות תחביר. תשובות אחרות השונות משני הקלטים תקפות לשאלת הראיון הרחבה, אך כאן נבדק הפלט הקנוני.",
+      "en": "Implement different_uint32(a,b) for ints in 0..2**32-1. For this canonical practice exercise return the unique value in 0..3 with bit0 opposite a bit0 and bit1 opposite b bit1; it differs from both inputs. Use bitwise operations without conditions, comparisons, loops or tables; finite output tests do not prove syntax restrictions. Other values different from both inputs remain valid for the broader interview task, but this exercise checks the canonical output."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "different_uint32",
+        "starter": "def different_uint32(a, b):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              0,
+              0
+            ]
+          },
+          {
+            "args": [
+              0,
+              1
+            ]
+          },
+          {
+            "args": [
+              0,
+              2
+            ]
+          },
+          {
+            "args": [
+              0,
+              3
+            ]
+          },
+          {
+            "args": [
+              1,
+              0
+            ]
+          },
+          {
+            "args": [
+              1,
+              1
+            ]
+          },
+          {
+            "args": [
+              1,
+              2
+            ]
+          },
+          {
+            "args": [
+              1,
+              3
+            ]
+          },
+          {
+            "args": [
+              2,
+              0
+            ]
+          },
+          {
+            "args": [
+              2,
+              1
+            ]
+          },
+          {
+            "args": [
+              2,
+              2
+            ]
+          },
+          {
+            "args": [
+              2,
+              3
+            ]
+          },
+          {
+            "args": [
+              3,
+              0
+            ]
+          },
+          {
+            "args": [
+              3,
+              1
+            ]
+          },
+          {
+            "args": [
+              3,
+              2
+            ]
+          },
+          {
+            "args": [
+              3,
+              3
+            ]
+          },
+          {
+            "args": [
+              0,
+              4294967295
+            ]
+          },
+          {
+            "args": [
+              4294967295,
+              0
+            ]
+          },
+          {
+            "args": [
+              4294967295,
+              4294967295
+            ]
+          },
+          {
+            "args": [
+              0,
+              0
+            ]
+          },
+          {
+            "args": [
+              2147483648,
+              2147483649
+            ]
+          },
+          {
+            "args": [
+              123456789,
+              987654321
+            ]
+          },
+          {
+            "args": [
+              4294967294,
+              4294967293
+            ]
+          },
+          {
+            "args": [
+              2863311530,
+              1431655765
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "prep-minimum-absolute-distance-between-two-arrays": {
+    "contract": {
+      "he": "ממשו minimum_cross_distance(left,right). החזירו את המינימום של abs(a-b) כאשר a מהמערך הראשון ו־b מהשני. הקלט מכיל int מדויקים, שליליים וכפילויות מותרים. החזירו None אם אחד הצדדים ריק; החזירו מרחק בלבד ושמרו על הקלטים. הציעו מיון עותקים ושני מצביעים; בדיקות פלט אינן מוכיחות סיבוכיות.",
+      "en": "Implement minimum_cross_distance(left,right). Return min(abs(a-b)) for one value from each array. Inputs contain exact ints; negatives and duplicates are allowed. Return None if either side is empty, otherwise only the distance. Preserve inputs. Propose copied sorting and two pointers; finite output tests do not prove complexity."
+    },
+    "languages": {
+      "python": {
+        "kind": "function",
+        "entry": "minimum_cross_distance",
+        "starter": "def minimum_cross_distance(left, right):\n    raise NotImplementedError\n",
+        "cases": [
+          {
+            "args": [
+              [],
+              []
+            ]
+          },
+          {
+            "args": [
+              [],
+              [
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1
+              ],
+              []
+            ]
+          },
+          {
+            "args": [
+              [
+                5
+              ],
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                8,
+                -3,
+                4
+              ],
+              [
+                10,
+                7
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1
+              ],
+              [
+                9
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                9
+              ],
+              [
+                1
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                -5,
+                -5
+              ],
+              [
+                -4,
+                -4
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                10
+              ],
+              [
+                5
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                9,
+                1,
+                8
+              ],
+              [
+                7,
+                3
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                100
+              ],
+              [
+                30,
+                70
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                100
+              ],
+              [
+                99,
+                101
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                -2147483648
+              ],
+              [
+                2147483647
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                -1208925819614629174706176
+              ],
+              [
+                1208925819614629174706176
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                4294967295
+              ],
+              [
+                4294967296
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                5,
+                5,
+                5
+              ],
+              [
+                7,
+                5
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                10,
+                20,
+                30
+              ],
+              [
+                31
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                10,
+                20,
+                30
+              ],
+              [
+                -100,
+                -90
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                -10,
+                -2,
+                0
+              ],
+              [
+                2,
+                8
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                -10,
+                -2,
+                0
+              ],
+              [
+                -1
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                4,
+                7
+              ],
+              [
+                8,
+                5,
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                100,
+                101
+              ],
+              [
+                -100,
+                1000
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                3,
+                3,
+                3
+              ],
+              [
+                4,
+                4,
+                4
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                99,
+                -50,
+                6
+              ],
+              [
+                7,
+                100,
+                -51
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,2420 @@
+[
+  {
+    "key": "quick-sw-386-v1",
+    "task": "quick-sw-386",
+    "inputs": [
+      [
+        2,
+        2,
+        1
+      ],
+      0,
+      2
+    ],
+    "expected": 1,
+    "options": [
+      1,
+      0,
+      2,
+      -1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The cloned path is 0 → 2 → 1. Each step reads the current node's target.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Clone by node identity to preserve shared targets.",
+    "source_content_sha256": "e3f62a51a5cb45b9eacce54480b813fbed9732c15a11680a54f95b3554faff3b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-371"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-386-v2",
+    "task": "quick-sw-386",
+    "inputs": [
+      [
+        0,
+        0
+      ],
+      0,
+      3
+    ],
+    "expected": 0,
+    "options": [
+      1,
+      0,
+      3,
+      -1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The cloned path is 0 → 0 → 0 → 0. Each step reads the current node's target.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Clone by node identity to preserve shared targets.",
+    "source_content_sha256": "e3f62a51a5cb45b9eacce54480b813fbed9732c15a11680a54f95b3554faff3b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-371"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-386-v3",
+    "task": "quick-sw-386",
+    "inputs": [
+      [
+        2,
+        2,
+        -1
+      ],
+      1,
+      2
+    ],
+    "expected": -1,
+    "options": [
+      0,
+      1,
+      2,
+      -1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The cloned path is 1 → 2 → -1. Each step reads the current node's target.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Clone by node identity to preserve shared targets.",
+    "source_content_sha256": "e3f62a51a5cb45b9eacce54480b813fbed9732c15a11680a54f95b3554faff3b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-371"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-386-v4",
+    "task": "quick-sw-386",
+    "inputs": [
+      [
+        1,
+        2,
+        0
+      ],
+      0,
+      4
+    ],
+    "expected": 1,
+    "options": [
+      1,
+      2,
+      0,
+      4
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The cloned path is 0 → 1 → 2 → 0 → 1. Each step reads the current node's target.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Clone by node identity to preserve shared targets.",
+    "source_content_sha256": "e3f62a51a5cb45b9eacce54480b813fbed9732c15a11680a54f95b3554faff3b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-371"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-386-v5",
+    "task": "quick-sw-386",
+    "inputs": [
+      [
+        2,
+        -1,
+        0
+      ],
+      1,
+      0
+    ],
+    "expected": 1,
+    "options": [
+      -1,
+      1,
+      2,
+      0
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The cloned path is 1. Each step reads the current node's target.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Clone by node identity to preserve shared targets.",
+    "source_content_sha256": "e3f62a51a5cb45b9eacce54480b813fbed9732c15a11680a54f95b3554faff3b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-371"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-387-v1",
+    "task": "quick-sw-387",
+    "inputs": [
+      [
+        9,
+        4,
+        7,
+        6
+      ],
+      7
+    ],
+    "expected": 9,
+    "options": [
+      6,
+      9,
+      4,
+      -1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The traversal order is [4,6,7,9]. Looking just past 7 gives 9.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Without a right subtree, the successor is the first ancestor reached from its left child.",
+    "source_content_sha256": "d8eba04731ed4029210963ba74c80607b5dccf49b0ee0e4e687988fbb9c885f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-373"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-387-v2",
+    "task": "quick-sw-387",
+    "inputs": [
+      [
+        8,
+        12,
+        10,
+        9
+      ],
+      8
+    ],
+    "expected": 9,
+    "options": [
+      10,
+      12,
+      9,
+      -1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The traversal order is [8,9,10,12]. Looking just past 8 gives 9.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Without a right subtree, the successor is the first ancestor reached from its left child.",
+    "source_content_sha256": "d8eba04731ed4029210963ba74c80607b5dccf49b0ee0e4e687988fbb9c885f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-373"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-387-v3",
+    "task": "quick-sw-387",
+    "inputs": [
+      [
+        4,
+        1,
+        6
+      ],
+      6
+    ],
+    "expected": -1,
+    "options": [
+      -1,
+      4,
+      1,
+      6
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The traversal order is [1,4,6]. Looking just past 6 gives -1.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Without a right subtree, the successor is the first ancestor reached from its left child.",
+    "source_content_sha256": "d8eba04731ed4029210963ba74c80607b5dccf49b0ee0e4e687988fbb9c885f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-373"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-387-v4",
+    "task": "quick-sw-387",
+    "inputs": [
+      [
+        3
+      ],
+      3
+    ],
+    "expected": -1,
+    "options": [
+      0,
+      -1,
+      3,
+      1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The traversal order is [3]. Looking just past 3 gives -1.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Without a right subtree, the successor is the first ancestor reached from its left child.",
+    "source_content_sha256": "d8eba04731ed4029210963ba74c80607b5dccf49b0ee0e4e687988fbb9c885f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-373"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-387-v5",
+    "task": "quick-sw-387",
+    "inputs": [
+      [
+        10,
+        5,
+        12,
+        3
+      ],
+      3
+    ],
+    "expected": 5,
+    "options": [
+      10,
+      12,
+      5,
+      -1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The traversal order is [3,5,10,12]. Looking just past 3 gives 5.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Without a right subtree, the successor is the first ancestor reached from its left child.",
+    "source_content_sha256": "d8eba04731ed4029210963ba74c80607b5dccf49b0ee0e4e687988fbb9c885f3",
+    "provenance": {
+      "interview_ids": [
+        "PREP-373"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-388-v1",
+    "task": "quick-sw-388",
+    "inputs": [
+      1,
+      7,
+      [
+        2,
+        5
+      ],
+      2
+    ],
+    "expected": 4,
+    "options": [
+      3,
+      5,
+      4,
+      6
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Removing the history window leaves [1,3,4,6,7]. Read the entry at index 2.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A uniform rank and a one-to-one mapping give a uniform value.",
+    "source_content_sha256": "19719cd3dff89e1c3a040e4458af155bbe3c2535d22714dac43c6f547901936b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-372"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-388-v2",
+    "task": "quick-sw-388",
+    "inputs": [
+      5,
+      10,
+      [
+        7,
+        9,
+        5,
+        10,
+        6
+      ],
+      0
+    ],
+    "expected": 8,
+    "options": [
+      5,
+      7,
+      9,
+      8
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Removing the history window leaves [8]. Read the entry at index 0.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A uniform rank and a one-to-one mapping give a uniform value.",
+    "source_content_sha256": "19719cd3dff89e1c3a040e4458af155bbe3c2535d22714dac43c6f547901936b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-372"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-388-v3",
+    "task": "quick-sw-388",
+    "inputs": [
+      2,
+      8,
+      [],
+      6
+    ],
+    "expected": 8,
+    "options": [
+      6,
+      8,
+      7,
+      2
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Removing the history window leaves [2,3,4,5,6,7,8]. Read the entry at index 6.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A uniform rank and a one-to-one mapping give a uniform value.",
+    "source_content_sha256": "19719cd3dff89e1c3a040e4458af155bbe3c2535d22714dac43c6f547901936b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-372"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-388-v4",
+    "task": "quick-sw-388",
+    "inputs": [
+      0,
+      7,
+      [
+        4,
+        1,
+        5,
+        2,
+        6,
+        3
+      ],
+      1
+    ],
+    "expected": 4,
+    "options": [
+      0,
+      1,
+      4,
+      7
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Removing the history window leaves [0,4,7]. Read the entry at index 1.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A uniform rank and a one-to-one mapping give a uniform value.",
+    "source_content_sha256": "19719cd3dff89e1c3a040e4458af155bbe3c2535d22714dac43c6f547901936b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-372"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-388-v5",
+    "task": "quick-sw-388",
+    "inputs": [
+      8,
+      14,
+      [
+        14,
+        13,
+        12,
+        11,
+        10
+      ],
+      1
+    ],
+    "expected": 9,
+    "options": [
+      8,
+      10,
+      14,
+      9
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Removing the history window leaves [8,9]. Read the entry at index 1.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A uniform rank and a one-to-one mapping give a uniform value.",
+    "source_content_sha256": "19719cd3dff89e1c3a040e4458af155bbe3c2535d22714dac43c6f547901936b",
+    "provenance": {
+      "interview_ids": [
+        "PREP-372"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-389-v1",
+    "task": "quick-sw-389",
+    "inputs": [
+      [
+        4,
+        7,
+        9,
+        2
+      ],
+      0,
+      1,
+      3,
+      3
+    ],
+    "expected": 9,
+    "options": [
+      4,
+      2,
+      7,
+      9
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The copied values are [4,7,9]. After the writes the array is [4,4,7,9].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The direction of copying depends on the overlap.",
+    "source_content_sha256": "62d91a257df21c2d4bc05b2726d11bda93932547f8d65eba54aa0754a5979365",
+    "provenance": {
+      "interview_ids": [
+        "PREP-332"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-389-v2",
+    "task": "quick-sw-389",
+    "inputs": [
+      [
+        3,
+        8,
+        4,
+        6
+      ],
+      1,
+      0,
+      3,
+      1
+    ],
+    "expected": 4,
+    "options": [
+      4,
+      8,
+      6,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The copied values are [8,4,6]. After the writes the array is [8,4,6,6].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The direction of copying depends on the overlap.",
+    "source_content_sha256": "62d91a257df21c2d4bc05b2726d11bda93932547f8d65eba54aa0754a5979365",
+    "provenance": {
+      "interview_ids": [
+        "PREP-332"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-389-v3",
+    "task": "quick-sw-389",
+    "inputs": [
+      [
+        9,
+        2,
+        7
+      ],
+      0,
+      2,
+      0,
+      2
+    ],
+    "expected": 7,
+    "options": [
+      9,
+      2,
+      7,
+      0
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The copied values are []. After the writes the array is [9,2,7].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The direction of copying depends on the overlap.",
+    "source_content_sha256": "62d91a257df21c2d4bc05b2726d11bda93932547f8d65eba54aa0754a5979365",
+    "provenance": {
+      "interview_ids": [
+        "PREP-332"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-389-v4",
+    "task": "quick-sw-389",
+    "inputs": [
+      [
+        1,
+        5,
+        8,
+        2
+      ],
+      1,
+      1,
+      2,
+      2
+    ],
+    "expected": 8,
+    "options": [
+      5,
+      1,
+      2,
+      8
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The copied values are [5,8]. After the writes the array is [1,5,8,2].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The direction of copying depends on the overlap.",
+    "source_content_sha256": "62d91a257df21c2d4bc05b2726d11bda93932547f8d65eba54aa0754a5979365",
+    "provenance": {
+      "interview_ids": [
+        "PREP-332"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-389-v5",
+    "task": "quick-sw-389",
+    "inputs": [
+      [
+        7,
+        9,
+        3,
+        2,
+        5
+      ],
+      0,
+      3,
+      2,
+      4
+    ],
+    "expected": 9,
+    "options": [
+      9,
+      5,
+      7,
+      2
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The copied values are [7,9]. After the writes the array is [7,9,3,7,9].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The direction of copying depends on the overlap.",
+    "source_content_sha256": "62d91a257df21c2d4bc05b2726d11bda93932547f8d65eba54aa0754a5979365",
+    "provenance": {
+      "interview_ids": [
+        "PREP-332"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-390-v1",
+    "task": "quick-sw-390",
+    "inputs": [
+      0,
+      10,
+      3,
+      [
+        2,
+        6,
+        9
+      ]
+    ],
+    "expected": 6,
+    "options": [
+      6,
+      2,
+      3,
+      9
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The grid points in measurement order are [3,6,9]. Checking them against the failures gives 6.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Find the first failure actually sampled on the grid.",
+    "source_content_sha256": "f76145e8d2cc9a83c797d80f84dabcf0e5588e38b79987d311092354abeffda0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-359"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-390-v2",
+    "task": "quick-sw-390",
+    "inputs": [
+      2,
+      12,
+      2,
+      [
+        2,
+        12
+      ]
+    ],
+    "expected": -1,
+    "options": [
+      2,
+      -1,
+      12,
+      10
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The grid points in measurement order are [4,6,8,10]. Checking them against the failures gives -1.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Find the first failure actually sampled on the grid.",
+    "source_content_sha256": "f76145e8d2cc9a83c797d80f84dabcf0e5588e38b79987d311092354abeffda0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-359"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-390-v3",
+    "task": "quick-sw-390",
+    "inputs": [
+      0,
+      9,
+      2,
+      [
+        8,
+        2
+      ]
+    ],
+    "expected": 2,
+    "options": [
+      8,
+      0,
+      -1,
+      2
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The grid points in measurement order are [2,4,6,8]. Checking them against the failures gives 2.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Find the first failure actually sampled on the grid.",
+    "source_content_sha256": "f76145e8d2cc9a83c797d80f84dabcf0e5588e38b79987d311092354abeffda0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-359"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-390-v4",
+    "task": "quick-sw-390",
+    "inputs": [
+      5,
+      7,
+      4,
+      [
+        6
+      ]
+    ],
+    "expected": -1,
+    "options": [
+      -1,
+      5,
+      6,
+      7
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The grid points in measurement order are []. Checking them against the failures gives -1.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Find the first failure actually sampled on the grid.",
+    "source_content_sha256": "f76145e8d2cc9a83c797d80f84dabcf0e5588e38b79987d311092354abeffda0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-359"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-390-v5",
+    "task": "quick-sw-390",
+    "inputs": [
+      1,
+      11,
+      3,
+      [
+        7
+      ]
+    ],
+    "expected": 7,
+    "options": [
+      4,
+      7,
+      10,
+      -1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "The grid points in measurement order are [4,7,10]. Checking them against the failures gives 7.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Find the first failure actually sampled on the grid.",
+    "source_content_sha256": "f76145e8d2cc9a83c797d80f84dabcf0e5588e38b79987d311092354abeffda0",
+    "provenance": {
+      "interview_ids": [
+        "PREP-359"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-391-v1",
+    "task": "quick-sw-391",
+    "inputs": [
+      [
+        1,
+        8
+      ],
+      [
+        3,
+        11
+      ]
+    ],
+    "expected": 2,
+    "options": [
+      3,
+      2,
+      5,
+      7
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Sorting and comparing neighbors from different arrays gives a closest pair of 1 and 3. Its absolute difference is 2.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "In sorted order, a closest value is adjacent to the insertion point.",
+    "source_content_sha256": "95c2b1dd5213007079d6181e76158eca616f897b80f71e814172b255ca28192e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-362"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-391-v2",
+    "task": "quick-sw-391",
+    "inputs": [
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        9
+      ]
+    ],
+    "expected": 0,
+    "options": [
+      1,
+      4,
+      0,
+      5
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Sorting and comparing neighbors from different arrays gives a closest pair of 4 and 4. Its absolute difference is 0.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "In sorted order, a closest value is adjacent to the insertion point.",
+    "source_content_sha256": "95c2b1dd5213007079d6181e76158eca616f897b80f71e814172b255ca28192e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-362"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-391-v3",
+    "task": "quick-sw-391",
+    "inputs": [
+      [
+        -8,
+        -1
+      ],
+      [
+        2,
+        12
+      ]
+    ],
+    "expected": 3,
+    "options": [
+      3,
+      1,
+      7,
+      10
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Sorting and comparing neighbors from different arrays gives a closest pair of -1 and 2. Its absolute difference is 3.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "In sorted order, a closest value is adjacent to the insertion point.",
+    "source_content_sha256": "95c2b1dd5213007079d6181e76158eca616f897b80f71e814172b255ca28192e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-362"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-391-v4",
+    "task": "quick-sw-391",
+    "inputs": [
+      [
+        15
+      ],
+      [
+        1,
+        7
+      ]
+    ],
+    "expected": 8,
+    "options": [
+      14,
+      8,
+      6,
+      7
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Sorting and comparing neighbors from different arrays gives a closest pair of 15 and 7. Its absolute difference is 8.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "In sorted order, a closest value is adjacent to the insertion point.",
+    "source_content_sha256": "95c2b1dd5213007079d6181e76158eca616f897b80f71e814172b255ca28192e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-362"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-391-v5",
+    "task": "quick-sw-391",
+    "inputs": [
+      [
+        17,
+        2,
+        30
+      ],
+      [
+        10,
+        28
+      ]
+    ],
+    "expected": 2,
+    "options": [
+      7,
+      8,
+      2,
+      13
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Sorting and comparing neighbors from different arrays gives a closest pair of 30 and 28. Its absolute difference is 2.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "In sorted order, a closest value is adjacent to the insertion point.",
+    "source_content_sha256": "95c2b1dd5213007079d6181e76158eca616f897b80f71e814172b255ca28192e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-362"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-392-v1",
+    "task": "quick-sw-392",
+    "inputs": "A B # #",
+    "expected": 1,
+    "options": [
+      0,
+      2,
+      1,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Start with one slot. Each of the 2 nodes adds one net slot, and each of the 2 null markers closes one. That leaves 1.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The open-slot count tells you when the tree encoding is complete.",
+    "source_content_sha256": "bfa241cfe6aa61c6f35557f9648bbf2710f50a3ca29183d16c1e6985f009ab4d",
+    "provenance": {
+      "interview_ids": [
+        "PREP-333"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-392-v2",
+    "task": "quick-sw-392",
+    "inputs": "#",
+    "expected": 0,
+    "options": [
+      1,
+      2,
+      -1,
+      0
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Start with one slot. Each of the 0 nodes adds one net slot, and each of the 1 null markers closes one. That leaves 0.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The open-slot count tells you when the tree encoding is complete.",
+    "source_content_sha256": "bfa241cfe6aa61c6f35557f9648bbf2710f50a3ca29183d16c1e6985f009ab4d",
+    "provenance": {
+      "interview_ids": [
+        "PREP-333"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-392-v3",
+    "task": "quick-sw-392",
+    "inputs": "A B C",
+    "expected": 4,
+    "options": [
+      3,
+      4,
+      6,
+      1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Start with one slot. Each of the 3 nodes adds one net slot, and each of the 0 null markers closes one. That leaves 4.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The open-slot count tells you when the tree encoding is complete.",
+    "source_content_sha256": "bfa241cfe6aa61c6f35557f9648bbf2710f50a3ca29183d16c1e6985f009ab4d",
+    "provenance": {
+      "interview_ids": [
+        "PREP-333"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-392-v4",
+    "task": "quick-sw-392",
+    "inputs": "A # B # #",
+    "expected": 0,
+    "options": [
+      1,
+      2,
+      0,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Start with one slot. Each of the 2 nodes adds one net slot, and each of the 3 null markers closes one. That leaves 0.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The open-slot count tells you when the tree encoding is complete.",
+    "source_content_sha256": "bfa241cfe6aa61c6f35557f9648bbf2710f50a3ca29183d16c1e6985f009ab4d",
+    "provenance": {
+      "interview_ids": [
+        "PREP-333"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-392-v5",
+    "task": "quick-sw-392",
+    "inputs": "A A #",
+    "expected": 2,
+    "options": [
+      1,
+      0,
+      3,
+      2
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Start with one slot. Each of the 2 nodes adds one net slot, and each of the 1 null markers closes one. That leaves 2.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "The open-slot count tells you when the tree encoding is complete.",
+    "source_content_sha256": "bfa241cfe6aa61c6f35557f9648bbf2710f50a3ca29183d16c1e6985f009ab4d",
+    "provenance": {
+      "interview_ids": [
+        "PREP-333"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-393-v1",
+    "task": "quick-sw-393",
+    "inputs": "7 2 - 3 *",
+    "expected": 15,
+    "options": [
+      1,
+      -15,
+      13,
+      15
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Pop the right operand first for each operator. The operations are (7 - 2) = 5, (5 * 3) = 15.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Subtraction and division require the original operand order.",
+    "source_content_sha256": "9b2ca12a8e72651a92acb06e880b77971fe8b7469976f95d35bb417c4f6740bc",
+    "provenance": {
+      "interview_ids": [
+        "PREP-123"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-393-v2",
+    "task": "quick-sw-393",
+    "inputs": "9 6 2 / -",
+    "expected": 6,
+    "options": [
+      6,
+      -6,
+      1,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Pop the right operand first for each operator. The operations are (6 / 2) = 3, (9 - 3) = 6.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Subtraction and division require the original operand order.",
+    "source_content_sha256": "9b2ca12a8e72651a92acb06e880b77971fe8b7469976f95d35bb417c4f6740bc",
+    "provenance": {
+      "interview_ids": [
+        "PREP-123"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-393-v3",
+    "task": "quick-sw-393",
+    "inputs": "2 7 - 3 +",
+    "expected": -2,
+    "options": [
+      2,
+      -8,
+      -2,
+      8
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Pop the right operand first for each operator. The operations are (2 - 7) = -5, (-5 + 3) = -2.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Subtraction and division require the original operand order.",
+    "source_content_sha256": "9b2ca12a8e72651a92acb06e880b77971fe8b7469976f95d35bb417c4f6740bc",
+    "provenance": {
+      "interview_ids": [
+        "PREP-123"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-393-v4",
+    "task": "quick-sw-393",
+    "inputs": "12 3 / 2 /",
+    "expected": 2,
+    "options": [
+      8,
+      6,
+      4,
+      2
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Pop the right operand first for each operator. The operations are (12 / 3) = 4, (4 / 2) = 2.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Subtraction and division require the original operand order.",
+    "source_content_sha256": "9b2ca12a8e72651a92acb06e880b77971fe8b7469976f95d35bb417c4f6740bc",
+    "provenance": {
+      "interview_ids": [
+        "PREP-123"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-393-v5",
+    "task": "quick-sw-393",
+    "inputs": "4 4 - 5 *",
+    "expected": 0,
+    "options": [
+      0,
+      5,
+      20,
+      -5
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Pop the right operand first for each operator. The operations are (4 - 4) = 0, (0 * 5) = 0.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Subtraction and division require the original operand order.",
+    "source_content_sha256": "9b2ca12a8e72651a92acb06e880b77971fe8b7469976f95d35bb417c4f6740bc",
+    "provenance": {
+      "interview_ids": [
+        "PREP-123"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-394-v1",
+    "task": "quick-sw-394",
+    "inputs": [
+      "ABBA",
+      "B"
+    ],
+    "expected": 3,
+    "options": [
+      3,
+      2,
+      6,
+      4
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Fix the prefix and arrange only the remaining letters. The resulting set is BAAB, BABA, BBAA.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Each recursive branch uses the frequencies left after its letter choice.",
+    "source_content_sha256": "49434564f1ae7fb65ff9c610f98a792db4082b2ff3300e5610d0729333334f32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-162"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-394-v2",
+    "task": "quick-sw-394",
+    "inputs": [
+      "ABCD",
+      "AB"
+    ],
+    "expected": 2,
+    "options": [
+      4,
+      2,
+      6,
+      12
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Fix the prefix and arrange only the remaining letters. The resulting set is ABCD, ABDC.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Each recursive branch uses the frequencies left after its letter choice.",
+    "source_content_sha256": "49434564f1ae7fb65ff9c610f98a792db4082b2ff3300e5610d0729333334f32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-162"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-394-v3",
+    "task": "quick-sw-394",
+    "inputs": [
+      "AAAA",
+      "AA"
+    ],
+    "expected": 1,
+    "options": [
+      2,
+      4,
+      6,
+      1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Fix the prefix and arrange only the remaining letters. The resulting set is AAAA.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Each recursive branch uses the frequencies left after its letter choice.",
+    "source_content_sha256": "49434564f1ae7fb65ff9c610f98a792db4082b2ff3300e5610d0729333334f32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-162"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-394-v4",
+    "task": "quick-sw-394",
+    "inputs": [
+      "AABC",
+      "BB"
+    ],
+    "expected": 0,
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Fix the prefix and arrange only the remaining letters. The resulting set is ∅.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Each recursive branch uses the frequencies left after its letter choice.",
+    "source_content_sha256": "49434564f1ae7fb65ff9c610f98a792db4082b2ff3300e5610d0729333334f32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-162"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-394-v5",
+    "task": "quick-sw-394",
+    "inputs": [
+      "ABC",
+      "ABC"
+    ],
+    "expected": 1,
+    "options": [
+      0,
+      1,
+      3,
+      6
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Fix the prefix and arrange only the remaining letters. The resulting set is ABC.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Each recursive branch uses the frequencies left after its letter choice.",
+    "source_content_sha256": "49434564f1ae7fb65ff9c610f98a792db4082b2ff3300e5610d0729333334f32",
+    "provenance": {
+      "interview_ids": [
+        "PREP-162"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-395-v1",
+    "task": "quick-sw-395",
+    "inputs": [
+      5,
+      [
+        5,
+        5,
+        6
+      ]
+    ],
+    "expected": 2,
+    "options": [
+      0,
+      2,
+      1,
+      -1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Index 2 reads generation 6, the first reading different from the saved generation 5.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "After a wakeup, recheck the waiting predicate under the same lock.",
+    "source_content_sha256": "16eaa0d83096a9a19ae3c547b4b1bb83aaa277f2ffffa478850b86a49a15e45e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-337"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-395-v2",
+    "task": "quick-sw-395",
+    "inputs": [
+      3,
+      [
+        4
+      ]
+    ],
+    "expected": 0,
+    "options": [
+      1,
+      3,
+      0,
+      4
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Index 0 reads generation 4, the first reading different from the saved generation 3.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "After a wakeup, recheck the waiting predicate under the same lock.",
+    "source_content_sha256": "16eaa0d83096a9a19ae3c547b4b1bb83aaa277f2ffffa478850b86a49a15e45e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-337"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-395-v3",
+    "task": "quick-sw-395",
+    "inputs": [
+      0,
+      [
+        0,
+        0
+      ]
+    ],
+    "expected": -1,
+    "options": [
+      -1,
+      0,
+      1,
+      2
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "No observation shows a changed generation, so the thread has no evidence yet that it may continue.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "After a wakeup, recheck the waiting predicate under the same lock.",
+    "source_content_sha256": "16eaa0d83096a9a19ae3c547b4b1bb83aaa277f2ffffa478850b86a49a15e45e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-337"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-395-v4",
+    "task": "quick-sw-395",
+    "inputs": [
+      9,
+      []
+    ],
+    "expected": -1,
+    "options": [
+      0,
+      -1,
+      9,
+      1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "No observation shows a changed generation, so the thread has no evidence yet that it may continue.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "After a wakeup, recheck the waiting predicate under the same lock.",
+    "source_content_sha256": "16eaa0d83096a9a19ae3c547b4b1bb83aaa277f2ffffa478850b86a49a15e45e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-337"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-395-v5",
+    "task": "quick-sw-395",
+    "inputs": [
+      12,
+      [
+        12,
+        13
+      ]
+    ],
+    "expected": 1,
+    "options": [
+      0,
+      12,
+      1,
+      13
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "Index 1 reads generation 13, the first reading different from the saved generation 12.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "After a wakeup, recheck the waiting predicate under the same lock.",
+    "source_content_sha256": "16eaa0d83096a9a19ae3c547b4b1bb83aaa277f2ffffa478850b86a49a15e45e",
+    "provenance": {
+      "interview_ids": [
+        "PREP-337"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-396-v1",
+    "task": "quick-sw-396",
+    "inputs": [
+      [
+        0,
+        0,
+        0
+      ],
+      0,
+      0
+    ],
+    "expected": 0,
+    "options": [
+      1,
+      2,
+      0,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "Scan the active prefix [] and count matches only inside it.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Search only the data structure's active range.",
+    "source_content_sha256": "d6be23a1089874f467cd2821dcebf8b47f57e33860dd1c0a7c596a3eeb404077",
+    "provenance": {
+      "interview_ids": [
+        "PREP-309"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-396-v2",
+    "task": "quick-sw-396",
+    "inputs": [
+      [
+        2,
+        2,
+        1,
+        2
+      ],
+      2,
+      2
+    ],
+    "expected": 2,
+    "options": [
+      3,
+      1,
+      0,
+      2
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "Scan the active prefix [2,2] and count matches only inside it.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Search only the data structure's active range.",
+    "source_content_sha256": "d6be23a1089874f467cd2821dcebf8b47f57e33860dd1c0a7c596a3eeb404077",
+    "provenance": {
+      "interview_ids": [
+        "PREP-309"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-396-v3",
+    "task": "quick-sw-396",
+    "inputs": [
+      [
+        1,
+        3,
+        3
+      ],
+      1,
+      3
+    ],
+    "expected": 0,
+    "options": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "Scan the active prefix [1] and count matches only inside it.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Search only the data structure's active range.",
+    "source_content_sha256": "d6be23a1089874f467cd2821dcebf8b47f57e33860dd1c0a7c596a3eeb404077",
+    "provenance": {
+      "interview_ids": [
+        "PREP-309"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-396-v4",
+    "task": "quick-sw-396",
+    "inputs": [
+      [
+        5,
+        1,
+        5,
+        5
+      ],
+      4,
+      5
+    ],
+    "expected": 3,
+    "options": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "Scan the active prefix [5,1,5,5] and count matches only inside it.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Search only the data structure's active range.",
+    "source_content_sha256": "d6be23a1089874f467cd2821dcebf8b47f57e33860dd1c0a7c596a3eeb404077",
+    "provenance": {
+      "interview_ids": [
+        "PREP-309"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-396-v5",
+    "task": "quick-sw-396",
+    "inputs": [
+      [
+        2,
+        0,
+        9,
+        0
+      ],
+      3,
+      0
+    ],
+    "expected": 1,
+    "options": [
+      2,
+      0,
+      3,
+      1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "Scan the active prefix [2,0,9] and count matches only inside it.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Search only the data structure's active range.",
+    "source_content_sha256": "d6be23a1089874f467cd2821dcebf8b47f57e33860dd1c0a7c596a3eeb404077",
+    "provenance": {
+      "interview_ids": [
+        "PREP-309"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-397-v1",
+    "task": "quick-sw-397",
+    "inputs": [
+      10,
+      1,
+      4
+    ],
+    "expected": 3,
+    "options": [
+      2,
+      4,
+      1,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The sampled columns inside the image are [1,5,9]. Stop before column 10.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The last point must have an index strictly below the image width.",
+    "source_content_sha256": "5a37617b0f7e862a25bf082b3bf933f8e171b61ad04d655bdf4a23b0644cd764",
+    "provenance": {
+      "interview_ids": [
+        "PREP-353"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-397-v2",
+    "task": "quick-sw-397",
+    "inputs": [
+      9,
+      1,
+      4
+    ],
+    "expected": 2,
+    "options": [
+      2,
+      3,
+      1,
+      4
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The sampled columns inside the image are [1,5]. Stop before column 9.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The last point must have an index strictly below the image width.",
+    "source_content_sha256": "5a37617b0f7e862a25bf082b3bf933f8e171b61ad04d655bdf4a23b0644cd764",
+    "provenance": {
+      "interview_ids": [
+        "PREP-353"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-397-v3",
+    "task": "quick-sw-397",
+    "inputs": [
+      4,
+      3,
+      6
+    ],
+    "expected": 1,
+    "options": [
+      0,
+      2,
+      1,
+      4
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The sampled columns inside the image are [3]. Stop before column 4.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The last point must have an index strictly below the image width.",
+    "source_content_sha256": "5a37617b0f7e862a25bf082b3bf933f8e171b61ad04d655bdf4a23b0644cd764",
+    "provenance": {
+      "interview_ids": [
+        "PREP-353"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-397-v4",
+    "task": "quick-sw-397",
+    "inputs": [
+      5,
+      5,
+      1
+    ],
+    "expected": 0,
+    "options": [
+      1,
+      4,
+      5,
+      0
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The sampled columns inside the image are []. Stop before column 5.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The last point must have an index strictly below the image width.",
+    "source_content_sha256": "5a37617b0f7e862a25bf082b3bf933f8e171b61ad04d655bdf4a23b0644cd764",
+    "provenance": {
+      "interview_ids": [
+        "PREP-353"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-397-v5",
+    "task": "quick-sw-397",
+    "inputs": [
+      8,
+      0,
+      1
+    ],
+    "expected": 8,
+    "options": [
+      8,
+      7,
+      9,
+      1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The sampled columns inside the image are [0,1,2,3,4,5,6,7]. Stop before column 8.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "The last point must have an index strictly below the image width.",
+    "source_content_sha256": "5a37617b0f7e862a25bf082b3bf933f8e171b61ad04d655bdf4a23b0644cd764",
+    "provenance": {
+      "interview_ids": [
+        "PREP-353"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-398-v1",
+    "task": "quick-sw-398",
+    "inputs": [
+      1,
+      0
+    ],
+    "expected": 1,
+    "options": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The printed row widths are [1]. Their sum is 1.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Output length can grow quadratically with the number of rows.",
+    "source_content_sha256": "acf88239761edda6a3e4bd0d52dcea4c509e2f99dd9bb7d41c5212065f1ec4ac",
+    "provenance": {
+      "interview_ids": [
+        "PREP-347"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-398-v2",
+    "task": "quick-sw-398",
+    "inputs": [
+      5,
+      0
+    ],
+    "expected": 9,
+    "options": [
+      5,
+      9,
+      6,
+      15
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The printed row widths are [1,3,5]. Their sum is 9.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Output length can grow quadratically with the number of rows.",
+    "source_content_sha256": "acf88239761edda6a3e4bd0d52dcea4c509e2f99dd9bb7d41c5212065f1ec4ac",
+    "provenance": {
+      "interview_ids": [
+        "PREP-347"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-398-v3",
+    "task": "quick-sw-398",
+    "inputs": [
+      7,
+      2
+    ],
+    "expected": 12,
+    "options": [
+      10,
+      16,
+      9,
+      12
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The printed row widths are [5,7]. Their sum is 12.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Output length can grow quadratically with the number of rows.",
+    "source_content_sha256": "acf88239761edda6a3e4bd0d52dcea4c509e2f99dd9bb7d41c5212065f1ec4ac",
+    "provenance": {
+      "interview_ids": [
+        "PREP-347"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-398-v4",
+    "task": "quick-sw-398",
+    "inputs": [
+      9,
+      4
+    ],
+    "expected": 9,
+    "options": [
+      9,
+      25,
+      16,
+      5
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The printed row widths are [9]. Their sum is 9.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Output length can grow quadratically with the number of rows.",
+    "source_content_sha256": "acf88239761edda6a3e4bd0d52dcea4c509e2f99dd9bb7d41c5212065f1ec4ac",
+    "provenance": {
+      "interview_ids": [
+        "PREP-347"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-398-v5",
+    "task": "quick-sw-398",
+    "inputs": [
+      3,
+      2
+    ],
+    "expected": 0,
+    "options": [
+      2,
+      0,
+      3,
+      4
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 2,
+    "difficulty_rationale": "The printed row widths are []. Their sum is 0.",
+    "source_difficulty": 2,
+    "source_difficulty_rationale": "Output length can grow quadratically with the number of rows.",
+    "source_content_sha256": "acf88239761edda6a3e4bd0d52dcea4c509e2f99dd9bb7d41c5212065f1ec4ac",
+    "provenance": {
+      "interview_ids": [
+        "PREP-347"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-399-v1",
+    "task": "quick-sw-399",
+    "inputs": [
+      [
+        "re",
+        "d red"
+      ],
+      "red"
+    ],
+    "expected": 2,
+    "options": [
+      1,
+      2,
+      0,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "After concatenation the tokens are [\"red\",\"red\"]. Count only complete matches for red.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A chunk boundary need not be a word boundary.",
+    "source_content_sha256": "cb4f8c37e4e0cd63db996d23006d944b7efa40dd6a45a2a51bb472e5292c03b2",
+    "provenance": {
+      "interview_ids": [
+        "PREP-314"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-399-v2",
+    "task": "quick-sw-399",
+    "inputs": [
+      [
+        " cat",
+        "alog cat"
+      ],
+      "cat"
+    ],
+    "expected": 1,
+    "options": [
+      2,
+      0,
+      1,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "After concatenation the tokens are [\"catalog\",\"cat\"]. Count only complete matches for cat.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A chunk boundary need not be a word boundary.",
+    "source_content_sha256": "cb4f8c37e4e0cd63db996d23006d944b7efa40dd6a45a2a51bb472e5292c03b2",
+    "provenance": {
+      "interview_ids": [
+        "PREP-314"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-399-v3",
+    "task": "quick-sw-399",
+    "inputs": [
+      [
+        "UP low up",
+        "! Up"
+      ],
+      "up"
+    ],
+    "expected": 0,
+    "options": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "After concatenation the tokens are [\"UP\",\"low\",\"up!\",\"Up\"]. Count only complete matches for up.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A chunk boundary need not be a word boundary.",
+    "source_content_sha256": "cb4f8c37e4e0cd63db996d23006d944b7efa40dd6a45a2a51bb472e5292c03b2",
+    "provenance": {
+      "interview_ids": [
+        "PREP-314"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-399-v4",
+    "task": "quick-sw-399",
+    "inputs": [
+      [
+        "to ",
+        "to",
+        " to"
+      ],
+      "to"
+    ],
+    "expected": 3,
+    "options": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "After concatenation the tokens are [\"to\",\"to\",\"to\"]. Count only complete matches for to.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A chunk boundary need not be a word boundary.",
+    "source_content_sha256": "cb4f8c37e4e0cd63db996d23006d944b7efa40dd6a45a2a51bb472e5292c03b2",
+    "provenance": {
+      "interview_ids": [
+        "PREP-314"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-399-v5",
+    "task": "quick-sw-399",
+    "inputs": [
+      [
+        "no",
+        " ",
+        "no",
+        "w"
+      ],
+      "no"
+    ],
+    "expected": 1,
+    "options": [
+      0,
+      2,
+      1,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "After concatenation the tokens are [\"no\",\"now\"]. Count only complete matches for no.",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "A chunk boundary need not be a word boundary.",
+    "source_content_sha256": "cb4f8c37e4e0cd63db996d23006d944b7efa40dd6a45a2a51bb472e5292c03b2",
+    "provenance": {
+      "interview_ids": [
+        "PREP-314"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-400-v1",
+    "task": "quick-sw-400",
+    "inputs": [
+      [
+        1
+      ]
+    ],
+    "expected": 0,
+    "options": [
+      1,
+      2,
+      0,
+      3
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "With zero-based indices, the positions above the diagonal that differ from their reflections are [].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Visit each symmetric pair once by requiring i<j.",
+    "source_content_sha256": "eeb65d13cf5721efb421fb12d7b92fece84bb5377d08120a60ab60764e09741c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-318"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-400-v2",
+    "task": "quick-sw-400",
+    "inputs": [
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        1
+      ]
+    ],
+    "expected": 1,
+    "options": [
+      2,
+      0,
+      4,
+      1
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "With zero-based indices, the positions above the diagonal that differ from their reflections are [[0,1]].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Visit each symmetric pair once by requiring i<j.",
+    "source_content_sha256": "eeb65d13cf5721efb421fb12d7b92fece84bb5377d08120a60ab60764e09741c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-318"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-400-v3",
+    "task": "quick-sw-400",
+    "inputs": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "expected": 0,
+    "options": [
+      1,
+      0,
+      2,
+      4
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "With zero-based indices, the positions above the diagonal that differ from their reflections are [].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Visit each symmetric pair once by requiring i<j.",
+    "source_content_sha256": "eeb65d13cf5721efb421fb12d7b92fece84bb5377d08120a60ab60764e09741c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-318"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-400-v4",
+    "task": "quick-sw-400",
+    "inputs": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        7,
+        4,
+        5
+      ],
+      [
+        8,
+        9,
+        6
+      ]
+    ],
+    "expected": 3,
+    "options": [
+      6,
+      2,
+      3,
+      9
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "With zero-based indices, the positions above the diagonal that differ from their reflections are [[0,1],[0,2],[1,2]].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Visit each symmetric pair once by requiring i<j.",
+    "source_content_sha256": "eeb65d13cf5721efb421fb12d7b92fece84bb5377d08120a60ab60764e09741c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-318"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  },
+  {
+    "key": "quick-sw-400-v5",
+    "task": "quick-sw-400",
+    "inputs": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        1,
+        0,
+        3
+      ],
+      [
+        4,
+        5,
+        0
+      ]
+    ],
+    "expected": 2,
+    "options": [
+      4,
+      3,
+      1,
+      2
+    ],
+    "method": "Evaluate the concrete case in scripts/quiz_authoring/code_800.py and compare with the authored answer.",
+    "difficulty": 3,
+    "difficulty_rationale": "With zero-based indices, the positions above the diagonal that differ from their reflections are [[0,2],[1,2]].",
+    "source_difficulty": 3,
+    "source_difficulty_rationale": "Visit each symmetric pair once by requiring i<j.",
+    "source_content_sha256": "eeb65d13cf5721efb421fb12d7b92fece84bb5377d08120a60ab60764e09741c",
+    "provenance": {
+      "interview_ids": [
+        "PREP-318"
+      ],
+      "authorship": "original AI-assisted practice",
+      "professional_review": "pending",
+      "calibration": "editorial estimate"
+    }
+  }
+]

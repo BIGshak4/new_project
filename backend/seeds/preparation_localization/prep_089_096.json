@@ -272,7 +272,7 @@
         "סעיף C: uint8_t קיים ביעד; הקלט כבר בית unsigned וכל שמונת הביטים נחשבים.",
         "סעיף C: uint8_t קיים ביעד; הקלט כבר בית unsigned וכל שמונת הביטים נחשבים.",
         "מספר ללא סימן המתאים בדיוק לרוחב W שלם לא שלילי; כל האפסים המובילים נשמרים כחלק מהייצוג.",
-        "W=0 מקבל רק0. קוד הסקאלרים נמנע ממערך וממחרוזת; המקור החדש מתיר בחירת שפה ואף פסאודו־קוד.",
+        "W=0 מקבל רק 0. קוד הסקאלרים נמנע ממערך וממחרוזת; המקור החדש מתיר בחירת שפה ואף פסאודו־קוד.",
         "ממדים חיוביים וקבועים; כל הביטים זמינים במקביל.",
         "c=0 הוא השמאלי בכתיב השורה; מיפוי row-major מפורש.",
         "מספר שלם בטווח 0..2^32−1; רוחב משמעותי בלבד; אפס מחזיר אפס.",
@@ -286,7 +286,7 @@
         "C part: target provides uint8_t; input is already an unsigned byte and all eight bits matter.",
         "C part: target provides uint8_t; input is already an unsigned byte and all eight bits matter.",
         "Unsigned value fitting nonnegative integer width W; leading-zero positions retained.",
-        "W=0 accepts only0. Scalar code avoids array/string, while the new source allows any language or pseudocode.",
+        "W=0 accepts only 0. Scalar code avoids array/string, while the new source allows any language or pseudocode.",
         "Positive fixed dimensions and all bits available in parallel.",
         "c=0 is the displayed leftmost bit; row-major mapping is explicit.",
         "Integer in 0..2^32−1; significant width only; zero returns zero.",
@@ -299,7 +299,7 @@
         "time": "שמונה איטרציות: O(1) לרוחב הקבוע. להכללה לרוחב w: O(w) צעדי ביט, בהנחה שהמילה מכילה את הערך.",
         "space": "O(1) משתנים/מילים; בהכללה הרוחב הכולל הוא O(w) ביטים.",
         "scope": "אין טענת מינימום הוראות או עדיפות על פקודת חומרה ייעודית. החלפות במסכות יכולות לתת חלופה לרוחב קבוע.",
-        "variant_C_mirror": "שתי הדרכים קבועות לרוחב8; שלושה שלבי מסכות במקום שמונה איטרציות. הכללה O(logW) לעומת O(W) שלבי מילים, ללא מדידת מהירות.",
+        "variant_C_mirror": "שתי הדרכים קבועות לרוחב 8; שלושה שלבי מסכות במקום שמונה איטרציות. הכללה O(logW) לעומת O(W) שלבי מילים, ללא מדידת מהירות.",
         "variant_given_width": "בדיוק W איטרציות ו־O(1) סקלרים. O(W) זמן במודל מילה מתאימה; Python ארוך דורש עד O(W) ביטי אחסון לסקלר ועלות פעולות תלוית רוחב. אין טענת מינימום.",
         "batch21_matrix_axis": "מיפוי קבוע יכול להתבצע בחוטים בלבד. ספירת חיבורים אינה הערכת שטח ניתוב או תדר.",
         "batch22_significant_bits": "O(W) צעדים, W=bit_length(n), לכל היותר 32 כאן; O(1) מילות עזר. רוחב התוצאה אינו שומר אפסים מובילים.",
@@ -313,7 +313,7 @@
         "variant_given_width": "Exactly W iterations/O(1) scalars. O(W) in a suitable word model; Python long integers use up to O(W) bits per scalar and width-dependent operations. No minimum claim.",
         "batch21_matrix_axis": "Fixed mapping can use wires only. Wire count is not routed area or frequency characterization.",
         "batch22_significant_bits": "O(W) steps for W=bit_length(n), at most 32 here, and O(1) auxiliary words. Numeric output does not retain leading zeroes.",
-        "Reverse32 without a huge lookup table": "Three byte stages and five32-bit stages, O(1) words; log₂wstages for suitable width. No measured-speed claim."
+        "Reverse32 without a huge lookup table": "Three byte stages and five 32-bit stages, O(1) words; log₂wstages for suitable width. No measured-speed claim."
       }
     },
     "edge_cases": {
@@ -325,8 +325,8 @@
         "הקוד דוחה קלט מחוץ לתחום וגם ערכים שאינם שלמים.",
         "1,15,240; אפס,255,one-hot ואפסים מובילים.",
         "1,15,240; אפס,255,one-hot ואפסים מובילים.",
-        "רוחב0,1,7,8; קלט0 וכל הביטים דלוקים.",
-        "אפסים מובילים, ערך1 ברוחבים שונים, רוחב שאינו חזקה של שתיים.",
+        "רוחב 0,1,7,8; קלט 0 וכל הביטים דלוקים.",
+        "אפסים מובילים, ערך 1 ברוחבים שונים, רוחב שאינו חזקה של שתיים.",
         "ערך מחוץ לרוחב או רוחב שלילי/לא שלם נדחה.",
         "מטריצה לא ריבועית אינה משנה ממדים.",
         "עמודה אחת אינה משתנה; רוחב אי־זוגי משאיר אמצע.",
@@ -341,8 +341,8 @@
         "The implementation rejects out-of-range and noninteger input.",
         "1/15/240; zero,255,one-hot and leading zeros.",
         "1/15/240; zero,255,one-hot and leading zeros.",
-        "Widths0,1,7,8; zero/all ones.",
-        "Leading zeros, value1 at different widths, non-power-of-two widths.",
+        "Widths 0,1,7,8; zero/all ones.",
+        "Leading zeros, value 1 at different widths, non-power-of-two widths.",
         "Out-of-width values or negative/noninteger width rejected.",
         "A non-square matrix retains its shape.",
         "One column is unchanged; odd widths retain a center.",
@@ -363,7 +363,7 @@
         "להציג שלושה שלבים כשלוש הוראות או מודל Python כהידור C.",
         "להשתמש באורך הייצוג המשמעותי במקום הרוחב שנמסר.",
         "לעצור כשהקלט שנותר מתאפס.",
-        "לכנות O(1) סקלרים O(1) ביטים, או להחיל מסכות8 ביט בלי התאמה לרוחב אחר.",
+        "לכנות O(1) סקלרים O(1) ביטים, או להחיל מסכות 8 ביט בלי התאמה לרוחב אחר.",
         "לבצע transpose.",
         "להפוך את האפיק כולו ובכך להפוך גם שורות.",
         "לבלבל לולאת generate עם אלגוריתם סדרתי.",
@@ -396,21 +396,21 @@
         "Right-shifting a negative integer until zero can fail to terminate.",
         "Using signed operands or shifting by 32.",
         "Confusing bit reversal with NOT or byte swapping.",
-        "Claiming2³²words require only 4 GiB.",
+        "Claiming 2³²words require only 4 GiB.",
         "Equating five stages with five instructions or measured speed."
       ]
     },
     "interview_answer": {
-      "he": "אתחל result=0. חזור שמונה פעמים: הזז את result שמאלה, צרף עם OR את value&1, והזז את value ימינה. הסיבית הראשונה שנקראה נודדת שמאלה עד לקצה. שמונה צעדים קבועים, בלי מערך עזר.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאחלץ את הביט הימני ואצרף אותו לתוצאה מוזזת שמאלה, בדיוק W פעמים. כך אפסים מובילים ממשיכים להזיז את התוצאה ומתקבל היפוך של הרוחב שנמסר; הדוגמה ברוחב7 מחזירה83.\n\nאשאיר את r ואחליף את c ב־C−1−c. עבור אפיק מקביל קבוע זה חיווט; אגדיר בנפרד אינדקסי packed וייצוג זיכרון טורי.\n\nאברר את הרוחב לפני הפתרון. בסעיף הזה הופכים עד שהקלט הלא־מסומן מתאפס; 13 מחזיר 11, אך ברוחב שמונה הוא עדיין מחזיר 176.\n\nאחליף שכנים, זוגות, רביעיות, בתים וחצאי מילה באמצעות מסכות והזזות לא־מסומנות. כל שלב מכפיל את גודל הבלוק שכבר הפוך; אין צורך בטבלת ענק.",
-      "en": "Initialize result=0. Repeat eight times: shift result left, OR in value&1, then shift value right. The first extracted bit moves left until it reaches the far end. Eight fixed steps and no auxiliary array.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nExtract the low bit and append to the left-shifted result exactly W times. Leading zeros still shift the result, yielding the declared-width reversal; the seven-bit example returns83.\n\nKeep r and replace c by C−1−c. A fixed parallel bus needs wiring; packed indexing and serial-memory access require explicit separate mappings.\n\nClarify width first. This part reverses until unsigned input becomes zero: 13 returns 11, while the eight-bit part still returns 176.\n\nSwap neighbors, pairs, nibbles, bytes and halfwords using unsigned masks/shifts. Each stage doubles the reversed block size; no huge table is needed."
+      "he": "אתחל result=0. חזור שמונה פעמים: הזז את result שמאלה, צרף עם OR את value&1, והזז את value ימינה. הסיבית הראשונה שנקראה נודדת שמאלה עד לקצה. שמונה צעדים קבועים, בלי מערך עזר.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאציג לולאה של שמונה ביטים, ואז החלפות שכנים, זוגות וחצאי בית במסכות 0x55,0x33,0x0F. שני המימושים קבועים לבית; השיפור הוא במספר שלבי העבודה, בלי להבטיח זמן מעבד שנמדד.\n\nאחלץ את הביט הימני ואצרף אותו לתוצאה מוזזת שמאלה, בדיוק W פעמים. כך אפסים מובילים ממשיכים להזיז את התוצאה ומתקבל היפוך של הרוחב שנמסר; הדוגמה ברוחב 7 מחזירה 83.\n\nאשאיר את r ואחליף את c ב־C−1−c. עבור אפיק מקביל קבוע זה חיווט; אגדיר בנפרד אינדקסי packed וייצוג זיכרון טורי.\n\nאברר את הרוחב לפני הפתרון. בסעיף הזה הופכים עד שהקלט הלא־מסומן מתאפס; 13 מחזיר 11, אך ברוחב שמונה הוא עדיין מחזיר 176.\n\nאחליף שכנים, זוגות, רביעיות, בתים וחצאי מילה באמצעות מסכות והזזות לא־מסומנות. כל שלב מכפיל את גודל הבלוק שכבר הפוך; אין צורך בטבלת ענק.",
+      "en": "Initialize result=0. Repeat eight times: shift result left, OR in value&1, then shift value right. The first extracted bit moves left until it reaches the far end. Eight fixed steps and no auxiliary array.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nStart with eight bit steps, then exchange neighbours, pairs and nibbles with0x55/0x33/0x0F. Both are constant for a byte; the improvement is fewer stages, without measured CPU-time guarantees.\n\nExtract the low bit and append to the left-shifted result exactly W times. Leading zeros still shift the result, yielding the declared-width reversal; the seven-bit example returns 83.\n\nKeep r and replace c by C−1−c. A fixed parallel bus needs wiring; packed indexing and serial-memory access require explicit separate mappings.\n\nClarify width first. This part reverses until unsigned input becomes zero: 13 returns 11, while the eight-bit part still returns 176.\n\nSwap neighbors, pairs, nibbles, bytes and halfwords using unsigned masks/shifts. Each stage doubles the reversed block size; no huge table is needed."
     },
     "source_ambiguities": {
       "he": [
         "המקור אומר מספר בן שמונה ביטים וללא מערך; הנוסח מבהיר טווח לא־מסומן, עיבוד אפסים מובילים ואיסור שימוש במחרוזת כתחליף למערך.",
         "תגיות המקור כוללות Intel ו־Marvell; השיוך מדווח ולא אומת עצמאית.",
-        "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים.",
-        "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים.",
-        "המקור החדש מספק רוחב ולא קובע סימן או שפת מימוש. זה שינוי מהותי לעומת8 ביט, ולכן נוסף כסעיף נפרד עם חוזה מפורש, בלי להחליף את נוסחי והרמזים הקודמים. VSW-003 הפרטית מציגה32 ביט בלבד.",
+        "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של 094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים.",
+        "המקור החדש מוסיף C ובקשת ייעול לאותו יעד של 094. נאמר במפורש מהו יעד uint8_t ומה לא נבדק; VSW-003 היא הכללת מסכות ל־32 ביטים.",
+        "המקור החדש מספק רוחב ולא קובע סימן או שפת מימוש. זה שינוי מהותי לעומת 8 ביט, ולכן נוסף כסעיף נפרד עם חוזה מפורש, בלי להחליף את נוסחי והרמזים הקודמים. VSW-003 הפרטית מציגה 32 ביט בלבד.",
         "הדוגמה מכריעה שהציר הראשי הוא העמודות. אין להסיק גודל, שעון או ארכיטקטורת RAM מעבר לכך. תוכן היפוך המספר המקורי נשמר.",
         "דוגמת המקור 13→11 קובעת היפוך משמעותי; נוספה וריאציה נפרדת בלי למחוק היפוך קבוע, W נתון או מטריצה.",
         "המקור מציע LUT כאופטימיזציה שנפסלה בגלל מקום ואינו מגדיר גודל תוצאה לטבלה. תוקן חישוב המקום; ההרחבה אינה משנה את חוזי הרוחב הישנים."
@@ -418,17 +418,17 @@
       "en": [
         "The source specifies eight bits and no array; the edition clarifies the unsigned range, leading-zero handling and no string workaround.",
         "Intel and Marvell are source-reported attributions, not independently verified.",
-        "New source adds C and optimization to094’s same target. uint8_t assumptions and unperformed compilation are explicit; VSW-003 is the32-bit mask generalization.",
         "New source adds C and optimization to 094’s same target. uint8_t assumptions and unperformed compilation are explicit; VSW-003 is the 32-bit mask generalization.",
-        "The new source supplies width but omits signedness/language. This materially generalizes eight bits, so add a separate explicit contract while preserving old prompts/hints. Private VSW-003 uses32 bits only.",
+        "New source adds C and optimization to 094’s same target. uint8_t assumptions and unperformed compilation are explicit; VSW-003 is the 32-bit mask generalization.",
+        "The new source supplies width but omits signedness/language. This materially generalizes eight bits, so add a separate explicit contract while preserving old prompts/hints. Private VSW-003 uses 32 bits only.",
         "The example selects column reversal. Width, clock and RAM architecture are otherwise unspecified. Original scalar bit-reversal content is retained.",
         "The source example 13→11 selects significant-only reversal; this is a separate variant preserving fixed-width, explicit-W and matrix parts.",
         "The source rejects a large LUT for space but omits output-entry size. Storage arithmetic is explicit; this addendum preserves earlier width contracts."
       ]
     },
     "verification": {
-      "he": "אומתו כל 256 הקלטים מול אורקל בלתי תלוי של היפוך מחרוזת בת שמונה תווים, 2,048 בדיקות מיקום סיבית, היפוך כפול, שימור מספר אחדים, התאמה למשלים ושבע דחיות של קלט לא תקין. מחרוזות משמשות באורקל בלבד. ללא הידור לשפה ברוחב קבוע או מדידת ביצועים.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\nכל256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\n8,191 קלטים ממצים ברוחבים0..12 ועוד800 קלטים רחבים; אורקל מחרוזת נפרד, היפוך כפול ושמירת אחדות. Python הורץ.\n\n5050 מטריצות ביטים בממדים 1..3 על 1..4 נבדקו מול היפוך שורות עצמאי, מיפוי אפיק שטוח ואינוולוציה; גם דוגמת 3×6 נבדקה. אין סינתזה או ניתוב.\n\n65,539 ערכי Python ו־C מול אורקל עצמאי, כולל כל הטווח 0..65535 וגבולות uint32. C99 עבר GCC עם דגלי אזהרה מחמירים בסביבה מבודדת; אין בדיקת כל 2^32 הערכים.\n\nGCC C99 מחמיר והרצה מבודדת עברו:165,792 מקרי מילים,156 מקרי מחיקה,234,489 בדיקות ואפס בלוקים חיים. ללא benchmark.",
-      "en": "Verified all 256 inputs against independent fixed-width string reversal, 2,048 individual bit positions, reversal involution, set-bit preservation, complement compatibility and seven invalid-input rejections. Strings are used only in the oracle. No fixed-width language compilation or benchmark.\n\nAll256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\nAll 256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\n8,191 exhaustive width0..12 inputs plus800 wide inputs; independent text oracle, involution and popcount. Python executed.\n\n5050 bit matrices at row counts one through three and column counts one through four matched independent row reversal, flat-bus mapping and involution, plus the supplied 3×6 example. No synthesis or routing.\n\n65,539 Python and C values checked against independent oracles, including 0..65535 and uint32 boundaries. C99 passed strict GCC compilation in isolation; the full 2^32 domain was not exhaustively enumerated.\n\nStrict GCC C99 and isolated native execution passed:165,792 word cases,156 removal cases,234,489 assertions and zero live blocks. No benchmark."
+      "he": "אומתו כל 256 הקלטים מול אורקל בלתי תלוי של היפוך מחרוזת בת שמונה תווים, 2,048 בדיקות מיקום סיבית, היפוך כפול, שימור מספר אחדים, התאמה למשלים ושבע דחיות של קלט לא תקין. מחרוזות משמשות באורקל בלבד. ללא הידור לשפה ברוחב קבוע או מדידת ביצועים.\n\nכל 256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\nכל 256 הקלטים בשני מודלי Python מול ביטים הפוכים, כולל היפוך כפול. C לא קומפל: ארבע פקודות מהדר לא נמצאו ב־PATH.\n\n8,191 קלטים ממצים ברוחבים 0..12 ועוד 800 קלטים רחבים; אורקל מחרוזת נפרד, היפוך כפול ושמירת אחדות. Python הורץ.\n\n5050 מטריצות ביטים בממדים 1..3 על 1..4 נבדקו מול היפוך שורות עצמאי, מיפוי אפיק שטוח ואינוולוציה; גם דוגמת 3×6 נבדקה. אין סינתזה או ניתוב.\n\n65,539 ערכי Python ו־C מול אורקל עצמאי, כולל כל הטווח 0..65535 וגבולות uint32. C99 עבר GCC עם דגלי אזהרה מחמירים בסביבה מבודדת; אין בדיקת כל 2^32 הערכים.\n\nGCC C99 מחמיר והרצה מבודדת עברו:165,792 מקרי מילים,156 מקרי מחיקה,234,489 בדיקות ואפס בלוקים חיים. ללא benchmark.",
+      "en": "Verified all 256 inputs against independent fixed-width string reversal, 2,048 individual bit positions, reversal involution, set-bit preservation, complement compatibility and seven invalid-input rejections. Strings are used only in the oracle. No fixed-width language compilation or benchmark.\n\nAll 256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\nAll 256 inputs in two Python models versus reversed bits, including involution. C uncompiled: four compiler commands absent from PATH.\n\n8,191 exhaustive width 0..12 inputs plus 800 wide inputs; independent text oracle, involution and popcount. Python executed.\n\n5050 bit matrices at row counts one through three and column counts one through four matched independent row reversal, flat-bus mapping and involution, plus the supplied 3×6 example. No synthesis or routing.\n\n65,539 Python and C values checked against independent oracles, including 0..65535 and uint32 boundaries. C99 passed strict GCC compilation in isolation; the full 2^32 domain was not exhaustively enumerated.\n\nStrict GCC C99 and isolated native execution passed:165,792 word cases,156 removal cases,234,489 assertions and zero live blocks. No benchmark."
     },
     "relationship_note": {
       "he": "קשורה לתרגילי הזזה וסיבוב, אך היפוך סדר שמונה הסיביות הוא פעולה אחרת; בפרט אין לשנות את הרוחב לפי גודל המספר.",
@@ -440,7 +440,7 @@
         "direction": "מחליפים סיביות שכנות במסכות 0x55/0xAA, אחר כך זוגות ב־0x33/0xCC ולבסוף רביעיות ב־0x0F/0xF0. יש להוכיח בנפרד את כיווני ההזזה ולשמור על רוחב שמונה.",
         "status": "מוכן בתוכן; אינו מחובר לתור שאלות ההמשך.",
         "variant_C_mirror": {
-          "question": "איך מרחיבים לרוחב32?",
+          "question": "איך מרחיבים לרוחב 32?",
           "direction": "ממשיכים בהחלפת בתים וחצאי מילה עם מסכות unsigned ברוחב מתאים; אין להשתמש בהזזה בגודל הרוחב.",
           "status": ""
         },
@@ -524,9 +524,9 @@
           "integration_status": ""
         },
         "given_width": {
-          "prompt": "### הרחבה: הרוחב נתון כחלק מהקלט\nנתונים מספר בינארי ורוחב הייצוג W. כתבו קוד או פסאודו־קוד שהופך בדיוק את W הסיביות: ה־MSB הופכת ל־LSB ולהפך. דוגמת המקור היא W=7: הקלט1100101 הופך ל־1010011.\n\nנבחר קלט ללא סימן0≤value<2^W, עם W שלם לא שלילי. אפסים מובילים שייכים לרוחב ואסור להשמיטם; W=0 מקבל רק value=0 ומחזיר0. מימוש הסקאלרים אינו משתמש במערך או במחרוזת, אף שהמקור החדש לא חייב הגבלה זו. גרסת8 הביט המקורית וה־C שלה נשמרות בנפרד. נתחו מספר איטרציות, מקום במילים לעומת ביטים ומודל מספרים ברוחב לא חסום.",
+          "prompt": "### הרחבה: הרוחב נתון כחלק מהקלט\nנתונים מספר בינארי ורוחב הייצוג W. כתבו קוד או פסאודו־קוד שהופך בדיוק את W הסיביות: ה־MSB הופכת ל־LSB ולהפך. דוגמת המקור היא W=7: הקלט 1100101 הופך ל־1010011.\n\nנבחר קלט ללא סימן 0≤value<2^W, עם W שלם לא שלילי. אפסים מובילים שייכים לרוחב ואסור להשמיטם; W=0 מקבל רק value=0 ומחזיר 0. מימוש הסקאלרים אינו משתמש במערך או במחרוזת, אף שהמקור החדש לא חייב הגבלה זו. גרסת 8 הביט המקורית וה־C שלה נשמרות בנפרד. נתחו מספר איטרציות, מקום במילים לעומת ביטים ומודל מספרים ברוחב לא חסום.",
           "hints": [
-            "אם הערך הוא1, האם הפלט זהה עבור רוחב7 ועבור רוחב8?",
+            "אם הערך הוא 1, האם הפלט זהה עבור רוחב 7 ועבור רוחב 8?",
             "אחרי חילוץ הביט הימני שומרים מקום לבא באמצעות הזזה שמאלה של התוצאה. מספר החזרות חייב להיות הרוחב הנתון.",
             "בצעו W פעמים result=(result<<1)|(value&1), ואז value>>=1. התחילו result=0, אל תעצרו כשהערך מתאפס, ובדקו שהקלט מתאים לרוחב לפני ההרצה."
           ],
@@ -571,11 +571,11 @@
           "integration_status": ""
         },
         "given_width": {
-          "prompt": "### Extension: width is part of the input\nGiven a binary number and representation width W, write code or pseudocode reversing exactly W bit positions, exchanging MSB and LSB. Source example uses W=7:1100101 becomes1010011.\n\nChoose unsigned0<=value<2^W with nonnegative integer W. Leading zeros belong to the width and must not be discarded; W=0 accepts only value0 and returns0. The scalar implementation uses no array/string even though the new source does not impose that restriction. Original eight-bit and C contracts remain separate. Analyze iterations, words versus bits, and unbounded numeric representations.",
+          "prompt": "### Extension: width is part of the input\nGiven a binary number and representation width W, write code or pseudocode reversing exactly W bit positions, exchanging MSB and LSB. Source example uses W=7:1100101 becomes 1010011.\n\nChoose unsigned0<=value<2^W with nonnegative integer W. Leading zeros belong to the width and must not be discarded; W=0 accepts only value 0 and returns 0. The scalar implementation uses no array/string even though the new source does not impose that restriction. Original eight-bit and C contracts remain separate. Analyze iterations, words versus bits, and unbounded numeric representations.",
           "hints": [
-            "For value1, should widths7 and8 produce the same answer?",
+            "For value 1, should widths 7 and 8 produce the same answer?",
             "After extracting the rightmost bit, shift the result left to make room for the next. The iteration count must equal the supplied width.",
-            "Repeat result=(result<<1)|(value&1), then value>>=1 exactly W times. Start result0, do not stop at value0, and validate width fit first."
+            "Repeat result=(result<<1)|(value&1), then value>>=1 exactly W times. Start result 0, do not stop at value 0, and validate width fit first."
           ],
           "integration_status": ""
         },
@@ -598,11 +598,11 @@
           "integration_status": ""
         },
         "Reverse32 without a huge lookup table": {
-          "prompt": "### Additional part: byte reversal and constant-storage uint32 reversal\nA. Reverse all eight bits of a byte, for example00111010 to 01011100, without an array or preinitialized LUT. Reduce reversal stages using masks.\nB. Reverse all 32 bits of uint32_t, mapping bit 0 to 31 and vice versa. A table mapping every 32-bit input to a result does not fit the memory constraint. Use a fixed number of scalar variables, with no array or lookup table. Analyze general word width w and distinguish dependent stages, instructions and measured runtime.\n\nAssume C99+providing uint8_t and uint32_t. These are fixed-width unsigned patterns, including leading zeros; do not infer width from value. Optimization is not a processor-speed guarantee and does not reverse only significant bits.",
+          "prompt": "### Additional part: byte reversal and constant-storage uint32 reversal\nA. Reverse all eight bits of a byte, for example 00111010 to 01011100, without an array or preinitialized LUT. Reduce reversal stages using masks.\nB. Reverse all 32 bits of uint32_t, mapping bit 0 to 31 and vice versa. A table mapping every 32-bit input to a result does not fit the memory constraint. Use a fixed number of scalar variables, with no array or lookup table. Analyze general word width w and distinguish dependent stages, instructions and measured runtime.\n\nAssume C99+providing uint8_t and uint32_t. These are fixed-width unsigned patterns, including leading zeros; do not infer width from value. Optimization is not a processor-speed guarantee and does not reverse only significant bits.",
           "hints": [
             "Can whole groups move with a shift rather than relocating one bit at a time?",
             "After swapping neighbors, exchange pairs, then groups of four, and so on. Why is a mask needed?",
-            "For32 bits swap at distances1,2,4,8,16. Mask the lower half of each group before left shifting and OR the two directions using unsigned types."
+            "For 32 bits swap at distances 1,2,4,8,16. Mask the lower half of each group before left shifting and OR the two directions using unsigned types."
           ],
           "integration_status": ""
         }
@@ -924,7 +924,7 @@
     },
     "interview_answer": {
       "he": "שומרים את In בפליפ-פלופ D בחזית עולה ומשווים ב־XOR לקלט החי. שינוי יוצר אי־התאמה עד הדגימה הבאה. יש להגדיר אתחול, תזמון וריבוי שינויים.\n\nאשמור את d האחרון ב־q. הזוג 10 הוא עלייה, 01 ירידה ושני אי־השוויונות הם XOR; בעליית clk דגימת d מבטלת את אי־ההתאמה.",
-      "en": "Store In in a rising-edge DFF and XOR the stored sample with live In. A change creates mismatch until the next sample. Both input directions work; timing, initialization and multiple-change behavior must be specified.\n\nRetain the last d sample in q. Pair10 detects rising disagreement,01 falling, and either is XOR. Sampling d clears the disagreement."
+      "en": "Store In in a rising-edge DFF and XOR the stored sample with live In. A change creates mismatch until the next sample. Both input directions work; timing, initialization and multiple-change behavior must be specified.\n\nRetain the last d sample in q. Pair 10 detects rising disagreement,01 falling, and either is XOR. Sampling d clears the disagreement."
     },
     "solution_extensions": {
       "he": {
@@ -985,7 +985,7 @@
           "prompt": "### Extension: three outputs distinguished by transition polarity\nBuild circuits for (1) rising d changes, (2) falling d changes and (3) both directions. Output starts at a data change between clock edges and ends at the next rising clock edge, or earlier if disagreement disappears.\n\nIdeal model: q is d sampled at the last rising clock edge. Before observation a known sample establishes d=q=0. Data and clock events are not simultaneous and setup/hold are valid; gate delays are ignored. Derive all three outputs and analyze another data change before the clock. Do not clock the flip-flop from d or replace the live pulse by a fixed-length synchronous one.",
           "hints": [
             "What information remains between rising clock edges? Compare it with current d.",
-            "A rising disagreement needs current1 and saved0. Which pair gives falling disagreement?",
+            "A rising disagreement needs current 1 and saved 0. Which pair gives falling disagreement?",
             "Connect D=d and CLK=clk. Use d AND NOT q, q AND NOT d, and XOR for both directions."
           ],
           "integration_status": ""
@@ -999,8 +999,8 @@
         "עשר הדגימות כוללות את הנוכחית; Y=1 אם ורק אם יש לפחות שלושה אחדים.",
         "איפוס והשלמת התחלה באפס; ללא מחזור השהיה נוסף במוצא.",
         "יש לקבוע דגימת X וקריאת Y מיוצבת ללא מרוץ; אין ערכי X/Z.",
-        "חלון חופף בן7 הכולל את הדגימה הנוכחית; לפחות6 ולא בדיוק6.",
-        "לעניין ההתחלה נבחר חלון מלא; זו תוספת מוצהרת ואינה משנה את המקור095.",
+        "חלון חופף בן 7 הכולל את הדגימה הנוכחית; לפחות 6 ולא בדיוק 6.",
+        "לעניין ההתחלה נבחר חלון מלא; זו תוספת מוצהרת ואינה משנה את המקור 095.",
         "חלון חופף בן 7 הכולל את הדגימה הנוכחית; לפחות 6 ולא בדיוק 6.",
         "לעניין ההתחלה נבחר חלון מלא; זו תוספת מוצהרת ואינה משנה את המקור 095.",
         "אחד לפחות; חלון כולל דגימה נוכחית; אפסים לפני תחילת הקלט.",
@@ -1011,9 +1011,9 @@
         "Reset zeroes history; missing warmup samples are zero; no extra output cycle latency.",
         "Define race-free X acquisition and settled Y observation; no X/Z values.",
         "An overlapping seven-sample window including the current sample; at least six, not exactly six.",
-        "Full-window startup is an explicit added policy; original095 is unchanged.",
+        "Full-window startup is an explicit added policy; original 095 is unchanged.",
         "An overlapping seven-sample window including the current sample; at least six, not exactly six.",
-        "Full-window startup is an explicit added policy; original095 is unchanged.",
+        "Full-window startup is an explicit added policy; original 095 is unchanged.",
         "Any one; include the present sample and zero-pad startup.",
         "No bit_valid: every edge samples."
       ]
@@ -1033,7 +1033,7 @@
         "אין במקור הגדרה מפורשת למוצא אחרת, לאיפוס, להתחלה, להשהיה או לסדר אירועי השעון.",
         "חוזה השלמת האפסים והדיווח באותה דגימה נוסף בעריכה וצריך להתאים לרכיב שנבדק.",
         "המקור אינו קובע התנהגות באתחול; נבחר חלון מלא.",
-        "הביטוי „בכל7” מפורש כאן כחלון נע של הדגימות האחרונות, לא כבלוקים.",
+        "הביטוי „בכל 7” מפורש כאן כחלון נע של הדגימות האחרונות, לא כבלוקים.",
         "המקור אינו קובע התנהגות באתחול; נבחר חלון מלא.",
         "הביטוי „בכל 7” מפורש כאן כחלון נע של הדגימות האחרונות, לא כבלוקים.",
         "המשמעות ״לפחות אחד״ והכללת המחזור הנוכחי נבחרו במפורש כהשלמה לימודית. הצילום אינו דורש שכל האלף יהיו אחד."
@@ -1042,9 +1042,9 @@
         "Source does not define otherwise-zero behavior, reset, warmup, output latency or scheduling for X changes on clock edges.",
         "The edited zero-padding and same-cycle contract must be agreed before connecting a DUT.",
         "The source omits startup; full windows are chosen explicitly.",
-        "“Every7” is interpreted as a sliding recent-sample window, not disjoint blocks.",
+        "“Every 7” is interpreted as a sliding recent-sample window, not disjoint blocks.",
         "The source omits startup; full windows are chosen explicitly.",
-        "“Every7” is interpreted as a sliding recent-sample window, not disjoint blocks.",
+        "“Every 7” is interpreted as a sliding recent-sample window, not disjoint blocks.",
         "Any-one semantics and inclusion of the current cycle are explicit teaching clarifications; the screenshot does not demand all thousand bits be one."
       ]
     },
@@ -1054,8 +1054,8 @@
         "יציאת האחד הישן לאחר עשר דגימות כלולות בדיוק.",
         "איפוס כש־Y גבוה וכניסה לסף לפני עשר דגימות.",
         "אורך מוצאים שונה מאורך הקלט וקלט שאינו בינארי.",
-        "דגימה6 עדיין אינה חלון מלא.",
-        "בדיוק6 או7 שגיאות בחלון: פלט1.",
+        "דגימה 6 עדיין אינה חלון מלא.",
+        "בדיוק 6 או 7 שגיאות בחלון: פלט 1.",
         "ירידה טבעית של count אחרי יציאת שגיאה; reset מתחיל חלון חדש.",
         "דגימה 6 עדיין אינה חלון מלא.",
         "בדיוק 6 או 7 שגיאות בחלון: פלט 1.",
@@ -1069,7 +1069,7 @@
         "Reset after a high output; startup may reach threshold before ten samples.",
         "Observed sequence length mismatch and nonbinary input.",
         "Sample six is not a full window.",
-        "Exactly six or seven errors in the window: output1.",
+        "Exactly six or seven errors in the window: output 1.",
         "Count decreases as an old error expires; reset starts a fresh window.",
         "Sample six is not a full window.",
         "Exactly six or seven errors in the window: output 1.",
@@ -1107,12 +1107,12 @@
       ]
     },
     "optimality": {
-      "he": "היסטוריה של עשרה ביטים נותנת אחסון ועבודה חסומים לכל מחזור. לחלון W נדרשים W ביטים; אין טענת מינימום שטח חומרה.\n\nאוגר היסטוריה בן7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.\n\nאוגר היסטוריה בן 7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.\n\nעשרה ביטי מצב עבור W=1000; עדכון קבוע באלגוריתם ומחסר בן עשרה ביטים. בכלליות O(log W) זיכרון סיביות.",
+      "he": "היסטוריה של עשרה ביטים נותנת אחסון ועבודה חסומים לכל מחזור. לחלון W נדרשים W ביטים; אין טענת מינימום שטח חומרה.\n\nאוגר היסטוריה בן 7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.\n\nאוגר היסטוריה בן 7 ביטים וספירות קטנות; עדכון קבוע לכל דגימה. אין טענת מינימום חומרה.\n\nעשרה ביטי מצב עבור W=1000; עדכון קבוע באלגוריתם ומחסר בן עשרה ביטים. בכלליות O(log W) זיכרון סיביות.",
       "en": "A fixed ten-bit history is bounded storage with fixed per-cycle work. Generalized W-bit history costs W bits; no minimum circuit-area claim.\n\nSeven history bits and small counters; constant work per sample. No hardware minimum claimed.\n\nSeven history bits and small counters; constant work per sample. No hardware minimum claimed.\n\nTen state bits for W=1000, with a fixed algorithmic update and a ten-bit decrementer; generally O(log W) bits."
     },
     "verification": {
       "he": "עברו 32,767 רצפים בינאריים עד אורך 14, 425,986 השוואות דגימה לסכומי פרוסות מפורשים וזוהו 98,298 שיבושי מוצא במחזור יחיד. נבדקו איפוס, כניסה לסף ופקיעה, קלט שגוי ואורך לא תואם. Python בלבד; ללא DUT חי או סימולציית HDL.\n\n8,191 מילים ו־90,114 תצפיות קידומת מול סכומי חלונות בלתי תלויים. ה־SV לא הודר.\n\n8,191 מילים ו־90,114 תצפיות קידומת מול סכומי חלונות בלתי תלויים. ה־SV לא הודר.\n\nאימות RTL אמיתי: Icarus Verilog 12 קימפל את חמש הווריאציות והרתמה עברה 138,967 בדיקות בסביבה מבודדת ללא רשת: 2,046 מילים טוריות, 5,000 מחזורי FIFO, 1,300 מחזורי חלון וכל 16 זוגות המקסימום. בדיקת Python עצמאית מרחיבה את הכיסוי ל־4,094 מילים ו־10,000 מחזורי FIFO. ראיות: checks/batch1107b10-native-verification.json ו־checks/batch1107b10-hardware-model-verification.json. זו סימולציה דיגיטלית מוגבלת; לא בוצעו סינתזה או ניתוח תזמון.",
-      "en": "Passed 32,767 binary streams through length fourteen, 425,986 sample comparisons against explicit suffix sums, and 98,298 injected single-cycle output corruptions. Reset, threshold arrival/expiry, invalid samples and length mismatch checked. Python only; no live DUT or HDL simulation.\n\n8,191 words and90,114 prefix observations against independent window sums. SV was not compiled.\n\n8,191 words and 90,114 prefix observations against independent window sums. SV was not compiled.\n\nExecuted RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
+      "en": "Passed 32,767 binary streams through length fourteen, 425,986 sample comparisons against explicit suffix sums, and 98,298 injected single-cycle output corruptions. Reset, threshold arrival/expiry, invalid samples and length mismatch checked. Python only; no live DUT or HDL simulation.\n\n8,191 words and 90,114 prefix observations against independent window sums. SV was not compiled.\n\n8,191 words and 90,114 prefix observations against independent window sums. SV was not compiled.\n\nExecuted RTL verification: Icarus Verilog 12 compiled the five variants and the harness passed 138,967 checks in an isolated network-denied environment: 2,046 serial words, 5,000 FIFO cycles, 1,300 window cycles and all 16 maximum-input pairs. Independent Python checks extend coverage to 4,094 words and 10,000 FIFO cycles. Evidence: checks/batch1107b10-native-verification.json and checks/batch1107b10-hardware-model-verification.json. This is bounded digital simulation, not synthesis or timing analysis."
     },
     "interview_answer": {
       "he": "מכניסים X לחלון זז של עשר דגימות ומוציאים את הישנה. מצפים ל־Y=1 אם יש לפחות שלושה אחדים ומשווים למוצא המיוצב לפי איפוס, התחלה והשהיה שהוגדרו.\n\nאשמור את שבע הדגימות האחרונות ואת סכומן. אוסיף את הקלט ואחסיר את היוצא, ואשווה את הסכום החדש לשש כאשר יש חלון מלא.\n\nאשמור את שבע הדגימות האחרונות ואת סכומן. אוסיף את הקלט ואחסיר את היוצא, ואשווה את הסכום החדש לשש כאשר יש חלון מלא.\n\nאזכור רק כמה דגימות נשארו עד שהאחד האחרון יוצא מהחלון. אחד טוען 1000, אפס מקטין עד אפס, והיציאה בודקת חיוביות.",
@@ -1374,7 +1374,7 @@
         "variant_096_three_colors": [
           {
             "question": "מה משתנה עבור q צבעים ושמות צבע מותרים?",
-            "answer_direction": "קודדו 0..q−1 והשתמשו בסכום מודולוq. הדובר הראשון מעביר אחת מ־q שאריות ושאר הדוברים משחזרים צבע אחד;N−1 עדיין חסם ההבטחה.",
+            "answer_direction": "קודדו 0..q−1 והשתמשו בסכום מודולו q. הדובר הראשון מעביר אחת מ־q שאריות ושאר הדוברים משחזרים צבע אחד;N−1 עדיין חסם ההבטחה.",
             "principle": "גודל אלפבית התשובה קובע את ערוץ סכום הביקורת."
           }
         ],
@@ -1408,7 +1408,7 @@
     },
     "verification": {
       "he": "בדיקת Python ממצה של 32,766 עולמות עבור n=1..14, ובהם 393,220 תשובות של גמדים שאינם הראשונים. נבדקו 16,383 זוגות עולמות עם אותו מידע גלוי וצבע אחורי שונה, ועוד 120 עולמות מדגמיים עד n=1024. נבדקו שימור הקלט וארבע דחיות קלט. ההוכחה הכללית והחסם העליון כתובים בנפרד; אין כאן ניסוי פיזי.\n\nכל 9,840 סידורי שלושה צבעים באורכים 1..8 נבדקו בשלוש האסטרטגיות כשהן מוגדרות, וכן 1,000 סידורים בני 100. ב־243 מחלקות תצפית שונה רק כובע הראשון ונבדקה זהות הודעתו. פונקציות התשובה אינן מקבלות את הכובע שלהן. גבול 99 מוכח בנפרד.\n\nכל 8,190 עולמות הכובעים באורכים 1..12;200 עולמות בני 1,000;עדי מקרה גרוע עם בדיוק 667 ו־999 תשובות נכונות. למפענח המקומי אין גישה לכובע של הדובר.",
-      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus16,383 paired worlds differing only in the invisible rear hat and120 seeded worlds up to n=1024. Input preservation and4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment.\n\nChecked all 9,840 three-color worlds of lengths 1..8 with each applicable strategy, plus 1,000 hundred-person worlds. In 243 visible-view classes only the first speaker hat changes and the first message stays identical. Reply functions do not receive their own hat. The 99 upper bound is separately proved.\n\nAll 8,190 binary worlds of lengths 1..12;200 worlds of size 1,000;explicit worst-case witnesses with exactly 667 and 999 correct. Local decoders cannot access the speaker's own hat."
+      "en": "Python exhaustively checks 32,766 worlds for n=1..14, including 393,220 nonfirst replies, plus 16,383 paired worlds differing only in the invisible rear hat and 120 seeded worlds up to n=1024. Input preservation and 4 invalid-world rejections are checked. The general proof and upper bound are separate; no physical experiment.\n\nChecked all 9,840 three-color worlds of lengths 1..8 with each applicable strategy, plus 1,000 hundred-person worlds. In 243 visible-view classes only the first speaker hat changes and the first message stays identical. Reply functions do not receive their own hat. The 99 upper bound is separately proved.\n\nAll 8,190 binary worlds of lengths 1..12;200 worlds of size 1,000;explicit worst-case witnesses with exactly 667 and 999 correct. Local decoders cannot access the speaker's own hat."
     },
     "relationship_note": {
       "he": "קשורה ל־PREP-033 בנושא כובעים, אך כאן n כללי, אין מכסת צבעים ידועה והמידע מועבר במכוון בתשובות סדרתיות.",

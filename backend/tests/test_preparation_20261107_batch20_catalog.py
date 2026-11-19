@@ -6,6 +6,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
+
 import pytest
 
 from app.engine.catalog import load_catalog
@@ -78,7 +80,7 @@ def test_every_old_record_asset_localization_and_compiled_prefix_stays_hash_boun
 
 def test_new_bilingual_tasks_and_variants_remain_proposed_and_media_gated():
     catalog = load_catalog(SEEDS)
-    assert len(catalog.questions) == 340
+    assert len(catalog.questions) == 415
     selected = {q.assets.get('preparation_id'): q for q in catalog.questions.values()
                 if q.assets.get('preparation_id') in NEW | VARIANTS}
     assert set(selected) == NEW | VARIANTS
@@ -110,11 +112,16 @@ def test_two_popcount_sources_share_one_canonical_question_and_source_typo_is_pr
 def test_existing_fundamentals_quiz_and_human_attestations_are_not_rewritten():
     baseline = BATCH1107B20_BASELINE
     for name, expected in baseline['short_card_source_sha256'].items():
-        assert digest(read(ROOT / 'apps/web/src/content' / name)) == expected
+        assert digest(before_current_copy('fundamentals', name, read(ROOT / 'apps/web/src/content' / name))) == expected
     for name, key in [('fundamentals_catalog.json', 'fundamentals_catalog_sha256'),
                       ('duel_quiz.json', 'quiz_bank_sha256'),
                       ('solution_review_attestations.json', 'review_registry_canonical_sha256')]:
-        assert digest(read(SEEDS / name)) == baseline[key]
+        actual = read(SEEDS / name)
+        if name == 'fundamentals_catalog.json':
+            actual = before_current_fundamentals_manifest(actual)
+        elif name == 'duel_quiz.json':
+            actual = before_current_copy('quiz', name, actual)
+        assert digest(actual) == baseline[key]
 
 
 @pytest.mark.parametrize('mutation', ['title','hint','prompt','version','media','digest','asset_ordinal'])

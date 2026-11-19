@@ -20,6 +20,9 @@ from app.services.billing import BillingConfig, BillingService, FakeStripe, Http
 from app.services.code_execution import CodeExecutionService
 from app.services.coins import CoinsService
 from app.services.coins import load_rules as load_coin_rules
+from app.services.daily_puzzle import DailyPuzzleService
+from app.services.daily_puzzle_grading import DailyPuzzleGrading
+from app.services.daily_puzzle_bank import load_daily_bank
 from app.services.demo_provider import DemoProvider
 from app.services.duels import DuelService, load_quiz
 from app.services.fundamentals import FundamentalsService, load_fundamentals_catalog
@@ -47,11 +50,15 @@ class Runtime:
     avatars: AvatarsService | None = None             # persistent logical-component customization and cosmetic ownership
     code_execution: CodeExecutionService | None = None
     identities: IdentityService | None = None
+    daily_puzzle: DailyPuzzleService | None = None
+    daily_grading: DailyPuzzleGrading | None = None
     warmer: JudgeWarmer | None = None                 # warms the judge's prompt cache when a question is opened
 
     async def aclose(self) -> None:
         # a redeploy waits a little for feedback being written; anything unfinished is resumed on the next read
         await self.practice.drain(timeout=20)
+        if self.daily_grading is not None:
+            await self.daily_grading.drain()
         if self.warmer is not None:
             await self.warmer.drain()
         if self.image_fetcher is not None:
@@ -95,6 +102,7 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
         kind = "database" if isinstance(store, DbStore) else "memory"
     config = ServiceConfig(role=settings.default_role, company=settings.default_company,
                            default_language=settings.default_language, daily_attempt_limit=settings.daily_attempt_limit,
+                           monthly_feedback_limit=settings.monthly_feedback_limit,
                            polish_tips=settings.llm_provider in REAL_PROVIDERS,
                            suggest_reviewed_only=settings.suggest_reviewed_only,
                            feedback_in_background=settings.feedback_in_background,
@@ -138,12 +146,14 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
                    duels=DuelService(store, catalog, provider, coins, reviewed_only=settings.suggest_reviewed_only,
                                      site_url=settings.site_url, quiz=load_quiz(settings.seeds_dir / "duel_quiz.json"),
                                      practice_secret=settings.supabase_service_role_key),
+                   daily_puzzle=DailyPuzzleService(lambda: load_daily_bank(catalog, settings.seeds_dir)),
                    fundamentals=FundamentalsService(
                        DbFundamentalsRepository() if kind == "database" else MemoryFundamentalsRepository(),
                        load_fundamentals_catalog(settings.seeds_dir / "fundamentals_catalog.json")),
                    interview=InterviewService(store, catalog, provider, interview_config, image_fetcher=fetcher,
                                               on_finished=interview_finished, coins=coins, warmer=warmer),
                    warmer=warmer)
+    runtime.daily_grading = DailyPuzzleGrading(runtime.daily_puzzle, practice)
     runtime.code_execution = CodeExecutionService(settings, database=kind == "database")
     runtime.identities = IdentityService(store, runtime.avatars)
     practice.code_execution = runtime.code_execution

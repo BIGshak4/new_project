@@ -44,6 +44,9 @@ test("friend codes preserve leading zeroes and legacy people get a safe public n
 test("incomplete identity, availability and friends responses never become successful empty data", () => {
   assert.deepEqual(readIdentity(identity), identity);
   assert.deepEqual(readFriends(list), list);
+  for (const online of [true, false]) {
+    assert.equal(readFriends({ ...list, friends: [{ ...person, online }] }).friends[0].online, online);
+  }
   assert.deepEqual(readUsernameAvailability({ available: false, reason: "taken" }), { available: false, reason: "taken" });
   for (const value of [{ ...identity, friend_code: "abc" }, { username: null, friend_code: "01ABCDEF" }]) assert.throws(() => readIdentity(value));
   for (const value of [{ available: true, reason: "taken" }, { available: false, reason: null }, { available: "yes", reason: null }]) assert.throws(() => readUsernameAvailability(value));

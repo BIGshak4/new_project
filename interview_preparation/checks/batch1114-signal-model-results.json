@@ -1,0 +1,26 @@
+{
+  "setup": 5,
+  "rc": {
+    "sine_integration_steps": 5000,
+    "square_tau_cases": 3
+  },
+  "adder": {
+    "operand_tuples": 4096,
+    "unregistered_gate_depth": 9,
+    "pipelined_gate_depths": [
+      5,
+      7
+    ]
+  },
+  "dsp": {
+    "midpoint_samples": 8192,
+    "edge_samples": 9,
+    "gains": {
+      "0": 0.9999999999999998,
+      "20": 0.9817646364625229,
+      "100": 0.7071067811865475,
+      "300": 0.22975292054736118,
+      "500": 1.9895593298577948e-17
+    }
+  }
+}

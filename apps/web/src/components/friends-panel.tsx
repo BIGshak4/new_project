@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
-import { Check, RefreshCw, UserPlus, Users, X } from "lucide-react";
+import { Check, RefreshCw, Swords, UserPlus, Users, X } from "lucide-react";
 import { identityApi } from "../lib/identity-api";
 import { DEFAULT_AVATAR } from "../lib/avatar-types";
 import { IdentityApiError, friendName, identityErrorMessage, normalizeFriendCode, validFriendCode, type AccountIdentityData, type FriendPerson, type FriendRequest, type FriendsData, type IdentityLanguage } from "../lib/identity-types";
@@ -9,7 +9,9 @@ import { LogicAvatar } from "./wardrobe/logic-avatar";
 import { FriendCode } from "./account-identity";
 import styles from "./account-social.module.css";
 
-export function FriendsPanel({ userId, lang }: { userId: string; lang: IdentityLanguage }) {
+export function FriendsPanel({ userId, lang, onChallenge, challengeDisabled, stake }: {
+  userId: string; lang: IdentityLanguage; onChallenge: (friendId: string) => void; challengeDisabled: boolean; stake: number;
+}) {
   const api = useMemo(() => identityApi(userId), [userId]);
   const id = useId(), he = lang === "he";
   const [saved, setSaved] = useState<{ owner: string; data: FriendsData } | null>(null);
@@ -20,6 +22,7 @@ export function FriendsPanel({ userId, lang }: { userId: string; lang: IdentityL
   const owner = useRef(userId); owner.current = userId;
   const sequence = useRef(0), live = useRef(true), writing = useRef(false);
   const friends = saved?.owner === userId ? saved.data : null;
+  const hasFriendsData = friends !== null;
   const identity = profile?.owner === userId ? profile.data : null;
   const load = useCallback(async () => {
     const request = ++sequence.current;
@@ -38,6 +41,23 @@ export function FriendsPanel({ userId, lang }: { userId: string; lang: IdentityL
     void load();
     return () => { live.current = false; sequence.current++; };
   }, [load]);
+  useEffect(() => {
+    if (loading || !hasFriendsData) return;
+    let active = true, reading = false;
+    async function refreshFriends() {
+      if (document.visibilityState !== "visible" || writing.current || reading) return;
+      const request = sequence.current;
+      reading = true;
+      try {
+        const data = await api.friends();
+        if (active && sequence.current === request && !writing.current) setSaved({ owner: userId, data });
+      } catch { /* Keep the list usable until the next refresh. */ }
+      finally { reading = false; }
+    }
+    const timer = window.setInterval(refreshFriends, 30_000);
+    document.addEventListener("visibilitychange", refreshFriends);
+    return () => { active = false; window.clearInterval(timer); document.removeEventListener("visibilitychange", refreshFriends); };
+  }, [api, userId, loading, hasFriendsData]);
 
   async function act(key: string, operation: () => Promise<FriendsData>) {
     if (writing.current || loading || uncertain || !friends) return;
@@ -85,7 +105,18 @@ export function FriendsPanel({ userId, lang }: { userId: string; lang: IdentityL
     {friends && <>
       {friends.incoming.length > 0 && <section className={styles.requestSection} aria-labelledby={`${id}-incoming`}><h3 id={`${id}-incoming`}>{he ? "בקשות שקיבלתם" : "Incoming requests"} <span>({friends.incoming.length})</span></h3>{requests(friends.incoming, true)}</section>}
       <div className={styles.friendListHeading}><h3>{he ? "החברים שלכם" : "Your friends"} <span>({friends.friends.length})</span></h3></div>
-      {friends.friends.length ? <ul className={styles.friendGrid}>{friends.friends.map(friend => <li className={styles.friend} key={friend.user_id} data-friend-code={friend.friend_code}>{person(friend, 112)}<strong><bdi>{friendName(friend, lang)}</bdi></strong><button type="button" className={styles.remove} disabled={disabled} onClick={() => void act(friend.user_id, () => api.removeFriend(friend.user_id))} aria-label={he ? `הסרת ${friendName(friend, lang)} מהחברים` : `Remove ${friendName(friend, lang)} from friends`}>{busy === friend.user_id ? he ? "מסירים…" : "Removing…" : he ? "הסרה" : "Remove"}</button></li>)}</ul> : <p className={styles.empty}>{he ? "עדיין אין חברים ברשימה. שלחו בקשה באמצעות הקוד של חבר או חברה." : "No friends yet. Send a request using a friend’s code."}</p>}
+      {friends.friends.length ? <ul className={styles.friendGrid}>{friends.friends.map(friend => <li className={styles.friend} key={friend.user_id} data-friend-code={friend.friend_code}>
+        {person(friend, 112)}
+        <strong><bdi>{friendName(friend, lang)}</bdi></strong>
+        {typeof friend.online === "boolean" && <span className={styles.presence} data-online={friend.online}>
+          {friend.online ? he ? "מחובר/ת עכשיו" : "Online now" : he ? "לא מחובר/ת" : "Offline"}
+        </span>}
+        <button type="button" className={styles.challenge} disabled={disabled || challengeDisabled} onClick={() => onChallenge(friend.user_id)}
+          aria-label={he ? `הזמנת ${friendName(friend, lang)} לדו־קרב ב־${stake} מטבעות` : `Challenge ${friendName(friend, lang)} for ${stake} coins`}>
+          <Swords size={16} aria-hidden="true" />{he ? "להזמין לדו־קרב" : "Challenge"} · {stake} {he ? "מטבעות" : "coins"}
+        </button>
+        <button type="button" className={styles.remove} disabled={disabled} onClick={() => void act(friend.user_id, () => api.removeFriend(friend.user_id))} aria-label={he ? `הסרת ${friendName(friend, lang)} מהחברים` : `Remove ${friendName(friend, lang)} from friends`}>{busy === friend.user_id ? he ? "מסירים…" : "Removing…" : he ? "הסרה" : "Remove"}</button>
+      </li>)}</ul> : <p className={styles.empty}>{he ? "עדיין אין חברים ברשימה. שלחו בקשה באמצעות הקוד של חבר או חברה." : "No friends yet. Send a request using a friend’s code."}</p>}
       {friends.outgoing.length > 0 && <section className={styles.requestSection} aria-labelledby={`${id}-outgoing`}><h3 id={`${id}-outgoing`}>{he ? "בקשות ששלחתם" : "Sent requests"} <span>({friends.outgoing.length})</span></h3>{requests(friends.outgoing, false)}</section>}
     </>}
   </section>;

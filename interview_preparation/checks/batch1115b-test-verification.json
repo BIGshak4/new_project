@@ -1,0 +1,50 @@
+{
+  "scope": "Second November 15 interview intake",
+  "backend_regression": {
+    "passed": 657,
+    "skipped": 3,
+    "note": "644 initial successes, then all 13 failures passed after the current counts and exact reverse projections were corrected. Two new source/revision tests also passed."
+  },
+  "execution_tests": {
+    "passed": 303,
+    "profiles": 59,
+    "preserved_prior_profiles": 56
+  },
+  "entrypoint_tests": {
+    "passed": 77,
+    "scope": "Practice service and TypeScript client contract"
+  },
+  "job_filter_tests": {
+    "passed": 35
+  },
+  "web": {
+    "passed": 463,
+    "typecheck": "passed",
+    "production_build": "passed"
+  },
+  "local_browser": {
+    "cases": 68,
+    "loaded_images_across_cases": 148,
+    "widths": [
+      390,
+      1280
+    ],
+    "languages": [
+      "he",
+      "en"
+    ],
+    "source_and_solution_boundaries": "passed"
+  },
+  "new_authored_png_files": 36,
+  "native_hdl": {
+    "compiler": "Icarus Verilog 13.0",
+    "package": "https://mirror.msys2.org/mingw/ucrt64/mingw-w64-ucrt-x86_64-iverilog-1~13.0-2-any.pkg.tar.zst",
+    "sha256": "fd4d7d7cb60cda1eb437f5476673503d92964cf47ce6c11b460eb3bd05c43582",
+    "evidence": "digital1115b-verification.json"
+  },
+  "limitations": [
+    "Browser widths are simulated in headless Edge.",
+    "STA comparison uses synthetic normalized reports; commercial STA tools and SPICE were not run.",
+    "The hardware checks include event simulation and Boolean/numeric models; there is no physical signoff."
+  ]
+}

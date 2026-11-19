@@ -1,0 +1,57 @@
+{
+  "scope": "Third November 15 intake of ten source screenshots",
+  "archive": {
+    "new_questions": 6,
+    "extended_questions": 2,
+    "provenance_only_questions": 2,
+    "affected_questions": 10,
+    "preparation_rows": 357,
+    "raw_interview_rows": 387
+  },
+  "backend_regression": {
+    "passed": 659,
+    "skipped": 3,
+    "scope": "Question catalog/copy/history/difficulty/review checks. Nine initial failures passed after exact current counts and final source binding were corrected."
+  },
+  "execution_tests": {
+    "passed": 317,
+    "profiles": 63,
+    "prior_profiles_preserved": 59
+  },
+  "normal_entrypoint_tests": {
+    "passed": 114
+  },
+  "parallel_daily_game_merge_checks": {
+    "passed": 57,
+    "note": "Includes overlapping client-contract and intake tests, so counts are not summed as unique."
+  },
+  "web": {
+    "passed": 469,
+    "typecheck": "passed",
+    "production_build": "passed"
+  },
+  "local_browser": {
+    "cases": 40,
+    "images_loaded_across_cases": 84,
+    "widths": [
+      390,
+      1280
+    ],
+    "languages": [
+      "he",
+      "en"
+    ],
+    "scope": "Production React components in a local fixture with question/solution reveal clicks."
+  },
+  "new_authored_png_files": 26,
+  "late_learner_copy_checks": {
+    "passed": 15,
+    "scope": "Intake guards and compiled bank fidelity after clarifying the basin prompt."
+  },
+  "limitations": [
+    "Hardware includes RTL simulation and RC/numeric models; SPICE and physical signoff were not run.",
+    "Fermi inputs are explicitly illustrative assumptions.",
+    "The basin flow, image borders/rounding and integer-grid coordinate models are explicit editorial completions.",
+    "Browser widths are emulated; production browser verification is signed-out."
+  ]
+}

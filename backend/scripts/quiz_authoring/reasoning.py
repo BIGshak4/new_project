@@ -186,8 +186,8 @@ def build_basic():
         fraction(
             13,
             v,
-            f"מטילים {count} מטבעות הוגנים ועצמאיים ושומרים רק תוצאות עם לפחות {minimum} פעמים עץ. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
-            f"Toss {count} fair independent coins and retain only outcomes with at least {minimum} heads. Among retained outcomes, what is the probability that all coins showed heads?",
+            f"מטילים {count} מטבעות הוגנים ועצמאיים ושומרים רק תוצאות שבהן מספר המטבעות שהראו עץ הוא לפחות {minimum}. מה ההסתברות שכל המטבעות הראו עץ, מבין התוצאות שנשמרו?",
+            f"Toss {count} fair independent coins and retain only outcomes with at least {minimum} {'head' if minimum == 1 else 'heads'}. Among retained outcomes, what is the probability that all coins showed heads?",
             result,
             f"נותרת תוצאה אחת של עץ בלבד מתוך {len(kept)} תוצאות שוות הסתברות.",
             f"There is one all-heads outcome among {len(kept)} equally likely retained outcomes.",
@@ -422,11 +422,11 @@ def build_basic():
         num(
             40,
             v,
-            f"צריך להגיע {right} צעדים ימינה ו־{up} צעדים למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
-            f"Reach a point {right} steps right and {up} steps up. Each move is one unit right or up only. How many routes are possible when step order matters?",
+            f"מספר הצעדים הדרושים הוא {right} ימינה ו־{up} למעלה. בכל צעד נעים יחידה אחת רק ימינה או למעלה. כמה מסלולים שונים יש אם סדר הצעדים חשוב?",
+            f"Reach a point {right} {'step' if right == 1 else 'steps'} right and {up} {'step' if up == 1 else 'steps'} up. Each move is one unit right or up only. How many routes are possible when step order matters?",
             result,
-            f"בוחרים אילו {up} מתוך {right + up} המקומות ברצף יהיו צעדים למעלה.",
-            f"Choose which {up} of the {right + up} sequence positions are upward steps.",
+            f"מתוך {right + up} מקומות ברצף, בוחרים {up} עבור הצעדים למעלה.",
+            f"Choose {up} of the {right + up} sequence positions for upward steps.",
             "binomial coefficient checked by binary-sequence enumeration",
             dict(right=right, up=up),
         )
@@ -764,8 +764,8 @@ def build_basic_rest():
         num(
             58,
             v,
-            f"לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מבצעים {weighings} שקילות ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
-            f"Each balance weighing has three possible outcomes. Perform {weighings} weighings and record the outcomes in order. What is the maximum number of different outcome sequences? This does not claim that every coin puzzle is solvable this way.",
+            f"לכל שקילה במאזניים יש שלוש תוצאות אפשריות. מספר השקילות שמבצעים הוא {weighings} ורושמים את התוצאות לפי הסדר. מהו המספר המרבי של רצפי תוצאות שונים? אין טענה שכל חידת מטבעות ניתנת לפתרון כך.",
+            f"Each balance weighing has three possible outcomes. Perform {weighings} {'weighing' if weighings == 1 else 'weighings'} and record the outcomes in order. What is the maximum number of different outcome sequences? This does not claim that every coin puzzle is solvable this way.",
             len(sequences),
             "לכל רצף קצר יש שלוש הרחבות אפשריות בשקילה הבאה.",
             "Each shorter sequence has three possible extensions in the next weighing.",
@@ -803,7 +803,7 @@ def build_basic_rest():
         fraction(
             60,
             v,
-            f"שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי של {red} אדומים ו־{blue} כחולים, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
+            f"שק מכיל רק כדורים אדומים וכחולים, לפחות אחד מכל צבע, אך מספריהם אינם ידועים. שולפים כדור אחד באקראי, כך שלכל כדור הסתברות שווה. איזו הסתברות לאדום יכולה להתאים להרכב אפשרי שבו מספר האדומים הוא {red} ומספר הכחולים הוא {blue}, ולכן מדגימה שההסתברות אינה בהכרח חצי?",
             f"A bag has only red and blue balls, at least one of each, with unspecified counts. Draw one ball uniformly at random, so each ball is equally likely. What red probability is possible for {red} red and {blue} blue balls, illustrating that the probability need not be one half?",
             Fraction(red, red + blue),
             "הסיכוי הוא מספר האדומים חלקי מספר הכדורים הכולל, והוא תלוי בהרכב.",
@@ -885,11 +885,11 @@ def build_expansion():
         num(
             65,
             v,
-            f"בין {total} מטבעות יש בדיוק {heads} מטבעות עץ. בוחרים בדיוק {heads} מטבעות; בפועל היו ביניהם {chosen_heads} מטבעות עץ, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
-            f"Among {total} coins, exactly {heads} show heads. Select exactly {heads} coins; in this case the selection contains {chosen_heads} heads, though their faces cannot be seen. Flip every selected coin. How many heads will each group then contain?",
+            f"בין {total} מטבעות יש בדיוק {heads} מטבעות עץ. בוחרים בדיוק {heads} מטבעות; בפועל מספר מטבעות העץ ביניהם היה {chosen_heads}, אף שלא רואים זאת. הופכים את כל הנבחרים. כמה מטבעות עץ יהיו בכל קבוצה אחרי ההיפוך?",
+            f"Among {total} coins, exactly {heads} show heads. Select exactly {heads} coins; in this case the selection contains {chosen_heads} {'head' if chosen_heads == 1 else 'heads'}, though their faces cannot be seen. Flip every selected coin. How many heads will each group then contain?",
             after,
-            f"מחוץ לקבוצה יש {heads - chosen_heads} מטבעות עץ; בקבוצה ההיפוך הופך את {heads - chosen_heads} מטבעות הפלי לעץ.",
-            f"The unselected group has {heads - chosen_heads} heads; flipping turns the selection's {heads - chosen_heads} tails into heads.",
+            f"מספר מטבעות העץ מחוץ לקבוצה הוא {heads - chosen_heads}; בקבוצה ההיפוך הופך לעץ את מטבעות הפלי, שמספרם {heads - chosen_heads}.",
+            f"The unselected group has a heads count of {heads - chosen_heads}; flipping converts the selection's tails count of {heads - chosen_heads} into heads.",
             "heads conservation before flip and complement after flip",
             dict(total=total, total_heads=heads, selected_count=heads, selected_heads=chosen_heads),
         )
@@ -919,7 +919,7 @@ def build_expansion():
         add(
             67,
             v,
-            f"מותרות רק זוגות הספרות הסמוכות {', '.join(a + b for a, b in edges)}. המחרוזת חייבת להתחיל ב־{path[0]}. מדוע אי אפשר לבנות מחרוזת באורך {length}?",
+            f"מותרים רק זוגות הספרות הסמוכות {', '.join(a + b for a, b in edges)}. המחרוזת חייבת להתחיל ב־{path[0]}. מדוע אי אפשר לבנות מחרוזת באורך {length}?",
             f"The only allowed adjacent digit pairs are {', '.join(a + b for a, b in edges)}. The string must start with {path[0]}. Why can no string of length {length} be built?",
             (
                 f"המסלול נתקע בספרה {path[-1]}, שאין ממנה מעבר מותר",
@@ -1050,8 +1050,8 @@ def build_expansion():
         add(
             74,
             v,
-            f"שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה {observed} בכל אחת מ־{repeats} מדידות זהות. איזה זוג מצבים נשאר אפשרי?",
-            f"Hidden bits A and B do not change. Only A XOR B is measured, giving {observed} in each of {repeats} identical measurements. Which pair of states remains possible?",
+            f"שני ביטים נסתרים A ו־B אינם משתנים. נמדד רק A XOR B, והתקבלה התוצאה {observed} בכל המדידות הזהות, שמספרן {repeats}. איזה זוג מצבים נשאר אפשרי?",
+            f"Hidden bits A and B do not change. Only A XOR B is measured, giving {observed} in each of {repeats} identical {'measurement' if repeats == 1 else 'measurements'}. Which pair of states remains possible?",
             " / ".join(states),
             ["00 / 01", "00 / 10", "10 / 11"],
             "אותה תצפית על אותו מצב אינה מוסיפה מידע; שני הזוגות נותנים אותו XOR.",
@@ -1159,8 +1159,8 @@ def build_expansion():
         num(
             81,
             v,
-            f"חוט על גליל שהיקפו {circumference} ס״מ וגובהו {height} ס״מ עושה {turns} סיבובים מלאים מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
-            f"A wire on a cylinder of circumference {circumference} cm and height {height} cm makes {turns} full turns from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness.",
+            f"חוט על גליל שהיקפו {circumference} ס״מ וגובהו {height} ס״מ משלים מספר סיבובים מלאים השווה ל־{turns} מהתחתית לפסגה. הגובה עולה ביחס קבוע לזווית הסיבוב. מה אורך החוט בס״מ? מתעלמים מעוביו.",
+            f"A wire on a cylinder of circumference {circumference} cm and height {height} cm makes {turns} full {'turn' if turns == 1 else 'turns'} from bottom to top. Height increases proportionally to rotation angle. What is the wire length in cm? Ignore its thickness.",
             length,
             "בפריסת הגליל מתקבל קו ישר; מפעילים פיתגורס על הגובה ועל המרחק האופקי המצטבר.",
             "Unrolling gives a straight segment; apply Pythagoras to the height and accumulated horizontal distance.",
@@ -1233,7 +1233,7 @@ def build_expansion():
         fraction(
             86,
             v,
-            f"מטבע הוגן הוטל באופן עצמאי {streak} פעמים והראה עץ בכל ההטלות. מה ההסתברות ל־{word_h} בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
+            f"מטבע הוגן הוטל באופן עצמאי {streak} פעמים והראה עץ בכל ההטלות. מה ההסתברות לקבל {word_h} בהטלה הבאה, אם המטבע נשאר הוגן וההטלות עצמאיות?",
             f"A fair coin was tossed independently {streak} times and showed heads every time. What is the probability of {requested} on the next toss, if fairness and independence remain unchanged?",
             Fraction(1, 2),
             "עצמאות קובעת שהעבר אינו משנה את הסתברות ההטלה הבאה.",
@@ -1302,8 +1302,8 @@ def build_extended():
         num(
             101,
             v,
-            f"יש {people} משדרים, וכל אחד רשאי לשלוח לכל היותר {limit} אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף עד {extra} ספירות ללא משדר. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
-            f"There are {people} senders, each allowed at most {limit} signals. Each signal is collected once, and an unknown initial state may add up to {extra} counts without a sender. What is the smallest count proving everyone participated?",
+            f"יש {people} משדרים, וכל אחד רשאי לשלוח לכל היותר {limit} אותות. המונה אוסף כל אות פעם אחת, ומצב התחלתי לא ידוע עלול להוסיף ספירות ללא משדר, שמספרן לכל היותר {extra}. מהי הספירה הקטנה ביותר שמוכיחה שכולם השתתפו?",
+            f"There are {people} senders, each allowed at most {limit} signals. Each signal is collected once, and an unknown initial state may add up to {extra} {'count' if extra == 1 else 'counts'} without a sender. What is the smallest count proving everyone participated?",
             threshold,
             f"אם אדם אחד לא השתתף, אפשר להגיע לכל היותר ל־{threshold - 1}, כולל הספירות הנוספות.",
             f"If one sender has not participated, the total is at most {threshold - 1}, including extra counts.",
@@ -1401,8 +1401,8 @@ def build_extended():
         fraction(
             105,
             v,
-            f"שני צעצועים עוברים מרחק כולל של {2 * distance} מטרים. A עובר {distance} מטרים במהירות {slow} מטר לשנייה ואת היתר במהירות {fast}; B עובר הכול במהירות {fast}. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
-            f"Two toys each travel {2 * distance} meters. A covers {distance} meters at {slow} m/s and the rest at {fast} m/s; B covers the entire route at {fast} m/s. Ignore speed-change time. How many seconds later does A finish, despite equal final speeds?",
+            f"שני צעצועים עוברים מרחק כולל של {2 * distance} מטרים. A עובר {distance} מטר במהירות {slow} מטר לשנייה ואת היתר במהירות {fast}; B עובר הכול במהירות {fast}. מתעלמים מזמן שינוי המהירות. בכמה שניות A מאחר ל־B, אף שמהירות הסיום שווה?",
+            f"Two toys each travel {2 * distance} meters. A covers {distance} {'meter' if distance == 1 else 'meters'} at {slow} m/s and the rest at {fast} m/s; B covers the entire route at {fast} m/s. Ignore speed-change time. How many seconds later does A finish, despite equal final speeds?",
             a - b,
             "מחברים זמני קטעים לכל מסלול ומחסרים את זמנו של B מזמנו של A.",
             "Add segment times for each trip, then subtract B's time from A's.",
@@ -1430,8 +1430,8 @@ def build_extended():
         num(
             107,
             v,
-            f"מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים {left_mass} ק״ג במרחק {left_arm} מטרים מהציר. איזו מסה בק״ג יש לתלות מימין במרחק {right_arm} מטרים לאיזון סטטי בכבידה אחידה?",
-            f"A weightless horizontal bar rests on a pivot supplying no torque. Hang {left_mass} kg at {left_arm} meters to the left. What mass in kg must hang {right_arm} meters to the right for static balance in uniform gravity?",
+            f"מוט אופקי חסר משקל נתמך בציר שאינו מספק מומנט. משמאל תולים {left_mass} ק״ג במרחק {left_arm} מטר מהציר. איזו מסה בק״ג יש לתלות מימין במרחק {right_arm} מטר לאיזון סטטי בכבידה אחידה?",
+            f"A weightless horizontal bar rests on a pivot supplying no torque. Hang {left_mass} kg at {left_arm} {'meter' if left_arm == 1 else 'meters'} to the left. What mass in kg must hang {right_arm} {'meter' if right_arm == 1 else 'meters'} to the right for static balance in uniform gravity?",
             right_mass,
             "משווים מסה כפול זרוע בשני הצדדים; גורם הכבידה משותף ומצטמצם.",
             "Equate mass times lever arm on both sides; the common gravity factor cancels.",
@@ -1514,8 +1514,8 @@ def build_extended():
         add(
             111,
             v,
-            f"קרן מנקודה שאינה על שפת מצולע פשוט חוצה את השפה {crossings} פעמים לפני האינסוף. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
-            f"A ray from a point off a simple polygon's boundary crosses the boundary {crossings} times before infinity. Every crossing is proper, with no vertices or tangencies. What follows about the point?",
+            f"קרן יוצאת מנקודה שאינה על שפת מצולע פשוט. מספר החציות שלה את השפה עד האינסוף הוא {crossings}. כל החציות אמיתיות, ללא קודקודים או השקות. מה אפשר להסיק על הנקודה?",
+            f"A ray from a point off a simple polygon's boundary crosses the boundary {crossings} {'time' if crossings == 1 else 'times'} before infinity. Every crossing is proper, with no vertices or tangencies. What follows about the point?",
             ("הנקודה בפנים", "The point is inside") if inside else ("הנקודה בחוץ", "The point is outside"),
             [
                 ("הנקודה בחוץ", "The point is outside")
@@ -1599,8 +1599,8 @@ def build_extended():
         fraction(
             115,
             v,
-            f"שחיין מקיף מרכז ברדיוס {r1} מטרים במהירות {s1} מטר לשנייה; רץ מקיף אותו מרכז ברדיוס {r2} מטרים במהירות {s2}. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
-            f"A swimmer circles a center at radius {r1} meters and speed {s1} m/s; a runner circles the same center at radius {r2} meters and speed {s2} m/s. By how many radians per second is the swimmer's angular speed greater?",
+            f"שחיין מקיף מרכז ברדיוס {r1} מטר במהירות {s1} מטר לשנייה; רץ מקיף אותו מרכז ברדיוס {r2} מטר במהירות {s2}. בכמה רדיאנים לשנייה גדולה מהירותו הזוויתית של השחיין?",
+            f"A swimmer circles a center at radius {r1} m and speed {s1} m/s; a runner circles the same center at radius {r2} m and speed {s2} m/s. By how many radians per second is the swimmer's angular speed greater?",
             omega1 - omega2,
             "המהירות הזוויתית היא המהירות לאורך המסלול חלקי הרדיוס. מחשבים לכל אחד ומחסרים.",
             "Angular speed equals path speed divided by radius. Compute both and subtract.",
@@ -1666,7 +1666,7 @@ def build_extended():
                 ),
                 ("אסור להחליף את צבע כובעו במודל", "Changing their hat color is forbidden by the model"),
             ],
-            "האמירה מקודדת את מה שנראה לאחרים; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
+            "האמירה מקודדת את הכובעים שהדובר רואה; שינוי רק בכובע הדובר אינו משנה את הודעתו.",
             "The word encodes the visible hats; changing only the speaker's own hat does not change the message.",
             "two indistinguishable worlds differing only in sender's own hat",
             dict(visible_black=visible, message=reply, own_hat_worlds=["white", "black"]),
@@ -1695,8 +1695,8 @@ def refine_conceptual():
         add(
             1,
             v,
-            f"מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: {', '.join(he_statements)}. בדיוק {count} מהמשפטים נכונים. היכן המטבע?",
-            f"A coin is in exactly one of boxes A, B, C. The three statements, in order, are {', '.join(en_statements)}. Exactly {count} statements are true. Where is the coin?",
+            f"מטבע נמצא בדיוק באחת הקופסאות A, B, C. שלושת המשפטים הם, לפי הסדר: {', '.join(he_statements)}. מספר המשפטים הנכונים הוא בדיוק {count}. היכן המטבע?",
+            f"A coin is in exactly one of boxes A, B, C. The three statements, in order, are {', '.join(en_statements)}. Exactly {count} {'statement is' if count == 1 else 'statements are'} true. Where is the coin?",
             valid[0],
             [x for x in ["A", "B", "C"] if x != valid[0]]
             + [("אין מיקום מתאים", "No location satisfies the conditions")],
@@ -1743,7 +1743,7 @@ def refine_conceptual():
             + f"A draw from the box labeled 'mixed' gives an {fruit}. What is in the box labeled '{label}'?",
             good,
             [x for x in content_options if x != good],
-            "הקופסה המסומנת כתערובת טהורה. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
+            "הקופסה המסומנת ״תערובת״ מכילה סוג פרי אחד בלבד. לאחר זיהויה, האיסור על כל תווית להיות נכונה קובע את שתי האחרות.",
             "The mixed-labeled box is pure. Once identified, requiring every label to be wrong fixes the other two contents.",
             "enumerate label derangements and filter by observation",
             dict(draw=fruit, queried_label=label, arrangement=actual),
@@ -1785,7 +1785,7 @@ def refine_conceptual():
         add(
             26,
             v,
-            baseh + f"שוקלים את {left} מול {right}, ו־{relh}. איזה מטבע כבד?",
+            baseh + f"שוקלים את {left} מול {right}, תוצאת השקילה: {relh}. איזה מטבע כבד?",
             basee + f"Weigh {left} against {right}; {rele}. Which coin is heavy?",
             good,
             [x for x in "ABC" if x != good] + [("אין די מידע", "Insufficient information")],

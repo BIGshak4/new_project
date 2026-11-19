@@ -12,6 +12,8 @@ import re
 import uuid
 from pathlib import Path
 
+from tests.copy_november12_history import before_current_copy, before_current_fundamentals_manifest
+
 import pytest
 
 from app.api.errors import ApiError
@@ -91,7 +93,7 @@ def test_twenty_one_sources_keep_the_exact_original_bytes_and_identity_mapping()
 
 def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets(catalog):
     archive = read(BANK / "questions.json")
-    assert len(archive["questions"]) == 310 and len(catalog.questions) == 340
+    assert len(archive["questions"]) == 385 and len(catalog.questions) == 415
     # Freeze this intake's 208-record endpoint before projecting its 197-record
     # predecessor. The later eleven additions have their own batch20 tests.
     previous_ids = {question["id"] for question in archive["questions"]
@@ -120,7 +122,7 @@ def test_authorized_extensions_preserve_all_197_original_records_and_1070_assets
         "example-reverse-singly-linked-list": "prep-reverse-singly-linked-list-in-place",
     }
     assert set(aliases) | set(aliases.values()) <= catalog.questions.keys()
-    assert len({aliases.get(key, key) for key in catalog.questions}) == 335
+    assert len({aliases.get(key, key) for key in catalog.questions}) == 410
 
 
 def test_all_new_questions_and_extensions_remain_bilingual_proposed_rated_and_gated(catalog):
@@ -201,7 +203,7 @@ def test_new_private_assets_are_safe_hash_bound_and_localized(catalog):
             if item["language"] == "en":
                 assert not any("\u05d0" <= char <= "\u05ea" for char in item["caption"])
     sources = [entry["local_path"] for entry in uploads.values() if entry["local_path"].startswith("sources/")]
-    assert len(sources) == 525 and len(set(sources)) == 523
+    assert len(sources) == 682 and len(set(sources)) == 675
     names = read(ROOT / "apps/web/src/lib/source-screenshots.json")
     assert set(names) == {Path(path).name for path in sources}
     assert all(f"2026-10-31-batch21-{number:02d}.png" in names for number in range(1, 22))
@@ -219,11 +221,12 @@ def test_all_400_short_card_objects_revisions_and_2000_quiz_variants_remain_unch
     cards = []
     assert len(BATCH21_BASELINE["short_card_source_sha256"]) == 11
     for name, previous_hash in BATCH21_BASELINE["short_card_source_sha256"].items():
-        current = read(content / name)
+        current = before_current_copy("fundamentals", name, read(content / name))
         assert digest(current) == previous_hash, name
         cards.extend(current)
     assert len(cards) == len({card["id"] for card in cards}) == 400
-    registry = read(SEEDS / "fundamentals_catalog.json")
+    current_registry = read(SEEDS / "fundamentals_catalog.json")
+    registry = before_current_fundamentals_manifest(current_registry)
     # Later authorized expansions add keys, while this intake's content stays frozen.
     historical_registry = {**registry, "questions": {
         key: revision for key, revision in registry["questions"].items()
@@ -231,8 +234,8 @@ def test_all_400_short_card_objects_revisions_and_2000_quiz_variants_remain_unch
     }}
     assert len(historical_registry["questions"]) == 400
     assert digest(historical_registry) == BATCH21_BASELINE["fundamentals_catalog_sha256"]
-    assert read(content / "fundamentals-revisions.json") == registry["questions"]
-    quiz = read(SEEDS / "duel_quiz.json")["questions"]
+    assert read(content / "fundamentals-revisions.json") == current_registry["questions"]
+    quiz = before_current_copy("quiz", "duel_quiz.json", read(SEEDS / "duel_quiz.json"))["questions"]
     historical_quiz = [q for q in quiz if not q.get("source_key")
                        or int(q["source_key"].rsplit("-", 1)[1]) <= 200]
     assert digest(sorted(historical_quiz, key=lambda q: q["key"])) == (

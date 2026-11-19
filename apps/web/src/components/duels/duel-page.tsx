@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useDuelLanguage } from "./games-navigation";
 import { Auth } from "../auth";
 import { LanguageMenu } from "../ui/language-menu";
 import { ThemeToggle } from "../ui/theme-toggle";
@@ -10,24 +11,19 @@ import type { AvatarConfig } from "../../lib/avatar-types";
 import type { DuelLanguage } from "../../lib/duel-types";
 import { DuelWorkspace } from "./duel-workspace";
 import { FriendsPanel } from "../friends-panel";
-
-export function useDuelLanguage() {
-  const [lang, setLang] = useState<DuelLanguage>("he");
-  useEffect(() => { try { if (localStorage.getItem("jobrun-language") === "en") setLang("en"); } catch {} }, []);
-  useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = lang === "he" ? "rtl" : "ltr"; try { localStorage.setItem("jobrun-language", lang); } catch {} }, [lang]);
-  return [lang, setLang] as const;
-}
+import { useFriendInvitations } from "./friend-duel-activity";
 
 function LiveWorkspace({ userId, lang, invite, controls }: { userId: string; lang: DuelLanguage; invite: string; controls: React.ReactNode }) {
   const client = useMemo(() => duelApi(userId), [userId]);
+  const invitations = useFriendInvitations(userId);
   const [avatar, setAvatar] = useState<AvatarConfig | null>(null);
   useEffect(() => {
     let current = true;
     void avatarApi(userId).get().then(value => { if (current) setAvatar(value.avatar); }).catch(() => {});
     return () => { current = false; };
   }, [userId]);
-  return <DuelWorkspace client={client} lang={lang} invite={invite} controls={controls} avatar={avatar}
-    friendsSlot={<FriendsPanel key={userId} userId={userId} lang={lang} />} />;
+  return <DuelWorkspace client={client} lang={lang} invite={invite} controls={controls} avatar={avatar} invitations={invitations}
+    renderFriends={(onChallenge, disabled, stake) => <FriendsPanel key={userId} userId={userId} lang={lang} onChallenge={onChallenge} challengeDisabled={disabled} stake={stake} />} />;
 }
 
 export function DuelPage({ invite = "" }: { invite?: string }) {

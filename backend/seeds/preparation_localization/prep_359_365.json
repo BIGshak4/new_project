@@ -1,0 +1,488 @@
+{
+  "PREP-359": {
+    "assumptions": {
+      "he": [
+        "הטווח פתוח בשני קצותיו, נקודת הרשת הראשונה היא start+step, הקלט הוא מחרוזות עשרוניות סופיות והצעד חיובי. True פירושו מעבר. המתאם מחזיר שבר מצומצם."
+      ],
+      "en": [
+        "Both bounds are strict; the first candidate is start+step. Inputs are finite decimal strings and step is positive. True means pass. The practice adapter returns a reduced fraction."
+      ]
+    },
+    "optimality": {
+      "he": "M קריאות במקרה הגרוע הן הכרחיות למבחן שרירותי. חיפוש בינארי O(log M) שייך רק להרחבה המונוטונית; אורך מספרים ועלות הבדיקה אינם נעלמים.",
+      "en": "M worst-case calls are necessary for arbitrary test outcomes. O(log M) belongs only to the monotonic extension; numeric bit length and test cost still matter."
+    },
+    "verification": {
+      "he": [
+        "נבדקו רשתות מדויקות מול אורקל של סרגל מספרים שלמים, כל דפוסי הכשל ברשתות קטנות ומקרי קצה עשרוניים, כולל 0.3 וכשלים לא מונוטוניים. זו בדיקת אלגוריתם ולא ניסוי ציוד."
+      ],
+      "en": [
+        "Checks compare against an independent scaled-integer grid oracle, enumerate all failure patterns on small grids and cover decimal endpoints, 0.3 and nonmonotonic failures. This verifies an algorithm, not physical test equipment."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "רשת ריקה; כשל בנקודה הראשונה או האחרונה; כל הנקודות עוברות; כשל רק בגבול המוחרג; צעד שאינו מחלק את הטווח; מתח שלילי; ייצוגים שקולים כגון 0.30 ו־3e-1; מעבר מחדש אחרי כשל."
+      ],
+      "en": [
+        "An empty grid; first/last candidate failure; all passing; failure only at an excluded endpoint; a step not dividing the range; negative voltage; equivalent values such as 0.30 and 3e-1; a pass after a failure."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיפוש בינארי בלי הבטחת מונוטוניות; הכללת start או stop בניגוד לחוזה; חיבור חוזר של float; דיווח על כשל בין נקודות הרשת; לולאה אינסופית בצעד אפס."
+      ],
+      "en": [
+        "Binary search without monotonicity; including start or stop; repeated float addition; returning an off-grid failure; an endless loop from a zero step."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני מגדיר רשת פנימית start+k·step, סורק אינדקסים שלמים עם אריתמטיקה מדויקת ועוצר ב־False הראשון. בלי מונוטוניות צריך עד M בדיקות; עם סף יחיד אפשר לחפש בינארית.",
+      "en": "I define the strict interior grid start+k·step, scan integer indices with exact arithmetic, and stop at the first False. Arbitrary outcomes need up to M calls; one permanent threshold permits binary search."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד תשתנה השיטה אם test עוברת בכל הנקודות עד סף ומאותו סף תמיד נכשלת?",
+          "answer_direction": "חשבו את מספר הנקודות ברשת וחפשו את האינדקס הראשון שנכשל, עם גבול וירטואלי M+1 למצב ללא כשל. המשיכו לחשב מתח מתוך אינדקס שלם.",
+          "principle": "חיפוש בינארי דורש תכונת סדר של התשובות, ולא רק ערכי קלט ממוינים."
+        }
+      ],
+      "en": [
+        {
+          "question": "How does the method change if all candidates pass until one threshold and fail thereafter?",
+          "answer_direction": "Count the grid points and binary-search the first failing index, allowing a virtual M+1 endpoint for no failure. Continue deriving voltages from integer indices.",
+          "principle": "Binary search requires ordered outcomes, not merely sorted inputs."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מגדיר אם True הוא מעבר או כשל, מהי נקודת הרשת הראשונה או מה קורה ללא כשל. נבחרו True=מעבר, רשת פנימית start+k·step עם k≥1, החזרת None ללא כשל וקלט עשרוני מדויק. אין במקור הבטחת מונוטוניות."
+      ],
+      "en": [
+        "The source leaves the Boolean polarity, grid origin and no-failure result unspecified. This edition chooses True=pass, strictly interior start+k·step for k≥1, None without failure and exact decimal input. Monotonicity is not promised."
+      ]
+    }
+  },
+  "PREP-360": {
+    "assumptions": {
+      "he": [
+        "בקשת HTTP/1.1 מעל TLS ו־TCP בחיבורים שהוקמו, על קישורי Ethernet דרך מתג ונתב. השרת ברשת אחרת, כתובתו ידועה, ואין NAT, proxy או מנהרה."
+      ],
+      "en": [
+        "HTTP/1.1 over established TLS/TCP connections, Ethernet links, a switch and a router. The server is on another network and its address is known. No NAT, proxy or tunnel."
+      ]
+    },
+    "optimality": {
+      "he": "זהו תרגיל הסבר של תפקידים ומסלול. אין טענה לאופטימליות זמן או למספר חבילות קבוע: קיטוע, MTU, אישורים ושידורים חוזרים תלויים בתרחיש.",
+      "en": "This is a role-and-path explanation, without a runtime optimum or fixed packet count. Segmentation, MTU, acknowledgments and retransmission depend on the scenario."
+    },
+    "verification": {
+      "he": [
+        "נבדקה עקביות התרשים, כתובות הצעד הבא ושדות הקצה מול תרחיש המסלול, עם עיון במקורות התקן הראשוניים המקושרים. לא בוצעה לכידת רשת או בדיקת ציוד חי."
+      ],
+      "en": [
+        "The diagram, next-hop addresses and endpoint fields were checked for scenario consistency against the linked primary standards. No live packet capture or physical equipment test was performed."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אם B באותה רשת לפי הניתוב, ה־MAC נפתר עבור B עצמו. מטמון שכן תקף חוסך את שלב הבקשה. נתיב חסר, TTL שנגמר או חבילה גדולה מדי יכולים לעצור את המסע לפני השרת."
+      ],
+      "en": [
+        "If B is on-link according to routing, resolve B itself rather than the gateway. A valid neighbor-cache entry avoids another query. A missing route, exhausted TTL or oversized packet can stop delivery before the server."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שליחת ARP כדי למצוא MAC של שרת ברשת רחוקה; טענה שכל נתב פותח TCP או מפענח TLS; זיהוי מקטע TCP עם הודעת יישום; טענה שכל שכבת תעבורה מבטיחה אמינות או שכל נתב IPv6 מפצל."
+      ],
+      "en": [
+        "ARP for a remote server; claiming every router opens TCP or decrypts TLS; equating TCP segments with application messages; claiming all transports guarantee reliability or IPv6 routers fragment packets."
+      ]
+    },
+    "interview_answer": {
+      "he": "השולח עוטף נתוני יישום ב־TLS, ב־TCP, ב־IP ובמסגרת קישור. המתג מעביר לפי MAC, הנתב לפי IP ובונה מסגרת לצעד הבא. הקצה המקבל מסיר מעטפות ומשחזר את זרם היישום.",
+      "en": "The sender wraps application data with TLS, TCP, IP and link framing. A switch forwards by MAC, while a router forwards by IP and creates the next-hop frame. The receiver removes wrappers and reconstructs the application byte stream."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה ישתנה אם נוסף NAT עם תרגום פורטים?",
+          "answer_direction": "הנתב המתרגם משנה גם כתובות IP ולעיתים פורטים ומעדכן סכומי ביקורת קשורים. נדרש מצב מיפוי לתשובות; MAC עדיין מתאר כל קישור. TLS יכול להישאר מקצה לקצה אם אין סיום TLS באמצע.",
+          "principle": "הבחנה בין ניתוב רגיל, תרגום כתובות וסיום פרוטוקול בקצה ביניים."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if port-translating NAT is inserted?",
+          "answer_direction": "The translator also rewrites IP addresses and sometimes ports and updates related checksums. Replies require mapping state; MAC addresses still describe each link. TLS may remain end-to-end unless an intermediary terminates it.",
+          "principle": "Distinguish ordinary routing, address translation and protocol termination."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע פרוטוקולים או טופולוגיה. נבחר מסלול Ethernet עם מתג, נתב ושני קצוות, HTTP/1.1 מעל TLS ו־TCP, ללא NAT או מנהרות. מיפוי OSI הוא הסבר מושגי ולא טענה למימוש שבע מחלקות תוכנה נפרדות."
+      ],
+      "en": [
+        "The source does not choose protocols or a topology. This edition uses Ethernet, a switch, a router and two endpoints, with HTTP/1.1 over TLS over TCP and no NAT or tunnels. OSI is a conceptual mapping, not seven mandatory software modules."
+      ]
+    }
+  },
+  "PREP-361": {
+    "assumptions": {
+      "he": [
+        "קלטים ופלט הם uint32 ללא סימן; הקלט כבר תקין. פעולות ביטים בלבד. Python משתמש ב־int והמסכות מצמצמות את הפלט ל־0..3."
+      ],
+      "en": [
+        "Inputs/output are unsigned uint32 values, and inputs already satisfy the domain. Only bitwise operations are used. Python ints are masked down to a result in 0..3."
+      ]
+    },
+    "optimality": {
+      "he": "מספר קבוע של פעולות, O(1) במודל uint32. הנוסחה נשארת תקפה לכל W≥2; אין צורך לטעון למספר פעולות מינימלי.",
+      "en": "A constant operation count gives O(1) in the uint32 model. The construction works for every W≥2; no minimum gate/operation count is claimed."
+    },
+    "verification": {
+      "he": [
+        "נבדקו כל זוגות הערכים ברוחבים 2..8, דגימות וקצוות uint32, מבנה הקוד ללא תנאים, וגם קימפול והרצת מימוש C מול בדיקת אי־שוויון עצמאית. זהו אימות לוגי ותוכנתי, לא הוכחת זמן קבוע של מהדר."
+      ],
+      "en": [
+        "Checks exhaust all input pairs for widths 2..8, sample uint32 extremes/random values, inspect branch-free source, and compile/run C against independent inequality properties. This is software/logical verification, not a compiler constant-time proof."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "קלטים שווים, אפסים, שני מספרים הכוללים את כל הביטים 1, קלטי 0 ו־1 וקצוות uint32. הבנייה מחזירה תמיד אחד הערכים 0..3, והביטים שבחרנו מוכיחים שאינו קלט."
+      ],
+      "en": [
+        "Equal inputs, zeroes, all-one inputs, 0 and 1, and uint32 extremes. The result is always in 0..3; the chosen witness bits prove it is neither input."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "החזרת ~a בלבד, שעשויה להיות b; שימוש ב־(a|b)+1 ב־uint32 בלי לטפל בגלישה; הסתרת if באופרטור תנאי; דרישה בלתי אפשרית ברוחב ביט אחד."
+      ],
+      "en": [
+        "Returning ~a alone, which may equal b; adding one to (a|b) with uint32 wraparound; hiding a condition in a ternary expression; requiring an impossible one-bit result."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני הופך את ביט 0 של a ואת ביט 1 של b ומאפס את היתר. הביט הראשון מבדיל מ־a והשני מ־b. לכן ((~a)&1)|((~b)&2) עובד ללא תנאים וללא אריתמטיקה.",
+      "en": "I complement a bit 0 and b bit 1 and clear the rest. The first bit differs from a and the second from b, so ((~a)&1)|((~b)&2) needs no conditions or arithmetic."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד תכלילו ל־k קלטים כאשר יש לפחות k ביטים בפלט?",
+          "answer_direction": "הקדישו ביט שונה לכל קלט, וקבעו אותו להיפוך הביט המתאים באותו קלט. איסוף הביטים ב־OR יוצר עד הבדל לכל אחד. ההנחה W≥k מספיקה לבנייה, אך אינה תנאי הכרחי לעצם קיום פלט.",
+          "principle": "אי שוויון אפשר להוכיח באמצעות עד מקומי אחד לכל יריב."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can this be generalized to k inputs if the result has at least k bits?",
+          "answer_direction": "Reserve a different output bit for each input and complement that input at its assigned bit. OR the witnesses together. W≥k is sufficient for this construction, but not necessary for the existence of a different result.",
+          "principle": "A local witness can establish a global inequality against each opponent."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע רוחב, סימן או אם הפלט באותו תחום. נבחרו שני קלטי uint32 ופלט uint32, ללא תנאים, השוואות, לולאות או גישה לטבלה. תחום של ביט אחד אינו מספיק עבור שני קלטים שונים."
+      ],
+      "en": [
+        "The source leaves width, signedness and result domain unspecified. This edition uses uint32 inputs/output and prohibits conditions, comparisons, loops and table lookups. A one-bit domain cannot handle two distinct inputs."
+      ]
+    }
+  },
+  "PREP-362": {
+    "assumptions": {
+      "he": [
+        "מרחק מוחלט בין שני מספרים שלמים מדויקים, אחד מכל מערך. כפילויות ושליליים מותרים; None אם חסר צד. הקלטים אינם משתנים והפלט הוא מרחק בלבד."
+      ],
+      "en": [
+        "Absolute distance between exact integers, one per array. Negatives/duplicates are allowed; an empty side gives None. Inputs remain unchanged; only the distance is returned."
+      ]
+    },
+    "optimality": {
+      "he": "הפתרון המוצע O(m log m+n log n) זמן ו־O(m+n) מקום לשמירת הקלט. לקלטים ממוינים O(m+n) זמן ו־O(1) מילים נוספות. אין טענה לחסם מיון הכרחי לכל חלופה.",
+      "en": "The proposed method uses O(m log m+n log n) time and O(m+n) space to preserve inputs. Sorted inputs need O(m+n) time and O(1) extra words. No universal sorting lower bound is claimed."
+    },
+    "verification": {
+      "he": [
+        "המימוש הושווה לאורקל ממצה של כל הזוגות על כל זוגות הרשימות הקצרות בתחום קטן, ועל דגימות ומקרי קצה גדולים. נבדקו שמירת הקלט, סימטריה והוספת הזזה אחידה."
+      ],
+      "en": [
+        "The implementation was compared with an independent all-pairs oracle for every pair of short lists over a small domain, then sampled large/extreme cases. Checks include input preservation, symmetry and uniform-translation invariance."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "אחד הצדדים ריק; צד יחיד באורך אחד; כפילויות רבות; ערך משותף; כל ערכי צד אחד קטנים מהאחר; שליליים; קצוות טיפוס חסום. [5] ו־[5] נותנים 0 למרות שמותר לבחור רק איבר אחד מכל צד."
+      ],
+      "en": [
+        "An empty side; a singleton side; repeated values; a common value; disjoint ordered ranges; negatives; bounded-type extremes. [5] and [5] yield zero while still choosing one occurrence from each side."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "בחירת שני איברים מאותו מערך; הפרש חתום במקום מוחלט; קידום הערך הגדול יותר בלי נימוק; מיון במקום המשנה את הקלט; גלישת חיסור לפני abs."
+      ],
+      "en": [
+        "Choosing both values from one array; signed rather than absolute difference; advancing the larger value without justification; sorting in place despite input preservation; overflowing before abs."
+      ]
+    },
+    "interview_answer": {
+      "he": "אני ממיין עותק מכל צד וסורק בשני מצביעים. אחרי עדכון המינימום אפשר לשכוח את הקטן, כי כל ערך עתידי בצד השני רחוק ממנו לפחות כמו הנוכחי. המיון שולט בזמן והקלט נשמר.",
+      "en": "I sort copies and scan with two pointers. After updating the minimum I discard the smaller value, because every future value on the other side is at least as far away. Sorting dominates runtime and preserves the original arrays."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "כיצד תחזירו גם את שני האינדקסים המקוריים?",
+          "answer_direction": "מיינו זוגות (ערך,אינדקס מקורי) ושמרו את הזוג כאשר המינימום משתפר. הגדירו במפורש שובר שוויון אם נדרש זוג ייחודי; מרחק בלבד אינו דורש כלל כזה.",
+          "principle": "לשמור מידע מזהה בעת שינוי סדר, ולהפריד דרישות תשובה ממדד המטרה."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would you return the original two indices as well?",
+          "answer_direction": "Sort (value,original_index) pairs and retain the pair on an improvement. Specify a tie rule if a unique pair is required; returning a distance alone needs none.",
+          "principle": "Preserve identity when reordering and separate the output contract from the objective."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע אם ההפרש מוחלט, מה להחזיר לקלט ריק או אם מותר לשנות מערכים. נבחר מרחק מוחלט, None אם חסר צד, פלט מספרי בלבד ושמירה על סדר הקלטים באמצעות עותקים."
+      ],
+      "en": [
+        "The source leaves absolute versus signed difference, empty inputs and mutation unspecified. This edition chooses absolute distance, None if either side is empty, a scalar result and copied sorts preserving input order."
+      ]
+    }
+  },
+  "PREP-363": {
+    "assumptions": {
+      "he": "קירור, דגימה סינכרונית, תחום ביניים שומר מצב, אתחולOFF וסתירה מכבה ומדווחת.",
+      "en": "Cooling, synchronous samples, retaining deadband, OFF initialization, contradictory sensors force OFF and report."
+    },
+    "optimality": {
+      "he": "ביט מצב אחד מספיק; ללא זיכרון00 אינו יכול להבחין בין שתי היסטוריות. אין טענת מינימום טרנזיסטורים.",
+      "en": "One bit suffices; memoryless 00 cannot distinguish two histories. No minimum transistor claim."
+    },
+    "verification": {
+      "he": "בדיקת טבלת המעברים ורצפים במודל עצמאי וב־RTL שקוּמפל; הפרטים בדוח הבדיקות.\n\n### בדיקות שבוצעו\nכל16 שורות מצב/קלט/איפוס נבדקו במודל עצמאי. המודול prep_thermal1115d קוּמפל והורץ ב־Icarus על10,240 דגימות של זוגות חיישנים, כולל סתירות ואיפוס באמצע רצף. הטבלאות והקוד מיישמים את אותה מדיניותOFF בסתירה. לא נבדק מנוע פיזי או תזמון אנלוגי.",
+      "en": "Transition-table and sequence checks in an independent model and compiled RTL; exact scope is in the verification report.\n\n### Executed checks\nAn independent model checked all 16 state/input/reset combinations. The prep_thermal1115d module compiled and ran in Icarus on 10,240 sensor-pair samples, including conflicts and midstream reset. The table and code share the same conflict-OFF policy. No physical motor or analog timing was tested."
+    },
+    "edge_cases": {
+      "he": [
+        "11 בזמןON מכבה;00 אחרי הסתירה נשארOFF; איפוס גובר על חם."
+      ],
+      "en": [
+        "11 while ON turns OFF;00 after contradiction retains OFF; reset overrides hot."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "פלט שווהTh שוכח את דרישת השימור; חיבורSR ללא טיפול11 משאיר מצב לא מוגדר."
+      ],
+      "en": [
+        "Output equal to Th forgets retention; SR wiring without an 11 policy leaves undefined behavior."
+      ]
+    },
+    "interview_answer": {
+      "he": "חם מדליק, קר מכבה והתחום שביניהם שומר את ביט המצב; הגדירו אתחול וסתירה.",
+      "en": "Hot sets, cold clears and the deadband retains the state bit; define initialization and conflict."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע אם המנוע מחמם או מקרר, מהו האתחול ומה עושים בסתירה. נבחר קירור עםOFF מפורש."
+      ],
+      "en": [
+        "The source omits heating/cooling direction, startup and contradiction policy; cooling with explicit OFF was chosen."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך ישתנה בקר של גוף חימום?",
+          "answer_direction": "החליפו את פקודות חם/קר תוך שמירת המצב בתחום הביניים והגדרת סתירה.",
+          "principle": "הפרדת דרישת המוצר ממבנה הזיכרון."
+        }
+      ],
+      "en": [
+        {
+          "question": "How would a heater controller differ?",
+          "answer_direction": "Reverse hot/cold commands while retaining deadband memory and specifying conflict.",
+          "principle": "Separate product direction from the state mechanism."
+        }
+      ]
+    }
+  },
+  "PREP-364": {
+    "assumptions": {
+      "he": "עומק2, שעון יחיד, ready/valid ללא bypass, החלפה במלא עם pop, ודגימת נתונים לפני החזית.",
+      "en": "Depth 2, one clock, ready/valid without bypass, full replacement with pop, and pre-edge data sampling."
+    },
+    "optimality": {
+      "he": "מודל deque צורך O(depth) אחסון ו־O(1) לכל דגימה; אין דרישה למספר מינימלי של רכיבי סביבת אימות.",
+      "en": "The deque model uses O(depth) storage/O(1) per sample; no minimum verification-component count is required."
+    },
+    "verification": {
+      "he": "מודל מוניטור נבדק מול FIFO מעגלי עצמאי, כולל חסימות, שני כיווני העברה, איפוס והזרקת נתון/דגל שגוי. בדיקה זו אינה ריצת UVM או DUT פיזי.\n\n### בדיקות שבוצעו\nהמוניטור נבדק מול FIFO מעגלי עצמאי בעומקים2 ו־3 על229,376 דגימות. נבדקו חסימות, העברות בו־זמניות ותפוסות0..3, וכן איפוס כשהתור אינו ריק. ארבע מוטציות מכוונות נדחו: ראש שגוי בהמתנה, out_valid שגוי, in_ready שגוי וסדר שגוי. דוגמת שלוש בקשות ושתי כתיבות שהתקבלו נבדקה בנפרד. איסוף כיסוי מצביעים פנימיים מוצע כהמשך ואינו ממומש ב־deque. אלה בדיקות Python של הדוגמה, ללא הרצת UVM או FIFO פיזי.",
+      "en": "The observer was checked against an independent circular FIFO, including blocking, simultaneous transfers, reset and injected data/flag errors. This is not a UVM run or physical DUT test.\n\n### Executed checks\nThe observer passed 229,376 samples against an independent circular FIFO at depths 2 and 3, covering blocking, simultaneous transfers and occupancies 0..3, plus reset while nonempty. Four intentional mutations were rejected: wrong stalled head, wrong out_valid, wrong in_ready and reordered head. The three-requests/two-accepted-writes example was separately checked. Internal pointer-bin coverage is a follow-up, not implemented by the deque sampler. These are Python checks of the example, without a UVM run or physical FIFO test."
+    },
+    "edge_cases": {
+      "he": [
+        "בריק אין bypass; במלא pop+push קורא את הראש הישן; אין העברה בזמן איפוס."
+      ],
+      "en": [
+        "No empty bypass; full pop+push reads the old head; reset accepts no traffic."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "הוספת בקשה למודל בלי handshake, ספירת כל מחזור המתנה ככתיבה, או בלבול כיסוי עם נכונות."
+      ],
+      "en": [
+        "Appending a request without a handshake, counting wait cycles as writes, or equating coverage with correctness."
+      ]
+    },
+    "interview_answer": {
+      "he": "בודקים מה ה־DUT קיבל והוציא, לא רק מה שניסינו לשלוח. תצפית חלופית יכולה להחליף מחלקת monitor.",
+      "en": "Check what the DUT accepted and produced, not only attempted stimulus; equivalent observation can replace the monitor class."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע פרוטוקול FIFO, דגימה או אם לרכיבים אחרים יש תצפית; נבחר חוזה מפורש והוסברו חלופות תקפות."
+      ],
+      "en": [
+        "The source omits FIFO protocol, sampling and other components’ observation capabilities; an explicit contract and valid substitutes are given."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך תבדקו שהבדיקות עצמן רגישות לתקלה?",
+          "answer_direction": "הזריקו reorder, נתון שגוי או דגל ready שגוי ודרשו כשל מזוהה; בדקו גם שהטסט התקין עובר.",
+          "principle": "בדיקות מוטציה ואבחנה בין כיסוי לחשיפה של תקלה."
+        }
+      ],
+      "en": [
+        {
+          "question": "How do you show the checks are sensitive to faults?",
+          "answer_direction": "Inject reorder, data corruption or an incorrect ready flag and require an identified failure, while the correct DUT passes.",
+          "principle": "Mutation checks and coverage versus fault detection."
+        }
+      ]
+    }
+  },
+  "PREP-365": {
+    "assumptions": {
+      "he": [
+        "מהפך CMOS, מדידת השהיה ב־50% וזמן ירידה 90%–10%; יש להפריד קוטביות וקשתות.",
+        "החישוב משתמש בנגד אפקטיבי וקבל מרוכז אחרי מדרגת כניסה אידאלית; הוא אינו מודל תהליך."
+      ],
+      "en": [
+        "CMOS inverter; 50%-crossing propagation delay and 90%-to-10% fall time, with separate polarities/arcs.",
+        "The calculation uses effective resistance and lumped capacitance after an ideal input step, not a process model."
+      ]
+    },
+    "optimality": {
+      "he": "אין אופטימיזציה אוניברסלית: יש לאזן השהיית תא ומסלול, שטח, הספק, עומס ופינות עבודה.",
+      "en": "No universal optimum is claimed: balance cell/path delay, area, power, loading and operating corners."
+    },
+    "verification": {
+      "he": [
+        "נבדקו 18 תרחישי RC מול אינטגרציית KCL עצמאית ב־144,000 צעדים, כולל זמני חצייה ועקומות עלייה/ירידה.",
+        "נבדקו הכפלת קיבול וחציית התנגדות. אין הרצת SPICE, STA או אפיון תא."
+      ],
+      "en": [
+        "Eighteen RC scenarios were compared with independent KCL integration over 144,000 steps, including threshold crossings and rising/falling waveforms.",
+        "Doubling capacitance and halving resistance were checked. No SPICE, STA or cell characterization was performed."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "בלי Rp אין מספיק נתונים לממוצע מספרי בין tPLH ו־tPHL.",
+        "במתח נמוך טמפרטורה גבוהה אינה בהכרח הפינה האיטית.",
+        "שינוי עומס עלול לשנות slew גם בשלבים הבאים; אין לשמר אותו בשקט בניתוח מסלול."
+      ],
+      "en": [
+        "Without Rp there is insufficient data for a numeric tPLH/tPHL average.",
+        "At low supply, higher temperature is not necessarily the slow corner.",
+        "Load changes may alter downstream slew; path analysis must not silently hold it fixed."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לזהות זמן ירידה עם השהיית מעבר.",
+        "לספור fanout בלי להביא בחשבון קיבולי כניסה וחיווט.",
+        "להבטיח ש־W גדול יותר או טמפרטורה נמוכה יותר משפרים כל מסלול בכל פינה.",
+        "להשתמש בממוצע rise/fall כחסם תזמון לכל קוטביות."
+      ],
+      "en": [
+        "Equating output fall time with propagation delay.",
+        "Counting fanout without pin/wire capacitance.",
+        "Guaranteeing larger W or lower temperature improves every path/corner.",
+        "Using an average rise/fall delay as a bound for every polarity."
+      ]
+    },
+    "interview_answer": {
+      "he": "השהיה נובעת מזמן הזזת מטען העומס בזרם ההנעה הזמין. עומס, חיווט, סלו, גודל/טופולוגיה ו־PVT קובעים אותה לכל קשת וקוטביות. בקירוב מדרגה ו־RC מקבלים t50=ln(2)RC; השהיית מסלול דורשת גם עומסי שלבים קודמים וחיווט.",
+      "en": "Delay comes from moving load charge with the available drive current. Load, wires, slew, size/topology and PVT determine each arc/polarity. An ideal-step RC approximation gives t50=ln(2)RC; complete paths also require predecessor loading and interconnect analysis."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור מזכיר Tpd ללא מעגל או תנאי מדידה. נבחר מהפך CMOS וניתנו ערכי RC ורמות ייחוס מפורשים כדוגמה לימודית."
+      ],
+      "en": [
+        "The source mentions Tpd without a circuit or measurement conditions. A CMOS inverter, RC values and reference levels were explicitly added as a teaching example."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מתי הוספת buffer יכולה לעזור למרות שנוסף שלב?",
+          "direction": "עומס גדול או חיווט ארוך עשויים להצדיק חלוקת הנעה למדרגות; יש להוסיף את השהיית ה־buffer, קיבולו ועומס השלב הקודם ולבחור בעזרת מודל.",
+          "tests": "זיהוי פשרת עומס לעומת מספר שלבים."
+        }
+      ],
+      "en": [
+        {
+          "question": "When can adding a buffer help despite adding a stage?",
+          "direction": "A large load or long wire can justify staged drive; include the buffer's own delay/capacitance and predecessor load, then evaluate the model.",
+          "tests": "Load-versus-stage-count tradeoffs."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "MIT: תזמון ועומס במעגל CMOS",
+          "url": "https://computationstructures.org/notes/cmos/notes.html",
+          "scope": "מודל CMOS לימודי, עומס חשמלי וחסמי תזמון"
+        },
+        {
+          "title": "TI: כניסות CMOS איטיות או צפות",
+          "url": "https://www.ti.com/lit/an/scba004e/scba004e.pdf",
+          "scope": "מגבלות זמן מעבר בכניסה ותופעות מיתוג"
+        }
+      ],
+      "en": [
+        {
+          "title": "MIT Computation Structures: CMOS timing and loading",
+          "url": "https://computationstructures.org/notes/cmos/notes.html",
+          "scope": "Educational CMOS model, electrical load and timing bounds"
+        },
+        {
+          "title": "TI: Implications of Slow or Floating CMOS Inputs",
+          "url": "https://www.ti.com/lit/an/scba004e/scba004e.pdf",
+          "scope": "Input-transition constraints and switching effects"
+        }
+      ]
+    }
+  }
+}

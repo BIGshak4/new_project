@@ -1,0 +1,754 @@
+{
+  "PREP-366": {
+    "assumptions": {
+      "he": [
+        "מקור יחיד, גל מישורי חד־תדרי, ערוצים מכוילים וחצי־מישור אחד. הפרש המופע הוא ערוץ 1 פחות ערוץ 2.",
+        "המרחק והזווית נמדדים על קו הבסיס מאנטנה 2 לאנטנה 1."
+      ],
+      "en": [
+        "One monochromatic plane-wave source, calibrated channels, and a known half-plane. Phase is channel 1 minus channel 2.",
+        "Measure the direction angle from the baseline pointing from antenna 2 to antenna 1."
+      ]
+    },
+    "optimality": {
+      "he": "ללא מידע נוסף ובתחום הזוויות הסגור, התנאי `0 < d < λ/2` הכרחי ומספיק לחד־ערכיות. זו בדיקת חד־ערכיות בתנאים אידאליים ולא בחירת מרחק מיטבי בנוכחות רעש.",
+      "en": "Without further information on the closed angular interval, `0 < d < λ/2` is necessary and sufficient for uniqueness. This is an ideal identifiability bound, not a noise-optimal spacing."
+    },
+    "verification": {
+      "he": "בדיקות חישוביות מאמתות את סימן ההיטל מחישוב עצמאי של מרחקים, את ההיפוך בתחום החד־ערכי ואת מקרי ההתלכדות בחצי אורך גל ומעליו.",
+      "en": "Computational checks compare the projection sign with independently calculated distances, exercise inversion within the unique range, and verify the collisions at and beyond half a wavelength."
+    },
+    "edge_cases": {
+      "he": [
+        "הפרש מופע אפס מתקבל בניצב לבסיס בתחום החד־ערכי. במרחק גדול יותר הוא עשוי להופיע גם בזוויות אחרות.",
+        "בחצי אורך גל `+π` ו־`−π` שווים אחרי עטיפה. במרחק אפס אין מדידת כיוון."
+      ],
+      "en": [
+        "Zero phase corresponds to broadside in the unique regime. At larger spacings other angles may also give zero.",
+        "At half a wavelength, `+π` and `−π` agree after wrapping. At zero spacing there is no direction measurement."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שימוש ב־`sin(θ)` כשהזווית מוגדרת מהבסיס, או החלפת סימן בלי להחליף את סדר הערוצים.",
+        "התייחסות להפרש מופע כאל הפרש זמן לא עטוף, או הסקת כיוון תלת־ממדי יחיד מבסיס אחד."
+      ],
+      "en": [
+        "Using `sin(θ)` for the baseline-referenced angle, or flipping the sign without swapping channel order.",
+        "Treating wrapped phase as unwrapped delay or inferring one unique three-dimensional direction from one baseline."
+      ]
+    },
+    "interview_answer": {
+      "he": "היטל קו הבסיס על הכיוון למקור הוא `d cos(θ)`, והמופע הוא `2π/λ` כפול ההיטל, מודולו `2π`. כדי שכל הזוויות בחצי־מישור סגור ייבדלו נדרש מרחק חיובי קטן מחצי אורך גל.",
+      "en": "Project the baseline toward the source to get `d cos(θ)`. Multiply by `2π/λ` and wrap. A positive spacing below half a wavelength distinguishes every angle in one closed half-plane."
+    },
+    "source_ambiguities": {
+      "he": [
+        "השרטוט מודד את הזווית מקו הבסיס. השאלה אינה מציינת אורך גל, שיטת מדידה או תחום זוויות, ולכן נבחר קריטריון מפורש של חד־ערכיות מהפרש מופע עטוף בגל מישורי."
+      ],
+      "en": [
+        "The drawing measures the angle from the baseline. The source does not specify a wavelength, measurement method, or angular domain, so the exercise uses an explicit uniqueness criterion for wrapped phase in a plane wave."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איזה מרחק מספיק לכל התדרים בתחום נתון?",
+          "answer_direction": "באותו תווך השתמשו באורך הגל הקצר ביותר בתחום כדי לשמור על החד־ערכיות בכל תדר.",
+          "principle": "מרווח המופע גדל כשהיחס בין אורך הבסיס לאורך הגל גדל."
+        }
+      ],
+      "en": [
+        {
+          "question": "What spacing works for every frequency in a given band?",
+          "answer_direction": "Use the shortest wavelength in the band in the same propagation medium to preserve uniqueness at each frequency.",
+          "principle": "The phase span grows with the ratio of baseline length to wavelength."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "יסודות אינטרפרומטריה בשתי אנטנות, אוניברסיטת קליפורניה בברקלי",
+          "url": "https://casper.berkeley.edu/astrobaki/index.php/Basic_Interferometry",
+          "scope": "הטלת קו הבסיס וזמן הגעה של גל מישורי."
+        }
+      ],
+      "en": [
+        {
+          "title": "Basic interferometry, UC Berkeley",
+          "url": "https://casper.berkeley.edu/astrobaki/index.php/Basic_Interferometry",
+          "scope": "Baseline projection and plane-wave arrival delay."
+        }
+      ]
+    }
+  },
+  "PREP-367": {
+    "assumptions": {
+      "he": [
+        "מודל DC של NMOS בתעלה ארוכה עם ספים תואמים, ללא מודולציית אורך תעלה. כל עקומה נמדדת במתח מוצא קבוע.",
+        "מקור הזרם והעומס החיצוניים יכולים לספק את מתחי הצמתים הנתונים."
+      ],
+      "en": [
+        "Long-channel DC NMOS with matched threshold voltages and zero channel-length modulation. Output voltage is held fixed for each curve.",
+        "The external current source and load can support the stated node voltages."
+      ]
+    },
+    "optimality": {
+      "he": "המעגל נותן יחס נתון במודל האידאלי בתנאי רוויה. דיוק, נצילות ומרווח מתח דורשים בחירה לפי דרישות המעגל.",
+      "en": "The circuit gives the target ratio in the ideal saturation model. Accuracy, efficiency, and compliance require separate design targets."
+    },
+    "verification": {
+      "he": "העקומות חושבו ממשוואות זרם רציפות, והושוו לחישוב עצמאי של זרם התעלה. נבדקו נקודות המעבר, יחס הרוויה ומגבלות מתח המוצא.",
+      "en": "Continuous current equations were checked against an independent channel-current calculation, including the two knees, saturation ratio, and output-voltage limits."
+    },
+    "edge_cases": {
+      "he": [
+        "כאשר מתח המוצא אפס, מודל הטריודה נותן זרם אפס בכל זרם כניסה.",
+        "במתח המוצא השווה למתח היתר, שתי משוואות הזרם נותנות אותה תוצאה."
+      ],
+      "en": [
+        "At zero output voltage, the triode equation gives zero current for every input current.",
+        "Both current formulas agree when output voltage equals overdrive."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "חיבור נקז המוצא לצומת הייחוס במקום לחבר רק את השערים.",
+        "הנחה שהזרם שווה ליחס הממדים בכל מתח מוצא, או שמשתני השרטוט הם `Iout` ו־`Vout` במקום `Iout` ו־`Iin`."
+      ],
+      "en": [
+        "Shorting the output drain to the reference node instead of sharing just the gates.",
+        "Assuming the size ratio fixes current at any output voltage, or substituting a plot of output current versus output voltage for the requested transfer."
+      ]
+    },
+    "interview_answer": {
+      "he": "טרנזיסטור בחיבור דיודה קובע `VGS` מזרם הייחוס. טרנזיסטור המוצא חולק את `VGS` ושוקע זרם ביחס החוזקים כל עוד `Vout ≥ VOV`. כשמתח המוצא קטן ממתח היתר, מחשבים את הזרם לפי משוואת הטריודה.",
+      "en": "The diode-connected transistor sets `VGS` from the reference current. The output device shares `VGS` and sinks current at the strength ratio while `Vout ≥ VOV`; below that, use the triode equation."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו קובע סוג טרנזיסטור, מתח מוצא או גודל התקנים. נבחר ראי NMOS שוקע זרם, עם שני מתחי מוצא קבועים ופרמטרים לימודיים כדי להגדיר את העקומות."
+      ],
+      "en": [
+        "The source does not specify transistor type, output voltage, or device sizes. An NMOS sink with two fixed output voltages and teaching parameters defines the plotted curves."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה ישתנה אם ענף המוצא צריך להזרים זרם מלמעלה ולא לשקוע זרם?",
+          "answer_direction": "תכננו ראי PMOS עם המקורות לאספקה. בדקו את מרווח המתח ברוויה באמצעות `VSD` ואת יחס החוזקים בגדלי הזרם.",
+          "principle": "החלפת קוטביות משנה את חיבורי הייחוס ואת מרווח המתח."
+        }
+      ],
+      "en": [
+        {
+          "question": "What changes if the output must source current from the positive rail?",
+          "answer_direction": "Use a PMOS mirror with sources at the supply. Check saturation headroom using `VSD` and use the strength ratio for current magnitudes.",
+          "principle": "Reversing polarity changes the reference connections and the relevant headroom."
+        }
+      ]
+    },
+    "technical_references": {
+      "he": [
+        {
+          "title": "מקורות ושוקעי זרם ב־MOS, הרצאה 25, MIT 6.012",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-spring-2009/0e19807429a2e5bd8d181661cb23c5b4_MIT6_012S09_lec25.pdf",
+          "scope": "טופולוגיית ראי זרם NMOS והעתקת הזרם לפי יחסי הממדים ברוויה."
+        }
+      ],
+      "en": [
+        {
+          "title": "MOS current sources and sinks, MIT 6.012 Lecture 25",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-spring-2009/0e19807429a2e5bd8d181661cb23c5b4_MIT6_012S09_lec25.pdf",
+          "scope": "NMOS mirror topology and the size ratio in saturation."
+        }
+      ]
+    }
+  },
+  "PREP-368": {
+    "assumptions": {
+      "he": "קלט מסונכרן ומיושר לבתים. חזית עולה תקפה אחת מקבלת בית אחד.",
+      "en": "Synchronized byte-aligned input. One valid rising edge accepts one byte."
+    },
+    "optimality": {
+      "he": "מונה ברוחב W ודגל גלישה דורשים W+1 סיביות אחסון במימוש המוצג.",
+      "en": "The shown W-bit counter and overflow flag use W+1 stored bits."
+    },
+    "verification": {
+      "he": "בדיקות פייתון וסימולציית Icarus עבור 256 ערכי בית, פערי תקפות, איפוס ורוויה.",
+      "en": "Python and Icarus checks cover 256 byte values, invalid cycles, reset and saturation."
+    },
+    "edge_cases": {
+      "he": [
+        "כאשר W=1 מתקבל 1 במופע הראשון ודגל במופע השני.",
+        "בית זהה בשתי חזיתות תקפות נספר פעמיים.",
+        "איפוס גובר על מופע."
+      ],
+      "en": [
+        "With W=1, the first match yields 1 and the second sets the flag.",
+        "The same byte on two valid edges counts twice.",
+        "Reset overrides a match."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "ספירה כשהקלט אינו תקף.",
+        "העלאת דגל על המופע שהגיע בדיוק לגבול."
+      ],
+      "en": [
+        "Counting on an invalid cycle.",
+        "Setting overflow on the match that merely reaches the limit."
+      ]
+    },
+    "interview_answer": {
+      "he": "השוו את הבית ל־0x7E, חברו את התקפות כאפשור, ומנו בחזיתות תקפות תואמות עד לרוויה.",
+      "en": "Compare all eight bits against 0x7E and enable the saturating counter for each valid match."
+    },
+    "source_ambiguities": {
+      "he": [
+        "רוחב הקלט, סנכרון, רוחב המונה וכלל גלישה לא צוינו ונקבעו במודל."
+      ],
+      "en": [
+        "Input alignment, sampling, count width and overflow behavior were specified for this exercise."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך בודקים מקור טורי עם מסגרות בתים?",
+          "answer_direction": "אספו שמונה ביטים והשוו פעם אחת בגבול הבית לפי סדר הביטים בממשק.",
+          "principle": "מסגרת קובעת מתי מילת קלט זמינה."
+        }
+      ],
+      "en": [
+        {
+          "question": "How do you support framed serial input?",
+          "answer_direction": "Collect eight bits and compare once at the byte boundary using the specified bit order.",
+          "principle": "The framing defines when a complete input word is valid."
+        }
+      ]
+    }
+  },
+  "PREP-369": {
+    "assumptions": {
+      "he": "רכיב אי־ההסכמה מקבל שלושה מוצאים בוליאניים מאותה עסקה. במודל הראשי הקלט המשותף אינו זמין לבודק.",
+      "en": "The disagreement detector sees three Boolean outputs from one transaction. In the primary model it cannot see the common input."
+    },
+    "optimality": {
+      "he": "משוואות קצרות עם השוואות זוגיות. עומק וצפיפות תלויים בשיתוף ב־bc ובטכנולוגיה.",
+      "en": "Pairwise comparisons give a compact design. Depth and area depend on sharing bc and the technology."
+    },
+    "verification": {
+      "he": "נבדקו כל שמונה דפוסי המוצא וכל 16 שילובי קלט־ומוצאים. סימולציית RTL מכסה את המעגל הלוגי.",
+      "en": "All eight output patterns and all 16 input/output combinations were checked. RTL simulation covers the combinational circuit."
+    },
+    "edge_cases": {
+      "he": [
+        "הסכמה יכולה להיות נכונה או שגויה.",
+        "בשתי טעויות ייתכן שהחריג תקין."
+      ],
+      "en": [
+        "Unanimous agreement can be correct or incorrect.",
+        "Two wrong answers can make the correct computer the outlier."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "XOR של שלושה קלטים מחזיר 1 ב־111 ולכן אינו דגל אי־הסכמה.",
+        "אין לזהות אוטומטית את החריג כרכיב הפגום."
+      ],
+      "en": [
+        "A three-input XOR produces 1 at 111, so it is not a disagreement flag.",
+        "The minority value is not automatically the faulty result."
+      ]
+    },
+    "interview_answer": {
+      "he": "השוו את A ל־B ול־C והפעילו דגל אם אחת ההשוואות שונה. החריג שונה משני האחרים, ואפשר להכריע מי טעה רק עם מידע נוסף.",
+      "en": "Compare A with B and C, and OR the differences. The outlier differs from both peers, and diagnosis requires additional information."
+    },
+    "source_ambiguities": {
+      "he": [
+        "נבחר קידוד one-hot. בשורות הסכמה מוגדר 000 אף שהזהות אינה בשימוש."
+      ],
+      "en": [
+        "The exercise uses a one-hot identifier. It is defined as 000 for unanimous outputs even though the identifier is unused."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מוסיפים תשובת רוב?",
+          "answer_direction": "הפיקו (a AND b) OR (a AND c) OR (b AND c) ובדקו מתי ההנחה של תקלה יחידה מספיקה.",
+          "principle": "הצבעת רוב מתקנת לכל היותר תשובה שגויה אחת מבין שלוש."
+        }
+      ],
+      "en": [
+        {
+          "question": "How do you provide a majority output?",
+          "answer_direction": "Use (a AND b) OR (a AND c) OR (b AND c) and state when the single-fault assumption guarantees correctness.",
+          "principle": "Three-way voting corrects at most one wrong answer."
+        }
+      ]
+    }
+  },
+  "PREP-370": {
+    "assumptions": {
+      "he": "בדיקה הרסנית, כתיבה וקריאה מלאות, קריאה וכתובות תקינות, ומודל תקיעות קבועות.",
+      "en": "Destructive complete-word writes and reads, correct addressing and readout, permanent stuck-at faults."
+    },
+    "optimality": {
+      "he": "עשרה סבבים הם מינימום למגבלה על עד שבעה אחדים מבוקשים, כולל באלגוריתם אדפטיבי.",
+      "en": "Ten rounds are minimal under a cap on requested ones, including adaptive deterministic algorithms."
+    },
+    "verification": {
+      "he": "אורקל נפרד בדק בריאות, 128 תקלות יחידות, מסכות בדיוק 7 ודוגמאות של תקיעות משולבות.",
+      "en": "An independent oracle checks the healthy case, 128 single faults, exact-seven masks and combined stuck faults."
+    },
+    "edge_cases": {
+      "he": [
+        "בסבב האחרון הרגיל דולקת רק סיבית 63.",
+        "אפשר להפסיק במופע הראשון של אי־התאמה."
+      ],
+      "en": [
+        "Only bit 63 is requested on in the last ordinary round.",
+        "The test can stop at the first mismatch."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "קריאת שבע הסיביות שנכתבו ל־1 בלבד אינה בודקת תקיעה ב־1.",
+        "מסכת כל האחדים בכתיבה אחת מפרה את התקציב."
+      ],
+      "en": [
+        "Reading only the seven asserted positions misses stuck-high faults.",
+        "Writing an all-ones word exceeds the stimulus cap."
+      ]
+    },
+    "interview_answer": {
+      "he": "אחדים בקבוצות זרות, עד שבעה בקבוצה. כל סיבית רואה את שני הערכים, ועשרה סבבים מכסים את כל 64 הסיביות במינימום.",
+      "en": "Use disjoint groups of up to seven ones and compare whole words. Each bit sees both values, and ten rounds are necessary and sufficient."
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור אינו מפרט ממשק או משפחת תקלות. נבחר מודל כתיבה וקריאה מלאות ותקיעות קבועות."
+      ],
+      "en": [
+        "The storage interface and fault family are specified as complete-word access and permanent stuck-at faults for this exercise."
+      ]
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה אם צריך לשמר את המידע?",
+          "answer_direction": "גבו ושחזרו רק אם הממשק והמגבלות מאפשרים זאת, או בדקו זיכרון ייעודי. אי אפשר לשחזר מידע אבוד מתא תקוע.",
+          "principle": "שימור נתונים משנה את פרוטוקול הבדיקה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if the stored data must be preserved?",
+          "answer_direction": "Back up and restore only if the interface and constraints permit it, or test dedicated storage. Data already lost in a stuck cell cannot be recovered by this test.",
+          "principle": "Preservation changes the test protocol."
+        }
+      ]
+    }
+  },
+  "PREP-371": {
+    "assumptions": {
+      "he": [
+        "בכל צומת נתון שלם. רק שרשרת next חייבת להיות ללא מעגל והמקור אינו משתנה."
+      ],
+      "en": [
+        "Integer payloads. Only the next chain must be acyclic, and the original stays unchanged."
+      ]
+    },
+    "optimality": {
+      "he": "זמן צפוי O(N), מפה O(N) בנוסף לפלט. יש לקרוא כל צומת ולהקצות לו עותק.",
+      "en": "Expected O(N) time and O(N) auxiliary map storage in addition to the output. Every original node must be read and individually copied."
+    },
+    "verification": {
+      "he": [
+        "בדיקות ממצות של יעדי random עד חמישה צמתים, בדיקות זהות ומוטציה בשתי שפות והרצת C++ מקומית."
+      ],
+      "en": [
+        "Exhaustive random-target choices through five nodes, link identity and mutation checks in both languages, and a local native C++ run."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "רשימה ריקה, נתונים שווים, random ריק, קישור קדימה או אחורה, מצביע עצמי ומעגלי random."
+      ],
+      "en": [
+        "Empty head, equal data, null random, forward and backward links, self-links and random cycles."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "העתקה ישירה של random משאירה קישור למקור. מיפוי לפי נתון מערבב צמתים בעלי אותו ערך."
+      ],
+      "en": [
+        "Assigning copied random directly from the original leaves an alias. Mapping by data conflates distinct nodes."
+      ]
+    },
+    "interview_answer": {
+      "he": "עוברים פעמיים. קודם מקצים עותק לכל כתובת, ואז מתרגמים את next ואת random דרך המפה. הבעלות על העותקים נשמרת בנפרד מהקישורים.",
+      "en": "Allocate a copy per address, translate both next and random through the map, and return ownership along with the copied head."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך מצמצמים זיכרון עזר כשהמקור ניתן לשינוי זמני?",
+          "answer_direction": "שזרו עותק מיד אחרי כל מקור, חברו random דרך target.next ואז הפרידו בזהירות ושחזרו. הגדירו טיפול בכשל הקצאה ובקוראים מקבילים.",
+          "principle": "שימוש בטופולוגיה זמנית במקום מפת זהויות."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can auxiliary space shrink when the original may be temporarily mutated?",
+          "answer_direction": "Interleave each copy immediately after its source, wire random through target.next and detach while restoring the original. Define allocation-failure handling and interference with concurrent readers.",
+          "principle": "Temporary topology can replace an explicit identity map."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "שדה random עשוי להיות ריק. כל יעד שאינו ריק שייך לשרשרת next, ושרשרת זו סופית וללא מעגל."
+      ],
+      "en": [
+        "A random link may be null, all non-null targets belong to the next chain, and that chain is finite and acyclic."
+      ]
+    }
+  },
+  "PREP-372": {
+    "assumptions": {
+      "he": [
+        "טווח שלמים סגור וקבוע לכל מופע. הדרגות מתקבלות מן המחולל האחיד שסופק. לפחות שישה ערכים."
+      ],
+      "en": [
+        "Inclusive integer range fixed per instance and valid uniform draws. At least six values."
+      ]
+    },
+    "optimality": {
+      "he": "עד חמש חסימות בזיכרון ודגימה אחת; מיון של עד חמישה ערכים וקפיצה מעליהם.",
+      "en": "One random draw, sorting and scanning at most five exclusions, and at most five retained results."
+    },
+    "verification": {
+      "he": [
+        "נבדקו כל דרגות הבחירה בכל תת־קבוצת חסימות בתחום סופי מסומן, המחזור הקטן ביותר, היסטוריה תקפה וניסיון טווח קטן."
+      ],
+      "en": [
+        "Exhaustive ranks for every exclusion subset in a finite signed domain, the minimum-range cycle, valid history and rejection of undersized ranges."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "טווח של שישה, התחלה ללא היסטוריה, קצוות שליליים, פינוי הערך הוותיק, והפרדה בין מופעים."
+      ],
+      "en": [
+        "Six allowed values, empty history, negative endpoints, oldest-result eviction and independent instances."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "שמירת כל הערכים שהופיעו אי פעם משנה את התרגיל. דילוג על חסימה רק פעם אחת מפספס חסימות סמוכות."
+      ],
+      "en": [
+        "Remembering every earlier result changes the problem. Skipping only once fails when exclusions are adjacent."
+      ]
+    },
+    "interview_answer": {
+      "he": "שומרים את חמש התוצאות האחרונות, מגרילים אינדקס אחיד ברשימת הערכים הזמינים ומתקנים אותו על ידי דילוג על חסימות ממוינות.",
+      "en": "Store the previous five results. Draw one uniform rank among the allowed candidates and map it to a value by stepping past sorted exclusions."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מהן עלויות דגימה חוזרת עד הצלחה?",
+          "answer_direction": "יש הסתברות הצלחה (M−k)/M בכל ניסיון, לכן מספר הניסיונות הצפוי הוא M/(M−k). הם אינם חסומים בזמן גרוע אם יש ערך אסור.",
+          "principle": "תוחלת, עלות גרועה ואחידות מותנית."
+        }
+      ],
+      "en": [
+        {
+          "question": "How much does rejection sampling cost?",
+          "answer_direction": "Each attempt succeeds with probability (M−k)/M, so M/(M−k) draws are expected. The worst-case number of draws is unbounded whenever some value is blocked.",
+          "principle": "Expected versus worst-case cost and conditional uniformity."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "כל מופע מנהל היסטוריה נפרדת עבור טווח קבוע. נבחר להבטיח פעילות ללא הגבלת זמן, ולכן טווח קטן נדחה בעת האתחול."
+      ],
+      "en": [
+        "One fixed range per instance with separate history. The interface promises an unlimited sequence, so a small range is rejected at initialization."
+      ]
+    }
+  },
+  "PREP-373": {
+    "assumptions": {
+      "he": [
+        "עץ סופי בעל סדר BST קשיח, מפתחות שונים וקישורי הורה עקביים."
+      ],
+      "en": [
+        "Finite, strict BST ordering, distinct keys, and consistent parent links."
+      ]
+    },
+    "optimality": {
+      "he": "O(h+1) זמן ו־O(1) זיכרון עזר במילים, מהצומת הנתון.",
+      "en": "O(h+1) time and O(1) auxiliary words starting at the given node."
+    },
+    "verification": {
+      "he": [
+        "כל סדרי ההכנסה עד שבעה מפתחות נבדקו באמצעות מיפוי עצמאי למפתח הבא, כולל זהות הצומת ושמירת הקישורים."
+      ],
+      "en": [
+        "All insertion orders through seven keys are checked against independently mapped next keys, including node identity and unchanged links."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "צומת מקסימלי, צומת יחיד, קפיצה דרך כמה הורים וילד ימני שהמינימום שלו נמצא עמוק משמאל."
+      ],
+      "en": [
+        "Maximum node, a singleton tree, a multi-ancestor climb and a right subtree with a deep leftmost node."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחזיר את הילד הימני בלי לבדוק את צאצאיו השמאליים, או להחזיר הורה שהגעתם אליו מהילד הימני."
+      ],
+      "en": [
+        "Returning the immediate right child without checking its left descendants, or returning an ancestor reached from its right child."
+      ]
+    },
+    "interview_answer": {
+      "he": "אם יש תת־עץ ימני, לוקחים את הקטן בו. אחרת עולים עד לקישור ראשון מהילד השמאלי ומחזירים את ההורה שלו.",
+      "en": "Take the minimum in the right subtree when present. Otherwise climb to the first parent reached from its left child."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה עושים אם אין מצביעי parent אבל יש גישה לשורש?",
+          "answer_direction": "מחפשים את המפתח מהשורש ושומרים מועמד בכל פעם שיורדים שמאלה. במעבר הסופי אפשר לבדוק גם את תת־העץ הימני של הצומת.",
+          "principle": "שימוש במועמד במהלך חיפוש במקום קישור חזרה."
+        }
+      ],
+      "en": [
+        {
+          "question": "What if parent pointers are unavailable but the root is known?",
+          "answer_direction": "Search from the root and remember the best larger ancestor each time you take a left branch. Also examine the given node’s right subtree when present.",
+          "principle": "Accumulate a larger candidate during descent instead of following a back link."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "הצומת נתון בהפניה ישירה וקיים בעץ. הוגדרו מפתחות שונים כדי לתת משמעות חד־משמעית לגדול ממש."
+      ],
+      "en": [
+        "The given node is a direct reference into the tree. Distinct keys give strictly greater a unique meaning."
+      ]
+    }
+  },
+  "PREP-374": {
+    "assumptions": {
+      "he": [
+        "מדובר במודל תפיסה אחיד, רוחבים בקנה מידה משותף, והשוואה נאמנה של רוחבים מתאימים."
+      ],
+      "en": [
+        "Uniform abstract perception, model and canvas measured on a common scale, and faithful matching of corresponding widths."
+      ]
+    },
+    "optimality": {
+      "he": "השוויון נובע אלגברית ואינו תלוי בגודל k כל עוד k חיובי ומשותף.",
+      "en": "Algebra forces equality for any positive shared k."
+    },
+    "verification": {
+      "he": [
+        "נבדקו דוגמאות רציונליות של הגדלה משותפת ומקדמים שונים באמצעות חשבון מדויק."
+      ],
+      "en": [
+        "Shared and different scale factors were checked with exact rational arithmetic."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "כאשר שני מקדמי ההגדלה שונים, למשל 1.5 ו־1, אותו תהליך התאמה יפיק רוחב פיזי גדול פי 1.5."
+      ],
+      "en": [
+        "If the scale factors are 1.5 and 1, the same matching procedure produces a physical width 1.5 times the model width."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחיל את ההגדלה רק על המודל אף שהצייר רואה גם את הקנבס דרך אותה מערכת."
+      ],
+      "en": [
+        "Applying the stretch only to the model even though the painter also observes the canvas through the same system."
+      ]
+    },
+    "interview_answer": {
+      "he": "הצייר משווה שני רוחבים שעברו אותה הגדלה. אותה הכפלה מתבטלת במשוואת ההתאמה, ולכן העיוות לבדו אינו מסביר את הציורים במודל הזה.",
+      "en": "Both observed widths are multiplied by the same factor. It cancels in the matching equation, so the stretch alone cannot explain the physical result in that model."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מתי עיוות זהה כן עלול להסתיר אי־התאמה?",
+          "answer_direction": "אם ההעתקה אינה חד־חד־ערכית, שני רוחבים שונים יכולים להיראות שווים. דוגמה היא תצוגה שקוטמת את כל הרוחבים מעל סף.",
+          "principle": "ההשוואה מזהה נכון את הערך המקורי כאשר ההעתקה המשותפת חד־חד־ערכית."
+        }
+      ],
+      "en": [
+        {
+          "question": "When could an identical distortion hide a mismatch?",
+          "answer_direction": "If the map is not injective, two different widths can look the same. A display that clips all widths above a threshold is one example.",
+          "principle": "Matching identifies the original value when the shared map is injective."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "המקור מייחס מסקנה נחרצת על הצייר. התרגיל מגדיר מודל מופשט ומבקש לקבוע מה נובע ממנו."
+      ],
+      "en": [
+        "The source asserts a definite conclusion about the painter. The exercise supplies an abstract model and asks what follows from it."
+      ]
+    }
+  },
+  "PREP-375": {
+    "assumptions": {
+      "he": [
+        "משווים מהירות ממוצעת במרחקים שווים. חישוב העיכוב משתמש באותה מהירות חופשית בשני החצאים כקו בסיס."
+      ],
+      "en": [
+        "The halves have equal distance. The delay calculation uses the first-half free-flow speed as a baseline for both halves."
+      ]
+    },
+    "optimality": {
+      "he": "שני תרחישים התואמים לאותו עבר ומניבים עתיד שונה מוכיחים שהתשובה אינה נקבעת מהנתונים.",
+      "en": "Two scenarios that fit the same past and imply different futures establish underdetermination."
+    },
+    "verification": {
+      "he": [
+        "דוגמאות זמני הנסיעה, המהירויות וזמן העמידה נבדקו חשבונית."
+      ],
+      "en": [
+        "The travel, speed and stopped-time examples were checked arithmetically."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "זמן עמידה בפועל יכול להיות אפס, גם כאשר הקטע העמוס מכפיל את זמן הנסיעה."
+      ],
+      "en": [
+        "Actual stopped time may be zero even when congestion doubles the time to travel the segment."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "לבלבל בין 20 הדקות שנמדדו בקטע העמוס לבין 10 דקות העיכוב ביחס לקו הבסיס."
+      ],
+      "en": [
+        "Using 20 minutes for both excess delay and total segment time confuses different measurements."
+      ]
+    },
+    "interview_answer": {
+      "he": "מהנתונים אפשר למצוא יחס מהירויות של 2 ועיכוב נוכחי של 10 דקות ביחס למהירות החופשית. תחזית עתידית דורשת הנחות על המסלול והעומס.",
+      "en": "The data give a speed ratio of 2 and a present delay of 10 minutes relative to free flow. A future estimate needs assumptions about the route and congestion."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "מה יקרה אם המהירות הממוצעת בקטע השני תשתפר ב־25% והמרחק יישאר קבוע?",
+          "answer_direction": "הזמן משתנה ביחס הפוך למהירות, כך ש־20 חלקי 1.25 הם 16 דקות.",
+          "principle": "קשר הפוך בין זמן למהירות עבור מרחק קבוע."
+        }
+      ],
+      "en": [
+        {
+          "question": "If average speed on the second half increases by 25% at the same distance, how long does it take?",
+          "answer_direction": "Time is inversely proportional to speed, so divide 20 by 1.25 to get 16 minutes.",
+          "principle": "Travel time and average speed are inversely related at fixed distance."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "במקור אין מודל עתידי, וגם המילה ״אעמוד״ יכולה להתייחס לעצירה ממש או לזמן בקטע העמוס."
+      ],
+      "en": [
+        "The source gives no future model, and “stand in traffic” can mean either stopped time or time on the congested segment."
+      ]
+    }
+  },
+  "PREP-376": {
+    "assumptions": {
+      "he": [
+        "לכל אסימון כמות אחת מסוג יחיד. החלוקה בחלק ב מדויקת, והכמויות של אותו סוג מתחברות."
+      ],
+      "en": [
+        "Each token holds one unit of one type. Division in part B is exact, and amounts of the same type add."
+      ]
+    },
+    "optimality": {
+      "he": "הבחירה של חצי מכל אסימון היא הבחירה היחידה במשקלים קבועים שמצליחה בכל סידור חוקי.",
+      "en": "Half of each token is the unique fixed-weight choice that succeeds for every valid assignment."
+    },
+    "verification": {
+      "he": [
+        "נסרקו כל שש ההקצאות הסמויות וכל זוגות הבחירה השלמים. חלוקת החצאים מצליחה בכל הקצאה."
+      ],
+      "en": [
+        "All six hidden assignments and all whole-token pairs were enumerated. The halves succeed on every assignment."
+      ]
+    },
+    "edge_cases": {
+      "he": [
+        "בחירת חצי משני אסימונים ואסימון שלם נוסף אינה מבטיחה איזון. שני החצאים יכולים להיות מאותו סוג של האסימון השלם."
+      ],
+      "en": [
+        "Taking one half of two tokens plus one whole token fails when the whole token and one of the halves share their type."
+      ]
+    },
+    "common_mistakes": {
+      "he": [
+        "להחליף ודאות בהסתברות גבוהה. קיומו של סידור אחד שבו נבחרו שני אסימונים מאותו סוג מספיק כדי לשלול הבטחה."
+      ],
+      "en": [
+        "Confusing a chance of success with a guarantee. One valid arrangement that yields two tokens of the same type defeats the guarantee."
+      ]
+    },
+    "interview_answer": {
+      "he": "אין זוג שלם שמבטיח אחד מכל סוג. חצי מכל אסימון נותן חצי מסך הכמות של A וחצי מסך הכמות של B, כלומר יחידה מכל סוג.",
+      "en": "No whole pair guarantees one of each type. Half of each token gives half of the total of each type, which is one unit apiece."
+    },
+    "solution_extensions": {
+      "he": [
+        {
+          "question": "איך בונים יחידה מכל סוג כאשר יש k אסימונים מכל סוג והם ניתנים לחלוקה מדויקת?",
+          "answer_direction": "קחו 1/k מכל אסימון. הכמות מכל סוג תהיה בדיוק 1.",
+          "principle": "כמות אחידה מכל מיקום מבטלת תלות בזהות הנסתרת."
+        }
+      ],
+      "en": [
+        {
+          "question": "How can you get one unit of each type when k tokens of each type are present and exactly divisible?",
+          "answer_direction": "Keep 1/k of each token. Exactly one unit of each type is collected.",
+          "principle": "A uniform share from every position removes dependence on hidden identity."
+        }
+      ]
+    },
+    "source_ambiguities": {
+      "he": [
+        "נשמר תרגיל הכמויות והאי־ודאות. באתר העיבוד משתמש באסימונים וביחידות מופשטות, ומגדיר חלוקה מדויקת כהנחה נפרדת."
+      ],
+      "en": [
+        "The quantities and uncertainty are preserved. The learner version uses abstract tokens with precise divisibility as a separate assumption."
+      ]
+    }
+  }
+}

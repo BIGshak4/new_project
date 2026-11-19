@@ -6,7 +6,7 @@
         "מודל צירופי אידאלי עם שערים דו־כניסתיים."
       ],
       "en": [
-        "All values0..7 are legal unsigned inputs.",
+        "All values 0..7 are legal unsigned inputs.",
         "Ideal combinational model with two-input gates."
       ]
     },
@@ -29,12 +29,12 @@
       ]
     },
     "common_mistakes": {
-      "he": "שימוש ב־XOR2 ללא אפשור; הנחה שהקלט תמיד5 או7; החלפת MSB במקום הסיבית האמצעית.",
-      "en": "Using unconditional XOR2; assuming the input is always5 or7; toggling MSB rather than the middle bit."
+      "he": "שימוש ב־XOR2 ללא אפשור; הנחה שהקלט תמיד 5 או 7; החלפת MSB במקום הסיבית האמצעית.",
+      "en": "Using unconditional XOR2; assuming the input is always 5 or 7; toggling MSB rather than the middle bit."
     },
     "interview_answer": {
       "he": "5 ו־7 שונים רק בסיבית האמצעית, ושניהם מזוהים באמצעות AND של הסיביות החיצוניות. אני משתמש בתוצאה כדי לאפשר XOR של הסיבית האמצעית.",
-      "en": "5 and7 differ only in the middle bit. AND of the outer bits identifies exactly that pair and enables the middle-bit XOR."
+      "en": "5 and 7 differ only in the middle bit. AND of the outer bits identifies exactly that pair and enables the middle-bit XOR."
     },
     "source_ambiguities": {
       "he": "המקור מגדיר במפורש לשמר את יתר הערכים; ספריית השערים לספירה היא בחירת עריכה.",
@@ -58,12 +58,12 @@
       "he": [
         "Vin עומד בתזמון ביחס לחזית יורדת; המונה נדגם בירידה.",
         "האיפוס מוחזק דרך חזית יורדת; שערים עם משוב מותרים לבניית זיכרון.",
-        "פולס יחיד לכל רצף גבוה שנדגם, ורווי במצב3."
+        "פולס יחיד לכל רצף גבוה שנדגם, ורווי במצב 3."
       ],
       "en": [
         "Vin meets timing at falling edges; state samples on falls.",
         "Reset spans a falling edge; gate feedback may construct storage.",
-        "One pulse per sampled high run, saturating at3."
+        "One pulse per sampled high run, saturating at 3."
       ]
     },
     "optimality": {
@@ -71,8 +71,8 @@
       "en": "Two state bits, Boolean equations and master/slave storage; no physical minimum or frequency claim."
     },
     "verification": {
-      "he": "מודל Python עבר155,648 בדיקות לכל4096 רצפי Vin באורך12, כולל איפוס ומיסוך במחצית הנמוכה. קוד התנהגותי ושערי NAND מופרדים לצורך סימולציית HDL בדוח נפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
-      "en": "Python passed155,648 checks over all4096 length12 Vin histories, including reset and low-phase masking. Behavioral and NAND-storage RTL are provided for separately recorded HDL simulation.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
+      "he": "מודל Python עבר 155,648 בדיקות לכל 4096 רצפי Vin באורך 12, כולל איפוס ומיסוך במחצית הנמוכה. קוד התנהגותי ושערי NAND מופרדים לצורך סימולציית HDL בדוח נפרד.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "en": "Python passed 155,648 checks over all 4096 length 12 Vin histories, including reset and low-phase masking. Behavioral and NAND-storage RTL are provided for separately recorded HDL simulation.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
       "he": [
@@ -91,8 +91,8 @@
       "en": "Inferring a memoryless function; assuming a full-cycle output; counting cycles with uncalibrated gate delay; ignoring initialization and feedback."
     },
     "interview_answer": {
-      "he": "צריך לזכור כמה חזיתות יורדות רצופות ראו Vin=1. מצב2 מאפשר רק את המחצית הגבוהה הבאה; מצב3 חוסם חזרה עד דגימת0. את שני הפליפ-פלופים ניתן לבנות מלאצ׳י NAND.",
-      "en": "Remember how many consecutive falling edges sampled Vin=1. State2 enables the next high phase; state3 blocks repeats until a sampled0. Two flip-flops can be built from NAND latches."
+      "he": "צריך לזכור כמה חזיתות יורדות רצופות ראו Vin=1. מצב 2 מאפשר רק את המחצית הגבוהה הבאה; מצב 3 חוסם חזרה עד דגימת 0. את שני הפליפ-פלופים ניתן לבנות מלאצ׳י NAND.",
+      "en": "Remember how many consecutive falling edges sampled Vin=1. State 2 enables the next high phase; state 3 blocks repeats until a sampled 0. Two flip-flops can be built from NAND latches."
     },
     "source_ambiguities": {
       "he": "איפוס, דגימה בירידה, rearm ו־Vin ממושך הוגדרו כאן כי הצילום אינו מכריע. הזרמת Vin אסינכרוני מחייבת תכנון CDC נוסף.",
@@ -127,8 +127,8 @@
       "en": "O(log M) stored bits and matching-width update/comparison logic; no minimum physical area or timing claim."
     },
     "verification": {
-      "he": "מודל עצמאי בדק29,760 טענות על קיבולות1..16, כל אוכלוסייה חוקית וכל מילות האירוע, עם בדיקת טווח ואחת משלוש נורות. RTL מופיע לבדיקת סימולציה נפרדת.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
-      "en": "An independent population oracle checked29,760 assertions over capacities1..16, every legal population and all event words, including signed range and one-of-three outputs. RTL is supplied for separately recorded simulation.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
+      "he": "מודל עצמאי בדק 29,760 טענות על קיבולות 1..16, כל אוכלוסייה חוקית וכל מילות האירוע, עם בדיקת טווח ואחת משלוש נורות. RTL מופיע לבדיקת סימולציה נפרדת.\n\nששת מימושי החומרה של האצווה קומפלו ב־Icarus Verilog עם ‎-g2012 -Wall והורצו ב־vvp בסביבה מבודדת ללא רשת:333,512 בדיקות עברו. נכללו גם לאצ׳י ה־NAND של גלאי הפולס. נותרה אזהרה טכנית אחת על ירושת timescale של מודול הבדיקה tb, ללא כשל פונקציונלי. ראיה: checks/batch1103-native-verification.json. לא בוצעו סינתזה, STA או מדידה פיזית.",
+      "en": "An independent population oracle checked 29,760 assertions over capacities 1..16, every legal population and all event words, including signed range and one-of-three outputs. RTL is supplied for separately recorded simulation.\n\nAll six hardware implementations were compiled with Icarus Verilog -g2012 -Wall and run with vvp in an isolated network-denied environment:333,512 checks passed, including the pulse detector NAND latches. One technical warning remained about tb inheriting a timescale, without a functional failure. Evidence: checks/batch1103-native-verification.json. No synthesis, STA or physical measurement was performed."
     },
     "edge_cases": {
       "he": [
@@ -147,8 +147,8 @@
       "en": "Storing only three colors; unsigned arithmetic; wraparound sign errors; reversing the woman-exit delta; presenting added coding as a source fact."
     },
     "interview_answer": {
-      "he": "אשמור הפרש מסומן. כניסת גבר ויציאת אישה מוסיפות1, ושני האירועים האחרים מחסירים1. השוואה לאפס קובעת צבע, וברוחב הזיכרון אשתמש בגבול התפוסה.",
-      "en": "Store a signed difference. Man-enter and woman-exit add1; the other two subtract1. Compare with zero for color, and size storage from the occupancy bound."
+      "he": "אשמור הפרש מסומן. כניסת גבר ויציאת אישה מוסיפות 1, ושני האירועים האחרים מחסירים 1. השוואה לאפס קובעת צבע, וברוחב הזיכרון אשתמש בגבול התפוסה.",
+      "en": "Store a signed difference. Man-enter and woman-exit add 1; the other two subtract 1. Compare with zero for color, and size storage from the occupancy bound."
     },
     "source_ambiguities": {
       "he": "הקיבולת, מצב ההתחלה, קידוד האירועים ומדיניות קלט לא חוקי אינם מוגדרים במקור והוספו במפורש.",
@@ -184,7 +184,7 @@
     },
     "verification": {
       "he": "203 לוחות נבדקו מול חיפוש עצמאי ואימות סמנטי, ועוד 5 קלטים פסולים. Python הורץ; אין מיצוי של כל לוחות הסודוקו.",
-      "en": "203 boards checked against independent search and semantic validation, plus5 invalid inputs. Python executed; not exhaustive over all Sudoku puzzles."
+      "en": "203 boards checked against independent search and semantic validation, plus 5 invalid inputs. Python executed; not exhaustive over all Sudoku puzzles."
     },
     "edge_cases": {
       "he": [
@@ -214,7 +214,7 @@
     },
     "source_ambiguities": {
       "he": "המקור אינו מציין גודל או ייצוג. לוח 9×9, אפס, מדיניות שגיאות והעתקת קלט הם הנחות והגדרות; לא דרישות שיוחסו לצילום.",
-      "en": "The source omits dimensions/representation.9×9, zero, error policy and input copying are explicit explicit assumptions."
+      "en": "The source omits dimensions/representation.9×9, zero, error policy and input copying are explicit assumptions."
     },
     "solution_extensions": {
       "he": [
@@ -316,14 +316,14 @@
     },
     "verification": {
       "he": "335,929 מקרים תקינים מול אורקל קבוצה ובדיקת רב־קבוצה, ועוד 3 פסולים. Python הורץ; אין מיצוי של כל השלמים.",
-      "en": "335,929 valid cases against set/multiset oracles, plus3 invalid inputs. Python executed; not exhaustive over all integers."
+      "en": "335,929 valid cases against set/multiset oracles, plus 3 invalid inputs. Python executed; not exhaustive over all integers."
     },
     "edge_cases": {
       "he": [
         "ריק, כל 1..n קיימים, רק שליליים, אפסים, עותקים שווים, ערך גדול מאוד, חסר 1."
       ],
       "en": [
-        "Empty, all 1..n present, all negative, zeros, equal copies, very large values, missing1."
+        "Empty, all 1..n present, all negative, zeros, equal copies, very large values, missing 1."
       ]
     },
     "common_mistakes": {
@@ -359,7 +359,7 @@
       "en": [
         {
           "question": "What if original array order must survive?",
-          "answer_direction": "A set of relevant values gives linear time withO(n) space; copying before rearranging pays space too.",
+          "answer_direction": "A set of relevant values gives linear time with O(n) space; copying before rearranging pays space too.",
           "principle": "Input preservation changes the storage contract."
         }
       ]
@@ -421,15 +421,15 @@
       "en": "900 power pairs compared with 50-digit Decimal logarithms and independently computed RMS powers; two dBm references checked."
     },
     "edge_cases": {
-      "he": "יחס1; הנחתה; הספק0 כגבול; ערכים שליליים פסולים; התנגדויות שונות; סכום הספקים לעומת מכפלת הגברים.",
-      "en": "Ratio1; attenuation; zero as a limit; invalid negative power; unequal resistances; summing powers versus multiplying gains."
+      "he": "יחס 1; הנחתה; הספק 0 כגבול; ערכים שליליים פסולים; התנגדויות שונות; סכום הספקים לעומת מכפלת הגברים.",
+      "en": "Ratio 1; attenuation; zero as a limit; invalid negative power; unequal resistances; summing powers versus multiplying gains."
     },
     "common_mistakes": {
-      "he": "להשתמש ב־20 לכל הספק; להציג0dBm כאפס; לחבר רמות מקור כאילו הן הגברים; להתעלם מפאזה או מעומס.",
-      "en": "Using20 for power ratios; treating0dBm as zero; adding source levels as gains; ignoring phase or loading."
+      "he": "להשתמש ב־20 לכל הספק; להציג 0dBm כאפס; לחבר רמות מקור כאילו הן הגברים; להתעלם מפאזה או מעומס.",
+      "en": "Using 20 for power ratios; treating 0dBm as zero; adding source levels as gains; ignoring phase or loading."
     },
     "interview_answer": {
-      "he": "dB הוא לוגריתם של יחס:10log להספק ו־20log למשרעת בתנאים המתאימים. מכפלות הופכות לסכומים, וייחוס כמו1mW מגדיר dBm.",
+      "he": "dB הוא לוגריתם של יחס:10log להספק ו־20log למשרעת בתנאים המתאימים. מכפלות הופכות לסכומים, וייחוס כמו 1mW מגדיר dBm.",
       "en": "dB logarithmically expresses a ratio:10log for power,20log for amplitude under suitable conditions. Products become sums; a reference such as 1 mW defines dBm."
     },
     "source_ambiguities": {
@@ -437,8 +437,8 @@
       "en": "No application domain is specified. Electrical power/voltage ratios are explained; not every dB quantity is a hearing metric."
     },
     "solution_extensions": {
-      "he": "שתי יציאות של1mW מתחברות כסכום הספקים: מה הרמה הכוללת? מה משתנה אם ידועים יחסי מתח אך העכבות שונות?",
-      "en": "Two1mW outputs add as powers: what is the total level? What changes with voltage ratios across unequal impedances?"
+      "he": "שתי יציאות של 1mW מתחברות כסכום הספקים: מה הרמה הכוללת? מה משתנה אם ידועים יחסי מתח אך העכבות שונות?",
+      "en": "Two 1mW outputs add as powers: what is the total level? What changes with voltage ratios across unequal impedances?"
     },
     "technical_references": {
       "he": [
@@ -459,7 +459,7 @@
       "en": "O(k) scanning at entry k and O(1) decision storage; O(n²) across all entries in the simple implementation. No physical optimum claim."
     },
     "verification": {
-      "he": "כל8,191 רצפי ההגעה באורכים0–12 נבדקו, שני צבעים אפשריים בכל בחירת רווח ואי־שינוי סדר הקודמים; נוספו200 סדרי25/25.",
+      "he": "כל 8,191 רצפי ההגעה באורכים 0–12 נבדקו, שני צבעים אפשריים בכל בחירת רווח ואי־שינוי סדר הקודמים; נוספו 200 סדרי 25/25.",
       "en": "All 8,191 arrival strings of lengths 0–12 checked, both own colors at each gap and unchanged prior order; 200 source-sized 25/25 orders added."
     },
     "edge_cases": {
@@ -497,32 +497,32 @@
       "en": "One copy of each positive integer weight; a subset is selected and only addition is permitted. There is no two-pan subtraction."
     },
     "optimality": {
-      "he": "מינימום6 משקולות מוכח מחסם2^k≥41 ובנייה בחזקות2. ל־M כללי נדרשותceil(log2(M+1)) משקולות.",
-      "en": "Six is minimal by2^k≥41 and a powers-of-two construction. General M requiresceil(log2(M+1)) weights."
+      "he": "מינימום 6 משקולות מוכח מחסם 2^k≥41 ובנייה בחזקות 2. ל־M כללי נדרשות ceil(log2(M+1)) משקולות.",
+      "en": "Six is minimal by 2^k≥41 and a powers-of-two construction. General M requiresceil(log2(M+1)) weights."
     },
     "verification": {
-      "he": "כל היעדים לכלM מ־0 עד255 נבדקו מול סכומי כל תתי־הקבוצות: 32,896 ייצוגים. החסם המתמטי נפרד מהבדיקה.",
+      "he": "כל היעדים לכל M מ־0 עד 255 נבדקו מול סכומי כל תתי־הקבוצות: 32,896 ייצוגים. החסם המתמטי נפרד מהבדיקה.",
       "en": "All targets for M=0..255 checked against enumerated subset sums: 32,896 representations. The mathematical bound is separate from finite checks."
     },
     "edge_cases": {
-      "he": "יעדים1,17,32,40; יעד0; חזרה על משקולת אסורה; משקולות שאינן מייצגות יעד; קיום כמה קבוצות אופטימליות.",
-      "en": "Targets1,17,32,40; zero; prohibited reuse; an unrepresentable target; multiple optimal weight sets."
+      "he": "יעדים 1,17,32,40; יעד 0; חזרה על משקולת אסורה; משקולות שאינן מייצגות יעד; קיום כמה קבוצות אופטימליות.",
+      "en": "Targets 1,17,32,40; zero; prohibited reuse; an unrepresentable target; multiple optimal weight sets."
     },
     "common_mistakes": {
-      "he": "לבחור1,3,9,27 בלי היתר חיסור; לספור3^k במודל שתי אפשרויות; להוכיח רק שסכום המשקולות מספיק; לטעון ליחידות הפתרון.",
-      "en": "Choosing1,3,9,27 without subtraction; counting3^k for two choices; using total mass alone as a coverage proof; claiming uniqueness."
+      "he": "לבחור 1,3,9,27 בלי היתר חיסור; לספור 3^k במודל שתי אפשרויות; להוכיח רק שסכום המשקולות מספיק; לטעון ליחידות הפתרון.",
+      "en": "Choosing 1,3,9,27 without subtraction; counting 3^k for two choices; using total mass alone as a coverage proof; claiming uniqueness."
     },
     "interview_answer": {
-      "he": "יש41 תוצאות נחוצות כולל0, ו־k משקולות נותנות לכל היותר2^k תתי־קבוצות. לכן צריך6, והמשקולות1,2,4,8,16,32 משיגות זאת.",
-      "en": "There are41 required values including0; k weights give at most 2^k subsets. Six are necessary, and1,2,4,8,16,32 suffice."
+      "he": "יש 41 תוצאות נחוצות כולל 0, ו־k משקולות נותנות לכל היותר 2^k תתי־קבוצות. לכן צריך 6, והמשקולות 1,2,4,8,16,32 משיגות זאת.",
+      "en": "There are 41 required values including 0; k weights give at most 2^k subsets. Six are necessary, and 1,2,4,8,16,32 suffice."
     },
     "source_ambiguities": {
-      "he": "המקור מדגים10+5+2 על מד משקל. נוסח העריכה מבהיר חיבור בלבד; מודל מאזניים דו־כפי נשאר שאלת המשך נפרדת.",
-      "en": "The source illustrates10+5+2 on a scale. The edited contract makes addition explicit; two-pan balancing is a separate follow-up."
+      "he": "המקור מדגים 10+5+2 על מד משקל. נוסח העריכה מבהיר חיבור בלבד; מודל מאזניים דו־כפי נשאר שאלת המשך נפרדת.",
+      "en": "The source illustrates 10+5+2 on a scale. The edited contract makes addition explicit; two-pan balancing is a separate follow-up."
     },
     "solution_extensions": {
-      "he": "אם מותר להניח משקולות בשתי כפות, מה משתנה במספר המצבים ובבניית1,3,9,27? הסבירו את ההבדל במודל.",
-      "en": "If weights may be put on either pan, how do outcome counts and1,3,9,27 change? Explain the different model."
+      "he": "אם מותר להניח משקולות בשתי כפות, מה משתנה במספר המצבים ובבניית 1,3,9,27? הסבירו את ההבדל במודל.",
+      "en": "If weights may be put on either pan, how do outcome counts and 1,3,9,27 change? Explain the different model."
     },
     "technical_references": {
       "he": [
@@ -609,7 +609,7 @@
       "en": "Traffic, provider, data and SLO are unspecified. This is a decision framework with hypothetical figures, not a deployment plan for this website."
     },
     "solution_extensions": {
-      "he": "אם DB מאפשר רק200 כתיבות לשנייה וה־frontend גדל פי10, מה יקרה? תכננו backpressure או מסלול כתיבה שמכבד עקביות ומגבלת זמן.",
+      "he": "אם DB מאפשר רק 200 כתיבות לשנייה וה־frontend גדל פי 10, מה יקרה? תכננו backpressure או מסלול כתיבה שמכבד עקביות ומגבלת זמן.",
       "en": "If DB allows only 200 writes/second while frontend scales 10x, what happens? Design backpressure or a write path respecting consistency and deadline limits."
     },
     "technical_references": {

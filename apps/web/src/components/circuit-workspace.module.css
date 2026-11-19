@@ -20,35 +20,23 @@
 
 .dialog {
   position: fixed;
-  inset: 16px;
-  box-sizing: border-box;
-  width: min(1560px, calc(100dvw - 32px));
-  max-width: calc(100dvw - 32px);
-  height: calc(100dvh - 32px);
-  max-height: calc(100dvh - 32px);
-  margin: auto;
-  padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--ink);
-  overflow: hidden;
-  box-shadow: 0 20px 64px color-mix(in srgb, var(--paper) 45%, transparent);
-}
-
-.dialog::backdrop {
-  background: color-mix(in srgb, var(--paper) 76%, transparent);
-}
-
-.dialog[data-layout="fullscreen"] {
   inset: 0;
+  box-sizing: border-box;
   width: 100dvw;
   max-width: 100dvw;
   height: 100dvh;
   max-height: 100dvh;
   margin: 0;
+  padding: 0;
   border: 0;
   border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.dialog::backdrop {
+  background: color-mix(in srgb, var(--paper) 76%, transparent);
 }
 
 .workbench {
@@ -286,18 +274,6 @@
 }
 
 @media (max-width: 800px) {
-  .dialog,
-  .dialog[data-layout="fullscreen"] {
-    inset: 0;
-    width: 100dvw;
-    max-width: 100dvw;
-    height: 100dvh;
-    max-height: 100dvh;
-    margin: 0;
-    border: 0;
-    border-radius: 0;
-  }
-
   .workbench .toolbar {
     gap: 8px;
     padding: max(10px, env(safe-area-inset-top)) 12px 10px;
