@@ -7,7 +7,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-11-14 (job types bring their own skills §5zzf; scale, security and cost §5zzg) · **Tests:** 4,510 offline (one known failure, Harel's client contract) + 22 live (one time-limit failure, §5zzh) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
+**Last updated:** 2026-11-19 (the backend speaks the user's language §5zzk; `master` brought up to `production`) · **Tests:** 7,006 offline, none failing + 22 live (one time-limit failure, §5zzh; not rerun on 2026-11-19) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
 
 ---
 
@@ -2477,6 +2477,63 @@ Three checks on the live code (`production`, `8d0a66b`):
 reason sentence is built; a reason on every `usage_limit` so the screen can say which limit it was; the check and
 code-run texts in the attempt's language; the plan's reasons rendered in the language of the request instead of
 the language of the day's first build. Not verified: a signed-in browser on the live site, and a real phone.
+**Done on 2026-11-19, §5zzk.**
+
+## 5zzk. The backend speaks the user's language (2026-11-19, Shaked: "fix the backend")
+
+The four backend items of §5zzj. `master` was first brought up to the live code (`production` was 43 commits ahead:
+Harel's daily puzzles, the monthly feedback allowance, more interview questions), so the fixes are built on what the
+site runs. Code and seed only: no database change, nothing in `apps/web`.
+
+**1. Skill and subject names in Hebrew.** Each of the 41 rows of `seeds/skills/digital_hardware.json` has a
+`label_he`; `CatalogSkill.name(language)` and `Catalog.skill_labels(language)` return the name a user reads, English
+when no Hebrew one is written. Every view that names a skill uses the language of the request (progress, focus
+skills, subjects, readiness and its three questions, the program and its items) or of the thing itself (the
+suggestion after an answer and the fallback follow-up follow the attempt; the interview's plan, turns, report and
+"since last time" follow the interview). The model's prompts keep the English names (evaluator, generator, feedback
+card), except the interview report, whose narrative is written in the interview's language and now gets the names
+in it. Words: the glossary's (`רגיסטר`, `מוקס`, `דקודר`, `משלים ל-2`) and, for the six subjects, the web app's own
+(`practice-ui.ts`). **The 41 names are content and wait for Shaked's read** (listed in the hand-over message).
+Because the Hebrew names differ in gender and number and some open with a Latin word, every Hebrew sentence that
+names a skill now says "הנושא {skill}" (plan reasons, next-question reasons, readiness reasons, the fallback
+follow-up); a verb agreeing with the name, or a prefix glued to it, would read wrong for half of them.
+
+**2. Which limit.** `usage_limit` covers fourteen different situations and the screen showed all of them as "daily
+limit, come back tomorrow". Every one now carries `error.reason` (`api/errors.USAGE_LIMIT_REASONS`):
+`daily_attempts`, `daily_interviews`, `monthly_budget`, `evaluation_tries`, `rate_limit`, `quiz_rounds`, `coins`
+(the three "not enough coins", HTTP 402), `daily_duels`, `duel_winnings_daily`, `duel_cooldown`, `code_runs_daily`,
+`code_runs_rate`, `code_runner_busy`, `company_sightings_daily`. The field is additive; the message stays English
+and is for logs. A test reads the source and fails when a `usage_limit` is raised without a known reason. The web
+app maps the reason to its own words (Harel, row 55).
+
+**3. The check's sentence in the attempt's language.** `CheckResult.detail` and the code runner's `detail` are
+still produced and stored in English: the judge reads them and the runner is a separate service. They are retold
+when a view is built (`engine/check_text.py`): the practice submission, the interview turn, the Run button's reply,
+the "runner unavailable" notice and the plain feedback card. Covered: every sentence of `engine/checks.py` (the
+sixteen reasons an expression or table could not be read included), of `services/code_execution.py` and of the
+runner (`apps/executor`); the question's test-scope line uses the Hebrew already in `seeds/execution_cases.json`.
+A sentence the module does not know is shown as it is, never dropped; a test reads the runner's source and fails
+when it gains a sentence without Hebrew. The numbers, units and the candidate's own symbols are carried over.
+
+**4. The plan's reasons follow the request.** The plan is built once a day and `plan_item.reason` keeps the
+sentence in the language of that first build, so a user who switched language read two languages in one paragraph
+until the next day. The column stays plain text (no migration): at view time `plan_router.retell_reason` recognises
+the saved sentence against the templates, with the item's own skill named in each language, and tells it again
+from the same numbers in the language of the request. Reading never rewrites the plan. A sentence that matches no
+template is shown as saved: **plans built before this release keep their old wording until their next daily
+rebuild.** The plain interview report no longer writes "Fit", "min" or the engine's status words in Hebrew.
+
+**Changed Hebrew copy (Shaked's to read):** the plan, next-question and readiness sentences (the "הנושא" form), the
+41 names, the check sentences in `check_text.py`.
+
+**Verified.** The in-memory two-language run of §5zzj again (609 text values per language): no Hebrew in English;
+in Hebrew, no English sentence of the backend's is left (what remains is the harness's own scripted judge reply and
+English technical terms inside Hebrew questions). `tests/test_language_backend_2026_11_19.py`: 27 tests. The
+grade-first golden record: three leaves changed, all the same Hebrew next-question sentence, nothing else (compared
+leaf by leaf, then those three strings replaced by hand). Offline suite on the merged tree: **7,006 passed / 13 skipped / 0
+failed** (the clock shows 3 h 51 min because the laptop slept during the run).
+**Not on the live site until Shaked says so** (merge `master` into `production`). Not verified: the screens in a
+browser (Harel's rows 55 to 57), and the real judge was not called (no prompt changed except the report's names).
 
 ## 6. Known gaps and open items
 
@@ -2487,7 +2544,7 @@ the language of the day's first build. Not verified: a signed-in browser on the 
 - **`SUPABASE_SERVICE_ROLE_KEY` not set anywhere yet:** photos attached to answers are stored but not judged until it is added to Render (and `backend/.env` for local runs). Server-only secret.
 - **Review before publishing.** All 30 questions stay `in_review` until a person checks technical correctness, rubric weights and Hebrew/English parity (checklist in `seeds/questions/README.md`).
 - **Bank coverage: 14 of the role's 27 skills** have a primary question. Missing: latches/flip-flops, state tables, Moore vs Mealy, truth tables, number representation, reset strategies, sequential HDL coding, debugging methodology, project walkthrough, state encoding, testbench basics.
-- **Content that is not in the interface language** (seen in the 2026-09-28 screenshots): skill names are English in the seed, a deterministic check's message ("6 of 8 specified rows differ") and the second line of some tips are English, and a plan's reasons are written in the language the plan was built in. Interface strings are all bilingual; these are data and backend strings, for a content pass together with the tip-template column below.
+- **Content that is not in the interface language** (seen in the 2026-09-28 screenshots): skill names are English in the seed, a deterministic check's message ("6 of 8 specified rows differ") and the second line of some tips are English, and a plan's reasons are written in the language the plan was built in. Interface strings are all bilingual; these are data and backend strings, for a content pass together with the tip-template column below. **Fixed 2026-11-19 (§5zzk)**, except the tips' second line.
 - **Small schema follow-ups** for a later migration: a per-language template column on `tips_library` (Hebrew tip text lives only in the seed file); the `question.hints` column comment describes the old object format.
 - **Placeholders** `app.py`, `requirements.txt`, `src/__init__.py` still in the repo; deletion not yet confirmed.
 - Backend notes from the performance review, for step 4: generate UUIDv7 ids for the append-only tables; cap `state.history_window`; write daily-allowance checks as `created_at >= day_start`.
@@ -2518,6 +2575,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-19 | The backend speaks the user's language (§5zzk): Hebrew names for the 41 skills and subjects, used in every view; `error.reason` on every `usage_limit` (fourteen reasons); the automatic check's and the code runner's sentences told in the attempt's language; a saved plan's reasons told in the language of the request; the plain interview report without English words. `master` brought up to `production` first. No database change. On `master`; not on the live site until Shaked says so. |
 | 2026-11-14 | Grader v3 released to the live site (`6231df3` contains the merge; merged suite 6,310 passed, none failed). The two languages verified (§5zzj): English clean; in Hebrew the backend still names the 41 skills, the check results and the code-run texts in English; the web app's items are rows 44 to 54 of `docs/harel-todo-2026-11-14.md`; eight of fourteen screens could not be photographed because the harness is behind the current pages. |
 | 2026-11-14 | A right answer is a strong answer (§5zzi): evaluator v3 scores correctness on the results the question asks for, never on what was left unexplained; every correct answer is STRONG (lean, 0.8 evidence, when the reasoning is thin); a passed truth-table or code check floors correctness at 0.80. Measured on the real judge with `scripts/grade_both_sides.py` and the review set. On `master`; not on the live site until Shaked says so. |
 | 2026-11-14 | Evening (§5zzh): coins when it is not the first try (5 first, 2 after an earlier attempt or after 21 days, nothing in between); 72 of the 78 waiting drafts for the seven thin skills checked and ready for Shaked's read (`scripts/verify_drafts.py`, `scripts/drafts_review_page.py`), nothing loaded; live suite 21 of 22 (one time limit on the cold library read) plus a new live test of today's database reads; Ophir joins the pilot list (20 members). |

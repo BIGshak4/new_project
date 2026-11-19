@@ -67,7 +67,8 @@ class SocialBudget:
         while bucket and bucket[0] <= now - 60:
             bucket.popleft()
         if len(bucket) >= maximum:
-            raise ApiError("usage_limit", "please wait before trying again", status=429, headers={"Retry-After": "60"})
+            raise ApiError("usage_limit", "please wait before trying again", status=429, headers={"Retry-After": "60"},
+                           reason="rate_limit")
         bucket.append(now)
         while len(self.buckets) > 3000:
             self.buckets.popitem(last=False)

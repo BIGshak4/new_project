@@ -97,7 +97,7 @@ def pick_question(catalog: Catalog, plan: list[PlanSkill], store: LocalStore, ar
                                                  language=args.language, seen_keys=store.seen_questions,
                                                  allow_in_review=True, require_parity=False, difficulty_window=9)
                 if selection:
-                    reason = plan_router.reason_text(candidate, args.language, catalog.skill_labels())
+                    reason = plan_router.reason_text(candidate, args.language, catalog.skill_labels(args.language))
                     return selection.question, selection.familiarity, reason
     return None, None, None
 

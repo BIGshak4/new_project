@@ -39,7 +39,8 @@ class QuizPractice:
         if today != self._opened_on:                   # a new day: everyone starts again, and the table stays small
             self._opened, self._opened_on = {}, today
         if self._opened.get(user_id, 0) >= self.daily_rounds:
-            raise ApiError("usage_limit", "today's practice rounds are used up; more tomorrow", headers={"Retry-After": "3600"})
+            raise ApiError("usage_limit", "today's practice rounds are used up; more tomorrow", headers={"Retry-After": "3600"},
+                           reason="quiz_rounds")
         self._opened[user_id] = self._opened.get(user_id, 0) + 1
 
     @staticmethod

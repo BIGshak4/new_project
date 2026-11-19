@@ -7,8 +7,10 @@ the profile and persists the result.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from datetime import date, timedelta
+from functools import lru_cache
 
 from app.engine.params import DEFAULT_PARAMS, EngineParams
 from app.schemas.engine import AssessmentMode, EvidenceStatus, Importance, PlanSkill
@@ -317,15 +319,17 @@ REASONS = {
         "keep_sharp": "{skill} is in good shape. A quick one keeps it that way.",
         "simulation": "A mock interview across your main skills, to practise under real conditions.",
     },
+    # the skill's name follows "הנושא" in every Hebrew sentence: the names differ in gender and number, and some
+    # open with a Latin word, so a verb agreeing with the name or a prefix glued to it would read wrong for half of them
     "he": {
         "diagnostic": "אבחון קצר על פני הנושאים שלכם, כדי שהתוכנית תתחיל ממה שאתם באמת יודעים.",
-        "retention_due": "הרמה שלכם ב-{skill} עלתה לאחרונה. בעיה חדשה עכשיו תראה אם זה נשאר.",
-        "stale": "עברו {days} ימים מאז ש-{skill} נבדקה לאחרונה. בעיה חדשה תראה אם הרמה עדיין מחזיקה.",
-        "core_gap": "{skill} היא מיומנות ליבה לתפקיד היעד, ואתם ברמה {level} מתוך {required} שנדרשת.",
-        "gap": "אתם ברמה {level} ב-{skill}; התפקיד דורש {required}.",
-        "unassessed": "עדיין אין לנו מידע על {skill}. שאלה אחת תראה מאיפה להתחיל.",
-        "expired": "עברו {days} ימים מאז שבדקנו את {skill}. שאלה טרייה תראה איפה אתם עומדים היום.",
-        "keep_sharp": "{skill} במצב טוב. שאלה קצרה תשמור על זה.",
+        "retention_due": "הרמה שלכם בנושא {skill} עלתה לאחרונה. בעיה חדשה עכשיו תראה אם זה נשאר.",
+        "stale": "עברו {days} ימים מאז שבדקנו את הנושא {skill}. בעיה חדשה תראה אם הרמה עדיין מחזיקה.",
+        "core_gap": "הנושא {skill} הוא מיומנות ליבה לתפקיד היעד, ואתם ברמה {level} מתוך {required} שנדרשת.",
+        "gap": "אתם ברמה {level} בנושא {skill}; התפקיד דורש {required}.",
+        "unassessed": "עדיין אין לנו מידע על הנושא {skill}. שאלה אחת תראה מאיפה להתחיל.",
+        "expired": "עברו {days} ימים מאז שבדקנו את הנושא {skill}. שאלה טרייה תראה איפה אתם עומדים היום.",
+        "keep_sharp": "הנושא {skill} במצב טוב. שאלה קצרה תשמור על זה.",
         "simulation": "ראיון מדומה על המיומנויות המרכזיות, כדי לתרגל בתנאים אמיתיים.",
     },
 }
@@ -341,3 +345,35 @@ def reason_text(activity: Activity, language: str, skill_labels: dict[str, str] 
     key = facts.get("skill")
     facts["skill"] = (skill_labels or {}).get(key, key) if key else ""
     return templates.get(code, templates["unassessed"]).format(**{"level": "", "required": "", "days": "", **facts})
+
+
+@lru_cache(maxsize=4096)
+def _reason_pattern(template: str, skill_name: str) -> re.Pattern:
+    """A stored reason sentence as a pattern: the template with this skill's name in place and the numbers open."""
+    pattern = re.escape(template).replace(re.escape("{skill}"), re.escape(skill_name))
+    for fact in ("level", "required", "days"):
+        pattern = pattern.replace(re.escape("{" + fact + "}"), rf"(?P<{fact}>\d*)")
+    return re.compile(pattern)
+
+
+def retell_reason(stored: str, skills: list[str], language: str, labels: dict[str, dict[str, str]]) -> str:
+    """A saved plan item's reason in the language of this request.
+
+    The plan keeps each reason as the sentence it was built with (`plan_item.reason` is plain text), so a user who
+    switches language saw the old language until the next day's plan. The sentence is recognised here against the
+    templates, with the item's own skill named in each language (`labels`: language -> skill key -> name), and told
+    again from the same facts. A sentence that matches no template (older wording) is returned as it was saved."""
+    templates = REASONS.get(language, REASONS["en"])
+    for source, texts in REASONS.items():
+        names = labels.get(source, {})
+        for key in skills or [""]:
+            for code, template in texts.items():
+                match = _reason_pattern(template, names.get(key, key)).fullmatch(stored)
+                if match is None:
+                    continue
+                if source == language:
+                    return stored
+                facts = {"level": "", "required": "", "days": "", **match.groupdict(),
+                         "skill": labels.get(language, {}).get(key, key)}
+                return templates.get(code, templates["unassessed"]).format(**facts)
+    return stored

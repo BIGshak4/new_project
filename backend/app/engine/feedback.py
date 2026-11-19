@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 
 from pydantic import BaseModel
 
-from app.engine import i18n, providers
+from app.engine import check_text, i18n, providers
 from app.engine.evaluator import neutralize
 from app.engine.providers import LLMError, LLMRequest, LLMUsage, Provider
 from app.schemas.bank import BankQuestion
@@ -70,7 +70,8 @@ def fallback_card(question: BankQuestion, evaluation: Evaluation, band: Band, ch
     text = question.text(language)
     happened = []
     if check is not None and check.passed is not None:
-        happened.append(t["check_pass" if check.passed else "check_fail"].format(detail=check.detail))
+        told = check_text.in_language(check.detail, language).rstrip(".")
+        happened.append(t["check_pass" if check.passed else "check_fail"].format(detail=told))
     if evaluation.key_points_hit:
         happened.append(t["hit"].format(points="; ".join(evaluation.key_points_hit[:3])))
     if evaluation.key_points_missed:

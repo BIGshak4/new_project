@@ -92,9 +92,10 @@ FEEDBACK_PENDING = "feedback_pending"
 class PracticeError(Exception):
     """A client error: the request cannot be honored as sent. Carries a stable code for the API."""
 
-    def __init__(self, code: str, message: str):
+    def __init__(self, code: str, message: str, *, reason: str | None = None):
         super().__init__(message)
         self.code = code
+        self.reason = reason                       # which limit, for `usage_limit` (api/errors.USAGE_LIMIT_REASONS)
 
 
 class EvaluationStatus(StrEnum):
@@ -542,7 +543,8 @@ class PracticeAttempt:
     def _within_judge_calls(self) -> None:
         if sum(s.attempts for s in self.submissions) >= MAX_JUDGE_CALLS_PER_ATTEMPT:
             raise PracticeError("usage_limit", "this answer could not be evaluated after several tries; it is saved. "
-                                               "Start a new attempt on the question later.")
+                                               "Start a new attempt on the question later.",
+                                reason="evaluation_tries")
 
     @staticmethod
     def _answer_text(answer) -> str:
@@ -914,7 +916,7 @@ class PracticeAttempt:
 
     def _tip_placeholders(self, evaluation: Evaluation) -> dict[str, str]:
         return {"missed_point": (evaluation.key_points_missed or [""])[0],
-                "skill_label": self.ctx.skills[self.question.primary_skill].label}
+                "skill_label": self.ctx.skills[self.question.primary_skill].name(self.ctx.language)}
 
     def _template_follow_up(self, decision: Decision) -> generator.GenerationResult:
         """The generator's own template for this decision (what it returns when the model fails twice)."""
@@ -923,7 +925,7 @@ class PracticeAttempt:
         skill = self.ctx.skills.get(decision.target_skill)
         texts = generator.FALLBACK_TEXT.get(language, generator.FALLBACK_TEXT["en"])
         template = texts.get(decision.action, generator.FALLBACK_TEXT["en"][Action.HOLD])
-        text = template.format(hint=hint_text or "", skill=skill.label if skill else decision.target_skill or "")
+        text = template.format(hint=hint_text or "", skill=skill.name(language) if skill else decision.target_skill or "")
         return generator.GenerationResult(generator.GeneratedQuestion(question_text=text,
                                                                       question_archetype=decision.target_archetype,
                                                                       expected_answer_outline=generator.fallback_outline(decision, language)),

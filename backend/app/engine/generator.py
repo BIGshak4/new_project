@@ -59,7 +59,7 @@ FALLBACK_TEXT = {
         Action.ESCALATE: "יפה. עכשיו החמירו את התנאים: איזו דרישה, אם תשתנה, תשבור ראשונה את הפתרון שלכם, ואיך תתאימו אותו?",
         Action.HINT: "הסתכלו שוב על השאלה עם הכיוון הזה: {hint}",
         Action.STEP_BACK: "ניגש מזווית פשוטה יותר. במילים שלכם, מהו הרעיון הבסיסי שהשאלה נשענת עליו?",
-        Action.ENTER_SKILL: "הסבירו את הרעיון המרכזי של {skill}, עם דוגמה קטנה.",
+        Action.ENTER_SKILL: "הסבירו את הרעיון המרכזי בנושא {skill}, עם דוגמה קטנה.",
     },
 }
 
@@ -185,7 +185,7 @@ async def generate(provider: Provider, decision: Decision, *, language: str, ski
         return GenerationResult(reserve, source="generated", usage=usage, model=model, latency_ms=latency_ms,
                                 flags=flags)
     template = FALLBACK_TEXT.get(language, FALLBACK_TEXT["en"]).get(decision.action, FALLBACK_TEXT["en"][Action.HOLD])
-    text = template.format(hint=hint_text or "", skill=skill.label if skill else decision.target_skill or "")
+    text = template.format(hint=hint_text or "", skill=skill.name(language) if skill else decision.target_skill or "")
     return GenerationResult(GeneratedQuestion(question_text=text, question_archetype=decision.target_archetype,
                                               expected_answer_outline=fallback_outline(decision, language)),
                             source="fallback", usage=usage, model=model, latency_ms=latency_ms,

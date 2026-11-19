@@ -68,6 +68,10 @@ STEP_WORDS = {"en": {"harder": "one notch harder", "same": "the same level", "ea
               "he": {"harder": "דרגה אחת קשה יותר", "same": "אותה רמה", "easier": "דרגה אחת קלה יותר"}}
 CHANGE_WORDS = {"en": {"improved": "improved", "held": "held", "lower": "lower", "new": "new"},
                 "he": {"improved": "השתפר", "held": "נשאר", "lower": "ירד", "new": "חדש"}}
+# the plain report's own words; English prints the subject's status as the engine names it
+PLAIN_WORDS = {"en": {"fit": "Fit", "minutes": "min"},
+               "he": {"fit": "התאמה", "minutes": "דק׳", "untouched": "לא נבדק", "exploring": "בבדיקה", "strong": "חזק",
+                      "mixed": "מעורב", "weak": "חלש", "done": "הושלם"}}
 
 
 def assess_skills(state: SessionState, plan: list[PlanSkill], notes: dict[str, dict] | None = None,
@@ -196,12 +200,13 @@ def fallback_narrative(data: ReportData, labels: dict[str, str], language: str,
             "What held up")
     words = STEP_WORDS.get(language) or STEP_WORDS["en"]
     change_words = CHANGE_WORDS.get(language) or CHANGE_WORDS["en"]
+    plain = PLAIN_WORDS.get(language) or PLAIN_WORDS["en"]
     lines = [f"## {heading[0]}"]
     if data.held_up:
         lines.append(f"- {heading[6]}: " + ", ".join(labels.get(k, k) for k in data.held_up))
     overall = data.scorecards.get("session_overall")
     if overall and overall.fit_score is not None:
-        lines.append(f"- Fit: {overall.fit_score:.0f}% ({overall.skills_assessed}/{overall.skills_total})")
+        lines.append(f"- {plain['fit']}: {overall.fit_score:.0f}% ({overall.skills_assessed}/{overall.skills_total})")
     if data.recommended_next_skills:
         lines.append(f"\n## {heading[2]}")
         lines += [f"- {labels.get(k, k)}" for k in data.recommended_next_skills[:5]]
@@ -210,7 +215,7 @@ def fallback_narrative(data: ReportData, labels: dict[str, str], language: str,
         focus = ", ".join(labels.get(k, k) for k in data.next_step.get("skills") or [])
         minutes = data.next_step.get("duration_min")
         lines.append(f"- {words.get(data.next_step.get('step', 'same'), words['same'])}"
-                     + (f", {minutes} min" if minutes else "") + (f" · {focus}" if focus else ""))
+                     + (f", {minutes} {plain['minutes']}" if minutes else "") + (f" · {focus}" if focus else ""))
     if since_last_time:
         lines.append(f"\n## {heading[5]}")
         lines += [f"- {s.get('label') or labels.get(s['key'], s['key'])}: {change_words.get(s['change'], s['change'])}"
@@ -219,7 +224,8 @@ def fallback_narrative(data: ReportData, labels: dict[str, str], language: str,
     for subject in data.subjects:
         level = "-" if subject["level"] is None else f"{subject['level']:.1f}"
         lines.append(f"- {labels.get(subject['key'], subject['key'])}: {level} / {subject['required_level']:.1f} "
-                     f"({subject['status']}, {subject['turns_used']}/{subject['turns_planned']})")
+                     f"({plain.get(subject['status'], subject['status'])}, "
+                     f"{subject['turns_used']}/{subject['turns_planned']})")
     if data.cover_next_time:
         lines.append(f"\n## {heading[3]}")
         lines += [f"- {labels.get(k, k)}" for k in data.cover_next_time[:8]]

@@ -74,11 +74,14 @@ def _limits(rows, user, now, daily, per_minute, concurrent):
 
 def _count_limits(day_used, minute_used, active, daily, per_minute, concurrent):
     if day_used >= daily:
-        raise ApiError("usage_limit", "the code execution daily allowance has been reached", headers={"Retry-After": "3600"})
+        raise ApiError("usage_limit", "the code execution daily allowance has been reached", headers={"Retry-After": "3600"},
+                       reason="code_runs_daily")
     if minute_used >= per_minute:
-        raise ApiError("usage_limit", "please wait before running code again", headers={"Retry-After": "60"})
+        raise ApiError("usage_limit", "please wait before running code again", headers={"Retry-After": "60"},
+                       reason="code_runs_rate")
     if active >= concurrent:
-        raise ApiError("usage_limit", "the code runner is busy; please retry shortly", headers={"Retry-After": "10"})
+        raise ApiError("usage_limit", "the code runner is busy; please retry shortly", headers={"Retry-After": "10"},
+                       reason="code_runner_busy")
 
 
 class DbExecutionLedger:

@@ -26,7 +26,7 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 
 from app.api.errors import ApiError
-from app.engine import activity, bank, next_question, plan_router, scorecards, scores, soft_skills, xp
+from app.engine import activity, bank, check_text, next_question, plan_router, scorecards, scores, soft_skills, xp
 from app.engine.catalog import Catalog
 from app.engine.job_selection import JobSelection, combined_job, plan_rows
 from app.engine.plan import merge_skill_sets
@@ -245,7 +245,7 @@ class PracticeService:
             try:
                 await tx.add_sighting(question_id=str(loaded.id), user_id=user_id, company=company)
             except SightingsLimit as exc:
-                raise ApiError("usage_limit", str(exc)) from exc
+                raise ApiError("usage_limit", str(exc), reason="company_sightings_daily") from exc
             except SightingsUnavailable as exc:
                 raise ApiError("temporarily_unavailable", str(exc), status=503) from exc
             except ValueError as exc:
@@ -386,7 +386,7 @@ class PracticeService:
                     started = await tx.started_today(user_id)
                     if started >= limit:
                         raise ApiError("usage_limit", f"you have started {started} attempts today; the daily limit is "
-                                                      f"{limit}. Come back tomorrow.")
+                                                      f"{limit}. Come back tomorrow.", reason="daily_attempts")
                     await monthly_budget_left(tx, user_id, self.config.monthly_budget_usd)
                     loaded = await tx.load_question(key=question_key, question_id=question_id)
                     if loaded is None:
@@ -399,7 +399,7 @@ class PracticeService:
                         attempt = PracticeAttempt(ctx, loaded.question, profile.states, mode=mode, familiarity="new",
                                                   self_confidence=self_confidence, entry=entry)
                     except PracticeError as exc:
-                        raise ApiError(exc.code, str(exc)) from exc
+                        raise ApiError(exc.code, str(exc), reason=exc.reason) from exc
                     row = attempt.attempt_row()
                     await tx.save_attempt(user_id=user_id, question_id=loaded.id, row=row, revisions=set())
                     if loaded.question.assets.get("assessment_ready") is not False:
@@ -480,10 +480,11 @@ class PracticeService:
                 submission, replay = await attempt.accept(answer, idempotency_key=idempotency_key,
                                                           follow_up=follow_up_turn is not None)
             except PracticeError as exc:
-                raise ApiError(exc.code, str(exc)) from exc
+                raise ApiError(exc.code, str(exc), reason=exc.reason) from exc
             if replay is not None:
                 return (self._submission_view(replay.submission, replay, xp_earned=self._xp_for(attempt, replay.submission),
-                                                                         coins_earned=self._coins_for(attempt, replay.submission)),
+                                                                         coins_earned=self._coins_for(attempt, replay.submission),
+                                                                         language=attempt.ctx.language),
                         self._view(attempt, stored, loaded, language))
 
             if submission.visual and submission.visual.images:
@@ -511,9 +512,10 @@ class PracticeService:
                     existing, replay = await attempt.accept(answer, idempotency_key=idempotency_key,
                                                             follow_up=follow_up_turn is not None)
                 except PracticeError as exc:
-                    raise ApiError(exc.code, str(exc)) from exc
+                    raise ApiError(exc.code, str(exc), reason=exc.reason) from exc
                 return (self._submission_view(existing, replay, xp_earned=self._xp_for(attempt, existing),
-                                                                coins_earned=self._coins_for(attempt, existing)),
+                                                                coins_earned=self._coins_for(attempt, existing),
+                                                                language=attempt.ctx.language),
                         self._view(attempt, stored, loaded, language))
 
             # 2. evaluate: model calls happen here, with no transaction open
@@ -536,7 +538,7 @@ class PracticeService:
             self._start_feedback(user_id, attempt_id, outcome.submission, words)
             return (self._submission_view(outcome.submission, outcome, attempt.next_question,
                                           xp_earned=self._xp_for(attempt, outcome.submission),
-                                          coins_earned=self._coins_for(attempt, outcome.submission)),
+                                          coins_earned=self._coins_for(attempt, outcome.submission), language=attempt.ctx.language),
                     self._view(attempt, stored, loaded, language))
 
     @staticmethod
@@ -571,7 +573,8 @@ class PracticeService:
             attempt, stored, loaded, _ = await self._load(user_id, attempt_id)
             sub = next(s for s in attempt.submissions if s.revision == wordless.revision)
             return (self._submission_view(sub, None, attempt.next_question, xp_earned=self._xp_for(attempt, sub),
-                                                                            coins_earned=self._coins_for(attempt, sub)),
+                                                                            coins_earned=self._coins_for(attempt, sub),
+                                                                            language=attempt.ctx.language),
                     self._view(attempt, stored, loaded, stored.row["practice_language"]))
         async with self._lock(attempt_id):
             attempt, stored, loaded, profile = await self._load(user_id, attempt_id)
@@ -583,7 +586,7 @@ class PracticeService:
                         await reserve_monthly_feedback(tx, user_id, attempt_id, self.config.monthly_feedback_limit)
                 outcome = await attempt.retry_evaluation(defer_prose=self.config.feedback_in_background)
             except PracticeError as exc:
-                raise ApiError(exc.code, str(exc)) from exc
+                raise ApiError(exc.code, str(exc), reason=exc.reason) from exc
             words, scored = self._write_words_now(attempt, outcome), outcome.submission
             try:
                 attempt, stored, loaded, outcome = await self._persist_outcome(user_id, attempt, stored, loaded, profile,
@@ -598,7 +601,7 @@ class PracticeService:
             self._start_feedback(user_id, attempt_id, outcome.submission, words)
             return (self._submission_view(outcome.submission, outcome, attempt.next_question,
                                           xp_earned=self._xp_for(attempt, outcome.submission),
-                                          coins_earned=self._coins_for(attempt, outcome.submission)),
+                                          coins_earned=self._coins_for(attempt, outcome.submission), language=attempt.ctx.language),
                     self._view(attempt, stored, loaded, stored.row["practice_language"]))
 
     async def skip_follow_up(self, user_id: uuid.UUID, attempt_id: uuid.UUID, turn: int) -> AttemptView:
@@ -610,13 +613,13 @@ class PracticeService:
             if (await peek[0].skip_follow_up(turn, dry_run=True)) == "evaluating":
                 raise ApiError("no_pending_follow_up", "this follow-up's answer is being evaluated")
         except PracticeError as exc:
-            raise ApiError(exc.code, str(exc)) from exc
+            raise ApiError(exc.code, str(exc), reason=exc.reason) from exc
         async with self._lock(attempt_id):
             attempt, stored, loaded, _ = await self._load(user_id, attempt_id)
             try:
                 changed = await attempt.skip_follow_up(turn)
             except PracticeError as exc:
-                raise ApiError(exc.code, str(exc)) from exc
+                raise ApiError(exc.code, str(exc), reason=exc.reason) from exc
             if changed is not None:
                 async with self.store.transaction() as tx:
                     await tx.save_attempt(user_id=user_id, question_id=stored.question_id, row=attempt.attempt_row(),
@@ -749,7 +752,7 @@ class PracticeService:
         suggestion = next_question.suggest(
             current=question, band=main_band, states=attempt.skill_states, candidates=candidates, seen=seen,
             required_levels=attempt.ctx.required_levels, skill_weights=attempt.ctx.skill_weights,
-            skill_labels=self.catalog.skill_labels(), language=language, difficulty_ceiling=attempt.ctx.difficulty_ceiling,
+            skill_labels=self.catalog.skill_labels(language), language=language, difficulty_ceiling=attempt.ctx.difficulty_ceiling,
             struggles=struggles, follow_up_bands=follow_up_bands)
         if suggestion is None:
             attempt.next_question = None
@@ -919,10 +922,11 @@ class PracticeService:
                "unassessed": "{job} weighs {skill} heavily and there is no evidence on it yet.",
                "confirm": "Not enough evidence on {skill} yet; one more answer confirms where you stand.",
                "refresh": "Your evidence on {skill} is old; one answer refreshes it."},
-        "he": {"gap": "{skill} מתחת לרמה ש-{job} דורש; השאלה הזו עובדת על הפער הזה.",
-               "unassessed": "{job} נותן משקל גבוה ל-{skill} ועדיין אין עליו עדות.",
-               "confirm": "עדיין אין מספיק עדות על {skill}; עוד תשובה אחת מאשרת איפה אתם עומדים.",
-               "refresh": "העדות על {skill} ישנה; תשובה אחת מרעננת אותה."},
+        # "הנושא {skill}" throughout, as in plan_router.REASONS: the Hebrew names differ in gender and number
+        "he": {"gap": "הנושא {skill} מתחת לרמה ש-{job} דורש; השאלה הזו עובדת על הפער הזה.",
+               "unassessed": "{job} נותן משקל גבוה לנושא {skill} ועדיין אין עליו עדות.",
+               "confirm": "עדיין אין מספיק עדות על הנושא {skill}; עוד תשובה אחת מאשרת איפה אתם עומדים.",
+               "refresh": "העדות על הנושא {skill} ישנה; תשובה אחת מרעננת אותה."},
     }
 
     async def readiness(self, user_id: uuid.UUID, *, language: str | None = None) -> ReadinessView:
@@ -946,7 +950,7 @@ class PracticeService:
         if exploring:
             job_label = "הלמידה שלכם" if language == "he" else "your learning path"
         required, _, _, plan_skills = self._plan(seniority, goal.selection)
-        by_key = {s.key: s for s in self._skill_rows(profile, required, datetime.now(UTC), None)}
+        by_key = {s.key: s for s in self._skill_rows(profile, required, datetime.now(UTC), None, language)}
         askable = {link.skill for q in self.catalog.questions.values() for link in q.skills}
         questioned = [p for p in plan_skills if p.assessment_mode.value == "questioned" and p.key in self.catalog.skills]
         total = sum(p.combined_weight for p in questioned) or 1.0
@@ -968,7 +972,7 @@ class PracticeService:
             counted = status == "assessed" and freshness != "expired" and level is not None
             if counted:
                 levels[p.key] = level
-            rows.append(ReadinessSkillView(key=p.key, label=skill.label, subject=skill.subject or "",
+            rows.append(ReadinessSkillView(key=p.key, label=skill.name(language), subject=skill.subject or "",
                                            weight_share=round(p.combined_weight / total, 3), required_level=p.required_level,
                                            level=level, status=status, gap=max(0, p.required_level - level) if counted else None,
                                            freshness=freshness, askable=p.key in askable))
@@ -1002,7 +1006,7 @@ class PracticeService:
                    else "confirm" if r.status == "insufficient_evidence" else "unassessed")
             reason = reasons[why].format(skill=r.label, job=job_label)
             if exploring:
-                reason = (f"השאלה הבאה נבחרה כדי לתרגל ולחזק את {r.label}." if language == "he"
+                reason = (f"השאלה הבאה נבחרה כדי לתרגל ולחזק את הנושא {r.label}." if language == "he"
                           else f"This next question helps you practise and strengthen {r.label}.")
             picked.append(ReadinessQuestionView(key=question.key, title=question.text(language).title, skill=r.key,
                                                 skill_label=r.label, why=why,
@@ -1065,18 +1069,18 @@ class PracticeService:
                                                  seniority, language, today)
         now = datetime.now(UTC)
         experience = xp.summarise(xp.from_rows(scored_rows), now.date())
-        skills = self._skill_rows(profile, required, now, experience)
-        subjects = self._subjects(skills, required, weights, bands, servable)
+        skills = self._skill_rows(profile, required, now, experience, language)
+        subjects = self._subjects(skills, required, weights, bands, servable, language)
         return ProgressView(skills=skills, subjects=subjects, recent=recent, attempts_today=started,
                             daily_limit=await self._daily_limit(user_id),
                             overview=self._overview(skills, plan_skills, bands, language, experience),
                             timeline=self._timeline(daily, profile),
-                            plan=self._plan_view(program, goal, today),
+                            plan=self._plan_view(program, goal, today, language),
                             goal=self._goal_view(goal, language),
-                            focus_skills=self._focus_skills(skills, plan_skills, required))
+                            focus_skills=self._focus_skills(skills, plan_skills, required, language))
 
     def _skill_rows(self, profile: LoadedProfile, required: dict[str, int], now: datetime,
-                    experience: xp.XpSummary | None) -> list[SkillProgress]:
+                    experience: xp.XpSummary | None, language: str | None = None) -> list[SkillProgress]:
         """One row per skill the profile knows: level, evidence status, trend, freshness (shared by progress and
         readiness; XP per skill only when the caller computed it)."""
         skills = []
@@ -1096,7 +1100,7 @@ class PracticeService:
             if scores.expired(value) and status.value == "assessed":
                 status = EvidenceStatus.INSUFFICIENT                 # 49+ days: the level is history until re-checked
             skills.append(SkillProgress(
-                key=key, label=catalog_skill.label, subject=catalog_skill.subject or "", level=level, status=status.value,
+                key=key, label=catalog_skill.name(language), subject=catalog_skill.subject or "", level=level, status=status.value,
                 trend=trend, required_level=required.get(key, 2),
                 assessments=sum(1 for t in state.history if t.evidence_weight > 0),
                 last_assessed_at=last.isoformat() if last else (history[-1]["at"] if history else None),
@@ -1109,7 +1113,7 @@ class PracticeService:
     FOCUS_SKILLS = 5
 
     def _focus_skills(self, skills: list[SkillProgress], plan_skills: list[PlanSkill],
-                      required: dict[str, int]) -> list[SkillProgress]:
+                      required: dict[str, int], language: str | None = None) -> list[SkillProgress]:
         """The skills that weigh most in the plan for the user's job type (the job type multiplies the role's weights),
         heaviest first, whether assessed yet or not: what the "Skill strength" card shows. A skill no bank question
         examines is left out (it could never fill; Shaked, 2026-10-04)."""
@@ -1125,7 +1129,8 @@ class PracticeService:
                 out.append(known)
                 continue
             skill = self.catalog.skills[p.key]
-            out.append(SkillProgress(key=p.key, label=skill.label, subject=skill.subject or "", level=None, status="not_assessed",
+            out.append(SkillProgress(key=p.key, label=skill.name(language), subject=skill.subject or "", level=None,
+                                     status="not_assessed",
                                      trend="new", required_level=required.get(p.key, 2), assessments=0, last_assessed_at=None,
                                      retention_due_at=None))
         return out
@@ -1155,7 +1160,7 @@ class PracticeService:
             required, _, _, plan_skills = self._plan(seniority, goal.selection)
             program = await self._ensure_program(tx, user_id, profile, plan_skills, required, servable, history, goal, seniority,
                                                  language, today)
-        return self._program_view(program, goal, today), profile, goal, seniority, servable
+        return self._program_view(program, goal, today, language), profile, goal, seniority, servable
 
     async def start_program_item(self, user_id: uuid.UUID, *, item_id: uuid.UUID | None = None,
                                  language: str | None = None, device: str | None = None) -> ProgramStartView:
@@ -1317,7 +1322,7 @@ class PracticeService:
             day_minutes[day_index] = day_minutes.get(day_index, 0) + item.minutes
             items.append({"day_index": day_index, "mode": item.mode, "skills": item.skills, "reason": item.reason,
                           "minutes": item.minutes, "status": "started", "previous_id": item.id})
-        labels = self.catalog.skill_labels()
+        labels = self.catalog.skill_labels(language)
         for planned in routed:
             signature = (planned.activity.mode, tuple(planned.activity.skills))
             if signature in taken or (planned.day_index, *signature) in done_slots:
@@ -1414,8 +1419,12 @@ class PracticeService:
                 return min(fitting, key=lambda i: (i.status == "started", i.day_index, i.created_at))
         return None
 
-    def _plan_view(self, plan: StoredPlan, goal: Goal, today: date) -> PlanView:
-        labels = self.catalog.skill_labels()
+    def _plan_view(self, plan: StoredPlan, goal: Goal, today: date, language: str | None = None) -> PlanView:
+        """The saved plan as this request reads it. Each item keeps the sentence it was built with (the plan is built
+        once a day), so the reason is told again in the request's language: a user who switches language no longer
+        reads yesterday's language until tomorrow (language verification, 2026-11-14)."""
+        labels = self.catalog.skill_labels(language)
+        names = {known: self.catalog.skill_labels(known) for known in LANGUAGES}
         offset = plan.day_index_of(today)                       # 0 for today's plan; a stale plan shifts by the days elapsed
         views = []
         for item in sorted(plan.items, key=lambda i: (i.day_index, i.created_at)):
@@ -1423,13 +1432,14 @@ class PracticeService:
                 id=str(item.id), day_index=item.day_index - offset,
                 date=(plan.week_start + timedelta(days=item.day_index)).isoformat(), mode=item.mode,
                 skills=[LabelledSkill(key=k, label=labels.get(k, k)) for k in item.skills], minutes=item.minutes,
-                reason=item.reason, done=item.status == "done", status=item.status))
+                reason=plan_router.retell_reason(item.reason, item.skills, language, names) if language else item.reason,
+                done=item.status == "done", status=item.status))
         return PlanView(items=views, minutes_per_day=plan.minutes_per_day, days_to_interview=goal.days_to_interview(today),
                         interview_date=goal.interview_date.isoformat() if goal.interview_date else None,
                         generated_for=plan.week_start.isoformat(), saved=True)
 
-    def _program_view(self, plan: StoredPlan, goal: Goal, today: date) -> ProgramView:
-        view = self._plan_view(plan, goal, today)
+    def _program_view(self, plan: StoredPlan, goal: Goal, today: date, language: str | None = None) -> ProgramView:
+        view = self._plan_view(plan, goal, today, language)
         today_items = [i for i in view.items if i.day_index == 0 and i.status in OPEN]
         today_items.sort(key=lambda i: i.mode == "simulation")                      # interviews last
         done_today = sum(1 for i in view.items if i.day_index == 0 and i.status == "done")
@@ -1505,7 +1515,7 @@ class PracticeService:
                                        recent=history)
 
     def _subjects(self, skills: list[SkillProgress], required: dict[str, int], weights: dict[str, float],
-                  bands: dict[str, dict[str, int]], servable) -> list[SubjectProgress]:
+                  bands: dict[str, dict[str, int]], servable, language: str | None = None) -> list[SubjectProgress]:
         """Roll the per-skill picture up to subjects: what the charts draw."""
         by_key = {s.key: s for s in skills}
         available: dict[str, int] = {}
@@ -1530,7 +1540,7 @@ class PracticeService:
                     levels[str(s.level)] += 1
             subject_bands = {b: bands.get(subject_key, {}).get(b, 0) for b in ("STRONG", "PARTIAL", "WEAK")}
             out.append(SubjectProgress(
-                key=subject_key, label=subject.label, skills_total=len(plan_skills), skills_assessed=assessed,
+                key=subject_key, label=subject.name(language), skills_total=len(plan_skills), skills_assessed=assessed,
                 skills_started=started_n, levels=levels, average_level=round(level_sum / assessed, 2) if assessed else None,
                 bands=subject_bands, attempts=sum(subject_bands.values()),
                 weight=round(sum(weights.get(k, 0.0) for k in plan_skills), 3), questions_available=available.get(subject_key, 0)))
@@ -1683,15 +1693,17 @@ class PracticeService:
 
     @staticmethod
     def _submission_view(submission, outcome: PracticeOutcome | None = None, next_question: dict | None = None,
-                         *, xp_earned: int | None = None, coins_earned: int | None = None) -> SubmissionView:
+                         *, xp_earned: int | None = None, coins_earned: int | None = None,
+                         language: str | None = None) -> SubmissionView:
+        """`language`: the attempt's. The check's sentence is stored in English (the judge reads it) and told here."""
         evaluation = Evaluation.model_validate(submission.evaluation) if submission.evaluation else None
         weight = outcome.evidence_weight if outcome is not None else submission.evidence_weight
         check = None
         if submission.check:
             check = CheckView(type=submission.check.get("type", ""), passed=submission.check.get("passed"),
-                              detail=submission.check.get("detail", ""),
+                              detail=check_text.in_language(submission.check.get("detail", ""), language),
                               mismatches=list(submission.check.get("mismatches") or [])[:8],
-                              execution=submission.check.get("execution"))
+                              execution=check_text.execution_in_language(submission.check.get("execution"), language))
         return SubmissionView(
             revision=submission.revision, key=submission.key, turn=submission.turn, answer=submission.answer, visual=submission.visual,
             status="evaluating" if submission.status == EvaluationStatus.PENDING else submission.status.value,
@@ -1721,7 +1733,8 @@ class PracticeService:
             follow_ups.append(FollowUpView(turn=turn["turn"], question=turn["question"] or "", action=turn.get("action", ""),
                                            created_at=turn.get("created_at", ""),
                                            submission=self._submission_view(sub, xp_earned=self._xp_for(attempt, sub),
-                                                                                 coins_earned=self._coins_for(attempt, sub)) if sub else None,
+                                                                                 coins_earned=self._coins_for(attempt, sub),
+                                                                                 language=attempt.ctx.language) if sub else None,
                                            question_pending=bool(turn.get("wording_pending")),
                                            skipped=bool(turn.get("skipped_at"))))
         pending = attempt.pending_follow_up
@@ -1743,7 +1756,8 @@ class PracticeService:
             hints_remaining=max(0, min(3, len(loaded.question.text(language).hints)) - attempt.hints_used) if main is None else 0,
             reference=attempt.question.text(language).reference_solution if attempt.reference_revealed else None,
             submission=self._submission_view(main, xp_earned=self._xp_for(attempt, main),
-                                                   coins_earned=self._coins_for(attempt, main)) if main else None,
+                                                   coins_earned=self._coins_for(attempt, main),
+                                                   language=attempt.ctx.language) if main else None,
             follow_ups=follow_ups, pending_follow_up=pending_view,
             can_submit=main is None or main.status == EvaluationStatus.FAILED,
             can_retry=latest is not None and latest.status == EvaluationStatus.FAILED and "superseded" not in latest.flags,

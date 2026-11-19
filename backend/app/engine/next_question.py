@@ -36,17 +36,18 @@ REASONS = {
         "explore_after_weak": "No other question on {skill} fits right now; {next_skill} has not been practised yet.",
         "same_skill": "Nothing else is waiting in your plan right now; one more on {skill}.",
     },
+    # "הנושא {skill}" throughout, as in plan_router.REASONS: the Hebrew names differ in gender and number
     "he": {
-        "struggle": "השאלה הבאה מתרגלת שוב {skill}, מזווית פשוטה יותר, כדי שהרעיון הזה יתייצב.",
-        "struggle_other": "הטעות הזו נובעת מ-{skill}; השאלה הבאה מתרגלת אותה מזווית פשוטה יותר.",
-        "reinforce": "התשובה חשפה פער ב-{skill}; השאלה הזו מתרגלת את אותו רעיון מזווית פשוטה יותר.",
-        "consolidate": "הייתם קרובים ב-{skill}; עוד שאלה ברמה הזו תייצב את זה.",
-        "advance": "{skill} נראה יציב כרגע; ב-{next_skill} יש לתוכנית שלכם הכי הרבה מה להרוויח.",
-        "advance_after_weak": "אין כרגע שאלה נוספת על {skill} שמתאימה; {next_skill} היא הבאה בתוכנית שלכם.",
-        "map": "יש מספיק על {skill} בינתיים; {next_skill} היא הכבדה ביותר בתוכנית ועדיין בלי עדות.",
-        "explore": "אין דבר פתוח ב-{skill}; {next_skill} עדיין לא תורגלה.",
-        "explore_after_weak": "אין כרגע שאלה נוספת על {skill} שמתאימה; {next_skill} עדיין לא תורגלה.",
-        "same_skill": "שום דבר אחר לא מחכה בתוכנית כרגע; עוד אחת על {skill}.",
+        "struggle": "השאלה הבאה מתרגלת שוב את הנושא {skill}, מזווית פשוטה יותר, כדי שהרעיון הזה יתייצב.",
+        "struggle_other": "הטעות הזו נובעת מהנושא {skill}; השאלה הבאה מתרגלת אותו מזווית פשוטה יותר.",
+        "reinforce": "התשובה חשפה פער בנושא {skill}; השאלה הזו מתרגלת את אותו רעיון מזווית פשוטה יותר.",
+        "consolidate": "הייתם קרובים בנושא {skill}; עוד שאלה ברמה הזו תייצב את זה.",
+        "advance": "הנושא {skill} נראה יציב כרגע; בנושא {next_skill} יש לתוכנית שלכם הכי הרבה מה להרוויח.",
+        "advance_after_weak": "אין כרגע שאלה נוספת שמתאימה בנושא {skill}; הנושא {next_skill} הוא הבא בתוכנית שלכם.",
+        "map": "יש מספיק על הנושא {skill} בינתיים; הנושא {next_skill} הוא הכבד ביותר בתוכנית ועדיין בלי עדות.",
+        "explore": "אין דבר פתוח בנושא {skill}; את הנושא {next_skill} עדיין לא תרגלתם.",
+        "explore_after_weak": "אין כרגע שאלה נוספת שמתאימה בנושא {skill}; את הנושא {next_skill} עדיין לא תרגלתם.",
+        "same_skill": "שום דבר אחר לא מחכה בתוכנית כרגע; עוד שאלה בנושא {skill}.",
     },
 }
 

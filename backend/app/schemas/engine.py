@@ -138,6 +138,7 @@ class CheckResult(BaseModel):
 class CatalogSkill(BaseModel):
     key: str
     label: str
+    label_he: str | None = None                    # the name shown in Hebrew; the model's prompts keep `label`
     subject: str | None = None                     # parent domain key; None for domain rows
     node_type: str = "skill"
     family: str = "hardware"
@@ -148,6 +149,10 @@ class CatalogSkill(BaseModel):
     prerequisites: list[str] = Field(default_factory=list)
     proficiency_rubric: dict[str, str] = Field(default_factory=dict)
     description: str = ""
+
+    def name(self, language: str | None = None) -> str:
+        """The name a user reads, in their language; English when no Hebrew name is written."""
+        return self.label_he if language == "he" and self.label_he else self.label
 
 
 class RoleSkillRow(BaseModel):

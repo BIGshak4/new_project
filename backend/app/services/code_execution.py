@@ -21,6 +21,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from app.api.errors import ApiError
+from app.engine import check_text
 from app.repo.executions import DbExecutionLedger, MemoryExecutionLedger
 from app.schemas.bank import BankQuestion
 from app.schemas.engine import CheckResult
@@ -86,6 +87,7 @@ class CodeExecutionService:
         self._health: tuple[float, bool] = (0, False)
         self._health_lock = asyncio.Lock()
         self.fixtures = self._load(settings.seeds_dir / "execution_cases.json")
+        check_text.learn_scopes(self.fixtures)             # each question's test-scope sentence, for Hebrew views
 
     @staticmethod
     def _load(path: Path) -> dict:

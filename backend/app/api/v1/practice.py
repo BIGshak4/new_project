@@ -27,6 +27,7 @@ from pydantic import BaseModel, Field
 from app.api.deps import PaidAccess as CurrentAccess
 from app.api.deps import Practice
 from app.api.errors import ApiError
+from app.engine import check_text
 from app.engine.practice import MAX_ANSWER_CHARS
 from app.schemas.api import AttemptView, HintView, SubmissionView
 from app.schemas.execution import ExecutionCapabilities, ExecutionRequest, ExecutionResult
@@ -152,8 +153,12 @@ async def get_attempt(attempt_id: AttemptId, access: CurrentAccess, practice: Pr
 async def execution_capabilities(attempt_id: AttemptId, access: CurrentAccess, practice: Practice):
     attempt, _, _, _ = await practice._load(access.user_id, attempt_id)
     if practice.code_execution is None:
-        return ExecutionCapabilities(available=False, languages=[], tested_languages=[], reason="Code execution is unavailable.")
-    return await practice.code_execution.capabilities(attempt.question)
+        return ExecutionCapabilities(available=False, languages=[], tested_languages=[],
+                                     reason=check_text.in_language("Code execution is unavailable.", attempt.ctx.language))
+    capabilities = await practice.code_execution.capabilities(attempt.question)
+    if capabilities.reason:                                     # told in the attempt's language, like the run's result
+        capabilities.reason = check_text.in_language(capabilities.reason, attempt.ctx.language)
+    return capabilities
 
 
 @router.post("/{attempt_id}/executions", response_model=ExecutionResult,
@@ -162,7 +167,8 @@ async def execute_code(attempt_id: AttemptId, body: ExecutionRequest, access: Cu
     attempt, _, _, _ = await practice._load(access.user_id, attempt_id)
     if practice.code_execution is None:
         raise ApiError("temporarily_unavailable", "Code execution is unavailable.")
-    return await practice.code_execution.execute(access.user_id, f"practice:{attempt_id}", attempt.question, body)
+    result = await practice.code_execution.execute(access.user_id, f"practice:{attempt_id}", attempt.question, body)
+    return check_text.execution_in_language(result, attempt.ctx.language)
 
 
 @router.post("/{attempt_id}/hints/next", response_model=HintResponse, summary="Show the next hint")

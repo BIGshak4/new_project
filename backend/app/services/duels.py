@@ -199,19 +199,22 @@ class DuelService:
         await self.coins.ensure_gift(tx, user_id)
         balance = await tx.coin_balance(user_id)
         if balance < self.rules.duel_stake:
-            raise ApiError("usage_limit", f"a duel costs {self.rules.duel_stake} coins to enter; you have {balance}", status=402)
+            raise ApiError("usage_limit", f"a duel costs {self.rules.duel_stake} coins to enter; you have {balance}", status=402,
+                           reason="coins")
         cap = self.rules.duel_daily_earning_cap
         if cap is not None:
             won = await tx.coin_sum_since(user_id, kinds=("payout",), since=start_of_today(), meta_key="net")
             if won >= cap:
-                raise ApiError("usage_limit", "you reached today's duel winnings; duels open again tomorrow")
+                raise ApiError("usage_limit", "you reached today's duel winnings; duels open again tomorrow",
+                               reason="duel_winnings_daily")
         if self.rules.duel_daily_cap is not None and await tx.duels_accepted_today(user_id) >= self.rules.duel_daily_cap:
-            raise ApiError("usage_limit", "today's duels are used up; more tomorrow")
+            raise ApiError("usage_limit", "today's duels are used up; more tomorrow", reason="daily_duels")
         if other is not None:
             last = await tx.last_duel_between(user_id, other)
             if last is not None and self.clock() - last < timedelta(minutes=self.rules.duel_cooldown_minutes):
                 wait = self.rules.duel_cooldown_minutes
-                raise ApiError("usage_limit", f"you two just duelled; wait {wait} minutes before the next one")
+                raise ApiError("usage_limit", f"you two just duelled; wait {wait} minutes before the next one",
+                               reason="duel_cooldown")
 
     # ------------------------------------------------------------------ actions
 

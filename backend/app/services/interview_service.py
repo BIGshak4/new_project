@@ -27,6 +27,7 @@ from datetime import UTC, datetime
 from app.api.errors import ApiError
 from app.engine import (
     bank,
+    check_text,
     checks,
     evaluator,
     generator,
@@ -127,7 +128,7 @@ class InterviewService:
             started = await tx.sessions_started_today(user_id)
             if started >= self.config.daily_limit:
                 raise ApiError("usage_limit", f"you have started {started} interviews today; the limit is "
-                               f"{self.config.daily_limit}", headers={"Retry-After": "3600"})
+                               f"{self.config.daily_limit}", headers={"Retry-After": "3600"}, reason="daily_interviews")
             await monthly_budget_left(tx, user_id, self.config.monthly_budget_usd)
             profile = await tx.load_profile(user_id)
             goal = await tx.load_goal(user_id)
@@ -170,7 +171,7 @@ class InterviewService:
             started = await tx.sessions_started_today(user_id)
             if started >= self.config.daily_limit:
                 raise ApiError("usage_limit", f"you have started {started} interviews today; the limit is "
-                               f"{self.config.daily_limit}", headers={"Retry-After": "3600"})
+                               f"{self.config.daily_limit}", headers={"Retry-After": "3600"}, reason="daily_interviews")
             await tx.save_session(user_id=user_id, row=row, turns=turns, plan=row["config"]["plan"],
                                   role_slug=self.config.role, company_slug=self.config.company)
         return self._view(StoredSession(id=session_id, user_id=user_id, row=row, turns=turns), state)
@@ -226,7 +227,8 @@ class InterviewService:
             tries = int(meta.get("tries") or 0)
             if tries >= MAX_JUDGE_CALLS_PER_TURN:
                 raise ApiError("usage_limit", "this answer could not be evaluated after several tries; it is saved. "
-                                              "End the interview to see the report on the answers that were.")
+                                              "End the interview to see the report on the answers that were.",
+                               reason="evaluation_tries")
 
             # 1. keep the answer before the model is called
             now = self._stamp()
@@ -400,7 +402,7 @@ class InterviewService:
             since = await self._since_last_time(user_id, row, data)
             wrapper = row["state"]
             if self._current_narrative(wrapper) is None and self.config.narrative:
-                labels = self.catalog.skill_labels()
+                labels = self.catalog.skill_labels(language)
                 text, source = await reporter.narrative(self.provider, data, language=language, labels=labels,
                                                         glossary=self.catalog.glossary,
                                                         since_last_time=(since or {}).get("skills"))
@@ -694,7 +696,7 @@ class InterviewService:
             before = self._report_data(state, plan, stored.row)
         except (KeyError, ValueError):                    # an older row the current schema cannot read: no comparison
             return None
-        labels = self.catalog.skill_labels()
+        labels = self.catalog.skill_labels(row["config"].get("language"))
         earlier = {a.key: a.proficiency_level for a in before.assessments if a.proficiency_level is not None}
         changes = []
         for a in data.assessments:
@@ -806,7 +808,7 @@ class InterviewService:
     def _report_view(self, stored: StoredSession, data: ReportData, *, since: dict | None = None) -> InterviewReportView:
         row, language = stored.row, stored.row["config"]["language"]
         narrative = self._current_narrative(row["state"])
-        labels = self.catalog.skill_labels()
+        labels = self.catalog.skill_labels(language)
         since = since or {}
 
         def labelled(keys: list[str]) -> list[LabelledSkill]:
@@ -854,7 +856,7 @@ class InterviewService:
         if question and question.prompt_with_code(language) == turn["question_text"]:
             wordings = question.additional_wordings(language)
         return InterviewTurnView(
-            index=turn["turn_index"], skill=skill, skill_label=catalog_skill.label if catalog_skill else skill,
+            index=turn["turn_index"], skill=skill, skill_label=catalog_skill.name(language) if catalog_skill else skill,
             subject=(catalog_skill.subject if catalog_skill else None) or "",
             archetype=turn["question_archetype"], question=turn["question_text"], question_key=turn.get("question_key"),
             additional_wordings=wordings,
@@ -868,9 +870,11 @@ class InterviewService:
             band=meta.get("band") if revealed else None, summary=meta.get("summary") if revealed else None,
             key_points_hit=meta.get("key_points_hit", []) if revealed else [],
             key_points_missed=meta.get("key_points_missed", []) if revealed else [],
-            check=CheckView(type=check.get("type", ""), passed=check.get("passed"), detail=check.get("detail", ""),
+            check=CheckView(type=check.get("type", ""), passed=check.get("passed"),
+                            detail=check_text.in_language(check.get("detail", ""), language),
                             mismatches=list(check.get("mismatches") or [])[:8],
-                            execution=check.get("execution")) if revealed and check else None,
+                            execution=check_text.execution_in_language(check.get("execution"), language))
+            if revealed and check else None,
             action_after=meta.get("action_after") if revealed else None,
             subject_switch=bool(meta.get("subject_switch", False)), closing=bool(meta.get("closing")),
             related=(scores.OFF_TOPIC_FLAG not in (meta.get("flags") or [])) if revealed else True,
@@ -896,7 +900,7 @@ class InterviewService:
         if open_turn is not None and not completed:            # the clock keeps running while the question is open
             asked = datetime.fromisoformat(open_turn.get("asked_at") or open_turn["created_at"])
             remaining = max(0.0, remaining - (self.clock() - asked).total_seconds() / 60)
-        labels = self.catalog.skill_labels()
+        labels = self.catalog.skill_labels(language)
         plan = [InterviewPlanSkill(skill=p["key"], label=labels.get(p["key"], p["key"]), subject=p["subject"],
                                    importance=p["importance"], required_level=p["required_level"],
                                    planned_turns=p.get("planned_turns", 0))

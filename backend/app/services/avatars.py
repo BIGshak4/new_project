@@ -101,7 +101,7 @@ class AvatarsService:
                 await self.coins.ensure_gift(tx, user_id)
                 price = item["price"]
                 if await tx.coin_balance(user_id) < price:
-                    raise ApiError("usage_limit", "not enough coins for this skin", status=402)
+                    raise ApiError("usage_limit", "not enough coins for this skin", status=402, reason="coins")
                 if price:
                     await tx.coin_add(user_id=user_id, delta=-price, kind="spend", reference=f"cosmetic:{skin}",
                                       item=skin, meta={"cosmetic_skin": skin})

@@ -34,4 +34,5 @@ async def monthly_budget_left(tx, user_id: uuid.UUID, budget_usd: float) -> None
         return
     if spent >= budget_usd:
         raise ApiError("usage_limit", "you have reached this month's practice allowance; it starts again on the 1st",
+                       reason="monthly_budget",
                        headers={"Retry-After": "86400"})

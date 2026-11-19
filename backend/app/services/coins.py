@@ -298,7 +298,8 @@ class CoinsService:
             await self.ensure_gift(tx, user_id)
             balance = await tx.coin_balance(user_id)
             if balance < item.price:
-                raise ApiError("usage_limit", f"not enough coins: this costs {item.price}, you have {balance}", status=402)
+                raise ApiError("usage_limit", f"not enough coins: this costs {item.price}, you have {balance}", status=402,
+                               reason="coins")
             reference = f"buy:{item.key}:{uuid.uuid4()}"
             try:
                 await tx.coin_add(user_id=user_id, delta=-item.price, kind="spend", reference=reference, item=item.key,

@@ -236,7 +236,8 @@ class StreamLimits:
             # client addresses or one shared one (every user in one 1,800/min bucket), which no other line records
             logging.getLogger("app").warning("rate limit: peer=%s caller=%s path=%s", self._network(scope),
                                              self._caller(scope)[:2], str(scope.get("path", ""))[:80].replace("\n", " "))
-            response = JSONResponse({"error": {"code": "usage_limit", "message": "too many requests; slow down for a minute"}},
+            response = JSONResponse({"error": {"code": "usage_limit", "message": "too many requests; slow down for a minute",
+                                               "reason": "rate_limit"}},
                                     status_code=429, headers={"Retry-After": "60"})
             return await response(scope, receive, send)
         state = {"received": 0, "too_large": False, "started": False}

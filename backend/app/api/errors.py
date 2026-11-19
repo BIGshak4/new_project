@@ -30,12 +30,34 @@ STATUS_FOR_CODE = {
     "temporarily_unavailable": 503,
 }
 
+# `usage_limit` covers every allowance and every "not enough coins". The screen cannot tell them apart by the code,
+# and showed all of them as "daily limit, try tomorrow" (language verification, 2026-11-14), so each one says which
+# it is in `error.reason`. The message stays English and is for logs; the web app writes its own words per reason.
+USAGE_LIMIT_REASONS = (
+    "daily_attempts",            # practice attempts started today
+    "daily_interviews",          # mock interviews started today
+    "monthly_budget",            # this month's practice allowance (services/budget.py)
+    "evaluation_tries",          # one answer sent to the judge too many times; the answer is saved
+    "rate_limit",                # too many requests in a minute
+    "quiz_rounds",               # the day's practice rounds of the quiz game
+    "coins",                     # not enough coins for this purchase or stake (HTTP 402)
+    "daily_duels",               # the day's duels
+    "duel_winnings_daily",       # the day's ceiling on coins won in duels
+    "duel_cooldown",             # the same two players, too soon
+    "code_runs_daily",           # the day's code runs
+    "code_runs_rate",            # code runs in the last minute
+    "code_runner_busy",          # this user's runs in flight
+    "company_sightings_daily",   # new companies reported today
+)
+
 
 class ApiError(Exception):
-    def __init__(self, code: str, message: str, *, status: int | None = None, headers: dict | None = None):
+    def __init__(self, code: str, message: str, *, status: int | None = None, headers: dict | None = None,
+                 reason: str | None = None):
         super().__init__(message)
         self.code = code
         self.message = message
+        self.reason = reason                        # which limit, for `usage_limit` (USAGE_LIMIT_REASONS)
         self.status = status or STATUS_FOR_CODE.get(code, 400)
         self.headers = headers or {}
 
@@ -55,8 +77,10 @@ def is_connection_error(exc: BaseException) -> bool:
     return False
 
 
-def _body(code: str, message: str, details=None) -> dict:
+def _body(code: str, message: str, details=None, reason: str | None = None) -> dict:
     error = {"code": code, "message": message}
+    if reason is not None:
+        error["reason"] = reason
     if details is not None:
         error["details"] = details
     return {"error": error}
@@ -65,7 +89,7 @@ def _body(code: str, message: str, details=None) -> dict:
 def install(app: FastAPI) -> None:
     @app.exception_handler(ApiError)
     async def _api_error(_: Request, exc: ApiError) -> JSONResponse:
-        return JSONResponse(_body(exc.code, exc.message), status_code=exc.status, headers=exc.headers)
+        return JSONResponse(_body(exc.code, exc.message, reason=exc.reason), status_code=exc.status, headers=exc.headers)
 
     @app.exception_handler(StarletteHTTPException)
     @app.exception_handler(HTTPException)

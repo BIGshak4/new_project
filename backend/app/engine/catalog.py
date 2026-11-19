@@ -71,8 +71,9 @@ class Catalog:
     def domains(self) -> dict[str, CatalogSkill]:
         return {k: s for k, s in self.skills.items() if s.node_type == "domain"}
 
-    def skill_labels(self) -> dict[str, str]:
-        return {k: s.label for k, s in self.skills.items()}
+    def skill_labels(self, language: str | None = None) -> dict[str, str]:
+        """Skill and subject names as the user reads them; without a language, the English names."""
+        return {k: s.name(language) for k, s in self.skills.items()}
 
 
 class CatalogError(Exception):
