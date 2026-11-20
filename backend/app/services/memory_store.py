@@ -38,6 +38,7 @@ class InMemoryStore:
         self.metrics: list[dict] = []
         self.usage: list[dict] = []
         self.feedback_allowance = {}
+        self.consents: dict[tuple[uuid.UUID, str, str], dict] = {}   # (user, consent key, version) -> the record
         self.tips: list[dict] = []
         self.sessions: dict[uuid.UUID, dict] = {}                 # interview id -> {user_id, row, turns, plan, created_at}
         self.seniority: dict[uuid.UUID, str] = {}
@@ -77,7 +78,8 @@ class InMemoryStore:
         snapshot = (dict(self.daily_attempts), dict(self.attempts), dict(self.profiles), list(self.metrics), list(self.usage), list(self.tips),
                     dict(self.sessions), dict(self.goals), list(self.sightings), dict(self.plans), dict(self.plan_links),
                     list(self.reports), list(self.coin_ledger), dict(self.duels), dict(self.avatars),
-                    dict(self.identities), dict(self.friendships), dict(self.practice_entries), dict(self.feedback_allowance))
+                    dict(self.identities), dict(self.friendships), dict(self.practice_entries), dict(self.feedback_allowance),
+                    dict(self.consents))
         commits_before = self._commits
         tx = _MemoryTx(self)
         try:
@@ -86,7 +88,8 @@ class InMemoryStore:
             if self._commits == commits_before:
                 (self.daily_attempts, self.attempts, self.profiles, self.metrics, self.usage, self.tips, self.sessions, self.goals,
                  self.sightings, self.plans, self.plan_links, self.reports, self.coin_ledger, self.duels, self.avatars,
-                 self.identities, self.friendships, self.practice_entries, self.feedback_allowance) = snapshot
+                 self.identities, self.friendships, self.practice_entries, self.feedback_allowance,
+                 self.consents) = snapshot
             raise
         else:
             self._commits += 1
@@ -118,6 +121,15 @@ class _MemoryTx:
 
     async def delete_feedback_use(self, user_id, reference):
         self.s.feedback_allowance.pop((user_id, reference), None)
+
+    async def user_consents(self, user_id):
+        rows = [row for (owner, _, _), row in self.s.consents.items() if owner == user_id]
+        return [dict(row) for row in sorted(rows, key=lambda row: row["accepted_at"])]
+
+    async def add_user_consent(self, user_id, *, key, version, policy_version, language, source):
+        self.s.consents.setdefault((user_id, key, version), {
+            "key": key, "version": version, "policy_version": policy_version, "language": language, "source": source,
+            "accepted_at": datetime.now(UTC).isoformat()})
 
     def __init__(self, store: InMemoryStore):
         self.s = store

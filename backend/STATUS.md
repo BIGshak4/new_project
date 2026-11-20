@@ -7,7 +7,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-11-19 (the backend speaks the user's language §5zzk; `master` brought up to `production`) · **Tests:** 7,006 offline, none failing + 22 live (one time-limit failure, §5zzh; not rerun on 2026-11-19) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
+**Last updated:** 2026-11-20 (privacy policy and sign-up consent, a draft until the founders' facts and a lawyer's read §5zzl; the backend speaks the user's language §5zzk; `master` brought up to `production`) · **Tests:** 7,006 offline, none failing + 22 live (one time-limit failure, §5zzh; not rerun on 2026-11-19) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
 
 ---
 
@@ -2535,6 +2535,49 @@ failed** (the clock shows 3 h 51 min because the laptop slept during the run).
 **Not on the live site until Shaked says so** (merge `master` into `production`). Not verified: the screens in a
 browser (Harel's rows 55 to 57), and the real judge was not called (no prompt changed except the report's names).
 
+## 5zzl. The privacy policy and the consent of sign-up (2026-11-20, Shaked: "check the legal file harel did and make a privacy that the user agrees to when he signs; he needs to agree for us collecting data to adjust the program for each user specifically"; "the sign up sounds good use it")
+
+**What Harel's legal files ask for** (`reports/דרישות משפטיות לאתר גוברן.md`, the master plan of 2026-10-31, the
+checklist of 2026-11-04; requirements JR-L03, L09, L10): a notice before anything is collected (what, why, who runs
+the site, who receives it, what refusing means, the rights to see and correct); one consent per use, never a box
+that covers every future use; proof kept by the server (who, when, which text version); a policy that describes
+what the site really does; no page with a blank or an invented contact; a lawyer's read before commercial reliance.
+The site had none of it: no privacy page, no notice at sign-up, no record.
+
+**Built (backend, content, a migration file; nothing in `apps/web`, nothing applied to the database):**
+
+- `seeds/legal/privacy.he.md`, `privacy.en.md`: the policy, twelve sections, written from what the code collects and
+  where it goes today (Supabase, DigitalOcean, OpenAI, Vercel's code runner; the legal report still named Anthropic,
+  Netlify and Render). A test holds the two languages to the same sections and vendors, and holds section 5's promise
+  ("no name, e-mail or account id goes to OpenAI") against the code that builds the model's requests.
+- `seeds/legal/legal.json`: the version (`2026-11-20`), the status (**`draft`**), three facts only the founders can
+  give (`operator`, `contact_email`, `minimum_age`), eleven open items, and the one consent, `personalisation`, in the
+  Hebrew Shaked approved and its English.
+- `services/legal.py`, `api/v1/legal.py`: `GET /v1/legal/privacy` and `GET /v1/legal/consents` are public (the
+  policy is read before an account exists); `GET` and `POST /v1/me/consents` read and record the signed-in user's
+  consent: the verified account, the server's clock, the text's version, the language shown, the screen (`signup`
+  or `prompt`). No IP address. A repeat changes nothing; a new text version asks everyone again.
+- `REQUIRE_PRIVACY_CONSENT` (off): on, a user who has not agreed gets 403 `consent_required` on the practice and
+  interview routes; who-am-I and the consent routes stay open so the prompt can be shown. `/health` (detailed)
+  shows `privacy_consent: off | draft | required`.
+- `supabase/migrations/20261120090000_user_consent.sql`: one table, API-only (RLS on, no browser grant, insert and
+  select for the server). **Dry run OK, NOT applied.**
+
+**Nothing is live in effect, by design.** While the policy is a draft the public route answers 404, the consent
+list is empty, no consent can be recorded, the table is never read and nobody is blocked, whatever the switch
+says. A published policy with a missing fact refuses to load. So this code can be deployed before the migration
+and before the screens without changing anything a user sees.
+
+**To turn it on, in this order:** (1) Shaked and Harel fill the three facts and settle the open items in
+`legal.json` (the Supabase region, OpenAI's account data settings, the old Render and Netlify copies, who handles
+a request to close an account, the minimum age); (2) an Israeli lawyer reads both language versions; (3) Shaked
+approves the migration and it is applied; (4) Harel builds rows 58 to 61 (the page, the box, the one-time prompt
+for the 20 existing accounts); (5) `status` becomes `published`; (6) `REQUIRE_PRIVACY_CONSENT=true` on the server.
+
+**Verified.** `tests/test_legal_consent_2026_11_20.py`, 15 tests (the documents, the draft's silence, recording,
+a new version, the switch, sign-up to first question over HTTP). Offline suite: **7,025 passed / 13 skipped / 0 failed**. Not verified: any
+screen; the table on the real database (not applied); the legal wording (not a lawyer's work).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -2575,6 +2618,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-20 | The privacy policy and the consent of sign-up (§5zzl): the policy in Hebrew and English written from what the code collects, one consent (personalisation) in the wording Shaked approved, public routes for both, a server-side record of who agreed to which text and when, a switch that blocks practice until agreed. All of it is inert while the policy is a draft: it waits for the operator's name, a contact address, the minimum age, a lawyer's read, the migration (dry run OK, not applied) and Harel's screens (rows 58 to 61). |
 | 2026-11-19 | The backend speaks the user's language (§5zzk): Hebrew names for the 41 skills and subjects, used in every view; `error.reason` on every `usage_limit` (fourteen reasons); the automatic check's and the code runner's sentences told in the attempt's language; a saved plan's reasons told in the language of the request; the plain interview report without English words. `master` brought up to `production` first. No database change. On `master`; not on the live site until Shaked says so. |
 | 2026-11-14 | Grader v3 released to the live site (`6231df3` contains the merge; merged suite 6,310 passed, none failed). The two languages verified (§5zzj): English clean; in Hebrew the backend still names the 41 skills, the check results and the code-run texts in English; the web app's items are rows 44 to 54 of `docs/harel-todo-2026-11-14.md`; eight of fourteen screens could not be photographed because the harness is behind the current pages. |
 | 2026-11-14 | A right answer is a strong answer (§5zzi): evaluator v3 scores correctness on the results the question asks for, never on what was left unexplained; every correct answer is STRONG (lean, 0.8 evidence, when the reasoning is thin); a passed truth-table or code check floors correctness at 0.80. Measured on the real judge with `scripts/grade_both_sides.py` and the review set. On `master`; not on the live site until Shaked says so. |

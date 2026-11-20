@@ -18,6 +18,7 @@ from app.services.coins import CoinsService
 from app.services.duels import DuelService
 from app.services.identity import IdentityService
 from app.services.interview_service import InterviewService
+from app.services.legal import LegalService
 from app.services.practice_service import PracticeService
 
 
@@ -54,6 +55,9 @@ async def paid_access(request: Request, access: Annotated[Access, Depends(curren
     billing = getattr(runtime, "billing", None)
     if billing is not None and not await billing.is_entitled(access.user_id):
         raise ApiError("payment_required", "this account has no active plan; choose one on the payment page", status=402)
+    legal = getattr(runtime, "legal", None)
+    if legal is not None:
+        await legal.check(access.user_id)              # 403 consent_required, when that is enforced (services/legal.py)
     return access
 
 
@@ -99,6 +103,13 @@ def interview_service(request: Request) -> InterviewService:
     return runtime.interview
 
 
+def legal_service(request: Request) -> LegalService:
+    runtime = getattr(request.app.state, "runtime", None)
+    if runtime is None or getattr(runtime, "legal", None) is None:
+        raise ApiError("evaluation_unavailable", "the legal documents are not loaded", status=503)
+    return runtime.legal
+
+
 def identity_service(request: Request) -> IdentityService:
     runtime = getattr(request.app.state, "runtime", None)
     if runtime is None or getattr(runtime, "identities", None) is None:
@@ -115,3 +126,4 @@ Duels = Annotated[DuelService, Depends(duel_service)]
 Practice = Annotated[PracticeService, Depends(practice_service)]
 Interview = Annotated[InterviewService, Depends(interview_service)]
 Identities = Annotated[IdentityService, Depends(identity_service)]
+Legal = Annotated[LegalService, Depends(legal_service)]

@@ -26,6 +26,7 @@ STATUS_FOR_CODE = {
     "stale_version": 409,
     "no_reviewed_questions": 409,              # the bank has no reviewed question for this role/plan yet
     "usage_limit": 429, "monthly_feedback_limit": 429, "payment_required": 402,
+    "consent_required": 403,                   # the privacy consent of sign-up has not been given (services/legal.py)
     "evaluation_unavailable": 503,
     "temporarily_unavailable": 503,
 }

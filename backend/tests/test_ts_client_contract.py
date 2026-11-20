@@ -46,7 +46,9 @@ PENDING_IN_CLIENT = {"SkillProgress": {"expired"},         # evidence older than
 # New routes the web client does not call yet, for the same reason; remove once practice-api.ts calls them.
 PENDING_ROUTES_IN_CLIENT: set[tuple[str, str]] = {        # the payment screen is Harel's next item (2026-10-20)
     ("GET", "/v1/me/billing"), ("POST", "/v1/me/billing/checkout"), ("POST", "/v1/me/billing/portal"),
-    ("POST", "/v1/me/coins/buy")}                     # the coins shop is separate from the game wallet
+    ("POST", "/v1/me/coins/buy"),                     # the coins shop is separate from the game wallet
+    # the privacy page and the sign-up consent are Harel's rows 58 to 61 (2026-11-20)
+    ("GET", "/v1/legal/privacy"), ("GET", "/v1/legal/consents"), ("GET", "/v1/me/consents"), ("POST", "/v1/me/consents")}
 
 
 def ts_fields(source: str, type_name: str) -> set[str]:
@@ -139,7 +141,8 @@ def test_every_v1_route_is_called_by_the_client(spec, source):
 def test_error_codes_are_typed(spec, source):
     from app.api.errors import STATUS_FOR_CODE
     typed = set(re.findall(r'\|\s*"(\w+)"', source.split("export type ApiErrorCode")[1].split(";")[0]))
-    pending = {"payment_required"}            # the payment screen is Harel's next item (2026-10-20)
+    # the payment screen is Harel's next item (2026-10-20); the consent prompt is his row 60 (2026-11-20)
+    pending = {"payment_required", "consent_required"}
     assert set(STATUS_FOR_CODE) - pending <= typed, set(STATUS_FOR_CODE) - typed
 
 

@@ -59,6 +59,9 @@ class Tx(Protocol):
     async def has_feedback_use(self, user_id: uuid.UUID, reference: uuid.UUID) -> bool: ...
     async def add_feedback_use(self, user_id: uuid.UUID, reference: uuid.UUID, month: date) -> None: ...
     async def delete_feedback_use(self, user_id: uuid.UUID, reference: uuid.UUID) -> None: ...
+    async def user_consents(self, user_id: uuid.UUID) -> list[dict]: ...
+    async def add_user_consent(self, user_id: uuid.UUID, *, key: str, version: str, policy_version: str,
+                               language: str, source: str) -> None: ...
     async def lock_usage(self, user_id: uuid.UUID, scope: str) -> None: ...
     async def daily_attempt(self, user_id: uuid.UUID, day: date, puzzle_key: str | None, *, for_update: bool = False) -> dict | None: ...
     async def save_daily_attempt(self, row: dict) -> None: ...
@@ -211,6 +214,22 @@ class DbTx:
         await self.connection.execute(text(
             "delete from public.feedback_allowance_use where user_id = :uid and reference_id = :ref"
         ), {"uid": user_id, "ref": reference})
+
+    async def user_consents(self, user_id):
+        """Every consent this user gave, oldest first (services/legal.py); `accepted_at` is the database's clock."""
+        rows = await self.connection.execute(text(
+            "select consent_key, version, policy_version, language, source, accepted_at from public.user_consent "
+            "where user_id = :uid order by accepted_at"), {"uid": user_id})
+        return [{"key": r.consent_key, "version": r.version, "policy_version": r.policy_version, "language": r.language,
+                 "source": r.source, "accepted_at": r.accepted_at.isoformat()} for r in rows]
+
+    async def add_user_consent(self, user_id, *, key, version, policy_version, language, source):
+        # the first agreement to a text is the record; agreeing again to the same text changes nothing
+        await self.connection.execute(text(
+            "insert into public.user_consent(user_id, consent_key, version, policy_version, language, source) "
+            "values (:uid, :key, :version, :policy, :language, :source) on conflict do nothing"),
+            {"uid": user_id, "key": key, "version": version, "policy": policy_version, "language": language,
+             "source": source})
 
     def __init__(self, connection: AsyncConnection, *, allow_in_review: bool):
         self.connection = connection

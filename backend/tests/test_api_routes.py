@@ -463,6 +463,8 @@ def every_route():
         ("POST", "/v1/me/avatar/buy", {"skin": "aurora"}),
         ("POST", "/v1/me/avatar/onboarding", {}),
         # Permanent own-account identity and participant-only friendship actions.
+        ("GET", "/v1/me/consents", None),
+        ("POST", "/v1/me/consents", {"key": "personalisation", "version": "x", "language": "he", "source": "signup"}),
         ("GET", "/v1/me/identity", None),
         ("PUT", "/v1/me/identity/username", {"username": "SafeName"}),
         ("GET", "/v1/me/friends", None), ("POST", "/v1/me/friends/requests", {"friend_code": "ABCDEF01"}),
@@ -514,7 +516,8 @@ class TestEveryRouteIsProtected:
         normalized = {(m, p.replace("/v1/duels/{attempt_id}", "/v1/duels/{duel_id}")) for m, p in normalized}
         normalized = {(m, p.replace("/v1/me/friends/requests/{attempt_id}", "/v1/me/friends/requests/{request_id}")
                        .replace("/v1/me/friends/{attempt_id}", "/v1/me/friends/{user_id}")) for m, p in normalized}
-        public = {("GET", "/v1/usernames/availability")}
+        # the policy and the consent text are read before an account exists (services/legal.py)
+        public = {("GET", "/v1/usernames/availability"), ("GET", "/v1/legal/privacy"), ("GET", "/v1/legal/consents")}
         assert v1 == normalized | public, f"routes without a protection test: {v1 - normalized - public}"
 
     async def test_username_availability_is_explicitly_public_without_account_details(self, client):

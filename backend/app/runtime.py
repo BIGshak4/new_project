@@ -28,6 +28,7 @@ from app.services.duels import DuelService, load_quiz
 from app.services.fundamentals import FundamentalsService, load_fundamentals_catalog
 from app.services.identity import IdentityService
 from app.services.interview_service import InterviewConfig, InterviewService
+from app.services.legal import LegalService, load_documents
 from app.services.memory_store import InMemoryStore
 from app.services.practice_service import PracticeService, ServiceConfig
 from app.services.storage_images import StorageImageFetcher
@@ -50,6 +51,7 @@ class Runtime:
     avatars: AvatarsService | None = None             # persistent logical-component customization and cosmetic ownership
     code_execution: CodeExecutionService | None = None
     identities: IdentityService | None = None
+    legal: LegalService | None = None                 # the privacy policy and the sign-up consent
     daily_puzzle: DailyPuzzleService | None = None
     daily_grading: DailyPuzzleGrading | None = None
     warmer: JudgeWarmer | None = None                 # warms the judge's prompt cache when a question is opened
@@ -156,6 +158,8 @@ def build_runtime(settings: Settings, *, catalog: Catalog | None = None, provide
     runtime.daily_grading = DailyPuzzleGrading(runtime.daily_puzzle, practice)
     runtime.code_execution = CodeExecutionService(settings, database=kind == "database")
     runtime.identities = IdentityService(store, runtime.avatars)
+    runtime.legal = LegalService(store, load_documents(settings.seeds_dir / "legal"),
+                                 require_consent=settings.require_privacy_consent)
     practice.code_execution = runtime.code_execution
     runtime.interview.code_execution = runtime.code_execution
     runtime.duels.code_execution = runtime.code_execution

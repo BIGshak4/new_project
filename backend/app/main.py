@@ -43,6 +43,7 @@ from app.api.v1 import (
     fundamentals,
     identity,
     interviews,
+    legal,
     me,
     meta,
     practice,
@@ -115,6 +116,7 @@ app.include_router(duels.router)
 app.include_router(daily_puzzle.router)
 app.include_router(avatars.router)
 app.include_router(identity.router)
+app.include_router(legal.router)
 
 
 MAX_BODY_BYTES = 256 * 1024          # an answer is at most 20 000 characters; anything larger is not a request we serve
@@ -393,7 +395,9 @@ async def health(request: Request, db_check: bool = False) -> dict:
             "code_execution": _code_execution_health(runtime),
             "assess_unreviewed_questions": settings.assess_unreviewed_questions,
             # one user's model spend a month, in shekels; 0 = no ceiling (2026-11-14)
-            "monthly_user_budget_ils": settings.monthly_user_budget_ils}
+            "monthly_user_budget_ils": settings.monthly_user_budget_ils,
+            # the sign-up consent (2026-11-20): off | draft (switch on, policy not published: nobody blocked) | required
+            "privacy_consent": _privacy_consent_health(runtime, settings)}
     if not detailed:
         body = {k: body[k] for k in ("status", "engine_version", "source_revision", "llm_provider") if k in body}
     else:
@@ -407,6 +411,13 @@ async def health(request: Request, db_check: bool = False) -> dict:
         except Exception as exc:                                  # noqa: BLE001 - reported, never raised
             body["database"] = {"error": type(exc).__name__}
     return body
+
+
+def _privacy_consent_health(runtime, settings) -> str:
+    legal = getattr(runtime, "legal", None)
+    if not settings.require_privacy_consent or legal is None:
+        return "off"
+    return "required" if legal.enforced else "draft"
 
 
 def _code_execution_health(runtime) -> dict | None:

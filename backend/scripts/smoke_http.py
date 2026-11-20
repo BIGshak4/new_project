@@ -56,6 +56,7 @@ V1_ROUTES = {
     ("GET", "/v1/practice/attempts/{attempt_id}/execution-capabilities"), ("POST", "/v1/practice/attempts/{attempt_id}/executions"),
     # Harel's permanent usernames, friend codes, account activity and interview history deletion (2026-11-04/05)
     ("GET", "/v1/me/identity"), ("PUT", "/v1/me/identity/username"), ("GET", "/v1/usernames/availability"),
+    ("GET", "/v1/legal/privacy"), ("GET", "/v1/legal/consents"), ("GET", "/v1/me/consents"), ("POST", "/v1/me/consents"),
     ("GET", "/v1/me/friends"), ("POST", "/v1/me/friends/requests"),
     ("POST", "/v1/me/friends/requests/{request_id}/accept"), ("POST", "/v1/me/friends/requests/{request_id}/decline"),
     ("DELETE", "/v1/me/friends/requests/{request_id}"), ("DELETE", "/v1/me/friends/{user_id}"),

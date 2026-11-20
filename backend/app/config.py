@@ -55,6 +55,10 @@ class Settings(BaseSettings):
     stripe_price_regular: str | None = None            # the Stripe price id behind seeds/billing_plans.json "regular" (30 a day)
     stripe_price_premium: str | None = None            # ... and "premium" (50 a day)
     require_payment: bool = False
+    # The privacy consent of sign-up (Shaked, 2026-11-19). On: a user who has not agreed to the current text gets 403
+    # `consent_required` on the practice and interview routes. It takes effect only once the policy in seeds/legal/
+    # is published; while that is a draft nobody is blocked, whatever this says (services/legal.py).
+    require_privacy_consent: bool = False
     billing_free_option_visible: bool = True
     site_url: str = "https://muxijobrun.com"   # where Stripe sends the user back
 
@@ -303,6 +307,8 @@ class Settings(BaseSettings):
             warnings.append("HEALTH_KEY is not set: /health describes the deployment to anyone")
         if not self.supabase_service_role_key:
             warnings.append("SUPABASE_SERVICE_ROLE_KEY is not set: answer photos are stored but never judged")
+        if self.require_privacy_consent:
+            warnings.append("REQUIRE_PRIVACY_CONSENT=true blocks practice only once seeds/legal/legal.json is published")
         if self.code_execution_enabled and not self.code_execution_signing_seed:
             warnings.append("CODE_EXECUTION_SIGNING_SEED is not set: the runner's tickets are signed with a derived key")
         return warnings
