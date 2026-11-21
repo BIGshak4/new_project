@@ -2604,7 +2604,10 @@ registered body (a policy names who legally answers to the users) and that the s
 The same day Shaked could not get into practice on the live site. Read from the live page's code, the likely cause is
 the gate the live version shows after sign-in when the server requires a consent while the policy is a draft (in
 `master` a draft never blocks anyone). Shaked confirmed the screen: "התרגול האישי ממתין לפרסום מדיניות הפרטיות". So
-every signed-in user is held there, not only him. The fix on the server is `REQUIRE_PRIVACY_CONSENT=false` until the policy is published.
+every signed-in user is held there, not only him. Later the same day the live site was redeployed (`source_revision`
+`72e31a6`, again on no GitHub branch): the wall is replaced by a "study mode" for signed-in users (a quiz that runs in
+the browser and saves nothing to the account, the question catalog, the tour, a line "pilot for ages 18 and up"), and
+personal practice still opens only once the policy is published and the user agrees. The fix on the server is `REQUIRE_PRIVACY_CONSENT=false` until the policy is published.
 
 ## 6. Known gaps and open items
 
