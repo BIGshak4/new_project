@@ -3,20 +3,18 @@
     "version": "2026-11-20",
     "status": "draft",
     "facts": {
-      "operator": null,
-      "contact_email": null,
-      "minimum_age": null
+      "operator": "JobRun",
+      "contact_email": "jobrunerai@gmail.com",
+      "minimum_age": 18
     },
     "open_items": [
-      "operator: the person, partnership or company that runs the site and answers to its users (JR-L01)",
-      "contact_email: a mailbox someone reads, for privacy requests (JR-L09, JR-L35)",
-      "minimum_age: adults only (18) or younger students too; younger needs its own legal check (JR-L33)",
+      "operator: Shaked gave \"JobRun\" (2026-11-21). A policy names who legally answers to the users: if JobRun is registered, print its registered name and number; if not, add the founders' names (JR-L01)",
+      "minimum age is 18 (Shaked, 2026-11-21) and section 12 says so; the sign-up screen does not state it yet (JR-L33)",
       "Supabase project region: section 6 says Europe and the United States; confirm where the database and files are kept (JR-L18)",
       "OpenAI account data controls: confirm the retention and training settings of the account before relying on section 5 (JR-L17, JR-L29)",
       "Vercel code runner: what it keeps of a run and for how long (JR-L17)",
-      "Render and Netlify still run the old copy of the site on the same database: retire them or name them in section 5 (JR-L17)",
+      "the old copies of the site: on 2026-11-21 Netlify answered 404 and the Render server did not answer; whoever holds those accounts confirms they are deleted, otherwise name them in section 5 (JR-L17)",
       "closing an account is done by hand today: agree who handles a request and run one test request end to end (JR-L11, JR-L12)",
-      "no analytics or advertising tool was found in the source; confirm on the live site's network traffic (JR-L19)",
       "the pilot list holds a first name the founders typed for each invited member; section 2 does not list it: remove the names or add the line (JR-L07)",
       "an Israeli lawyer reads both language versions before status becomes published (the legal report, section 1)"
     ]

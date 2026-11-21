@@ -2595,6 +2595,17 @@ itself, its own API and the Supabase project, so no third-party tracking or adve
 old Netlify site answers 404 and the old Render API did not answer within 90 seconds (JR-L17: looks retired, to be
 confirmed by whoever holds those accounts).
 
+**Later on 2026-11-21: the three facts, from Shaked.** Operator "JobRun", contact the team's shared mailbox,
+minimum age 18 (he first said no minimum, then chose 18). On his "go" they are written into `seeds/legal/legal.json`
+on `master` although the live commit is still not pushed: the change is three values and the list of open items, the
+status stays `draft`, nothing is released, and the overlap with the live version of that file is to be settled when
+that commit arrives. The two checks above are in the file too. Open items now: nine, among them whether "JobRun" is a
+registered body (a policy names who legally answers to the users) and that the sign-up screen does not state the age.
+The same day Shaked could not get into practice on the live site. Read from the live page's code, the likely cause is
+the gate the live version shows after sign-in when the server requires a consent while the policy is a draft (in
+`master` a draft never blocks anyone); not confirmed, since neither his session nor the server's setting can be read
+from here. The fix on the server is `REQUIRE_PRIVACY_CONSENT=false` until the policy is published.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.

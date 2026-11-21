@@ -79,7 +79,8 @@ class TestTheDocuments:
     def test_the_real_policy_is_a_draft_that_names_what_is_missing(self):
         documents = load_documents(LEGAL)
         assert documents.status == "draft" and not documents.published
-        assert set(documents.missing_facts) == {"operator", "contact_email", "minimum_age"}
+        # the three facts came from Shaked on 2026-11-21; what keeps it a draft is the list of open items
+        assert documents.missing_facts == ()
         assert len(documents.open_items) >= 8 and any("lawyer" in item for item in documents.open_items)
         assert set(documents.policy) == set(LANGUAGES)
 
@@ -104,9 +105,10 @@ class TestTheDocuments:
             # every outside service the code sends personal data to is named (the report: "a policy of truth")
             for vendor in ("Supabase", "DigitalOcean", "OpenAI", "Vercel"):
                 assert vendor in text, vendor
-            # the facts the founders still owe, each used at least once
-            for fact in ("{operator}", "{contact_email}", "{minimum_age}"):
+            # the facts the founders gave (2026-11-21), each printed and no blank left
+            for fact in ("JobRun", "jobrunerai@gmail.com", "18"):
                 assert fact in text, fact
+            assert "{" not in text
 
     def test_what_the_policy_says_is_sent_to_the_model_is_what_the_code_sends(self):
         """Section 5 promises that no name, e-mail or account id goes to OpenAI: the request the provider builds has
