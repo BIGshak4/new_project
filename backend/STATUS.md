@@ -2603,8 +2603,8 @@ that commit arrives. The two checks above are in the file too. Open items now: n
 registered body (a policy names who legally answers to the users) and that the sign-up screen does not state the age.
 The same day Shaked could not get into practice on the live site. Read from the live page's code, the likely cause is
 the gate the live version shows after sign-in when the server requires a consent while the policy is a draft (in
-`master` a draft never blocks anyone); not confirmed, since neither his session nor the server's setting can be read
-from here. The fix on the server is `REQUIRE_PRIVACY_CONSENT=false` until the policy is published.
+`master` a draft never blocks anyone). Shaked confirmed the screen: "התרגול האישי ממתין לפרסום מדיניות הפרטיות". So
+every signed-in user is held there, not only him. The fix on the server is `REQUIRE_PRIVACY_CONSENT=false` until the policy is published.
 
 ## 6. Known gaps and open items
 
