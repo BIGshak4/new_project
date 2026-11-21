@@ -2578,6 +2578,23 @@ for the 20 existing accounts); (5) `status` becomes `published`; (6) `REQUIRE_PR
 a new version, the switch, sign-up to first question over HTTP). Offline suite: **7,025 passed / 13 skipped / 0 failed**. Not verified: any
 screen; the table on the real database (not applied); the legal wording (not a lawyer's work).
 
+**2026-11-21: the live site is ahead of GitHub.** `https://api.muxijobrun.com/health` reports `source_revision`
+`7eb6433`, a commit that is on no branch of the GitHub repository (`production` there is still `4e645bc`, and the
+last publish run is of 2026-11-18). Compared by its public route list, the live API is `master` (`0018276`, so the
+language fixes of §5zzk and the privacy routes are live) plus work that is not in the repository: a route
+`GET /v1/legal/contact` (it returns the team's shared mailbox) and a `policy_version` field on the consent. The live
+web app has new pages `/privacy`, `/privacy/rights`, `/terms`, `/accessibility` that read those routes; the policy
+itself still answers 404 (draft), the terms page says the terms are not published, and nothing asks for a consent.
+**Until that commit is pushed, do not push `production` from GitHub (it would remove the live pages' routes) and do
+not edit `seeds/legal/` or `services/legal.py` (they were changed there).** Before any release, check that the live
+`source_revision` exists in the repository.
+
+Two open items of `legal.json` checked on the live site the same day (not yet written into the file, for the
+reason above): the site's Content-Security-Policy lets a page load scripts only from itself and connect only to
+itself, its own API and the Supabase project, so no third-party tracking or advertising tool can run (JR-L19); the
+old Netlify site answers 404 and the old Render API did not answer within 90 seconds (JR-L17: looks retired, to be
+confirmed by whoever holds those accounts).
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
