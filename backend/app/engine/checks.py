@@ -32,15 +32,21 @@ MAX_EXPRESSION_LENGTH = 2000
 MAX_NESTING_DEPTH = 32
 
 
+# Every spelling a candidate's keyboard produces is a token here (2026-11-26): a phone turns A' into A’, a textbook
+# writes A⋅B and ¬A, a Verilog answer writes s ? a : b. A spelling that is not a token used to end the expression
+# early, and the part before it was graded as if it were the whole answer.
 _TOKEN_RE = re.compile(
-    r"\s*(?:(?P<const>[01])|(?P<ident>[A-Za-z_][A-Za-z_0-9]*)|(?P<op>\(|\)|~|!|'|&&|&|\*|·|∧|\|\||\||\+|∨|\^|⊕))"
+    r"\s*(?:(?P<const>[01])|(?P<ident>[A-Za-z_][A-Za-z_0-9]*)"
+    r"|(?P<op>\(|\)|~\^|\^~|~|!|¬|'|’|‘|ʼ|′|´|&&|&|\*|·|⋅|∙|•|×|∧|\|\||\||\+|∨|\^|⊕|⊙|\?|:))"
 )
 
-_AND_OPS = {"&", "&&", "*", "·", "∧"}
+_AND_OPS = {"&", "&&", "*", "·", "⋅", "∙", "•", "×", "∧"}
 _OR_OPS = {"|", "||", "+", "∨"}
 _XOR_OPS = {"^", "⊕"}
-_NOT_PREFIX = {"~", "!"}
-_WORD_OPS = {"and": "&", "or": "|", "xor": "^", "not": "~"}
+_XNOR_OPS = {"⊙", "~^", "^~"}
+_NOT_PREFIX = {"~", "!", "¬"}
+_NOT_POSTFIX = {"'", "’", "‘", "ʼ", "′", "´"}
+_WORD_OPS = {"and": "&", "or": "|", "xor": "^", "not": "~", "xnor": "⊙", "nand": "nand", "nor": "nor"}
 
 
 def _tokenize(text: str, variables: list[str]) -> list[str]:
@@ -72,7 +78,7 @@ def _tokenize(text: str, variables: list[str]) -> list[str]:
 
 
 class _Parser:
-    """Precedence: NOT > AND (explicit or by adjacency) > XOR > OR."""
+    """Precedence: NOT > AND, NAND (explicit or by adjacency) > XOR, XNOR > OR, NOR > the conditional `s ? a : b`."""
 
     def __init__(self, tokens: list[str], variables: list[str]):
         self.tokens = tokens
@@ -89,23 +95,46 @@ class _Parser:
         return tok
 
     def parse(self):
-        node = self._or()
+        node = self._conditional()
         if self._peek() is not None:
             raise BooleanParseError(f"unexpected token {self._peek()!r}")
         return node
 
+    def _conditional(self):
+        """`s ? a : b` is (s AND a) OR (NOT s AND b). Each `?` counts as one level of nesting, so a chain is bounded."""
+        node = self._or()
+        if self._peek() != "?":
+            return node
+        self._take()
+        self.depth += 1
+        if self.depth > MAX_NESTING_DEPTH:
+            raise BooleanParseError(f"more than {MAX_NESTING_DEPTH} nested parentheses")
+        when_true = self._conditional()
+        if self._peek() is None:
+            raise BooleanParseError("unexpected end of expression")
+        if self._peek() != ":":
+            raise BooleanParseError(f"unexpected token {self._peek()!r}")
+        self._take()
+        when_false = self._conditional()
+        self.depth -= 1
+        return ("or", ("and", node, when_true), ("and", ("not", node), when_false))
+
     def _or(self):
         node = self._xor()
-        while self._peek() in _OR_OPS:
-            self._take()
+        while self._peek() in _OR_OPS or self._peek() == "nor":
+            negated = self._take() == "nor"
             node = ("or", node, self._xor())
+            if negated:
+                node = ("not", node)
         return node
 
     def _xor(self):
         node = self._and()
-        while self._peek() in _XOR_OPS:
-            self._take()
+        while self._peek() in _XOR_OPS or self._peek() in _XNOR_OPS:
+            negated = self._take() in _XNOR_OPS
             node = ("xor", node, self._and())
+            if negated:
+                node = ("not", node)
         return node
 
     def _starts_operand(self, tok: str | None) -> bool:
@@ -118,6 +147,9 @@ class _Parser:
             if tok in _AND_OPS:
                 self._take()
                 node = ("and", node, self._not())
+            elif tok == "nand":
+                self._take()
+                node = ("not", ("and", node, self._not()))
             elif self._starts_operand(tok):        # adjacency: A B, A(B+C), AB'
                 node = ("and", node, self._not())
             else:
@@ -130,7 +162,7 @@ class _Parser:
             self._take()
             negations += 1
         node = self._atom()
-        while self._peek() == "'":                 # postfix complement: A'
+        while self._peek() in _NOT_POSTFIX:        # postfix complement: A', and the apostrophes a phone types for it
             self._take()
             negations += 1
         return ("not", node) if negations % 2 else node
@@ -144,7 +176,7 @@ class _Parser:
             self.depth += 1
             if self.depth > MAX_NESTING_DEPTH:
                 raise BooleanParseError(f"more than {MAX_NESTING_DEPTH} nested parentheses")
-            node = self._or()
+            node = self._conditional()
             self.depth -= 1
             if self._peek() != ")":
                 raise BooleanParseError("missing closing parenthesis")
@@ -235,29 +267,79 @@ def extract_expression(text: str, variables: list[str], output_name: str | None 
     text, then the last line that parses on its own. Raises BooleanParseError if
     nothing in the answer is an expression over the given variables.
     """
+    text = _collapse_whitespace(text)
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     if output_name:
         pattern = re.compile(rf"(?:^|\W){re.escape(output_name)}\s*=\s*(.+)$", re.IGNORECASE)
         for line in reversed(lines):
             match = pattern.search(line)
             if match:
-                found = _longest_parsable_prefix(match.group(1), variables)
+                found = _stated_expression(_first_statement(match.group(1), variables), variables)
                 if found:
                     return found
-    candidates = [text.strip(), *reversed(lines)]
+    candidates = list(reversed(lines))
     candidates += [line.split("=", 1)[1] for line in reversed(lines) if "=" in line]
-    for candidate in candidates:
+    candidates += [line.rsplit(":", 1)[1] for line in reversed(lines) if ":" in line]   # "A majority vote: AB + BC + AC"
+    # something that is an expression from end to end is believed before anything cut out of a longer text
+    for candidate in [text.strip(), *candidates]:
+        whole = candidate.strip().rstrip(" .;,:")
+        if _reads_as_expression(whole, variables):
+            return whole
+    for candidate in [*candidates, text.strip()]:
         found = _longest_parsable_prefix(candidate, variables)
         if found:
             return found
     raise BooleanParseError("no Boolean expression over " + ", ".join(variables) + " was found in the answer")
 
 
+# What may follow the expression is prose: words, digits and the punctuation of a sentence. If the text that would be
+# cut off holds anything else (an operator, a symbol the parser does not read, a combining overline) or an operator
+# written as a word it does not know, it is the rest of the expression, and grading the part before it marked right
+# answers wrong ("A ⋅ B + A ⋅ C'" graded as "A") and a wrong one right (bug hunt, 2026-11-26). Then nothing is
+# graded: the check says it could not read the answer, and the judge decides without it.
+_EXPRESSION_MARK = re.compile(r"[^\w\s.,;:!?()\[\]\"'’‘“”\-–—/%]|_"
+                              r"|\b(?:implies|iff|equals|nxor|exor|eor|plus|minus|times)\b", re.IGNORECASE)
+_NEXT_ASSIGNMENT = re.compile(r"(?:;|,|\s)\s*([A-Za-z_]\w*)\s*=(?!=)")
+
+
+def _first_statement(text: str, variables: list[str]) -> str:
+    """'E&A1&~A0; Y3 = E&A1&A0' -> 'E&A1&~A0': where another output is assigned, this one's expression is over.
+    A name made of the question's variables is not another output ('A + B = B + A' stays whole)."""
+    known = set(variables)
+    single_letter = all(len(v) == 1 for v in variables)
+    for match in _NEXT_ASSIGNMENT.finditer(text):
+        name = match.group(1)
+        if name in known or name.lower() in _WORD_OPS or (single_letter and all(ch in known for ch in name)):
+            continue
+        return text[:match.start()]
+    return text.split(";", 1)[0]
+
+
+def _reads_as_expression(text: str, variables: list[str]) -> bool:
+    try:
+        return _mentions_variable(parse_boolean(text.strip(), variables))
+    except BooleanParseError:
+        return False
+
+
+def _stated_expression(statement: str, variables: list[str]) -> str | None:
+    """"(A+B)' = A'B'" -> "A'B'": in a chain of equal forms the last one is the answer. Anything else after an equals
+    sign ('AB + AC = alarm when two agree') is not a form, and the part before it is read."""
+    parts = statement.split("=")
+    if len(parts) > 1 and all(_reads_as_expression(part, variables) for part in parts[:-1]):
+        found = _longest_parsable_prefix(parts[-1], variables)
+        if found:
+            return found
+    return _longest_parsable_prefix(parts[0] if len(parts) > 1 else statement, variables)
+
+
 def _longest_parsable_prefix(text: str, variables: list[str]) -> str | None:
     """'AB + AC + BC because each pair suffices' -> 'AB + AC + BC'. Cuts at word boundaries, longest first."""
-    text = text.strip().rstrip(" .;,:")
+    text = _first_statement(text, variables).strip().rstrip(" .;,:")
     cuts = [len(text)] + [m.start() for m in re.finditer(r"\s", text)][::-1]
     for cut in cuts[:80]:
+        if _EXPRESSION_MARK.search(text, cut):
+            return None                            # every shorter cut leaves this operator behind too
         candidate = text[:cut].rstrip(" .;,:")
         if not candidate:
             continue
@@ -374,34 +456,94 @@ _SI_PREFIX = {
     "f": 1e-15, "p": 1e-12, "n": 1e-9, "u": 1e-6, "µ": 1e-6, "μ": 1e-6, "m": 1e-3,
     "": 1.0, "k": 1e3, "K": 1e3, "M": 1e6, "G": 1e9, "T": 1e12,
 }
-_NUMBER_RE = re.compile(r"[-+]?\d+(?:[.,]\d+)?(?:[eE][-+]?\d+)?")
+# 1,493,000 (digit groups) | 1.4 or 1,4 | .6 ; each with an optional exponent
+_NUMBER_RE = re.compile(r"[-+]?(?:\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:[.,]\d+)?|\.\d+)(?:[eE][-+]?\d+)?")
+_GROUPED_NUMBER = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?")
+
+# units written as words: "1400 picoseconds", "1.4e-9 seconds", "1400 psec"
+_UNIT_WORDS = {"second": "s", "seconds": "s", "sec": "s", "secs": "s", "hertz": "Hz", "volt": "V", "volts": "V",
+               "amp": "A", "amps": "A", "ampere": "A", "amperes": "A", "watt": "W", "watts": "W",
+               "farad": "F", "farads": "F", "ohm": "Ω", "ohms": "Ω", "bit": "bit", "bits": "bit"}
+_PREFIX_WORDS = {"femto": "f", "pico": "p", "nano": "n", "micro": "u", "milli": "m", "kilo": "k", "mega": "M",
+                 "giga": "G", "tera": "T"}
+_SAME_BASE = {"ohm": "Ω", "ohms": "Ω", "bits": "bit"}                 # one unit, several spellings
+
+_UNICODE_MINUS = str.maketrans({"−": "-", "﹣": "-", "－": "-"})
+_TIMES_TEN = re.compile(r"(?<=\d) ?[x×*·⋅] ?10 ?\^ ?\(? ?([-+]?\d+) ?\)?")    # 1.4 x 10^-9
+_BARE_TEN = re.compile(r"(?<![\w.,])10 ?\^ ?\(? ?([-+]?\d+) ?\)?")           # 10^8
+
+
+def _same_base(one: str | None, other: str | None) -> bool:
+    if one is None or other is None:
+        return one is other
+    return _SAME_BASE.get(one, one).lower() == _SAME_BASE.get(other, other).lower()
 
 
 def _split_unit(unit: str, base_units: set[str]) -> tuple[float, str] | None:
-    """Split 'ns' into (1e-9, 's') given the known base units."""
+    """Split 'ns' into (1e-9, 's') given the known base units; 'picoseconds' and 'psec' too."""
     unit = unit.strip()
     if unit in base_units:
         return 1.0, unit
     for base in sorted(base_units, key=len, reverse=True):
         if unit.endswith(base) and unit[: -len(base)] in _SI_PREFIX:
             return _SI_PREFIX[unit[: -len(base)]], base
+    word, factor = unit.lower(), 1.0
+    for prefix_word, letter in _PREFIX_WORDS.items():
+        if word.startswith(prefix_word) and word[len(prefix_word):] in _UNIT_WORDS:
+            word, factor = word[len(prefix_word):], _SI_PREFIX[letter]
+            break
+    else:
+        if word[:1] in ("f", "p", "n", "u", "µ", "μ", "m") and word[1:] in ("sec", "secs"):
+            word, factor = word[1:], _SI_PREFIX[word[0]]
+    base = _UNIT_WORDS.get(word)
+    if base is None:
+        return None
+    for known in base_units:
+        if _same_base(known, base):
+            return factor, known
     return None
+
+
+def _normalize_numbers(text: str) -> str:
+    """One spelling for what a number can look like: a typographic minus, and powers of ten written out."""
+    text = _collapse_whitespace(text).translate(_UNICODE_MINUS)
+    text = _TIMES_TEN.sub(lambda m: "e" + m.group(1), text)
+    return _BARE_TEN.sub(lambda m: "1e" + m.group(1), text)
+
+
+def _number_readings(token: str) -> list[float]:
+    """What the written number can mean. '1,493' is 1.493 with a decimal comma and 1493 with a digit group, and the
+    text alone does not say which: both are returned, and the answer is right if either is."""
+    sign = -1.0 if token.startswith("-") else 1.0
+    mantissa, _, exponent = token.lstrip("+-").lower().partition("e")
+    scale = 10.0 ** int(exponent) if exponent else 1.0
+    if _GROUPED_NUMBER.fullmatch(mantissa):
+        grouped = sign * float(mantissa.replace(",", "")) * scale
+        if mantissa.count(",") == 1 and "." not in mantissa:
+            return [sign * float(mantissa.replace(",", ".")) * scale, grouped]
+        return [grouped]
+    return [sign * float(mantissa.replace(",", ".")) * scale]
+
+
+def _quantity_readings(text: str | float | int, base_units: set[str]) -> tuple[list[float], str | None]:
+    if isinstance(text, (int, float)):
+        return [float(text)], None
+    match = _NUMBER_RE.search(text)
+    if not match:
+        raise ValueError("no number found")
+    values = _number_readings(match.group(0))
+    rest = text[match.end():].strip().split()
+    if rest:
+        split = _split_unit(rest[0].strip(".,;)"), base_units)
+        if split:
+            return [value * split[0] for value in values], split[1]
+    return values, None
 
 
 def parse_quantity(text: str | float | int, base_units: set[str]) -> tuple[float, str | None]:
     """Return (value in base units, base unit or None). Raises ValueError if no number is present."""
-    if isinstance(text, (int, float)):
-        return float(text), None
-    match = _NUMBER_RE.search(text)
-    if not match:
-        raise ValueError("no number found")
-    value = float(match.group(0).replace(",", "."))
-    rest = text[match.end():].strip().split()
-    if rest:
-        split = _split_unit(rest[0].strip(".,;"), base_units)
-        if split:
-            return value * split[0], split[1]
-    return value, None
+    values, base = _quantity_readings(text, base_units)
+    return values[0], base
 
 
 # a named value's clause ends at a sentence end, a connective, or where the next assignment (", fmax = ...") begins
@@ -409,6 +551,17 @@ _CLAUSE_END = re.compile(r"[;\n]|\.(?=\s|$)|\s+(?:so|therefore|hence|thus|then|w
                          r"|,\s*(?=[A-Za-z_][\w ]*?\s*(?:=|:|≈|\bis\b))", re.IGNORECASE)
 _QUANTITY_RE = re.compile(rf"({_NUMBER_RE.pattern})\s*([A-Za-zµμΩ]+)?")
 _WHITESPACE_RUN = re.compile(r"\s{2,}")
+_NAME_LINK = r"\s*(?P<link>is|=|:|≈|~|of)?\s*(?:about|approximately|approx\.?)?"
+_BRACKETED = re.compile(r"\([^()]*\)")
+_OTHER_BASE_LITERAL = re.compile(r"(?<![\w.])(?:0[xX][0-9A-Fa-f]+|0[bB][01]+)\b")
+_NEW_ASSIGNMENT = re.compile(r"(?<![\w.])[A-Za-z_]\w*\s*(?:=|≈)")
+_EQUALS = re.compile(r"=|≈")
+_ARITHMETIC = {"+", "-", "*", "/", "×", "·", "⋅", "x", "X"}
+# The work per answer is bounded: a name's clause is read inside this window, and only a name's last occurrences are
+# read. Before, every occurrence rescanned the rest of the answer, so "Tmin=1 " repeated to the 20,000-character cap
+# cost about a minute of processor time before any model call (bug hunt, 2026-11-26; SEC-016 was the blank-run case).
+CLAUSE_WINDOW = 400
+OCCURRENCES_READ = 40
 
 
 def _collapse_whitespace(text: str) -> str:
@@ -418,46 +571,120 @@ def _collapse_whitespace(text: str) -> str:
     return _WHITESPACE_RUN.sub(lambda m: "\n" if "\n" in m.group() else " ", text)
 
 
-def locate_named_value(text: str, names: list[str], *, expected_base: str | None = None,
-                       base_units: set[str] | None = None) -> str | None:
-    """The value the candidate assigns to a named quantity.
+def _written(quantity: re.Match) -> str:
+    return f"{quantity.group(1)} {quantity.group(2) or ''}".strip()
 
-    'Tmin = 1.40 ns, so fmax = 714 MHz' with ['Tmin'] -> '1.40 ns'. With a derivation,
-    'Tmin = 0.12 + 1.10 + 0.18 = 1.40 ns', the result is the LAST quantity in that clause that
-    carries a compatible unit (here ns), not the first number after the name; without any unit
-    in the clause, the last number. The last occurrence of a name wins.
+
+def _stated_value(clause: str, expected_base: str | None, base_units: set[str] | None) -> tuple[str | None, list[str]]:
+    """(the value this clause states for its name, every quantity written in the clause).
+
+    The stated value is None when the clause does not say which number it is. How a clause is read:
+    'Tmin = 0.12 + 1.10 + 0.18 = 1.40 ns' states 1.40 ns (what follows the last equals sign);
+    'Tmin = 1.40 ns (tcq 0.12 ns + ...)' states 1.40 ns (brackets are an aside);
+    'c = 107 because a = 5' states 107 (a new assignment ends the clause);
+    'acc = -31 (0x21)' states -31 (a hexadecimal or binary literal is not a second value);
+    'Tmin = 0.12 + 1.10 + 0.18 ns' states nothing (a sum the candidate did not work out).
+    """
+    clause = _OTHER_BASE_LITERAL.sub(" ", clause)
+    mentioned = [_written(q) for q in _QUANTITY_RE.finditer(clause)]
+    core = clause
+    for _ in range(4):                                             # nested brackets, innermost first
+        without = _BRACKETED.sub(" ", core)
+        if without == core:
+            break
+        core = without
+    core = core.split("(", 1)[0]                                   # a bracket the clause end cut open
+    if not _QUANTITY_RE.search(core):
+        core = clause                                              # 'Tmin = (1.4 ns)': the value was the bracket
+    for start in _NEW_ASSIGNMENT.finditer(core):
+        before = core[:start.start()].rstrip()
+        # 'tcq + tsetup = 1.4' continues the sum, and '33 unsigned = -31 signed' annotates a number
+        if before and before[-1] not in "+-*/×·⋅(=≈" and not before[-1].isdigit():
+            core = before
+            break
+    found: list[re.Match] = []
+    segment = ""
+    for segment in reversed(_EQUALS.split(core)):                  # 'c = 107 = a + b': the last part that has a number
+        found = list(_QUANTITY_RE.finditer(segment))
+        if found:
+            break
+    if not found:
+        return None, mentioned
+    index = 0
+    if expected_base and base_units:
+        for position, quantity in enumerate(found):
+            split = _split_unit((quantity.group(2) or "").strip(".,;"), base_units) if quantity.group(2) else None
+            if split and _same_base(split[1], expected_base):
+                index = position
+                break
+
+    def summed(left: re.Match, right: re.Match) -> bool:
+        between = segment[left.end():right.start()].strip(" ()")
+        return between in _ARITHMETIC or (not between and right.group(1)[0] in "+-")
+
+    if (index + 1 < len(found) and summed(found[index], found[index + 1])) or (index and summed(found[index - 1], found[index])):
+        return None, mentioned
+    return _written(found[index]), mentioned
+
+
+def _named_readings(text: str, names: list[str], expected_base: str | None,
+                    base_units: set[str] | None) -> tuple[str | None, list[str]] | None:
+    """What the answer says about the named quantity: (its stated value or None, every quantity near the name).
+    None when no name is followed by a number.
+
+    A name is a whole word ('c' is not found in 'because', 'acc' not in 'accumulator'). An occurrence that links the
+    name to its value ('N = 4', 'Tmin is 1.4 ns') is believed over one that merely stands next to a number
+    ('3 stages give an MTBF of 2 years'); among equals a later name of the list, then the later occurrence, wins.
     """
     text = _collapse_whitespace(text)
-    found = None
-    for name in names:
-        for match in re.finditer(rf"{re.escape(name)}\s*(?:is|=|:|≈|~|of)?\s*(?:about|approximately|approx\.?)?", text,
-                                 re.IGNORECASE):
-            clause = text[match.end():]
+    best: tuple[tuple[bool, int, int], str | None] | None = None
+    mentioned: list[str] = []
+    for order, name in enumerate(names):
+        pattern = re.compile(rf"(?<![A-Za-z0-9_]){re.escape(name)}(?![A-Za-z0-9_]){_NAME_LINK}", re.IGNORECASE)
+        for match in list(pattern.finditer(text))[-OCCURRENCES_READ:]:
+            clause = text[match.end():match.end() + CLAUSE_WINDOW]
             stop = _CLAUSE_END.search(clause)
-            clause = clause[:stop.start()] if stop else clause
-            quantities = [(q.group(1), q.group(2) or "") for q in _QUANTITY_RE.finditer(clause)]
+            stated, quantities = _stated_value(clause[:stop.start()] if stop else clause, expected_base, base_units)
             if not quantities:
                 continue
-            if expected_base and base_units:
-                compatible = [(n, u) for n, u in quantities
-                              if u and (split := _split_unit(u.strip(".,;"), base_units)) and split[1] == expected_base]
-                if compatible:
-                    found = f"{compatible[-1][0]} {compatible[-1][1]}"
-                    continue
-            number, unit = quantities[-1]
-            found = f"{number} {unit}".strip()
-    return found
+            mentioned += quantities
+            rank = (bool(match.group("link")), order, match.start())
+            if best is None or rank > best[0]:
+                best = (rank, stated)
+    return None if best is None else (best[1], mentioned)
+
+
+def locate_named_value(text: str, names: list[str], *, expected_base: str | None = None,
+                       base_units: set[str] | None = None) -> str | None:
+    """The value the candidate assigns to a named quantity, or None when the answer does not state one.
+
+    'Tmin = 1.40 ns, so fmax = 714 MHz' with ['Tmin'] -> '1.40 ns'. See `_stated_value` for how a clause is read.
+    """
+    read = _named_readings(text, names, expected_base, base_units)
+    return read[0] if read else None
+
+
+NOT_ONE_VALUE = "more than one value could be the answer for {names}; it was not checked automatically"
 
 
 def check_numeric(spec: dict, answer: str | float | int | dict) -> CheckResult:
     """spec: {"expected": 12.5, "unit": "ns", "tolerance_abs": 0.1 | "tolerance_rel": 0.02,
-             "output_names": ["Tmin", "minimum period"]}   # optional: which number in a long answer"""
+             "output_names": ["Tmin", "minimum period"]}   # optional: which number in a long answer
+
+    With `output_names` the check gives a verdict only when the answer is plain about it: passed when the value the
+    answer states for the name is the expected one, failed when no number near the name is, and None (the judge
+    decides without the check) when the stated value is wrong but the expected one stands next to it, or when the
+    answer leaves a sum unfinished. A wrong verdict here caps or lifts the judge's score, so doubt is not a verdict."""
     started = time.perf_counter()
+
+    def result(passed: bool | None, detail: str) -> CheckResult:
+        return CheckResult(type="numeric", passed=passed, detail=detail, runtime_ms=int((time.perf_counter() - started) * 1000))
+
     if isinstance(answer, dict):
         answer = answer.get("value", answer.get("text", ""))
     if isinstance(answer, str):
         # Numeric questions grade the written result, never bits from an attached table.
-        answer = _WRITTEN_TABLE.sub("", answer, count=1)
+        answer = _normalize_numbers(_WRITTEN_TABLE.sub("", answer, count=1))
     names = spec.get("output_names") or ([spec["output_name"]] if spec.get("output_name") else [])
     unit = spec.get("unit")
     base_units = {"s", "Hz", "V", "A", "W", "F", "Ω", "ohm", "b", "B", "bit", "bits"}
@@ -465,38 +692,46 @@ def check_numeric(spec: dict, answer: str | float | int | dict) -> CheckResult:
     if unit:
         split = _split_unit(unit, base_units)
         expected_factor, expected_base = split if split else (1.0, unit)
-    if names and isinstance(answer, str):
-        located = locate_named_value(answer, names, expected_base=expected_base, base_units=base_units)
-        if located is None:
-            return CheckResult(type="numeric", passed=None,
-                               detail=f"no value named {', '.join(names)} was found in the answer",
-                               runtime_ms=int((time.perf_counter() - started) * 1000))
-        answer = located
     expected = float(spec["expected"]) * expected_factor
-
-    try:
-        got, got_base = parse_quantity(answer, base_units)
-    except ValueError as exc:
-        return CheckResult(type="numeric", passed=None, detail=f"could not read a number: {exc}",
-                           runtime_ms=int((time.perf_counter() - started) * 1000))
-    if got_base is None:
-        got *= expected_factor                     # bare number: assume the unit the question asked for
-    elif expected_base and got_base.lower() != expected_base.lower():
-        return CheckResult(type="numeric", passed=False,
-                           detail=f"unit mismatch: expected {expected_base}, got {got_base}",
-                           runtime_ms=int((time.perf_counter() - started) * 1000))
-
     tolerance = spec.get("tolerance_abs")
     if tolerance is not None:
         tolerance = float(tolerance) * expected_factor
     else:
         tolerance = abs(expected) * float(spec.get("tolerance_rel", 0.01))
-    passed = abs(got - expected) <= tolerance + 1e-18
+    slack = 1e-9 * max(abs(expected), abs(tolerance)) + 1e-18      # 3.4 - 3.3 is 0.10000000000000009 in floating point
+
+    def agrees(written: str | float | int) -> bool | None:
+        """True or False when the unit fits; None when it is another kind of unit."""
+        values, base = _quantity_readings(written, base_units)
+        if base is None:
+            values = [value * expected_factor for value in values]    # bare number: assume the unit the question asked for
+        elif expected_base and not _same_base(base, expected_base):
+            return None
+        return any(abs(value - expected) <= tolerance + slack for value in values)
+
+    others: list[str] = []
+    if names and isinstance(answer, str):
+        read = _named_readings(answer, names, expected_base, base_units)
+        if read is None:
+            return result(None, f"no value named {', '.join(names)} was found in the answer")
+        stated, others = read
+        if stated is None:
+            return result(None, NOT_ONE_VALUE.format(names=", ".join(names)))
+        answer = stated
+
+    try:
+        got_values, got_base = _quantity_readings(answer, base_units)
+        passed = agrees(answer)
+    except ValueError as exc:
+        return result(None, f"could not read a number: {exc}")
+    if not passed and any(agrees(other) for other in others):
+        return result(None, NOT_ONE_VALUE.format(names=", ".join(names)))
+    if passed is None:
+        return result(False, f"unit mismatch: expected {expected_base}, got {got_base}")
     shown_unit = f" {unit}" if unit else ""
-    detail = (f"within tolerance of {spec['expected']}{shown_unit}" if passed
-              else f"expected {spec['expected']}{shown_unit}, got {got / expected_factor:g}{shown_unit}")
-    return CheckResult(type="numeric", passed=passed, detail=detail,
-                       runtime_ms=int((time.perf_counter() - started) * 1000))
+    got = got_values[0] * (expected_factor if got_base is None else 1.0)
+    return result(passed, f"within tolerance of {spec['expected']}{shown_unit}" if passed
+                  else f"expected {spec['expected']}{shown_unit}, got {got / expected_factor:g}{shown_unit}")
 
 
 # ----------------------------------------------------------------------------- dispatch

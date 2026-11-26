@@ -294,8 +294,8 @@ class TestTheChecksSentence:
 
     def test_every_reason_an_answer_could_not_be_read(self):
         source = (APP / "engine" / "checks.py").read_text(encoding="utf-8")
-        # a new message needs its Hebrew too ("unexpected token" is raised in two places)
-        assert source.count("raise BooleanParseError(") == len(PARSE_MESSAGES) + 1
+        # a new message needs its Hebrew too (three messages are raised in more than one place: four extra raises)
+        assert source.count("raise BooleanParseError(") == len(PARSE_MESSAGES) + 4
         general = "לא הצלחנו לקרוא את התשובה"
         for message in PARSE_MESSAGES:
             told = told_in_hebrew(f"could not parse the answer: {message}")
@@ -315,11 +315,17 @@ class TestTheChecksSentence:
         details = []
         for name in ("runner.mjs", "job.mjs"):
             source = (RUNNER / name).read_text(encoding="utf-8")
-            details += [m[2] for m in re.finditer(r"detail: ([\"`])(.+?)\1", source)]
-        assert len(details) >= 14
+            # every text of a `detail:`, also both halves of `detail: cond ? "..." : "..."` (five were missed until 2026-11-26)
+            for line in source.splitlines():
+                if "detail: " in line:
+                    details += [m[2] for m in re.finditer(r"([\"`])(.+?)\1", line.split("detail: ", 1)[1])]
+        assert len(set(details)) >= 18
         for detail in details:
             sentence = re.sub(r"\$\{[^}]*\}", "3", detail)
-            assert not re.search(r"[A-Za-z]{2,}", told_in_hebrew(sentence).replace("HDL", "").replace("elaboration", "")), detail
+            told = told_in_hebrew(sentence)
+            for kept in ("HDL", "elaboration", "testbench"):                # terms the glossary keeps in English
+                told = told.replace(kept, "")
+            assert not re.search(r"[A-Za-z]{2,}", told), detail
 
     def test_the_test_scope_follows_in_the_questions_hebrew(self):
         from app.config import get_settings

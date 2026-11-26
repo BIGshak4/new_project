@@ -7,7 +7,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-11-20 (privacy policy and sign-up consent, a draft until the founders' facts and a lawyer's read §5zzl; the backend speaks the user's language §5zzk; `master` brought up to `production`) · **Tests:** 7,006 offline, none failing + 22 live (one time-limit failure, §5zzh; not rerun on 2026-11-19) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
+**Last updated:** 2026-11-26 (a verification, a bug hunt and its first six fixes §5zzm; privacy policy and sign-up consent, a draft until a lawyer's read §5zzl; the backend speaks the user's language §5zzk; `master` brought up to `production`) · **Tests:** 7,126 passed, 13 skipped, 2 failed offline on 2026-11-26 (the failures are two database tests this laptop can no longer reach, §5zzm) + 22 live (one time-limit failure, §5zzh; not rerun on 2026-11-19) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
 
 ---
 
@@ -2609,6 +2609,85 @@ every signed-in user is held there, not only him. Later the same day the live si
 the browser and saves nothing to the account, the question catalog, the tour, a line "pilot for ages 18 and up"), and
 personal practice still opens only once the policy is published and the user agrees. The fix on the server is `REQUIRE_PRIVACY_CONSENT=false` until the policy is published.
 
+## 5zzm. A verification, a bug hunt, and the first six fixes (2026-11-26, Shaked: "do a full verification on the system and a bug hunt and find all the bugs that you can find"; "go")
+
+**The verification.** The offline suite on `master`: 7,023 passed, 13 skipped, 2 failed. The two failures are not
+code: `tests/test_admin_support_security.py` and `tests/test_user_inbox_security.py` open a rollback-only connection
+to the real database, and since some day after 2026-11-20 the database refuses this laptop (`EADDRNOTALLOWED: address
+not in tenant allow_list`). Until the address is allowed, `scripts/dry_run_sql.py`, the live suites and migrations
+cannot run from here either. The live site was checked from outside, as an anonymous visitor: every signed-in route
+of the API answers 401 without a token, forged and unsigned tokens are refused, a stranger origin is refused, and
+the 66 script files of the live web app hold no analytics or advertising code and call only routes that exist. The
+live `source_revision` is `f435f91`, the third release that is on no GitHub branch (§5zzl).
+
+**The hunt.** Five reviewers read the backend in parallel, one area each (coins and limits; duels, games and friends;
+the practice flow; the interview and the scoring engine; the security surface and the two stores), and the findings
+that matter most were run again before being believed. No finding lets one user read or change another user's data;
+the coin ledger, the token check and the SQL held. The list is kept outside the repository until its entries are
+fixed, because the repository is public. Six were fixed the same day:
+
+1. **The truth-table check graded a fragment of the answer** (`engine/checks.py`). When an expression held a spelling
+   that was not one of the parser's tokens, the longest part before it that did parse was graded as the whole
+   answer: `F = AB + AC’` (the apostrophe a phone types) was graded as `AB`, `A xnor B` as `A`, and the wrong answer
+   `AB + BC + AC + A’B’C’` passed as the majority function. A failed check caps correctness below PARTIAL and a
+   passed one lifts it to STRONG, so both directions changed a band. Now: the typographic apostrophes, `⋅ ∙ • ×`,
+   `¬`, `⊙`, `xnor`, `nand`, `nor` and the conditional `s ? a : b` are tokens; and what is cut off after an
+   expression has to be prose (words, digits, sentence punctuation). If it holds an operator, an unknown symbol or
+   an operator word the parser does not know (`implies`), nothing is graded: the check answers "could not parse",
+   which neither caps nor lifts. Where several outputs are assigned on one line, the asked one is read up to the
+   next assignment; in a chain of equal forms (`F = (A+B)' = A'B'`) the last form is the answer; and a line that is
+   an expression from end to end is believed before anything cut out of a longer text.
+2. **A level-3 hint or one core misconception capped a skill's level for good** (`engine/scores.py::record_turn`).
+   Practice works on the long-lived profile, and nothing ever cleared the two flags: one level-3 hint at difficulty 3
+   kept a skill at level 1 through twenty strong answers at difficulty 8. **The rule now (a decision, said here so it
+   can be changed):** a STRONG answer that counts (weight above 0) and needed no level-3 hint lifts the hint's cap
+   when it is at that difficulty or above, and lifts the misconception's cap at any difficulty; a new level-3 hint
+   or a new core misconception sets the cap again. Interviews are not affected (their flags never reached the
+   profile).
+3. **The numeric check was quadratic in the length of the answer** (`checks.py`). For every occurrence of a name the
+   rest of the answer was scanned again: a long answer that repeats a named value cost seconds of processor time at
+   10,000 characters and about a minute at the 20,000 cap, before any model call. Now a name's clause is read
+   inside a 400-character window and only a name's last 40 occurrences are read: 0.14 s at 20,000 characters for the
+   worst input tried. Same class as SEC-016 (blank runs), another input.
+4. **The numeric check picked the wrong number out of a right answer** (`checks.py`). It took the last number of the
+   clause and matched names inside words: `c = 107 because a = 5 and b = 102` read 5, `N = 4, since 3 stages give an
+   MTBF of only 2 years` read 2, `acc = -31. The accumulator is 6 bits wide.` read 6 (`acc` inside "accumulator").
+   Now a name is a whole word; an occurrence that links the name to a value (`N = 4`) is believed over one that
+   stands next to a number; brackets are an aside; a hexadecimal or binary literal is not a second value; a new
+   assignment ends the clause; in a chain of equals the last part is the value; and a sum left unfinished states no
+   value. **The verdict is given only when the answer is plain about it:** passed when the stated value is the
+   expected one, failed when no number near the name is, and None when the stated value is wrong but the expected
+   one stands next to it (new sentence: "more than one value could be the answer for ...; it was not checked
+   automatically", with its Hebrew). Also read now: `1,493` as a digit group (both readings are tried), the
+   typographic minus, `.6`, `1.4 x 10^-9`, `10^8`, units written as words (`picoseconds`, `psec`, `seconds`),
+   `kohm` against `kΩ`, `bit` against `bits`; and the tolerance's edge no longer depends on floating point
+   (expected 3.3 V ± 0.1 accepts 3.4 V).
+5. **The answers written outside the CORS layer carried no cross-origin header** (`main.py`). `CORSMiddleware` is the
+   innermost layer, so the rate limit's 429, both 413 answers and the last-resort 500 left without
+   `Access-Control-Allow-Origin`; the browser then hid them from the web app, which could only show a network
+   failure. Seen on the live API (the 413). The layers keep their order (the rate limit still counts everything);
+   those four answers now add the header themselves, for an allowed origin only (`main.cors_headers`).
+6. **Five sentences of the code runner had no Hebrew** (`engine/check_text.py`): the output limit, a failure while
+   running test N, an exit with an error, and both testbench result lines (the normal result of every HDL
+   question). They sit in the second half of a `cond ? "..." : "..."` in `apps/executor/lib/runner.mjs`, which the
+   guard test of 2026-11-19 did not read; it reads every text of a `detail:` now.
+
+**Tests.** `tests/test_bug_hunt_2026_11_26.py` (new) pins all of it; `tests/test_language_backend_2026_11_19.py`
+updated (the guard, and the count of parse messages). The catalog's self-tests of every seed question pass: they
+caught one regression while this was written (an answer with several outputs on one line was read as the last
+output), which is why item 1 reads up to the next assignment. Offline suite after the fixes: 7,126 passed, 13 skipped, 2 failed (the two
+failures are the database tests above). The full run itself counted 7,124 passed and 4 failed: the other two were
+the golden record of `tests/test_grade_first.py`, where exactly one value differed, `core_misconception` of
+`boolean_algebra` in the stored profile (true before, false now: the scenario's later strong answer lifts the cap,
+which is item 2). That one value was changed by hand in `tests/golden/grade_first_equivalence.json` and the file's
+eleven tests were run again on their own; the whole suite was not run a second time.
+
+**Not released.** `master` only. The live site cannot be released from GitHub while the live code is not in the
+repository (§5zzl).
+
+**Open, for Shaked:** whether the rule of item 2 is the one he wants (one strong answer lifts a misconception's cap);
+the rest of the list, in the order he chooses.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -2649,6 +2728,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-26 | A verification, a bug hunt and the first six fixes (§5zzm): the truth-table check no longer grades a fragment of an answer (phone apostrophes, `⋅`, `¬`, `xnor`, `nand`, `nor`, `s ? a : b` are read; an expression it cannot read to the end is not graded); a level-3 hint or a core misconception no longer caps a level for good; the numeric check is bounded (a minute of processor time for one answer before) and reads the stated value, not the last number, giving no verdict when in doubt; the 429, 413 and 500 written outside the CORS layer carry the cross-origin header; five runner sentences have their Hebrew. Offline suite: 7,126 passed, 13 skipped, 2 failed. Not released. The database refuses this laptop since after 2026-11-20, which fails two database tests and stops dry runs from here. |
 | 2026-11-20 | The privacy policy and the consent of sign-up (§5zzl): the policy in Hebrew and English written from what the code collects, one consent (personalisation) in the wording Shaked approved, public routes for both, a server-side record of who agreed to which text and when, a switch that blocks practice until agreed. All of it is inert while the policy is a draft: it waits for the operator's name, a contact address, the minimum age, a lawyer's read, the migration (dry run OK, not applied) and Harel's screens (rows 58 to 61). |
 | 2026-11-19 | The backend speaks the user's language (§5zzk): Hebrew names for the 41 skills and subjects, used in every view; `error.reason` on every `usage_limit` (fourteen reasons); the automatic check's and the code runner's sentences told in the attempt's language; a saved plan's reasons told in the language of the request; the plain interview report without English words. `master` brought up to `production` first. No database change. On `master`; not on the live site until Shaked says so. |
 | 2026-11-14 | Grader v3 released to the live site (`6231df3` contains the merge; merged suite 6,310 passed, none failed). The two languages verified (§5zzj): English clean; in Hebrew the backend still names the 41 skills, the check results and the code-run texts in English; the web app's items are rows 44 to 54 of `docs/harel-todo-2026-11-14.md`; eight of fourteen screens could not be photographed because the harness is behind the current pages. |

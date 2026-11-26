@@ -285,11 +285,22 @@ def record_turn(skill: SkillState, *, difficulty: int, band: Band, evaluation: E
     skill.turns += 1
     if hint_level > 0:
         skill.hints_used += 1
-    if hint_level >= 3 and skill.level3_hint_difficulty is None:
-        skill.level3_hint_difficulty = difficulty
+    # The two caps of `questioned_level` say what the candidate could not do yet, so later proof lifts them. In practice
+    # this state is the long-lived profile, and a cap that nothing lifted was for life: one level-3 hint at difficulty 3
+    # kept a skill at level 1 through twenty strong answers at difficulty 8 (bug hunt, 2026-11-26). The proof is a
+    # STRONG answer that counts and needed no level-3 hint: at that difficulty or above for the hint's cap, at any
+    # difficulty for the misconception's (a STRONG answer cannot hold a core misconception, see `classify_band`).
+    unaided_strong = band == Band.STRONG and hint_level < 3 and weight > 0
+    if hint_level >= 3:
+        if skill.level3_hint_difficulty is None:
+            skill.level3_hint_difficulty = difficulty
+    elif unaided_strong and skill.level3_hint_difficulty is not None and difficulty >= skill.level3_hint_difficulty:
+        skill.level3_hint_difficulty = None
     if core_misconception:
         skill.core_misconception = True
-    if band == Band.STRONG and hint_level < 3 and weight > 0:
+    elif unaided_strong:
+        skill.core_misconception = False
+    if unaided_strong:
         skill.ceiling = max(skill.ceiling or 0, difficulty)
     skill.provisional_level, _ = questioned_level(skill, params)
 

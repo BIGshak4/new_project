@@ -130,9 +130,30 @@ class BodyTooLarge(Exception):
     """Raised from the wrapped receive once more than MAX_BODY_BYTES arrived on the stream."""
 
 
-def _too_large_response(request_id: str) -> JSONResponse:
+def cors_headers(origin: str | None) -> dict[str, str]:
+    """The cross-origin headers for an answer that is written outside the CORS layer.
+
+    The rate limit's 429, the body limit's 413 and the last-resort 500 are produced by the layers around
+    `CORSMiddleware`, so they left without `Access-Control-Allow-Origin`: the browser then hides the answer from the
+    web app, which could only show a network failure (bug hunt, 2026-11-26). Same rule as the layer itself: the
+    header is given to an allowed origin and to nobody else."""
+    allowed = get_settings().allowed_origins
+    if not origin or not ("*" in allowed or origin in allowed):
+        return {}
+    return {"Access-Control-Allow-Origin": "*" if "*" in allowed else origin,
+            "Access-Control-Expose-Headers": "X-Request-Id", "Vary": "Origin"}
+
+
+def _scope_origin(scope) -> str | None:
+    for name, value in scope.get("headers") or ():
+        if name == b"origin":
+            return value.decode("latin-1")
+    return None
+
+
+def _too_large_response(request_id: str, origin: str | None = None) -> JSONResponse:
     return JSONResponse({"error": {"code": "payload_too_large", "message": f"the request body exceeds {MAX_BODY_BYTES} bytes"}},
-                        status_code=413, headers={"X-Request-Id": request_id})
+                        status_code=413, headers={"X-Request-Id": request_id, **cors_headers(origin)})
 
 
 class StreamLimits:
@@ -240,7 +261,7 @@ class StreamLimits:
                                              self._caller(scope)[:2], str(scope.get("path", ""))[:80].replace("\n", " "))
             response = JSONResponse({"error": {"code": "usage_limit", "message": "too many requests; slow down for a minute",
                                                "reason": "rate_limit"}},
-                                    status_code=429, headers={"Retry-After": "60"})
+                                    status_code=429, headers={"Retry-After": "60", **cors_headers(_scope_origin(scope))})
             return await response(scope, receive, send)
         state = {"received": 0, "too_large": False, "started": False}
         body = json.dumps({"error": {"code": "payload_too_large",
@@ -259,8 +280,11 @@ class StreamLimits:
             if state["too_large"]:                                  # ... which is replaced by the 413 here
                 if message["type"] == "http.response.start":
                     state["started"] = True
+                    cross_origin = [(name.lower().encode(), value.encode())
+                                    for name, value in cors_headers(_scope_origin(scope)).items()]
                     await send({"type": "http.response.start", "status": 413,
-                                "headers": [(b"content-type", b"application/json"), (b"content-length", str(len(body)).encode())]})
+                                "headers": [(b"content-type", b"application/json"),
+                                            (b"content-length", str(len(body)).encode()), *cross_origin]})
                 elif message["type"] == "http.response.body" and not state.get("sent"):
                     state["sent"] = True
                     await send({"type": "http.response.body", "body": body, "more_body": False})
@@ -273,7 +297,7 @@ class StreamLimits:
             await self.app(scope, limited_receive, guarded_send)
         except BodyTooLarge:
             if not state["started"]:
-                await _too_large_response(uuid.uuid4().hex[:12])(scope, receive, send)
+                await _too_large_response(uuid.uuid4().hex[:12], _scope_origin(scope))(scope, receive, send)
 
 
 app.add_middleware(StreamLimits)
@@ -303,7 +327,7 @@ async def request_log(request: Request, call_next):
     started = time.perf_counter()
     declared = request.headers.get("content-length")
     if declared and declared.isdigit() and int(declared) > MAX_BODY_BYTES:
-        return _too_large_response(request_id)
+        return _too_large_response(request_id, request.headers.get("origin"))
     path = request.url.path.replace("\n", " ").replace("\r", " ")
     try:
         response = await call_next(request)
@@ -313,7 +337,8 @@ async def request_log(request: Request, call_next):
         access_log.exception("%s %s %s user=%s status=500 ms=%d", request_id, request.method, path,
                              getattr(request.state, "user_id", "-"), (time.perf_counter() - started) * 1000)
         return JSONResponse({"error": {"code": "internal", "message": "something went wrong on our side",
-                                       "request_id": request_id}}, status_code=500, headers={"X-Request-Id": request_id})
+                                       "request_id": request_id}}, status_code=500,
+                            headers={"X-Request-Id": request_id, **cors_headers(request.headers.get("origin"))})
     response.headers["X-Request-Id"] = request_id
     access_log.info("%s %s %s user=%s status=%d ms=%d", request_id, request.method, path,
                     getattr(request.state, "user_id", "-"), response.status_code, (time.perf_counter() - started) * 1000)
