@@ -30,6 +30,8 @@ ASYMMETRIC = ("ES256", "RS256")
 LEEWAY_SECONDS = 30
 KEY_CACHE_SECONDS = 3600              # a key seen in the project's set is reused this long (PyJWKClient keeps the set as long)
 KEY_SET_FRESH_SECONDS = 30            # after a lookup, the set counts as current this long: at most one lookup per period
+KEY_RETRY_SECONDS = 2                 # after a lookup that could not reach the key set, the next one waits only this long
+KEY_STALE_SECONDS = 24 * 3600         # while the key set cannot be reached, a key seen before is still believed this long
 
 
 @dataclass(frozen=True)
@@ -41,8 +43,14 @@ class AuthenticatedUser:
 
     @property
     def display_name(self) -> str | None:
-        meta = self.claims.get("user_metadata") or {}
-        return meta.get("full_name") or meta.get("name") or meta.get("display_name")
+        """The name the user gave at sign-up. `user_metadata` is the user's own to edit, so only text counts: a
+        number or a list there used to fail every call of that user with 500 (bug hunt, 2026-11-26)."""
+        meta = self.claims.get("user_metadata")
+        for field_name in ("full_name", "name", "display_name"):
+            value = meta.get(field_name) if isinstance(meta, dict) else None
+            if isinstance(value, str) and value.strip():
+                return value
+        return None
 
 
 class TokenVerifier:
@@ -58,6 +66,7 @@ class TokenVerifier:
         self._keys: dict[str | None, tuple[float, object]] = {}
         self._lookup: asyncio.Future | None = None
         self._last_lookup = -1e9
+        self._set_reached = True                           # False after a lookup that could not download the key set
 
     @property
     def configured(self) -> bool:
@@ -103,7 +112,14 @@ class TokenVerifier:
         does not hold the kid), and EVERY key of the set it saw is stored, so a lookup caused by anyone refreshes the
         real keys too. After a lookup the set counts as current for KEY_SET_FRESH_SECONDS: a kid not in it is refused
         without another download. Made-up kids (anyone can send them) therefore cost at most one lookup per
-        KEY_SET_FRESH_SECONDS and can never lock a real key out; a key added to the project waits at most that long."""
+        KEY_SET_FRESH_SECONDS and can never lock a real key out; a key added to the project waits at most that long.
+
+        A lookup that could not REACH the key set (a timeout, a 5xx, a body that is not the key set) says nothing
+        about any key. It used to count as "the set is current": one failed download, for example right after a
+        deploy, answered every valid session with 401 for KEY_SET_FRESH_SECONDS, and the web app told those users
+        their session had ended (bug hunt, 2026-11-26). Now the next lookup comes after KEY_RETRY_SECONDS; a key
+        seen before is still believed (up to KEY_STALE_SECONDS); and a kid nothing is known about is answered 503
+        "try again", never 401."""
         cached = self._keys.get(kid)
         if cached is not None and time.monotonic() - cached[0] < KEY_CACHE_SECONDS:
             return cached[1]
@@ -117,32 +133,48 @@ class TokenVerifier:
             finally:
                 self._lookup = None
         cached = self._keys.get(kid)
-        if cached is not None and time.monotonic() - cached[0] < KEY_CACHE_SECONDS + KEY_SET_FRESH_SECONDS:
-            return cached[1]
+        if cached is not None:
+            age = time.monotonic() - cached[0]
+            if age < KEY_CACHE_SECONDS + KEY_SET_FRESH_SECONDS or (not self._set_reached and age < KEY_STALE_SECONDS):
+                return cached[1]
+        if not self._set_reached:
+            raise ApiError("temporarily_unavailable", "the sign-in keys could not be fetched; try again in a moment",
+                           headers={"Retry-After": str(KEY_RETRY_SECONDS)})
         raise ApiError("unauthenticated", "the token's signing key is not known")
 
     async def _look_up(self, token: str) -> None:
-        found = await asyncio.to_thread(self._fetch_keys, token)
+        try:
+            found, reached = await asyncio.to_thread(self._fetch_keys, token)
+        except Exception:                                  # noqa: BLE001 - whatever the download died of, nothing was learned
+            found, reached = {}, False
         now = time.monotonic()
         for kid, key in found.items():
             self._keys[kid] = (now, key)
+        self._set_reached = reached
+        if not reached:                                    # try again soon, and still one lookup at a time
+            self._last_lookup = now - KEY_SET_FRESH_SECONDS + KEY_RETRY_SECONDS
 
-    def _fetch_keys(self, token: str) -> dict:
-        """(worker thread) {kid: key} for the token's kid if the project has it, and for every key of the set."""
+    def _fetch_keys(self, token: str) -> tuple[dict, bool]:
+        """(worker thread) {kid: key} for the token's kid if the project has it and for every key of the set, and
+        whether the set was reached. Not reached: the download failed, so nothing is known about this kid, and the
+        keys of an older copy are not stamped as seen now."""
         found = {}
         try:
             signing = self._jwks.get_signing_key_from_jwt(token)        # downloads the set when needed
             found[jwt.get_unverified_header(token).get("kid")] = signing.key
+        except jwt.PyJWKClientConnectionError:
+            return {}, False
         except jwt.PyJWTError:
-            pass                                                        # not in the project's set
+            pass                                                        # not in the project's set, or the set is unusable
         every = getattr(self._jwks, "get_signing_keys", None)
         if every is not None:
             try:
                 for key in every():                                     # the set just seen, from the client's cache
                     found[key.key_id] = key.key
             except jwt.PyJWTError:
-                pass
-        return found
+                # no usable key set at all (an empty one, or not a key set): nothing was learned about this kid
+                return found, bool(found)
+        return found, True
 
 
 _bearer = HTTPBearer(auto_error=False)

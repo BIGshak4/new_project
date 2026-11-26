@@ -75,6 +75,26 @@ def _submission_dict(row) -> dict:
     }
 
 
+def engine_state(row: dict) -> dict:
+    """The attempt row's `engine_state` column. `attempt_submission` has no column for two per-revision values, so
+    they live here, keyed by revision: when an evaluation started, and what the answer really earned (as the ledger
+    wrote it; 0 counts). The second was kept only in memory until 2026-11-26: after a reload the answer showed the
+    pure rule's amount (5 or 10) where the response had said what was paid (0 or 2)."""
+    return {"evidence_mode": row.get("evidence_mode"), "tip_turns": row.get("tip_turns") or {},
+            "next_question": row.get("next_question"), "entry": row.get("entry"),
+            "evaluating_since": {str(s["revision"]): s["evaluating_since"] for s in row["submissions"]
+                                 if s.get("evaluating_since")},
+            "coins_awarded": {str(s["revision"]): s["coins_awarded"] for s in row["submissions"]
+                              if s.get("coins_awarded") is not None}}
+
+
+def revision_extras(state: dict, revision: int) -> dict:
+    """What `engine_state` holds for one revision (the reverse of `engine_state`). An answer scored before the
+    amount was stored has None, and the view falls back to the pure rule, as it always did."""
+    return {"evaluating_since": (state.get("evaluating_since") or {}).get(str(revision)),
+            "coins_awarded": (state.get("coins_awarded") or {}).get(str(revision))}
+
+
 async def mark_question_completed(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: uuid.UUID) -> None:
     """Patch only the completion flag on the owner's library entry."""
     entries = await db.table("jr_practice_entries")
@@ -106,11 +126,7 @@ async def save(connection: AsyncConnection, *, user_id: uuid.UUID, question_id: 
         "misconceptions_hit": list(row.get("misconceptions_hit") or []), "familiarity": row["familiarity"],
         "duration_ms": row.get("duration_ms"), "submitted_at": _dt(main["accepted_at"]) if main else None,
         "exposures": row.get("exposures") or [],
-        "engine_state": {"evidence_mode": row.get("evidence_mode"), "tip_turns": row.get("tip_turns") or {},
-                         "next_question": row.get("next_question"), "entry": row.get("entry"),
-                         # attempt_submission has no column for this; it lives here, keyed by revision
-                         "evaluating_since": {str(s["revision"]): s["evaluating_since"] for s in row["submissions"]
-                                              if s.get("evaluating_since")}},
+        "engine_state": engine_state(row),
     }
     statement = insert(attempt).values(**db.sql_values(values))
     updates = {c: statement.excluded[c] for c in values if c not in ("id", "user_id", "question_id", "started_at")}
@@ -182,8 +198,7 @@ async def load(connection: AsyncConnection, attempt_id: uuid.UUID, *, user_id: u
         "evidence_mode": state.get("evidence_mode"), "duration_ms": row.duration_ms,
         "tip_turns": state.get("tip_turns") or {}, "next_question": state.get("next_question"),
         "entry": state.get("entry"),
-        "submissions": [{**_submission_dict(s), "evaluating_since": (state.get("evaluating_since") or {}).get(str(s.revision))}
-                        for s in subs],
+        "submissions": [{**_submission_dict(s), **revision_extras(state, s.revision)} for s in subs],
         "exposures": list(row.exposures or []),
     }
     return StoredAttempt(id=row.id, user_id=row.user_id, question_id=row.question_id, question_key=row.question_key,

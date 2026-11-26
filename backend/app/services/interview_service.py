@@ -211,7 +211,7 @@ class InterviewService:
                     return self._turn_view(turn, language, revealed=False), self._view(stored, state)
                 raise ApiError("conflict", "this answer is being evaluated")
             text = answer.get("text", "") if isinstance(answer, dict) else str(answer or "")
-            text = (text or "").strip()
+            text = (text or "").replace("\x00", "").strip()         # Postgres stores no NUL character
             visual = self._visual(answer)
             if not text and visual is None:
                 raise ApiError("validation", "an answer is required (say what you would try, even if unsure)")
@@ -343,9 +343,15 @@ class InterviewService:
             row["turn_count"] = len(turns)
 
             # 5. persist everything in one transaction; the candidate's long-lived profile takes this turn's evidence
-            merged = self._merge_into_profile(profile, question.primary_skill, state.skill_state[question.primary_skill])
+            #    The skill is the one the engine scored (the metrics row names it), not the question's own: after a
+            #    step back to a prerequisite the question belongs to the prerequisite while the engine keeps scoring
+            #    the skill it stepped back from. Merging by the question's skill gave the prerequisite a copy of its
+            #    previous record whatever was answered, and the scored skill never received the turn (bug hunt,
+            #    2026-11-26).
+            scored = metrics["skill_key"]
+            merged = self._merge_into_profile(profile, scored, state.skill_state[scored])
             await self._persist(user_id, row, changed, state=state, metrics=[metrics], usage_rows=usage_rows,
-                                profile=(profile, {question.primary_skill: merged}), seniority=row["seniority"],
+                                profile=(profile, {scored: merged}), seniority=row["seniority"],
                                 all_turns=turns)
             return (self._turn_view(turn, language, revealed=row["status"] == "completed"), self._view(stored, state))
 
@@ -744,6 +750,12 @@ class InterviewService:
         # the loser learns it before it evaluates anything
         expected = int(row["state"].get("revision", 0))
         row["state"]["revision"] = expected + 1
+        # The program item of a finished interview is ticked once. The flag goes on the row BEFORE the row is saved:
+        # set after the save it was never stored, and a later save of the finished interview (the report's
+        # narrative) ticked a second item (bug hunt, 2026-11-26).
+        tick = (row["status"] == "completed" and not row["state"].get("program_ticked") and self.on_finished is not None)
+        if tick:
+            row["state"]["program_ticked"] = True
         try:
             async with self.store.transaction() as tx:
                 if self.coins is not None:
@@ -777,8 +789,7 @@ class InterviewService:
                         await tx.save_profile(loaded, states)
                     except StaleProfile:
                         row["state"].setdefault("flags", []).append("profile_not_updated_stale")
-                if row["status"] == "completed" and not row["state"].get("program_ticked") and self.on_finished is not None:
-                    row["state"]["program_ticked"] = True
+                if tick:
                     await self.on_finished(tx, user_id, session_id)
                 if metrics:
                     await tx.record_session_metrics(user_id=user_id, session_id=session_id, metrics=metrics,
@@ -788,7 +799,13 @@ class InterviewService:
                     await tx.record_session_usage(user_id=user_id, session_id=session_id, usage_rows=usage_rows)
         except StaleSession:
             row["state"]["revision"] = expected
+            if tick:
+                row["state"]["program_ticked"] = False     # nothing was saved, so nothing was ticked
             raise ApiError("conflict", "another request changed this interview at the same time; reload it") from None
+        except BaseException:
+            if tick:
+                row["state"]["program_ticked"] = False     # the transaction rolled back with the tick in it
+            raise
 
     # ------------------------------------------------------------------ report
 

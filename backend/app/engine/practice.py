@@ -551,7 +551,8 @@ class PracticeAttempt:
         """The API sends {"text": ...} (or {"expression": ...} for checks); the CLI sends a string. Same answer either way."""
         if isinstance(answer, dict):
             answer = answer.get("text") or answer.get("expression") or ""
-        return str(answer).strip()
+        # without the NUL character: Postgres stores it in no text and no JSON, so one pasted NUL failed the save
+        return str(answer).replace("\x00", "").strip()
 
     @staticmethod
     def _answer_visual(answer) -> VisualAnswer | None:

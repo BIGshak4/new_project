@@ -7,7 +7,7 @@ Updated at the end of every build step. Newest changes are at the bottom of the 
 
 > **Deployment operations update (20 September):** Both Netlify frontends now deploy automatically from Git, with successful push-to-live verification. The existing Render service is already in Frankfurt and uses the real Anthropic provider. The server-only Storage credential is now configured and `/health.answer_images` reports `assessed`. See [the deployment repair report](../docs/deployment-repair-2026-09-20.md) for current checks and remaining human-review steps; older scripted-provider / missing-photo-key notes below are historical.
 
-**Last updated:** 2026-11-26 (a verification, a bug hunt and its first six fixes §5zzm; privacy policy and sign-up consent, a draft until a lawyer's read §5zzl; the backend speaks the user's language §5zzk; `master` brought up to `production`) · **Tests:** 7,126 passed, 13 skipped, 2 failed offline on 2026-11-26 (the failures are two database tests this laptop can no longer reach, §5zzm) + 22 live (one time-limit failure, §5zzh; not rerun on 2026-11-19) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
+**Last updated:** 2026-11-26 (a verification, a bug hunt and sixteen of its 45 entries fixed §5zzm and §5zzn; privacy policy and sign-up consent, a draft until a lawyer's read §5zzl; the backend speaks the user's language §5zzk; `master` brought up to `production`) · **Tests:** 7,159 passed, 13 skipped, 2 failed offline on 2026-11-26 (the failures are two database tests this laptop can no longer reach, §5zzm) + 22 live (one time-limit failure, §5zzh; not rerun on 2026-11-19) · **Latest commit:** see changelog · **Live site:** `muxijobrun.com` runs the branch `production` on Harel's server since 2026-11-12; `master` reaches Render only (§5zzg). `production` = `master` merged on 2026-11-14 19:00 (`e43cff2`, §5zzh): merge `master` into `production` to release
 
 ---
 
@@ -2688,6 +2688,73 @@ repository (§5zzl).
 **Open, for Shaked:** whether the rule of item 2 is the one he wants (one strong answer lifts a misconception's cap);
 the rest of the list, in the order he chooses.
 
+## 5zzn. The second batch of fixes from the bug hunt, and the note for Harel (2026-11-26, Shaked: "start to solve it and send harel the findings")
+
+Nine more entries of the list of §5zzm, fixed on `master`; sixteen of its 45 are now fixed (the list has 45 entries,
+39 in the code and 6 about process; §5zzm's "44" was a miscount). Tests: `tests/test_bug_hunt_2026_11_26b.py` (33
+tests; 24 of them fail on the code before this batch).
+
+1. **A second attempt on the same question counted as new evidence** (`services/practice_service.py::start`).
+   `familiarity="new"` was hard-coded and `seen_same` (weight 0.4, §2.9) was never used: reveal the reference on one
+   attempt, paste it on the next, and the level rose at full weight. Now an attempt is `seen_same` when this user
+   already has a scored main answer on the question, or was shown its reference on another attempt (the two lookups
+   that have decided the coins since 2026-11-14). An attempt that was opened and left does not mark the question.
+   The lookups run in a savepoint and a failed one counts as "new": the first full run of the suite caught that a
+   failed lookup stopped the question from opening (`test_a_lookup_that_fails_never_costs_the_answer`).
+   Visible to the web app: such an answer says `evidence: "reduced"`. **A decision, said here so it can be changed:**
+   0.4 and not 0, because answering again after reading the feedback is the normal way to study; and it has no
+   expiry (a question answered a year ago is still `seen_same`).
+2. **Mock interview: the profile took the wrong skill's state** (`services/interview_service.py::answer`). After a
+   step back to a prerequisite the question belongs to the prerequisite while the engine keeps scoring the skill it
+   stepped back from; the service merged by the question's skill. The prerequisite gained a copy of its previous
+   record whatever was answered, and the scored skill never received the turn. Now the skill is the one the metrics
+   row names. **Not changed, and worth a decision one day:** the engine scores a prerequisite's question on the
+   dependent skill (§3.4 as built); whether that answer should count for the prerequisite instead is a design
+   question, not a slip.
+3. **The coins an answer really earned were not stored** (`repo/attempts.py`). `coins_awarded` had no column; the
+   response said 0 or 2 and a reload said 5 or 10 (the pure rule). The balance was always right. It is kept now in
+   `attempt.engine_state`, keyed by revision, next to `evaluating_since` (no migration). An answer scored before
+   today reads None and shows the pure rule, as before. `engine_state()` and `revision_extras()` are the two pure
+   halves, tested; **the write and the read were not run against the real database** (it refuses this laptop).
+4. **One failed download of the sign-in keys was 30 seconds of 401 for every valid session** (`auth.py`). The
+   failed lookup counted as "the key set is current", so the token's key was "not known", and the web app told the
+   user the session had ended. Now a lookup that could not reach the key set is tried again after 2 seconds
+   (`KEY_RETRY_SECONDS`), a key seen before is believed while the set is unreachable (up to 24 hours,
+   `KEY_STALE_SECONDS`), and a key nothing is known about is answered 503 `temporarily_unavailable` with
+   `Retry-After`, never 401. A made-up key id is still refused with 401 when the set was reached, and still cannot
+   buy a second download.
+5. **A full connection pool was a 500** (`api/errors.py`): `sqlalchemy.exc.TimeoutError` is not a `DBAPIError`. It
+   is 503 `temporarily_unavailable` with `Retry-After: 5` now.
+6. **The NUL character** (`schemas/execution.py`, `engine/practice.py`, `interview_service.py`, `api/errors.py`).
+   Postgres stores it in no text and no JSON. A program that printed one made Run answer 500, lost the output and
+   held one of the user's two run slots for two minutes: `ExecutionResult` now replaces it with U+FFFD at any depth.
+   An answer loses it at intake. Every other text a request can carry (duel code, a report, an image name) is
+   answered 422 `validation` when Postgres refuses it (SQLSTATE 22021 or 22P05) instead of 500. **The 422 path is
+   read from the driver's code and was not run against the real database.**
+7. **A name that is not text failed every call of its user** (`auth.py::display_name`): `user_metadata` is the
+   user's own to edit, and a number there reached a slice. Only text counts now.
+8. **A follow-up answer sent again with the same key was refused** (`practice_service.py::submit`): 409
+   `no_pending_follow_up` instead of the stored result. It is replayed now, as a main answer is.
+9. **A finished interview could tick two program items** (`interview_service.py::_persist`): `program_ticked` was
+   set after the row was saved, so it was never stored, and the next save of the finished interview (the report's
+   narrative) ticked again. The flag goes on the row before the save, and comes off if the transaction fails.
+
+**Not fixed on purpose:** F2 (`/health?db_check=true` shows the database round trip to anyone).
+`deploy/selfhost/autodeploy/pull_release.py` reads exactly that field without a key, so hiding it would stop
+Harel's releases; it is row 72 of his note.
+
+**For Harel:** `docs/harel-todo-2026-11-26.md` (rows 62 to 76): the live code that is on no GitHub branch, the
+merge and release of `master`, the consent switch that blocks Shaked, the database's allow list, what the screens
+will see after the merge, and the findings that are his. The full list stays outside the repository (it is public
+and 29 entries are open); Shaked sends it to Harel as a file.
+
+**Tests.** Offline suite after this batch: 7,159 passed, 13 skipped, 2 failed (the two failures are the database tests of §5zzm).
+
+**Not released.** `master` only (§5zzl).
+
+**Open, for Shaked:** the two decisions above (0.4 with no expiry for a repeated question; the rule of §5zzm item
+2); which of the 23 open code entries comes next.
+
 ## 6. Known gaps and open items
 
 - **Content is loaded** (2026-09-18): 41 skill rows, role, company, 10 tips, 30 glossary terms; the 30 questions have 50 skill links, 60 translations, 3 hints each, 3 deterministic checks. All still `in_review`; the pilot serves them with `ALLOW_IN_REVIEW_CONTENT=true` until the first ones are published.
@@ -2728,6 +2795,7 @@ With the manual provider, each model call appears as `workdir/manual_llm/NNN_<ro
 
 | Date | Change |
 |---|---|
+| 2026-11-26 | The second batch from the bug hunt (§5zzn), nine entries: a second attempt on a question is `seen_same` evidence (weight 0.4), not new; the interview merges the skill the engine scored; the coins an answer earned are stored (in `engine_state`, no migration); a failed download of the sign-in keys is 503 and a retry after 2 s, not 30 s of 401; a full pool is 503; the NUL character no longer fails a save (program output, answers) and is 422 elsewhere; a non-text name no longer fails its user; a follow-up answer sent again is replayed; a finished interview ticks the program once. `docs/harel-todo-2026-11-26.md` written. Offline suite: 7,159 passed, 13 skipped, 2 failed. Not released. |
 | 2026-11-26 | A verification, a bug hunt and the first six fixes (§5zzm): the truth-table check no longer grades a fragment of an answer (phone apostrophes, `⋅`, `¬`, `xnor`, `nand`, `nor`, `s ? a : b` are read; an expression it cannot read to the end is not graded); a level-3 hint or a core misconception no longer caps a level for good; the numeric check is bounded (a minute of processor time for one answer before) and reads the stated value, not the last number, giving no verdict when in doubt; the 429, 413 and 500 written outside the CORS layer carry the cross-origin header; five runner sentences have their Hebrew. Offline suite: 7,126 passed, 13 skipped, 2 failed. Not released. The database refuses this laptop since after 2026-11-20, which fails two database tests and stops dry runs from here. |
 | 2026-11-20 | The privacy policy and the consent of sign-up (§5zzl): the policy in Hebrew and English written from what the code collects, one consent (personalisation) in the wording Shaked approved, public routes for both, a server-side record of who agreed to which text and when, a switch that blocks practice until agreed. All of it is inert while the policy is a draft: it waits for the operator's name, a contact address, the minimum age, a lawyer's read, the migration (dry run OK, not applied) and Harel's screens (rows 58 to 61). |
 | 2026-11-19 | The backend speaks the user's language (§5zzk): Hebrew names for the 41 skills and subjects, used in every view; `error.reason` on every `usage_limit` (fourteen reasons); the automatic check's and the code runner's sentences told in the attempt's language; a saved plan's reasons told in the language of the request; the plain interview report without English words. `master` brought up to `production` first. No database change. On `master`; not on the live site until Shaked says so. |

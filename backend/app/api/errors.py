@@ -11,6 +11,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import HTTPException, RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import DBAPIError, OperationalError
+from sqlalchemy.exc import TimeoutError as PoolTimeoutError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 STATUS_FOR_CODE = {
@@ -78,6 +79,25 @@ def is_connection_error(exc: BaseException) -> bool:
     return False
 
 
+# What Postgres answers when a text holds the NUL character: 22021 for a text column ("invalid byte sequence for
+# encoding UTF8: 0x00"), 22P05 for a jsonb column ("unsupported Unicode escape sequence"). The answer intakes and the
+# code runner's result drop the character before it gets that far; this is for every other text a request can carry.
+UNSTORABLE_TEXT_STATES = ("22021", "22P05")
+UNSTORABLE_TEXT_NAMES = ("CharacterNotInRepertoireError", "UntranslatableCharacterError")
+
+
+def is_unstorable_text(exc: BaseException) -> bool:
+    """True when the database refused a value for a character it cannot store, at any depth of the cause chain."""
+    seen = 0
+    while exc is not None and seen < 8:
+        if (getattr(exc, "sqlstate", None) in UNSTORABLE_TEXT_STATES or getattr(exc, "pgcode", None) in UNSTORABLE_TEXT_STATES
+                or type(exc).__name__ in UNSTORABLE_TEXT_NAMES):
+            return True
+        exc = getattr(exc, "orig", None) or exc.__cause__ or exc.__context__
+        seen += 1
+    return False
+
+
 def _body(code: str, message: str, details=None, reason: str | None = None) -> dict:
     error = {"code": code, "message": message}
     if reason is not None:
@@ -104,12 +124,27 @@ def install(app: FastAPI) -> None:
     async def _database_unavailable(request: Request, exc: DBAPIError) -> JSONResponse:
         """A dropped or refused database connection. The failed transaction rolled back atomically,
         so the client may simply retry; an accepted answer is never lost by this."""
+        if is_unstorable_text(exc):
+            # the caller's own text, not a server fault: 500 here told the web app to show "something went wrong"
+            # for a pasted NUL character (bug hunt, 2026-11-26). The transaction rolled back; nothing was half-saved.
+            return JSONResponse(_body("validation", "the text holds a character that cannot be stored (NUL); "
+                                                    "remove it and send again"), status_code=422)
         if not (exc.connection_invalidated or is_connection_error(exc)):
             raise exc                                          # a real query error: let the 500 path log it
         request_id = getattr(request.state, "request_id", None)
         return JSONResponse(_body("temporarily_unavailable", "the database connection dropped; please retry",
                                   {"request_id": request_id} if request_id else None), status_code=503,
                             headers={"Retry-After": "2"})
+
+    @app.exception_handler(PoolTimeoutError)
+    async def _pool_exhausted(request: Request, exc: PoolTimeoutError) -> JSONResponse:
+        """Every connection of the pool stayed in use for the whole pool timeout. Nothing of this request ran, so the
+        client may retry. It is not a DBAPIError, so it used to leave as a 500 with no Retry-After (bug hunt,
+        2026-11-26)."""
+        request_id = getattr(request.state, "request_id", None)
+        return JSONResponse(_body("temporarily_unavailable", "the server is busy; please retry in a few seconds",
+                                  {"request_id": request_id} if request_id else None), status_code=503,
+                            headers={"Retry-After": "5"})
 
     @app.exception_handler(RequestValidationError)
     async def _validation(_: Request, exc: RequestValidationError) -> JSONResponse:

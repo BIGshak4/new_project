@@ -395,8 +395,22 @@ class PracticeService:
                     goal = await tx.load_goal(user_id)
                     seniority = goal.seniority or await tx.user_seniority(user_id) or "student"
                     ctx = self._context(seniority, language, goal.selection, user_id=user_id)
+                    # A question this user already has a scored answer on, or whose reference they were shown on
+                    # another attempt, is not new evidence (§2.9 "seen_same", weight 0.4). Every attempt was "new"
+                    # until 2026-11-26: reveal the reference on one attempt, paste it on the next, and the level
+                    # rose at full weight. The same two lookups have decided the coins since 2026-11-14.
+                    # In a savepoint, and a lookup that fails counts as "new": it must never stop a
+                    # question from opening (the rule the coins' lookup has followed since 2026-11-14).
                     try:
-                        attempt = PracticeAttempt(ctx, loaded.question, profile.states, mode=mode, familiarity="new",
+                        async with tx.savepoint():
+                            familiar = (await tx.answered_before(user_id, loaded.id)
+                                        or await tx.reference_exposed(user_id, loaded.id))
+                    except Exception:                               # noqa: BLE001
+                        log.exception("could not look up earlier attempts of %s on %s; counted as new", user_id, loaded.id)
+                        familiar = False
+                    try:
+                        attempt = PracticeAttempt(ctx, loaded.question, profile.states, mode=mode,
+                                                  familiarity="seen_same" if familiar else "new",
                                                   self_confidence=self_confidence, entry=entry)
                     except PracticeError as exc:
                         raise ApiError(exc.code, str(exc), reason=exc.reason) from exc
@@ -474,7 +488,11 @@ class PracticeService:
             language = stored.row["practice_language"]
             if follow_up_turn is not None:
                 pending = attempt.pending_follow_up
-                if pending is None or pending["turn"] != follow_up_turn:
+                # the same answer sent again (a retry after a lost response) is replayed by `accept`, as a main
+                # answer is; it used to be refused here, because its follow-up is no longer the pending one
+                resent = idempotency_key is not None and any(
+                    s.key == idempotency_key and s.turn == follow_up_turn for s in attempt.submissions)
+                if not resent and (pending is None or pending["turn"] != follow_up_turn):
                     raise ApiError("no_pending_follow_up", "this follow-up is not the one waiting for an answer")
             try:
                 submission, replay = await attempt.accept(answer, idempotency_key=idempotency_key,
